@@ -1,6 +1,6 @@
 # Gye Mong
 2D 탑다운 액션 RPG 게임.
-[기획](https://github.com/Gimlocal/Record/blob/main/Game Directing/Initial Planning.md)
+[기획](https://github.com/Gimlocal/Record/blob/main/Game%20Directing/Initial%20Planning.md)
 
 ## commit convention
 
