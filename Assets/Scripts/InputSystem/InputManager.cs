@@ -196,7 +196,7 @@ public class InputManager : SingletonObject<InputManager>
     /// Registers a listener to receive input events.
     /// </summary>
     /// <param name="listener">Listener to add</param>
-    public void SetKeyListener(IInputListener listener)
+    public void SetInputListener(IInputListener listener)
     {
         inputListeners.Add(listener);
     }
