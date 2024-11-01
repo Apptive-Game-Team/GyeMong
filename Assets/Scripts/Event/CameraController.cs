@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
         isShaking = false;
     }
 
-    public void ShakeCamera(float time = 1)
+    public void ShakeCamera(float time = 0.5f)
     {
         StartCoroutine(Shaking(time));
     }
