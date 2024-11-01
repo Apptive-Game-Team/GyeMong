@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Every Event Management class
 /// </summary>
-public class EventManager : SingletonObject<EventManager>
+public class EffectManager : SingletonObject<EffectManager>
 {
 
     private CameraController cameraController;

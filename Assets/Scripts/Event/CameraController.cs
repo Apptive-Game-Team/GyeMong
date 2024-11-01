@@ -10,10 +10,10 @@ public class CameraController : MonoBehaviour
     private const float SHAKE_AMOUNT = 0.1f;
     private const float SHAKE_DELAY = 0.1f;
     private bool isShaking = false;
-
+    
     void Awake()
     {
-        EventManager.Instance.SetCameraController(this);
+        EffectManager.Instance.SetCameraController(this);
         player = GameObject.Find("Player");
     }
 
