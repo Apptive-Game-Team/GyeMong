@@ -6,17 +6,79 @@ public class MidBoss : Boss
 {
     private void Awake()
     {
-        maxHealth = 100f;
-        curHealth = maxHealth;
-        speed = 1;
+        maxHealthP1 = 100f;
+        maxHealthP2 = 200f;
+        speed = 1f;
         player = GameObject.FindGameObjectWithTag("Player");
     }
     void Start()
     {
         wall.SetActive(false);
+        SelectRandomPattern();
+        SetupPhase();
     }
+
     void Update()
     {
-        
+        if (onBattle)
+        {
+            if(!isPattern)
+            {
+                SelectRandomPattern();
+                TrackPlayer();
+            }
+        }
+    }
+    protected override void Die()
+    {
+        CheckPhaseTransition();
+    }
+
+    protected override IEnumerator ExecutePattern0()
+    {
+        isPattern = true;
+        Debug.Log("Executing Pattern 0");
+        float duration = 2f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            TrackPlayer();
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        isPattern = false;
+    }
+
+    protected override IEnumerator ExecutePattern1()
+    {
+        isPattern = true;
+        Debug.Log("Executing Pattern 1");
+        float duration = 2f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            TrackPlayer();
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        isPattern = false;
+    }
+
+    protected override IEnumerator ExecutePattern2()
+    {
+        isPattern = true;
+        Debug.Log("Executing Pattern 2");
+        float duration = 2f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            TrackPlayer();
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        isPattern = false;
     }
 }
