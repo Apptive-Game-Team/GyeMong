@@ -5,6 +5,7 @@ public class Creature : MonoBehaviour
 {
     protected float maxHealth;
     protected float curHealth;
+    protected float AttackDamage;
     protected float speed;
     protected float detectionRange = 1f;
     protected GameObject player;
