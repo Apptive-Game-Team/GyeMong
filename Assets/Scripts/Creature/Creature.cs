@@ -6,18 +6,9 @@ public class Creature : MonoBehaviour
     protected float maxHealth;
     protected float curHealth;
     protected float speed;
-    protected float detectionRange = 10f;
-    private Transform playerTransform;
-
-    private void Start()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            playerTransform = player.transform;
-        }
-    }
-
+    protected float detectionRange = 1f;
+    protected GameObject player;
+    protected bool onBattle = false;
     public virtual void TakeDamage(float damage)
     {
         curHealth -= damage;
@@ -26,20 +17,9 @@ public class Creature : MonoBehaviour
             Die();
         }
     }
-
     protected virtual void Die()
     {
         Destroy(gameObject);
-    }
-
-    public bool DetectPlayer()
-    {
-        if (playerTransform == null)
-        {
-            return false;
-        }
-        float distance = Vector3.Distance(transform.position, playerTransform.position);
-        return distance <= detectionRange;
     }
 }
 
