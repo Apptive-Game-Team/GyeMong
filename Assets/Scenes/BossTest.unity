@@ -1914,6 +1914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0e25d8f4f1cbc4b8b729b4f708811a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wall: {fileID: 632343602}
 --- !u!1 &1482526801
 GameObject:
   m_ObjectHideFlags: 0
@@ -3858,6 +3859,7 @@ GameObject:
   - component: {fileID: 2063228065}
   - component: {fileID: 2063228064}
   - component: {fileID: 2063228066}
+  - component: {fileID: 2063228068}
   - component: {fileID: 2063228067}
   m_Layer: 0
   m_Name: BossRoomEntrance
@@ -4044,7 +4046,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0009598732, y: -4.694131}
+  m_Offset: {x: -0.027679205, y: -4.494385}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4055,7 +4057,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.0019197, y: 0.6117382}
+  m_Size: {x: 2.0689712, y: 1.1456718}
   m_EdgeRadius: 0
 --- !u!114 &2063228067
 MonoBehaviour:
@@ -4070,6 +4072,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   midBoss: {fileID: 762724554}
+--- !u!50 &2063228068
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063228062}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &2095341881
 GameObject:
   m_ObjectHideFlags: 0
@@ -4298,7 +4327,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.019981146, y: -0.019980907}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4309,7 +4338,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.7592797, y: 1.8392038}
   m_EdgeRadius: 0
 --- !u!212 &2096203951
 SpriteRenderer:
@@ -4372,7 +4401,7 @@ Transform:
   m_GameObject: {fileID: 2096203947}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: -3.46, z: 5.4316254}
+  m_LocalPosition: {x: -0.07, y: -9.79, z: 5.4316254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

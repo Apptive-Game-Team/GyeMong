@@ -5,30 +5,17 @@ public class Boss : Creature
 {
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
-    private Transform playerTransform;
 
-    private void Awake()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
-    private void Start()
-    {
-        wall.SetActive(false);
-        playerTransform = player.transform;
-    }
-    protected override void Die()
-    {
-
-    }
     public IEnumerator DetectPlayerCoroutine()
     {
         while (true)
         {
-            float distance = Vector3.Distance(transform.position, playerTransform.position);
+            float distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance <= detectionRange)
             {
                 onBattle = true;
                 wall.SetActive(true);
+                Debug.Log("qkqh");
                 yield break;
             }
             else onBattle = false;

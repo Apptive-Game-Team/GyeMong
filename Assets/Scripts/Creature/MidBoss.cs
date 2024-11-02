@@ -9,10 +9,11 @@ public class MidBoss : Boss
         maxHealth = 100f;
         curHealth = maxHealth;
         speed = 1;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     void Start()
     {
-        
+        wall.SetActive(false);
     }
     void Update()
     {
