@@ -3593,7 +3593,7 @@ Transform:
   m_GameObject: {fileID: 679684918}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11, y: 2.5, z: 0}
+  m_LocalPosition: {x: -17.48, y: 6.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4021,6 +4021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puzzleImages: []
+  rune: {fileID: 1176405771}
 --- !u!1 &998294830
 GameObject:
   m_ObjectHideFlags: 0
@@ -4307,6 +4308,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1176405771 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2455715456273074898, guid: 7f616013f84a4404295479de232b0e16,
+    type: 3}
+  m_PrefabInstance: {fileID: 1194838224}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1189817297
 GameObject:
   m_ObjectHideFlags: 0

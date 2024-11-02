@@ -5,8 +5,9 @@ using UnityEngine;
 public class PuzzleController : MonoBehaviour
 {
     public List<GameObject> puzzleImages = new();
+    [SerializeField] GameObject rune;
 
-    void Start()
+    void Awake()
     {
         SetUpImage();
         SetUpInitialRotation();
@@ -14,7 +15,10 @@ public class PuzzleController : MonoBehaviour
 
     void Update()
     {
-        
+        if (CheckClear())
+        {
+            rune.SetActive(true);
+        }
     }
 
     void SetUpImage()
@@ -43,7 +47,7 @@ public class PuzzleController : MonoBehaviour
     {
         foreach (GameObject image in puzzleImages)
         {
-            if (Mathf.Abs(image.transform.eulerAngles.z % 360) != 0f)
+            if (image.transform.eulerAngles.z != 0f)
             {
                 return false;
             }

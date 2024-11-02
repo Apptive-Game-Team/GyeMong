@@ -35,7 +35,7 @@ public class NewBehaviourScript : MonoBehaviour
     void Rotate()
     {
         Vector3 newRotation = gameObject.transform.eulerAngles;
-        newRotation.z += 90f;
+        newRotation.z -= 90f;
         gameObject.transform.eulerAngles = newRotation;
     }
 }
