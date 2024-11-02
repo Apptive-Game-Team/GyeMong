@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Creature : MonoBehaviour
 {
-    public float maxHealth;
-    public float curHealth;
-    public float speed;
-    public float detectionRange = 10f;
+    protected float maxHealth;
+    protected float curHealth;
+    protected float speed;
+    protected float detectionRange = 10f;
     private Transform playerTransform;
 
     private void Start()
