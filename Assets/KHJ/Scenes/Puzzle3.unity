@@ -1079,6 +1079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,7 +1186,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1359,6 +1360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,6 +1706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &679684918
 GameObject:
   m_ObjectHideFlags: 0
@@ -2010,6 +2013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &909136094
 GameObject:
   m_ObjectHideFlags: 0
@@ -2153,6 +2157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &970471168
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,6 +2363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1027586080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2501,6 +2507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1176405771 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2455715456273074898, guid: 7f616013f84a4404295479de232b0e16,
@@ -2650,6 +2657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1001 &1194838224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2886,6 +2894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1318589305
 GameObject:
   m_ObjectHideFlags: 0
@@ -32149,6 +32158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1532577573
 GameObject:
   m_ObjectHideFlags: 0
@@ -32292,6 +32302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1603218677
 GameObject:
   m_ObjectHideFlags: 0
@@ -32435,6 +32446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1613062013
 GameObject:
   m_ObjectHideFlags: 0
@@ -32578,6 +32590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1645951903
 GameObject:
   m_ObjectHideFlags: 0
@@ -32721,6 +32734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1705145437
 GameObject:
   m_ObjectHideFlags: 0
@@ -32864,6 +32878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1 &1749611966
 GameObject:
   m_ObjectHideFlags: 0
@@ -33054,6 +33069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d375b54cd403e074da3da723bb99c0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 300
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
