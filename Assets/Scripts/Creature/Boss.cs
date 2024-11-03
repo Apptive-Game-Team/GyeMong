@@ -42,6 +42,10 @@ public class Boss : Creature
             currentPhase++;
             SetupPhase();
         }
+        else
+        {
+            Die();
+        }
     }
 
     protected virtual void ExecuteCurrentPattern()

@@ -27,7 +27,6 @@ public class MidBoss : Boss
             {
                 SelectRandomPattern();
                 ExecuteCurrentPattern();
-                //TrackPlayer();
             }
         }
     }
