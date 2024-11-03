@@ -6,7 +6,7 @@ public class Entrance : MonoBehaviour
 {
     public MidBoss midBoss;
 
-    public void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
