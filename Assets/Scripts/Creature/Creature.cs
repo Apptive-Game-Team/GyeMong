@@ -7,9 +7,9 @@ public class Creature : MonoBehaviour
     protected float curHealth;
     protected float AttackDamage;
     protected float speed;
-    protected float detectionRange = 1f;
+    protected float detectionRange;
     protected GameObject player;
-    protected bool onBattle;//디버깅용, 디텍터 버그 해결시 false로 전환
+    protected bool onBattle = false;
     public virtual void TakeDamage(float damage)
     {
         curHealth -= damage;

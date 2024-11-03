@@ -9,6 +9,7 @@ public class MidBoss : Boss
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
         speed = 1f;
+        detectionRange = 10f;
         player = GameObject.FindGameObjectWithTag("Player");
     }
     void Start()
