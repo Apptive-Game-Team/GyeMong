@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class ImageRotation : MonoBehaviour
 {
     bool isAttached = false;
     bool isRotating = true;
     public float rotationSpeed = 300f;
-    public float cooldownTime = 1f;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -57,8 +57,6 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         transform.eulerAngles = new Vector3(0, 0, targetAngle);
-
-        yield return new WaitForSeconds(cooldownTime);
         isRotating = true;
     }
 }
