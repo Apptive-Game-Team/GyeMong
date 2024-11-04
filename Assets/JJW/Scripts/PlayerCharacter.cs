@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace playerCharacter
 {
-    public class PlayerCharacter : MonoBehaviour
+    public class PlayerCharacter : SingletonObject<PlayerCharacter>
     {
         public float moveSpeed = 2.0f;
         public float sprintSpeed = 4.0f;
