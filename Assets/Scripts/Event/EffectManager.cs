@@ -39,17 +39,19 @@ public class EffectManager : SingletonObject<EffectManager>
     /// <summary>
     /// The screen is getting Ligther
     /// </summary>
-    public void FadeIn()
+    /// <returns>return IEnumerator</returns>
+    public IEnumerator FadeIn()
     {
-        StartCoroutine(Fade(black, 0));
+        return Fade(black, 0);
     }
 
     /// <summary>
     /// The screen is getting darker
     /// </summary>
-    public void FadeOut()
+    /// /// <returns>return IEnumerator</returns>
+    public IEnumerator FadeOut()
     {
-        StartCoroutine(Fade(black, 1));
+        return Fade(black, 1);
     }
 
 
