@@ -22,13 +22,13 @@ public class GenerateMaze : MonoBehaviour
         start = new Vector2Int(1, height - 2); // 왼쪽 위
         end = new Vector2Int(width - 2, 1); //오른쪽 아래
 
+        InitializeWalls();
         GenerateMap(start, end);
         GenerateTile(gridTile);
     }
 
     void GenerateMap(Vector2Int start, Vector2Int end)
     {
-        InitializeWalls();
         pathStack.Push(start);
         gridTile[start.x, start.y] = true;
 
