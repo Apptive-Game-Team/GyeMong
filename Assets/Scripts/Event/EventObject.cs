@@ -97,6 +97,7 @@ public class EventObject : MonoBehaviour
 
     public void KillEvent()
     {
-        StopCoroutine(eventLoop);
+        if (eventLoop != null)
+            StopCoroutine(eventLoop);
     }
 }
