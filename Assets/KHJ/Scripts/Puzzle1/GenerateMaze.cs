@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 
 public class GenerateMaze : MonoBehaviour
@@ -10,68 +9,74 @@ public class GenerateMaze : MonoBehaviour
 
     private int width = 49;
     private int height = 49;
-
     private float tileRatio = 1f;
     private bool[,] gridTile;
+    private Stack<Vector2Int> pathStack = new();
 
+    private Vector2Int start; 
+    private Vector2Int end; 
 
     void Start()
     {
-        Generatemap(width,height);
+        gridTile = new bool[width, height];
+        start = new Vector2Int(1, height - 2); // 왼쪽 위
+        end = new Vector2Int(width - 2, 1); //오른쪽 아래
+
+        GenerateMap(start, end);
         GenerateTile(gridTile);
     }
 
-    void Generatemap(int width, int height)
+    void GenerateMap(Vector2Int start, Vector2Int end)
     {
-        gridTile = new bool[width, height];
+        InitializeWalls();
+        pathStack.Push(start);
+        gridTile[start.x, start.y] = true;
 
-        for (int i = 0;i < width;i++) // 가장자리 벽 설정
+        while (pathStack.Count > 0)
         {
-            for (int j = 0;j < height;j++) 
+            Vector2Int current = pathStack.Peek();
+            List<Vector2Int> neighbors = GetUnvisitedNeighbors(current);
+
+            if (neighbors.Count > 0)
             {
-                if (i % 2 == 0 || j % 2 == 0)
-                {
-                    gridTile[i,j] = false;
-                }
-                else gridTile[i, j] = true;
+                Vector2Int chosen = neighbors[Random.Range(0, neighbors.Count)];
+                pathStack.Push(chosen);
+
+                Vector2Int wallToRemove = (current + chosen) / 2;
+                gridTile[wallToRemove.x, wallToRemove.y] = true;
+                gridTile[chosen.x, chosen.y] = true;
+            }
+            else
+            {
+                pathStack.Pop();
             }
         }
 
-        for (int i = 0;i < width;i++)
+        gridTile[width-2,0] = true;
+        gridTile[1,height-1] = true; 
+    }
+
+    void InitializeWalls()
+    {
+        for (int i = 0; i < width; i++)
         {
-            for (int j = 0;j < height;j++)
+            for (int j = 0; j < height; j++)
             {
-                if (i % 2 == 0 || j % 2 == 0) continue; // 가장자리는 그대로 벽
-                if (i == width - 2 && j == height - 2) continue; // 마지막 타일 = 벽
-
-                // if (i == width - 2) // i의 다음값이 가장자리(벽)일때
-                // {
-                //     gridTile[i,j+1] = true; // 다른방향으로 벽뚫음 (오른쪽)
-                //     continue;
-                // }
-
-                // if (j == height - 2) // j의 다음값이 가장자리(벽)일때
-                // {
-                //     gridTile[i+1,j] = true; // 다른방향으로 벽뚫음 (아래쪽)
-                //     continue;
-                // }
-
-                if (Random.Range(0, 2) == 0) // 랜덤으로 오른쪽 혹은 왼쪽으로 벽을 뚫는다.
-                {
-                    if (i < width - 2)
-                    {
-                        gridTile[i + 1, j] = true;
-                    }
-                }
-                else
-                {
-                    if (j < height - 2)
-                    {
-                        gridTile[i, j + 1] = true;
-                    }
-                }
+                gridTile[i, j] = false;
             }
         }
+    }
+
+    List<Vector2Int> GetUnvisitedNeighbors(Vector2Int cell)
+    {
+        List<Vector2Int> neighbors = new();
+
+        if (cell.x - 2 >= 0 && !gridTile[cell.x - 2, cell.y]) neighbors.Add(new Vector2Int(cell.x - 2, cell.y));
+        if (cell.x + 2 < width && !gridTile[cell.x + 2, cell.y]) neighbors.Add(new Vector2Int(cell.x + 2, cell.y));
+        if (cell.y - 2 >= 0 && !gridTile[cell.x, cell.y - 2]) neighbors.Add(new Vector2Int(cell.x, cell.y - 2));
+        if (cell.y + 2 < height && !gridTile[cell.x, cell.y + 2]) neighbors.Add(new Vector2Int(cell.x, cell.y + 2));
+
+        return neighbors;
     }
 
     void GenerateTile(bool[,] gridTile)
@@ -82,16 +87,9 @@ public class GenerateMaze : MonoBehaviour
             {
                 Vector2 position = new Vector2((i - width / 2) * tileRatio, (j - height / 2) * tileRatio);
 
-                if (!gridTile[i, j]) 
-                {
-                    Instantiate<GameObject>(wallPrefab, position, Quaternion.identity);
-                }
-                else 
-                {
-                    Instantiate<GameObject>(tilePrefab, position, Quaternion.identity);
-                }
+                if (!gridTile[i, j]) Instantiate(wallPrefab, position, Quaternion.identity);
+                else Instantiate(tilePrefab, position, Quaternion.identity);
             }
         }
     }
-
 }
