@@ -8,8 +8,8 @@ public class GenerateMaze : MonoBehaviour
     [SerializeField] GameObject wallPrefab;
     [SerializeField] GameObject tilePrefab;
 
-    private int width = 50;
-    private int height = 50;
+    private int width = 49;
+    private int height = 49;
 
     private float tileRatio = 1f;
     private bool[,] gridTile;
@@ -44,17 +44,17 @@ public class GenerateMaze : MonoBehaviour
                 if (i % 2 == 0 || j % 2 == 0) continue; // 가장자리는 그대로 벽
                 if (i == width - 2 && j == height - 2) continue; // 마지막 타일 = 벽
 
-                if (i == width - 2) // i의 다음값이 가장자리(벽)일때
-                {
-                    gridTile[i,j+1] = true; // 다른방향으로 벽뚫음 (오른쪽)
-                    continue;
-                }
+                // if (i == width - 2) // i의 다음값이 가장자리(벽)일때
+                // {
+                //     gridTile[i,j+1] = true; // 다른방향으로 벽뚫음 (오른쪽)
+                //     continue;
+                // }
 
-                if (j == height - 2) // j의 다음값이 가장자리(벽)일때
-                {
-                    gridTile[i+1,j] = true; // 다른방향으로 벽뚫음 (아래쪽)
-                    continue;
-                }
+                // if (j == height - 2) // j의 다음값이 가장자리(벽)일때
+                // {
+                //     gridTile[i+1,j] = true; // 다른방향으로 벽뚫음 (아래쪽)
+                //     continue;
+                // }
 
                 if (Random.Range(0, 2) == 0) // 랜덤으로 오른쪽 혹은 왼쪽으로 벽을 뚫는다.
                 {
