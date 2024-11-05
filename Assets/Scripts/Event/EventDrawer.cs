@@ -1,14 +1,48 @@
 using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
+using System;
+using System.Reflection;
 
 [CustomPropertyDrawer(typeof(Event), true)]
 public class EventDrawer : PropertyDrawer
 {
+    //Class Infos   
+    private static Dictionary<string, Type> classInfos = new Dictionary<string, Type>();
+
     //Drop Down names
-    private static readonly string[] classNames = { "Event", "WarpPortalEvent" };
+    private static string[] classNames = null;
+
+    //Initializer
+    private void InitializeClassInfos()
+    {
+        Assembly assembly = Assembly.GetAssembly(typeof(Event));
+        Type[] types = assembly.GetTypes();
+        foreach (Type type in types)
+        {
+            if (!type.IsAbstract && type.IsSubclassOf(typeof(Event))){
+                classInfos.Add(type.Name, type);
+            }
+        }
+
+        classNames = new string[classInfos.Count];
+
+        int index = 0;
+        foreach (string tuple in classInfos.Keys)
+        {
+            classNames[index] = tuple;
+            index++;
+        }
+    }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
+
+        if (classNames == null)
+        {
+            InitializeClassInfos();
+        }
+
         //initial gui setting
         EditorGUI.BeginProperty(position, label, property);
 
@@ -37,8 +71,18 @@ public class EventDrawer : PropertyDrawer
     // get current class index
     private int GetClassIndex(SerializedProperty property)
     {
-        if (property.managedReferenceValue is WarpPortalEvent) return 1;
-        if (property.managedReferenceValue is Event) return 0;
+        if (property.managedReferenceValue == null) return -1;
+
+        string targetName = property.managedReferenceValue.GetType().ToString();
+        int index = 0;
+        foreach (string name in classNames)
+        {
+            if (name.Equals(targetName))
+            {
+                return index;
+            }
+            index++;
+        }
         
         return -1; //default value
     }
@@ -46,15 +90,8 @@ public class EventDrawer : PropertyDrawer
     // set property to instance of selected class
     private void CreateSubclassInstance(SerializedProperty property, int index)
     {
-        switch (index)
-        {
-            case 0:
-                property.managedReferenceValue = new Event();
-                break;
-            case 1:
-                property.managedReferenceValue = new WarpPortalEvent();
-                break;
-        }
+        property.managedReferenceValue = Activator.CreateInstance(classInfos[classNames[index]]);
+
         property.serializedObject.ApplyModifiedProperties();
     }
 
