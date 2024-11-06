@@ -5,7 +5,6 @@ using System;
 
 public enum EventTrigger
 {
-    
     OnCollisionEnter=0
 }
 
@@ -13,6 +12,26 @@ public enum EventTrigger
 public abstract class Event
 {
     public abstract IEnumerator execute();
+}
+
+[Serializable]
+public class HurtEffectEvent : Event
+{
+    public float amount;
+    public override IEnumerator execute()
+    {
+        return EffectManager.Instance.HurtEffect(amount);
+    }
+}
+
+[Serializable]
+public class ShakeCameraEvent : Event
+{
+    public float time;
+    public override IEnumerator execute()
+    {
+        return EffectManager.Instance.ShakeCamera(time);
+    }
 }
 
 [Serializable]
