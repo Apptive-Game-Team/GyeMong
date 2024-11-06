@@ -5,7 +5,8 @@ using System;
 
 public enum EventTrigger
 {
-    OnCollisionEnter=0
+    OnCollisionEnter = 0,
+    OnInteraction = 1,
 }
 
 [Serializable]
@@ -81,7 +82,7 @@ public class FadeOutEvent : Event
 //    }
 //}
 
-public class EventObject : MonoBehaviour
+public class EventObject : InteractableObject
 {
     [SerializeField]
     private bool isLoop = false;
@@ -119,6 +120,12 @@ public class EventObject : MonoBehaviour
     {
         if (eventLoop != null)
             StopCoroutine(eventLoop);
+    }
+
+    protected override void OnInteraction(Collider2D collision)
+    {
+        if (trigger == EventTrigger.OnInteraction)
+            TriggerEvent();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
