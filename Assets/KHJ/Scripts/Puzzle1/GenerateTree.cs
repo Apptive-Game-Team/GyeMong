@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GenerateTree : MonoBehaviour
+{
+    [SerializeField] GameObject[] treePrefabs; 
+
+    private float mapMinX = -43;
+    private float mapMaxX = 43;
+    private float mapMinY = -23.5f;
+    private float mapMaxY = 36;
+
+    private float mazeMinX = -23.5f;
+    private float mazeMaxX = 24.5f;
+    private float mazeMinY = -23;
+    private float mazeMaxY = 25;
+
+    private float rewardMinX = -28;
+    private float rewardMaxX = -18;
+    private float rewardMinY = 25;
+    private float rewardMaxY = 35;
+
+    private float treePlacementChance = 0.35f;
+
+    void Start()
+    {
+        PlaceTrees();
+    }
+
+    void PlaceTrees()
+    {
+        for (int x = (int)mapMinX; x <= (int)mapMaxX; x++)
+        {
+            for (int y = (int)mapMinY; y <= (int)mapMaxY; y++)
+            {
+                Vector2 position = new Vector2(x, y);
+
+                if (IsWithinBounds(position, mazeMinX, mazeMaxX, mazeMinY, mazeMaxY) || 
+                    IsWithinBounds(position, rewardMinX, rewardMaxX, rewardMinY, rewardMaxY))
+                {
+                    continue;
+                }
+
+                if (Random.value < treePlacementChance)
+                {
+                    GameObject treePrefab = treePrefabs[Random.Range(0, treePrefabs.Length)];
+                    Instantiate(treePrefab, position, Quaternion.identity);
+                }
+            }
+        }
+    }
+
+    bool IsWithinBounds(Vector2 position, float minX, float maxX, float minY, float maxY)
+    {
+        return position.x >= minX && position.x <= maxX &&
+               position.y >= minY && position.y <= maxY;
+    }
+}
