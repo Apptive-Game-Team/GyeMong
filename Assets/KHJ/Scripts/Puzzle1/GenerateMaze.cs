@@ -16,20 +16,18 @@ public class GenerateMaze : MonoBehaviour
     private Stack<Vector2Int> pathStack = new();
 
     private Vector2Int start; 
-    private Vector2Int end; 
 
     void Start()
     {
         gridTile = new bool[width, height];
-        start = new Vector2Int(1, height - 2); // 왼쪽 위
-        end = new Vector2Int(width - 2, 1);    // 오른쪽 아래
+        start = new Vector2Int(1, height - 2); // 왼쪽 위(시작지점 or 끝지점)
 
         InitializeWalls();
-        GenerateMap(start, end);
+        GenerateMap(start);
         GenerateTile(gridTile);
     }
 
-    void GenerateMap(Vector2Int start, Vector2Int end)
+    void GenerateMap(Vector2Int start)
     {
         pathStack.Push(start);
         gridTile[start.x, start.y] = true;
