@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GenerateMaze : MonoBehaviour
 {
-    [SerializeField] GameObject wallPrefab;
-    [SerializeField] GameObject tilePrefab;
+    [SerializeField] Tilemap wallTilemap;
+    [SerializeField] Tilemap floorTilemap;
+    [SerializeField] Tile wallTile;
+    [SerializeField] Tile floorTile;
 
     private int width = 49;
     private int height = 49;
-    private float tileRatio = 1f;
     private bool[,] gridTile;
     private Stack<Vector2Int> pathStack = new();
 
@@ -20,7 +22,7 @@ public class GenerateMaze : MonoBehaviour
     {
         gridTile = new bool[width, height];
         start = new Vector2Int(1, height - 2); // 왼쪽 위
-        end = new Vector2Int(width - 2, 1); //오른쪽 아래
+        end = new Vector2Int(width - 2, 1);    // 오른쪽 아래
 
         InitializeWalls();
         GenerateMap(start, end);
@@ -52,8 +54,8 @@ public class GenerateMaze : MonoBehaviour
             }
         }
 
-        gridTile[width-2,0] = true;
-        gridTile[1,height-1] = true; 
+        gridTile[width - 2, 0] = true;
+        gridTile[1, height - 1] = true;
     }
 
     void InitializeWalls()
@@ -81,14 +83,23 @@ public class GenerateMaze : MonoBehaviour
 
     void GenerateTile(bool[,] gridTile)
     {
+        wallTilemap.ClearAllTiles();
+        floorTilemap.ClearAllTiles();
+
         for (int i = 0; i < gridTile.GetLength(0); i++)
         {
             for (int j = 0; j < gridTile.GetLength(1); j++)
             {
-                Vector2 position = new Vector2((i - width / 2) * tileRatio, (j - height / 2) * tileRatio);
+                Vector3Int tilePosition = new(i - width / 2, j - height / 2, 0);
 
-                if (!gridTile[i, j]) Instantiate(wallPrefab, position, Quaternion.identity);
-                else Instantiate(tilePrefab, position, Quaternion.identity);
+                if (gridTile[i, j])
+                {
+                    floorTilemap.SetTile(tilePosition, floorTile);
+                }
+                else
+                {
+                    wallTilemap.SetTile(tilePosition, wallTile);
+                }
             }
         }
     }
