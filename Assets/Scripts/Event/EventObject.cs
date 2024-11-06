@@ -6,6 +6,7 @@ using System;
 public enum EventTrigger
 {
     
+    OnCollisionEnter=0
 }
 
 [Serializable]
@@ -99,5 +100,11 @@ public class EventObject : MonoBehaviour
     {
         if (eventLoop != null)
             StopCoroutine(eventLoop);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (trigger == EventTrigger.OnCollisionEnter)
+            TriggerEvent();
     }
 }
