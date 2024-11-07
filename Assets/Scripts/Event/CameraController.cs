@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
             transform.position = player.transform.position + Vector3.back * defaultCameraZ;
     }
 
-    private IEnumerator Shaking(float time)
+    public IEnumerator ShakeCamera(float time)
     {
         float timer = 0;
         isShaking = true;
@@ -35,10 +35,5 @@ public class CameraController : MonoBehaviour
             transform.position = player.transform.position + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.back * defaultCameraZ;
         }
         isShaking = false;
-    }
-
-    public void ShakeCamera(float time = 0.5f)
-    {
-        StartCoroutine(Shaking(time));
     }
 }
