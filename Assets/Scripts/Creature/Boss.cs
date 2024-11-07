@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Boss : Creature
+public abstract class Boss : Creature
 {
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
@@ -48,7 +48,7 @@ public class Boss : Creature
         }
     }
 
-    protected virtual void ExecuteCurrentPattern()
+    protected void ExecuteCurrentPattern()
     {
         switch (curPattern)
         {
@@ -66,53 +66,9 @@ public class Boss : Creature
         }
     }
 
-    protected virtual IEnumerator ExecutePattern0()
-    {
-        isPattern = true;
-        Debug.Log("Executing Pattern 0");
-        float duration = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            TrackPlayer();
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        isPattern = false;
-    }
-
-    protected virtual IEnumerator ExecutePattern1()
-    {
-        isPattern = true;
-        Debug.Log("Executing Pattern 1");
-        float duration = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            TrackPlayer();
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        isPattern = false;
-    }
-
-    protected virtual IEnumerator ExecutePattern2()
-    {
-        isPattern = true;
-        Debug.Log("Executing Pattern 2");
-        float duration = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            TrackPlayer();
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        isPattern = false;
-    }
+    protected abstract IEnumerator ExecutePattern0();
+    protected abstract IEnumerator ExecutePattern1();
+    protected abstract IEnumerator ExecutePattern2();
 
     protected void SelectRandomPattern()
     {
