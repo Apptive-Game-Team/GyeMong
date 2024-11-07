@@ -10,6 +10,8 @@ public class MidBoss : Boss
         maxHealthP2 = 200f;
         speed = 1f;
         detectionRange = 10f;
+        MeleeAttackRange = 1f;
+        RangedAttackRange = 5f;
         player = GameObject.FindGameObjectWithTag("Player");
     }
     void Start()
@@ -41,10 +43,15 @@ public class MidBoss : Boss
         Debug.Log("°Å¸® ¹ú¸®±â");
         float duration = 2f;
         float elapsed = 0f;
-
         while (elapsed < duration)
         {
-            TrackPlayer();
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance <= RangedAttackRange)
+            {
+                BackStep();
+            }
+            else
+                break;
             elapsed += Time.deltaTime;
             yield return null;
         }

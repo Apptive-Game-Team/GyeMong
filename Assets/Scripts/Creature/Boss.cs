@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+
 public abstract class Boss : Creature
 {
     public GameObject wall;
@@ -84,7 +86,7 @@ public abstract class Boss : Creature
 
     protected void SelectRandomPattern()
     {
-        int randomIndex = Random.Range(0, allPatterns.Count);
+        int randomIndex = Random.Range(0, 2);//테스트용 원래는 Random.Range(0, allPatterns.Count);이거
         curPattern = allPatterns[randomIndex];
     }
 
@@ -95,6 +97,17 @@ public abstract class Boss : Creature
             float step = speed * Time.deltaTime;
             Vector3 targetPosition = player.transform.position;
             Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, step);
+            transform.position = newPosition;
+        }
+    }
+    public void BackStep()
+    {
+        if (player != null)
+        {
+            float backStepSpeed = 10f;
+            float step = backStepSpeed * Time.deltaTime;
+            Vector3 targetPosition = player.transform.position;
+            Vector3 newPosition = Vector3.MoveTowards(transform.position,transform.position - (targetPosition - transform.position), step);
             transform.position = newPosition;
         }
     }
@@ -109,6 +122,7 @@ public abstract class Boss : Creature
                 onBattle = true;
                 wall.SetActive(true);
                 Debug.Log("qkqh");
+                StopDetectingPlayer();
                 yield break;
             }
             else onBattle = false;
