@@ -7,7 +7,7 @@ public abstract class Boss : Creature
     private Coroutine detectPlayerRoutine;
 
     protected int curPattern;
-    protected List<int> allPatterns = new List<int> { 0, 1, 2 };
+    protected List<int> allPatterns = new List<int> { 0, 1, 2, 3, 4, 5 };
     protected bool isPattern;
     protected int currentPhase = 1;
     protected float maxHealthP1;
@@ -61,6 +61,15 @@ public abstract class Boss : Creature
             case 2:
                 StartCoroutine(ExecutePattern2());
                 break;
+            case 3:
+                StartCoroutine(ExecutePattern3());
+                break;
+            case 4:
+                StartCoroutine(ExecutePattern4());
+                break;
+            case 5:
+                StartCoroutine(ExecutePattern5());
+                break;
             default:
                 break;
         }
@@ -69,6 +78,9 @@ public abstract class Boss : Creature
     protected abstract IEnumerator ExecutePattern0();
     protected abstract IEnumerator ExecutePattern1();
     protected abstract IEnumerator ExecutePattern2();
+    protected abstract IEnumerator ExecutePattern3();
+    protected abstract IEnumerator ExecutePattern4();
+    protected abstract IEnumerator ExecutePattern5();
 
     protected void SelectRandomPattern()
     {
@@ -120,5 +132,20 @@ public abstract class Boss : Creature
             detectPlayerRoutine = null;
         }
     }
+    /*protected override IEnumerator ExecutePattern0()
+    {
+        isPattern = true;
+        Debug.Log("ÃßÀû");
+        float duration = 2f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            TrackPlayer();
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        isPattern = false;
+    }*/
 }
 
