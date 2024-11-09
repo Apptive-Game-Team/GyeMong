@@ -44,16 +44,12 @@ public class MidBoss : Boss
         Debug.Log("거리 벌리기");
         float duration = 2f;
         float elapsed = 0f;
-        while (elapsed < duration)
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        while (distance <= RangedAttackRange && elapsed < duration)
         {
-            float distance = Vector3.Distance(transform.position, player.transform.position);
-            if (distance <= RangedAttackRange)
-            {
-                BackStep();
-            }
-            else
-                break;
+            BackStep();
             elapsed += Time.deltaTime;
+            distance = Vector3.Distance(transform.position, player.transform.position);
             yield return null;
         }
         isPattern = false;
@@ -63,15 +59,30 @@ public class MidBoss : Boss
     {
         isPattern = true;
         Debug.Log("원거리 공격");
-        float duration = 1f;
-        float elapsed = 0f;
 
-        while (elapsed < duration)
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= RangedAttackRange)
         {
-            Instantiate(arrowPrefab, gameObject.transform.position, Quaternion.identity);
-            elapsed += Time.deltaTime;
-            yield return null;
+            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(2f);
         }
+        else
+        {
+            // 사거리에 도달할 때까지 플레이어 방향으로 이동
+            while (distance > RangedAttackRange)
+            {
+                speed = 10f;
+                Vector3 direction = (player.transform.position - transform.position).normalized;
+                transform.position += direction * speed * Time.deltaTime;
+                distance = Vector3.Distance(transform.position, player.transform.position);
+                yield return null;
+            }
+            // 사거리에 도달한 후 화살 발사 및 대기
+            speed = 1f;
+            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(2f);
+        }
+
         isPattern = false;
     }
 
@@ -94,7 +105,7 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern3()
     {
         isPattern = true;
-        Debug.Log("돌진");
+        Debug.Log("추적");
         float duration = 2f;
         float elapsed = 0f;
 
