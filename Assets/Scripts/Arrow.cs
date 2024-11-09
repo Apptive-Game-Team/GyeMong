@@ -20,12 +20,12 @@ public class Arrow : MonoBehaviour
 
     private IEnumerator FireArrow()
     {
-        float timer = 0f;
-
-        while (timer < 5f)
+        Vector3 firePosition = transform.position;
+        float fireDistance = 0;
+        while (fireDistance < 10f)
         {
             transform.position += direction * speed * Time.deltaTime;
-            timer += Time.deltaTime;
+            fireDistance = Vector3.Distance(firePosition, transform.position);
             yield return null;
         }
         Destroy(gameObject);

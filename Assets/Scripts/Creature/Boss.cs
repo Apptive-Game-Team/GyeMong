@@ -11,7 +11,7 @@ public abstract class Boss : Creature
     protected int curPattern;
     protected List<int> allPatterns = new List<int> { 0, 1, 2, 3};
     protected bool isPattern;
-    protected int currentPhase = 1;
+    protected int currentPhase = 2;
     protected float maxHealthP1;
     protected float maxHealthP2;
     private int lastPattern = -1; // 직전 패턴을 저장

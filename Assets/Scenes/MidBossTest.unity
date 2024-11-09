@@ -1969,6 +1969,8 @@ MonoBehaviour:
   wall: {fileID: 632343602}
   arrowPrefab: {fileID: 1349092434517921609, guid: 698ededced094f444b9cd52caa8c484b,
     type: 3}
+  seedPrefab: {fileID: 1349092434517921609, guid: 068119754423d174c8805146893a83eb,
+    type: 3}
 --- !u!1 &1482526801
 GameObject:
   m_ObjectHideFlags: 0
@@ -4324,6 +4326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0386aeb0d7f06bc488fd00741bac31ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHealth: 0
 --- !u!50 &2096203949
 Rigidbody2D:
   serializedVersion: 4
@@ -4383,7 +4386,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.019981146, y: -0.019980907}
+  m_Offset: {x: -0.029836535, y: 0.009585857}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4394,7 +4397,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7592797, y: 1.8392038}
+  m_Size: {x: 0.9905367, y: 1.1098852}
   m_EdgeRadius: 0
 --- !u!212 &2096203951
 SpriteRenderer:

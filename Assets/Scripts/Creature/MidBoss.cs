@@ -6,6 +6,7 @@ using UnityEngine;
 public class MidBoss : Boss
 {
     [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private GameObject seedPrefab;
     void Start()
     {
         maxHealthP1 = 100f;
@@ -86,10 +87,9 @@ public class MidBoss : Boss
         isPattern = true;
         Debug.Log("근거리 공격");
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        while (distance <= RangedAttackRange)
+        if (distance <= MeleeAttackRange)
         {
             PlayerDemo.Instance.TakeDamage(10);
-            break;
         }
         isPattern = false;
         yield return null;
@@ -114,15 +114,35 @@ public class MidBoss : Boss
     {
         isPattern = true;
         Debug.Log("히히 씨앗 발사");
-        float duration = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= RangedAttackRange)
         {
-            TrackPlayer();
-            elapsed += Time.deltaTime;
-            yield return null;
+            int count = 0;
+            while(count < 4)
+            {
+                Instantiate(seedPrefab, transform.position, Quaternion.identity);
+                count++;
+                yield return new WaitForSeconds(0.3f);
+            }
+            yield return new WaitForSeconds(2f);
         }
+        else
+        {
+            // 사거리에 도달할 때까지 플레이어 방향으로 이동
+            while (distance > RangedAttackRange)
+            {
+                speed = 10f;
+                Vector3 direction = (player.transform.position - transform.position).normalized;
+                transform.position += direction * speed * Time.deltaTime;
+                distance = Vector3.Distance(transform.position, player.transform.position);
+                yield return null;
+            }
+            // 사거리에 도달한 후 화살 발사 및 대기
+            speed = 1f;
+            Instantiate(seedPrefab, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(2f);
+        }
+
         isPattern = false;
     }
     protected override IEnumerator ExecutePattern5()

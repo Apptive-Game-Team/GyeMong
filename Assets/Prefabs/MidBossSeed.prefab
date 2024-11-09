@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1718034405884253646}
   - component: {fileID: 6903973534843988526}
-  - component: {fileID: 613066186455057783}
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
+  - component: {fileID: 7136526515895070149}
   m_Layer: 0
-  m_Name: MidBossArrow
+  m_Name: MidBossSeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1349092434517921609}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 1.16, z: 0.040643148}
+  m_LocalPosition: {x: -0.086, y: 1.0406, z: 0.040643148}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.15515523, g: 0.6981132, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -87,18 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &613066186455057783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349092434517921609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d57f0854c331f884b9f10cc8f7f923da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &8557463274029972440
 Rigidbody2D:
   serializedVersion: 4
@@ -171,3 +159,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
+--- !u!114 &7136526515895070149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e07d49a98aa7f4a982b722a751286a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
