@@ -14,6 +14,7 @@ public abstract class Boss : Creature
     protected int currentPhase = 1;
     protected float maxHealthP1;
     protected float maxHealthP2;
+    private int lastPattern = -1; // 직전 패턴을 저장
 
     protected void SetupPhase()
     {
@@ -86,8 +87,14 @@ public abstract class Boss : Creature
 
     protected void SelectRandomPattern()
     {
-        int randomIndex = Random.Range(0, 3);//테스트용 원래는 Random.Range(0, allPatterns.Count);이거
+        int randomIndex;
+        do
+        {
+            randomIndex = Random.Range(0, 3); // 테스트용 범위. 실제로는 Random.Range(0, allPatterns.Count)
+        } while (randomIndex == lastPattern); // 직전 패턴과 동일하면 다시 뽑기
+
         curPattern = allPatterns[randomIndex];
+        lastPattern = randomIndex; // 현재 패턴을 직전 패턴으로 저장
     }
 
     public void TrackPlayer()

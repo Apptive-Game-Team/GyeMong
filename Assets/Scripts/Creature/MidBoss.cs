@@ -48,9 +48,9 @@ public class MidBoss : Boss
             BackStep();
             elapsed += Time.deltaTime;
             distance = Vector3.Distance(transform.position, player.transform.position);
-            yield return null;
         }
         isPattern = false;
+        yield return new WaitForSeconds(0.5f);
     }
 
     protected override IEnumerator ExecutePattern1()
