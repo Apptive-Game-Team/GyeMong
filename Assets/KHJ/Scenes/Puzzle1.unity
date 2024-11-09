@@ -203,7 +203,7 @@ TilemapRenderer:
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
-  m_SortOrder: 0
+  m_SortOrder: 2
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
@@ -384,8 +384,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallTilemap: {fileID: 13072766}
   floorTilemap: {fileID: 374287647}
-  wallTile: {fileID: 11400000, guid: c231422095e1ca14ebf843f5f0ea5ff3, type: 2}
-  floorTile: {fileID: 11400000, guid: 7b6e368fc0ee90b4ca09e0f71344589a, type: 2}
+  wallTile: {fileID: 11400000, guid: c63e0c53141c6b6469df2950d1aea981, type: 2}
+  floorTile: {fileID: 11400000, guid: 92402ec57ea3fcb4280061dc0f591402, type: 2}
 --- !u!4 &28995810
 Transform:
   m_ObjectHideFlags: 0
