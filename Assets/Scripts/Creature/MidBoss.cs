@@ -41,19 +41,15 @@ public class MidBoss : Boss
     {
         isPattern = true;
         Debug.Log("거리 벌리기");
-        float duration = 2f;
-        float elapsed = 0f;
+
+        float duration = 1f; // 이동 시간
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        while (distance <= RangedAttackRange && elapsed < duration)
+        if (distance <= RangedAttackRange)
         {
-            BackStep();
-            elapsed += Time.deltaTime;
-            distance = Vector3.Distance(transform.position, player.transform.position);
+            yield return StartCoroutine(BackStep(duration));
         }
         isPattern = false;
-        yield return null;
     }
-
     protected override IEnumerator ExecutePattern1()
     {
         isPattern = true;

@@ -9,7 +9,7 @@ public abstract class Boss : Creature
     private Coroutine detectPlayerRoutine;
 
     protected int curPattern;
-    protected List<int> allPatterns = new List<int> { 0, 1, 2, 3, 4, 5 };
+    protected List<int> allPatterns = new List<int> { 0, 1, 2, 3};
     protected bool isPattern;
     protected int currentPhase = 1;
     protected float maxHealthP1;
@@ -22,9 +22,11 @@ public abstract class Boss : Creature
         {
             case 1:
                 curHealth = maxHealthP1;
+                allPatterns = new List<int> { 0, 1, 2, 3 };
                 break;
             case 2:
                 curHealth = maxHealthP2;
+                allPatterns = new List<int> { 0, 1, 2, 3, 4 ,5 };
                 break;
 
             default:
@@ -90,7 +92,7 @@ public abstract class Boss : Creature
         int randomIndex;
         do
         {
-            randomIndex = Random.Range(0, 4); // 테스트용 범위. 실제로는 Random.Range(0, allPatterns.Count)
+            randomIndex = Random.Range(0, allPatterns.Count);
         } while (randomIndex == lastPattern); // 직전 패턴과 동일하면 다시 뽑기
 
         curPattern = allPatterns[randomIndex];
@@ -107,15 +109,32 @@ public abstract class Boss : Creature
             transform.position = newPosition;
         }
     }
-    public void BackStep()
+    /*public void BackStep()
     {
         if (player != null)
         {
-            float backStepSpeed = 10f;
+            float backStepSpeed = 5f;
             float step = backStepSpeed * Time.deltaTime;
             Vector3 targetPosition = player.transform.position;
             Vector3 newPosition = Vector3.MoveTowards(transform.position,transform.position - (targetPosition - transform.position), step);
             transform.position = newPosition;
+        }
+    }*/
+    public IEnumerator BackStep(float duration)
+    {
+        if (player != null)
+        {
+            float elapsedTime = 0f;
+            float backStepSpeed = 2f;
+            Vector3 direction = (transform.position - player.transform.position).normalized; // 플레이어 반대 방향
+
+            while (elapsedTime < duration)
+            {
+                // 매 프레임마다 이동
+                transform.position += direction * backStepSpeed * Time.deltaTime;
+                elapsedTime += Time.deltaTime;
+            }
+            yield return new WaitForSeconds(1f);
         }
     }
 
