@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 113260380}
   - component: {fileID: 113260379}
   m_Layer: 0
-  m_Name: Tilemap2(passableObject)
+  m_Name: PassableObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1050,7 +1050,7 @@ GameObject:
   - component: {fileID: 1414166579}
   - component: {fileID: 1414166578}
   m_Layer: 0
-  m_Name: Tilemap1(background)
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56453,7 +56453,7 @@ GameObject:
   - component: {fileID: 1664194032}
   - component: {fileID: 1664194031}
   m_Layer: 0
-  m_Name: Tilemap3(notPassableObject)
+  m_Name: NotPassableObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
