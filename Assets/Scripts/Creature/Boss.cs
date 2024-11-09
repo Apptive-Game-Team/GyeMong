@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -9,9 +10,8 @@ public abstract class Boss : Creature
     private Coroutine detectPlayerRoutine;
 
     protected int curPattern;
-    protected List<int> allPatterns = new List<int> { 0, 1, 2, 3};
     protected bool isPattern;
-    protected int currentPhase = 2;
+    protected int currentPhase = 1;//테스트용 원래는 1
     protected float maxHealthP1;
     protected float maxHealthP2;
     private int lastPattern = -1; // 직전 패턴을 저장
@@ -22,11 +22,9 @@ public abstract class Boss : Creature
         {
             case 1:
                 curHealth = maxHealthP1;
-                allPatterns = new List<int> { 0, 1, 2, 3 };
                 break;
             case 2:
                 curHealth = maxHealthP2;
-                allPatterns = new List<int> { 0, 1, 2, 3, 4 ,5 };
                 break;
 
             default:
@@ -90,13 +88,31 @@ public abstract class Boss : Creature
     protected void SelectRandomPattern()
     {
         int randomIndex;
+        List<int> weightedPatterns = new List<int>();
+
+        // 가중치를 반영하여 리스트에 패턴을 추가
+        if(currentPhase == 1)
+        {
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
+        }
+        else
+        {
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
+        }
         do
         {
-            randomIndex = Random.Range(0, allPatterns.Count);
-        } while (randomIndex == lastPattern); // 직전 패턴과 동일하면 다시 뽑기
-
-        curPattern = allPatterns[randomIndex];
-        lastPattern = randomIndex; // 현재 패턴을 직전 패턴으로 저장
+            randomIndex = Random.Range(0, weightedPatterns.Count);
+        } while (weightedPatterns[randomIndex] == lastPattern); // 직전 패턴과 동일하면 다시 뽑기
+        curPattern = weightedPatterns[randomIndex];
+        lastPattern = curPattern; // 현재 패턴을 직전 패턴으로 저장
     }
 
     public void TrackPlayer()

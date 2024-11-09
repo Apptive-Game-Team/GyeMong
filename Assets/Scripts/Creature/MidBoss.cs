@@ -19,7 +19,6 @@ public class MidBoss : Boss
         player = GameObject.FindGameObjectWithTag("Player");
         //여기까지 원래 Awake였음
         wall.SetActive(false);
-        SelectRandomPattern();
         SetupPhase();
     }
 
