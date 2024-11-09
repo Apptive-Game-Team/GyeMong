@@ -7,6 +7,7 @@ public class MidBoss : Boss
 {
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject seedPrefab;
+    [SerializeField] private GameObject vinePrefab;
     void Start()
     {
         maxHealthP1 = 100f;
@@ -151,10 +152,9 @@ public class MidBoss : Boss
         Debug.Log("µ¢Äð ÈÖµÎ¸£±â");
         float duration = 2f;
         float elapsed = 0f;
-
+        Instantiate(vinePrefab, transform.position, Quaternion.identity);
         while (elapsed < duration)
         {
-            TrackPlayer();
             elapsed += Time.deltaTime;
             yield return null;
         }
