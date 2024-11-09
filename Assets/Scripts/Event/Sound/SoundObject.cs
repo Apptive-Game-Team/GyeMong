@@ -32,15 +32,21 @@ public class SoundObject : MonoBehaviour
         }
     }
 
+    public void SetLoop(bool isLoop)
+    {
+        audioSource.loop = isLoop;
+    }
+
     public void SetSoundSourceByName(string soundSourceName)
     {
-        SoundSource soundSource = soundManager.soundSourceList.GetSoundSourceByName(soundSourceName);
-        volume = soundManager.GetVolume(soundSource.type);
+        SoundSource soundSource = SoundManager.Instance.soundSourceList.GetSoundSourceByName(soundSourceName);
+        volume = SoundManager.Instance.GetVolume(soundSource.type);
         clip = soundSource.clip;
     }
 
     public IEnumerator Play()
     {
+        yield return new WaitUntil(()=>audioSource != null);
         audioSource.volume = volume;
         audioSource.clip = clip;
         audioSource.Play();
