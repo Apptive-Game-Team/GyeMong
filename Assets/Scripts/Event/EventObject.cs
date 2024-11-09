@@ -7,6 +7,7 @@ public enum EventTrigger
 {
     OnCollisionEnter = 0,
     OnInteraction = 1,
+    OnAwake = 2,
 }
 
 [Serializable]
@@ -83,6 +84,20 @@ public class SoundEvent : Event
     }
 }
 
+[Serializable]
+public class BGMEvent : Event
+{
+    [SerializeField]
+    private string bgm_name;
+    public override IEnumerator execute()
+    {
+        SoundObject soundObject = SoundManager.Instance.GetBgmObject();
+        Debug.Log(bgm_name);
+        soundObject.SetSoundSourceByName(bgm_name);
+        return soundObject.Play();
+    }
+}
+
 public class EventObject : InteractableObject
 {
     [SerializeField]
@@ -97,6 +112,14 @@ public class EventObject : InteractableObject
 
     private Coroutine eventLoop = null;
 
+    private void Start()
+    {
+        if (trigger == EventTrigger.OnAwake)
+        {
+            TriggerEvent();
+        }
+    }
+
     private IEnumerator EventLoop()
     {
         do
@@ -110,7 +133,7 @@ public class EventObject : InteractableObject
 
     public void TriggerEvent()
     {
-        if (eventLoop == null)
+        if (eventLoop != null)
         {
             KillEvent();
         }
