@@ -86,7 +86,7 @@ public abstract class Boss : Creature
 
     protected void SelectRandomPattern()
     {
-        int randomIndex = Random.Range(0, 2);//테스트용 원래는 Random.Range(0, allPatterns.Count);이거
+        int randomIndex = Random.Range(0, 3);//테스트용 원래는 Random.Range(0, allPatterns.Count);이거
         curPattern = allPatterns[randomIndex];
     }
 

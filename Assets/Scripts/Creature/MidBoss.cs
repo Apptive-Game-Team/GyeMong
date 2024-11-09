@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MidBoss : Boss
 {
+    [SerializeField] private GameObject arrowPrefab;
     private void Awake()
     {
         maxHealthP1 = 100f;
@@ -62,12 +63,12 @@ public class MidBoss : Boss
     {
         isPattern = true;
         Debug.Log("원거리 공격");
-        float duration = 2f;
+        float duration = 1f;
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
-            TrackPlayer();
+            Instantiate(arrowPrefab, gameObject.transform.position, Quaternion.identity);
             elapsed += Time.deltaTime;
             yield return null;
         }
