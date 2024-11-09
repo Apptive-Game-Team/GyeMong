@@ -12,7 +12,7 @@ public class MidBoss : Boss
         speed = 1f;
         detectionRange = 10f;
         MeleeAttackRange = 1f;
-        RangedAttackRange = 5f;
+        RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
         //여기까지 원래 Awake였음
         wall.SetActive(false);
@@ -50,7 +50,7 @@ public class MidBoss : Boss
             distance = Vector3.Distance(transform.position, player.transform.position);
         }
         isPattern = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return null;
     }
 
     protected override IEnumerator ExecutePattern1()
