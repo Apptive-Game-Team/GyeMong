@@ -5,7 +5,7 @@ using UnityEngine;
 public class MidBoss : Boss
 {
     [SerializeField] private GameObject arrowPrefab;
-    private void Awake()
+    void Start()
     {
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
@@ -14,9 +14,7 @@ public class MidBoss : Boss
         MeleeAttackRange = 1f;
         RangedAttackRange = 5f;
         player = GameObject.FindGameObjectWithTag("Player");
-    }
-    void Start()
-    {
+        //여기까지 원래 Awake였음
         wall.SetActive(false);
         SelectRandomPattern();
         SetupPhase();
