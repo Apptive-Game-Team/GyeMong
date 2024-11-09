@@ -90,7 +90,7 @@ public abstract class Boss : Creature
         int randomIndex;
         do
         {
-            randomIndex = Random.Range(0, 3); // 테스트용 범위. 실제로는 Random.Range(0, allPatterns.Count)
+            randomIndex = Random.Range(0, 4); // 테스트용 범위. 실제로는 Random.Range(0, allPatterns.Count)
         } while (randomIndex == lastPattern); // 직전 패턴과 동일하면 다시 뽑기
 
         curPattern = allPatterns[randomIndex];

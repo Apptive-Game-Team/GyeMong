@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MidBoss : Boss
@@ -88,16 +89,14 @@ public class MidBoss : Boss
     {
         isPattern = true;
         Debug.Log("근거리 공격");
-        float duration = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        while (distance <= RangedAttackRange)
         {
-            TrackPlayer();
-            elapsed += Time.deltaTime;
-            yield return null;
+            PlayerDemo.Instance.TakeDamage(10);
+            break;
         }
         isPattern = false;
+        yield return null;
     }
 
     protected override IEnumerator ExecutePattern3()
