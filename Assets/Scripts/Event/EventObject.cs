@@ -73,14 +73,15 @@ public class FadeOutEvent : Event
     }
 }
 
-//[Serializable]
-//public class SoundEvent : Event
-//{
-//    public override IEnumerator execute()
-//    {
-
-//    }
-//}
+[Serializable]
+public class SoundEvent : Event
+{
+    public SoundObject soundObject;
+    public override IEnumerator execute()
+    {
+        return soundObject.Play();
+    }
+}
 
 public class EventObject : InteractableObject
 {
