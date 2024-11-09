@@ -6,6 +6,8 @@ using UnityEngine;
 public enum PortalID
 {
     NONE = 0,
+    SPRING_MAIN_TO_BOSS = 1,
+    SPRING_BOSS_TO_MAIN = 2,
 }
 
 [Serializable]
