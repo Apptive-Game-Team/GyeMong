@@ -139,7 +139,14 @@ public class MidBoss : Boss
             }
             // 사거리에 도달한 후 화살 발사 및 대기
             speed = 1f;
-            Instantiate(seedPrefab, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.5f);
+            int count = 0;
+            while (count < 4)
+            {
+                Instantiate(seedPrefab, transform.position, Quaternion.identity);
+                count++;
+                yield return new WaitForSeconds(0.3f);
+            }
             yield return new WaitForSeconds(2f);
         }
 

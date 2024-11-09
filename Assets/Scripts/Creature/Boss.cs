@@ -11,7 +11,7 @@ public abstract class Boss : Creature
 
     protected int curPattern;
     protected bool isPattern;
-    protected int currentPhase = 1;//테스트용 원래는 1
+    protected int currentPhase = 2;//테스트용 원래는 1
     protected float maxHealthP1;
     protected float maxHealthP2;
     private int lastPattern = -1; // 직전 패턴을 저장
