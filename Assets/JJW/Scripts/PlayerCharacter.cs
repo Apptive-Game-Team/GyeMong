@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace playerCharacter
 {
-    public class PlayerCharacter : MonoBehaviour
+    public class PlayerCharacter : SingletonObject<PlayerCharacter>
     {
         public float moveSpeed = 2.0f;
         public float sprintSpeed = 4.0f;
@@ -42,13 +42,42 @@ namespace playerCharacter
 
         private void HandleInput()
         {
-            movement.x = Input.GetAxisRaw("Horizontal");
-            movement.y = Input.GetAxisRaw("Vertical");
+            movement.x = 0;
+            movement.y = 0;
+
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                movement.x = 1;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                movement.x = -1;
+            }
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                movement.y = 1;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                movement.y = -1;
+            }
+
             movement.Normalize();
 
             if (Input.GetKeyDown(KeyCode.X) && !isDashing)
             {
                 StartCoroutine(Dash());
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                StartCoroutine(Attack());
+            }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                StartCoroutine(Defend());
             }
         }
 
@@ -106,6 +135,28 @@ namespace playerCharacter
             isDashing = false;
             canMove = true;
             animator.SetBool("isDashing", false);
+        }
+
+        private IEnumerator Attack()
+        {
+            canMove = false;
+            animator.SetBool("isAttacking", true);
+
+            yield return new WaitForSeconds(0.5f);
+
+            animator.SetBool("isAttacking", false);
+            canMove = true;
+        }
+
+        private IEnumerator Defend()
+        {
+            canMove = false;
+            animator.SetBool("isDefending", true);
+
+            yield return new WaitForSeconds(0.5f);
+
+            animator.SetBool("isDefending", false);
+            canMove = true;
         }
     }
 }
