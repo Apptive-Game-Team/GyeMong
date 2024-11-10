@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Creature : MonoBehaviour
+public class Creature : SingletonObject<Creature>
 {
     protected float maxHealth;
     protected float curHealth;
     protected float AttackDamage;
     protected float speed;
     protected float detectionRange;
+    protected float MeleeAttackRange;
+    protected float RangedAttackRange;
     protected GameObject player;
     protected bool onBattle = false;
     public virtual void TakeDamage(float damage)
