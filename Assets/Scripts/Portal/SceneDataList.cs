@@ -7,7 +7,8 @@ public enum SceneID
 {
     NONE = 0,
     SPRING_MAIN = 1,
-    SPRING_BOSS = 2
+    SPRING_BOSS = 2,
+    SPRING_PUZZLE2 = 3,
 }
 
 
