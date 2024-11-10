@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/241103/GameScene.unity
-    guid: a27f3877425c34166a8ef473ba71054a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test/BossTest.unity
     guid: 8d396b11dcea2f44fb37b678234ff7d3
   - enabled: 1
-    path: Assets/Scenes/Test/Puzzle2InsideTest.unity
-    guid: e23afd410ffbe894e832ce595b25ae0a
+    path: Assets/Scenes/241110/SpringMain.unity
+    guid: 7a6126315849541b3a7c4fcddc2950a9
+  - enabled: 1
+    path: Assets/Scenes/241110/SpringMidBoss.unity
+    guid: d27ff85de3dde4019abc92eab94976f9
+  - enabled: 1
+    path: Assets/Scenes/241110/SpringPuzzle2.unity
+    guid: 417a0584dcbbd4c1caf3516c3a5a9a70
   m_configObjects: {}
