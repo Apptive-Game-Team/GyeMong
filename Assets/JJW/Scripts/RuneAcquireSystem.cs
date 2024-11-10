@@ -33,7 +33,7 @@ namespace runeSystem
             }
         }
 
-        private void AcquireRune(int runeIndex)
+        public void AcquireRune(int runeIndex)
         {
             if (runeSystem != null)
             {
