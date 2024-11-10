@@ -8,6 +8,8 @@ public enum PortalID
     NONE = 0,
     SPRING_MAIN_TO_BOSS = 1,
     SPRING_BOSS_TO_MAIN = 2,
+    SPRING_MAIN_TO_PUZZLE2 = 3,
+    SPRING_PUZZLE2_TO_MAIN = 4,
 }
 
 [Serializable]
