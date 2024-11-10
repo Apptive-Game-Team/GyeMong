@@ -6,8 +6,8 @@ using UnityEngine;
 public enum PortalID
 {
     NONE = 0,
-    TEST = 1,
-    SPRING_MAP_TO_ADVENTURE_2 = 2,
+    SPRING_MAIN_TO_BOSS = 1,
+    SPRING_BOSS_TO_MAIN = 2,
 }
 
 [Serializable]
@@ -21,10 +21,10 @@ public class PortalData
 [CreateAssetMenu(fileName = "PortalDataList", menuName = "ScriptableObject/New PortalDataList")]
 public class PortalDataList : ScriptableObject
 {
-    [SerializeField]
+
     public List<PortalData> portalDatas;
 
-
+    //∞≠∞«º∫¿Ã ∂≥æÓ¡¸
     public PortalData GetPortalDataByID(PortalID id)
     {
         PortalData sceneData = portalDatas.Find(x => x.portalID == id);
