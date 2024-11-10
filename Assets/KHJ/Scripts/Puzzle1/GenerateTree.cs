@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GenerateTree : MonoBehaviour
 {
-    [SerializeField] GameObject[] treePrefabs; 
-
+    [SerializeField] GameObject[] treePrefabs;
+    [SerializeField] GameObject grid;
+ 
     private float mapMinX = -43;
     private float mapMaxX = 43;
     private float mapMinY = -23.5f;
@@ -23,21 +24,25 @@ public class GenerateTree : MonoBehaviour
 
     private float treePlacementChance = 0.35f;
 
+    private Vector2Int offset = new Vector2Int(); 
+
     void Start()
-    {
+    {   
+        offset.x = (int)grid.transform.position.x;
+        offset.y = (int)grid.transform.position.y;
         PlaceTrees();
     }
 
     void PlaceTrees()
     {
-        for (int x = (int)mapMinX; x <= (int)mapMaxX; x++)
+        for (int x = (int)mapMinX + offset.x; x <= (int)mapMaxX + offset.x; x++)
         {
-            for (int y = (int)mapMinY; y <= (int)mapMaxY; y++)
+            for (int y = (int)mapMinY + offset.y; y <= (int)mapMaxY + offset.y; y++)
             {
                 Vector2 position = new Vector2(x, y);
 
-                if (IsWithinBounds(position, mazeMinX, mazeMaxX, mazeMinY, mazeMaxY) || 
-                    IsWithinBounds(position, rewardMinX, rewardMaxX, rewardMinY, rewardMaxY))
+                if (IsWithinBounds(position, mazeMinX + offset.x, mazeMaxX+ offset.x, mazeMinY+ offset.y, mazeMaxY + offset.y) || 
+                    IsWithinBounds(position, rewardMinX+ offset.x, rewardMaxX+ offset.x, rewardMinY + offset.y, rewardMaxY + offset.y))
                 {
                     continue;
                 }
