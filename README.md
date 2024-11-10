@@ -20,6 +20,31 @@ ex) feat(파일명)
 ## contributor
 
 <table>
+      <tr>
+    <td align="center">
+        개발자
+      </a>
+    </td>
+    <td align="center">
+        개발자
+      </a>
+    </td>
+    <td align="center">
+        개발자
+      </a>
+    </td>
+    <td align="center">
+        개발자
+      </a>
+    </td>
+    <td align="center">
+        개발자
+      </a>
+    <td align="center">
+        디자이너
+      </a>
+    </td>
+  </tr>
   <tr>
     <td align="center" width="200px">
       <a href="https://github.com/Monolong" target="_blank">
@@ -44,6 +69,11 @@ ex) feat(파일명)
     <td align="center" width="200px">
       <a href="https://github.com/hwanginseop" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/163392234?v=4" alt="황인섭 프로필" />
+      </a>
+    </td>
+    <td align="center" width="200px">
+      <a href="https://github.com/cheese1006" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/181458108?v=4" alt="배시연 프로필" />
       </a>
     </td>
   </tr>
@@ -71,6 +101,11 @@ ex) feat(파일명)
     <td align="center">
       <a href="https://github.com/hwanginseop" target="_blank">
         황인섭
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/hwanginseop" target="_blank">
+        배시연
       </a>
     </td>
   </tr>

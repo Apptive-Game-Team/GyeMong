@@ -23,33 +23,35 @@ public class EffectManager : SingletonObject<EffectManager>
     /// set HurtEffect transparency
     /// </summary>
     /// <param name="amount">0(none)~1(fill) alpha value</param>
-    public void HurtEffect(float amount)
+    public IEnumerator HurtEffect(float amount)
     {
-        StartCoroutine(Fade(hurtEffect, amount));
+        return Fade(hurtEffect, amount);
     }
 
     /// <summary>
     /// vibrate camera
     /// </summary>
-    public void ShakeCamera()
+    public IEnumerator ShakeCamera(float time=0.5f)
     {
-        cameraController.ShakeCamera();
+        return cameraController.ShakeCamera(time);
     }
 
     /// <summary>
     /// The screen is getting Ligther
     /// </summary>
-    public void FadeIn()
+    /// <returns>return IEnumerator</returns>
+    public IEnumerator FadeIn()
     {
-        StartCoroutine(Fade(black, 0));
+        return Fade(black, 0);
     }
 
     /// <summary>
     /// The screen is getting darker
     /// </summary>
-    public void FadeOut()
+    /// /// <returns>return IEnumerator</returns>
+    public IEnumerator FadeOut()
     {
-        StartCoroutine(Fade(black, 1));
+        return Fade(black, 1);
     }
 
 
