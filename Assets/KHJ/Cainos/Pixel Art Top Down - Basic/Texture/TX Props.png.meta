@@ -569,15 +569,19 @@ TextureImporter:
       name: TX Props Rune Pillar Broken
       rect:
         serializedVersion: 2
-        x: 227
+        x: 224
         y: 291
-        width: 26
+        width: 32
         height: 38
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 12}
+        - {x: -16, y: -19}
+        - {x: 16, y: -19}
+        - {x: 16, y: 12}
       tessellationDetail: 0
       bones: []
       spriteID: 9242e74a03e5ca44c988038d7bd535ef
