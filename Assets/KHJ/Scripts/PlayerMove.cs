@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    private float speed = 25f;
+    private float speed = 10f;
     private Rigidbody2D playerRigidbody;
 
     void Start()
@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");
