@@ -14,7 +14,11 @@ public class Option : SingletonObject<Option>
 
     private void Update()
     {
-        OpenOrCloseOption();
+        //if (InputManager.Instance.GetKeyDown(ActionCode.Option))
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OpenOrCloseOption();
+        }
     }
 
     private void FindOptionImage()
@@ -26,11 +30,8 @@ public class Option : SingletonObject<Option>
 
     public void OpenOrCloseOption()
     {   
-        //if (InputManager.Instance.GetKeyDown(ActionCode.Option))
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            isOptionOpened = !isOptionOpened;
-            optionImage.gameObject.SetActive(isOptionOpened);
-        }
+        isOptionOpened = !isOptionOpened;
+        optionImage.gameObject.SetActive(isOptionOpened);
+        
     }
 }
