@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum EventTrigger
-{
-    OnCollisionEnter = 0,
-    OnInteraction = 1,
-    OnAwake = 2,
-}
-
 [Serializable]
 public abstract class Event
 {
@@ -117,6 +110,13 @@ public class StopEvent : Event
 
 public class EventObject : InteractableObject
 {
+    private enum EventTrigger
+    {
+        OnCollisionEnter = 0,
+        OnInteraction = 1,
+        OnAwake = 2,
+    }
+
     [SerializeField]
     private bool isLoop = false;
 
