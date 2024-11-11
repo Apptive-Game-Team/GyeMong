@@ -11,6 +11,7 @@ public enum ActionCode
     MoveRight,
     MoveLeft,
     OpenInventory,
+    Option,
     SelectClick,
 }
 
@@ -32,6 +33,7 @@ public class InputManager : SingletonObject<InputManager>
         { ActionCode.MoveRight, KeyCode.RightArrow },
         { ActionCode.MoveLeft, KeyCode.LeftArrow },
         { ActionCode.OpenInventory, KeyCode.I },
+        { ActionCode.Option, KeyCode.Escape},
         { ActionCode.SelectClick, KeyCode.Mouse0 },
     };
 
