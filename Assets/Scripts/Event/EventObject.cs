@@ -77,9 +77,15 @@ public class FadeOutEvent : Event
 [Serializable]
 public class SoundEvent : Event
 {
-    public SoundObject soundObject;
+    [SerializeField]
+    private SoundObject soundObject;
+    [SerializeField]
+    private string soundName = null;
+
     public override IEnumerator execute()
     {
+        if (soundName != null)
+            soundObject.SetSoundSourceByName(soundName);
         return soundObject.Play();
     }
 }
