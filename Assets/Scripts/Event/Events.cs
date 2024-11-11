@@ -130,7 +130,6 @@ public class StopEvent : Event
 [Serializable]
 public class NestedEventEvent : Event
 {
-    [SerializeField]
     [SerializeReference]
     private List<Event> events;
 
@@ -141,5 +140,28 @@ public class NestedEventEvent : Event
             yield return eventObject.execute();
         }
     }
+}
 
+[Serializable]
+public class ConditionalEvent : Event
+{
+    [SerializeReference]
+    private Condition condition;
+
+    [SerializeReference]
+    private Event eventInTrue;
+
+    [SerializeReference]
+    private Event eventInFalse;
+
+    public override IEnumerator execute()
+    {
+        if (condition.Check())
+        {
+            return eventInTrue.execute();
+        } else
+        {
+            return eventInFalse.execute();
+        }
+    }
 }
