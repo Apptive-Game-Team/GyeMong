@@ -94,12 +94,11 @@ public class SoundEvent : Event
 public class BGMEvent : Event
 {
     [SerializeField]
-    private string bgm_name;
+    private string bgmName;
     public override IEnumerator execute()
     {
         SoundObject soundObject = SoundManager.Instance.GetBgmObject();
-        Debug.Log(bgm_name);
-        soundObject.SetSoundSourceByName(bgm_name);
+        soundObject.SetSoundSourceByName(bgmName);
         return soundObject.Play();
     }
 }
