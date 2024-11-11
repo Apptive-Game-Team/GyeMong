@@ -139,6 +139,9 @@ public class EventObject : InteractableObject
     private EventTrigger trigger;
 
     [SerializeField]
+    private int triggerLimitCounter = -1;
+
+    [SerializeField]
     [SerializeReference]
     public List<Event> eventSequence = new List<Event>();
 
@@ -146,9 +149,10 @@ public class EventObject : InteractableObject
 
     private void Start()
     {
-        if (trigger == EventTrigger.OnAwake)
+        if (trigger == EventTrigger.OnAwake && triggerLimitCounter != 0)
         {
             TriggerEvent();
+            triggerLimitCounter -= 1;
         }
     }
 
@@ -180,13 +184,20 @@ public class EventObject : InteractableObject
 
     protected override void OnInteraction(Collider2D collision)
     {
-        if (trigger == EventTrigger.OnInteraction)
+        if (trigger == EventTrigger.OnInteraction && triggerLimitCounter != 0)
+        {
             TriggerEvent();
+            triggerLimitCounter -= 1;
+        }
+            
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (trigger == EventTrigger.OnCollisionEnter)
+        if (trigger == EventTrigger.OnCollisionEnter && triggerLimitCounter != 0)
+        {
             TriggerEvent();
+            triggerLimitCounter -= 1;
+        }
     }
 }
