@@ -103,6 +103,18 @@ public class BGMEvent : Event
     }
 }
 
+[Serializable]
+public class StopEvent : Event
+{
+    [SerializeField]
+    private EventObject targetObject;
+    public override IEnumerator execute()
+    {
+        targetObject.KillEvent();
+        yield return null;
+    }
+}
+
 public class EventObject : InteractableObject
 {
     [SerializeField]
