@@ -4,11 +4,18 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class Condition
+public abstract class Condition
 {
-    [SerializeField]
+    public abstract bool Check();
+}
+
+[Serializable]
+public class BoolCondition : Condition
+{
+    [SerializeReference]
     private bool condition = true;
-    public virtual bool Check()
+
+    public override bool Check()
     {
         return condition;
     }
