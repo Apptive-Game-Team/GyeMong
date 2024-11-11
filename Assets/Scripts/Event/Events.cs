@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -124,4 +125,21 @@ public class StopEvent : Event
         targetObject.KillEvent();
         yield return null;
     }
+}
+
+[Serializable]
+public class NestedEventEvent : Event
+{
+    [SerializeField]
+    [SerializeReference]
+    private List<Event> events;
+
+    public override IEnumerator execute()
+    {
+        foreach (Event eventObject in events)
+        {
+            yield return eventObject.execute();
+        }
+    }
+
 }
