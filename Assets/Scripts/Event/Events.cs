@@ -165,3 +165,21 @@ public class ConditionalEvent : Event
         }
     }
 }
+
+[Serializable]
+public class ConditionalLoopEvent : Event
+{
+    [SerializeReference]
+    private Condition condition;
+
+    [SerializeReference]
+    private Event loopBodyevent;
+
+    public override IEnumerator execute()
+    {
+        while (condition.Check())
+        {
+            yield return loopBodyevent.execute();
+        }
+    }
+}
