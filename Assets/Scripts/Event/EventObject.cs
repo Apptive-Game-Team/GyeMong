@@ -72,14 +72,29 @@ public class SoundEvent : Event
 {
     [SerializeField]
     private SoundObject soundObject;
+
+    private enum PlayOrStop{
+        PLAY,
+        STOP
+    }
+
+    [SerializeField]
+    private PlayOrStop playOrStop = PlayOrStop.PLAY;
+
     [SerializeField]
     private string soundName = null;
 
     public override IEnumerator execute()
     {
-        if (soundName != null)
-            soundObject.SetSoundSourceByName(soundName);
-        return soundObject.Play();
+        if (playOrStop == PlayOrStop.STOP)
+        {
+            soundObject.Stop();
+            return null;
+        } else {
+            if (soundName != null)
+                soundObject.SetSoundSourceByName(soundName);
+            return soundObject.Play();
+        }
     }
 }
 
