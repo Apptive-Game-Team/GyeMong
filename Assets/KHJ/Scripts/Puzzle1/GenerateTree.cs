@@ -50,7 +50,7 @@ public class GenerateTree : MonoBehaviour
                 if (Random.value < treePlacementChance)
                 {
                     GameObject treePrefab = treePrefabs[Random.Range(0, treePrefabs.Length)];
-                    Instantiate(treePrefab, position, Quaternion.identity);
+                    Instantiate(treePrefab, position, Quaternion.identity,transform);
                 }
             }
         }
