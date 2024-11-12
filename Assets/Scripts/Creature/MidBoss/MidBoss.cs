@@ -10,6 +10,7 @@ public class MidBoss : Boss
     [SerializeField] private GameObject vinePrefab;
     void Start()
     {
+        maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
         speed = 1f;

@@ -12,6 +12,7 @@ public abstract class Boss : Creature
     protected int curPattern;
     protected bool isPattern;
     protected int currentPhase = 2;//테스트용 원래는 1
+    protected int maxPhase;
     protected float maxHealthP1;
     protected float maxHealthP2;
     private int lastPattern = -1; // 직전 패턴을 저장
@@ -40,7 +41,7 @@ public abstract class Boss : Creature
     }
     protected void TransPhase()
     {
-        if (currentPhase < 2)
+        if (currentPhase < maxPhase)
         {
             currentPhase++;
             SetupPhase();
