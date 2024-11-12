@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Option : SingletonObject<Option>
+public class OptionUI : SingletonObject<OptionUI>
 {
     private Image optionImage;
     private bool isOptionOpened = false;

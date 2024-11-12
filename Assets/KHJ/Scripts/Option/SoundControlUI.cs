@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SoundControlImage : SingletonObject<SoundControlImage>
+public class SoundControlUI : SingletonObject<SoundControlUI>
 {
     private void Start()
     {
