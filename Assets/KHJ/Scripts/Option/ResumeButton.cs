@@ -6,6 +6,6 @@ public class ResumeButton : MonoBehaviour
 {
     public void OnclickButton()
     {
-        Option.Instance.OpenOrCloseOption();
+        OptionUI.Instance.OpenOrCloseOption();
     }
 }

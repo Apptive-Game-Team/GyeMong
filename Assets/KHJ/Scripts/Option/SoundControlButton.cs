@@ -7,7 +7,7 @@ public class SoundControlButton : MonoBehaviour
 {
     public void OnClickButton()
     {
-        Option.Instance.OpenOrCloseOption();
-        SoundControlImage.Instance.OpenSoundControlImage();
+        OptionUI.Instance.OpenOrCloseOption();
+        SoundControlUI.Instance.OpenSoundControlImage();
     }
 }
