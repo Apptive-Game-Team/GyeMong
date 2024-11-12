@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Creature : SingletonObject<Creature>
+public class Creature : MonoBehaviour
 {
     protected float maxHealth;
     protected float curHealth;
