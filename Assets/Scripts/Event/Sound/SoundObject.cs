@@ -14,6 +14,7 @@ public class SoundObject : MonoBehaviour
     private AudioClip clip;
     private AudioSource audioSource;
     private float volume;
+    private float masterVolume = 1f;
 
 
     private void Start()
@@ -49,9 +50,20 @@ public class SoundObject : MonoBehaviour
     public void SetVolume(float volume)
     {
         this.volume = volume;
+        UpdateAudioSourceVolume();
+    }
+
+    public void SetMasterVolume(float masterVolume)
+    {
+        this.masterVolume = masterVolume;
+        UpdateAudioSourceVolume();
+    }
+
+    private void UpdateAudioSourceVolume()
+    {
         if (audioSource != null)
         {
-            audioSource.volume = volume;
+            audioSource.volume = volume * masterVolume;
         }
     }
 

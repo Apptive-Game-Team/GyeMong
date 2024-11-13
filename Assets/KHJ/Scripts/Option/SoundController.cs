@@ -30,9 +30,7 @@ public class SoundController : MonoBehaviour
 
     private void UpdateMasterVolume(float value)
     {
-        SoundManager.Instance.SetVolume(SoundType.UI, value);
-        SoundManager.Instance.SetVolume(SoundType.BGM, value);
-        SoundManager.Instance.SetVolume(SoundType.EFFECT, value);
+        SoundManager.Instance.SetMasterVolume(value);
     }
 
     private void UpdateUIVolume(float value)

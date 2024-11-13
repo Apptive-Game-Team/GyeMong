@@ -63,6 +63,14 @@ public class SoundManager : SingletonObject<SoundManager>
         }
     }
 
+    public void SetMasterVolume(float masterVolume)
+    {
+        foreach (SoundObject soundObject in soundObjects)
+        {
+            soundObject.SetMasterVolume(masterVolume);
+        } 
+    }
+
     public float GetVolume(SoundType type)
     {
         return volumes[type];
