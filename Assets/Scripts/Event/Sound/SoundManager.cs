@@ -20,6 +20,7 @@ public class SoundManager : SingletonObject<SoundManager>
 
     public SoundSourceList soundSourceList;
     private Dictionary<SoundType, float> volumes = new Dictionary<SoundType, float>();
+    private SoundObject[] soundObjects;
     
     private void InitializeVolumes()
     {
@@ -44,9 +45,22 @@ public class SoundManager : SingletonObject<SoundManager>
         InitializeVolumes();
     }
 
+    private void Start()
+    {
+        soundObjects = FindObjectsOfType<SoundObject>();
+    }
+
     public void SetVolume(SoundType type, float volume)
     {
         volumes[type] = volume;
+
+        foreach (SoundObject soundObject in soundObjects)
+        {
+            if (soundObject.GetSoundType() == type)
+            {
+                soundObject.SetVolume(volume);
+            }
+        }
     }
 
     public float GetVolume(SoundType type)

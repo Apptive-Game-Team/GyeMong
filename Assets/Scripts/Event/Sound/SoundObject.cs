@@ -9,6 +9,7 @@ public class SoundObject : MonoBehaviour
     private SoundManager soundManager;
 
     [SerializeField] private string sourceName = null;
+    private SoundType soundType;
 
     private AudioClip clip;
     private AudioSource audioSource;
@@ -40,8 +41,23 @@ public class SoundObject : MonoBehaviour
     public void SetSoundSourceByName(string soundSourceName)
     {
         SoundSource soundSource = SoundManager.Instance.soundSourceList.GetSoundSourceByName(soundSourceName);
+        soundType = soundSource.type;
         volume = SoundManager.Instance.GetVolume(soundSource.type);
         clip = soundSource.clip;
+    }
+
+    public void SetVolume(float volume)
+    {
+        this.volume = volume;
+        if (audioSource != null)
+        {
+            audioSource.volume = volume;
+        }
+    }
+
+    public SoundType GetSoundType()
+    {
+        return soundType;
     }
 
     public IEnumerator Play()
