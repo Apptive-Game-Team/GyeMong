@@ -15,7 +15,7 @@ public class SoundControlExitButton : MonoBehaviour
 
     public void OnClickButton()
     {
+        OptionUI.Instance.isOptionUITop = true;
         SoundControlImage.gameObject.SetActive(false);
-        OptionUI.Instance.OpenOrCloseOption();
     }
 }
