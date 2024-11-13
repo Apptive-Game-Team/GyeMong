@@ -5,6 +5,7 @@ public class OptionUI : SingletonObject<OptionUI>
 {
     private Image optionImage;
     private bool isOptionOpened = false;
+    public bool isOptionUITop = true;
 
     private void Start()
     {
@@ -15,10 +16,15 @@ public class OptionUI : SingletonObject<OptionUI>
     private void Update()
     {
         //if (InputManager.Instance.GetKeyDown(ActionCode.Option))
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (isOptionUITop)
         {
-            OpenOrCloseOption();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OpenOrCloseOption();
+            }
         }
+
+        PauseOrResumeGame();
     }
 
     private void FindOptionImage()
@@ -32,6 +38,11 @@ public class OptionUI : SingletonObject<OptionUI>
     {   
         isOptionOpened = !isOptionOpened;
         optionImage.gameObject.SetActive(isOptionOpened);
-        
+    }
+
+    private void PauseOrResumeGame()
+    {
+        if (isOptionOpened) Time.timeScale = 0f;
+        else Time.timeScale = 1f;
     }
 }
