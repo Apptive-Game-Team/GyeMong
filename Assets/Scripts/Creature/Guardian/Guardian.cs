@@ -9,17 +9,17 @@ public class Guardian : Boss
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
+    [SerializeField] private List<GameObject> rootSpawnZone;
     void Start()
     {
         maxPhase = 2;
-        maxHealthP1 = 100f;
-        maxHealthP2 = 200f;
+        maxHealthP1 = 200f;
+        maxHealthP2 = 300f;
         speed = 1f;
         detectionRange = 10f;
         MeleeAttackRange = 1f;
         RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
-        //여기까지 원래 Awake였음
         wall.SetActive(false);
         SetupPhase();
     }

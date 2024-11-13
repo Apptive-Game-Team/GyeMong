@@ -51,7 +51,6 @@ public abstract class Boss : Creature
             Die();
         }
     }
-
     protected void ExecuteCurrentPattern()
     {
         switch (curPattern)
@@ -78,7 +77,6 @@ public abstract class Boss : Creature
                 break;
         }
     } //보유 패턴 추가시 case추가
-
     protected abstract IEnumerator ExecutePattern0();
     protected abstract IEnumerator ExecutePattern1();
     protected abstract IEnumerator ExecutePattern2();
@@ -96,17 +94,6 @@ public abstract class Boss : Creature
             transform.position = newPosition;
         }
     }
-    /*public void BackStep()
-    {
-        if (player != null)
-        {
-            float backStepSpeed = 5f;
-            float step = backStepSpeed * Time.deltaTime;
-            Vector3 targetPosition = player.transform.position;
-            Vector3 newPosition = Vector3.MoveTowards(transform.position,transform.position - (targetPosition - transform.position), step);
-            transform.position = newPosition;
-        }
-    }*/
     public IEnumerator BackStep(float duration)
     {
         if (player != null)
@@ -124,7 +111,6 @@ public abstract class Boss : Creature
             yield return new WaitForSeconds(1f);
         }
     }
-
     public IEnumerator DetectPlayerCoroutine()
     {
         while (true)
@@ -159,20 +145,5 @@ public abstract class Boss : Creature
             detectPlayerRoutine = null;
         }
     }
-    /*protected override IEnumerator ExecutePattern0()
-    {
-        isPattern = true;
-        Debug.Log("추적");
-        float duration = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            TrackPlayer();
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        isPattern = false;
-    }*/
 }
 
