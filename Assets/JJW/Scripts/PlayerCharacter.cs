@@ -33,6 +33,7 @@ namespace playerCharacter
                 HandleInput();
             }
             UpdateState();
+
         }
 
         private void FixedUpdate()
@@ -131,6 +132,7 @@ namespace playerCharacter
                 yield return null;
             }
 
+            playerRb.velocity = Vector2.zero;
             yield return new WaitForSeconds(dashCooldown);
             isDashing = false;
             canMove = true;
