@@ -44,6 +44,11 @@ public class SoundObject : MonoBehaviour
         clip = soundSource.clip;
     }
 
+    public void Stop()
+    {
+        audioSource.Stop();
+    }
+
     public IEnumerator Play()
     {
         yield return new WaitUntil(()=>audioSource != null);
