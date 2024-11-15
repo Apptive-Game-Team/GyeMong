@@ -20,6 +20,7 @@ public class ChatController : MonoBehaviour
     private const float SHOW_CHAT_DELAY = 0.1f;
     private TMP_Text nameText;
     private TMP_Text messageText;
+    private bool isWorking = false;
 
     private void Awake()
     {
@@ -28,8 +29,10 @@ public class ChatController : MonoBehaviour
         messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
     }
 
-    public void Open()
+    public IEnumerator Open()
     {
+        yield return new WaitWhile(() => isWorking);
+        isWorking = true;
         Color color = chatWindow.color;
         color.a = CHAT_WINDOW_ALPHA;
         chatWindow.color = color;
@@ -50,13 +53,14 @@ public class ChatController : MonoBehaviour
         nameText.color = color;
         nameText.text = "";
         messageText.text = "";
+        isWorking = false;
     }
 
     public IEnumerator Chat(ChatMessage chatMessage)
     {
         nameText.text = chatMessage.name;
         messageText.text = "";
-        return ShowChat(chatMessage.message);
+        yield return ShowChat(chatMessage.message);
     }
 
     private IEnumerator ShowChat(string message)
