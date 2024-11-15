@@ -245,4 +245,33 @@ public class ConditionalLoopEvent : Event
     }
 }
 
+[Serializable]
+public class ToggleConditionEvent : Event
+{
+    [SerializeReference]
+    private string tag;
+    [SerializeReference]
+    private bool condition;
+
+    public override IEnumerator execute()
+    {
+        List<ToggeableCondition> conditions = EventObject.toggleableConditions[tag];
+        if (conditions == null)
+        {
+            Debug.Log("Toggleable Conditions is not found by " + tag);
+            yield return null;
+        }
+        foreach (ToggeableCondition condition in conditions)
+        {
+            try
+            {
+                condition.SetCondition(this.condition);
+            } catch
+            {
+                EventObject.toggleableConditions[tag].Remove(condition);
+            }
+            
+        }
+        
+    }
 }
