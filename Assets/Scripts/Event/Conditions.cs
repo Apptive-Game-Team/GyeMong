@@ -32,3 +32,26 @@ public class NotCondition : Condition
         return !condition.Check();
     }
 }
+
+[Serializable]
+public class ToggeableCondition : Condition
+{
+    [SerializeField]
+    private string tag;
+
+    [SerializeField]
+    private bool condition = false;
+
+    public override bool Check()
+    {
+        return condition;
+    }
+    public string GetTag()
+    {
+        return tag;
+    }
+    public void SetCondition(bool condition)
+    {
+        this.condition = condition;
+    }
+}
