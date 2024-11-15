@@ -14,6 +14,11 @@ public class EffectManager : SingletonObject<EffectManager>
     private RawImage black;
     private const float FADING_DELTA_TIME = 0.05f;
 
+    public ChatController GetChatController()
+    {
+        return GetComponent<ChatController>();
+    }
+
     public void SetCameraController(CameraController cameraController)
     {
         this.cameraController = cameraController;
