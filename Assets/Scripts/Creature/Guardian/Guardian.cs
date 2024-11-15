@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class Guardian : Boss
 {
-    [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private GameObject rootPrefab;
+    private GameObject[] rootObjects;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
     [SerializeField] private List<GameObject> rootSpawnZone;
@@ -22,6 +23,14 @@ public class Guardian : Boss
         player = GameObject.FindGameObjectWithTag("Player");
         wall.SetActive(false);
         SetupPhase();
+
+        rootObjects = new GameObject[rootSpawnZone.Count];
+        for (int i = 0; i < rootSpawnZone.Count; i++)
+        {
+            GameObject rootObject = Instantiate(rootPrefab, rootSpawnZone[i].transform.position , Quaternion.identity);
+            rootObjects[i] = rootObject;
+            rootObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -43,13 +52,28 @@ public class Guardian : Boss
     protected override IEnumerator ExecutePattern0()
     {
         isPattern = true;
-        Debug.Log("거리 벌리기");
+        Debug.Log("가시 바닥");
 
-        float duration = 1f; // 이동 시간
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
+        int caseNumber = Random.Range(1, 5);
+        switch (caseNumber)
         {
-            yield return StartCoroutine(BackStep(duration));
+            case 1:
+                ActivateRootObjects(new int[] { 0, 1, 7, 8, 9, 10, 11 });
+                break;
+            case 2:
+                ActivateRootObjects(new int[] { 1, 2, 3, 5, 9, 11, 12, 13 });
+                break;
+            case 3:
+                ActivateRootObjects(new int[] { 0, 2, 4, 6, 8, 10, 12, 14 });
+                break;
+            case 4:
+                ActivateRootObjects(new int[] { 0, 1, 3, 6, 8, 9, 11, 12, 14 });
+                break;
+        }
+        yield return new WaitForSeconds(1f);
+        for (int i = 0; i < rootSpawnZone.Count; i++)
+        {
+            rootObjects[i].SetActive(false);
         }
         isPattern = false;
     }
@@ -61,7 +85,7 @@ public class Guardian : Boss
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange)
         {
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            Instantiate(rootPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(2f);
         }
         else
@@ -77,7 +101,7 @@ public class Guardian : Boss
             }
             // 사거리에 도달한 후 화살 발사 및 대기
             speed = 1f;
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            Instantiate(rootPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(2f);
         }
 
@@ -168,7 +192,13 @@ public class Guardian : Boss
         }
         isPattern = false;
     }
-
+    private void ActivateRootObjects(int[] indices)
+    {
+        foreach (int index in indices)
+        {
+           rootObjects[index].SetActive(true);
+        }
+    }
     protected override void SelectRandomPattern()
     {
         int randomIndex;
@@ -178,18 +208,18 @@ public class Guardian : Boss
         if (currentPhase == 1)
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
         }
         else
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(4, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(5, 0));
         }
         do
         {
