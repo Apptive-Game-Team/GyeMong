@@ -13,9 +13,9 @@ public class Root : MonoBehaviour
         yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player"))
         {
             PlayerDemo.Instance.TakeDamage(10);
         }
