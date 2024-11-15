@@ -55,6 +55,7 @@ public class ChatController : MonoBehaviour
     public IEnumerator Chat(ChatMessage chatMessage)
     {
         nameText.text = chatMessage.name;
+        messageText.text = "";
         return ShowChat(chatMessage.message);
     }
 
