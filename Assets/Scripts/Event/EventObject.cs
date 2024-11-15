@@ -74,13 +74,14 @@ public class EventObject : InteractableObject
                 yield return eventObject.execute();
             }
         } while (isLoop);
+        eventLoop = null;
     }
 
     public void TriggerEvent()
     {
         if (eventLoop != null)
         {
-            KillEvent();
+            return;
         }
         eventLoop = StartCoroutine(EventLoop());
     }
@@ -89,6 +90,7 @@ public class EventObject : InteractableObject
     {
         if (eventLoop != null)
             StopCoroutine(eventLoop);
+        eventLoop = null;
     }
 
     protected override void OnInteraction(Collider2D collision)
