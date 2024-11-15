@@ -1,105 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-
-public enum EventTrigger
-{
-    OnCollisionEnter = 0,
-    OnInteraction = 1,
-    OnAwake = 2,
-}
-
-[Serializable]
-public abstract class Event
-{
-    public abstract IEnumerator execute();
-}
-
-[Serializable]
-public class HurtEffectEvent : Event
-{
-    public float amount;
-    public override IEnumerator execute()
-    {
-        return EffectManager.Instance.HurtEffect(amount);
-    }
-}
-
-[Serializable]
-public class ShakeCameraEvent : Event
-{
-    public float time;
-    public override IEnumerator execute()
-    {
-        return EffectManager.Instance.ShakeCamera(time);
-    }
-}
-
-[Serializable]
-public class WarpPortalEvent : Event
-{
-    public PortalID portalID;
-    public override IEnumerator execute()
-    {
-        return PortalManager.Instance.TransitScene(portalID);
-    }
-}
-
-[Serializable]
-public class DelayEvent : Event
-{
-    public float delayTime;
-    public override IEnumerator execute()
-    {
-        yield return new WaitForSeconds(delayTime);
-    }
-}
-
-[Serializable]
-public class FadeInEvent : Event
-{
-    public override IEnumerator execute()
-    {
-        return EffectManager.Instance.FadeIn();
-    }
-}
-
-[Serializable]
-public class FadeOutEvent : Event
-{
-    public override IEnumerator execute()
-    {
-        return EffectManager.Instance.FadeOut();
-    }
-}
-
-[Serializable]
-public class SoundEvent : Event
-{
-    public SoundObject soundObject;
-    public override IEnumerator execute()
-    {
-        return soundObject.Play();
-    }
-}
-
-[Serializable]
-public class BGMEvent : Event
-{
-    [SerializeField]
-    private string bgm_name;
-    public override IEnumerator execute()
-    {
-        SoundObject soundObject = SoundManager.Instance.GetBgmObject();
-        Debug.Log(bgm_name);
-        soundObject.SetSoundSourceByName(bgm_name);
-        return soundObject.Play();
-    }
-}
 
 public class EventObject : InteractableObject
 {
+    private enum EventTrigger
+    {
+        OnCollisionEnter = 0,
+        OnInteraction = 1,
+        OnAwake = 2,
+    }
+
     [SerializeField]
     private bool isLoop = false;
 
@@ -107,16 +18,50 @@ public class EventObject : InteractableObject
     private EventTrigger trigger;
 
     [SerializeField]
+    private int triggerLimitCounter = -1;
+
     [SerializeReference]
-    public List<Event> eventSequence = new List<Event>();
+    private List<Event> eventSequence = new List<Event>();
 
     private Coroutine eventLoop = null;
 
+    public static Dictionary<string, List<ToggeableCondition>> toggleableConditions = new();
+
+    private List<ToggeableCondition> FindToggleableConditions()
+    {
+        List<ToggeableCondition> result = new List<ToggeableCondition>();
+        foreach (Event @event in eventSequence)
+        {
+            List<ToggeableCondition> temp = @event.FindToggleableConditions();
+            if (temp != null)
+            {
+                result.AddRange(temp);
+            }
+        }
+        return result;
+    }
+
+    private void InitializeToggleableConditions()
+    {
+        List<ToggeableCondition> conditions =  FindToggleableConditions();
+        foreach (ToggeableCondition condition in conditions)
+        {
+            string tag = condition.GetTag();
+            if (!toggleableConditions.ContainsKey(tag))
+            {
+                toggleableConditions.Add(tag, new List<ToggeableCondition>());
+            }
+            toggleableConditions[tag].Add(condition);
+        }
+    }
+
     private void Start()
     {
-        if (trigger == EventTrigger.OnAwake)
+        InitializeToggleableConditions();
+        if (trigger == EventTrigger.OnAwake && triggerLimitCounter != 0)
         {
             TriggerEvent();
+            triggerLimitCounter -= 1;
         }
     }
 
@@ -129,13 +74,14 @@ public class EventObject : InteractableObject
                 yield return eventObject.execute();
             }
         } while (isLoop);
+        eventLoop = null;
     }
 
     public void TriggerEvent()
     {
         if (eventLoop != null)
         {
-            KillEvent();
+            return;
         }
         eventLoop = StartCoroutine(EventLoop());
     }
@@ -144,17 +90,25 @@ public class EventObject : InteractableObject
     {
         if (eventLoop != null)
             StopCoroutine(eventLoop);
+        eventLoop = null;
     }
 
     protected override void OnInteraction(Collider2D collision)
     {
-        if (trigger == EventTrigger.OnInteraction)
+        if (trigger == EventTrigger.OnInteraction && triggerLimitCounter != 0)
+        {
             TriggerEvent();
+            triggerLimitCounter -= 1;
+        }
+            
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (trigger == EventTrigger.OnCollisionEnter)
+        if (trigger == EventTrigger.OnCollisionEnter && triggerLimitCounter != 0)
+        {
             TriggerEvent();
+            triggerLimitCounter -= 1;
+        }
     }
 }
