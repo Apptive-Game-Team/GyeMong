@@ -275,3 +275,18 @@ public class ToggleConditionEvent : Event
         
     }
 }
+
+[Serializable]
+public class MovePositionEvent : Event
+{
+    [SerializeField]
+    private GameObject @gameObject;
+    [SerializeField]
+    private Vector3 targetPosition;
+
+    public override IEnumerator execute()
+    {
+        @gameObject.transform.position = targetPosition;
+        yield return null;
+    }
+}
