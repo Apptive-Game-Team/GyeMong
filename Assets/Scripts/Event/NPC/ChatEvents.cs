@@ -7,8 +7,7 @@ public class OpenChatEvent : Event
 {
     public override IEnumerator execute()
     {
-        EffectManager.Instance.GetChatController().Open();
-        yield return null;
+        return EffectManager.Instance.GetChatController().Open();
     }
 }
 
