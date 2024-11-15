@@ -71,10 +71,6 @@ public class Guardian : Boss
                 break;
         }
         yield return new WaitForSeconds(1f);
-        for (int i = 0; i < rootSpawnZone.Count; i++)
-        {
-            rootObjects[i].SetActive(false);
-        }
         isPattern = false;
     }
     protected override IEnumerator ExecutePattern1()
