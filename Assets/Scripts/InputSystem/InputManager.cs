@@ -5,6 +5,10 @@ using System;
 
 public enum ActionCode
 {
+    Attack,
+    Defend,
+    Dash,
+    Run,
     Interaction,
     MoveUp,
     MoveDown,
@@ -27,6 +31,10 @@ public class InputManager : SingletonObject<InputManager>
     private Dictionary<ActionCode, bool> keyActiveFlags = new Dictionary<ActionCode, bool>();
     private Dictionary<ActionCode, KeyCode> keyMappings = new Dictionary<ActionCode, KeyCode>()
     {
+        { ActionCode.Attack, KeyCode.A},
+        { ActionCode.Defend, KeyCode.S},
+        { ActionCode.Dash, KeyCode.X},
+        { ActionCode.Run, KeyCode.LeftShift},
         { ActionCode.Interaction, KeyCode.Z },
         { ActionCode.MoveUp, KeyCode.UpArrow },
         { ActionCode.MoveDown, KeyCode.DownArrow },
