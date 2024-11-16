@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractionKeyMapping : KeyMapping
+public class InteractionKey : KeyMapping
 {
     protected override ActionCode ActionCode => ActionCode.Interaction;
     protected override string InitialCode => "Z";

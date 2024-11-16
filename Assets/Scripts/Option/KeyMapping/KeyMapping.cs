@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public abstract class KeyMapping : MonoBehaviour
 {
     protected abstract ActionCode ActionCode { get; }
-    protected abstract String InitialCode { get; }
+    protected abstract string InitialCode { get; }
     private TextMeshProUGUI keyText;
 
     private void Start()
