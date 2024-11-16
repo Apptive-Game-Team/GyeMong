@@ -11,13 +11,15 @@ namespace playerCharacter
         public float dashSpeed = 10.0f;
         public float dashDuration = 0.1f;
         public float dashDistance = 5.0f;
-        public float dashCooldown = 1.0f;
+        public float delayTime = 0.5f;
 
         private Vector2 movement;
         private Vector2 lastMovementDirection;
         private Rigidbody2D playerRb;
         private Animator animator;
         private bool isDashing = false;
+        private bool isAttacking = false;
+        private bool isDefending = false;
         private bool canMove = true;
 
         private void Start()
@@ -33,6 +35,7 @@ namespace playerCharacter
                 HandleInput();
             }
             UpdateState();
+
         }
 
         private void FixedUpdate()
@@ -70,12 +73,12 @@ namespace playerCharacter
                 StartCoroutine(Dash());
             }
 
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A) && !isAttacking)
             {
                 StartCoroutine(Attack());
             }
 
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S) && !isDefending)
             {
                 StartCoroutine(Defend());
             }
@@ -83,13 +86,10 @@ namespace playerCharacter
 
         private void MoveCharacter()
         {
-            if (!isDashing)
-            {
-                float speed = Input.GetKey(KeyCode.Z) ? sprintSpeed : moveSpeed;
-                playerRb.velocity = movement * speed;
+            float speed = Input.GetKey(KeyCode.Z) ? sprintSpeed : moveSpeed;
+            playerRb.velocity = movement * speed;
 
-                animator.SetFloat("speed", speed);
-            }
+            animator.SetFloat("speed", speed);
         }
 
         private void UpdateState()
@@ -131,7 +131,8 @@ namespace playerCharacter
                 yield return null;
             }
 
-            yield return new WaitForSeconds(dashCooldown);
+            playerRb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(delayTime);
             isDashing = false;
             canMove = true;
             animator.SetBool("isDashing", false);
@@ -139,24 +140,32 @@ namespace playerCharacter
 
         private IEnumerator Attack()
         {
+            isAttacking = true;
             canMove = false;
             animator.SetBool("isAttacking", true);
 
-            yield return new WaitForSeconds(0.5f);
+            movement = Vector2.zero;
+            playerRb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(delayTime);
 
             animator.SetBool("isAttacking", false);
             canMove = true;
+            isAttacking = false;
         }
 
         private IEnumerator Defend()
         {
+            isDefending = true;
             canMove = false;
             animator.SetBool("isDefending", true);
 
-            yield return new WaitForSeconds(0.5f);
+            movement = Vector2.zero;
+            playerRb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(delayTime);
 
             animator.SetBool("isDefending", false);
             canMove = true;
+            isDefending = false;
         }
     }
 }
