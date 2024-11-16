@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefenseKey : MonoBehaviour
+public class DefenseKey : KeyMapping
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    protected override ActionCode ActionCode => ActionCode.Defend;
+    protected override string InitialCode => "S";
 }

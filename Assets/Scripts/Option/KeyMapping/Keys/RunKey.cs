@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunKey : MonoBehaviour
+public class RunKey : KeyMapping
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    protected override ActionCode ActionCode => ActionCode.Run;
+    protected override string InitialCode => "LeftShift";
 }
