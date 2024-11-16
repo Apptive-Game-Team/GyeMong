@@ -6,6 +6,12 @@ namespace playerCharacter
 {
     public class PlayerCharacter : SingletonObject<PlayerCharacter>
     {
+        public float maxHealth;
+        [SerializeField] public float curHealth;
+        public float attackPower;
+
+        public GameObject attackColliderPrefab;
+
         public float moveSpeed = 2.0f;
         public float sprintSpeed = 4.0f;
         public float dashSpeed = 10.0f;
@@ -26,6 +32,10 @@ namespace playerCharacter
         {
             playerRb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+
+            attackPower = 1f;
+            maxHealth = 100f;
+            curHealth = maxHealth;
         }
 
         private void Update()
@@ -144,9 +154,12 @@ namespace playerCharacter
             canMove = false;
             animator.SetBool("isAttacking", true);
 
+            SpawnAttackCollider();
+
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
             yield return new WaitForSeconds(delayTime);
+    
 
             animator.SetBool("isAttacking", false);
             canMove = true;
@@ -166,6 +179,17 @@ namespace playerCharacter
             animator.SetBool("isDefending", false);
             canMove = true;
             isDefending = false;
+        }
+
+        private void SpawnAttackCollider()
+        {
+            Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
+            Quaternion spawnRotation = Quaternion.identity;
+
+            GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation);
+            attackCollider.transform.right = lastMovementDirection;
+
+            Destroy(attackCollider, delayTime);
         }
     }
 }
