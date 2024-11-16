@@ -53,53 +53,32 @@ public class Guardian : Boss
     {
         isPattern = true;
         Debug.Log("가시 바닥");
-
         int caseNumber = Random.Range(1, 5);
-        switch (caseNumber)
+        if(!rootObjects[0].activeSelf && !rootObjects[3].activeSelf)
         {
-            case 1:
-                ActivateRootObjects(new int[] { 0, 1, 7, 8, 9, 10, 11 });
-                break;
-            case 2:
-                ActivateRootObjects(new int[] { 1, 2, 3, 5, 9, 11, 12, 13 });
-                break;
-            case 3:
-                ActivateRootObjects(new int[] { 0, 2, 4, 6, 8, 10, 12, 14 });
-                break;
-            case 4:
-                ActivateRootObjects(new int[] { 0, 1, 3, 6, 8, 9, 11, 12, 14 });
-                break;
+            switch (caseNumber)
+            {
+                case 1:
+                    ActivateRootObjects(new int[] { 0, 1, 7, 8, 9, 10, 11 });
+                    break;
+                case 2:
+                    ActivateRootObjects(new int[] { 1, 2, 3, 5, 9, 11, 12, 13 });
+                    break;
+                case 3:
+                    ActivateRootObjects(new int[] { 0, 2, 4, 6, 8, 10, 12, 14 });
+                    break;
+                case 4:
+                    ActivateRootObjects(new int[] { 0, 1, 3, 6, 8, 9, 11, 12, 14 });
+                    break;
+            }
+            yield return null;
         }
-        yield return new WaitForSeconds(1f);
         isPattern = false;
     }
     protected override IEnumerator ExecutePattern1()
     {
         isPattern = true;
-        Debug.Log("원거리 공격");
-
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
-        {
-            Instantiate(rootPrefab, transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(2f);
-        }
-        else
-        {
-            // 사거리에 도달할 때까지 플레이어 방향으로 이동
-            while (distance > RangedAttackRange)
-            {
-                speed = 10f;
-                Vector3 direction = (player.transform.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
-                distance = Vector3.Distance(transform.position, player.transform.position);
-                yield return null;
-            }
-            // 사거리에 도달한 후 화살 발사 및 대기
-            speed = 1f;
-            Instantiate(rootPrefab, transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(2f);
-        }
+        Debug.Log("큐브 떨구기");
 
         isPattern = false;
     }
