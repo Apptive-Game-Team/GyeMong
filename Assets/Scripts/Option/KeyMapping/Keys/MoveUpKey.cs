@@ -5,5 +5,4 @@ using UnityEngine;
 public class MoveUpKey : KeyMapping
 {
     protected override ActionCode ActionCode => ActionCode.MoveUp;
-    protected override string InitialCode => "UpArrow";
 }

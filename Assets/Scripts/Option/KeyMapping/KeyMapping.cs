@@ -8,17 +8,10 @@ using UnityEngine.UI;
 public abstract class KeyMapping : MonoBehaviour
 {
     protected abstract ActionCode ActionCode { get; }
-    protected abstract string InitialCode { get; }
-    private TextMeshProUGUI keyText;
-
-    private void Start()
-    {
-        keyText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        keyText.text = InitialCode;
-    }
     
     protected void BindKey(KeyCode newKey)
     {
+        CheckDuplication(newKey);
         InputManager.Instance.SetKey(ActionCode, newKey);
     }
     
@@ -33,7 +26,7 @@ public abstract class KeyMapping : MonoBehaviour
         
         KeyCode pressedKey = GetPressedKey();
         BindKey(pressedKey);
-        UpdateKeyText(pressedKey);
+        KeyButtonTexts.Instance.UpdateKeyText();
     }
 
     private KeyCode GetPressedKey()
@@ -44,9 +37,18 @@ public abstract class KeyMapping : MonoBehaviour
         }
         return KeyCode.None;
     }
-
-    private void UpdateKeyText(KeyCode keyCode)
+    
+    private void CheckDuplication(KeyCode keyCode)
     {
-        keyText.text = keyCode.ToString();
+        Dictionary<ActionCode, KeyCode> keyMappings = InputManager.Instance.GetKeyActions();
+        List<ActionCode> keysToCheck = new(keyMappings.Keys);
+
+        foreach (ActionCode actionCode in keysToCheck)
+        {
+            if (keyMappings[actionCode] == keyCode)
+            {
+                InputManager.Instance.SetKey(actionCode, KeyCode.None);
+            }
+        }
     }
 }
