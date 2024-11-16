@@ -14,7 +14,7 @@ public enum ActionCode
     MoveDown,
     MoveRight,
     MoveLeft,
-    OpenInventory,
+    RunePage,
     Option,
     SelectClick,
 }
@@ -40,7 +40,7 @@ public class InputManager : SingletonObject<InputManager>
         { ActionCode.MoveDown, KeyCode.DownArrow },
         { ActionCode.MoveRight, KeyCode.RightArrow },
         { ActionCode.MoveLeft, KeyCode.LeftArrow },
-        { ActionCode.OpenInventory, KeyCode.I },
+        { ActionCode.RunePage, KeyCode.I },
         { ActionCode.Option, KeyCode.Escape},
         { ActionCode.SelectClick, KeyCode.Mouse0 },
     };
@@ -91,6 +91,14 @@ public class InputManager : SingletonObject<InputManager>
     public bool GetKeyActive(ActionCode action)
     {
         return keyActiveFlags[action];
+    }
+
+    /// <summary>
+    /// Gets the keyMappings.
+    /// </summary>
+    public Dictionary<ActionCode,KeyCode> GetKeyActions()
+    {
+        return keyMappings;
     }
 
     /// <summary>
