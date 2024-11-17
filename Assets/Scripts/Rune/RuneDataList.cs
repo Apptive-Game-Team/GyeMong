@@ -10,20 +10,11 @@ public class RuneData
     public int id;
     public Sprite runeImage;
     public BuffData runeBuff;
+    public float cooldown;
 }
 
 [CreateAssetMenu(fileName = "RuneDataList",menuName ="ScriptableObject/RuneDataList")]
 public class RuneDataList : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<RuneData> runeDataList;
 }
