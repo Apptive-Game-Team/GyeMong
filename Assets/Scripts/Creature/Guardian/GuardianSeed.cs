@@ -10,19 +10,19 @@ public class GuardianSeed : MonoBehaviour
     }
     private IEnumerator BombSeed()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Explode();
         Destroy(gameObject);
     }
     private void Explode()
     {
-        float explosionRadius = 2f;
+        float explosionRadius = 1f;
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach (Collider2D enemy in hitEnemies)
         {
             if (enemy.CompareTag("Player"))
             {
-                PlayerDemo.Instance.Bind(2f);
+                PlayerDemo.Instance.Bind(1f);
             }
         }
     }

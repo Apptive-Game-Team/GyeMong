@@ -122,10 +122,16 @@ public class Guardian : Boss
 
         int numberOfObjects = 10; // 생성할 오브젝트 수
         float interval = 0.1f; // 생성 간격
+        float fixedDistance = 7f;
+
         List<GameObject> spawnedObjects = new List<GameObject>();
+
+        Vector3 direction = (player.transform.position - transform.position).normalized; // 플레이어 방향 계산
+        Vector3 startPosition = transform.position;
+
         for (int i = 0; i <= numberOfObjects; i++)
         {
-            Vector3 spawnPosition = Vector3.Lerp(transform.position , player.transform.position, (float)i / numberOfObjects);
+            Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
             GameObject floor = Instantiate(floorPrefab, spawnPosition, Quaternion.identity);
             spawnedObjects.Add(floor);
             yield return new WaitForSeconds(interval); // 다음 오브젝트 생성까지 대기
