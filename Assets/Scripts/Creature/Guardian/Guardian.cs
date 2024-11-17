@@ -8,9 +8,12 @@ public class Guardian : Boss
 {
     [SerializeField] private GameObject rootPrefab;
     private GameObject[] rootObjects;
+    [SerializeField] private GameObject cubePrefab;
+    [SerializeField] private GameObject cubeShadowPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
     [SerializeField] private List<GameObject> rootSpawnZone;
+    private float shieldHealth;
     void Start()
     {
         maxPhase = 2;
@@ -43,6 +46,7 @@ public class Guardian : Boss
                 ExecuteCurrentPattern();
             }
         }
+        //curHealth += shieldHealth;
     }
     protected override void Die()
     {
@@ -79,21 +83,20 @@ public class Guardian : Boss
     {
         isPattern = true;
         Debug.Log("큐브 떨구기");
-
+        Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
+        Instantiate(cubeShadowPrefab, player.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
+        yield return null;
         isPattern = false;
     }
 
     protected override IEnumerator ExecutePattern2()
     {
         isPattern = true;
-        Debug.Log("근거리 공격");
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= MeleeAttackRange)
-        {
-            PlayerDemo.Instance.TakeDamage(10);
-        }
-        isPattern = false;
+        Debug.Log("보호막");
+        /*float shield = 30;
+        shieldHealth += shield;*/
         yield return null;
+        isPattern = false;
     }
 
     protected override IEnumerator ExecutePattern3()
@@ -183,14 +186,14 @@ public class Guardian : Boss
         if (currentPhase == 1)
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
         }
         else
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(4, 0));
