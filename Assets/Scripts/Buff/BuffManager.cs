@@ -93,15 +93,8 @@ public class BuffManager : SingletonObject<BuffManager>, IBuffMaster
     }
     public void AddRuneEvent(BuffData data, BuffComponent buffComp)
     {
+        StartCoroutine(AddEverySecondBuff(data, buffComp));
         Debug.Log(data.buffType);
-        switch(data.buffType)
-        {
-            case BuffType.RUNE_BREEZE:
-                break;
-            case BuffType.RUNE_FLOWER:
-                break;
-
-        }    
     }
     public void DeleteRuneEvent(BuffData data, BuffComponent buffComp)
     {
@@ -116,5 +109,23 @@ public class BuffManager : SingletonObject<BuffManager>, IBuffMaster
         yield return new WaitForSeconds(data.duration);
         DeleteRuneEvent(data, buffComp);
         Debug.Log(data.duration);
+    }
+
+    public IEnumerator AddEverySecondBuff(BuffData data, BuffComponent buffComp)
+    {
+        while (true) 
+        {
+            yield return new WaitForSeconds(data.duration);
+            switch (data.buffType)
+            {
+                //Character Health not yet Implement...
+                case BuffType.RUNE_BREEZE:
+                    buffHitman.ActiveRune_Breeze(data,GetComponent<BuffTestComponent>());
+                    break;
+                case BuffType.RUNE_VINE:
+                    buffHitman.ActiveRune_Vine(data, GetComponent<BuffTestComponent>());
+                    break;
+            }
+        }
     }
 }
