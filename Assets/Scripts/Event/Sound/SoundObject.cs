@@ -9,10 +9,12 @@ public class SoundObject : MonoBehaviour
     private SoundManager soundManager;
 
     [SerializeField] private string sourceName = null;
+    private SoundType soundType;
 
     private AudioClip clip;
     private AudioSource audioSource;
     private float volume;
+    private float masterVolume = 1f;
 
 
     private void Start()
@@ -40,6 +42,7 @@ public class SoundObject : MonoBehaviour
     public void SetSoundSourceByName(string soundSourceName)
     {
         SoundSource soundSource = SoundManager.Instance.soundSourceList.GetSoundSourceByName(soundSourceName);
+        soundType = soundSource.type;
         volume = SoundManager.Instance.GetVolume(soundSource.type);
         clip = soundSource.clip;
     }
@@ -56,5 +59,30 @@ public class SoundObject : MonoBehaviour
         audioSource.clip = clip;
         audioSource.Play();
         yield return new WaitWhile(()=>audioSource.isPlaying);
+    }
+
+    public SoundType GetSoundType()
+    {
+        return soundType;
+    }
+
+    public void SetVolume(float volume)
+    {
+        this.volume = volume;
+        UpdateAudioSourceVolume();
+    }
+
+    public void SetMasterVolume(float masterVolume)
+    {
+        this.masterVolume = masterVolume;
+        UpdateAudioSourceVolume();
+    }
+
+    private void UpdateAudioSourceVolume()
+    {
+        if (audioSource != null)
+        {
+            audioSource.volume = volume * masterVolume;
+        }
     }
 }

@@ -48,37 +48,37 @@ namespace playerCharacter
             movement.x = 0;
             movement.y = 0;
 
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (InputManager.Instance.GetKey(ActionCode.MoveRight))
             {
                 movement.x = 1;
             }
-            else if (Input.GetKey(KeyCode.LeftArrow))
+            else if (InputManager.Instance.GetKey(ActionCode.MoveLeft))
             {
                 movement.x = -1;
             }
 
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (InputManager.Instance.GetKey(ActionCode.MoveUp))
             {
                 movement.y = 1;
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (InputManager.Instance.GetKey(ActionCode.MoveDown))
             {
                 movement.y = -1;
             }
 
             movement.Normalize();
 
-            if (Input.GetKeyDown(KeyCode.X) && !isDashing)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Dash) && !isDashing)
             {
                 StartCoroutine(Dash());
             }
 
-            if (Input.GetKeyDown(KeyCode.A) && !isAttacking)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Attack) && !isAttacking)
             {
                 StartCoroutine(Attack());
             }
 
-            if (Input.GetKeyDown(KeyCode.S) && !isDefending)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Defend) && !isDefending)
             {
                 StartCoroutine(Defend());
             }
@@ -86,7 +86,7 @@ namespace playerCharacter
 
         private void MoveCharacter()
         {
-            float speed = Input.GetKey(KeyCode.Z) ? sprintSpeed : moveSpeed;
+            float speed = InputManager.Instance.GetKey(ActionCode.Run) ? sprintSpeed : moveSpeed;
             playerRb.velocity = movement * speed;
 
             animator.SetFloat("speed", speed);
