@@ -24,6 +24,7 @@ public class SoundSourceList : ScriptableObject
             if (source.name.Equals(name))
                 return source;
         }
+
         throw new NotFoundException("SoundSource is not found");
     }
 
