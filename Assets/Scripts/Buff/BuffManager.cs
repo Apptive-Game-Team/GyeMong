@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,18 +23,32 @@ public enum BuffDisposeMode
     PERMANENT = 2,
 }
 
+[Serializable]
 public class BuffData
 {
     public BuffType buffType;
     public BuffDisposeMode disposeMode;
     public float duration;
-    public float disposeTime;
+    public float amount1;
+    public float amount2;
+}
+
+public interface IBuffSlave
+{
+    public void AddBuff(BuffData newBuff);
+    public void DeleteBuff(BuffData newBuff);
+}
+
+public interface IBuffMaster
+{
+    public void AddRuneEvent(BuffData data, BuffComponent buffComp);
 }
 
 
-public class BuffComponent
+[Serializable]
+public class BuffComponent : IBuffSlave
 {
-    List<BuffData> buffList;
+    [SerializeField] List<BuffData> buffList = new List<BuffData>();
 
     public void AddBuff(BuffData newBuff)
     {
@@ -41,26 +56,40 @@ public class BuffComponent
         {
             case BuffDisposeMode.TEMPORARY:
                 buffList.Add(newBuff);
-                newBuff.disposeTime = Time.time + newBuff.duration;
+                //listener.AddEvent(DisposeEvent,this,disposeTime);
+                BuffManager.Instance.StartCoroutine(BuffManager.Instance.AddTemporaryBuff(newBuff, this));
                 break;
             case BuffDisposeMode.PERMANENT:
                 buffList.Add(newBuff);
                 break;
         }
     }
+
+    public void DeleteBuff(BuffData buff)
+    {
+        buffList.Remove(buff);
+    }
 }
 
-public class BuffManager : MonoBehaviour
+public class BuffManager : SingletonObject<BuffManager>, IBuffMaster
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] RuneDataList runeDataList;
+    public void AddRuneEvent(BuffData data, BuffComponent buffComp)
     {
-        
+        Debug.Log(data.buffType);
+    }
+    public void DeleteRuneEvent(BuffData data, BuffComponent buffComp)
+    {
+        buffComp.DeleteBuff(data);
     }
 
-    // Update is called once per frame
-    void Update()
+    //we need buffhandler.... tick dmg/heal or dispose by time...
+
+    public IEnumerator AddTemporaryBuff(BuffData data, BuffComponent buffComp)
     {
-        
+        Debug.Log(data.buffType);
+        yield return new WaitForSeconds(data.duration);
+        DeleteRuneEvent(data, buffComp);
+        Debug.Log(data.duration);
     }
 }
