@@ -10,7 +10,7 @@ public class Guardian : Boss
     private GameObject[] rootObjects;
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private GameObject cubeShadowPrefab;
-    [SerializeField] private GameObject seedPrefab;
+    [SerializeField] private GameObject floorPrefab;
     [SerializeField] private GameObject vinePrefab;
     [SerializeField] private List<GameObject> rootSpawnZone;
     private float shieldHealth;
@@ -117,45 +117,37 @@ public class Guardian : Boss
     protected override IEnumerator ExecutePattern4()
     {
         isPattern = true;
-        Debug.Log("히히 씨앗 발사");
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
+        Debug.Log("크산테 q");
+        yield return new WaitForSeconds(0.5f);
+
+        int numberOfObjects = 10; // 생성할 오브젝트 수
+        float interval = 0.1f; // 생성 간격
+        List<GameObject> spawnedObjects = new List<GameObject>();
+        for (int i = 0; i <= numberOfObjects; i++)
         {
-            int count = 0;
-            while(count < 4)
-            {
-                Instantiate(seedPrefab, transform.position, Quaternion.identity);
-                count++;
-                yield return new WaitForSeconds(0.3f);
-            }
-            yield return new WaitForSeconds(2f);
+            Vector3 spawnPosition = Vector3.Lerp(transform.position , player.transform.position, (float)i / numberOfObjects);
+            GameObject floor = Instantiate(floorPrefab, spawnPosition, Quaternion.identity);
+            spawnedObjects.Add(floor);
+            yield return new WaitForSeconds(interval); // 다음 오브젝트 생성까지 대기
         }
-        else
-        {
-            // 사거리에 도달할 때까지 플레이어 방향으로 이동
-            while (distance > RangedAttackRange)
-            {
-                speed = 10f;
-                Vector3 direction = (player.transform.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
-                distance = Vector3.Distance(transform.position, player.transform.position);
-                yield return null;
-            }
-            // 사거리에 도달한 후 화살 발사 및 대기
-            speed = 1f;
-            yield return new WaitForSeconds(0.5f);
-            int count = 0;
-            while (count < 4)
-            {
-                Instantiate(seedPrefab, transform.position, Quaternion.identity);
-                count++;
-                yield return new WaitForSeconds(0.3f);
-            }
-            yield return new WaitForSeconds(2f);
-        }
+
+        StartCoroutine(DestroyFloorObjectsAfterDelay(spawnedObjects, 0.5f));
 
         isPattern = false;
     }
+    private IEnumerator DestroyFloorObjectsAfterDelay(List<GameObject> objects, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        foreach (GameObject obj in objects)
+        {
+            if (obj != null)
+            {
+                Destroy(obj);
+            }
+        }
+    } //이게 지금 바닥이 플레이어를 추적하면서 융기되는데 걍 목표위치를 고정하고 직선형으로 뻗는거랑 이거중에 뭐가 나을지 모르겠다
+
     protected override IEnumerator ExecutePattern5()
     {
         isPattern = true;
@@ -192,11 +184,11 @@ public class Guardian : Boss
         }
         else
         {
-            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(4, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(5, 0));
         }
         do
