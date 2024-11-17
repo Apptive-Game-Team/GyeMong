@@ -95,28 +95,22 @@ public class EventDrawer : PropertyDrawer
         property.serializedObject.ApplyModifiedProperties();
     }
 
-    
+
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        // default height
-        float height = EditorGUIUtility.singleLineHeight * 3 + EditorGUIUtility.standardVerticalSpacing * 2;
+        float totalHeight = EditorGUIUtility.singleLineHeight * 3 + EditorGUIUtility.standardVerticalSpacing * 2; // default label height
 
         SerializedProperty iterator = property.Copy();
+        SerializedProperty endProperty = property.GetEndProperty();
 
-        // add child properties heights
-        while (iterator.NextVisible(true))
+        iterator.NextVisible(true); // skip parent property
+
+        while (!SerializedProperty.EqualContents(iterator, endProperty))
         {
-            if (iterator.propertyPath.StartsWith(property.propertyPath) && iterator.propertyPath != property.propertyPath)
-            {
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            }
-            else
-            {
-                break;
-            }
-        } 
+            totalHeight += EditorGUI.GetPropertyHeight(iterator, true) + EditorGUIUtility.standardVerticalSpacing;
+            iterator.NextVisible(false); // move to next sibling property
+        }
 
-
-        return height;
+        return totalHeight;
     }
 }
