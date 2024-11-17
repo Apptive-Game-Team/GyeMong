@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDemo : SingletonObject<PlayerDemo>
@@ -8,6 +9,7 @@ public class PlayerDemo : SingletonObject<PlayerDemo>
     private float maxHealth;
     [SerializeField] private float curHealth;
     private Rigidbody2D playerRigidbody;
+    private bool canMove = true;
 
     void Start()
     {
@@ -18,6 +20,8 @@ public class PlayerDemo : SingletonObject<PlayerDemo>
 
     void Update()
     {
+        if (!canMove) return;
+
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");
 
@@ -36,5 +40,16 @@ public class PlayerDemo : SingletonObject<PlayerDemo>
     private void Die()
     {
         Destroy(gameObject);
+    }
+    public void Bind(float duration)
+    {
+        StartCoroutine(BindCoroutine(duration));
+    }
+
+    private IEnumerator BindCoroutine(float duration)
+    {
+        canMove = false; // 움직임 제한
+        yield return new WaitForSeconds(duration); // 지정된 시간 대기
+        canMove = true; // 움직임 재개
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class MidBoss : Boss
     [SerializeField] private GameObject vinePrefab;
     void Start()
     {
+        maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
         speed = 1f;
@@ -165,5 +167,35 @@ public class MidBoss : Boss
             yield return null;
         }
         isPattern = false;
+    }
+
+    protected override void SelectRandomPattern()
+    {
+        int randomIndex;
+        List<int> weightedPatterns = new List<int>();
+
+        // 가중치를 반영하여 리스트에 패턴을 추가
+        if (currentPhase == 1)
+        {
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
+        }
+        else
+        {
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
+        }
+        do
+        {
+            randomIndex = Random.Range(0, weightedPatterns.Count);
+        } while (weightedPatterns[randomIndex] == lastPattern); // 직전 패턴과 동일하면 다시 뽑기
+        curPattern = weightedPatterns[randomIndex];
+        lastPattern = curPattern; // 현재 패턴을 직전 패턴으로 저장
     }
 }
