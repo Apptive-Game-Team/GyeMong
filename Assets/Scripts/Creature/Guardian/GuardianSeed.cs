@@ -22,7 +22,7 @@ public class GuardianSeed : MonoBehaviour
         {
             if (enemy.CompareTag("Player"))
             {
-                PlayerDemo.Instance.TakeDamage(15); //이거 바인드 구현해서 바인드로 바꿔야됨
+                PlayerDemo.Instance.Bind(2f);
             }
         }
     }
