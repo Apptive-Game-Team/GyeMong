@@ -6,15 +6,17 @@ using UnityEngine;
 public enum BuffType
 {
     DEFAULT = 0,
-    SNARE = 1,
-    DOTDAMAGE = 2,
-    DOTHEAL = 3,
+    BUFF_SNARE = 1,
+    BUFF_DOT_DAMAGE = 2,
+    BUFF_DOT_HEAL = 4,
     RUNE_DEFAULT = 100,
     RUNE_BREEZE = 101,
     RUNE_VINE = 102,
     RUNE_FLOWER = 103,
     RUNE_GOLEM = 104,
 }
+
+//필요한 기능 - 몹에 스네어 상태가 구현이 되어야함 (속박상태)
 
 public enum BuffDisposeMode
 {
@@ -23,11 +25,19 @@ public enum BuffDisposeMode
     PERMANENT = 2,
 }
 
+public enum BuffActiveMode
+{
+    NONE = 0,
+    EVERY_SOME_SECOND = 1,
+    ON_ATTACK = 2,
+}
+
 [Serializable]
 public class BuffData
 {
     public BuffType buffType;
     public BuffDisposeMode disposeMode;
+    public BuffActiveMode buffActiveMode;
     public float duration;
     public float amount1;
     public float amount2;
@@ -61,6 +71,7 @@ public class BuffComponent : IBuffSlave
                 break;
             case BuffDisposeMode.PERMANENT:
                 buffList.Add(newBuff);
+                BuffManager.Instance.AddRuneEvent(newBuff, this);
                 break;
         }
     }
@@ -73,10 +84,24 @@ public class BuffComponent : IBuffSlave
 
 public class BuffManager : SingletonObject<BuffManager>, IBuffMaster
 {
-    [SerializeField] RuneDataList runeDataList;
+    [SerializeField] public RuneDataList runeDataList;
+    BuffHitman buffHitman;
+
+    private void Start()
+    {
+        buffHitman = new BuffHitman();
+    }
     public void AddRuneEvent(BuffData data, BuffComponent buffComp)
     {
         Debug.Log(data.buffType);
+        switch(data.buffType)
+        {
+            case BuffType.RUNE_BREEZE:
+                break;
+            case BuffType.RUNE_FLOWER:
+                break;
+
+        }    
     }
     public void DeleteRuneEvent(BuffData data, BuffComponent buffComp)
     {

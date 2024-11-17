@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuffTestComponent : MonoBehaviour
 {
-    [SerializeField] float playerHealth = 100f;
+    [SerializeField] public float playerHealth = 100f;
     [SerializeField] BuffComponent buffComponent;
 
     private void Awake()
@@ -14,6 +14,6 @@ public class BuffTestComponent : MonoBehaviour
 
     private void Start()
     {
-        buffComponent.AddBuff(new BuffData() { buffType = BuffType.SNARE, disposeMode = BuffDisposeMode.TEMPORARY, duration = 5f});
+        buffComponent.AddBuff(new BuffData() { buffType = BuffType.BUFF_SNARE, disposeMode = BuffDisposeMode.TEMPORARY, duration = 5f});
     }
 }
