@@ -4,7 +4,7 @@ using UnityEngine;
 public class Creature : MonoBehaviour
 {
     protected float maxHealth;
-    protected float curHealth;
+    [SerializeField] protected float curHealth;
     protected float AttackDamage;
     protected float speed;
     protected float detectionRange;
