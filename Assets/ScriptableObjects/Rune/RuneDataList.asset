@@ -19,33 +19,37 @@ MonoBehaviour:
     runeBuff:
       buffType: 0
       disposeMode: 2
+      buffActiveMode: 0
       duration: 0
       amount1: 0
       amount2: 0
   - name: Rune Of Breeze
     id: 1
-    runeImage: {fileID: 0}
+    runeImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
     runeBuff:
       buffType: 101
       disposeMode: 2
+      buffActiveMode: 0
       duration: 0
       amount1: 1
       amount2: 0
   - name: Rune Of Vine
     id: 2
-    runeImage: {fileID: 0}
+    runeImage: {fileID: 21300000, guid: dd1d19010ae9d8e4ba93035aa4b14621, type: 3}
     runeBuff:
       buffType: 102
       disposeMode: 2
+      buffActiveMode: 0
       duration: 0
       amount1: 1
       amount2: 0
   - name: Rune Of Flower
     id: 3
-    runeImage: {fileID: 0}
+    runeImage: {fileID: 21300000, guid: 1650ed56f27e1504faef336c81799de5, type: 3}
     runeBuff:
       buffType: 103
       disposeMode: 2
+      buffActiveMode: 0
       duration: 0
       amount1: 1
       amount2: 0
@@ -55,6 +59,7 @@ MonoBehaviour:
     runeBuff:
       buffType: 104
       disposeMode: 2
+      buffActiveMode: 0
       duration: 0
       amount1: 1
       amount2: 0
