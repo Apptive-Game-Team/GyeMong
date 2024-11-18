@@ -2,8 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class CreateRuneEvent : Event
+{
+    [SerializeField] Vector3 createPos;
+    [SerializeField] int runeID;
+
+    public override IEnumerator execute()
+    {
+        RuneObjectCreator.Instance.DrawRuneObject(runeID, createPos);
+        yield return null;
+    }
+}
+
+public class AcquireRuneEvent : Event
+{
+    public override IEnumerator execute()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+
 // PrefabCreator..?
-public class RuneObjectCreator : MonoBehaviour
+public class RuneObjectCreator : SingletonObject<RuneObjectCreator>
 {
     [SerializeField] RuneDataList runeDataList;
     [SerializeField] GameObject runeGameObject;

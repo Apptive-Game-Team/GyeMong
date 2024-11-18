@@ -81,7 +81,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 10.17, y: 9.93}
+  m_Size: {x: 1.27125, y: 1.24125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -115,16 +115,13 @@ MonoBehaviour:
   trigger: 1
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 883042389637201935
+  - rid: 7499765935887089665
   references:
     version: 2
     RefIds:
-    - rid: 883042389637201935
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uB8EC"
-          message: "\uC5BB\uC5C8\uB2E4."
+    - rid: 7499765935887089665
+      type: {class: AcquireRuneEvent, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!58 &362799338905696116
 CircleCollider2D:
   m_ObjectHideFlags: 0
