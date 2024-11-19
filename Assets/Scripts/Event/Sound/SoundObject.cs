@@ -28,7 +28,7 @@ public class SoundObject : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.loop = false;
 
-        if (sourceName != null)
+        if (sourceName != null && sourceName.Length != 0)
         {
             SetSoundSourceByName(sourceName);
         }
