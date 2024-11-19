@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -8,6 +9,12 @@ public class DataManager : SingletonObject<DataManager>
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    private void Start()
+    {
+        SetKeyMappings();
+        SetSoundSettings();
     }
 
     // 특정 구역 저장
@@ -32,5 +39,34 @@ public class DataManager : SingletonObject<DataManager>
             Debug.LogWarning($"{fileName} not found, returning new instance.");
             return new T(); // 파일이 없으면 새 인스턴스 반환
         }
+    }
+
+    private void SetKeyMappings()
+    {
+        KeyMappingData keyMappingData = DataManager.Instance.LoadSection<KeyMappingData>("KeyMappingData");
+        for (int i = 0; i < keyMappingData.keyBindings.Count; i++)
+        {
+            KeyMappingEntry entry = keyMappingData.keyBindings[i];
+
+            ActionCode actionCode = (ActionCode)Enum.Parse(typeof(ActionCode), entry.actionCode);
+            KeyCode keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), entry.keyCode);
+
+            InputManager.Instance.SetKey(actionCode, keyCode);
+        }
+    }
+
+    private void SetSoundSettings()
+    {
+        SoundData soundData = DataManager.Instance.LoadSection<SoundData>("SoundData");
+        SoundManager.Instance.SetMasterVolume(soundData.masterVolume);
+        SoundManager.Instance.SetVolume(SoundType.UI, soundData.UIVolume);
+        SoundManager.Instance.SetVolume(SoundType.BGM, soundData.bgmVolume);
+        SoundManager.Instance.SetVolume(SoundType.EFFECT, soundData.sfxVolume);
+    }
+
+    public SoundData GetSoundSettings()
+    {
+        SoundData soundData = DataManager.Instance.LoadSection<SoundData>("SoundData");
+        return soundData;
     }
 }

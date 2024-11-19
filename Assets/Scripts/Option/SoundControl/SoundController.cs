@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundController : MonoBehaviour
+public class SoundController : SingletonObject<SoundController>
 {
-    private Scrollbar masterVolumeSlider;
-    private Scrollbar uiVolumeSlider;
-    private Scrollbar bgmVolumeSlider;
-    private Scrollbar effectVolumeSlider;
+    public Scrollbar masterVolumeSlider;
+    public Scrollbar uiVolumeSlider;
+    public Scrollbar bgmVolumeSlider;
+    public Scrollbar effectVolumeSlider;
 
     private void Start()
     {
@@ -21,6 +21,11 @@ public class SoundController : MonoBehaviour
         uiVolumeSlider = transform.Find("UIVolumeSlider").GetComponent<Scrollbar>();
         bgmVolumeSlider = transform.Find("BgmVolumeSlider").GetComponent<Scrollbar>();
         effectVolumeSlider = transform.Find("EffectVolumeSlider").GetComponent<Scrollbar>();
+
+        masterVolumeSlider.value = DataManager.Instance.GetSoundSettings().masterVolume;
+        uiVolumeSlider.value = DataManager.Instance.GetSoundSettings().UIVolume;
+        bgmVolumeSlider.value = DataManager.Instance.GetSoundSettings().bgmVolume;
+        effectVolumeSlider.value = DataManager.Instance.GetSoundSettings().sfxVolume;
 
         masterVolumeSlider.onValueChanged.AddListener(UpdateMasterVolume);
         uiVolumeSlider.onValueChanged.AddListener(UpdateUIVolume);

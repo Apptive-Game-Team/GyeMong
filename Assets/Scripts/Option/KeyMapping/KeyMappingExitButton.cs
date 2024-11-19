@@ -24,8 +24,7 @@ public class KeyMappingExitButton : MonoBehaviour
             keyMappingData.keyBindings.Add(new KeyMappingEntry(pair.Key, pair.Value));
         }
 
-        DataManager dataManager = new();
-        dataManager.SaveSection(keyMappingData, "KeyMappingData");
+        DataManager.Instance.SaveSection(keyMappingData, "KeyMappingData");
     }
 
 }
