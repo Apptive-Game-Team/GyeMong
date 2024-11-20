@@ -44,5 +44,6 @@ public class OptionUI : SingletonObject<OptionUI>
     {
         if (isOptionOpened) Time.timeScale = 0f;
         else Time.timeScale = 1f;
+        InputManager.Instance.SetActionState(!isOptionOpened);
     }
 }
