@@ -9,6 +9,7 @@ public class GenerateMaze : MonoBehaviour
     [SerializeField] Tilemap floorTilemap;
     [SerializeField] Tile wallTile;
     [SerializeField] Tile floorTile;
+    [SerializeField] GameObject shadowCasterPrefab;
 
     private int width = 49;
     private int height = 49;
@@ -17,7 +18,7 @@ public class GenerateMaze : MonoBehaviour
 
     private Vector2Int start; 
 
-    void Start()
+    private void Start()
     {
         gridTile = new bool[width, height];
         start = new Vector2Int(1, height - 2); // 왼쪽 위(시작지점 or 끝지점)
@@ -27,7 +28,7 @@ public class GenerateMaze : MonoBehaviour
         GenerateTile(gridTile);
     }
 
-    void GenerateMap(Vector2Int start)
+    private void GenerateMap(Vector2Int start)
     {
         pathStack.Push(start);
         gridTile[start.x, start.y] = true;
@@ -56,7 +57,7 @@ public class GenerateMaze : MonoBehaviour
         gridTile[1, height - 1] = true;
     }
 
-    void InitializeWalls()
+    private void InitializeWalls()
     {
         for (int i = 0; i < width; i++)
         {
@@ -67,7 +68,7 @@ public class GenerateMaze : MonoBehaviour
         }
     }
 
-    List<Vector2Int> GetUnvisitedNeighbors(Vector2Int cell)
+    private List<Vector2Int> GetUnvisitedNeighbors(Vector2Int cell)
     {
         List<Vector2Int> neighbors = new();
 
@@ -79,7 +80,7 @@ public class GenerateMaze : MonoBehaviour
         return neighbors;
     }
 
-    void GenerateTile(bool[,] gridTile)
+    private void GenerateTile(bool[,] gridTile)
     {
         wallTilemap.ClearAllTiles();
         floorTilemap.ClearAllTiles();
@@ -97,8 +98,24 @@ public class GenerateMaze : MonoBehaviour
                 else
                 {
                     wallTilemap.SetTile(tilePosition, wallTile);
+                    CreateShadowCaster(tilePosition);
                 }
             }
         }
+    }
+
+    private void CreateShadowCaster(Vector3Int tilePosition)
+    {
+        // 타일맵의 월드 좌표 계산
+        Vector3 worldPosition = wallTilemap.GetCellCenterWorld(tilePosition);
+
+        // Shadow Caster 프리팹 생성
+        GameObject shadowCaster = Instantiate(shadowCasterPrefab, worldPosition, Quaternion.identity);
+
+        // 그림자 오브젝트의 부모를 설정해 계층 정리
+        shadowCaster.transform.SetParent(wallTilemap.transform);
+
+        // 타일 크기에 맞게 조정
+        shadowCaster.transform.localScale = wallTilemap.cellSize;
     }
 }
