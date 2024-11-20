@@ -14,7 +14,11 @@ public class RuneWindow : MonoBehaviour, ISelectableContainerUI
 {
     SelectableUI[] selectableUIs;
     int currentCursorNum;
+    int maxRuneEquipNum = 2;
+
+
     [SerializeField] GameObject cursorUI;
+
 
     public void Init()
     {

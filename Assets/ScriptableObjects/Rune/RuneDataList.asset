@@ -15,6 +15,7 @@ MonoBehaviour:
   runeDataList:
   - name: DefaultRune
     id: 0
+    description: This is dummy text. What did you except?
     runeImage: {fileID: 0}
     runeBuff:
       buffType: 0
@@ -25,6 +26,9 @@ MonoBehaviour:
       amount2: 0
   - name: Rune Of Breeze
     id: 1
+    description: "\uB530\uC2A4\uD55C \uBD04\uBC14\uB78C\uC774 \uCCB4\uB825\uC744
+      \uC18C\uB7C9 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4. 1\uCD08\uB9C8\uB2E4 1\uC758
+      \uCCB4\uB825\uC744 \uD68C\uBCF5\uD55C\uB2E4."
     runeImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
     runeBuff:
       buffType: 101
@@ -35,6 +39,10 @@ MonoBehaviour:
       amount2: 0
   - name: Rune Of Vine
     id: 2
+    description: "\uC77C\uC815\uC2DC\uAC04\uB9C8\uB2E4 \uC801\uC758 \uC6C0\uC9C1\uC784\uC744
+      \uBD09\uC1C4\uD55C\uB2E4. 10m \uAC70\uB9AC \uC774\uB0B4\uC758 \uC801 \uD558\uB098\uB97C
+      1\uCD08\uAC04 \uC18D\uBC15\uC2DC\uD0A8\uB2E4. (\uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04
+      10\uCD08)"
     runeImage: {fileID: 21300000, guid: dd1d19010ae9d8e4ba93035aa4b14621, type: 3}
     runeBuff:
       buffType: 102
@@ -45,6 +53,9 @@ MonoBehaviour:
       amount2: 0
   - name: Rune Of Flower
     id: 3
+    description: "\uADFC\uC811 \uACF5\uACA9\uC2DC \uC801\uC5D0\uAC8C \uAC1C\uD654\uB97C
+      \uC77C\uC73C\uCF1C \uCD94\uAC00 \uB300\uBBF8\uC9C0\uB97C \uBC1C\uC0DD\uC2DC\uD0B4
+      (100% \uD655\uB960\uB85C \uBC1C\uB3D9, 20% \uD53C\uD574 \uCD94\uAC00)"
     runeImage: {fileID: 21300000, guid: 1650ed56f27e1504faef336c81799de5, type: 3}
     runeBuff:
       buffType: 103
@@ -55,6 +66,7 @@ MonoBehaviour:
       amount2: 0
   - name: Rune Of Golem
     id: 4
+    description: "\uACE8\uACE8\uB818\uB818"
     runeImage: {fileID: 0}
     runeBuff:
       buffType: 104
