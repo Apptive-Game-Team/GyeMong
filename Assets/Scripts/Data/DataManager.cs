@@ -58,15 +58,8 @@ public class DataManager : SingletonObject<DataManager>
     private void SetSoundSettings()
     {
         SoundData soundData = DataManager.Instance.LoadSection<SoundData>("SoundData");
-        SoundManager.Instance.SetMasterVolume(soundData.masterVolume);
         SoundManager.Instance.SetVolume(SoundType.UI, soundData.UIVolume);
         SoundManager.Instance.SetVolume(SoundType.BGM, soundData.bgmVolume);
         SoundManager.Instance.SetVolume(SoundType.EFFECT, soundData.sfxVolume);
-    }
-
-    public SoundData GetSoundSettings()
-    {
-        SoundData soundData = DataManager.Instance.LoadSection<SoundData>("SoundData");
-        return soundData;
     }
 }

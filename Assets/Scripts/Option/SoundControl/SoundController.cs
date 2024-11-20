@@ -22,10 +22,11 @@ public class SoundController : SingletonObject<SoundController>
         bgmVolumeSlider = transform.Find("BgmVolumeSlider").GetComponent<Scrollbar>();
         effectVolumeSlider = transform.Find("EffectVolumeSlider").GetComponent<Scrollbar>();
 
-        masterVolumeSlider.value = DataManager.Instance.GetSoundSettings().masterVolume;
-        uiVolumeSlider.value = DataManager.Instance.GetSoundSettings().UIVolume;
-        bgmVolumeSlider.value = DataManager.Instance.GetSoundSettings().bgmVolume;
-        effectVolumeSlider.value = DataManager.Instance.GetSoundSettings().sfxVolume;
+        SoundData soundData = DataManager.Instance.LoadSection<SoundData>("SoundData");
+        masterVolumeSlider.value = soundData.masterVolume;
+        uiVolumeSlider.value = soundData.UIVolume;
+        bgmVolumeSlider.value = soundData.bgmVolume;
+        effectVolumeSlider.value = soundData.sfxVolume;
 
         masterVolumeSlider.onValueChanged.AddListener(UpdateMasterVolume);
         uiVolumeSlider.onValueChanged.AddListener(UpdateUIVolume);

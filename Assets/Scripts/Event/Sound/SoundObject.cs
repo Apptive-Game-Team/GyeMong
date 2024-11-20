@@ -17,6 +17,11 @@ public class SoundObject : MonoBehaviour
     private float masterVolume = 1f;
 
 
+    private void Awake()
+    {
+        masterVolume = DataManager.Instance.LoadSection<SoundData>("SoundData") == null ? 1f : DataManager.Instance.LoadSection<SoundData>("SoundData").masterVolume;
+    }
+
     private void Start()
     {
         soundManager = SoundManager.Instance;
@@ -55,7 +60,7 @@ public class SoundObject : MonoBehaviour
     public IEnumerator Play()
     {
         yield return new WaitUntil(()=>audioSource != null);
-        audioSource.volume = volume;
+        audioSource.volume = volume * masterVolume;
         audioSource.clip = clip;
         audioSource.Play();
         yield return new WaitWhile(()=>audioSource.isPlaying);
