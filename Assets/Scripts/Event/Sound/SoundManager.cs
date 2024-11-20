@@ -43,6 +43,7 @@ public class SoundManager : SingletonObject<SoundManager>
     {
         base.Awake();
         InitializeVolumes();
+        LoadSoundSettings();
     }
 
     private void Start()
@@ -74,5 +75,13 @@ public class SoundManager : SingletonObject<SoundManager>
     public float GetVolume(SoundType type)
     {
         return volumes[type];
+    }
+
+    private void LoadSoundSettings()
+    {
+        SoundData soundData = DataManager.Instance.LoadSection<SoundData>("SoundData");
+        volumes[SoundType.UI] = soundData.UIVolume;
+        volumes[SoundType.BGM] = soundData.bgmVolume;
+        volumes[SoundType.EFFECT] = soundData.sfxVolume;
     }
 }
