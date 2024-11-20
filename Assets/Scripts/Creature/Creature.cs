@@ -15,7 +15,17 @@ public class Creature : MonoBehaviour
     protected bool onBattle = false;
     public virtual void TakeDamage(float damage)
     {
-        curHealth -= damage;
+        //curHealth -= damage;
+        if (shield >= damage)
+        {
+            shield -= damage;
+        }
+        else
+        {
+            float temp = shield;
+            shield = 0;
+            curHealth -= (damage-temp);
+        }
     }
     protected virtual void Die()
     {
