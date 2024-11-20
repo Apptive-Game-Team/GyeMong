@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Guardian : Boss
 {
+    public static Guardian Instance { get; private set; }
+
     [SerializeField] private GameObject rootPrefab;
     private GameObject[] rootObjects;
     [SerializeField] private GameObject cubePrefab;
@@ -14,6 +16,15 @@ public class Guardian : Boss
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private List<GameObject> rootSpawnZone;
     private float shieldHealth;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     void Start()
     {
         maxPhase = 2;
@@ -47,7 +58,6 @@ public class Guardian : Boss
                 ExecuteCurrentPattern();
             }
         }
-        //curHealth += shieldHealth;
     }
     protected override void Die()
     {

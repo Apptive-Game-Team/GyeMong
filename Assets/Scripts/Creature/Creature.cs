@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Creature : MonoBehaviour
 {
+    public enum State
+    {
+        MOVE,
+        PATTERN,
+        STUN
+    }
+    public State curState;
     protected float maxHealth;
     [SerializeField] protected float curHealth;
     protected float AttackDamage;
