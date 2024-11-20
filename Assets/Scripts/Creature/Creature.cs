@@ -10,6 +10,7 @@ public class Creature : MonoBehaviour
     protected float detectionRange;
     protected float MeleeAttackRange;
     protected float RangedAttackRange;
+    protected float shield;
     protected GameObject player;
     protected bool onBattle = false;
     public virtual void TakeDamage(float damage)
