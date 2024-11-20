@@ -130,8 +130,8 @@ public class Guardian : Boss
         Debug.Log("크산테 q");
         yield return new WaitForSeconds(0.5f);
 
-        int numberOfObjects = 10; // 생성할 오브젝트 수
-        float interval = 0.1f; // 생성 간격
+        int numberOfObjects = 5; // 생성할 오브젝트 수
+        float interval = 0.2f; // 생성 간격
         float fixedDistance = 7f;
 
         List<GameObject> spawnedObjects = new List<GameObject>();

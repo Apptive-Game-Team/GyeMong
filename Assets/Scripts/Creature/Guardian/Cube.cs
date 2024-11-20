@@ -74,6 +74,7 @@ public class Cube : MonoBehaviour
         if (collision.collider.gameObject == root)
         {
             Destroy(gameObject);
+            Guardian.Instance.curState = Guardian.State.STUN;
         }
     }
 }
