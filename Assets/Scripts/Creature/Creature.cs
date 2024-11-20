@@ -5,11 +5,19 @@ public class Creature : MonoBehaviour
 {
     public enum State
     {
+        READY,
         MOVE,
-        PATTERN,
+        ATTACK
+    }
+    public enum StatusEffect
+    {
+        NONE,
+        CHANGINGPATTERN,
+        ONHIT,
         STUN
     }
     public State curState;
+    public StatusEffect statusEffect;
     protected float maxHealth;
     [SerializeField] protected float curHealth;
     protected float AttackDamage;
@@ -19,10 +27,8 @@ public class Creature : MonoBehaviour
     protected float RangedAttackRange;
     [SerializeField] protected float shield;
     protected GameObject player;
-    protected bool onBattle = false;
     public virtual void TakeDamage(float damage)
     {
-        //curHealth -= damage;
         if (shield >= damage)
         {
             shield -= damage;
@@ -37,6 +43,14 @@ public class Creature : MonoBehaviour
     protected virtual void Die()
     {
         Destroy(gameObject);
+    }
+    protected virtual void ChageState(State newState)
+    {
+        curState = newState;
+    }
+    protected virtual void ChageStateEffect()
+    {
+
     }
 }
 

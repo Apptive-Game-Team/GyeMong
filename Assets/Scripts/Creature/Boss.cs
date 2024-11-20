@@ -10,7 +10,6 @@ public abstract class Boss : Creature
     private Coroutine detectPlayerRoutine;
 
     protected int curPattern;
-    protected bool isPattern;
     protected int currentPhase = 2;//테스트용 원래는 1
     protected int maxPhase;
     protected float maxHealthP1;
@@ -118,14 +117,11 @@ public abstract class Boss : Creature
             float distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance <= detectionRange)
             {
-                onBattle = true;
                 wall.SetActive(true);
                 Debug.Log("qkqh");
                 StopDetectingPlayer();
                 yield break;
             }
-            else onBattle = false;
-
             yield return new WaitForSeconds(0.5f);
         }
     }
