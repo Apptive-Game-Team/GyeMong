@@ -51,6 +51,13 @@ public class Cube : MonoBehaviour
             yield return null;
         }
 
+        // 낙하 완료 후 Collider의 isTrigger를 해제
+        Collider2D collider = GetComponent<Collider2D>();
+        if (collider != null)
+        {
+            collider.isTrigger = false;
+        }
+
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
