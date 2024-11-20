@@ -19,6 +19,7 @@ public class Guardian : Boss
         maxPhase = 2;
         maxHealthP1 = 200f;
         maxHealthP2 = 300f;
+        shield = 50f;
         speed = 1f;
         detectionRange = 10f;
         MeleeAttackRange = 1f;
@@ -93,8 +94,7 @@ public class Guardian : Boss
     {
         isPattern = true;
         Debug.Log("º¸È£¸·");
-        /*float shield = 30;
-        shieldHealth += shield;*/
+        shield = 30f;
         yield return null;
         isPattern = false;
     }
