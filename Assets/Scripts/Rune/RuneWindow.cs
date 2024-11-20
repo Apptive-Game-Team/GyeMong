@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class RuneWindow : MonoBehaviour
+public interface ISelectableContainerUI
 {
-    // Start is called before the first frame update
-    void Start()
+    public void SetSelectableList();
+    public void OnKeyInput();
+}
+
+public class RuneWindow : MonoBehaviour, ISelectableContainerUI
+{
+    [SerializeField] ISelectableUI[] selectableUIs;
+    [SerializeField] int currentCursorNum;
+
+    public void SetSelectableList()
     {
-        
+        selectableUIs = GetComponentsInChildren<ISelectableUI>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnKeyInput()
     {
-        
+        if(InputManager.Instance.GetKeyDown(ActionCode.MoveUp))
+        {
+            currentCursorNum++;
+        }
+    }
+
+    private void Update()
+    {
+        OnKeyInput();
     }
 }
