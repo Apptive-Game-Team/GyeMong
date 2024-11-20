@@ -13,8 +13,8 @@ public class DataManager : SingletonObject<DataManager>
 
     private void Start()
     {
-        SetKeyMappings();
-        SetSoundSettings();
+        LoadKeyMappings();
+        LoadSoundSettings();
     }
 
     // 특정 구역 저장
@@ -41,7 +41,7 @@ public class DataManager : SingletonObject<DataManager>
         }
     }
 
-    private void SetKeyMappings()
+    private void LoadKeyMappings()
     {
         KeyMappingData keyMappingData = DataManager.Instance.LoadSection<KeyMappingData>("KeyMappingData");
         for (int i = 0; i < keyMappingData.keyBindings.Count; i++)
@@ -55,7 +55,7 @@ public class DataManager : SingletonObject<DataManager>
         }
     }
 
-    private void SetSoundSettings()
+    private void LoadSoundSettings()
     {
         SoundData soundData = DataManager.Instance.LoadSection<SoundData>("SoundData");
         SoundManager.Instance.SetVolume(SoundType.UI, soundData.UIVolume);
