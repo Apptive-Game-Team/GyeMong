@@ -33,20 +33,24 @@ public class Cube : MonoBehaviour
 
     private IEnumerator StartFalling()
     {
-        float Speed = 7f; // 낙하 속도
+        float accele = 70f; // 중력가속도 (가속도 크기)
+        float speed = 0f; // 초기 속도
+        float currentSpeed = speed; // 현재 속도
         Vector3 targetPosition = player.transform.position;
         Vector3 startPosition = transform.position;
 
-        float distance = startPosition.y - targetPosition.y;
-        float elapsedTime = 0f;
-
         while (transform.position.y > targetPosition.y)
         {
-            elapsedTime += Time.deltaTime;
-            float newY = Mathf.Lerp(startPosition.y, targetPosition.y, elapsedTime * Speed / distance);
+            //속도 = 초기속도 + 가속도 * 시간
+            currentSpeed += accele * Time.deltaTime;
+
+            //s = vt
+            float newY = transform.position.y - currentSpeed * Time.deltaTime;
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+
             yield return null;
         }
+
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
