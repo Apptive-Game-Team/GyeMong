@@ -5,19 +5,15 @@ public class Creature : MonoBehaviour
 {
     public enum State
     {
-        READY,
+        IDLE,
         MOVE,
-        ATTACK
-    }
-    public enum StatusEffect
-    {
-        NONE,
+        ATTACK,
         CHANGINGPATTERN,
         ONHIT,
         STUN
     }
-    public State curState;
-    public StatusEffect statusEffect;
+    private FiniteStateMachine _fsm;
+    public State _curState;
     protected float maxHealth;
     [SerializeField] protected float curHealth;
     protected float AttackDamage;
@@ -44,13 +40,27 @@ public class Creature : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    protected virtual void ChageState(State newState)
+    protected virtual void ChageState(State nextState)
     {
-        curState = newState;
-    }
-    protected virtual void ChageStateEffect()
-    {
-
+        _curState = nextState;
+        switch(_curState)
+        {
+            case State.IDLE:
+                {
+                    _fsm.ChangeState(new IdleState(this)); 
+                    break;
+                }
+            case State.MOVE:
+                {
+                    _fsm.ChangeState(new MoveState(this));
+                    break;
+                }
+            case State.ATTACK:
+                {
+                    _fsm.ChangeState(new AttackState(this));
+                    break;
+                }
+        }
     }
 }
 
