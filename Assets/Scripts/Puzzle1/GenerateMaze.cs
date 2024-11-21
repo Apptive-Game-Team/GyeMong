@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class GenerateMaze : MonoBehaviour
 {
@@ -72,12 +73,21 @@ public class GenerateMaze : MonoBehaviour
     {
         List<Vector2Int> neighbors = new();
 
-        if (cell.x - 2 >= 0 && !gridTile[cell.x - 2, cell.y]) neighbors.Add(new Vector2Int(cell.x - 2, cell.y));
-        if (cell.x + 2 < width && !gridTile[cell.x + 2, cell.y]) neighbors.Add(new Vector2Int(cell.x + 2, cell.y));
-        if (cell.y - 2 >= 0 && !gridTile[cell.x, cell.y - 2]) neighbors.Add(new Vector2Int(cell.x, cell.y - 2));
-        if (cell.y + 2 < height && !gridTile[cell.x, cell.y + 2]) neighbors.Add(new Vector2Int(cell.x, cell.y + 2));
+        if (cell.x - 2 >= 0 && !gridTile[cell.x - 2, cell.y] && !IsInCenter(new Vector2Int(cell.x - 2, cell.y))) neighbors.Add(new Vector2Int(cell.x - 2, cell.y));
+        if (cell.x + 2 < width && !gridTile[cell.x + 2, cell.y] && !IsInCenter(new Vector2Int(cell.x + 2, cell.y))) neighbors.Add(new Vector2Int(cell.x + 2, cell.y));
+        if (cell.y - 2 >= 0 && !gridTile[cell.x, cell.y - 2] && !IsInCenter(new Vector2Int(cell.x, cell.y - 2))) neighbors.Add(new Vector2Int(cell.x, cell.y - 2));
+        if (cell.y + 2 < height && !gridTile[cell.x, cell.y + 2] && !IsInCenter(new Vector2Int(cell.x, cell.y + 2))) neighbors.Add(new Vector2Int(cell.x, cell.y + 2));
 
         return neighbors;
+    }
+
+    private bool IsInCenter(Vector2Int position)
+    {
+        int centerX = width / 2;
+        int centerY = height / 2;
+        int halfSize = 4;
+
+        return position.x >= centerX - halfSize && position.x <= centerX + halfSize && position.y >= centerY - halfSize && position.y <= centerY + halfSize;
     }
 
     private void GenerateTile(bool[,] gridTile)
@@ -90,6 +100,7 @@ public class GenerateMaze : MonoBehaviour
             for (int j = 0; j < gridTile.GetLength(1); j++)
             {
                 Vector3Int tilePosition = new(i - width / 2, j - height / 2, 0);
+                if (IsInCenter(new Vector2Int(i,j))) gridTile[i,j] = true;
 
                 if (gridTile[i, j])
                 {
@@ -106,16 +117,9 @@ public class GenerateMaze : MonoBehaviour
 
     private void CreateShadowCaster(Vector3Int tilePosition)
     {
-        // 타일맵의 월드 좌표 계산
         Vector3 worldPosition = wallTilemap.GetCellCenterWorld(tilePosition);
-
-        // Shadow Caster 프리팹 생성
         GameObject shadowCaster = Instantiate(shadowCasterPrefab, worldPosition, Quaternion.identity);
-
-        // 그림자 오브젝트의 부모를 설정해 계층 정리
         shadowCaster.transform.SetParent(wallTilemap.transform);
-
-        // 타일 크기에 맞게 조정
         shadowCaster.transform.localScale = wallTilemap.cellSize;
     }
 }
