@@ -6,8 +6,8 @@ namespace playerCharacter
 {
     public class PlayerCharacter : SingletonObject<PlayerCharacter>
     {
-        public float maxHealth;
         [SerializeField] public float curHealth;
+        public float maxHealth;
         public float attackPower;
 
         public GameObject attackColliderPrefab;
@@ -20,6 +20,7 @@ namespace playerCharacter
         private float dashDistance = 5.0f;
         private float delayTime = 0.3f;
         private float dashCooldown = 1.0f;
+        private float invincibilityDuration = 3.0f;
 
         private Vector2 movement;
         private Vector2 lastMovementDirection;
@@ -29,6 +30,7 @@ namespace playerCharacter
         private bool isAttacking = false;
         private bool isDefending = false;
         private bool canMove = true;
+        private bool isInvincible = false;
 
         private void Start()
         {
@@ -36,7 +38,7 @@ namespace playerCharacter
             animator = GetComponent<Animator>();
 
             attackPower = 1f;
-            maxHealth = 100f;
+            maxHealth = 1000f;
             curHealth = maxHealth;
         }
 
@@ -122,6 +124,47 @@ namespace playerCharacter
             }
         }
 
+        public void TakeDamage(float damage)
+        {
+            if (isInvincible) return;
+
+            curHealth -= damage;
+            if (curHealth <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                StartCoroutine(TriggerInvincibility());
+            }
+        }
+
+        private IEnumerator TriggerInvincibility()
+        {
+            Debug.Log("무적 시작");
+            isInvincible = true;
+
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                float elapsedTime = 0f;
+                bool isVisible = true;
+
+                while (elapsedTime < invincibilityDuration)
+                {
+                    elapsedTime += 0.2f;
+                    isVisible = !isVisible;
+                    spriteRenderer.enabled = isVisible;
+                    yield return new WaitForSeconds(0.1f);
+                }
+
+                spriteRenderer.enabled = true;
+            }
+
+            isInvincible = false;
+            Debug.Log("무적 해제");
+        }
+
         private IEnumerator Dash()
         {
             movement = Vector2.zero;
@@ -192,12 +235,30 @@ namespace playerCharacter
         private void SpawnAttackCollider()
         {
             Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
-            Quaternion spawnRotation = Quaternion.identity;
+
+            float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
             GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation);
-            attackCollider.transform.right = lastMovementDirection;
 
             Destroy(attackCollider, delayTime);
+        }
+
+        private void Die()
+        {
+            Destroy(gameObject);
+        }
+
+        public void Bind(float duration)
+        {
+            StartCoroutine(BindCoroutine(duration));
+        }
+
+        private IEnumerator BindCoroutine(float duration)
+        {
+            canMove = false; // 움직임 제한
+            yield return new WaitForSeconds(duration); // 지정된 시간 대기
+            canMove = true; // 움직임 재개
         }
     }
 }
