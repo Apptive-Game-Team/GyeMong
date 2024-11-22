@@ -1,23 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PuzzleController : MonoBehaviour
 {
-    public List<GameObject> puzzleImages = new();
+    public static PuzzleController Instance;
+    private List<GameObject> puzzleImages = new();
+    public bool isPuzzleStart = false;
+    public bool isPuzzleCleared = false;
     [SerializeField] GameObject rune;
+    private Image timeWatchImage;
+    private TextMeshProUGUI timeWatch;
 
     private void Awake()
     {
-        SetUpImage();
-        SetUpInitialRotation();
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        if (rune == null || rune.activeSelf) isPuzzleCleared = true;
+
+        Transform canvas = transform.parent.Find("TimeWatch");
+        timeWatchImage = canvas.GetChild(0).GetComponent<Image>();
+        timeWatch = canvas.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        if (!isPuzzleCleared)
+        {
+            SetUpImage();
+            SetUpInitialRotation();
+        }
     }
 
     private void Update()
     {
-        if (CheckClear())
+        if (!isPuzzleCleared && isPuzzleStart && !timeWatchImage.gameObject.activeSelf)
+        {
+            StartCoroutine(StartTimeWatchCoroutine());
+        }
+
+        if (CheckClear() && !isPuzzleCleared)
         {
             rune.SetActive(true);
+            isPuzzleCleared = true;
         }
     }
 
@@ -53,5 +78,28 @@ public class PuzzleController : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private IEnumerator StartTimeWatchCoroutine()
+    {
+        timeWatchImage.gameObject.SetActive(true);
+        float remainTime = 30f;
+
+        while (remainTime > 0)
+        {
+            if (CheckClear())
+            {
+                timeWatchImage.gameObject.SetActive(false);
+                yield break;
+            }
+
+            remainTime -= Time.deltaTime;
+            timeWatch.text = remainTime.ToString("F2");
+            yield return null;
+        }
+
+        timeWatchImage.gameObject.SetActive(false);
+        SetUpInitialRotation();
+        isPuzzleStart = false;
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ImageRotation : MonoBehaviour
 {
-    bool isAttached = false;
-    bool isRotating = true;
+    private bool isAttached = false;
+    private bool isRotating = true;
     public float rotationSpeed = 300f;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -18,11 +18,12 @@ public class ImageRotation : MonoBehaviour
 
     private void Update()
     {
-        if (isAttached && isRotating)
+        if (isAttached && isRotating && !PuzzleController.Instance.isPuzzleCleared)
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 StartCoroutine(RotateImage());
+                PuzzleController.Instance.isPuzzleStart = true;
             }
         }
     }
