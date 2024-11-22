@@ -8,7 +8,7 @@ public class ImageRotation : MonoBehaviour
     bool isRotating = true;
     public float rotationSpeed = 300f;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -16,7 +16,7 @@ public class ImageRotation : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (isAttached && isRotating)
         {
@@ -27,7 +27,7 @@ public class ImageRotation : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D other) 
+    private void OnTriggerExit2D(Collider2D other) 
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -35,14 +35,7 @@ public class ImageRotation : MonoBehaviour
         }
     }
 
-    void Rotate()
-    {
-        Vector3 newRotation = gameObject.transform.eulerAngles;
-        newRotation.z -= 90f;
-        gameObject.transform.eulerAngles = newRotation;
-    }
-
-    IEnumerator RotateImage()
+    private IEnumerator RotateImage()
     {
         isRotating = false;
         float targetAngle = transform.eulerAngles.z - 90f;

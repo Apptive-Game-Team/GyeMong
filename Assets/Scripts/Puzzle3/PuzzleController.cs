@@ -7,13 +7,13 @@ public class PuzzleController : MonoBehaviour
     public List<GameObject> puzzleImages = new();
     [SerializeField] GameObject rune;
 
-    void Awake()
+    private void Awake()
     {
         SetUpImage();
         SetUpInitialRotation();
     }
 
-    void Update()
+    private void Update()
     {
         if (CheckClear())
         {
@@ -21,7 +21,7 @@ public class PuzzleController : MonoBehaviour
         }
     }
 
-    void SetUpImage()
+    private void SetUpImage()
     {
         foreach (Transform image in transform)
         {
@@ -29,7 +29,7 @@ public class PuzzleController : MonoBehaviour
         }
     }
 
-    void SetUpInitialRotation()
+    private void SetUpInitialRotation()
     {
         float[] rotations = { 0f, 90f, 180f, 270f };
 
@@ -43,7 +43,7 @@ public class PuzzleController : MonoBehaviour
         } while (CheckClear());
     }
 
-    bool CheckClear()
+    private bool CheckClear()
     {
         foreach (GameObject image in puzzleImages)
         {
