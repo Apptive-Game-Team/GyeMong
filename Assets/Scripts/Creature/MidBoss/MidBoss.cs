@@ -21,6 +21,8 @@ public class MidBoss : Boss
     }
     void Start()
     {
+        curState = State.NONE;
+        _fsm = new FiniteStateMachine(new IdleState(this));
         maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
@@ -29,21 +31,17 @@ public class MidBoss : Boss
         MeleeAttackRange = 1f;
         RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
-        //여기까지 원래 Awake였음
         wall.SetActive(false);
         SetupPhase();
     }
 
     void Update()
     {
-        if (onBattle)
-        {
-            if(!isPattern)
-            {
-                SelectRandomPattern();
-                ExecuteCurrentPattern();
-            }
-        }
+        if (curState == State.NONE || curState == State.ATTACK)
+            return;
+
+        SelectRandomPattern();
+        ExecuteCurrentPattern();
     }
     protected override void Die()
     {
@@ -52,7 +50,7 @@ public class MidBoss : Boss
 
     protected override IEnumerator ExecutePattern0()
     {
-        isPattern = true;
+        ChangeState(State.ATTACK);
         Debug.Log("거리 벌리기");
 
         float duration = 1f; // 이동 시간
@@ -61,11 +59,11 @@ public class MidBoss : Boss
         {
             yield return StartCoroutine(BackStep(duration));
         }
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern1()
     {
-        isPattern = true;
+        ChangeState(State.ATTACK);
         Debug.Log("원거리 공격");
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -90,26 +88,25 @@ public class MidBoss : Boss
             Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(2f);
         }
-
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
 
     protected override IEnumerator ExecutePattern2()
     {
-        isPattern = true;
+        ChangeState(State.ATTACK);
         Debug.Log("근거리 공격");
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
             PlayerDemo.Instance.TakeDamage(10);
         }
-        isPattern = false;
         yield return null;
+        ChangeState(State.IDLE);
     }
 
     protected override IEnumerator ExecutePattern3()
     {
-        isPattern = true;
+        ChangeState(State.ATTACK);
         Debug.Log("추적");
         float duration = 2f;
         float elapsed = 0f;
@@ -120,11 +117,11 @@ public class MidBoss : Boss
             elapsed += Time.deltaTime;
             yield return null;
         }
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern4()
     {
-        isPattern = true;
+        ChangeState(State.ATTACK);
         Debug.Log("히히 씨앗 발사");
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange)
@@ -161,12 +158,11 @@ public class MidBoss : Boss
             }
             yield return new WaitForSeconds(2f);
         }
-
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern5()
     {
-        isPattern = true;
+        ChangeState(State.ATTACK);
         Debug.Log("덩쿨 휘두르기");
         float duration = 2f;
         float elapsed = 0f;
@@ -176,7 +172,7 @@ public class MidBoss : Boss
             elapsed += Time.deltaTime;
             yield return null;
         }
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
 
     protected override void SelectRandomPattern()

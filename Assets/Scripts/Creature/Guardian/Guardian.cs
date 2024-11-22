@@ -27,6 +27,8 @@ public class Guardian : Boss
     }
     void Start()
     {
+        curState = State.NONE;
+        _fsm = new FiniteStateMachine(new IdleState(this));
         maxPhase = 2;
         maxHealthP1 = 200f;
         maxHealthP2 = 300f;
@@ -50,9 +52,9 @@ public class Guardian : Boss
 
     void Update()
     {
-        if (onBattle)
+        if (curState != State.IDLE)
         {
-            if(!isPattern)
+            if (curState != State.ATTACK)
             {
                 SelectRandomPattern();
                 ExecuteCurrentPattern();
@@ -66,7 +68,6 @@ public class Guardian : Boss
 
     protected override IEnumerator ExecutePattern0()
     {
-        isPattern = true;
         Debug.Log("가시 바닥");
         int caseNumber = Random.Range(1, 5);
         if(!rootObjects[0].activeSelf && !rootObjects[3].activeSelf)
@@ -88,30 +89,24 @@ public class Guardian : Boss
             }
             yield return null;
         }
-        isPattern = false;
     }
     protected override IEnumerator ExecutePattern1()
     {
-        isPattern = true;
         Debug.Log("큐브 떨구기");
         Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
         Instantiate(cubeShadowPrefab, player.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
         yield return null;
-        isPattern = false;
     }
 
     protected override IEnumerator ExecutePattern2()
     {
-        isPattern = true;
         Debug.Log("보호막");
         shield = 30f;
         yield return null;
-        isPattern = false;
     }
 
     protected override IEnumerator ExecutePattern3()
     {
-        isPattern = true;
         Debug.Log("추적");
         float duration = 2f;
         float elapsed = 0f;
@@ -122,11 +117,9 @@ public class Guardian : Boss
             elapsed += Time.deltaTime;
             yield return null;
         }
-        isPattern = false;
     }
     protected override IEnumerator ExecutePattern4()
     {
-        isPattern = true;
         Debug.Log("크산테 q");
         yield return new WaitForSeconds(0.5f);
 
@@ -148,8 +141,6 @@ public class Guardian : Boss
         }
 
         StartCoroutine(DestroyFloor(spawnedObjects, 0.5f));
-
-        isPattern = false;
     }
     private IEnumerator DestroyFloor(List<GameObject> objects, float delay)
     {
@@ -166,11 +157,9 @@ public class Guardian : Boss
 
     protected override IEnumerator ExecutePattern5()
     {
-        isPattern = true;
         Debug.Log("맞으면 못 움직이는 씨앗");
         Instantiate(seedPrefab,player.transform.position, Quaternion.identity);
         yield return null;
-        isPattern = false;
     }
     private void ActivateRootObjects(int[] indices)
     {

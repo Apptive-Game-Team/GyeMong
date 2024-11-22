@@ -12,6 +12,19 @@ public abstract class BaseState
     public abstract void OnStateUpdate();
     public abstract void OnStateExit();
 }
+public class NoneState : BaseState
+{
+    public NoneState(Creature creature) : base(creature) { }
+    public override void OnStateEnter()
+    {
+    }
+    public override void OnStateExit()
+    {
+    }
+    public override void OnStateUpdate()
+    {
+    }
+}
 public class IdleState : BaseState
 {
     public IdleState(Creature creature) : base(creature) { }
@@ -41,6 +54,45 @@ public class MoveState : BaseState
 public class AttackState : BaseState
 {
     public AttackState(Creature creature) : base(creature) { }
+    public override void OnStateEnter()
+    {
+    }
+    public override void OnStateExit()
+    {
+    }
+    public override void OnStateUpdate()
+    {
+    }
+}
+public class ChangingPatternState : BaseState
+{
+    public ChangingPatternState(Creature creature) : base(creature) { }
+    public override void OnStateEnter()
+    {
+    }
+    public override void OnStateExit()
+    {
+    }
+    public override void OnStateUpdate()
+    {
+    }
+}
+public class OnHitState : BaseState
+{
+    public OnHitState(Creature creature) : base(creature) { }
+    public override void OnStateEnter()
+    {
+    }
+    public override void OnStateExit()
+    {
+    }
+    public override void OnStateUpdate()
+    {
+    }
+}
+public class StunState : BaseState
+{
+    public StunState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
     }
