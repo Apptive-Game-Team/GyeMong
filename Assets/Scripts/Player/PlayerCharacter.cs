@@ -15,10 +15,11 @@ namespace playerCharacter
         public float moveSpeed = 2.0f;
         public float sprintSpeed = 4.0f;
         public float dashSpeed = 10.0f;
-        public float dashDuration = 0.1f;
-        public float dashDistance = 5.0f;
-        public float delayTime = 0.1f;
-        public float dashCooldown = 3.0f;
+
+        private float dashDuration = 0.1f;
+        private float dashDistance = 5.0f;
+        private float delayTime = 0.3f;
+        private float dashCooldown = 1.0f;
 
         private Vector2 movement;
         private Vector2 lastMovementDirection;
@@ -137,7 +138,7 @@ namespace playerCharacter
             while (elapsedTime < dashDuration)
             {
                 elapsedTime += Time.deltaTime;
-  
+
                 playerRb.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration);
                 yield return null;
             }
@@ -163,8 +164,9 @@ namespace playerCharacter
 
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
+
             yield return new WaitForSeconds(delayTime);
-    
+
 
             animator.SetBool("isAttacking", false);
             canMove = true;
@@ -179,6 +181,7 @@ namespace playerCharacter
 
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
+
             yield return new WaitForSeconds(delayTime);
 
             animator.SetBool("isDefending", false);
