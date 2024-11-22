@@ -15,7 +15,6 @@ public class Guardian : Boss
     [SerializeField] private GameObject floorPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private List<GameObject> rootSpawnZone;
-    private float shieldHealth;
     private void Awake()
     {
         if (Instance != null && Instance != this)

@@ -10,6 +10,8 @@ public class MidBoss : Boss
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
+    [SerializeField] private GameObject meleeAttackPrefab;
+    Vector3 meleeAttackPrefabPos;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -28,10 +30,11 @@ public class MidBoss : Boss
         maxHealthP2 = 200f;
         speed = 1f;
         detectionRange = 10f;
-        MeleeAttackRange = 1f;
+        MeleeAttackRange = 2f;
         RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
         wall.SetActive(false);
+        meleeAttackPrefab.SetActive(false);
         SetupPhase();
     }
 
@@ -107,8 +110,14 @@ public class MidBoss : Boss
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
-            PlayerDemo.Instance.TakeDamage(10);
+            meleeAttackPrefab.SetActive(true);
+            Debug.Log("ÄÑÁü");
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+            float movement = Vector3.Angle(direction, transform.forward); ;
+            meleeAttackPrefab.transform.RotateAround(transform.position, Vector3.forward, movement);
+            yield return new WaitForSeconds(1f);
         }
+        meleeAttackPrefab.SetActive(false);
         yield return null;
         ChangeState(State.IDLE);
     }
@@ -208,11 +217,11 @@ public class MidBoss : Boss
         else
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(4, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(5, 0));
         }
         do
         {
