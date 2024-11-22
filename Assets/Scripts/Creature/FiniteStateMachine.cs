@@ -59,6 +59,7 @@ public class AttackState : BaseState
     public AttackState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
+       _creature.StartStateCoroutine(WaitAndAttack());
     }
     public override void OnStateExit()
     {
@@ -66,6 +67,12 @@ public class AttackState : BaseState
     public override void OnStateUpdate()
     {
         Debug.Log("FSM업데이트중");
+    }
+    private IEnumerator WaitAndAttack()
+    {
+        Debug.Log("공격 준비 중");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("공격 시작");
     }
 }
 public class ChangingPatternState : BaseState

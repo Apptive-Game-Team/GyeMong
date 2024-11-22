@@ -44,7 +44,7 @@ public class Creature : MonoBehaviour
     protected virtual void ChangeState(State nextState)
     {
         curState = nextState;
-        switch(curState)
+        switch(curState)    
         {
             case State.NONE:
                 {
@@ -82,6 +82,10 @@ public class Creature : MonoBehaviour
                     break;
                 }
         }
+    }
+    public Coroutine StartStateCoroutine(IEnumerator coroutine)
+    {
+        return StartCoroutine(coroutine);
     }
 }
 

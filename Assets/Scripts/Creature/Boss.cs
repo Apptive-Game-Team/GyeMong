@@ -50,38 +50,26 @@ public abstract class Boss : Creature
             Die();
         }
     }
-    private IEnumerator WaitAndAttack()
-    {
-        Debug.Log("공격 준비 중");
-        yield return new WaitForSeconds(2f);
-        Debug.Log("공격 시작");
-    }
     protected void ExecuteCurrentPattern()
     {
         switch (curPattern)
         {
             case 0:
-                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern0());
                 break;
             case 1:
-                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern1());
                 break;
             case 2:
-                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern2());
                 break;
             case 3:
-                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern3());
                 break;
             case 4:
-                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern4());
                 break;
             case 5:
-                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern5());
                 break;
             default:

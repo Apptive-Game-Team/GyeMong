@@ -127,7 +127,7 @@ public class MidBoss : Boss
         if (distance <= RangedAttackRange)
         {
             int count = 0;
-            while(count < 4)
+            while (count < 4)
             {
                 Instantiate(seedPrefab, transform.position, Quaternion.identity);
                 count++;
@@ -148,7 +148,6 @@ public class MidBoss : Boss
             }
             // 사거리에 도달한 후 화살 발사 및 대기
             speed = 1f;
-            yield return new WaitForSeconds(0.5f);
             int count = 0;
             while (count < 4)
             {
