@@ -45,6 +45,7 @@ public class MazeDarkness : MonoBehaviour
             globalLight.intensity = Mathf.Lerp(globalLight.intensity, targetIntensity, Ratio);
             yield return new WaitForSeconds(0.05f);
         }
+        globalLight.intensity = targetIntensity;
 
         playerLight.SetActive(isInMaze);
 

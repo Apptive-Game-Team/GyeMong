@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
@@ -8,13 +9,17 @@ public class GenerateMaze : MonoBehaviour
 {
     [SerializeField] Tilemap wallTilemap;
     [SerializeField] Tilemap floorTilemap;
+    [SerializeField] Tilemap thornTilemap;
     [SerializeField] Tile wallTile;
     [SerializeField] Tile floorTile;
+    [SerializeField] Tile thornTile;
     [SerializeField] GameObject shadowCasterPrefab;
 
     private int width = 49;
     private int height = 49;
     private bool[,] gridTile;
+    private bool[,] thornGridTile;
+    private bool isDeadEnd = true;
     private Stack<Vector2Int> pathStack = new();
 
     private Vector2Int start; 
@@ -22,6 +27,7 @@ public class GenerateMaze : MonoBehaviour
     private void Start()
     {
         gridTile = new bool[width, height];
+        thornGridTile = new bool[width, height];
         start = new Vector2Int(1, height - 2); // 왼쪽 위(시작지점 or 끝지점)
 
         InitializeWalls();
@@ -47,15 +53,24 @@ public class GenerateMaze : MonoBehaviour
                 Vector2Int wallToRemove = (current + chosen) / 2;
                 gridTile[wallToRemove.x, wallToRemove.y] = true;
                 gridTile[chosen.x, chosen.y] = true;
+
+                isDeadEnd = false;
             }
             else
             {
+                if (!isDeadEnd && !IsInCenter(new Vector2Int(current.x, current.y)))
+                {
+                    thornGridTile[current.x, current.y] = true;
+                    isDeadEnd = true;
+                }
                 pathStack.Pop();
             }
         }
 
         gridTile[width - 2, 0] = true;
         gridTile[1, height - 1] = true;
+        thornGridTile[width - 2, 0] = false;
+        thornGridTile[1, height - 1] = false;
     }
 
     private void InitializeWalls()
@@ -65,6 +80,7 @@ public class GenerateMaze : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 gridTile[i, j] = false;
+                thornGridTile[i, j] = false;
             }
         }
     }
@@ -94,6 +110,7 @@ public class GenerateMaze : MonoBehaviour
     {
         wallTilemap.ClearAllTiles();
         floorTilemap.ClearAllTiles();
+        thornTilemap.ClearAllTiles();
 
         for (int i = 0; i < gridTile.GetLength(0); i++)
         {
@@ -111,6 +128,16 @@ public class GenerateMaze : MonoBehaviour
                     wallTilemap.SetTile(tilePosition, wallTile);
                     CreateShadowCaster(tilePosition);
                 }
+            }
+        }
+
+        for (int i = 0; i < thornGridTile.GetLength(0); i++)
+        {
+            for (int j = 0; j < thornGridTile.GetLength(1); j++)
+            {
+                Vector3Int tilePosition = new(i - width / 2, j - height / 2, 0);
+
+                if (thornGridTile[i, j]) thornTilemap.SetTile(tilePosition, thornTile);
             }
         }
     }
