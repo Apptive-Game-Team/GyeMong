@@ -52,7 +52,7 @@ public class Guardian : Boss
 
     void Update()
     {
-        if (curState == State.NONE || curState == State.ATTACK)
+        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN)
             return;
 
         SelectRandomPattern();
@@ -66,6 +66,9 @@ public class Guardian : Boss
 
     protected override IEnumerator ExecutePattern0()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("가시 바닥");
         int caseNumber = Random.Range(1, 5);
@@ -92,6 +95,9 @@ public class Guardian : Boss
     }
     protected override IEnumerator ExecutePattern1()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("큐브 떨구기");
         Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
@@ -102,6 +108,9 @@ public class Guardian : Boss
 
     protected override IEnumerator ExecutePattern2()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("보호막");
         shield = 30f;
@@ -111,6 +120,9 @@ public class Guardian : Boss
 
     protected override IEnumerator ExecutePattern3()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("추적");
         float duration = 2f;
@@ -126,6 +138,9 @@ public class Guardian : Boss
     }
     protected override IEnumerator ExecutePattern4()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("크산테 q");
         yield return new WaitForSeconds(0.5f);
@@ -161,10 +176,12 @@ public class Guardian : Boss
                 Destroy(obj);
             }
         }
-    } //이게 지금 바닥이 플레이어를 추적하면서 융기되는데 걍 목표위치를 고정하고 직선형으로 뻗는거랑 이거중에 뭐가 나을지 모르겠다
-
+    }
     protected override IEnumerator ExecutePattern5()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("맞으면 못 움직이는 씨앗");
         Instantiate(seedPrefab,player.transform.position, Quaternion.identity);
