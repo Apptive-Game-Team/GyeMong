@@ -50,26 +50,38 @@ public abstract class Boss : Creature
             Die();
         }
     }
+    private IEnumerator WaitAndAttack()
+    {
+        Debug.Log("공격 준비 중");
+        yield return new WaitForSeconds(2f);
+        Debug.Log("공격 시작");
+    }
     protected void ExecuteCurrentPattern()
     {
         switch (curPattern)
         {
             case 0:
+                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern0());
                 break;
             case 1:
+                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern1());
                 break;
             case 2:
+                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern2());
                 break;
             case 3:
+                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern3());
                 break;
             case 4:
+                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern4());
                 break;
             case 5:
+                StartCoroutine(WaitAndAttack());
                 StartCoroutine(ExecutePattern5());
                 break;
             default:
@@ -121,7 +133,7 @@ public abstract class Boss : Creature
                 yield return null; // 다음 프레임까지 대기
             }
             yield return new WaitForSeconds(1f);
-        }//현재 장애물에 막힐 경우 플레이어가 알아서 멀어지지 않으면 멈춰버리는데 장애물 피하는 ai가 필요함
+        }
     }
     public IEnumerator DetectPlayerCoroutine()
     {
