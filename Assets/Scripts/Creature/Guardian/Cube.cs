@@ -5,12 +5,10 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
     private GameObject player;
-    private GameObject root;
 
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        root = GameObject.Find("Root");
         StartCoroutine(FollowAndFall());
     }
 
@@ -69,10 +67,10 @@ public class Cube : MonoBehaviour
             PlayerDemo.Instance.TakeDamage(10);
             //플레이어가 맞고 잠시 무적 되는 기능을 넣을 필요가 있어보임
         }
-        if (collision.collider.gameObject == root)
+        if (collision.collider.CompareTag("Boss"))
         {
             Destroy(gameObject);
-            Guardian.Instance.curState = Guardian.State.STUN;
+            Guardian.Instance.ChangeState(Guardian.State.STUN);
         }
     }
 }

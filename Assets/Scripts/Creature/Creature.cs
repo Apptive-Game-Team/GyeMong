@@ -41,7 +41,7 @@ public class Creature : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    protected virtual void ChangeState(State nextState)
+    public virtual void ChangeState(State nextState)
     {
         curState = nextState;
         switch(curState)    
