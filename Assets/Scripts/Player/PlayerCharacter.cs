@@ -10,6 +10,11 @@ namespace playerCharacter
         public float maxHealth;
         public float attackPower;
 
+        private Vector2 movement;
+        private Vector2 lastMovementDirection;
+        private Rigidbody2D playerRb;
+        private Animator animator;
+
         public GameObject attackColliderPrefab;
 
         public float moveSpeed = 2.0f;
@@ -18,14 +23,15 @@ namespace playerCharacter
 
         private float dashDuration = 0.1f;
         private float dashDistance = 5.0f;
-        private float delayTime = 0.3f;
         private float dashCooldown = 1.0f;
+
+        private float delayTime = 0.3f;
+
+        private float defendTime = 1.0f;
+        private float defendStartTime = 0f;
+        
         private float invincibilityDuration = 3.0f;
 
-        private Vector2 movement;
-        private Vector2 lastMovementDirection;
-        private Rigidbody2D playerRb;
-        private Animator animator;
         private bool isDashing = false;
         private bool isAttacking = false;
         private bool isDefending = false;
@@ -128,7 +134,22 @@ namespace playerCharacter
         {
             if (isInvincible) return;
 
+            if (isDefending)
+            {
+                if (Time.time - defendStartTime < defendTime / 2f) 
+                {
+                    damage = 0f;
+                    Debug.Log($"Perfect Defend, damage : {damage}");
+                }
+                else 
+                {
+                    damage /= 2f;
+                    Debug.Log($"ÀÏ´Ü Defend, damage : {damage}");
+                }
+            }
+
             curHealth -= damage;
+
             if (curHealth <= 0)
             {
                 Die();
@@ -225,7 +246,9 @@ namespace playerCharacter
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
 
-            yield return new WaitForSeconds(delayTime);
+            defendStartTime = Time.time;
+
+            yield return new WaitForSeconds(defendTime);
 
             animator.SetBool("isDefending", false);
             canMove = true;
