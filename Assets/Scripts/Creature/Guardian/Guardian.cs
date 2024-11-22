@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-
 public class Guardian : Boss
 {
     public static Guardian Instance { get; private set; }
@@ -11,6 +10,8 @@ public class Guardian : Boss
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private GameObject cubeShadowPrefab;
     [SerializeField] private GameObject floorPrefab;
+    [SerializeField] private GameObject meleeAttackPrefab1;
+    [SerializeField] private GameObject meleeAttackPrefab2;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,17 +31,21 @@ public class Guardian : Boss
         shield = 50f;
         speed = 1f;
         detectionRange = 10f;
-        MeleeAttackRange = 1f;
+        MeleeAttackRange = 2f;
         RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
         wall.SetActive(false);
+        meleeAttackPrefab1.SetActive(false);
+        meleeAttackPrefab2.SetActive(false);
         SetupPhase();
     }
 
     void Update()
     {
         if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN)
+        {
             return;
+        }
 
         SelectRandomPattern();
         ExecuteCurrentPattern();
@@ -57,8 +62,16 @@ public class Guardian : Boss
         Debug.Log("쉬어");
         yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
-        Debug.Log("근접공격 1");
-
+        Debug.Log("근거리 공격1");
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= MeleeAttackRange)
+        {
+            meleeAttackPrefab1.SetActive(true);
+            Debug.Log("켜짐");
+            yield return new WaitForSeconds(1f);
+        }
+        meleeAttackPrefab1.SetActive(false);
+        yield return null;
         ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern1()
@@ -151,7 +164,19 @@ public class Guardian : Boss
         Debug.Log("쉬어");
         yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
-        Debug.Log("근접공격 2");
+        Debug.Log("근거리 공격2");
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= MeleeAttackRange)
+        {
+            meleeAttackPrefab2.SetActive(true);
+            Debug.Log("켜짐");
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+            float movement = Vector3.Angle(direction, transform.forward); ;
+            meleeAttackPrefab2.transform.RotateAround(transform.position, Vector3.forward, movement);
+            yield return new WaitForSeconds(1f);
+        }
+        meleeAttackPrefab2.SetActive(false);
+        yield return null;
         ChangeState(State.IDLE);
     }
     protected override void SelectRandomPattern()
@@ -170,10 +195,10 @@ public class Guardian : Boss
         else
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(4, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
         }
         do
