@@ -203,7 +203,8 @@ namespace playerCharacter
             {
                 elapsedTime += Time.deltaTime;
 
-                playerRb.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration);
+                /*playerRb.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration);*/
+                playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration));
                 yield return null;
             }
 
