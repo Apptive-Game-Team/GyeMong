@@ -17,7 +17,8 @@ namespace playerCharacter
         public float dashSpeed = 10.0f;
         public float dashDuration = 0.1f;
         public float dashDistance = 5.0f;
-        public float delayTime = 0.5f;
+        public float delayTime = 0.1f;
+        public float dashCooldown = 3.0f;
 
         private Vector2 movement;
         private Vector2 lastMovementDirection;
@@ -143,9 +144,13 @@ namespace playerCharacter
 
             playerRb.velocity = Vector2.zero;
             yield return new WaitForSeconds(delayTime);
-            isDashing = false;
+
             canMove = true;
             animator.SetBool("isDashing", false);
+
+            yield return new WaitForSeconds(dashCooldown);
+
+            isDashing = false;
         }
 
         private IEnumerator Attack()
