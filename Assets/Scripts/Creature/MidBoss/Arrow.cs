@@ -5,7 +5,7 @@ public class Arrow : MonoBehaviour
 {
     private GameObject player;
     private Vector3 direction;
-    private float speed = 10f;
+    private float speed = 15f;
 
     private void Awake()
     {

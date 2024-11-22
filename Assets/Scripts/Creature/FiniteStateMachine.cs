@@ -1,5 +1,6 @@
 using UnityEngine.XR;
-
+using System.Collections.Generic;
+using UnityEngine;
 public abstract class BaseState
 {
     protected Creature _creature;
@@ -62,6 +63,7 @@ public class AttackState : BaseState
     }
     public override void OnStateUpdate()
     {
+        Debug.Log("원거리 공격");
     }
 }
 public class ChangingPatternState : BaseState

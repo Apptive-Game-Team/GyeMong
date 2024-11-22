@@ -42,6 +42,7 @@ public class MidBoss : Boss
 
         SelectRandomPattern();
         ExecuteCurrentPattern();
+        _fsm.UpdateState();
     }
     protected override void Die()
     {
@@ -54,7 +55,7 @@ public class MidBoss : Boss
         Debug.Log("°Å¸® ¹ú¸®±â");
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
+        if (distance <= RangedAttackRange/2)
         {
             yield return StartCoroutine(BackStep(RangedAttackRange));
         }
