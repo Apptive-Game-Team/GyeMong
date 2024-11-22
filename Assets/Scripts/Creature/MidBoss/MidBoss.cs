@@ -37,7 +37,7 @@ public class MidBoss : Boss
 
     void Update()
     {
-        if (curState == State.NONE || curState == State.ATTACK)
+        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN)
             return;
 
         SelectRandomPattern();
@@ -51,6 +51,9 @@ public class MidBoss : Boss
 
     protected override IEnumerator ExecutePattern0()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("거리 벌리기");
 
@@ -63,6 +66,9 @@ public class MidBoss : Boss
     }
     protected override IEnumerator ExecutePattern1()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("원거리 공격");
 
@@ -93,6 +99,9 @@ public class MidBoss : Boss
 
     protected override IEnumerator ExecutePattern2()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("근거리 공격");
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -106,6 +115,9 @@ public class MidBoss : Boss
 
     protected override IEnumerator ExecutePattern3()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("추적");
         float duration = 2f;
@@ -121,6 +133,9 @@ public class MidBoss : Boss
     }
     protected override IEnumerator ExecutePattern4()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("히히 씨앗 발사");
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -161,6 +176,9 @@ public class MidBoss : Boss
     }
     protected override IEnumerator ExecutePattern5()
     {
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
         Debug.Log("덩쿨 휘두르기");
         float duration = 2f;

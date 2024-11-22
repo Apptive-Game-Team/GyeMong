@@ -83,9 +83,5 @@ public class Creature : MonoBehaviour
                 }
         }
     }
-    public Coroutine StartStateCoroutine(IEnumerator coroutine)
-    {
-        return StartCoroutine(coroutine);
-    }
 }
 

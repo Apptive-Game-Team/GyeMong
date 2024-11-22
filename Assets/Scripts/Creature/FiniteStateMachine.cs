@@ -1,6 +1,6 @@
 using UnityEngine.XR;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Diagnostics;
 using System.Collections;
 
 public abstract class BaseState
@@ -59,20 +59,12 @@ public class AttackState : BaseState
     public AttackState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
-       _creature.StartStateCoroutine(WaitAndAttack());
     }
     public override void OnStateExit()
     {
     }
     public override void OnStateUpdate()
     {
-        Debug.Log("FSM업데이트중");
-    }
-    private IEnumerator WaitAndAttack()
-    {
-        Debug.Log("공격 준비 중");
-        yield return new WaitForSeconds(1f);
-        Debug.Log("공격 시작");
     }
 }
 public class ChangingPatternState : BaseState
