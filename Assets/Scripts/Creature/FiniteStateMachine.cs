@@ -63,7 +63,7 @@ public class AttackState : BaseState
     }
     public override void OnStateUpdate()
     {
-        Debug.Log("원거리 공격");
+        Debug.Log("FSM업데이트중");
     }
 }
 public class ChangingPatternState : BaseState

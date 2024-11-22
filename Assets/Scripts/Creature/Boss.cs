@@ -100,12 +100,20 @@ public abstract class Boss : Creature
             float backStepSpeed = 50f;
             Vector3 direction = (transform.position - player.transform.position).normalized; // 플레이어 반대 방향
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            float checkRadius = 1f; // 충돌 감지 반경
+            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle"); // 장애물 레이어
+
             while (true)
             {
                 float currentDistance = Vector3.Distance(transform.position, player.transform.position);
                 if (currentDistance >= targetDistance)
                 {
                     break;
+                }
+                RaycastHit2D hit = Physics2D.CircleCast(transform.position, checkRadius, direction, backStepSpeed * Time.deltaTime, obstacleLayer);
+                if (hit.collider != null)
+                {
+                    break; // 충돌 시 백스텝 중단
                 }
                 // MovePosition으로 이동
                 Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
