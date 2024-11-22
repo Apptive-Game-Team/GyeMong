@@ -1966,6 +1966,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0e25d8f4f1cbc4b8b729b4f708811a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curState: 0
+  curHealth: 0
+  shield: 0
   wall: {fileID: 632343602}
   arrowPrefab: {fileID: 1349092434517921609, guid: 698ededced094f444b9cd52caa8c484b,
     type: 3}

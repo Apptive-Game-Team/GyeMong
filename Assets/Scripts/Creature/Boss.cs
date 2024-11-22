@@ -93,22 +93,27 @@ public abstract class Boss : Creature
             transform.position = newPosition;
         }
     }
-    public IEnumerator BackStep(float duration)
+    public IEnumerator BackStep(float targetDistance)
     {
         if (player != null)
         {
-            float elapsedTime = 0f;
-            float backStepSpeed = 2f;
+            float backStepSpeed = 50f;
             Vector3 direction = (transform.position - player.transform.position).normalized; // 플레이어 반대 방향
-
-            while (elapsedTime < duration)
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            while (true)
             {
-                // 매 프레임마다 이동
-                transform.position += direction * backStepSpeed * Time.deltaTime;
-                elapsedTime += Time.deltaTime;
+                float currentDistance = Vector3.Distance(transform.position, player.transform.position);
+                if (currentDistance >= targetDistance)
+                {
+                    break;
+                }
+                // MovePosition으로 이동
+                Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
+                rb.MovePosition(newPosition);
+                yield return null; // 다음 프레임까지 대기
             }
             yield return new WaitForSeconds(1f);
-        }
+        }//현재 장애물에 막힐 경우 플레이어가 알아서 멀어지지 않으면 멈춰버리는데 장애물 피하는 ai가 필요함
     }
     public IEnumerator DetectPlayerCoroutine()
     {

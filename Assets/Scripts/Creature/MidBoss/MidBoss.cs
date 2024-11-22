@@ -53,11 +53,10 @@ public class MidBoss : Boss
         ChangeState(State.ATTACK);
         Debug.Log("거리 벌리기");
 
-        float duration = 1f; // 이동 시간
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange)
         {
-            yield return StartCoroutine(BackStep(duration));
+            yield return StartCoroutine(BackStep(RangedAttackRange));
         }
         ChangeState(State.IDLE);
     }
@@ -192,10 +191,10 @@ public class MidBoss : Boss
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(4, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(5, 0));
         }
         do
         {
