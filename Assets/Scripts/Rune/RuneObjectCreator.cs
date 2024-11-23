@@ -1,3 +1,4 @@
+using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,16 +17,20 @@ public class CreateRuneEvent : Event
 
 public class AcquireRuneEvent : Event
 {
+    [SerializeField] int runeID;
     public override IEnumerator execute()
     {
-        throw new System.NotImplementedException();
+        RuneData runeData = RuneObjectCreator.Instance.runeDataList.GetRuneData(runeID);
+
+        PlayerCharacter.Instance.GetComponent<RuneComponent>().AcquireRune(runeData);
+        yield return null;
     }
 }
 
 // PrefabCreator..?
 public class RuneObjectCreator : SingletonObject<RuneObjectCreator>
 {
-    [SerializeField] RuneDataList runeDataList;
+    [SerializeField] public RuneDataList runeDataList;
     [SerializeField] GameObject runeGameObject;
 
     public GameObject DrawRuneObject(int runeID, Vector3 pos)

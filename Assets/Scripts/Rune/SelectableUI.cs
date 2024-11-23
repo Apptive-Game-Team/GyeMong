@@ -10,7 +10,6 @@ public enum SelectableState
 
 public class SelectableUI : MonoBehaviour, ISelectableUI
 {
-    SelectableState uiState;
 }
 
 public interface ISelectableUI
