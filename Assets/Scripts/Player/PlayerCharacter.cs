@@ -108,7 +108,9 @@ namespace playerCharacter
 
         private void MoveCharacter()
         {
-            float speed = InputManager.Instance.GetKey(ActionCode.Run) ? sprintSpeed : moveSpeed;
+            bool isRun = InputManager.Instance.GetKey(ActionCode.Run);
+            float speed = isRun ? sprintSpeed : moveSpeed;
+            soundController.SetRun(isRun);
             playerRb.velocity = movement * speed;
 
             animator.SetFloat("speed", speed);
@@ -118,6 +120,7 @@ namespace playerCharacter
         {
             bool isMoving = movement.magnitude > 0;
             animator.SetBool("isMove", isMoving);
+            soundController.SetBool(Sound.Foot, isMoving);
 
             if (isMoving)
             {
