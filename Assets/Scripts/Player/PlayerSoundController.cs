@@ -41,7 +41,7 @@ namespace playerCharacter
         private int curFootSoundIndex = 0;
         private FloorType curFloorType = FloorType.GRASS;
         private WalkType curWalkType = WalkType.WALK;
-
+        private Coroutine footSoundCoroutine = null;
         private void Awake()
         {
             soundObjects.Add(Sound.Sword, transform.Find("SwordSound").GetComponent<SoundObject>());
@@ -65,12 +65,12 @@ namespace playerCharacter
             if (active && !soundBools[sound])
             {
                 soundBools[sound] = true;
-                print("qudtld");
-                StartCoroutine(PlaySequentialSound(sound));
+                footSoundCoroutine = StartCoroutine(PlaySequentialSound(sound));
             }
             else if (!active && soundBools[sound])
             {
-                print("tlqkf");
+                StopCoroutine(footSoundCoroutine);
+                footSoundCoroutine = null;
                 soundBools[sound] = false;
                 soundObjects[sound].Stop();
             }
@@ -83,7 +83,6 @@ namespace playerCharacter
             {
                 index %= footSounds[curFootSoundIndex].GetLength();
                 soundObjects[sound].SetSoundSource(footSounds[curFootSoundIndex].GetSoundSource(index));
-                //print(footSounds[curFootSoundIndex].GetSoundSource(index).clip);
                 yield return soundObjects[sound].Play();
                 index += 1;
             }
