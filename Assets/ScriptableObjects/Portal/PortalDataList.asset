@@ -24,13 +24,17 @@ MonoBehaviour:
     destination: {x: -29, y: 0, z: 0}
   - portalID: 4
     sceneID: 1
-    destination: {x: 46, y: 26, z: 0}
+    destination: {x: 53, y: 47, z: 0}
   - portalID: 5
+    sceneID: 1
+    destination: {x: -48, y: 0, z: 0}
+    destination: {x: 46, y: 26, z: 0}
+  - portalID: 6
     sceneID: 4
     destination: {x: 0, y: -5, z: 0}
-  - portalID: 6
+  - portalID: 7
     sceneID: 1
     destination: {x: -4, y: 28, z: 0}
-  - portalID: 7
+  - portalID: 8
     sceneID: 1
     destination: {x: -3, y: 3, z: 0}
