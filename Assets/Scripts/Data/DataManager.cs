@@ -14,7 +14,6 @@ public class DataManager : SingletonObject<DataManager>
     private void Start()
     {
         LoadKeyMappings();
-        LoadSoundSettings();
     }
 
     // 특정 구역 저장
@@ -53,13 +52,5 @@ public class DataManager : SingletonObject<DataManager>
 
             InputManager.Instance.SetKey(actionCode, keyCode);
         }
-    }
-
-    private void LoadSoundSettings()
-    {
-        SoundData soundData = DataManager.Instance.LoadSection<SoundData>("SoundData");
-        SoundManager.Instance.SetVolume(SoundType.UI, soundData.UIVolume);
-        SoundManager.Instance.SetVolume(SoundType.BGM, soundData.bgmVolume);
-        SoundManager.Instance.SetVolume(SoundType.EFFECT, soundData.sfxVolume);
     }
 }
