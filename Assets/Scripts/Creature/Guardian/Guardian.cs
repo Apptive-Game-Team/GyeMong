@@ -108,15 +108,6 @@ public class Guardian : Boss
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("추적");
-        float duration = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            TrackPlayer();
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
         ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern4()
@@ -160,27 +151,33 @@ public class Guardian : Boss
             }
         }
     }
-    protected override IEnumerator ExecutePattern5()
-    {
-        ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("쉬어");
-        yield return new WaitForSeconds(2f);
-        ChangeState(State.ATTACK);
-        Debug.Log("근거리 공격2");
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= MeleeAttackRange)
+        protected override IEnumerator ExecutePattern5()
         {
-            meleeAttackPrefab2.SetActive(true);
-            Debug.Log("켜짐");
-            Vector3 direction = (player.transform.position - transform.position).normalized;
-            float movement = Vector3.Angle(direction, transform.forward); ;
-            meleeAttackPrefab2.transform.RotateAround(transform.position, Vector3.forward, movement);
-            yield return new WaitForSeconds(1f);
+            ChangeState(State.CHANGINGPATTERN);
+            Debug.Log("쉬어");
+            yield return new WaitForSeconds(2f);
+            ChangeState(State.ATTACK);
+            Debug.Log("근거리 공격2");
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance <= MeleeAttackRange)
+            {
+                meleeAttackPrefab2.SetActive(true);
+                Debug.Log("켜짐");
+
+                // 플레이어 방향 계산
+                Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+
+                // 콜라이더를 플레이어 방향으로 이동
+                meleeAttackPrefab2.transform.position = transform.position + playerDirection * MeleeAttackRange;
+
+                // 공격 지속 시간
+                yield return new WaitForSeconds(0.2f);
+
+                meleeAttackPrefab2.SetActive(false);
+            }
+            yield return null;
+            ChangeState(State.IDLE);
         }
-        meleeAttackPrefab2.SetActive(false);
-        yield return null;
-        ChangeState(State.IDLE);
-    }
     protected override void SelectRandomPattern()
     {
         int randomIndex;

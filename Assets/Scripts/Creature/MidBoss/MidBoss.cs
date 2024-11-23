@@ -112,12 +112,18 @@ public class MidBoss : Boss
         {
             meleeAttackPrefab.SetActive(true);
             Debug.Log("켜짐");
-            Vector3 direction = (player.transform.position - transform.position).normalized;
-            float movement = Vector3.Angle(direction, transform.forward); ;
-            meleeAttackPrefab.transform.RotateAround(transform.position, Vector3.forward, movement);
-            yield return new WaitForSeconds(1f);
+
+            // 플레이어 방향 계산
+            Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+
+            // 콜라이더를 플레이어 방향으로 이동
+            meleeAttackPrefab.transform.position = transform.position + playerDirection * MeleeAttackRange;
+
+            // 공격 지속 시간
+            yield return new WaitForSeconds(0.2f);
+
+            meleeAttackPrefab.SetActive(false);
         }
-        meleeAttackPrefab.SetActive(false);
         yield return null;
         ChangeState(State.IDLE);
     }
