@@ -26,7 +26,6 @@ public class SequentialSoundSourceList : ScriptableObject
 
     private void Initialize()
     {
-        Debug.Log("zz");
         soundSources = new List<SoundSource>();
         int id = 0;
         foreach (AudioClip audioClip in audioClips)
@@ -35,7 +34,6 @@ public class SequentialSoundSourceList : ScriptableObject
             soundSource.name = template.name + id;
             soundSource.type = template.type;
             soundSource.clip = audioClip;
-            Debug.Log(audioClip);
             soundSources.Add(soundSource);
             id++;
         }

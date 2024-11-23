@@ -16,7 +16,7 @@ public class MazeDarkness : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         globalLight = GameObject.Find("GlobalLight2D").GetComponent<Light2D>();
-        playerLight = player.transform.GetChild(0).GetComponent<Light2D>().gameObject;
+        playerLight = player.transform.Find("PlayerLight").GetComponent<Light2D>().gameObject;
     }
 
     private void OnTriggerExit2D(Collider2D other) 
