@@ -211,7 +211,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
 --- !u!1 &1335504902609846588
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,12 +507,12 @@ PrefabInstance:
     - target: {fileID: 3027008433291006028, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -58.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3027008433291006028, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 35.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3027008433291006028, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}
@@ -527,17 +527,17 @@ PrefabInstance:
     - target: {fileID: 3027008433291006028, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3027008433291006028, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3027008433291006028, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3027008433291006028, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}
@@ -558,6 +558,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354279042027975731, guid: 875c47ed22de1104bbad6f8f665b07b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
