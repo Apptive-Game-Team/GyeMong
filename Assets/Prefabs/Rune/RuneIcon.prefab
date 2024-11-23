@@ -215,6 +215,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00bfd54391e03b4096d1d8ceca0e283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runeData:
+    name: 
+    id: 0
+    description: 
+    runeImage: {fileID: 21300000, guid: a24cec790ecd2e946988439077181c4d, type: 3}
+    runeBuff:
+      buffType: 0
+      disposeMode: 2
+      buffActiveMode: 0
+      duration: 0
+      amount1: 0
+      amount2: 0
+  uiState: 0
   uiImage: {fileID: 6546578019850912495}
 --- !u!1 &6836604358095013428
 GameObject:
@@ -281,7 +294,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1650ed56f27e1504faef336c81799de5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

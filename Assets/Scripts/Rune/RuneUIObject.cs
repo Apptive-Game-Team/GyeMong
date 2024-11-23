@@ -24,16 +24,12 @@ public enum RuneUIState
 public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
 {
     [SerializeField] RuneData runeData;
-    RuneUIState uiState;
+    [SerializeField] RuneUIState uiState;
 
     [SerializeField] Image uiImage;
 
     private void Update()
     {
-        if(InputManager.Instance.GetKeyDown(ActionCode.Interaction))
-        {
-            OnInteract();
-        }
     }
 
     public void Init(RuneData newData)
@@ -52,7 +48,7 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
         return new DescriptionSet(runeData.name, runeData.description);
     }
 
-    public void OnInteract()
+    public override void OnInteract()
     {
         if(uiState == RuneUIState.UNEQUIPPED) 
         {

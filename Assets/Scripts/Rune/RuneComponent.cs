@@ -5,7 +5,7 @@ using UnityEngine;
 public class RuneComponent : MonoBehaviour
 {
 
-    List<RuneData> equippedRuneList = new List<RuneData>();
+    [SerializeField] List<RuneData> equippedRuneList = new List<RuneData>();
     [SerializeField] List<RuneData> acquiredRuneList = new List<RuneData>();
     int maxRuneEquipNum = 2;
 

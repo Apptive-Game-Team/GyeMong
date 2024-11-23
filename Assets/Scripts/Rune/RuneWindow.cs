@@ -54,6 +54,10 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         {
             StartCoroutine(DrawUICursor(1));
         }
+        else if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
+        {
+            selectableUIs[currentCursorNum].OnInteract();
+        }
     }
 
     IEnumerator DrawUICursor(int step) 
@@ -125,7 +129,6 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         gameObject.SetActive(isOptionOpened);
     }
 }
-
 
 public class EquipRuneListUI : MonoBehaviour
 {

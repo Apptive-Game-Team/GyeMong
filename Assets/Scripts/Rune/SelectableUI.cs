@@ -8,8 +8,9 @@ public enum SelectableState
     ACTIVE = 1,
 }
 
-public class SelectableUI : MonoBehaviour, ISelectableUI
+public abstract class SelectableUI : MonoBehaviour, ISelectableUI
 {
+    public abstract void OnInteract();
 }
 
 public interface ISelectableUI

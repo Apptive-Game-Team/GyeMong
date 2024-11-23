@@ -53,16 +53,14 @@ MonoBehaviour:
       amount2: 0
   - name: Rune Of Flower
     id: 3
-    description: "\uADFC\uC811 \uACF5\uACA9\uC2DC \uC801\uC5D0\uAC8C \uAC1C\uD654\uB97C
-      \uC77C\uC73C\uCF1C \uCD94\uAC00 \uB300\uBBF8\uC9C0\uB97C \uBC1C\uC0DD\uC2DC\uD0B4
-      (100% \uD655\uB960\uB85C \uBC1C\uB3D9, 20% \uD53C\uD574 \uCD94\uAC00)"
+    description: 
     runeImage: {fileID: 21300000, guid: 1650ed56f27e1504faef336c81799de5, type: 3}
     runeBuff:
-      buffType: 103
+      buffType: 0
       disposeMode: 2
       buffActiveMode: 0
       duration: 0
-      amount1: 1
+      amount1: 0
       amount2: 0
   - name: Rune Of Golem
     id: 4

@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLoop: 0
   trigger: 1
-  triggerLimitCounter: -1
+  triggerLimitCounter: 1
   eventSequence:
   - rid: 7499765935887089665
   references:
@@ -121,7 +121,8 @@ MonoBehaviour:
     RefIds:
     - rid: 7499765935887089665
       type: {class: AcquireRuneEvent, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        runeID: 0
 --- !u!58 &362799338905696116
 CircleCollider2D:
   m_ObjectHideFlags: 0
