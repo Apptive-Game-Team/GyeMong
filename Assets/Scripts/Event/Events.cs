@@ -290,3 +290,13 @@ public class MovePositionEvent : Event
         yield return null;
     }
 }
+
+[Serializable]
+public class DestroySelfEvent : Event
+{
+    public override IEnumerator execute(EventObject eventObject = null)
+    {
+        eventObject.DestroySelf();
+        return null;
+    }
+}
