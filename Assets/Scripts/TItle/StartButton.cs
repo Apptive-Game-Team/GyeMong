@@ -3,7 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class StartButton : MonoBehaviour
 {
-    [SerializeField] GameObject optionExitButton;
+    private GameObject optionExitButton;
+
+    private void Start()
+    {
+        optionExitButton = GameObject.Find("OptionController").transform.GetChild(0).GetChild(0).Find("OptionExitButton").gameObject;
+    }
+
     public void StartGame()
     {
         optionExitButton.SetActive(true);
