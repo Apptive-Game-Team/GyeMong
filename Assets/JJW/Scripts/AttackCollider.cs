@@ -19,9 +19,16 @@ public class AttackCollider : MonoBehaviour
         if (creature != null)
         {
             creature.TakeDamage(attackDamage);
-            Debug.Log("¶Ñ±îÆÐ±â");
+            Debug.Log("ï¿½Ñ±ï¿½ï¿½Ð±ï¿½");
 
             Destroy(gameObject);
+        } else
+        {
+            IAttackable[] attackableObjects = collision.GetComponents<IAttackable>();
+            foreach (IAttackable @object in attackableObjects)
+            {
+                @object.OnAttacked();
+            }
         }
     }
 }

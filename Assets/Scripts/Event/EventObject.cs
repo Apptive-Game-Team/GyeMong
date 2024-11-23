@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventObject : InteractableObject
+public class EventObject : InteractableObject, IAttackable
 {
     private enum EventTrigger
     {
         OnCollisionEnter = 0,
         OnInteraction = 1,
         OnAwake = 2,
+        OnAttacked = 3,
     }
 
     [SerializeField]
@@ -71,7 +72,7 @@ public class EventObject : InteractableObject
         {
             foreach (Event eventObject in eventSequence)
             {
-                yield return eventObject.execute();
+                yield return eventObject.execute(this);
             }
         } while (isLoop);
         eventLoop = null;
@@ -110,5 +111,19 @@ public class EventObject : InteractableObject
             TriggerEvent();
             triggerLimitCounter -= 1;
         }
+    }
+
+    public void OnAttacked()
+    {
+        if (trigger == EventTrigger.OnAttacked && triggerLimitCounter != 0)
+        {
+            TriggerEvent();
+            triggerLimitCounter -= 1;
+        }
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }
