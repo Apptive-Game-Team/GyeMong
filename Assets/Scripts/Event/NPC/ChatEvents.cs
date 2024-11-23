@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OpenChatEvent : Event
 {
-    public override IEnumerator execute()
+    public override IEnumerator execute(EventObject eventObject = null)
     {
         return EffectManager.Instance.GetChatController().Open();
     }
@@ -13,7 +13,7 @@ public class OpenChatEvent : Event
 
 public class CloseChatEvent : Event
 {
-    public override IEnumerator execute()
+    public override IEnumerator execute(EventObject eventObject = null)
     {
         EffectManager.Instance.GetChatController().Close();
         yield return null;
@@ -26,7 +26,7 @@ public class ShowChatEvent : Event
     [SerializeField]
     ChatMessage message;
 
-    public override IEnumerator execute()
+    public override IEnumerator execute(EventObject eventObject = null)
     {
         return EffectManager.Instance.GetChatController().Chat(message);
     }
