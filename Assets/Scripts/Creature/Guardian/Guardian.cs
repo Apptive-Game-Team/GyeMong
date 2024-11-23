@@ -83,8 +83,13 @@ public class Guardian : Boss
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("큐브 떨구기");
-        Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
-        Instantiate(cubeShadowPrefab, player.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
+        GameObject cube= Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
+        GameObject shadow =  Instantiate(cubeShadowPrefab, player.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
+        Cube cubeScript = cube.GetComponent<Cube>();
+        if (cubeScript != null)
+        {
+            cubeScript.DetectShadow(shadow);
+        }
         yield return null;
         ChangeState(State.IDLE);
     }
@@ -194,7 +199,7 @@ public class Guardian : Boss
         else
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 50));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
@@ -206,5 +211,18 @@ public class Guardian : Boss
         } while (weightedPatterns[randomIndex] == lastPattern); // 직전 패턴과 동일하면 다시 뽑기
         curPattern = weightedPatterns[randomIndex];
         lastPattern = curPattern; // 현재 패턴을 직전 패턴으로 저장
+    }
+    public void Stun()
+    {
+        StopAllCoroutines();
+        StartCoroutine(StunCoroutine());
+    }
+
+    private IEnumerator StunCoroutine()
+    {
+        ChangeState(State.STUN);
+        shield = 0f;
+        yield return new WaitForSeconds(5f);
+        ChangeState(State.IDLE);
     }
 }

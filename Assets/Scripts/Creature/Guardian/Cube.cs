@@ -67,10 +67,19 @@ public class Cube : MonoBehaviour
             PlayerDemo.Instance.TakeDamage(10);
             //플레이어가 맞고 잠시 무적 되는 기능을 넣을 필요가 있어보임
         }
-        if (collision.collider.CompareTag("Boss"))
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Boss"))
         {
             Destroy(gameObject);
-            Guardian.Instance.ChangeState(Guardian.State.STUN);
+            Destroy(shadow);
+            Guardian.Instance.Stun();
         }
+    }
+    GameObject shadow;
+    public void DetectShadow(GameObject shadow)
+    {
+        this.shadow = shadow;
     }
 }
