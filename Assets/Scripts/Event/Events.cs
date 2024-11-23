@@ -91,8 +91,16 @@ public class SoundEvent : Event
     [SerializeField]
     private string soundName = null;
 
+    [SerializeField]
+    private bool sync = true;
+
     public override IEnumerator execute(EventObject eventObject = null)
     {
+        if (soundObject == null)
+        {
+            soundObject = eventObject.GetComponent<SoundObject>();
+        }
+
         if (playOrStop == PlayOrStop.STOP)
         {
             soundObject.Stop();
@@ -102,7 +110,11 @@ public class SoundEvent : Event
         {
             if (soundName != null)
                 soundObject.SetSoundSourceByName(soundName);
-            return soundObject.Play();
+            if (sync)
+                return soundObject.Play();
+            else
+                soundObject.StartCoroutine(soundObject.Play());
+            return null;
         }
     }
 }
