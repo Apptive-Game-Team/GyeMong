@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneDatas:
   - sceneID: 1
-    sceneName: SpringMain
+    sceneName: NewSpringMain
   - sceneID: 2
-    sceneName: SpringMidBoss
+    sceneName: SpringGuardian
   - sceneID: 3
     sceneName: SpringPuzzle2
+  - sceneID: 4
+    sceneName: SpringMidBoss
