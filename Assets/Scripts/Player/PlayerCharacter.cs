@@ -14,6 +14,7 @@ namespace playerCharacter
         private Vector2 lastMovementDirection;
         private Rigidbody2D playerRb;
         private Animator animator;
+        private PlayerSoundController soundController;
 
         public GameObject attackColliderPrefab;
 
@@ -42,6 +43,7 @@ namespace playerCharacter
         {
             playerRb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+            soundController = GetComponent<PlayerSoundController>();
 
             attackPower = 1f;
             maxHealth = 1000f;
@@ -221,6 +223,7 @@ namespace playerCharacter
 
         private IEnumerator Attack()
         {
+            soundController.Trigger(Sound.Sword);
             isAttacking = true;
             canMove = false;
             animator.SetBool("isAttacking", true);
