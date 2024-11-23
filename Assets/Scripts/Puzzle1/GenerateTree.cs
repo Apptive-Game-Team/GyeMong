@@ -12,8 +12,8 @@ public class GenerateTree : MonoBehaviour
     private float mapMinY = -23.5f;
     private float mapMaxY = 36;
 
-    private float mazeMinX = -23.5f;
-    private float mazeMaxX = 24.5f;
+    private float mazeMinX = -24f;
+    private float mazeMaxX = 25f;
     private float mazeMinY = -23;
     private float mazeMaxY = 25;
 
