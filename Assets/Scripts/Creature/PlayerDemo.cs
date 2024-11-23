@@ -13,7 +13,7 @@ public class PlayerDemo : SingletonObject<PlayerDemo>
 
     void Start()
     {
-        maxHealth = 100f;
+        maxHealth = 10000f;
         curHealth = maxHealth;
         playerRigidbody = GetComponent<Rigidbody2D>();
     }
@@ -35,6 +35,11 @@ public class PlayerDemo : SingletonObject<PlayerDemo>
         if (curHealth <= 0)
         {
             Die();
+        }
+
+        if (playerCharacter.PlayerCharacter.Instance != null)
+        {
+            playerCharacter.PlayerCharacter.Instance.TakeDamage(damage);
         }
     }
     private void Die()
