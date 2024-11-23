@@ -46,9 +46,11 @@ public class Guardian : Boss
         {
             return;
         }
-
-        SelectRandomPattern();
-        ExecuteCurrentPattern();
+        if(curState == State.IDLE)
+        {
+            SelectRandomPattern();
+            ExecuteCurrentPattern();
+        }
         _fsm.UpdateState();
     }
     protected override void Die()
@@ -60,7 +62,7 @@ public class Guardian : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("근거리 공격1");
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -78,7 +80,7 @@ public class Guardian : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("큐브 떨구기");
         Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
@@ -91,7 +93,7 @@ public class Guardian : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("보호막");
         shield = 30f;
@@ -103,7 +105,7 @@ public class Guardian : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("추적");
         float duration = 2f;
@@ -121,7 +123,7 @@ public class Guardian : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("크산테 q");
         yield return new WaitForSeconds(0.5f);
@@ -162,7 +164,7 @@ public class Guardian : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("근거리 공격2");
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -195,10 +197,10 @@ public class Guardian : Boss
         else
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 0));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
-            weightedPatterns.AddRange(Enumerable.Repeat(3, 0));
-            weightedPatterns.AddRange(Enumerable.Repeat(4, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
         }
         do

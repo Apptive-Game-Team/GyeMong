@@ -56,7 +56,7 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("거리 벌리기");
 
@@ -71,7 +71,7 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("원거리 공격");
 
@@ -104,7 +104,7 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("근거리 공격");
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -126,7 +126,7 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("추적");
         float duration = 2f;
@@ -144,7 +144,7 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("히히 씨앗 발사");
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -187,7 +187,7 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("덩쿨 휘두르기");
         float duration = 2f;

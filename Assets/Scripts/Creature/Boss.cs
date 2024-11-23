@@ -133,7 +133,7 @@ public abstract class Boss : Creature
                 wall.SetActive(true);
                 Debug.Log("qkqh");
                 StopDetectingPlayer();
-                ChangeState(State.MOVE);
+                ChangeState(State.IDLE);
                 yield break;
             }
             yield return new WaitForSeconds(0.5f);

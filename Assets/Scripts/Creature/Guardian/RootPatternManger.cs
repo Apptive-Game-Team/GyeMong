@@ -27,7 +27,6 @@ public class RootPatternManger : MonoBehaviour
     {
         while(true)
         {
-            Debug.Log("°¡½Ã ¹Ù´Ú Áø");
             int caseNumber = Random.Range(1, 5);
             if (!rootObjects[0].activeSelf && !rootObjects[3].activeSelf)
             {

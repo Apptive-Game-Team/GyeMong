@@ -10,8 +10,7 @@ public class SpringGuardianBossRoomEntrance : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("rkskek");
-            if (guardian != null)
+            if (guardian != null && guardian.curState == Creature.State.NONE)
             {
                 guardian.StartDetectingPlayer();
             }
