@@ -10,7 +10,6 @@ public abstract class Boss : Creature
     private Coroutine detectPlayerRoutine;
 
     protected int curPattern;
-    protected bool isPattern;
     protected int currentPhase = 2;//테스트용 원래는 1
     protected int maxPhase;
     protected float maxHealthP1;
@@ -94,19 +93,32 @@ public abstract class Boss : Creature
             transform.position = newPosition;
         }
     }
-    public IEnumerator BackStep(float duration)
+    public IEnumerator BackStep(float targetDistance)
     {
         if (player != null)
         {
-            float elapsedTime = 0f;
-            float backStepSpeed = 2f;
+            float backStepSpeed = 50f;
             Vector3 direction = (transform.position - player.transform.position).normalized; // 플레이어 반대 방향
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            float checkRadius = 1f; // 충돌 감지 반경
+            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle"); // 장애물 레이어
 
-            while (elapsedTime < duration)
+            while (true)
             {
-                // 매 프레임마다 이동
-                transform.position += direction * backStepSpeed * Time.deltaTime;
-                elapsedTime += Time.deltaTime;
+                float currentDistance = Vector3.Distance(transform.position, player.transform.position);
+                if (currentDistance >= targetDistance)
+                {
+                    break;
+                }
+                RaycastHit2D hit = Physics2D.CircleCast(transform.position, checkRadius, direction, backStepSpeed * Time.deltaTime, obstacleLayer);
+                if (hit.collider != null)
+                {
+                    break; // 충돌 시 백스텝 중단
+                }
+                // MovePosition으로 이동
+                Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
+                rb.MovePosition(newPosition);
+                yield return null; // 다음 프레임까지 대기
             }
             yield return new WaitForSeconds(1f);
         }
@@ -118,14 +130,12 @@ public abstract class Boss : Creature
             float distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance <= detectionRange)
             {
-                onBattle = true;
                 wall.SetActive(true);
                 Debug.Log("qkqh");
                 StopDetectingPlayer();
+                ChangeState(State.IDLE);
                 yield break;
             }
-            else onBattle = false;
-
             yield return new WaitForSeconds(0.5f);
         }
     }

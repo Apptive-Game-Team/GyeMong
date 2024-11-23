@@ -5,14 +5,18 @@ using UnityEngine;
 public class SpringGuardianBossRoomEntrance : MonoBehaviour
 {
     [SerializeField] Guardian guardian;
+    [SerializeField] GameObject rootPatternManger;
     public void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("rkskek");
-            if (guardian != null)
+            if (guardian != null && guardian.curState == Creature.State.NONE)
             {
                 guardian.StartDetectingPlayer();
+            }
+            if(rootPatternManger != null)
+            {
+                rootPatternManger.SetActive(true);
             }
         }
     }
