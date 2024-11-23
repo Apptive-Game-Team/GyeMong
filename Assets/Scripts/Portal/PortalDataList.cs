@@ -10,6 +10,7 @@ public enum PortalID
     SPRING_BOSS_TO_MAIN = 2,
     SPRING_MAIN_TO_PUZZLE2 = 3,
     SPRING_PUZZLE2_TO_MAIN = 4,
+    TUTORIAL_TO_MAIN = 5,
 }
 
 [Serializable]
