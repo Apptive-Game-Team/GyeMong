@@ -15,7 +15,9 @@ public class SoundObject : MonoBehaviour
     private AudioSource audioSource;
     private float volume;
     private float masterVolume = 1f;
-
+    public bool IsPlaying {
+        get { return audioSource.isPlaying; }
+    }
 
     private void Awake()
     {
@@ -47,6 +49,13 @@ public class SoundObject : MonoBehaviour
     public void SetSoundSourceByName(string soundSourceName)
     {
         SoundSource soundSource = SoundManager.Instance.soundSourceList.GetSoundSourceByName(soundSourceName);
+        soundType = soundSource.type;
+        volume = SoundManager.Instance.GetVolume(soundSource.type);
+        clip = soundSource.clip;
+    }
+
+    public void SetSoundSource(SoundSource soundSource)
+    {
         soundType = soundSource.type;
         volume = SoundManager.Instance.GetVolume(soundSource.type);
         clip = soundSource.clip;
