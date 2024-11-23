@@ -3975,57 +3975,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1626863468 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 49194295218117097, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-    type: 3}
-  m_PrefabInstance: {fileID: 1944177144}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1626863475
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626863468}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.9}
-  m_EdgeRadius: 0
 --- !u!1001 &1944177144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4089,26 +4038,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4260208394606408057, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8317479884959384149, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: attackColliderPrefab
-      value: 
-      objectReference: {fileID: 2848122850891802944, guid: 8e8beeeb017f3414891b7e04a9438725,
-        type: 3}
-    m_RemovedComponents:
-    - {fileID: 3571894445581072163, guid: 64f1ae9c03ebe9d4c9496b6f4942f313, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 49194295218117097, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1626863475}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64f1ae9c03ebe9d4c9496b6f4942f313, type: 3}
 --- !u!1 &2063228062
 GameObject:
