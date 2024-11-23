@@ -6,34 +6,46 @@ using UnityEngine;
 
 public class MidBoss : Boss
 {
+    public static MidBoss Instance { get; private set; }
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
+    [SerializeField] private GameObject meleeAttackPrefab;
+    Vector3 meleeAttackPrefabPos;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     void Start()
     {
+        curState = State.NONE;
+        _fsm = new FiniteStateMachine(new IdleState(this));
         maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
         speed = 1f;
         detectionRange = 10f;
-        MeleeAttackRange = 1f;
+        MeleeAttackRange = 2f;
         RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
-        //여기까지 원래 Awake였음
         wall.SetActive(false);
+        meleeAttackPrefab.SetActive(false);
         SetupPhase();
     }
 
     void Update()
     {
-        if (onBattle)
-        {
-            if(!isPattern)
-            {
-                SelectRandomPattern();
-                ExecuteCurrentPattern();
-            }
-        }
+        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN)
+            return;
+
+        SelectRandomPattern();
+        ExecuteCurrentPattern();
+        _fsm.UpdateState();
     }
     protected override void Die()
     {
@@ -42,20 +54,25 @@ public class MidBoss : Boss
 
     protected override IEnumerator ExecutePattern0()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("거리 벌리기");
 
-        float duration = 1f; // 이동 시간
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
+        if (distance <= RangedAttackRange/2)
         {
-            yield return StartCoroutine(BackStep(duration));
+            yield return StartCoroutine(BackStep(RangedAttackRange));
         }
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern1()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("원거리 공격");
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -80,26 +97,43 @@ public class MidBoss : Boss
             Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(2f);
         }
-
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
 
     protected override IEnumerator ExecutePattern2()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("근거리 공격");
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
-            PlayerDemo.Instance.TakeDamage(10);
+            meleeAttackPrefab.SetActive(true);
+            Debug.Log("켜짐");
+
+            // 플레이어 방향 계산
+            Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+
+            // 콜라이더를 플레이어 방향으로 이동
+            meleeAttackPrefab.transform.position = transform.position + playerDirection * MeleeAttackRange;
+
+            // 공격 지속 시간
+            yield return new WaitForSeconds(0.2f);
+
+            meleeAttackPrefab.SetActive(false);
         }
-        isPattern = false;
         yield return null;
+        ChangeState(State.IDLE);
     }
 
     protected override IEnumerator ExecutePattern3()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("추적");
         float duration = 2f;
         float elapsed = 0f;
@@ -110,17 +144,20 @@ public class MidBoss : Boss
             elapsed += Time.deltaTime;
             yield return null;
         }
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern4()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("히히 씨앗 발사");
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange)
         {
             int count = 0;
-            while(count < 4)
+            while (count < 4)
             {
                 Instantiate(seedPrefab, transform.position, Quaternion.identity);
                 count++;
@@ -141,7 +178,6 @@ public class MidBoss : Boss
             }
             // 사거리에 도달한 후 화살 발사 및 대기
             speed = 1f;
-            yield return new WaitForSeconds(0.5f);
             int count = 0;
             while (count < 4)
             {
@@ -151,12 +187,14 @@ public class MidBoss : Boss
             }
             yield return new WaitForSeconds(2f);
         }
-
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern5()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("덩쿨 휘두르기");
         float duration = 2f;
         float elapsed = 0f;
@@ -166,7 +204,7 @@ public class MidBoss : Boss
             elapsed += Time.deltaTime;
             yield return null;
         }
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
 
     protected override void SelectRandomPattern()
