@@ -121,4 +121,9 @@ public class EventObject : InteractableObject, IAttackable
             triggerLimitCounter -= 1;
         }
     }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
 }
