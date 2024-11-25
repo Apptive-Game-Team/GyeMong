@@ -16,7 +16,7 @@ public class MazeDarkness : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         globalLight = GameObject.Find("GlobalLight2D").GetComponent<Light2D>();
-        playerLight = player.transform.GetChild(0).GetComponent<Light2D>().gameObject;
+        playerLight = player.transform.Find("PlayerLight").GetComponent<Light2D>().gameObject;
     }
 
     private void OnTriggerExit2D(Collider2D other) 
@@ -38,7 +38,8 @@ public class MazeDarkness : MonoBehaviour
     {
         float targetIntensity = isInMaze ? 0f : 1f;
         float Ratio = 0f;
-        
+
+        playerLight.SetActive(isInMaze);
         while (Mathf.Abs(globalLight.intensity - targetIntensity) > 0.01f)
         {
             Ratio += Time.deltaTime;
@@ -46,8 +47,6 @@ public class MazeDarkness : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
         globalLight.intensity = targetIntensity;
-
-        playerLight.SetActive(isInMaze);
 
         yield return null;
     }
