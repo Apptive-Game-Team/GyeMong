@@ -72,15 +72,15 @@ public class InputManager : SingletonObject<InputManager>
 
 
     /// <summary>
-    /// Activates or deactivates all movement-related actions.
+    /// Activates or deactivates all actions.
     /// </summary>
     /// <param name="active">True to activate movement actions, false to deactivate</param>
-    public void SetMovementState(bool active)
+    public void SetActionState(bool active)
     {
-        SetKeyActive(ActionCode.MoveUp, active);
-        SetKeyActive(ActionCode.MoveDown, active);
-        SetKeyActive(ActionCode.MoveLeft, active);
-        SetKeyActive(ActionCode.MoveRight, active);
+        foreach (ActionCode actionCode in keyMappings.Keys)
+        {
+            SetKeyActive(actionCode, active);
+        }
     }
 
     /// <summary>

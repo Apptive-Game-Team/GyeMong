@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ImageRotation : MonoBehaviour
 {
-    bool isAttached = false;
-    bool isRotating = true;
+    private bool isAttached = false;
+    private bool isRotating = true;
     public float rotationSpeed = 300f;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -16,18 +16,19 @@ public class ImageRotation : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (isAttached && isRotating)
+        if (isAttached && isRotating && !PuzzleController.Instance.isPuzzleCleared)
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 StartCoroutine(RotateImage());
+                PuzzleController.Instance.isPuzzleStart = true;
             }
         }
     }
 
-    void OnTriggerExit2D(Collider2D other) 
+    private void OnTriggerExit2D(Collider2D other) 
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -35,14 +36,7 @@ public class ImageRotation : MonoBehaviour
         }
     }
 
-    void Rotate()
-    {
-        Vector3 newRotation = gameObject.transform.eulerAngles;
-        newRotation.z -= 90f;
-        gameObject.transform.eulerAngles = newRotation;
-    }
-
-    IEnumerator RotateImage()
+    private IEnumerator RotateImage()
     {
         isRotating = false;
         float targetAngle = transform.eulerAngles.z - 90f;

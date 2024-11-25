@@ -8,8 +8,10 @@ public class KeyButtonTexts : SingletonObject<KeyButtonTexts>
     private List<Transform> keys = new();
     private List<TextMeshProUGUI> keyTexts = new();
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+        
         for (int i = 0;i < transform.childCount;i++)
         {
             keys.Add(transform.GetChild(i));
@@ -19,8 +21,6 @@ public class KeyButtonTexts : SingletonObject<KeyButtonTexts>
         {
             keyTexts.Add(keys[i].GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
         }
-
-        UpdateKeyText();
     }
 
 

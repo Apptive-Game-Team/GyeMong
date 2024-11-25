@@ -15,7 +15,14 @@ public class SoundObject : MonoBehaviour
     private AudioSource audioSource;
     private float volume;
     private float masterVolume = 1f;
+    public bool IsPlaying {
+        get { return audioSource.isPlaying; }
+    }
 
+    private void Awake()
+    {
+        masterVolume = DataManager.Instance.LoadSection<SoundData>("SoundData") == null ? 1f : DataManager.Instance.LoadSection<SoundData>("SoundData").masterVolume;
+    }
 
     private void Start()
     {
@@ -28,7 +35,7 @@ public class SoundObject : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.loop = false;
 
-        if (sourceName != null)
+        if (sourceName != null && sourceName.Length != 0)
         {
             SetSoundSourceByName(sourceName);
         }
@@ -47,6 +54,13 @@ public class SoundObject : MonoBehaviour
         clip = soundSource.clip;
     }
 
+    public void SetSoundSource(SoundSource soundSource)
+    {
+        soundType = soundSource.type;
+        volume = SoundManager.Instance.GetVolume(soundSource.type);
+        clip = soundSource.clip;
+    }
+
     public void Stop()
     {
         audioSource.Stop();
@@ -55,7 +69,7 @@ public class SoundObject : MonoBehaviour
     public IEnumerator Play()
     {
         yield return new WaitUntil(()=>audioSource != null);
-        audioSource.volume = volume;
+        audioSource.volume = volume * masterVolume;
         audioSource.clip = clip;
         audioSource.Play();
         yield return new WaitWhile(()=>audioSource.isPlaying);

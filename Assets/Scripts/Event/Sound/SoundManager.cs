@@ -43,10 +43,6 @@ public class SoundManager : SingletonObject<SoundManager>
     {
         base.Awake();
         InitializeVolumes();
-    }
-
-    private void Start()
-    {
         soundObjects = FindObjectsOfType<SoundObject>();
     }
 

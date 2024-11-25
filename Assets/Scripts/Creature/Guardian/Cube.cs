@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine;
-
 public class Cube : MonoBehaviour
 {
     private GameObject player;
@@ -33,20 +31,31 @@ public class Cube : MonoBehaviour
 
     private IEnumerator StartFalling()
     {
-        float Speed = 7f; // 낙하 속도
+        float accele = 70f; // 중력가속도 (가속도 크기)
+        float speed = 0f; // 초기 속도
+        float currentSpeed = speed; // 현재 속도
         Vector3 targetPosition = player.transform.position;
         Vector3 startPosition = transform.position;
 
-        float distance = startPosition.y - targetPosition.y;
-        float elapsedTime = 0f;
-
         while (transform.position.y > targetPosition.y)
         {
-            elapsedTime += Time.deltaTime;
-            float newY = Mathf.Lerp(startPosition.y, targetPosition.y, elapsedTime * Speed / distance);
+            //속도 = 초기속도 + 가속도 * 시간
+            currentSpeed += accele * Time.deltaTime;
+
+            //s = vt
+            float newY = transform.position.y - currentSpeed * Time.deltaTime;
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+
             yield return null;
         }
+
+        // 낙하 완료 후 Collider의 isTrigger를 해제
+        Collider2D collider = GetComponent<Collider2D>();
+        if (collider != null)
+        {
+            collider.isTrigger = false;
+        }
+
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
@@ -58,5 +67,19 @@ public class Cube : MonoBehaviour
             PlayerDemo.Instance.TakeDamage(10);
             //플레이어가 맞고 잠시 무적 되는 기능을 넣을 필요가 있어보임
         }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Boss"))
+        {
+            Destroy(gameObject);
+            Destroy(shadow);
+            Guardian.Instance.Stun();
+        }
+    }
+    GameObject shadow;
+    public void DetectShadow(GameObject shadow)
+    {
+        this.shadow = shadow;
     }
 }

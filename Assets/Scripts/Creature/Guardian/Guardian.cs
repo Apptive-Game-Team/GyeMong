@@ -3,50 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-
 public class Guardian : Boss
 {
-    [SerializeField] private GameObject rootPrefab;
-    private GameObject[] rootObjects;
+    public static Guardian Instance { get; private set; }
+
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private GameObject cubeShadowPrefab;
     [SerializeField] private GameObject floorPrefab;
-    [SerializeField] private GameObject seedPrefab;
-    [SerializeField] private List<GameObject> rootSpawnZone;
-    private float shieldHealth;
+    [SerializeField] private GameObject meleeAttackPrefab1;
+    [SerializeField] private GameObject meleeAttackPrefab2;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     void Start()
     {
+        curState = State.NONE;
+        _fsm = new FiniteStateMachine(new IdleState(this));
         maxPhase = 2;
         maxHealthP1 = 200f;
         maxHealthP2 = 300f;
+        shield = 50f;
         speed = 1f;
         detectionRange = 10f;
-        MeleeAttackRange = 1f;
+        MeleeAttackRange = 2f;
         RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
         wall.SetActive(false);
+        meleeAttackPrefab1.SetActive(false);
+        meleeAttackPrefab2.SetActive(false);
         SetupPhase();
-
-        rootObjects = new GameObject[rootSpawnZone.Count];
-        for (int i = 0; i < rootSpawnZone.Count; i++)
-        {
-            GameObject rootObject = Instantiate(rootPrefab, rootSpawnZone[i].transform.position , Quaternion.identity);
-            rootObjects[i] = rootObject;
-            rootObject.SetActive(false);
-        }
     }
 
     void Update()
     {
-        if (onBattle)
+        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN)
         {
-            if(!isPattern)
-            {
-                SelectRandomPattern();
-                ExecuteCurrentPattern();
-            }
+            return;
         }
-        //curHealth += shieldHealth;
+        if(curState == State.IDLE)
+        {
+            SelectRandomPattern();
+            ExecuteCurrentPattern();
+        }
+        _fsm.UpdateState();
     }
     protected override void Die()
     {
@@ -55,73 +60,72 @@ public class Guardian : Boss
 
     protected override IEnumerator ExecutePattern0()
     {
-        isPattern = true;
-        Debug.Log("가시 바닥");
-        int caseNumber = Random.Range(1, 5);
-        if(!rootObjects[0].activeSelf && !rootObjects[3].activeSelf)
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
+        Debug.Log("근거리 공격1");
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= MeleeAttackRange)
         {
-            switch (caseNumber)
-            {
-                case 1:
-                    ActivateRootObjects(new int[] { 0, 1, 7, 8, 9, 10, 11 });
-                    break;
-                case 2:
-                    ActivateRootObjects(new int[] { 1, 2, 3, 5, 9, 11, 12, 13 });
-                    break;
-                case 3:
-                    ActivateRootObjects(new int[] { 0, 2, 4, 6, 8, 10, 12, 14 });
-                    break;
-                case 4:
-                    ActivateRootObjects(new int[] { 0, 1, 3, 6, 8, 9, 11, 12, 14 });
-                    break;
-            }
-            yield return null;
+            meleeAttackPrefab1.SetActive(true);
+            Debug.Log("켜짐");
+            yield return new WaitForSeconds(1f);
         }
-        isPattern = false;
+        meleeAttackPrefab1.SetActive(false);
+        yield return null;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern1()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("큐브 떨구기");
-        Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
-        Instantiate(cubeShadowPrefab, player.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
+        GameObject cube= Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
+        GameObject shadow =  Instantiate(cubeShadowPrefab, player.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
+        Cube cubeScript = cube.GetComponent<Cube>();
+        if (cubeScript != null)
+        {
+            cubeScript.DetectShadow(shadow);
+        }
         yield return null;
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
 
     protected override IEnumerator ExecutePattern2()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("보호막");
-        /*float shield = 30;
-        shieldHealth += shield;*/
+        shield = 30f;
         yield return null;
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
 
     protected override IEnumerator ExecutePattern3()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("추적");
-        float duration = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            TrackPlayer();
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern4()
     {
-        isPattern = true;
+        ChangeState(State.CHANGINGPATTERN);
+        Debug.Log("쉬어");
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
         Debug.Log("크산테 q");
         yield return new WaitForSeconds(0.5f);
 
-        int numberOfObjects = 10; // 생성할 오브젝트 수
-        float interval = 0.1f; // 생성 간격
+        int numberOfObjects = 5; // 생성할 오브젝트 수
+        float interval = 0.2f; // 생성 간격
         float fixedDistance = 7f;
 
         List<GameObject> spawnedObjects = new List<GameObject>();
@@ -138,8 +142,7 @@ public class Guardian : Boss
         }
 
         StartCoroutine(DestroyFloor(spawnedObjects, 0.5f));
-
-        isPattern = false;
+        ChangeState(State.IDLE);
     }
     private IEnumerator DestroyFloor(List<GameObject> objects, float delay)
     {
@@ -152,23 +155,34 @@ public class Guardian : Boss
                 Destroy(obj);
             }
         }
-    } //이게 지금 바닥이 플레이어를 추적하면서 융기되는데 걍 목표위치를 고정하고 직선형으로 뻗는거랑 이거중에 뭐가 나을지 모르겠다
-
-    protected override IEnumerator ExecutePattern5()
-    {
-        isPattern = true;
-        Debug.Log("맞으면 못 움직이는 씨앗");
-        Instantiate(seedPrefab,player.transform.position, Quaternion.identity);
-        yield return null;
-        isPattern = false;
     }
-    private void ActivateRootObjects(int[] indices)
-    {
-        foreach (int index in indices)
+        protected override IEnumerator ExecutePattern5()
         {
-           rootObjects[index].SetActive(true);
+            ChangeState(State.CHANGINGPATTERN);
+            Debug.Log("쉬어");
+            yield return new WaitForSeconds(2f);
+            ChangeState(State.ATTACK);
+            Debug.Log("근거리 공격2");
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance <= MeleeAttackRange)
+            {
+                meleeAttackPrefab2.SetActive(true);
+                Debug.Log("켜짐");
+
+                // 플레이어 방향 계산
+                Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+
+                // 콜라이더를 플레이어 방향으로 이동
+                meleeAttackPrefab2.transform.position = transform.position + playerDirection * MeleeAttackRange;
+
+                // 공격 지속 시간
+                yield return new WaitForSeconds(0.2f);
+
+                meleeAttackPrefab2.SetActive(false);
+            }
+            yield return null;
+            ChangeState(State.IDLE);
         }
-    }
     protected override void SelectRandomPattern()
     {
         int randomIndex;
@@ -186,7 +200,7 @@ public class Guardian : Boss
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 0));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
@@ -197,5 +211,18 @@ public class Guardian : Boss
         } while (weightedPatterns[randomIndex] == lastPattern); // 직전 패턴과 동일하면 다시 뽑기
         curPattern = weightedPatterns[randomIndex];
         lastPattern = curPattern; // 현재 패턴을 직전 패턴으로 저장
+    }
+    public void Stun()
+    {
+        StopAllCoroutines();
+        StartCoroutine(StunCoroutine());
+    }
+
+    private IEnumerator StunCoroutine()
+    {
+        ChangeState(State.STUN);
+        shield = 0f;
+        yield return new WaitForSeconds(5f);
+        ChangeState(State.IDLE);
     }
 }

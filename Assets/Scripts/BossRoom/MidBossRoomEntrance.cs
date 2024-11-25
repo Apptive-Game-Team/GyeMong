@@ -9,8 +9,7 @@ public class MidBossRoomEntrance : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("rkskek");
-            if (midBoss != null)
+            if (midBoss != null && midBoss.curState == Creature.State.NONE)
             {
                 midBoss.StartDetectingPlayer();
             }

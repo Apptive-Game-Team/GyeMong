@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class OptionUI : SingletonObject<OptionUI>
 {
@@ -20,7 +21,7 @@ public class OptionUI : SingletonObject<OptionUI>
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                OpenOrCloseOption();
+                if (!(SceneManager.GetActiveScene().name == "TitleScene")) OpenOrCloseOption();
             }
         }
 
@@ -44,5 +45,6 @@ public class OptionUI : SingletonObject<OptionUI>
     {
         if (isOptionOpened) Time.timeScale = 0f;
         else Time.timeScale = 1f;
+        InputManager.Instance.SetActionState(!isOptionOpened);
     }
 }
