@@ -9,6 +9,7 @@ namespace playerCharacter
         SWORD_ATTACK = 1,
         SWORD_DEFEND = 2,
         FOOT = 3,
+        DASH = 4,
     }
 
     public enum FloorType
@@ -38,11 +39,11 @@ namespace playerCharacter
         private Coroutine footSoundCoroutine = null;
         private void Awake()
         {
+            soundObjects.Add(PlayerSoundType.DASH, transform.Find("DashSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.SWORD_SWING, transform.Find("SwordSwingSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.SWORD_ATTACK, transform.Find("SwordAttackSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.SWORD_DEFEND, transform.Find("SwordDefendSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.FOOT, transform.Find("FootSound").GetComponent<SoundObject>());
-            soundBools.Add(PlayerSoundType.FOOT, false);
         }
 
         public void SetRun(bool isRun)
@@ -77,6 +78,7 @@ namespace playerCharacter
             catch (KeyNotFoundException)
             {
                 soundBools.Add(sound, false);
+                SetBool(sound, active);
             }
             
         }
