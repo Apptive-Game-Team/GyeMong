@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace playerCharacter
 {
-    public enum Sound
+    public enum SoundType
     {
-        Sword,
-        Foot,
+        SWORD_SWING = 0,
+        SWORD_ATTACK = 1,
+        SWORD_DEFEND = 2,
+        FOOT = 3,
     }
 
     public enum FloorType
@@ -23,18 +25,10 @@ namespace playerCharacter
         WALK = 1,
     }
 
-    public enum FootSoundType
-    {
-        GRASS_RUN = 0,
-        GRASS_WALK = 1,
-        STONE_RUN = 2,
-        STONE_WALK = 3,
-    }
-
     public class PlayerSoundController : MonoBehaviour
     {
-        private Dictionary<Sound, SoundObject> soundObjects = new Dictionary<Sound, SoundObject>();
-        private Dictionary<Sound, bool> soundBools = new();
+        private Dictionary<SoundType, SoundObject> soundObjects = new();
+        private Dictionary<SoundType, bool> soundBools = new();
 
         [SerializeField]
         private List<SequentialSoundSourceList> footSounds = new List<SequentialSoundSourceList>();
@@ -44,9 +38,11 @@ namespace playerCharacter
         private Coroutine footSoundCoroutine = null;
         private void Awake()
         {
-            soundObjects.Add(Sound.Sword, transform.Find("SwordSound").GetComponent<SoundObject>());
-            soundObjects.Add(Sound.Foot, transform.Find("FootSound").GetComponent<SoundObject>());
-            soundBools.Add(Sound.Foot, false);
+            soundObjects.Add(SoundType.SWORD_SWING, transform.Find("SwordSwingSound").GetComponent<SoundObject>());
+            soundObjects.Add(SoundType.SWORD_ATTACK, transform.Find("SwordAttackSound").GetComponent<SoundObject>());
+            soundObjects.Add(SoundType.SWORD_DEFEND, transform.Find("SwordDefendSound").GetComponent<SoundObject>());
+            soundObjects.Add(SoundType.FOOT, transform.Find("FootSound").GetComponent<SoundObject>());
+            soundBools.Add(SoundType.FOOT, false);
         }
 
         public void SetRun(bool isRun)
@@ -54,13 +50,14 @@ namespace playerCharacter
             UpdateFootSound(walkType: isRun ? WalkType.RUN : WalkType.WALK);
         }
 
-        public void Trigger(Sound sound)
+        public void Trigger(SoundType sound)
         {
             soundObjects[sound].SetLoop(false);
             StartCoroutine(soundObjects[sound].Play());
         }
 
-        public void SetBool(Sound sound, bool active)
+        // ReSharper disable Unity.PerformanceAnalysis
+        public void SetBool(SoundType sound, bool active)
         {
             if (active && !soundBools[sound])
             {
@@ -76,7 +73,8 @@ namespace playerCharacter
             }
         }
 
-        private IEnumerator PlaySequentialSound(Sound sound)
+        // ReSharper disable Unity.PerformanceAnalysis
+        private IEnumerator PlaySequentialSound(SoundType sound)
         {
             int index = 0;
             while (true)
