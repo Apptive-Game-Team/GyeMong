@@ -120,7 +120,7 @@ namespace playerCharacter
         {
             bool isMoving = movement.magnitude > 0;
             animator.SetBool("isMove", isMoving);
-            soundController.SetBool(Sound.Foot, isMoving);
+            soundController.SetBool(SoundType.FOOT, isMoving);
 
             if (isMoving)
             {
@@ -226,7 +226,7 @@ namespace playerCharacter
 
         private IEnumerator Attack()
         {
-            soundController.Trigger(Sound.Sword);
+            soundController.Trigger(SoundType.SWORD_SWING);
             isAttacking = true;
             canMove = false;
             animator.SetBool("isAttacking", true);
