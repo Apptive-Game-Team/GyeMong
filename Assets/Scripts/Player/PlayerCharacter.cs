@@ -199,7 +199,8 @@ namespace playerCharacter
             isDashing = true;
             canMove = false;
             animator.SetBool("isDashing", true);
-
+            soundController.Trigger(PlayerSoundType.DASH);
+            
             Vector2 dashDirection = lastMovementDirection.normalized;
             Vector2 startPosition = playerRb.position;
             Vector2 targetPosition = startPosition + dashDirection * dashDistance;
@@ -264,6 +265,7 @@ namespace playerCharacter
             isDefending = false;
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider()
         {
             Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
