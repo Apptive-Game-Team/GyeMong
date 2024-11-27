@@ -1,3 +1,4 @@
+using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,7 +47,7 @@ public class Seed : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerDemo.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(10);
         }
     }
 
@@ -58,7 +59,7 @@ public class Seed : MonoBehaviour
         {
             if (enemy.CompareTag("Player"))
             {
-                PlayerDemo.Instance.TakeDamage(15);
+                PlayerCharacter.Instance.TakeDamage(15);
             }
         }
     }

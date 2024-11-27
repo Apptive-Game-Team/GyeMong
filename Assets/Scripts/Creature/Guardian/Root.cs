@@ -1,3 +1,4 @@
+using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class Root : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            PlayerDemo.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(10);
         }
     }
 }
