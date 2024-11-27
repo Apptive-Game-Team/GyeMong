@@ -15,12 +15,17 @@ public class RuneComponent : MonoBehaviour
 
     private void Start()
     {
+        TestAcquire();
+    }
+
+    private void TestAcquire()
+    {
         RuneDataList dataList = RuneObjectCreator.Instance.runeDataList;
         AcquireRune(dataList.GetRuneData(1));
         AcquireRune(dataList.GetRuneData(2));
         AcquireRune(dataList.GetRuneData(3));
     }
-
+    
     private void Update()
     {
         if(InputManager.Instance.GetKeyDown(ActionCode.RunePage))
