@@ -48,6 +48,8 @@ namespace playerCharacter
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
+
+            LoadPlayerData();
         }
 
         private void Update()
@@ -149,7 +151,7 @@ namespace playerCharacter
                 else 
                 {
                     damage /= 2f;
-                    Debug.Log($"ÀÏ´Ü Defend, damage : {damage}");
+                    Debug.Log($"ï¿½Ï´ï¿½ Defend, damage : {damage}");
                 }
             }
 
@@ -167,7 +169,7 @@ namespace playerCharacter
 
         private IEnumerator TriggerInvincibility()
         {
-            Debug.Log("¹«Àû ½ÃÀÛ");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             isInvincible = true;
 
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -188,7 +190,7 @@ namespace playerCharacter
             }
 
             isInvincible = false;
-            Debug.Log("¹«Àû ÇØÁ¦");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
 
         private IEnumerator Dash()
@@ -286,9 +288,29 @@ namespace playerCharacter
 
         private IEnumerator BindCoroutine(float duration)
         {
-            canMove = false; // ¿òÁ÷ÀÓ Á¦ÇÑ
-            yield return new WaitForSeconds(duration); // ÁöÁ¤µÈ ½Ã°£ ´ë±â
-            canMove = true; // ¿òÁ÷ÀÓ Àç°³
+            canMove = false; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            yield return new WaitForSeconds(duration); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½
+            canMove = true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ç°³
+        }
+
+        public Vector3 GetPlayerPosition()
+        {
+            return gameObject.transform.position;
+        }
+
+        public Vector2 GetPlayerDirection()
+        {
+            return lastMovementDirection;
+        }
+
+        private void LoadPlayerData()
+        {
+            PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
+            if (!playerData.isFirst)
+            {
+                gameObject.transform.position = playerData.playerPosition;
+                lastMovementDirection = playerData.playerDirection;
+            }
         }
     }
 }
