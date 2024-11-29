@@ -27,6 +27,7 @@ public class AttackCollider : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         var creature = collision.GetComponent<Creature>();
         if (creature != null)
         {
@@ -43,7 +44,6 @@ public class AttackCollider : MonoBehaviour
             if (attackableObjects.Length != 0)
             {
                 SetParticleSystemTexture(collision);
-                
                 _eventObject.TriggerEvent();
                 _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                 foreach (IAttackable @object in attackableObjects)
@@ -57,16 +57,21 @@ public class AttackCollider : MonoBehaviour
 
     private void SetParticleSystemTexture(Collider2D collision)
     {
-        Sprite sprite;
         try
         {
-            sprite = collision.GetComponent<SpriteRenderer>().sprite;
-            
-        }
-        catch (MissingComponentException)
+            Sprite sprite;
+            try
+            {
+                sprite = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
+            }
+            catch (MissingComponentException)
+            {
+                sprite = collision.GetComponentInChildren<SpriteRenderer>().sprite;
+            }
+            _shape.texture = sprite.texture;
+        } catch
         {
-            sprite = collision.GetComponentInChildren<SpriteRenderer>().sprite;
+            Debug.Log("No SpriteRenderer found");
         }
-        _shape.texture = sprite.texture;
     }
 }
