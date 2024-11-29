@@ -1,6 +1,5 @@
 using playerCharacter;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CreateRuneEvent : Event
@@ -42,7 +41,7 @@ public class RuneObjectCreator : SingletonObject<RuneObjectCreator>
         return runeObj;
     }
 
-    public void DoTest()
+    private void DoTest()
     {
         DrawRuneObject(3, new Vector3(-2,-2,0));
     }
