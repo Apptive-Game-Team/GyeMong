@@ -6,7 +6,7 @@ namespace playerCharacter
 {
     public class PlayerCharacter : SingletonObject<PlayerCharacter>
     {
-        [SerializeField] public float curHealth;
+        [SerializeField] private float curHealth;
         public float maxHealth;
         public float attackPower;
 
