@@ -28,7 +28,7 @@ namespace playerCharacter
 
         private float delayTime = 0.3f;
 
-        private float defendTime = 1.0f;
+        private float parryTime = 0.5f;
         private float defendStartTime = 0f;
         
         private float invincibilityDuration = 3.0f;
@@ -138,14 +138,17 @@ namespace playerCharacter
         public void TakeDamage(float damage)
         {
             if (isInvincible) return;
-
+            
+            StartCoroutine(EffectManager.Instance.ShakeCamera());
+            
             if (isDefending)
             {
                 soundController.Trigger(PlayerSoundType.SWORD_DEFEND);
-                if (Time.time - defendStartTime < defendTime / 2f) 
+                if (Time.time - defendStartTime < parryTime) 
                 {
                     damage = 0f;
                     Debug.Log($"Perfect Defend, damage : {damage}");
+                    return;
                 }
                 else 
                 {
@@ -258,7 +261,7 @@ namespace playerCharacter
 
             defendStartTime = Time.time;
 
-            yield return new WaitForSeconds(defendTime);
+            yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
 
             animator.SetBool("isDefending", false);
             canMove = true;
