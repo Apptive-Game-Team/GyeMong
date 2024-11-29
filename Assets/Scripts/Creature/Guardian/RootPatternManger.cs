@@ -27,22 +27,16 @@ public class RootPatternManger : MonoBehaviour
     {
         while(true)
         {
-            int caseNumber = Random.Range(1, 5);
+            int caseNumber = Random.Range(1, 2);
             if (!rootObjects[0].activeSelf && !rootObjects[3].activeSelf)
             {
                 switch (caseNumber)
                 {
                     case 1:
-                        ActivateRootObjects(new int[] { 0, 1, 7, 8, 9, 10, 11 });
+                        ActivateRootObjects(new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32 });
                         break;
                     case 2:
-                        ActivateRootObjects(new int[] { 1, 2, 3, 5, 9, 11, 12, 13 });
-                        break;
-                    case 3:
-                        ActivateRootObjects(new int[] { 0, 2, 4, 6, 8, 10, 12, 14 });
-                        break;
-                    case 4:
-                        ActivateRootObjects(new int[] { 0, 1, 3, 6, 8, 9, 11, 12, 14 });
+                        ActivateRootObjects(new int[] { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31 });
                         break;
                 }
                 yield return new WaitForSeconds(2f);

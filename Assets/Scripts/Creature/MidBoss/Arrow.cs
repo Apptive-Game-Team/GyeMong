@@ -1,3 +1,4 @@
+using playerCharacter;
 using System.Collections;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ public class Arrow : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerDemo.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(10);
         }
     }
 }
