@@ -158,7 +158,7 @@ namespace playerCharacter
             }
 
             curHealth -= damage;
-            
+            EffectManager.Instance.UpdateHpBar(curHealth);
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/maxHealth));
             
             if (curHealth <= 0)
