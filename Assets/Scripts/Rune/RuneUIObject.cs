@@ -59,7 +59,6 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
             PlayerCharacter.Instance.GetComponent<RuneComponent>().UnequipRune(runeData);
         }
 
-        RuneWindow.Instance.ReDrawUI();
-        RuneWindow.Instance.SetSelectableList();
+        RuneWindow.Instance.Init();
     }
 }
