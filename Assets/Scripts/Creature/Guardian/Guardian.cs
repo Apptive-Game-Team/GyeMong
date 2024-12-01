@@ -61,15 +61,12 @@ public class Guardian : Boss
     protected override IEnumerator ExecutePattern0()
     {
         ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("½¬¾î");
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
-        Debug.Log("±Ù°Å¸® °ø°Ý1");
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
             meleeAttackPrefab1.SetActive(true);
-            Debug.Log("ÄÑÁü");
             yield return new WaitForSeconds(1f);
         }
         meleeAttackPrefab1.SetActive(false);
@@ -79,10 +76,8 @@ public class Guardian : Boss
     protected override IEnumerator ExecutePattern1()
     {
         ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("½¬¾î");
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
-        Debug.Log("Å¥ºê ¶³±¸±â");
         GameObject cube= Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
         GameObject shadow =  Instantiate(cubeShadowPrefab, player.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
         Cube cubeScript = cube.GetComponent<Cube>();
@@ -97,10 +92,8 @@ public class Guardian : Boss
     protected override IEnumerator ExecutePattern2()
     {
         ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("½¬¾î");
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
-        Debug.Log("º¸È£¸·");
         shield = 30f;
         yield return null;
         ChangeState(State.IDLE);
@@ -109,28 +102,24 @@ public class Guardian : Boss
     protected override IEnumerator ExecutePattern3()
     {
         ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("½¬¾î");
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
-        Debug.Log("ÃßÀû");
         ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern4()
     {
         ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("½¬¾î");
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
-        Debug.Log("Å©»êÅ× q");
         yield return new WaitForSeconds(0.5f);
 
-        int numberOfObjects = 5; // »ý¼ºÇÒ ¿ÀºêÁ§Æ® ¼ö
-        float interval = 0.2f; // »ý¼º °£°Ý
+        int numberOfObjects = 5; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½
+        float interval = 0.2f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         float fixedDistance = 7f;
 
         List<GameObject> spawnedObjects = new List<GameObject>();
 
-        Vector3 direction = (player.transform.position - transform.position).normalized; // ÇÃ·¹ÀÌ¾î ¹æÇâ °è»ê
+        Vector3 direction = (player.transform.position - transform.position).normalized; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 startPosition = transform.position;
 
         for (int i = 0; i <= numberOfObjects; i++)
@@ -138,7 +127,7 @@ public class Guardian : Boss
             Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
             GameObject floor = Instantiate(floorPrefab, spawnPosition, Quaternion.identity);
             spawnedObjects.Add(floor);
-            yield return new WaitForSeconds(interval); // ´ÙÀ½ ¿ÀºêÁ§Æ® »ý¼º±îÁö ´ë±â
+            yield return new WaitForSeconds(interval); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         }
 
         StartCoroutine(DestroyFloor(spawnedObjects, 0.5f));
@@ -159,23 +148,20 @@ public class Guardian : Boss
         protected override IEnumerator ExecutePattern5()
         {
             ChangeState(State.CHANGINGPATTERN);
-            Debug.Log("½¬¾î");
             yield return new WaitForSeconds(2f);
             ChangeState(State.ATTACK);
-            Debug.Log("±Ù°Å¸® °ø°Ý2");
             float distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance <= MeleeAttackRange)
             {
                 meleeAttackPrefab2.SetActive(true);
-                Debug.Log("ÄÑÁü");
-
-                // ÇÃ·¹ÀÌ¾î ¹æÇâ °è»ê
+                
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 Vector3 playerDirection = (player.transform.position - transform.position).normalized;
 
-                // ÄÝ¶óÀÌ´õ¸¦ ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ÀÌµ¿
+                // ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
                 meleeAttackPrefab2.transform.position = transform.position + playerDirection * MeleeAttackRange;
 
-                // °ø°Ý Áö¼Ó ½Ã°£
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
                 yield return new WaitForSeconds(0.2f);
 
                 meleeAttackPrefab2.SetActive(false);
@@ -188,7 +174,7 @@ public class Guardian : Boss
         int randomIndex;
         List<int> weightedPatterns = new List<int>();
 
-        // °¡ÁßÄ¡¸¦ ¹Ý¿µÇÏ¿© ¸®½ºÆ®¿¡ ÆÐÅÏÀ» Ãß°¡
+        // ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         if (currentPhase == 1)
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
@@ -208,9 +194,9 @@ public class Guardian : Boss
         do
         {
             randomIndex = Random.Range(0, weightedPatterns.Count);
-        } while (weightedPatterns[randomIndex] == lastPattern); // Á÷Àü ÆÐÅÏ°ú µ¿ÀÏÇÏ¸é ´Ù½Ã »Ì±â
+        } while (weightedPatterns[randomIndex] == lastPattern); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ù½ï¿½ ï¿½Ì±ï¿½
         curPattern = weightedPatterns[randomIndex];
-        lastPattern = curPattern; // ÇöÀç ÆÐÅÏÀ» Á÷Àü ÆÐÅÏÀ¸·Î ÀúÀå
+        lastPattern = curPattern; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
     public void Stun()
     {

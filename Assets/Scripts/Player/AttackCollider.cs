@@ -39,7 +39,6 @@ public class AttackCollider : MonoBehaviour
             _eventObject.TriggerEvent();
             _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
             creature.TakeDamage(attackDamage);
-            Debug.Log("�ѱ��б�");
             //Bad Way But..
             if (PlayerCharacter.Instance.GetComponent<RuneComponent>().isRune(3))
             {

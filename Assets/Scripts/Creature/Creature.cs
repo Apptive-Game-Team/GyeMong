@@ -115,9 +115,5 @@ public class Creature : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         ChangeState(State.IDLE);
     }
-    public void Debuging(int n)
-    {
-        Debug.Log($"µÊ¤·¤·{n}");
-    }
 }
 
