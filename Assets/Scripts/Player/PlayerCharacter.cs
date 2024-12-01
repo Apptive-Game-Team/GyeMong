@@ -15,7 +15,7 @@ namespace playerCharacter
         private Rigidbody2D playerRb;
         private Animator animator;
         private PlayerSoundController soundController;
-
+        
         public GameObject attackColliderPrefab;
 
         public float moveSpeed = 2.0f;
@@ -28,7 +28,7 @@ namespace playerCharacter
 
         private float delayTime = 0.3f;
 
-        private float defendTime = 1.0f;
+        private float parryTime = 0.5f;
         private float defendStartTime = 0f;
         
         private float invincibilityDuration = 3.0f;
@@ -122,7 +122,7 @@ namespace playerCharacter
         {
             bool isMoving = movement.magnitude > 0;
             animator.SetBool("isMove", isMoving);
-            soundController.SetBool(Sound.Foot, isMoving);
+            soundController.SetBool(PlayerSoundType.FOOT, isMoving);
 
             if (isMoving)
             {
@@ -140,13 +140,17 @@ namespace playerCharacter
         public void TakeDamage(float damage)
         {
             if (isInvincible) return;
-
+            
+            StartCoroutine(EffectManager.Instance.ShakeCamera());
+            
             if (isDefending)
             {
-                if (Time.time - defendStartTime < defendTime / 2f) 
+                soundController.Trigger(PlayerSoundType.SWORD_DEFEND);
+                if (Time.time - defendStartTime < parryTime) 
                 {
                     damage = 0f;
                     Debug.Log($"Perfect Defend, damage : {damage}");
+                    return;
                 }
                 else 
                 {
@@ -156,7 +160,9 @@ namespace playerCharacter
             }
 
             curHealth -= damage;
-
+            
+            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/maxHealth));
+            
             if (curHealth <= 0)
             {
                 Die();
@@ -167,6 +173,7 @@ namespace playerCharacter
             }
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator TriggerInvincibility()
         {
             Debug.Log("���� ����");
@@ -199,7 +206,8 @@ namespace playerCharacter
             isDashing = true;
             canMove = false;
             animator.SetBool("isDashing", true);
-
+            soundController.Trigger(PlayerSoundType.DASH);
+            
             Vector2 dashDirection = lastMovementDirection.normalized;
             Vector2 startPosition = playerRb.position;
             Vector2 targetPosition = startPosition + dashDirection * dashDistance;
@@ -228,7 +236,7 @@ namespace playerCharacter
 
         private IEnumerator Attack()
         {
-            soundController.Trigger(Sound.Sword);
+            soundController.Trigger(PlayerSoundType.SWORD_SWING);
             isAttacking = true;
             canMove = false;
             animator.SetBool("isAttacking", true);
@@ -257,13 +265,14 @@ namespace playerCharacter
 
             defendStartTime = Time.time;
 
-            yield return new WaitForSeconds(defendTime);
+            yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
 
             animator.SetBool("isDefending", false);
             canMove = true;
             isDefending = false;
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider()
         {
             Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
@@ -272,7 +281,7 @@ namespace playerCharacter
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
             GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation);
-
+            attackCollider.GetComponent<AttackCollider>().Init(soundController);
             Destroy(attackCollider, delayTime);
         }
 

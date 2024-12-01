@@ -350,8 +350,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 390382601}
   m_HandleRect: {fileID: 390382600}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.6068435
+  m_Value: -0.0000015842168
+  m_Size: 0.6067554
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3776,7 +3776,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21628}
+  m_AnchoredPosition: {x: 0, y: 308.21677}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &755958330
@@ -4355,7 +4355,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: managedReferences[142013154360819714].bgmName
-      value: BGM_Spring
+      value: BGM_Title
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -5484,8 +5484,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2026817970}
   m_HandleRect: {fileID: 2026817969}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.6068435
+  m_Value: -0.0000015842168
+  m_Size: 0.6067554
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9338,7 +9338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21628}
+  m_AnchoredPosition: {x: 0, y: 308.21677}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1710069908
