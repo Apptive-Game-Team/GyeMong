@@ -2,6 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class PlayerData
+{
+    public bool isFirst = true;
+    public string sceneName = "TutorialScene";
+    public Vector3 playerPosition = new(4.93f, -1.72f, 0);
+    public Vector2 playerDirection = new(1, 0);
+}
+
+[System.Serializable]
 public class SoundData
 {
     public float masterVolume = 1f;

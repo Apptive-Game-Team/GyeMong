@@ -10,6 +10,7 @@ public class EventObject : InteractableObject, IAttackable
         OnInteraction = 1,
         OnAwake = 2,
         OnAttacked = 3,
+        OnCalled = 4,
     }
 
     [SerializeField]
@@ -72,7 +73,7 @@ public class EventObject : InteractableObject, IAttackable
         {
             foreach (Event eventObject in eventSequence)
             {
-                yield return eventObject.execute(this);
+                yield return eventObject.Execute(this);
             }
         } while (isLoop);
         eventLoop = null;

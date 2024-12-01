@@ -8,6 +8,7 @@ public class RuneData
 {
     public string name;
     public int id;
+    public string description;
     public Sprite runeImage;
     public BuffData runeBuff;
 }

@@ -10,7 +10,7 @@ public class AnimationEvent : Event {
     [SerializeField]
     private float deltaTime = 0.1f;
 
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         SpriteRenderer renderer = eventObject.GetComponent<SpriteRenderer>();
         foreach(Sprite sprite in frames)

@@ -1,3 +1,4 @@
+using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,7 +65,7 @@ public class Cube : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            PlayerDemo.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(10);
             //플레이어가 맞고 잠시 무적 되는 기능을 넣을 필요가 있어보임
         }
     }

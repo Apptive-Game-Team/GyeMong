@@ -8,8 +8,6 @@ public abstract class Boss : Creature
 {
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
-
-    protected int curPattern;
     protected int currentPhase = 2;//테스트용 원래는 1
     protected int maxPhase;
     protected float maxHealthP1;
@@ -50,29 +48,29 @@ public abstract class Boss : Creature
             Die();
         }
     }
+    public Coroutine currentPatternCoroutine;
     protected void ExecuteCurrentPattern()
     {
+        if (currentPatternCoroutine != null) return; // 중복 실행 방지
         switch (curPattern)
         {
             case 0:
-                StartCoroutine(ExecutePattern0());
+                currentPatternCoroutine = StartCoroutine(ExecutePattern0());
                 break;
             case 1:
-                StartCoroutine(ExecutePattern1());
+                currentPatternCoroutine = StartCoroutine(ExecutePattern1());
                 break;
             case 2:
-                StartCoroutine(ExecutePattern2());
+                currentPatternCoroutine = StartCoroutine(ExecutePattern2());
                 break;
             case 3:
-                StartCoroutine(ExecutePattern3());
+                currentPatternCoroutine = StartCoroutine(ExecutePattern3());
                 break;
             case 4:
-                StartCoroutine(ExecutePattern4());
+                currentPatternCoroutine = StartCoroutine(ExecutePattern4());
                 break;
             case 5:
-                StartCoroutine(ExecutePattern5());
-                break;
-            default:
+                currentPatternCoroutine = StartCoroutine(ExecutePattern5());
                 break;
         }
     } //보유 패턴 추가시 case추가
@@ -120,7 +118,7 @@ public abstract class Boss : Creature
                 rb.MovePosition(newPosition);
                 yield return null; // 다음 프레임까지 대기
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
     public IEnumerator DetectPlayerCoroutine()

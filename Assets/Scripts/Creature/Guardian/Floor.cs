@@ -1,3 +1,4 @@
+using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class Floor : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerDemo.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(10);
         }
     }
 }
