@@ -1,11 +1,14 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class AttackCollider : MonoBehaviour
 {
     public float attackDamage;
+    //Bad Way But..
+    [SerializeField] private GameObject flowerObj;
     private PlayerSoundController _soundController;
     private EventObject _eventObject;
     private ParticleSystem _particleSystem;
@@ -37,7 +40,12 @@ public class AttackCollider : MonoBehaviour
             _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
             creature.TakeDamage(attackDamage);
             Debug.Log("�ѱ��б�");
-            // Destroy(gameObject);
+            //Bad Way But..
+            if (PlayerCharacter.Instance.GetComponent<RuneComponent>().isRune(3))
+            {
+                Debug.Log("Flower Rune Activated");
+                Instantiate(flowerObj, collision.transform.position,quaternion.identity);
+            }
         } else
         {
             IAttackable[] attackableObjects = collision.GetComponents<IAttackable>();

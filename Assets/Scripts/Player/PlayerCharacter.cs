@@ -173,7 +173,15 @@ namespace playerCharacter
             }
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
+        public void Heal(float amount)
+        {
+            curHealth += amount;
+            if (curHealth > maxHealth)
+            {
+                curHealth = maxHealth;
+            }
+        }
+        
         private IEnumerator TriggerInvincibility()
         {
             Debug.Log("���� ����");

@@ -41,7 +41,8 @@ public class PuzzleController : MonoBehaviour
 
         if (CheckClear() && !isPuzzleCleared)
         {
-            rune.SetActive(true);
+            // rune.SetActive(true);
+            RuneObjectCreator.Instance.DrawRuneObject(1,rune.transform.position); //dont need rune gameobj
             isPuzzleCleared = true;
         }
     }

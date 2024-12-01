@@ -122,6 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 0
+  flowerObj: {fileID: 6008280722342465732, guid: d5c5aef1ed484c949bf9e8acb70210a2,
+    type: 3}
 --- !u!212 &-3350436086995963345
 SpriteRenderer:
   m_ObjectHideFlags: 0

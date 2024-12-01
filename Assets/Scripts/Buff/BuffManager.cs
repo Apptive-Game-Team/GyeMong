@@ -16,7 +16,7 @@ public enum BuffType
     RUNE_GOLEM = 104,
 }
 
-//ÇÊ¿äÇÑ ±â´É - ¸÷¿¡ ½º³×¾î »óÅÂ°¡ ±¸ÇöÀÌ µÇ¾î¾ßÇÔ (¼Ó¹Ú»óÅÂ)
+//ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×¾ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ (ï¿½Ó¹Ú»ï¿½ï¿½ï¿½)
 
 public enum BuffDisposeMode
 {
@@ -31,6 +31,8 @@ public enum BuffActiveMode
     EVERY_SOME_SECOND = 1,
     ON_ATTACK = 2,
 }
+
+
 
 [Serializable]
 public class BuffData
@@ -52,34 +54,6 @@ public interface IBuffSlave
 public interface IBuffMaster
 {
     public void AddRuneEvent(BuffData data, BuffComponent buffComp);
-}
-
-
-[Serializable]
-public class BuffComponent : IBuffSlave
-{
-    [SerializeField] List<BuffData> buffList = new List<BuffData>();
-
-    public void AddBuff(BuffData newBuff)
-    {
-        switch(newBuff.disposeMode)
-        {
-            case BuffDisposeMode.TEMPORARY:
-                buffList.Add(newBuff);
-                //listener.AddEvent(DisposeEvent,this,disposeTime);
-                BuffManager.Instance.StartCoroutine(BuffManager.Instance.AddTemporaryBuff(newBuff, this));
-                break;
-            case BuffDisposeMode.PERMANENT:
-                buffList.Add(newBuff);
-                BuffManager.Instance.AddRuneEvent(newBuff, this);
-                break;
-        }
-    }
-
-    public void DeleteBuff(BuffData buff)
-    {
-        buffList.Remove(buff);
-    }
 }
 
 public class BuffManager : SingletonObject<BuffManager>, IBuffMaster
@@ -120,10 +94,10 @@ public class BuffManager : SingletonObject<BuffManager>, IBuffMaster
             {
                 //Character Health not yet Implement...
                 case BuffType.RUNE_BREEZE:
-                    buffHitman.ActiveRune_Breeze(data,GetComponent<BuffTestComponent>());
+                    buffHitman.ActiveRune_Breeze(data);
                     break;
                 case BuffType.RUNE_VINE:
-                    buffHitman.ActiveRune_Vine(data, GetComponent<BuffTestComponent>());
+                    buffHitman.ActiveRune_Vine(data);
                     break;
             }
         }
