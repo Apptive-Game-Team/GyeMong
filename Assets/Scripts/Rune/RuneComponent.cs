@@ -9,12 +9,15 @@ public class RuneComponent : MonoBehaviour
     [SerializeField] List<RuneData> acquiredRuneList = new List<RuneData>();
     int maxRuneEquipNum = 2;
 
+    private BuffComponent _buffComp;
+    
     public List<RuneData> EquippedRuneList {  get { return equippedRuneList; } }
     public List<RuneData> AcquiredRuneList { get { return acquiredRuneList; } }
     public int MaxRuneEquipNum {  get { return maxRuneEquipNum; } }
 
     private void Start()
     {
+        _buffComp = GetComponent<BuffComponent>();
         TestAcquire();
     }
 
@@ -39,6 +42,7 @@ public class RuneComponent : MonoBehaviour
         if(equippedRuneList.Count < maxRuneEquipNum) 
         {
             equippedRuneList.Add(runeData);
+            _buffComp.AddBuff(runeData.runeBuff);
         }
         else
         {
@@ -49,6 +53,7 @@ public class RuneComponent : MonoBehaviour
     public void UnequipRune(RuneData runeData)
     {
         equippedRuneList.Remove(runeData);
+        _buffComp.DeleteBuff(runeData.runeBuff);
     }
 
     public void AcquireRune(RuneData runeData)

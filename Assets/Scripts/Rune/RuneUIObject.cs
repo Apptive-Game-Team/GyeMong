@@ -53,10 +53,12 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
         if(uiState == RuneUIState.UNEQUIPPED) 
         {
             PlayerCharacter.Instance.GetComponent<RuneComponent>().EquipRune(runeData);
+            uiState = RuneUIState.EQUIPPED;
         }
         else if (uiState == RuneUIState.EQUIPPED)
         {
             PlayerCharacter.Instance.GetComponent<RuneComponent>().UnequipRune(runeData);
+            uiState = RuneUIState.UNEQUIPPED;
         }
 
         RuneWindow.Instance.Init();
