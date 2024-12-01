@@ -93,5 +93,6 @@ public class EffectManager : SingletonObject<EffectManager>
     {
         base.Awake();
         CachingComponents();
+        hpBarController.gameObject.SetActive(false);
     }
 }

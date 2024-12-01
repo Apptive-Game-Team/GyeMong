@@ -7,7 +7,7 @@ public class CreateRuneEvent : Event
     [SerializeField] Vector3 createPos;
     [SerializeField] int runeID;
     
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         RuneObjectCreator.Instance.DrawRuneObject(runeID, createPos);
         yield return null;
@@ -18,7 +18,7 @@ public class AcquireRuneEvent : Event
 {
     [SerializeField] int runeID;
 
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         RuneData runeData = RuneObjectCreator.Instance.runeDataList.GetRuneData(runeID);
 
