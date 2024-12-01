@@ -10,6 +10,7 @@ public class EffectManager : SingletonObject<EffectManager>
 {
 
     private CameraController cameraController;
+    private HpBarController hpBarController;
     private RawImage hurtEffect;
     private RawImage black;
     private const float FADING_DELTA_TIME = 0.05f;
@@ -22,6 +23,11 @@ public class EffectManager : SingletonObject<EffectManager>
     public void SetCameraController(CameraController cameraController)
     {
         this.cameraController = cameraController;
+    }
+
+    public void UpdateHpBar(float hp)
+    {
+        hpBarController.UpdateHp(hp);
     }
 
     /// <summary>
@@ -76,15 +82,16 @@ public class EffectManager : SingletonObject<EffectManager>
         image.color = color;
     }
 
-    private void CachingImages()
+    private void CachingComponents()
     {
         hurtEffect = transform.Find("HurtEffect").GetComponent<RawImage>();
         black = transform.Find("Black").GetComponent<RawImage>();
+        hpBarController = transform.Find("HpBar").GetComponent<HpBarController>();
     }
 
     protected override void Awake()
     {
         base.Awake();
-        CachingImages();
+        CachingComponents();
     }
 }

@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEditor.PackageManager;
-
+using Unity.VisualScripting;
 
 [Serializable]
 public abstract class Event
 {
-    public abstract IEnumerator execute(EventObject eventObject = null);
+    public abstract IEnumerator Execute(EventObject eventObject = null);
     public virtual List<ToggeableCondition> FindToggleableConditions()
     {
         return null;
@@ -19,7 +18,7 @@ public abstract class Event
 public class HurtEffectEvent : Event
 {
     public float amount;
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         return EffectManager.Instance.HurtEffect(amount);
     }
@@ -29,7 +28,7 @@ public class HurtEffectEvent : Event
 public class ShakeCameraEvent : Event
 {
     public float time;
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         return EffectManager.Instance.ShakeCamera(time);
     }
@@ -39,7 +38,7 @@ public class ShakeCameraEvent : Event
 public class WarpPortalEvent : Event
 {
     public PortalID portalID;
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         return PortalManager.Instance.TransitScene(portalID);
     }
@@ -49,7 +48,7 @@ public class WarpPortalEvent : Event
 public class DelayEvent : Event
 {
     public float delayTime;
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         yield return new WaitForSeconds(delayTime);
     }
@@ -58,7 +57,7 @@ public class DelayEvent : Event
 [Serializable]
 public class FadeInEvent : Event
 {
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         return EffectManager.Instance.FadeIn();
     }
@@ -67,7 +66,7 @@ public class FadeInEvent : Event
 [Serializable]
 public class FadeOutEvent : Event
 {
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         return EffectManager.Instance.FadeOut();
     }
@@ -94,27 +93,38 @@ public class SoundEvent : Event
     [SerializeField]
     private bool sync = true;
 
-    public override IEnumerator execute(EventObject eventObject = null)
+    // ReSharper disable Unity.PerformanceAnalysis
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
-        if (soundObject == null)
+        try
         {
-            soundObject = eventObject.GetComponent<SoundObject>();
-        }
+            if (soundObject == null)
+            {
 
-        if (playOrStop == PlayOrStop.STOP)
-        {
-            soundObject.Stop();
-            return null;
-        }
-        else
-        {
-            if (soundName != null)
-                soundObject.SetSoundSourceByName(soundName);
-            if (sync)
-                return soundObject.Play();
+                soundObject = eventObject.GetComponent<SoundObject>();
+
+            }
+
+            if (playOrStop == PlayOrStop.STOP)
+            {
+                soundObject.Stop();
+                return null;
+            }
             else
-                soundObject.StartCoroutine(soundObject.Play());
-            return null;
+            {
+                if (soundName != null)
+                    soundObject.SetSoundSourceByName(soundName);
+                if (sync)
+                    return soundObject.Play();
+                else
+                    soundObject.StartCoroutine(soundObject.Play());
+                return null;
+            }
+        }
+        catch (NullReferenceException)
+        {
+            soundObject = eventObject.AddComponent<SoundObject>();
+            return Execute(eventObject);
         }
     }
 }
@@ -124,7 +134,7 @@ public class BGMEvent : Event
 {
     [SerializeField]
     private string bgmName;
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         SoundObject soundObject = SoundManager.Instance.GetBgmObject();
         soundObject.SetSoundSourceByName(bgmName);
@@ -137,7 +147,7 @@ public class StopEvent : Event
 {
     [SerializeField]
     private EventObject targetObject;
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         targetObject.KillEvent();
         yield return null;
@@ -150,11 +160,11 @@ public class NestedEventEvent : Event
     [SerializeReference]
     private List<Event> events;
 
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         foreach (Event @event in events)
         {
-            yield return @event.execute();
+            yield return @event.Execute();
         }
     }
     public override List<ToggeableCondition> FindToggleableConditions()
@@ -184,14 +194,14 @@ public class ConditionalBranchEvent : Event
     [SerializeReference]
     private Event eventInFalse;
 
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         if (condition.Check())
         {
-            return eventInTrue.execute();
+            return eventInTrue.Execute();
         } else
         {
-            return eventInFalse.execute();
+            return eventInFalse.Execute();
         }
     }
     public override List<ToggeableCondition> FindToggleableConditions()
@@ -233,11 +243,11 @@ public class ConditionalLoopEvent : Event
     [SerializeReference]
     private Event loopBodyevent;
 
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         while (condition.Check())
         {
-            yield return loopBodyevent.execute();
+            yield return loopBodyevent.Execute();
         }
     }
     public override List<ToggeableCondition> FindToggleableConditions()
@@ -265,7 +275,7 @@ public class ToggleConditionEvent : Event
     [SerializeReference]
     private bool condition;
 
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         List<ToggeableCondition> conditions = EventObject.toggleableConditions[tag];
         if (conditions == null)
@@ -296,7 +306,7 @@ public class MovePositionEvent : Event
     [SerializeField]
     private Vector3 targetPosition;
 
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         @gameObject.transform.position = targetPosition;
         yield return null;
@@ -306,7 +316,7 @@ public class MovePositionEvent : Event
 [Serializable]
 public class DestroySelfEvent : Event
 {
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         eventObject.DestroySelf();
         return null;
