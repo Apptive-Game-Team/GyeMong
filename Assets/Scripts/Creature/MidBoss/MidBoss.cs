@@ -41,16 +41,12 @@ public class MidBoss : Boss
     protected override void Update()
     {
         base.Update();
-        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN || curState == State.MOVE || curState == State.DASH)
-        {
-            _fsm.UpdateState();
-        }
-        else if(curState == State.IDLE)
+        if(curState == State.IDLE && currentPatternCoroutine == null)
         {
             SelectRandomPattern();
             ExecuteCurrentPattern();
-            _fsm.UpdateState();
         }
+        _fsm.UpdateState();
     }
     protected override void Die()
     {
