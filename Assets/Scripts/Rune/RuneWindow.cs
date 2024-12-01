@@ -21,6 +21,7 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
     [SerializeField] GameObject AcquiredRuneListUI;
     [SerializeField] RuneUIObject runeIcon;
     [SerializeField] GameObject runeIcon_Empty;
+    [SerializeField] GameObject runeCanvas;
     [SerializeReference] GameObject runeDescriptionUI;
 
     public void OpenOrCloseOption()
@@ -121,6 +122,12 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
             selectableUIs.Add(runeUI);
         }
 
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();   
+        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
     private void Update()
