@@ -60,5 +60,10 @@ public class RuneComponent : MonoBehaviour
     {
         acquiredRuneList.Add(runeData);
     }
+
+    public bool isRune(int id)
+    {
+        return acquiredRuneList.Exists(x => x.id.Equals(id));
+    }
 }
 
