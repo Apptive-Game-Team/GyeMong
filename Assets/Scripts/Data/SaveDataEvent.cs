@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class SaveDataEvent : Event
 {
     private PlayerData playerData = new();
-    public override IEnumerator execute(EventObject eventObject = null)
+    public override IEnumerator Execute(EventObject eventObject = null)
     {
         playerData.isFirst = false;
         playerData.sceneName = SceneManager.GetActiveScene().name;

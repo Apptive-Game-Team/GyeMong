@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 5083188182615057341}
   - component: {fileID: 4047033506906318720}
   - component: {fileID: 6259209506450466507}
+  - component: {fileID: 3862622192896607297}
+  - component: {fileID: 8464625720961678176}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -156,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHealth: 0
-  maxHealth: 0
+  maxHealth: 100
   attackPower: 0
   attackColliderPrefab: {fileID: 2848122850891802944, guid: 8e8beeeb017f3414891b7e04a9438725,
     type: 3}
@@ -215,6 +217,33 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.3
+--- !u!114 &3862622192896607297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49194295218117097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a0626a04d3700c4bbdd5220145872f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equippedRuneList: []
+  acquiredRuneList: []
+--- !u!114 &8464625720961678176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49194295218117097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23fb3c5c7c9095419fc1fc01c7b6460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffList: []
 --- !u!1 &1335504902609846588
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,8 +56,6 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern0()
     {
         ChangeState(State.ATTACK);
-        Debug.Log("°Å¸® ¹ú¸®±â");
-
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange/2)
         {
@@ -68,13 +66,11 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern1()
     {
         ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("½¬¾î");
         yield return new WaitForSeconds(0.5f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange)
         {
             ChangeState(State.ATTACK);
-            Debug.Log("¿ø°Å¸® °ø°Ý");
             Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
         }
@@ -103,17 +99,15 @@ public class MidBoss : Boss
         if (distance <= MeleeAttackRange)
         {
             ChangeState(State.ATTACK);
-            Debug.Log("±Ù°Å¸® °ø°Ý");
             meleeAttackPrefab.SetActive(true);
-            Debug.Log("ÄÑÁü");
 
-            // ÇÃ·¹ÀÌ¾î ¹æÇâ °è»ê
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             Vector3 playerDirection = (player.transform.position - transform.position).normalized;
 
-            // ÄÝ¶óÀÌ´õ¸¦ ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ÀÌµ¿
+            // ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             meleeAttackPrefab.transform.position = transform.position + playerDirection * MeleeAttackRange;
 
-            // °ø°Ý Áö¼Ó ½Ã°£
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
             yield return new WaitForSeconds(0.2f);
 
             meleeAttackPrefab.SetActive(false);
@@ -124,7 +118,6 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern3()
     {
         ChangeState(State.MOVE);
-        Debug.Log("ÃßÀû");
         float duration = 2f;
         float elapsed = 0f;
 
@@ -139,13 +132,11 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern4()
     {
         ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("½¬¾î");
         yield return new WaitForSeconds(1f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange)
         {
             ChangeState(State.ATTACK);
-            Debug.Log("È÷È÷ ¾¾¾Ñ ¹ß»ç");
             int count = 0;
             while (count < 4)
             {
@@ -158,7 +149,7 @@ public class MidBoss : Boss
         else
         {
             ChangeState(State.DASH);
-            // »ç°Å¸®¿¡ µµ´ÞÇÒ ¶§±îÁö ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ÀÌµ¿
+            // ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             while (distance > RangedAttackRange)
             {
                 speed = 10f;
@@ -168,7 +159,7 @@ public class MidBoss : Boss
                 yield return null;
             }
             ChangeState(State.ATTACK);
-            // »ç°Å¸®¿¡ µµ´ÞÇÑ ÈÄ È­»ì ¹ß»ç ¹× ´ë±â
+            // ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
             speed = 1f;
             int count = 0;
             while (count < 4)
@@ -184,10 +175,8 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern5()
     {
         ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("½¬¾î");
         yield return new WaitForSeconds(0.5f);
         ChangeState(State.ATTACK);
-        Debug.Log("µ¢Äð ÈÖµÎ¸£±â");
         float duration = 2f;
         float elapsed = 0f;
         Instantiate(vinePrefab, transform.position, Quaternion.identity);
@@ -204,7 +193,7 @@ public class MidBoss : Boss
         int randomIndex;
         List<int> weightedPatterns = new List<int>();
 
-        // °¡ÁßÄ¡¸¦ ¹Ý¿µÇÏ¿© ¸®½ºÆ®¿¡ ÆÐÅÏÀ» Ãß°¡
+        // ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         if (currentPhase == 1)
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
@@ -224,8 +213,8 @@ public class MidBoss : Boss
         do
         {
             randomIndex = Random.Range(0, weightedPatterns.Count);
-        } while (weightedPatterns[randomIndex] == lastPattern); // Á÷Àü ÆÐÅÏ°ú µ¿ÀÏÇÏ¸é ´Ù½Ã »Ì±â
+        } while (weightedPatterns[randomIndex] == lastPattern); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ù½ï¿½ ï¿½Ì±ï¿½
         curPattern = weightedPatterns[randomIndex];
-        lastPattern = curPattern; // ÇöÀç ÆÐÅÏÀ» Á÷Àü ÆÐÅÏÀ¸·Î ÀúÀå
+        lastPattern = curPattern; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 }

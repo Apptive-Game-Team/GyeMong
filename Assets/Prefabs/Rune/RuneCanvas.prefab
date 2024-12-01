@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 2664055384115406498}
   - component: {fileID: 1831911562428773292}
   - component: {fileID: 6044999527238747298}
+  - component: {fileID: 1478862668766380169}
   m_Layer: 5
   m_Name: DescriptionUI
   m_TagString: Untagged
@@ -237,6 +238,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1478862668766380169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2512298621604903364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c5c0a7de04768f4284c94c1b26bac24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textTitle: {fileID: 2455396177769328114}
+  textDescription: {fileID: 5993159743443035967}
 --- !u!1 &2730530504407421398
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +352,7 @@ MonoBehaviour:
     type: 3}
   runeIcon_Empty: {fileID: 6478281533961071843, guid: 5eef2923ea5f3e14bb2e071274851c0e,
     type: 3}
+  runeDescriptionUI: {fileID: 2512298621604903364}
 --- !u!1 &3161981933874473235
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,8 +420,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Rune Of Default
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d66ffdeac25064c23ad290f6db72193f, type: 2}
+  m_sharedMaterial: {fileID: -664159576824077772, guid: d66ffdeac25064c23ad290f6db72193f,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -613,8 +630,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: This is Dummy Text. What did you expect?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4f6169eb030564f26b3a7f721ef94cc9, type: 2}
+  m_sharedMaterial: {fileID: -2872450316396892703, guid: 4f6169eb030564f26b3a7f721ef94cc9,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

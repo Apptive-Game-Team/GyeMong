@@ -155,7 +155,7 @@ namespace playerCharacter
                 else 
                 {
                     damage /= 2f;
-                    Debug.Log($"�ϴ� Defend, damage : {damage}");
+                    Debug.Log($"Defend, damage : {damage}");
                 }
             }
 
@@ -184,7 +184,6 @@ namespace playerCharacter
         
         private IEnumerator TriggerInvincibility()
         {
-            Debug.Log("���� ����");
             isInvincible = true;
 
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -205,7 +204,6 @@ namespace playerCharacter
             }
 
             isInvincible = false;
-            Debug.Log("���� ����");
         }
 
         private IEnumerator Dash()
