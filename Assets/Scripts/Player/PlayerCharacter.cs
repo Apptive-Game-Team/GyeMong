@@ -48,6 +48,8 @@ namespace playerCharacter
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
+
+            LoadPlayerData();
         }
 
         private void Update()
@@ -298,6 +300,26 @@ namespace playerCharacter
             canMove = false; // ������ ����
             yield return new WaitForSeconds(duration); // ������ �ð� ���
             canMove = true; // ������ �簳
+        }
+
+        public Vector3 GetPlayerPosition()
+        {
+            return gameObject.transform.position;
+        }
+
+        public Vector2 GetPlayerDirection()
+        {
+            return lastMovementDirection;
+        }
+
+        private void LoadPlayerData()
+        {
+            PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
+            if (!playerData.isFirst)
+            {
+                gameObject.transform.position = playerData.playerPosition;
+                lastMovementDirection = playerData.playerDirection;
+            }
         }
     }
 }
