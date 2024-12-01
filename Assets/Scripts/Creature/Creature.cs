@@ -11,10 +11,12 @@ public class Creature : MonoBehaviour
         ATTACK,
         CHANGINGPATTERN,
         ONHIT,
-        STUN
+        STUN,
+        DASH
     }
     protected FiniteStateMachine _fsm;
     public State curState;
+    public int curPattern;
     protected float maxHealth;
     [SerializeField] protected float curHealth;
     protected float AttackDamage;
@@ -22,10 +24,23 @@ public class Creature : MonoBehaviour
     protected float detectionRange;
     protected float MeleeAttackRange;
     protected float RangedAttackRange;
+    public Vector2 moveDir { get; private set; }
     [SerializeField] protected float shield;
     protected GameObject player;
+    protected virtual void Update()
+    {
+        Vector3 targetPosition = player.transform.position;
+        Vector3 direction = targetPosition - transform.position;
+        SetMoveDirection(new Vector2(direction.x, direction.y));
+    }
+    public void SetMoveDirection(Vector2 direction)
+    {
+        moveDir = direction;
+        moveDir.Normalize();
+    }
     public virtual void TakeDamage(float damage)
     {
+        OnHit();
         if (shield >= damage)
         {
             shield -= damage;
@@ -81,7 +96,28 @@ public class Creature : MonoBehaviour
                     _fsm.ChangeState(new StunState(this));
                     break;
                 }
+            case State.DASH:
+                {
+                    _fsm.ChangeState(new DashState(this));
+                    break;
+                }
         }
+    }
+    public void OnHit()
+    {
+        StopAllCoroutines();
+        StartCoroutine(OnHitCoroutine());
+    }
+
+    private IEnumerator OnHitCoroutine()
+    {
+        ChangeState(State.ONHIT);
+        yield return new WaitForSeconds(0.5f);
+        ChangeState(State.IDLE);
+    }
+    public void Debuging(int n)
+    {
+        Debug.Log($"µÊ¤·¤·{n}");
     }
 }
 

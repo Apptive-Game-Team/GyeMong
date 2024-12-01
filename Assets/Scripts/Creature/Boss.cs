@@ -8,8 +8,6 @@ public abstract class Boss : Creature
 {
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
-
-    protected int curPattern;
     protected int currentPhase = 2;//테스트용 원래는 1
     protected int maxPhase;
     protected float maxHealthP1;
@@ -120,7 +118,7 @@ public abstract class Boss : Creature
                 rb.MovePosition(newPosition);
                 yield return null; // 다음 프레임까지 대기
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
     public IEnumerator DetectPlayerCoroutine()

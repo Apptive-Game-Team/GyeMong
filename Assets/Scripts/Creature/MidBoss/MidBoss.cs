@@ -38,14 +38,19 @@ public class MidBoss : Boss
         SetupPhase();
     }
 
-    void Update()
+    protected override void Update()
     {
-        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN)
-            return;
-
-        SelectRandomPattern();
-        ExecuteCurrentPattern();
-        _fsm.UpdateState();
+        base.Update();
+        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN || curState == State.MOVE || curState == State.DASH)
+        {
+            _fsm.UpdateState();
+        }
+        else if(curState == State.IDLE)
+        {
+            SelectRandomPattern();
+            ExecuteCurrentPattern();
+            _fsm.UpdateState();
+        }
     }
     protected override void Die()
     {
@@ -54,9 +59,6 @@ public class MidBoss : Boss
 
     protected override IEnumerator ExecutePattern0()
     {
-        ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("쉬어");
-        yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         Debug.Log("거리 벌리기");
 
@@ -71,19 +73,18 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(2f);
-        ChangeState(State.ATTACK);
-        Debug.Log("원거리 공격");
-
+        yield return new WaitForSeconds(0.5f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange)
         {
+            ChangeState(State.ATTACK);
+            Debug.Log("원거리 공격");
             Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
         }
         else
         {
-            // 사거리에 도달할 때까지 플레이어 방향으로 이동
+            ChangeState(State.DASH);
             while (distance > RangedAttackRange)
             {
                 speed = 10f;
@@ -92,24 +93,21 @@ public class MidBoss : Boss
                 distance = Vector3.Distance(transform.position, player.transform.position);
                 yield return null;
             }
-            // 사거리에 도달한 후 화살 발사 및 대기
+            ChangeState(State.ATTACK);
             speed = 1f;
             Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
         }
         ChangeState(State.IDLE);
     }
 
     protected override IEnumerator ExecutePattern2()
     {
-        ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("쉬어");
-        yield return new WaitForSeconds(2f);
-        ChangeState(State.ATTACK);
-        Debug.Log("근거리 공격");
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
+            ChangeState(State.ATTACK);
+            Debug.Log("근거리 공격");
             meleeAttackPrefab.SetActive(true);
             Debug.Log("켜짐");
 
@@ -127,13 +125,9 @@ public class MidBoss : Boss
         yield return null;
         ChangeState(State.IDLE);
     }
-
     protected override IEnumerator ExecutePattern3()
     {
-        ChangeState(State.CHANGINGPATTERN);
-        Debug.Log("쉬어");
-        yield return new WaitForSeconds(2f);
-        ChangeState(State.ATTACK);
+        ChangeState(State.MOVE);
         Debug.Log("추적");
         float duration = 2f;
         float elapsed = 0f;
@@ -150,23 +144,24 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(2f);
-        ChangeState(State.ATTACK);
-        Debug.Log("히히 씨앗 발사");
+        yield return new WaitForSeconds(1f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= RangedAttackRange)
         {
+            ChangeState(State.ATTACK);
+            Debug.Log("히히 씨앗 발사");
             int count = 0;
             while (count < 4)
             {
                 Instantiate(seedPrefab, transform.position, Quaternion.identity);
                 count++;
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(0.25f);
             }
-            yield return new WaitForSeconds(2f);
+            yield return null;
         }
         else
         {
+            ChangeState(State.DASH);
             // 사거리에 도달할 때까지 플레이어 방향으로 이동
             while (distance > RangedAttackRange)
             {
@@ -176,6 +171,7 @@ public class MidBoss : Boss
                 distance = Vector3.Distance(transform.position, player.transform.position);
                 yield return null;
             }
+            ChangeState(State.ATTACK);
             // 사거리에 도달한 후 화살 발사 및 대기
             speed = 1f;
             int count = 0;
@@ -183,9 +179,9 @@ public class MidBoss : Boss
             {
                 Instantiate(seedPrefab, transform.position, Quaternion.identity);
                 count++;
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(0.25f);
             }
-            yield return new WaitForSeconds(2f);
+            yield return null;
         }
         ChangeState(State.IDLE);
     }
@@ -193,7 +189,7 @@ public class MidBoss : Boss
     {
         ChangeState(State.CHANGINGPATTERN);
         Debug.Log("쉬어");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         ChangeState(State.ATTACK);
         Debug.Log("덩쿨 휘두르기");
         float duration = 2f;
