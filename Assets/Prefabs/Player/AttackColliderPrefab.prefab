@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -101421307163761881}
   - component: {fileID: -3350436086995963345}
   - component: {fileID: 6099312340670356930}
+  - component: {fileID: 7813404654519479442}
   m_Layer: 0
   m_Name: AttackColliderPrefab
   m_TagString: Untagged
@@ -199,6 +200,27 @@ MonoBehaviour:
     - rid: 142013584090857472
       type: {class: ParticleEvent, ns: , asm: Assembly-CSharp}
       data: 
+--- !u!95 &7813404654519479442
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2848122850891802944}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ad66f909b4eda324d9d509365ae95351, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7666442732443652392
 GameObject:
   m_ObjectHideFlags: 0
