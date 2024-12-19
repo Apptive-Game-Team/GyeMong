@@ -292,9 +292,7 @@ public class ToggleConditionEvent : Event
             {
                 EventObject.toggleableConditions[tag].Remove(condition);
             }
-            
         }
-        
     }
 }
 
