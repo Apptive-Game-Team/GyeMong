@@ -6,8 +6,8 @@ using playerCharacter;
 
 public class Puzzle2 : MonoBehaviour
 {
-
-    List<GameObject> Roots;
+    private Collider2D[] paths;
+    List<GameObject> roots;
     Tilemap fogTilemap;
     PlayerCharacter player;
     List<Collider2D> pathList;
@@ -18,6 +18,7 @@ public class Puzzle2 : MonoBehaviour
     private void Start()
     {
         player = PlayerCharacter.Instance;
+        paths = transform.Find("Path").GetComponentsInChildren<Collider2D>();
         fogTilemap = GameObject.Find("fogTilemap").GetComponent<Tilemap>();
     }
 
