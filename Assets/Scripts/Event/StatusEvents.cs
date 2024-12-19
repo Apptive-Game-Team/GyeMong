@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoolStatusEvent : Event
+public abstract class StatusEvent : Event {
+}
+
+public class BoolStatusEvent : StatusEvent
 {
     [SerializeField] private EventStatus<bool> status;
     [SerializeField] private bool value;

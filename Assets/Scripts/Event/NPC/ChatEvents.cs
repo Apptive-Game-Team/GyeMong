@@ -3,7 +3,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenChatEvent : Event
+public abstract class ChatEvent : Event
+{
+}
+
+public class OpenChatEvent : ChatEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
@@ -11,7 +15,7 @@ public class OpenChatEvent : Event
     }
 }
 
-public class CloseChatEvent : Event
+public class CloseChatEvent : ChatEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
@@ -21,7 +25,7 @@ public class CloseChatEvent : Event
 }
 
 [Serializable]
-public class ShowChatEvent : Event
+public class ShowChatEvent : ChatEvent
 {
     [SerializeField]
     ChatMessage message;

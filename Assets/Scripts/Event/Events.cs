@@ -15,26 +15,6 @@ public abstract class Event
 }
 
 [Serializable]
-public class HurtEffectEvent : Event
-{
-    public float amount;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return EffectManager.Instance.HurtEffect(amount);
-    }
-}
-
-[Serializable]
-public class ShakeCameraEvent : Event
-{
-    public float time;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return EffectManager.Instance.ShakeCamera(time);
-    }
-}
-
-[Serializable]
 public class WarpPortalEvent : Event
 {
     public PortalID portalID;
@@ -51,24 +31,6 @@ public class DelayEvent : Event
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         yield return new WaitForSeconds(delayTime);
-    }
-}
-
-[Serializable]
-public class FadeInEvent : Event
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return EffectManager.Instance.FadeIn();
-    }
-}
-
-[Serializable]
-public class FadeOutEvent : Event
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return EffectManager.Instance.FadeOut();
     }
 }
 
@@ -179,120 +141,6 @@ public class NestedEventEvent : Event
             }
         }
         return result;
-    }
-}
-
-[Serializable]
-public class ConditionalBranchEvent : Event
-{
-    [SerializeReference]
-    protected Condition condition;
-
-    [SerializeReference]
-    private Event eventInTrue;
-
-    [SerializeReference]
-    private Event eventInFalse;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        if (condition.Check())
-        {
-            return eventInTrue.Execute();
-        } else
-        {
-            return eventInFalse.Execute();
-        }
-    }
-    public override List<ToggeableCondition> FindToggleableConditions()
-    {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
-        List<ToggeableCondition> temp;
-        try
-        {
-            temp = eventInTrue.FindToggleableConditions();
-        }
-        catch
-        {
-            return null;
-        }
-        
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        temp = eventInFalse.FindToggleableConditions();
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        if (condition is ToggeableCondition)
-        {
-            result.Add((ToggeableCondition) condition);
-        }
-        return result;
-    }
-}
-
-[Serializable]
-public class ConditionalLoopEvent : Event
-{
-    [SerializeReference]
-    protected Condition condition;
-
-    [SerializeReference]
-    private Event loopBodyevent;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        while (condition.Check())
-        {
-            yield return loopBodyevent.Execute();
-        }
-    }
-    public override List<ToggeableCondition> FindToggleableConditions()
-    {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
-
-        List<ToggeableCondition> temp = loopBodyevent.FindToggleableConditions();
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        if (condition is ToggeableCondition)
-        {
-            result.Add((ToggeableCondition)condition);
-        }
-        return result;
-    }
-}
-
-[Serializable]
-public class ToggleConditionEvent : Event
-{
-    [SerializeReference]
-    private string tag;
-    [SerializeReference]
-    private bool condition;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        List<ToggeableCondition> conditions = EventObject.toggleableConditions[tag];
-        if (conditions == null)
-        {
-            Debug.Log("Toggleable Conditions is not found by " + tag);
-            yield return null;
-        }
-        foreach (ToggeableCondition condition in conditions)
-        {
-            try
-            {
-                condition.SetCondition(this.condition);
-            } catch
-            {
-                EventObject.toggleableConditions[tag].Remove(condition);
-            }
-        }
     }
 }
 
