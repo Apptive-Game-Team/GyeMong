@@ -34,6 +34,10 @@ public class EventObject : InteractableObject, IAttackable
         List<ToggeableCondition> result = new List<ToggeableCondition>();
         foreach (Event @event in eventSequence)
         {
+            if (@event == null)
+            {
+                continue;
+            }
             List<ToggeableCondition> temp = @event.FindToggleableConditions();
             if (temp != null)
             {
@@ -45,7 +49,7 @@ public class EventObject : InteractableObject, IAttackable
 
     private void InitializeToggleableConditions()
     {
-        List<ToggeableCondition> conditions =  FindToggleableConditions();
+        List<ToggeableCondition> conditions = FindToggleableConditions();
         foreach (ToggeableCondition condition in conditions)
         {
             string tag = condition.GetTag();
