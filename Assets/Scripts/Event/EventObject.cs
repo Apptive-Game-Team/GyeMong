@@ -29,6 +29,10 @@ public class EventObject : InteractableObject, IAttackable
 
     public static Dictionary<string, List<ToggeableCondition>> toggleableConditions = new();
 
+    public void SetTriggerLimitCounter(int counter)
+    {
+        triggerLimitCounter = counter;
+    }
     private List<ToggeableCondition> FindToggleableConditions()
     {
         List<ToggeableCondition> result = new List<ToggeableCondition>();
@@ -83,7 +87,16 @@ public class EventObject : InteractableObject, IAttackable
         eventLoop = null;
     }
 
-    public void TriggerEvent()
+    public void Trigger()
+    {
+        if (trigger == EventTrigger.OnCalled && triggerLimitCounter != 0)
+        {
+            TriggerEvent();
+            triggerLimitCounter -= 1;
+        }
+    }
+    
+    private void TriggerEvent()
     {
         if (eventLoop != null)
         {
