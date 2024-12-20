@@ -3,16 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public abstract class ConditionalEvent : Event {
-
+public abstract class ConditionalEvent : Event
+{
+    [SerializeReference]
+    protected Condition _condition;
+    public override List<ToggeableCondition> FindToggleableConditions()
+    {
+        List<ToggeableCondition> result = new List<ToggeableCondition>();
+        Event[] children = GetChildren();
+        if (children != null)
+        {
+            foreach (Event @event in children)
+            {
+                List<ToggeableCondition> temp;
+                temp = @event.FindToggleableConditions();
+                if (temp != null)
+                {
+                    result.AddRange(temp);
+                }
+            }
+        }
+        
+        if (_condition is ToggeableCondition)
+        {
+            result.Add((ToggeableCondition) _condition);
+        }
+        return result;
+    }
 }
 
 [Serializable]
 public class ConditionalBranchEvent : ConditionalEvent
 {
-    [SerializeReference]
-    protected Condition condition;
-
     [SerializeReference]
     private Event eventInTrue;
 
@@ -21,7 +43,7 @@ public class ConditionalBranchEvent : ConditionalEvent
 
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        if (condition.Check())
+        if (_condition.Check())
         {
             return eventInTrue.Execute();
         } else
@@ -29,33 +51,10 @@ public class ConditionalBranchEvent : ConditionalEvent
             return eventInFalse.Execute();
         }
     }
-    public override List<ToggeableCondition> FindToggleableConditions()
+
+    public override Event[] GetChildren()
     {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
-        List<ToggeableCondition> temp;
-        try
-        {
-            temp = eventInTrue.FindToggleableConditions();
-        }
-        catch
-        {
-            return null;
-        }
-        
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        temp = eventInFalse.FindToggleableConditions();
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        if (condition is ToggeableCondition)
-        {
-            result.Add((ToggeableCondition) condition);
-        }
-        return result;
+        return new Event[] { eventInTrue, eventInFalse };
     }
 }
 
@@ -63,37 +62,24 @@ public class ConditionalBranchEvent : ConditionalEvent
 public class ConditionalLoopEvent : ConditionalEvent
 {
     [SerializeReference]
-    protected Condition condition;
-
-    [SerializeReference]
     private Event loopBodyevent;
 
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        while (condition.Check())
+        while (_condition.Check())
         {
             yield return loopBodyevent.Execute();
         }
     }
-    public override List<ToggeableCondition> FindToggleableConditions()
-    {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
 
-        List<ToggeableCondition> temp = loopBodyevent.FindToggleableConditions();
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        if (condition is ToggeableCondition)
-        {
-            result.Add((ToggeableCondition)condition);
-        }
-        return result;
+    public override Event[] GetChildren()
+    {
+        return new Event[] { loopBodyevent };
     }
 }
 
 [Serializable]
-public class ToggleConditionEvent : ConditionalEvent
+public class ToggleConditionEvent : Event
 {
     [SerializeReference]
     private string tag;
