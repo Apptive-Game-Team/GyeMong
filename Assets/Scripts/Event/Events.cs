@@ -117,34 +117,6 @@ public class StopEvent : Event
 }
 
 [Serializable]
-public class NestedEventEvent : Event
-{
-    [SerializeReference]
-    private List<Event> events;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        foreach (Event @event in events)
-        {
-            yield return @event.Execute();
-        }
-    }
-    public override List<ToggeableCondition> FindToggleableConditions()
-    {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
-        foreach (Event @event in events)
-        {
-            List<ToggeableCondition> temp = @event.FindToggleableConditions();
-            if (temp != null)
-            {
-                result.AddRange(temp);
-            }
-        }
-        return result;
-    }
-}
-
-[Serializable]
 public class MovePositionEvent : Event
 {
     [SerializeField]
