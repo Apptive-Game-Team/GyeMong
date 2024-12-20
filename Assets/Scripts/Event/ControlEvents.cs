@@ -38,6 +38,12 @@ public class NestedEventEvent : ControlEvent
             yield return @event.Execute();
         }
     }
+    
+    public override Event[] GetChildren()
+    {
+        return events.ToArray();
+    }
+    
     public override List<ToggeableCondition> FindToggleableConditions()
     {
         List<ToggeableCondition> result = new List<ToggeableCondition>();
