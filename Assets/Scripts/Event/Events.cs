@@ -8,6 +8,28 @@ using Unity.VisualScripting;
 public abstract class Event
 {
     public abstract IEnumerator Execute(EventObject eventObject = null);
+
+    public virtual Event[] GetChildren()
+    {
+        return null;
+    }
+
+    public Event Find(Type type)
+    {
+        Event[] children = GetChildren();
+        if (children != null)
+        {
+            foreach (Event child in children)
+            {
+                if (child.GetType() == type)
+                {
+                    return child;
+                }
+            }
+        }
+
+        return null;
+    }
     public virtual List<ToggeableCondition> FindToggleableConditions()
     {
         return null;
