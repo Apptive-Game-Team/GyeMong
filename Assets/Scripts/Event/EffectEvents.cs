@@ -66,7 +66,7 @@ public class ParticleAToBEvent : EffectEvent
         
         _shape.shapeType = ParticleSystemShapeType.SingleSidedEdge;
         
-        float signedAngle = Mathf.Atan2(_endPosition.y - _startPosition.y, _endPosition.x - _startPosition.x) * Mathf.Rad2Deg;
+        float signedAngle = Mathf.Atan2(_endPosition.x - _startPosition.x, _endPosition.y - _startPosition.y) * Mathf.Rad2Deg;
         float distance = Vector3.Distance(_startPosition, _endPosition);
         _emission.rateOverTime = _rateOverTime;
         _main.startSpeed = _speed;
