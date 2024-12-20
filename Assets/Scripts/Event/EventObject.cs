@@ -29,6 +29,8 @@ public class EventObject : InteractableObject, IAttackable
 
     public static Dictionary<string, List<ToggeableCondition>> toggleableConditions = new();
 
+    public Event[] EventSequence => eventSequence.ToArray(); 
+    
     public void SetTriggerLimitCounter(int counter)
     {
         triggerLimitCounter = counter;
