@@ -68,14 +68,15 @@ public class ParticleAToBEvent : EffectEvent
         
         float signedAngle = Mathf.Atan2(_endPosition.x - _startPosition.x, _endPosition.y - _startPosition.y) * Mathf.Rad2Deg;
         float distance = Vector3.Distance(_startPosition, _endPosition);
-        _emission.rateOverTime = _rateOverTime;
+        
+        _emission.rateOverTime = new ParticleSystem.MinMaxCurve(0, _rateOverTime);
         _main.startSpeed = _speed;
         _main.startSize = _size;
         _shape.rotation = Vector3.back * signedAngle;
         _shape.position = _startPosition - _particleSystem.transform.position;
         _main.startLifetime = distance / _main.startSpeed.constant;
         _particleSystem.Play();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(10/_rateOverTime);
         _particleSystem.Stop();
     }
 }
