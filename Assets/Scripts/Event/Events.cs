@@ -140,3 +140,23 @@ public class DestroySelfEvent : Event
         return null;
     }
 }
+
+[Serializable]
+public class TriggerEvent : Event
+{
+    [SerializeField]
+    private MonoBehaviour triggerable;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        try
+        {
+            IEventTriggerable triggerable = this.triggerable as IEventTriggerable;
+            triggerable.Trigger();
+        } catch (NullReferenceException)
+        {
+            Debug.LogError("Triggerable is not set");
+        }
+        
+        return null;
+    }
+}
