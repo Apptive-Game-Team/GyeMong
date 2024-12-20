@@ -14,8 +14,9 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
     Collider2D playerCollider;
     List<Collider2D> pathList;
     private EventObject eventObject;
+    private EventObject pathEventObject;
     private EventStatus<int> rootNum;
-
+    
     const int visionRange = 2;
     int curRootNum = 0;
 
@@ -30,17 +31,34 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
             .Where(component => component.gameObject != pRoots && component.transform.parent == pRoots.transform)
             .ToArray();;
         Array.Sort(roots, (a, b) => a.GetSiblingIndex().CompareTo(b.GetSiblingIndex()));
-        paths = transform.Find("Path").GetComponentsInChildren<Collider2D>();
+        Transform pathTransform = transform.Find("Path");
+        paths = pathTransform.GetComponentsInChildren<Collider2D>();
+        pathEventObject = pathTransform.GetComponent<EventObject>();
         fogTilemap = GameObject.Find("fogTilemap").GetComponent<Tilemap>();
     }
 
     private void Update()
     {
         UpdateFog();
-
+        UpdateParticle();
         if (!CheckOnPath())
         {
             eventObject.Trigger();
+        }
+    }
+    
+    void UpdateParticle()
+    {
+        Event[] events =  pathEventObject.EventSequence;
+        foreach (Event @event in events)
+        {
+            if (@event is ParticleAToBEvent)
+            {
+                ParticleAToBEvent particleEvent = @event as ParticleAToBEvent;
+                int index = rootNum.GetStatus();
+                particleEvent._startPosition = roots[index].position;
+                particleEvent._endPosition = roots[index+1].position;
+            }
         }
     }
 
