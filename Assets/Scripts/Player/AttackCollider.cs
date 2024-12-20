@@ -36,7 +36,7 @@ public class AttackCollider : MonoBehaviour
         {
             SetParticleSystemTexture(collision);
 
-            _eventObject.TriggerEvent();
+            _eventObject.Trigger();
             _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
             creature.TakeDamage(attackDamage);
             //Bad Way But..
@@ -51,7 +51,7 @@ public class AttackCollider : MonoBehaviour
             if (attackableObjects.Length != 0)
             {
                 SetParticleSystemTexture(collision);
-                _eventObject.TriggerEvent();
+                _eventObject.Trigger();
                 _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                 foreach (IAttackable @object in attackableObjects)
                 {

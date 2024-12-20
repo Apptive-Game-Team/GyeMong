@@ -28,9 +28,17 @@ public class EventDrawer : PropertyDrawer
         classNames = new string[classInfos.Count];
 
         int index = 0;
-        foreach (string tuple in classInfos.Keys)
+        foreach (Type type in classInfos.Values)
         {
-            classNames[index] = tuple;
+            Type baseType = type.BaseType;
+            String className = type.Name;
+            while (baseType != typeof(Event))
+            {
+                className = baseType.Name + "/" + className;
+                baseType = baseType.BaseType;
+            }
+
+            classNames[index] = className;
             index++;
         }
     }
@@ -75,8 +83,9 @@ public class EventDrawer : PropertyDrawer
 
         string targetName = property.managedReferenceValue.GetType().ToString();
         int index = 0;
-        foreach (string name in classNames)
+        foreach (string classPath in classNames)
         {
+            string name = classPath.Split('/')[^1];
             if (name.Equals(targetName))
             {
                 return index;
@@ -90,7 +99,7 @@ public class EventDrawer : PropertyDrawer
     // set property to instance of selected class
     private void CreateSubclassInstance(SerializedProperty property, int index)
     {
-        property.managedReferenceValue = Activator.CreateInstance(classInfos[classNames[index]]);
+        property.managedReferenceValue = Activator.CreateInstance(classInfos[classNames[index].Split('/')[^1]]);
 
         property.serializedObject.ApplyModifiedProperties();
     }
