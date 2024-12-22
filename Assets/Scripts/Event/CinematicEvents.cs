@@ -80,6 +80,19 @@ public class ClearTextEvent : TextEvent
         return null;
     }
 }
+
+
+public class ChangeSpriteEvent : CinematicEvent
+{
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Sprite _sprite;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        _spriteRenderer.sprite = _sprite;
+        return null;
+    }
+}
+
 public class ControlShaderEvent : CinematicEvent
 {
     [SerializeField] private Shader shader;
