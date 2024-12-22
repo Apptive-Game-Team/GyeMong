@@ -56,7 +56,7 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
             {
                 ParticleAToBEvent particleEvent = @event as ParticleAToBEvent;
                 int index = rootNum.GetStatus();
-                if (index >= roots.Length)
+                if (index >= roots.Length - 1)
                     return;
                 particleEvent._startPosition = roots[index].position;
                 particleEvent._endPosition = roots[index+1].position;
