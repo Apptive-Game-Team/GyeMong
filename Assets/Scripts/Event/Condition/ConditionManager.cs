@@ -22,6 +22,10 @@ internal class Conditions
     public Conditions(Dictionary<string, bool> conditions)
     {
         this._conditions = new List<KeyValuePair<string, bool>>();
+        if (conditions == null)
+        {
+            return;
+        }
         foreach (KeyValuePair<string, bool> condition in conditions)
         {
             this._conditions.Add(condition);
@@ -44,15 +48,25 @@ public class ConditionManager : SingletonObject<ConditionManager>
 {
     private const string CONDITION_FILE = "conditions";
     private Dictionary<string, bool> _conditions;
-    public Dictionary<string, bool> Conditions => _conditions;
-    protected override void Awake()
+
+    public Dictionary<string, bool> Conditions
     {
-        base.Awake();
-        Conditions conditions = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE);
-        _conditions = conditions.GetConditions();
+        get
+        {
+            if (_conditions == null)
+            {
+                _conditions = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE).GetConditions();
+            }
+
+            return _conditions;
+        }
     }
-    
     private void OnApplicationQuit()
+    {
+        DataManager.Instance.SaveSection(new Conditions(_conditions), CONDITION_FILE);
+    }
+
+    public void Save()
     {
         DataManager.Instance.SaveSection(new Conditions(_conditions), CONDITION_FILE);
     }
