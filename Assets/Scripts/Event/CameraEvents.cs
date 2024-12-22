@@ -34,8 +34,7 @@ public class StopFollowCameraEvent : CameraEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        CameraController cameraController = CameraController;
-        cameraController.IsFollowing = false;
+        CameraController.IsFollowing = false;
         return null;
     }
 }
@@ -44,8 +43,7 @@ public class StartFollowCameraEvent : CameraEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        CameraController cameraController = CameraController;
-        cameraController.IsFollowing = true;
+        CameraController.IsFollowing = true;
         return null;
     }  
 }
