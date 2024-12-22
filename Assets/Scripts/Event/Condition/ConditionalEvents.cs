@@ -104,5 +104,7 @@ public class ToggleConditionEvent : Event
                 EventObject.toggleableConditions[tag].Remove(condition);
             }
         }
+
+        ConditionManager.Instance.Conditions[tag] = this.condition;
     }
 }
