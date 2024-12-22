@@ -46,7 +46,9 @@ public class HpBarController : MonoBehaviour
                 maxHps.Add(bossInfo.Item2);
                 maxHps.Add(bossInfo.Item3);
                 currentPhase = 1;
+                currentPhase = boss.CurrentPhase;
                 _maxHp = maxHps[currentPhase - 1];
+                _isBossSetUp = true;
             }
         }
         else
