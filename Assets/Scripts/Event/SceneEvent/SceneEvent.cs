@@ -44,7 +44,7 @@ public class SceneEvent : MonoBehaviour
 
         ResumeCameraFollow();
 
-        chatEventObject.TriggerEvent();
+        chatEventObject.Trigger();
     }
 
     private IEnumerator FadeIn()
