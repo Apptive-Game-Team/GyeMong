@@ -37,11 +37,18 @@ public class ToggeableCondition : Condition
     [SerializeField]
     private string tag;
 
+    private bool isSetUp = false;
+    
     [SerializeField]
     private bool condition = false;
 
     public override bool Check()
     {
+        if (!isSetUp)
+        {
+            condition = ConditionManager.Instance.Conditions[tag];
+            isSetUp = true;
+        }
         return condition;
     }
     public string GetTag()
