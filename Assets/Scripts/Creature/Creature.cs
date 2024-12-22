@@ -105,15 +105,15 @@ public class Creature : MonoBehaviour
     }
     public void OnHit()
     {
-        StopAllCoroutines();
         StartCoroutine(OnHitCoroutine());
     }
 
     private IEnumerator OnHitCoroutine()
     {
+        State curState_ = curState;
         ChangeState(State.ONHIT);
-        yield return new WaitForSeconds(0.5f);
-        ChangeState(State.IDLE);
+        yield return null;
+        ChangeState(curState_);
     }
 }
 

@@ -193,7 +193,7 @@ public class MidBoss : Boss
         int randomIndex;
         List<int> weightedPatterns = new List<int>();
 
-        // ����ġ�� �ݿ��Ͽ� ����Ʈ�� ������ �߰�
+        // ����ġ�� ���Ͽ� ����Ʈ�� ������ �߰�
         if (currentPhase == 1)
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
