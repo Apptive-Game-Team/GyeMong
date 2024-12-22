@@ -31551,6 +31551,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64f1ae9c03ebe9d4c9496b6f4942f313, type: 3}
+--- !u!114 &730340168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5083188182615057341, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+    type: 3}
+  m_PrefabInstance: {fileID: 730340167}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e9787a85296984b9ffdfe6f00e3e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &730557092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35858,7 +35870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21713}
+  m_AnchoredPosition: {x: 0, y: 308.21658}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36682,8 +36694,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565192122}
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
-  m_Value: -0.0000031684335
-  m_Size: 0.6068397
+  m_Value: -0.0000015842168
+  m_Size: 0.60545295
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37408,7 +37420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21713}
+  m_AnchoredPosition: {x: 0, y: 308.21658}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -42288,6 +42300,7 @@ GameObject:
   - component: {fileID: 1852717529}
   - component: {fileID: 1852717528}
   - component: {fileID: 1852717527}
+  - component: {fileID: 1852717532}
   m_Layer: 0
   m_Name: BossRoomEntrance
   m_TagString: Untagged
@@ -42514,6 +42527,81 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1852717532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852717525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 0
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 521773745628250143
+  - rid: 521773745628250139
+  - rid: 521773745628250132
+  - rid: 521773745628250133
+  - rid: 521773745628250134
+  - rid: 521773745628250135
+  - rid: 521773745628250138
+  - rid: 521773745628250136
+  - rid: 521773745628250140
+  - rid: 521773745628250142
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773745628250132
+      type: {class: MoveCreatureEvent, ns: , asm: Assembly-CSharp}
+      data:
+        creatureType: 0
+        iControllable: {fileID: 730340168}
+        target: {x: 86, y: 15, z: 0}
+        speed: 1
+    - rid: 521773745628250133
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 521773745628250134
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uD0C0\uB77D\uD55C \uC5D8\uD504"
+          message: "\uC654\uAD70.. \uC5EC\uAE30\uAE4C\uC9C0 \uC628 \uAC83\uC740 \uB108\uAC00
+            \uCC98\uC74C\uC774 \uC544\uB2C8\uB2E4.."
+    - rid: 521773745628250135
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0
+    - rid: 521773745628250136
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 521773745628250138
+      type: {class: ChangeSpriteEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 2099362347}
+        _sprite: {fileID: 21300000, guid: 5fd0c1220da3844429dd60969921942e, type: 3}
+    - rid: 521773745628250139
+      type: {class: ChangeSpriteEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 2099362347}
+        _sprite: {fileID: 21300000, guid: 3bd1012804ff5486cb054948185bd4aa, type: 3}
+    - rid: 521773745628250140
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 1852717527}
+    - rid: 521773745628250142
+      type: {class: StartAnimatiorEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 2099362349}
+    - rid: 521773745628250143
+      type: {class: StopAnimatiorEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 2099362349}
 --- !u!1 &1865815903
 GameObject:
   m_ObjectHideFlags: 0
@@ -43087,8 +43175,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272479262}
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
-  m_Value: -0.0000031684335
-  m_Size: 0.6068397
+  m_Value: -0.0000015842168
+  m_Size: 0.60545295
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -45013,7 +45101,7 @@ Transform:
   m_GameObject: {fileID: 2099362343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 86.1, y: 17.4, z: 0}
+  m_LocalPosition: {x: 86.99, y: 19.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45028,7 +45116,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2099362343}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2423237b3a72bed4b9b463bced41800e, type: 2}
   m_CullingMode: 0
