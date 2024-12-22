@@ -10,6 +10,7 @@ public class EffectManager : SingletonObject<EffectManager>
 {
 
     private CameraController cameraController;
+    
     private HpBarController hpBarController;
     private RawImage hurtEffect;
     private RawImage black;
@@ -20,6 +21,11 @@ public class EffectManager : SingletonObject<EffectManager>
         return GetComponent<ChatController>();
     }
 
+    public CameraController GetCameraController()
+    {
+        return cameraController;
+    }
+    
     public void SetCameraController(CameraController cameraController)
     {
         this.cameraController = cameraController;
