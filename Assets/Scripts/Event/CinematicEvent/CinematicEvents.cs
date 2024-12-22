@@ -17,7 +17,7 @@ public class MoveCreatureEvent : CinematicEvent
     [SerializeField] private float speed;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        IControllable iControllable;
+        IControllable iControllable = null;
         if (creatureType == CreatureType.Selectable)
         {
             iControllable = (IControllable) this.iControllable;
