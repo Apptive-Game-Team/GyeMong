@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,25 @@ public abstract class Boss : Creature
 {
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
-    protected int currentPhase = 2;//Å×½ºÆ®¿ë ¿ø·¡´Â 1
+    protected int currentPhase = 2; //ï¿½×½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1
     protected int maxPhase;
     protected float maxHealthP1;
     protected float maxHealthP2;
-    protected int lastPattern = -1; // Á÷Àü ÆÐÅÏÀ» ÀúÀå
+
+    public float CurrentHp
+    {
+        get { return curHealth; }
+    }
+
+    public int CurrentPhase
+    {
+        get { return currentPhase; }
+    }
+    public Tuple<int, float, float> BossInfo
+    {
+        get { return new Tuple<int, float, float>(currentPhase, curHealth, maxHealthP1); }
+    }
+    protected int lastPattern = -1; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     protected void SetupPhase()
     {
@@ -28,7 +43,7 @@ public abstract class Boss : Creature
             default:
                 break;
         }
-    } //ÃÖ´ëÆäÀÌÁî Ãß°¡½Ã caseÃß°¡
+    } //ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ caseï¿½ß°ï¿½
     protected void CheckPhaseTransition()
     {
         if (curHealth <= 0)
@@ -51,7 +66,7 @@ public abstract class Boss : Creature
     public Coroutine currentPatternCoroutine;
     protected void ExecuteCurrentPattern()
     {
-        if (currentPatternCoroutine != null) return; // Áßº¹ ½ÇÇà ¹æÁö
+        if (currentPatternCoroutine != null) return; // ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         switch (curPattern)
         {
             case 0:
@@ -73,14 +88,14 @@ public abstract class Boss : Creature
                 currentPatternCoroutine = StartCoroutine(ExecutePattern5());
                 break;
         }
-    } //º¸À¯ ÆÐÅÏ Ãß°¡½Ã caseÃß°¡
+    } //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ caseï¿½ß°ï¿½
     protected abstract IEnumerator ExecutePattern0();
     protected abstract IEnumerator ExecutePattern1();
     protected abstract IEnumerator ExecutePattern2();
     protected abstract IEnumerator ExecutePattern3();
     protected abstract IEnumerator ExecutePattern4();
     protected abstract IEnumerator ExecutePattern5();
-    protected abstract void SelectRandomPattern();//ÆÐÅÏ ¼±ÅÃ ¸Å¼­µå Ãß»óÈ­
+    protected abstract void SelectRandomPattern();//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¼ï¿½ï¿½ï¿½ ï¿½ß»ï¿½È­
     public void TrackPlayer()
     {
         if (player != null)
@@ -96,10 +111,10 @@ public abstract class Boss : Creature
         if (player != null)
         {
             float backStepSpeed = 50f;
-            Vector3 direction = (transform.position - player.transform.position).normalized; // ÇÃ·¹ÀÌ¾î ¹Ý´ë ¹æÇâ
+            Vector3 direction = (transform.position - player.transform.position).normalized; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ý´ï¿½ ï¿½ï¿½ï¿½ï¿½
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            float checkRadius = 1f; // Ãæµ¹ °¨Áö ¹Ý°æ
-            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle"); // Àå¾Ö¹° ·¹ÀÌ¾î
+            float checkRadius = 1f; // ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý°ï¿½
+            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle"); // ï¿½ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½
 
             while (true)
             {
@@ -111,12 +126,12 @@ public abstract class Boss : Creature
                 RaycastHit2D hit = Physics2D.CircleCast(transform.position, checkRadius, direction, backStepSpeed * Time.deltaTime, obstacleLayer);
                 if (hit.collider != null)
                 {
-                    break; // Ãæµ¹ ½Ã ¹é½ºÅÜ Áß´Ü
+                    break; // ï¿½æµ¹ ï¿½ï¿½ ï¿½é½ºï¿½ï¿½ ï¿½ß´ï¿½
                 }
-                // MovePositionÀ¸·Î ÀÌµ¿
+                // MovePositionï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
                 Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
                 rb.MovePosition(newPosition);
-                yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
+                yield return null; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             }
             yield return new WaitForSeconds(0.5f);
         }
