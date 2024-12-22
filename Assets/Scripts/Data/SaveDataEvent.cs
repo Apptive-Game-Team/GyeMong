@@ -12,6 +12,7 @@ public class SaveDataEvent : Event
         playerData.playerDirection = PlayerCharacter.Instance.GetPlayerDirection();
 
         DataManager.Instance.SaveSection(playerData, "PlayerData");
+        ConditionManager.Instance.Save();
 
         yield return null;
     }
