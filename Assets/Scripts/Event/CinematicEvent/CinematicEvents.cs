@@ -22,7 +22,7 @@ public class MoveCreatureEvent : CinematicEvent
         {
             iControllable = (IControllable) this.iControllable;
         }
-        else
+        else if (creatureType == CreatureType.Player)
         {
             iControllable = (IControllable) PlayerCharacter.Instance;
         }
