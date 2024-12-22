@@ -534,6 +534,7 @@ MonoBehaviour:
   - rid: 521773745628250168
   - rid: 521773745628250169
   - rid: 521773745628250161
+  - rid: 521773745628250170
   references:
     version: 2
     RefIds:
@@ -591,6 +592,10 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 1
+    - rid: 521773745628250170
+      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 0}
 --- !u!4 &97916096
 Transform:
   m_ObjectHideFlags: 0
