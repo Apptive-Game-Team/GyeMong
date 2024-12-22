@@ -13,16 +13,6 @@ public class HurtEffectEvent : EffectEvent
         return EffectManager.Instance.HurtEffect(amount);
     }
 }
-
-[Serializable]
-public class ShakeCameraEvent : EffectEvent
-{
-    public float time;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return EffectManager.Instance.ShakeCamera(time);
-    }
-}
 public class ParticleEvent : EffectEvent
 {
     private ParticleSystem _particleSystem;
