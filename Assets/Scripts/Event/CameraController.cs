@@ -10,6 +10,13 @@ public class CameraController : MonoBehaviour
     private const float SHAKE_AMOUNT = 0.1f;
     private const float SHAKE_DELAY = 0.1f;
     private bool isShaking = false;
+    private bool isFollowing = true;
+    
+    public bool IsFollowing
+    {
+        get => isFollowing && !isShaking;
+        set => isFollowing = value;
+    }
     
     void Awake()
     {
@@ -20,7 +27,7 @@ public class CameraController : MonoBehaviour
     
     void Update()
     {
-        if (!isShaking)
+        if (IsFollowing)
             transform.position = player.transform.position + Vector3.back * defaultCameraZ;
     }
 
