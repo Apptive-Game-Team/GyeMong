@@ -35,6 +35,11 @@ public class EffectManager : SingletonObject<EffectManager>
     {
         hpBarController.UpdateHp(hp);
     }
+    
+    public HpBarController GetHpBarController()
+    {
+        return hpBarController;
+    }
 
     /// <summary>
     /// set HurtEffect transparency
