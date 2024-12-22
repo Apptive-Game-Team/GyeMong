@@ -29,6 +29,7 @@ public class ShowBossHealthBarEvent : BossHpBarEvent
   public override IEnumerator Execute(EventObject eventObject = null)
   {
     HpBarController.gameObject.SetActive(true);
+    HpBarController.SetBoss(_boss);
     return null;
   }
 }
@@ -37,6 +38,7 @@ public class HideBossHealthBarEvent : BossHpBarEvent
 {
   public override IEnumerator Execute(EventObject eventObject = null)
   {
+    HpBarController.ClearBoss();
     HpBarController.gameObject.SetActive(false);
     return null;
   }
