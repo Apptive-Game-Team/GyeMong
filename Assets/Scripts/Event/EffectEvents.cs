@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public abstract class EffectEvent : Event { }
@@ -13,16 +11,6 @@ public class HurtEffectEvent : EffectEvent
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         return EffectManager.Instance.HurtEffect(amount);
-    }
-}
-
-[Serializable]
-public class ShakeCameraEvent : EffectEvent
-{
-    public float time;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return EffectManager.Instance.ShakeCamera(time);
     }
 }
 public class ParticleEvent : EffectEvent
