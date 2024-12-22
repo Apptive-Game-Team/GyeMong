@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using playerCharacter;
 using TMPro;
 using UnityEngine;
 
@@ -7,12 +8,27 @@ public abstract class CinematicEvent : Event { }
 
 public class MoveCreatureEvent : CinematicEvent
 {
+    private enum CreatureType
+    {
+        Player,
+        Selectable,
+    }
+    [SerializeField] private CreatureType creatureType;
     [SerializeField] private MonoBehaviour iControllable;
     [SerializeField] private Vector3 target;
     [SerializeField] private float speed;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        IControllable iControllable = (IControllable) this.iControllable;
+        IControllable iControllable;
+        if (creatureType == CreatureType.Selectable)
+        {
+            iControllable = (IControllable) this.iControllable;
+        }
+        else
+        {
+            iControllable = (IControllable) PlayerCharacter.Instance;
+        }
+        
         return iControllable.MoveTo(target, speed);
     }
 }
