@@ -25,7 +25,7 @@ public abstract class Boss : Creature
     }
     public Tuple<int, float, float> BossInfo
     {
-        get { return new Tuple<int, float, float>(currentPhase, curHealth, maxHealthP1); }
+        get { return new Tuple<int, float, float>(currentPhase, maxHealthP1, maxHealthP2); }
     }
     protected int lastPattern = -1; // ���� ������ ����
 
