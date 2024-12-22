@@ -48,3 +48,12 @@ public class StartFollowCameraEvent : CameraEvent
     }  
 }
 
+public class CameraMoveEvent : CameraEvent
+{
+    [SerializeField] private Vector3 target;
+    [SerializeField] private float duration;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        return CameraController.MoveTo(target, duration);
+    }
+}
