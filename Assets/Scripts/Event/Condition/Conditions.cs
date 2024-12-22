@@ -46,7 +46,12 @@ public class ToggeableCondition : Condition
     {
         if (!isSetUp)
         {
-            condition = ConditionManager.Instance.Conditions[tag];
+            if (ConditionManager.Instance.Conditions.ContainsKey(tag))
+            {
+                condition = ConditionManager.Instance.Conditions[tag];
+            }
+            else 
+                ConditionManager.Instance.Conditions[tag] = condition;
             isSetUp = true;
         }
         return condition;
