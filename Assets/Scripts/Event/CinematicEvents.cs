@@ -80,3 +80,12 @@ public class ClearTextEvent : TextEvent
         return null;
     }
 }
+public class ControlShaderEvent : CinematicEvent
+{
+    [SerializeField] private Shader shader;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        // 
+        return null;
+    }
+}
