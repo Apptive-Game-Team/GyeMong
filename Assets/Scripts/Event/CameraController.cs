@@ -31,6 +31,18 @@ public class CameraController : MonoBehaviour
             transform.position = player.transform.position + Vector3.back * defaultCameraZ;
     }
 
+    public IEnumerator MoveTo(Vector3 target, float duration)
+    {
+        float timer = 0;
+        Vector3 startPosition = transform.position;
+        while (timer < duration)
+        {
+            yield return new WaitForSeconds(0.02f);
+            timer += 0.02f;
+            transform.position = Vector3.Lerp(startPosition, target, timer / duration);
+        }
+    }
+    
     public IEnumerator ShakeCamera(float time)
     {
         float timer = 0;
