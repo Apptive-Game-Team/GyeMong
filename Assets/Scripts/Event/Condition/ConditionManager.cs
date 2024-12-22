@@ -7,37 +7,43 @@ using UnityEngine;
 [Serializable]
 internal class Conditions
 {
-    private List<KeyValuePair<string, bool>> _conditions;
-
-    public void Add(KeyValuePair<string, bool> condition)
+    [Serializable] 
+    class Condition
     {
-        _conditions.Add(condition);
+        public string tag;
+        public bool condition;
+    }
+    [SerializeReference] private List<Condition> _conditions;
+
+    public void Add(string tag, string condition)
+    {
+        _conditions.Add(new Condition { tag = tag, condition = bool.Parse(condition) });
     }
 
     public Conditions()
     {
-        _conditions = new List<KeyValuePair<string, bool>>();
+        _conditions = new List<Condition>();
     }
 
     public Conditions(Dictionary<string, bool> conditions)
     {
-        this._conditions = new List<KeyValuePair<string, bool>>();
+        this._conditions = new List<Condition>();
         if (conditions == null)
         {
             return;
         }
         foreach (KeyValuePair<string, bool> condition in conditions)
         {
-            this._conditions.Add(condition);
+            this._conditions.Add(new Condition{ tag = condition.Key, condition = condition.Value});
         }
     }
 
     public Dictionary<string, bool> GetConditions()
     {
         Dictionary<string, bool> result = new Dictionary<string, bool>();
-        foreach (KeyValuePair<string, bool> condition in _conditions)
+        foreach (Condition condition in _conditions)
         {
-            result.Add(condition.Key, condition.Value);
+            result.Add(condition.tag, condition.condition);
         }
 
         return result;
@@ -48,7 +54,7 @@ public class ConditionManager : SingletonObject<ConditionManager>
 {
     private const string CONDITION_FILE = "conditions";
     private Dictionary<string, bool> _conditions;
-
+    [SerializeReference] private Conditions asdf;
     public Dictionary<string, bool> Conditions
     {
         get
@@ -56,6 +62,7 @@ public class ConditionManager : SingletonObject<ConditionManager>
             if (_conditions == null)
             {
                 _conditions = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE).GetConditions();
+                asdf = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE);
             }
 
             return _conditions;
@@ -68,6 +75,7 @@ public class ConditionManager : SingletonObject<ConditionManager>
 
     public void Save()
     {
-        DataManager.Instance.SaveSection(new Conditions(_conditions), CONDITION_FILE);
+        asdf = new Conditions(_conditions);
+        DataManager.Instance.SaveSection(asdf, CONDITION_FILE);
     }
 }
