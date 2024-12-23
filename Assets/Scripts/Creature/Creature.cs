@@ -52,8 +52,16 @@ public class Creature : MonoBehaviour
             curHealth -= (damage-temp);
         }
     }
-    protected virtual void Die()
+    protected virtual void Die() // Clear Event
     {
+        try
+        {
+            GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
+        }
+        catch
+        {
+            Debug.Log("BossDownEventObject not found");
+        }
         Destroy(gameObject);
     }
     public virtual void ChangeState(State nextState)
@@ -105,15 +113,15 @@ public class Creature : MonoBehaviour
     }
     public void OnHit()
     {
-        StopAllCoroutines();
         StartCoroutine(OnHitCoroutine());
     }
 
     private IEnumerator OnHitCoroutine()
     {
+        State curState_ = curState;
         ChangeState(State.ONHIT);
-        yield return new WaitForSeconds(0.5f);
-        ChangeState(State.IDLE);
+        yield return null;
+        ChangeState(curState_);
     }
 }
 

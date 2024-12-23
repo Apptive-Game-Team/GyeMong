@@ -57,6 +57,20 @@ public class DelayEvent : Event
 }
 
 [Serializable]
+public class SkippableDelayEvent : Event
+{
+    public float delayTime = 10;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        float timer = Time.time;
+        yield return new WaitUntil(() =>
+        {
+            return (timer + delayTime < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction);
+        });
+    }
+}
+
+[Serializable]
 public class SoundEvent : Event
 {
     [SerializeField]

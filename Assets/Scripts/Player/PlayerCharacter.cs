@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
+using UnityEngine.SceneManagement;
 
 namespace playerCharacter
 {
-    public class PlayerCharacter : SingletonObject<PlayerCharacter>
+    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable
     {
         [SerializeField] private float curHealth;
         public float maxHealth;
         public float attackPower;
-
+        private bool isControlled = false;
         private Vector2 movement;
         private Vector2 lastMovementDirection;
         private Rigidbody2D playerRb;
@@ -38,6 +40,7 @@ namespace playerCharacter
         private bool isDefending = false;
         private bool canMove = true;
         private bool isInvincible = false;
+        public VisualEffect vfxRenderer;
 
         private void Start()
         {
@@ -54,12 +57,20 @@ namespace playerCharacter
 
         private void Update()
         {
-            if (canMove)
+            if (SceneManager.GetActiveScene().name == "SpringPuzzle2")
             {
-                HandleInput();
+                vfxRenderer.SetVector3("ColliderPos", transform.position);
             }
-            UpdateState();
 
+            if (!isControlled)
+            {
+                if (canMove)
+                {
+                    HandleInput();
+                }
+                UpdateState();
+                
+            }
         }
 
         private void FixedUpdate()
@@ -326,6 +337,35 @@ namespace playerCharacter
                 gameObject.transform.position = playerData.playerPosition;
                 lastMovementDirection = playerData.playerDirection;
             }
+        }
+
+        public IEnumerator MoveTo(Vector3 target, float speed)
+        {
+            isControlled = true;   
+            animator.SetBool("isMove", true);
+            soundController.SetBool(PlayerSoundType.FOOT, true);
+
+            movement.x = target.x - transform.position.x;
+            movement.y = target.y - transform.position.y;
+            movement.Normalize();
+            animator.SetFloat("xDir", movement.x);
+            animator.SetFloat("yDir", movement.y);
+            
+            while (true)
+            {
+                playerRb.velocity = movement * speed;
+                if (Vector3.Distance(transform.position, target) < 0.1f)
+                {
+                    break;
+                }
+                yield return new WaitForSeconds(0.02f);
+            }
+            playerRb.velocity = movement * speed;
+            animator.SetFloat("speed", speed);
+            
+            animator.SetBool("isMove", false);
+            soundController.SetBool(PlayerSoundType.FOOT, false);
+            isControlled = false;
         }
     }
 }
