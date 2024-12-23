@@ -26,11 +26,28 @@ public abstract class BossHpBarEvent : BossEvent
 
 public class ShowBossHealthBarEvent : BossHpBarEvent
 {
+  private const float TIME = 0.3f;
+  private const float DELTA_TIME = 0.02f;
   public override IEnumerator Execute(EventObject eventObject = null)
   {
     HpBarController.gameObject.SetActive(true);
     HpBarController.SetBoss(_boss);
-    return null;
+
+    Vector3 defaultScale = HpBarController.transform.localScale;
+    HpBarController.transform.localScale = defaultScale * 0.8f;
+    float timer = 0;
+
+    while (timer < TIME)
+    {
+      timer += DELTA_TIME;
+      float progress = timer / TIME;
+      float scaleRate = Mathf.Lerp(0.8f, 1, Mathf.Sin(progress * Mathf.PI));
+      HpBarController.transform.localScale = defaultScale * scaleRate;
+
+      yield return new WaitForSeconds(DELTA_TIME);
+    }
+
+    HpBarController.transform.localScale = defaultScale;
   }
 }
 
