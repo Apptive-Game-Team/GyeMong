@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public abstract class BossEvent : Event
@@ -33,21 +34,29 @@ public class ShowBossHealthBarEvent : BossHpBarEvent
     HpBarController.gameObject.SetActive(true);
     HpBarController.SetBoss(_boss);
 
-    Vector3 defaultScale = HpBarController.transform.localScale;
-    HpBarController.transform.localScale = defaultScale * 0.8f;
+    // Vector3 defaultScale = HpBarController.transform.localScale;
+    Vector3 defaultPosition = HpBarController.transform.position;
+
+    // 시작 위치 설정 (화면 위에서 시작)
+    Vector3 startPosition = defaultPosition + new Vector3(0, 100, 0); // Y축으로 2.0만큼 위로 이동
+    
+    HpBarController.transform.position = startPosition;
+    // HpBarController.transform.localScale = defaultScale * 0.9f;
     float timer = 0;
 
     while (timer < TIME)
     {
       timer += DELTA_TIME;
-      float progress = timer / TIME;
-      float scaleRate = Mathf.Lerp(0.8f, 1, Mathf.Sin(progress * Mathf.PI));
-      HpBarController.transform.localScale = defaultScale * scaleRate;
+      float progress = Mathf.Pow(timer / TIME, 2);
+      float scaleRate = Mathf.Lerp(0.9f, 1, Mathf.Sin(progress * Mathf.PI));
+      // HpBarController.transform.localScale = defaultScale * scaleRate;
+      HpBarController.transform.position = Vector3.Lerp(startPosition, defaultPosition, progress );
 
       yield return new WaitForSeconds(DELTA_TIME);
     }
+    HpBarController.transform.position = defaultPosition;
 
-    HpBarController.transform.localScale = defaultScale;
+    // HpBarController.transform.localScale = defaultScale;
   }
 }
 
