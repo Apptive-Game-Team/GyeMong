@@ -8,29 +8,31 @@ using Unity.VisualScripting;
 public abstract class Event
 {
     public abstract IEnumerator Execute(EventObject eventObject = null);
-    public virtual List<ToggeableCondition> FindToggleableConditions()
+
+    public virtual Event[] GetChildren()
     {
         return null;
     }
-}
 
-[Serializable]
-public class HurtEffectEvent : Event
-{
-    public float amount;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public Event Find(Type type)
     {
-        return EffectManager.Instance.HurtEffect(amount);
+        Event[] children = GetChildren();
+        if (children != null)
+        {
+            foreach (Event child in children)
+            {
+                if (child.GetType() == type)
+                {
+                    return child;
+                }
+            }
+        }
+
+        return null;
     }
-}
-
-[Serializable]
-public class ShakeCameraEvent : Event
-{
-    public float time;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public virtual List<ToggeableCondition> FindToggleableConditions()
     {
-        return EffectManager.Instance.ShakeCamera(time);
+        return null;
     }
 }
 
@@ -55,20 +57,16 @@ public class DelayEvent : Event
 }
 
 [Serializable]
-public class FadeInEvent : Event
+public class SkippableDelayEvent : Event
 {
+    public float delayTime = 10;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        return EffectManager.Instance.FadeIn();
-    }
-}
-
-[Serializable]
-public class FadeOutEvent : Event
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return EffectManager.Instance.FadeOut();
+        float timer = Time.time;
+        yield return new WaitUntil(() =>
+        {
+            return (timer + delayTime < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction);
+        });
     }
 }
 
@@ -155,150 +153,6 @@ public class StopEvent : Event
 }
 
 [Serializable]
-public class NestedEventEvent : Event
-{
-    [SerializeReference]
-    private List<Event> events;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        foreach (Event @event in events)
-        {
-            yield return @event.Execute();
-        }
-    }
-    public override List<ToggeableCondition> FindToggleableConditions()
-    {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
-        foreach (Event @event in events)
-        {
-            List<ToggeableCondition> temp = @event.FindToggleableConditions();
-            if (temp != null)
-            {
-                result.AddRange(temp);
-            }
-        }
-        return result;
-    }
-}
-
-[Serializable]
-public class ConditionalBranchEvent : Event
-{
-    [SerializeReference]
-    protected Condition condition;
-
-    [SerializeReference]
-    private Event eventInTrue;
-
-    [SerializeReference]
-    private Event eventInFalse;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        if (condition.Check())
-        {
-            return eventInTrue.Execute();
-        } else
-        {
-            return eventInFalse.Execute();
-        }
-    }
-    public override List<ToggeableCondition> FindToggleableConditions()
-    {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
-        List<ToggeableCondition> temp;
-        try
-        {
-            temp = eventInTrue.FindToggleableConditions();
-        }
-        catch
-        {
-            return null;
-        }
-        
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        temp = eventInFalse.FindToggleableConditions();
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        if (condition is ToggeableCondition)
-        {
-            result.Add((ToggeableCondition) condition);
-        }
-        return result;
-    }
-}
-
-[Serializable]
-public class ConditionalLoopEvent : Event
-{
-    [SerializeReference]
-    protected Condition condition;
-
-    [SerializeReference]
-    private Event loopBodyevent;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        while (condition.Check())
-        {
-            yield return loopBodyevent.Execute();
-        }
-    }
-    public override List<ToggeableCondition> FindToggleableConditions()
-    {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
-
-        List<ToggeableCondition> temp = loopBodyevent.FindToggleableConditions();
-        if (temp != null)
-        {
-            result.AddRange(temp);
-        }
-        if (condition is ToggeableCondition)
-        {
-            result.Add((ToggeableCondition)condition);
-        }
-        return result;
-    }
-}
-
-[Serializable]
-public class ToggleConditionEvent : Event
-{
-    [SerializeReference]
-    private string tag;
-    [SerializeReference]
-    private bool condition;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        List<ToggeableCondition> conditions = EventObject.toggleableConditions[tag];
-        if (conditions == null)
-        {
-            Debug.Log("Toggleable Conditions is not found by " + tag);
-            yield return null;
-        }
-        foreach (ToggeableCondition condition in conditions)
-        {
-            try
-            {
-                condition.SetCondition(this.condition);
-            } catch
-            {
-                EventObject.toggleableConditions[tag].Remove(condition);
-            }
-            
-        }
-        
-    }
-}
-
-[Serializable]
 public class MovePositionEvent : Event
 {
     [SerializeField]
@@ -319,6 +173,26 @@ public class DestroySelfEvent : Event
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         eventObject.DestroySelf();
+        return null;
+    }
+}
+
+[Serializable]
+public class TriggerEvent : Event
+{
+    [SerializeField]
+    private MonoBehaviour triggerable;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        try
+        {
+            IEventTriggerable triggerable = this.triggerable as IEventTriggerable;
+            triggerable.Trigger();
+        } catch (NullReferenceException)
+        {
+            Debug.LogError("Triggerable is not set");
+        }
+        
         return null;
     }
 }
