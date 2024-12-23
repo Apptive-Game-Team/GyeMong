@@ -490,6 +490,127 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 94970493}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &97916094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 97916096}
+  - component: {fileID: 97916095}
+  m_Layer: 0
+  m_Name: BossDownEventObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &97916095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97916094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 521773745628250159
+  - rid: 521773745628250160
+  - rid: 521773745628250162
+  - rid: 521773745628250163
+  - rid: 521773745628250164
+  - rid: 521773745628250165
+  - rid: 521773745628250166
+  - rid: 521773745628250167
+  - rid: 521773745628250168
+  - rid: 521773745628250169
+  - rid: 521773745628250161
+  - rid: 521773745628250170
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773745628250159
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: spring_midboss_down
+        condition: 1
+    - rid: 521773745628250160
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 521773745628250161
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 521773745628250162
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          message: "\uB0B4... \uB0B4\uAC00... \uC774\uB7F4 \uC218\uAC00..."
+    - rid: 521773745628250163
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773745628250164
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          message: "\uD0C0\uB77D\uD55C \uD798\uC5D0 \uB208\uC774 \uBA40\uC5B4...
+            \uC18C\uC911\uD55C \uAC78 \uC78A\uACE0 \uC788\uC5C8\uC5B4..."
+    - rid: 521773745628250165
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773745628250166
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          message: "\uD0C0\uB77D\uD55C \uD798\uC5D0 \uB208\uC774 \uBA40\uC5B4...
+            \uC18C\uC911\uD55C \uAC78 \uC78A\uACE0 \uC788\uC5C8\uC5B4..."
+    - rid: 521773745628250167
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773745628250168
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          message: "\uC6A9\uC11C\uD574\uC918. \uC774 \uC232\uACFC \uC6B0\uB9AC \uBD80\uC871\uC744
+            \uC9C0\uCF1C\uC918\uC11C... \uC815\uB9D0 \uACE0\uB9C8\uC6CC."
+    - rid: 521773745628250169
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773745628250170
+      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 0}
+--- !u!4 &97916096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97916094}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 89.256165, y: 11.613763, z: -0.17530909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &105888985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30368,6 +30489,104 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573810665}
   m_CullTransparentMesh: 1
+--- !u!1001 &614366046
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2816292
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.0157694
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: trigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: eventSequence.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: eventSequence.Array.data[0]
+      value: 521773771964809217
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[521773771964809217]
+      value: Assembly-CSharp ShowBossHealthBarEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[521773771964809217]._boss
+      value: 
+      objectReference: {fileID: 2099362344}
+    - target: {fileID: 4934385667042233568, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_Name
+      value: EventObject (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f79cf1be3a37447669edd05f233eeeec, type: 3}
 --- !u!1001 &616356938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35870,7 +36089,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21658}
+  m_AnchoredPosition: {x: 0, y: 308.21628}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36694,7 +36913,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565192122}
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
-  m_Value: -0.0000015842168
+  m_Value: 0
   m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -37420,7 +37639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21658}
+  m_AnchoredPosition: {x: 0, y: 308.21628}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -42549,10 +42768,18 @@ MonoBehaviour:
   - rid: 521773745628250133
   - rid: 521773745628250134
   - rid: 521773745628250135
+  - rid: 521773745628250152
   - rid: 521773745628250138
+  - rid: 521773745628250153
+  - rid: 521773745628250154
+  - rid: 521773745628250155
+  - rid: 521773745628250156
+  - rid: 521773745628250157
   - rid: 521773745628250136
   - rid: 521773745628250140
   - rid: 521773745628250142
+  - rid: 521773745628250158
+  - rid: 521773771964809216
   references:
     version: 2
     RefIds:
@@ -42571,12 +42798,12 @@ MonoBehaviour:
       data:
         message:
           name: "\uD0C0\uB77D\uD55C \uC5D8\uD504"
-          message: "\uC654\uAD70.. \uC5EC\uAE30\uAE4C\uC9C0 \uC628 \uAC83\uC740 \uB108\uAC00
-            \uCC98\uC74C\uC774 \uC544\uB2C8\uB2E4.."
+          message: "\uB108\uD76C\uB4E4 \uAC19\uC740 \uC874\uC7AC\uB4E4\uC774 \uAC10\uD788
+            \uC774 \uC232\uC744 \uB354\uB7FD\uD788\uB824 \uD558\uB2E4\uB2C8... "
     - rid: 521773745628250135
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
-        delayTime: 0
+        delayTime: 1
     - rid: 521773745628250136
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -42602,6 +42829,44 @@ MonoBehaviour:
       type: {class: StopAnimatiorEvent, ns: , asm: Assembly-CSharp}
       data:
         _animator: {fileID: 2099362349}
+    - rid: 521773745628250152
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uD0C0\uB77D\uD55C \uC5D8\uD504"
+          message: "\uD558\uC9C0\uB9CC \uAD1C\uCC2E\uC544."
+    - rid: 521773745628250153
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773745628250154
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uD0C0\uB77D\uD55C \uC5D8\uD504"
+          message: "\uC774 \uC232\uC740 \uC774\uC81C \uB098\uC758 \uAC83\uC774\uB2C8\uAE4C."
+    - rid: 521773745628250155
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773745628250156
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uD0C0\uB77D\uD55C \uC5D8\uD504"
+          message: "\uB364\uBCBC\uB77C \uC774\uBC29\uC778."
+    - rid: 521773745628250157
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773745628250158
+      type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 2099362344}
+    - rid: 521773771964809216
+      type: {class: ShakeCameraEvent, ns: , asm: Assembly-CSharp}
+      data:
+        time: 0.2
 --- !u!1 &1865815903
 GameObject:
   m_ObjectHideFlags: 0
@@ -43175,7 +43440,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272479262}
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
-  m_Value: -0.0000015842168
+  m_Value: 0
   m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -45101,7 +45366,7 @@ Transform:
   m_GameObject: {fileID: 2099362343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 86.99, y: 19.18, z: 0}
+  m_LocalPosition: {x: 86.16, y: 19.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -46006,3 +46271,5 @@ SceneRoots:
   - {fileID: 730557092}
   - {fileID: 2099362348}
   - {fileID: 3039129871713629899}
+  - {fileID: 97916096}
+  - {fileID: 614366046}
