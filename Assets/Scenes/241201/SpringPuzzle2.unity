@@ -61585,6 +61585,11 @@ PrefabInstance:
       propertyPath: vfxRenderer
       value: 
       objectReference: {fileID: 747119951}
+    - target: {fileID: 7969873626946254296, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
