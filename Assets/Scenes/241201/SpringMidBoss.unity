@@ -30500,7 +30500,7 @@ PrefabInstance:
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.755587
+      value: 2.55
       objectReference: {fileID: 0}
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -30565,8 +30565,18 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: eventSequence.Array.data[0]
-      value: -2
+      value: 521773771964809217
       objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[521773771964809217]
+      value: Assembly-CSharp ShowBossHealthBarEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[521773771964809217]._boss
+      value: 
+      objectReference: {fileID: 2099362344}
     - target: {fileID: 4934385667042233568, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_Name
@@ -36079,7 +36089,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.2164}
+  m_AnchoredPosition: {x: 0, y: 308.21628}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36903,8 +36913,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565192122}
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
-  m_Value: -0.0000007921084
-  m_Size: 0.5976366
+  m_Value: 0
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37629,7 +37639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.2164}
+  m_AnchoredPosition: {x: 0, y: 308.21628}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -43430,8 +43440,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272479262}
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
-  m_Value: -0.0000007921084
-  m_Size: 0.5976366
+  m_Value: 0
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
