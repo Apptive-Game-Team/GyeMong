@@ -144,7 +144,6 @@ public abstract class Boss : Creature
             if (distance <= detectionRange)
             {
                 wall.SetActive(true);
-                Debug.Log("qkqh");
                 StopDetectingPlayer();
                 ChangeState(State.IDLE);
                 yield break;
