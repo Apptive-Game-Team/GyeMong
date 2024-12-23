@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
+using UnityEngine.SceneManagement;
 
 namespace playerCharacter
 {
@@ -38,6 +40,7 @@ namespace playerCharacter
         private bool isDefending = false;
         private bool canMove = true;
         private bool isInvincible = false;
+        public VisualEffect vfxRenderer;
 
         private void Start()
         {
@@ -60,6 +63,10 @@ namespace playerCharacter
             }
             UpdateState();
 
+            if (SceneManager.GetActiveScene().name == "SpringPuzzle2")
+            {
+                vfxRenderer.SetVector3("ColliderPos",transform.position);
+            }
         }
 
         private void FixedUpdate()
