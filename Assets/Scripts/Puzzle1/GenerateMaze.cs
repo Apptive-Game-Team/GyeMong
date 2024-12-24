@@ -69,8 +69,8 @@ public class GenerateMaze : MonoBehaviour
 
         gridTile[width - 2, 0] = true;
         gridTile[1, height - 1] = true;
-        thornGridTile[width - 2, 0] = false;
-        thornGridTile[1, height - 1] = false;
+        thornGridTile[width - 2, 1] = false;
+        thornGridTile[1, height - 2] = false;
     }
 
     private void InitializeWalls()
