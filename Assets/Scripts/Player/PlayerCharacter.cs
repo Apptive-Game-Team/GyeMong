@@ -50,8 +50,6 @@ namespace playerCharacter
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
-
-            LoadPlayerData();
         }
 
         private void Update()
@@ -323,7 +321,7 @@ namespace playerCharacter
             return lastMovementDirection;
         }
 
-        private void LoadPlayerData()
+        public void LoadPlayerData()
         {
             PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
             if (!playerData.isFirst)

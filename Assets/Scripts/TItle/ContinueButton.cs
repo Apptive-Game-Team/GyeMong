@@ -1,3 +1,4 @@
+using playerCharacter;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,5 +15,6 @@ public class ContinueButton : MonoBehaviour
     {
         string sceneName = playerData.sceneName;
         SceneManager.LoadScene(sceneName);
+        PlayerCharacter.Instance.LoadPlayerData();
     }
 }
