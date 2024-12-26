@@ -108,33 +108,61 @@ public abstract class Boss : Creature
     }
     public IEnumerator BackStep(float targetDistance)
     {
-        if (player != null)
-        {
-            float backStepSpeed = 50f;
-            Vector3 direction = (transform.position - player.transform.position).normalized; 
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            float checkRadius = 1f; 
-            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle"); 
+        if (player == null) 
+            yield break;
 
-            while (true)
-            {
-                float currentDistance = Vector3.Distance(transform.position, player.transform.position);
-                if (currentDistance >= targetDistance)
-                {
-                    break;
-                }
-                RaycastHit2D hit = Physics2D.CircleCast(transform.position, checkRadius, direction, backStepSpeed * Time.deltaTime, obstacleLayer);
-                if (hit.collider != null)
-                {
-                    break; 
-                }
-                Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
-                rb.MovePosition(newPosition);
-                yield return null;
-            }
-            yield return new WaitForSeconds(0.5f);
+        float backStepSpeed = 50f;
+        float checkRadius = 1f;
+        LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        Vector3 direction = GetSafeDirection(targetDistance, checkRadius, obstacleLayer);
+
+        // 안전한 방향이 없으면 백스텝 중단
+        if (direction == Vector3.zero) yield break;
+
+        // 백스텝 이동
+        while (Vector3.Distance(transform.position, player.transform.position) < targetDistance)
+        {
+            if (IsObstacleInPath(transform.position, direction, checkRadius, obstacleLayer, backStepSpeed))
+                yield break;
+
+            Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
+            rb.MovePosition(newPosition);
+            yield return null;
         }
+
+        yield return new WaitForSeconds(0.5f);
     }
+
+    // 안전한 방향 찾기
+    private Vector3 GetSafeDirection(float distance, float radius, LayerMask layer)
+    {
+        Vector3 initialDirection = (transform.position - player.transform.position).normalized;
+        int numDirections = 8;
+        List<Vector3> validDirections = new List<Vector3>();
+
+        for (int i = 0; i < numDirections; i++)
+        {
+            float angle = i * (360f / numDirections);
+            Vector3 testDirection = Quaternion.Euler(0, 0, angle) * initialDirection;
+
+            if (!Physics2D.CircleCast(transform.position, radius, testDirection, distance, layer))
+            {
+                validDirections.Add(testDirection.normalized);
+            }
+        }
+
+        return validDirections.Count > 0
+            ? validDirections[UnityEngine.Random.Range(0, validDirections.Count)]
+            : Vector3.zero; // 모든 방향이 막혀 있으면 Vector3.zero 반환
+    }
+
+    // 이동 경로 충돌 검사
+    private bool IsObstacleInPath(Vector3 position, Vector3 direction, float radius, LayerMask layer, float speed)
+    {
+        return Physics2D.CircleCast(position, radius, direction, speed * Time.deltaTime, layer);
+    }
+
     public IEnumerator DetectPlayerCoroutine()
     {
         while (true)
