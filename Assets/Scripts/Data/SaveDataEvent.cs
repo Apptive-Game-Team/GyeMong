@@ -17,3 +17,17 @@ public class SaveDataEvent : Event
         yield return null;
     }
 }
+public class LoadDataEvent : Event
+{
+    private PlayerData playerData;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
+
+        SceneManager.LoadScene(playerData.sceneName);
+        PlayerCharacter.Instance.LoadPlayerData();
+        yield return null;
+    }
+}
+
+
