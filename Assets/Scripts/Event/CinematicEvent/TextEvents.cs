@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class TextEvent : CinematicEvent
 {
+    protected const float DELTA_TIME = 0.02f;
     private GameObject _textPanel;
     protected GameObject TextPanel
     {
@@ -45,6 +46,7 @@ public abstract class TextEvent : CinematicEvent
 
 public class PrintTextEvent : TextEvent
 {
+    protected const float RANGE_TIME = 1f;
     [SerializeField] private string header;
     [SerializeField] private string description;
     [SerializeField] private Color textColor = Color.black;
@@ -61,10 +63,24 @@ public class PrintTextEvent : TextEvent
 
 public class ClearTextEvent : TextEvent
 {
+    protected const float RANGE_TIME = 0.5f;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
+        Color color = HeaderText.color;
+        color.a = 1;
+        float timer = 0;
+        while (timer < RANGE_TIME)
+        {
+            timer += DELTA_TIME; 
+            color.a -= DELTA_TIME / RANGE_TIME;
+            HeaderText.color = color;
+            DescriptionText.color = color;
+            yield return new WaitForSeconds(DELTA_TIME);
+        }
+        color.a = 0;
+        HeaderText.color = color;
+        DescriptionText.color = color;
         HeaderText.text = "";
         DescriptionText.text = "";
-        return null;
     }
 }
