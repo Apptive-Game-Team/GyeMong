@@ -108,9 +108,9 @@ public class MidBoss : Boss
             yield return new WaitForSeconds(0.3f);
 
             meleeAttackPrefab.SetActive(false);
-            ChangeState(State.IDLE);
         }
         yield return null;
+        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern3()//ÃßÀû
     {
@@ -182,9 +182,9 @@ public class MidBoss : Boss
             {
                 elapsed += Time.deltaTime;
             }
-            ChangeState(State.IDLE);
         }
         yield return null;
+        ChangeState(State.IDLE);
     }
 
     protected override void SelectRandomPattern()
