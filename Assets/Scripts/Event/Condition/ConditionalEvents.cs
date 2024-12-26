@@ -16,7 +16,7 @@ public abstract class ConditionalEvent : Event
             foreach (Event @event in children)
             {
                 List<ToggeableCondition> temp;
-                temp = @event.FindToggleableConditions();
+                temp = @event?.FindToggleableConditions();
                 if (temp != null)
                 {
                     result.AddRange(temp);
@@ -45,10 +45,10 @@ public class ConditionalBranchEvent : ConditionalEvent
     {
         if (_condition.Check())
         {
-            return eventInTrue.Execute();
+            return eventInTrue?.Execute();
         } else
         {
-            return eventInFalse.Execute();
+            return eventInFalse?.Execute();
         }
     }
 
@@ -68,7 +68,7 @@ public class ConditionalLoopEvent : ConditionalEvent
     {
         while (_condition.Check())
         {
-            yield return loopBodyevent.Execute();
+            yield return loopBodyevent?.Execute();
         }
     }
 
