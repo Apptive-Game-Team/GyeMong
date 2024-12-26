@@ -321,7 +321,7 @@ namespace playerCharacter
             return lastMovementDirection;
         }
 
-        private void LoadPlayerData()
+        public void LoadPlayerData()
         {
             PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
             if (!playerData.isFirst)
