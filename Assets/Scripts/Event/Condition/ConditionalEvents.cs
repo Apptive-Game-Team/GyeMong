@@ -88,23 +88,7 @@ public class ToggleConditionEvent : Event
 
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        List<ToggeableCondition> conditions = EventObject.toggleableConditions[tag];
-        if (conditions == null)
-        {
-            Debug.Log("Toggleable Conditions is not found by " + tag);
-            yield return null;
-        }
-        foreach (ToggeableCondition condition in conditions)
-        {
-            try
-            {
-                condition.SetCondition(this.condition);
-            } catch
-            {
-                EventObject.toggleableConditions[tag].Remove(condition);
-            }
-        }
-
         ConditionManager.Instance.Conditions[tag] = this.condition;
+        return null;
     }
 }
