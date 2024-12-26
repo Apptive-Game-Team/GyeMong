@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2478308951613359036}
   - component: {fileID: 4107057368509685491}
   - component: {fileID: 2706223787955244828}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EventObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLoop: 0
   trigger: 0
+  triggerLimitCounter: -1
   eventSequence: []
   references:
     version: 2
