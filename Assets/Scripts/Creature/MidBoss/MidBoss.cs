@@ -53,7 +53,7 @@ public class MidBoss : Boss
         CheckPhaseTransition();
     }
 
-    protected override IEnumerator ExecutePattern0()
+    protected override IEnumerator ExecutePattern0()//¹é½ºÅÜ
     {
         ChangeState(State.ATTACK);
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -63,7 +63,7 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern1()
+    protected override IEnumerator ExecutePattern1()//¿ø°Å¸® È°
     {
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(0.5f);
@@ -93,29 +93,26 @@ public class MidBoss : Boss
         ChangeState(State.IDLE);
     }
 
-    protected override IEnumerator ExecutePattern2()
+    protected override IEnumerator ExecutePattern2()//±Ù°Å¸®
     {
+        ChangeState(State.CHANGINGPATTERN);
+        yield return new WaitForSeconds(0.2f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
             ChangeState(State.ATTACK);
             meleeAttackPrefab.SetActive(true);
 
-            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-
-            // ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             meleeAttackPrefab.transform.position = transform.position + playerDirection * MeleeAttackRange;
-
-            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
 
             meleeAttackPrefab.SetActive(false);
         }
         yield return null;
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern3()
+    protected override IEnumerator ExecutePattern3()//ÃßÀû
     {
         ChangeState(State.MOVE);
         float duration = 2f;
@@ -129,7 +126,7 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern4()
+    protected override IEnumerator ExecutePattern4()//¿ø°Å¸® ¾¾¾Ñ
     {
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(1f);
@@ -149,7 +146,6 @@ public class MidBoss : Boss
         else
         {
             ChangeState(State.DASH);
-            // ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             while (distance > RangedAttackRange)
             {
                 speed = 10f;
@@ -159,7 +155,6 @@ public class MidBoss : Boss
                 yield return null;
             }
             ChangeState(State.ATTACK);
-            // ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
             speed = 1f;
             int count = 0;
             while (count < 4)
@@ -172,7 +167,7 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern5()
+    protected override IEnumerator ExecutePattern5()//µ¢Äð ÈÖµÎ¸£±â
     {
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(0.5f);
@@ -193,7 +188,6 @@ public class MidBoss : Boss
         int randomIndex;
         List<int> weightedPatterns = new List<int>();
 
-        // ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         if (currentPhase == 1)
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
@@ -213,8 +207,8 @@ public class MidBoss : Boss
         do
         {
             randomIndex = Random.Range(0, weightedPatterns.Count);
-        } while (weightedPatterns[randomIndex] == lastPattern); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ù½ï¿½ ï¿½Ì±ï¿½
+        } while (weightedPatterns[randomIndex] == lastPattern);
         curPattern = weightedPatterns[randomIndex];
-        lastPattern = curPattern; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        lastPattern = curPattern;
     }
 }

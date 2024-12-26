@@ -27,8 +27,6 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
 
     private Coroutine eventLoop = null;
 
-    public static Dictionary<string, List<ToggeableCondition>> toggleableConditions = new();
-
     public Event[] EventSequence => eventSequence.ToArray(); 
     
     public void SetTriggerLimitCounter(int counter)
@@ -58,12 +56,7 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
         List<ToggeableCondition> conditions = FindToggleableConditions();
         foreach (ToggeableCondition condition in conditions)
         {
-            string tag = condition.GetTag();
-            if (!toggleableConditions.ContainsKey(tag))
-            {
-                toggleableConditions.Add(tag, new List<ToggeableCondition>());
-            }
-            toggleableConditions[tag].Add(condition);
+            condition.Check();
         }
     }
 
@@ -126,7 +119,7 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (trigger == EventTrigger.OnCollisionEnter && triggerLimitCounter != 0)
+        if (trigger == EventTrigger.OnCollisionEnter && collision.CompareTag("Player") && triggerLimitCounter != 0)
         {
             TriggerEvent();
             triggerLimitCounter -= 1;

@@ -148,13 +148,13 @@ namespace playerCharacter
             }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, bool isUnblockable = false)
         {
             if (isInvincible) return;
             
             StartCoroutine(EffectManager.Instance.ShakeCamera());
             
-            if (isDefending)
+            if (!isUnblockable && isDefending)
             {
                 soundController.Trigger(PlayerSoundType.SWORD_DEFEND);
                 if (Time.time - defendStartTime < parryTime) 

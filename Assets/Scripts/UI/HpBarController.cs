@@ -12,7 +12,9 @@ public class HpBarController : MonoBehaviour
     private float _curHp;
     private float _maxHp = 100;
     private bool _isBossSetUp = false;
-
+    
+    public const float DEFAULT_HP = 100;
+    
     private int currentPhase = 0;
     private List<float> maxHps = new List<float>();
     private void Awake()
@@ -53,6 +55,7 @@ public class HpBarController : MonoBehaviour
         else
         {
             _isBossSetUp = false;
+            _maxHp = DEFAULT_HP;
         }
     }
 

@@ -36,24 +36,18 @@ public class ToggeableCondition : Condition
 {
     [SerializeField]
     private string tag;
-
-    private bool isSetUp = false;
     
     [SerializeField]
     private bool condition = false;
 
     public override bool Check()
     {
-        if (!isSetUp)
+        if (ConditionManager.Instance.Conditions.ContainsKey(tag))
         {
-            if (ConditionManager.Instance.Conditions.ContainsKey(tag))
-            {
-                condition = ConditionManager.Instance.Conditions[tag];
-            }
-            else 
-                ConditionManager.Instance.Conditions[tag] = condition;
-            isSetUp = true;
+            condition = ConditionManager.Instance.Conditions[tag];
         }
+        else 
+            ConditionManager.Instance.Conditions[tag] = condition;
         return condition;
     }
     public string GetTag()
