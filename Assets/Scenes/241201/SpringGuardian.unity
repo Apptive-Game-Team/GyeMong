@@ -20335,7 +20335,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21698}
+  m_AnchoredPosition: {x: 0, y: 308.21622}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &286961927
@@ -20465,7 +20465,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21698}
+  m_AnchoredPosition: {x: 0, y: 308.21622}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &326613589
@@ -23776,6 +23776,62 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &553630108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 553630110}
+  - component: {fileID: 553630109}
+  m_Layer: 0
+  m_Name: BossDownEventObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &553630109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553630108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 521773836373327900
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773836373327900
+      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 0}
+--- !u!4 &553630110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553630108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 37.550106, y: 30.90367, z: -0.13146967}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &556801776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40772,8 +40828,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 872356579}
   m_HandleRect: {fileID: 872356578}
   m_Direction: 2
-  m_Value: -0.0000023763253
-  m_Size: 0.6068435
+  m_Value: 0
+  m_Size: 0.6068404
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -41118,8 +41174,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 86957274}
   m_HandleRect: {fileID: 86957273}
   m_Direction: 2
-  m_Value: -0.0000023763253
-  m_Size: 0.6068435
+  m_Value: 0
+  m_Size: 0.6068404
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -42318,3 +42374,4 @@ SceneRoots:
   - {fileID: 638479975}
   - {fileID: 1777554342}
   - {fileID: 1508380644}
+  - {fileID: 553630110}
