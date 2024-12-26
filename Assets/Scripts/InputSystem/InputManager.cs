@@ -158,7 +158,6 @@ public class InputManager : SingletonObject<InputManager>
         {
             directionList.Remove(Vector2.down);
         }
-
         if (GetKey(ActionCode.MoveLeft))
         {
             if (!directionList.Contains(Vector2.left))
