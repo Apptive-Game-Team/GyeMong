@@ -101,13 +101,8 @@ public class MidBoss : Boss
             ChangeState(State.ATTACK);
             meleeAttackPrefab.SetActive(true);
 
-            // �÷��̾� ���� ���
             Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-
-            // �ݶ��̴��� �÷��̾� �������� �̵�
             meleeAttackPrefab.transform.position = transform.position + playerDirection * MeleeAttackRange;
-
-            // ���� ���� �ð�
             yield return new WaitForSeconds(0.2f);
 
             meleeAttackPrefab.SetActive(false);
@@ -149,7 +144,6 @@ public class MidBoss : Boss
         else
         {
             ChangeState(State.DASH);
-            // ��Ÿ��� ������ ������ �÷��̾� �������� �̵�
             while (distance > RangedAttackRange)
             {
                 speed = 10f;
@@ -159,7 +153,6 @@ public class MidBoss : Boss
                 yield return null;
             }
             ChangeState(State.ATTACK);
-            // ��Ÿ��� ������ �� ȭ�� �߻� �� ���
             speed = 1f;
             int count = 0;
             while (count < 4)
@@ -193,7 +186,6 @@ public class MidBoss : Boss
         int randomIndex;
         List<int> weightedPatterns = new List<int>();
 
-        // ����ġ�� ���Ͽ� ����Ʈ�� ������ �߰�
         if (currentPhase == 1)
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
@@ -213,8 +205,8 @@ public class MidBoss : Boss
         do
         {
             randomIndex = Random.Range(0, weightedPatterns.Count);
-        } while (weightedPatterns[randomIndex] == lastPattern); // ���� ���ϰ� �����ϸ� �ٽ� �̱�
+        } while (weightedPatterns[randomIndex] == lastPattern);
         curPattern = weightedPatterns[randomIndex];
-        lastPattern = curPattern; // ���� ������ ���� �������� ����
+        lastPattern = curPattern;
     }
 }
