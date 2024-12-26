@@ -13,7 +13,7 @@ public class Vine : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
