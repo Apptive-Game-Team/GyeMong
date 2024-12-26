@@ -48,11 +48,6 @@ public class MidBoss : Boss
         }
         _fsm.UpdateState();
     }
-    protected override void Die()
-    {
-        CheckPhaseTransition();
-    }
-
     protected override IEnumerator ExecutePattern0()//πÈΩ∫≈‹
     {
         ChangeState(State.ATTACK);

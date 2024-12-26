@@ -11,7 +11,7 @@ public abstract class Boss : Creature
 {
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
-    protected int currentPhase = 2; //�׽�Ʈ�� ������ 1
+    protected int currentPhase = 1;
     protected int maxPhase;
     protected float maxHealthP1;
     protected float maxHealthP2;
@@ -29,8 +29,12 @@ public abstract class Boss : Creature
     {
         get { return new Tuple<int, float, float>(currentPhase, maxHealthP1, maxHealthP2); }
     }
-    protected int lastPattern = -1; // ���� ������ ����
-
+    protected int lastPattern = -1;
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        CheckPhaseTransition();
+    }
     protected void SetupPhase()
     {
         switch (currentPhase)
