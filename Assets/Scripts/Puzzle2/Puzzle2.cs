@@ -9,7 +9,6 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
 {
     private Collider2D[] paths;
     private Transform[] roots;
-    Tilemap fogTilemap;
     PlayerCharacter player;
     Collider2D playerCollider;
     List<Collider2D> pathList;
@@ -17,7 +16,6 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
     private EventObject pathEventObject;
     private EventStatus<int> rootNum;
     
-    const int visionRange = 2;
     int curRootNum = 0;
 
     private void Start()
@@ -34,12 +32,10 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
         Transform pathTransform = transform.Find("Path");
         paths = pathTransform.GetComponentsInChildren<Collider2D>();
         pathEventObject = pathTransform.GetComponent<EventObject>();
-        fogTilemap = GameObject.Find("fogTilemap").GetComponent<Tilemap>();
     }
 
     private void Update()
     {
-        UpdateFog();
         UpdateParticle();
         if (!CheckOnPath())
         {
@@ -63,20 +59,7 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
             }
         }
     }
-
-    void UpdateFog()
-    {
-        Vector3Int playerPos = fogTilemap.WorldToCell(player.transform.position);
-
-        for(int i=-visionRange; i<= visionRange ;i++)
-        {
-            for(int j=-visionRange;j<=visionRange ;j++)
-            {
-                fogTilemap.SetTile(playerPos + new Vector3Int(i, j, 0), null);
-            }
-        }
-    }
-
+    
     bool CheckOnPath()
     {
         bool isOn = false;
