@@ -181,6 +181,7 @@ public class MidBoss : Boss
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
+                yield return null;
             }
         }
         yield return null;
@@ -203,10 +204,10 @@ public class MidBoss : Boss
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 10));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(5, 10));
         }
         do
         {

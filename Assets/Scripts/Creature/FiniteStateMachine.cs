@@ -105,9 +105,11 @@ public class OnHitState : BaseState
     public OnHitState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
+        animator.SetBool("onHit", true);
     }
     public override void OnStateExit()
     {
+        animator.SetBool("onHit", false);
     }
     public override void OnStateUpdate()
     {
