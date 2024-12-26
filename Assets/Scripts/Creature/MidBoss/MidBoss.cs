@@ -65,11 +65,11 @@ public class MidBoss : Boss
     }
     protected override IEnumerator ExecutePattern1()//¿ø°Å¸® È°
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(0.5f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance >= RangedAttackRange)
         {
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
             Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
@@ -81,6 +81,8 @@ public class MidBoss : Boss
             {
                 yield return StartCoroutine(BackStep(RangedAttackRange));
             }
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
             speed = 1f;
             Instantiate(arrowPrefab, transform.position, Quaternion.identity);
@@ -124,11 +126,11 @@ public class MidBoss : Boss
     }
     protected override IEnumerator ExecutePattern4()//¿ø°Å¸® ¾¾¾Ñ
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(1f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance >= RangedAttackRange)
         {
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(1f);
             ChangeState(State.ATTACK);
             int count = 0;
             while (count < 4)
@@ -146,6 +148,8 @@ public class MidBoss : Boss
             {
                 yield return StartCoroutine(BackStep(RangedAttackRange));
             }
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(1f);
             ChangeState(State.ATTACK);
             speed = 1f;
             int count = 0;
