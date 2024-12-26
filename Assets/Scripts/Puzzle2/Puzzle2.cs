@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using playerCharacter;
+using UnityEngine.VFX;
 
 public class Puzzle2 : MonoBehaviour, IEventTriggerable
 {
@@ -15,6 +16,8 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
     private EventObject eventObject;
     private EventObject pathEventObject;
     private EventStatus<int> rootNum;
+    
+    [SerializeField] private VisualEffect vfxRenderer;
     
     int curRootNum = 0;
 
@@ -36,6 +39,7 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
 
     private void Update()
     {
+        vfxRenderer.SetVector3("ColliderPos", PlayerCharacter.Instance.transform.position);
         UpdateParticle();
         if (!CheckOnPath())
         {
@@ -77,7 +81,6 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
 
     private void MovePlayerPosition()
     {
-        print(rootNum.GetStatus());
         player.transform.position = roots[rootNum.GetStatus()].position;
     }
     public void Trigger()
