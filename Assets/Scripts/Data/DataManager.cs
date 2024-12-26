@@ -41,7 +41,7 @@ public class DataManager : SingletonObject<DataManager>
         // 파일을 다시 읽기 전용으로 설정
         File.SetAttributes(filePath, FileAttributes.ReadOnly);
 
-        Debug.Log($"{fileName} saved at {savePath} as ReadOnly and encrypted.");
+        Debug.Log($"{fileName} saved at {savePath} as ReadOnly.");
 #else
         string json = JsonUtility.ToJson(sectionData, true); // JSON으로 직렬화
         string encryptedData = Encrypt(json); // JSON 데이터를 암호화
