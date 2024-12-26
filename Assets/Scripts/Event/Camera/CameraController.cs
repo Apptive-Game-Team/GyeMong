@@ -128,7 +128,7 @@ public class CameraController : MonoBehaviour
         {
             yield return new WaitForSeconds(SHAKE_DELAY);
             timer += 0.1f;
-            transform.position = player.transform.position + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.back * defaultCameraZ;
+            transform.position = player.transform.position + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.forward * defaultCameraZ;
         }
         isShaking = false;
     }
