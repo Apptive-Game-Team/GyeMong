@@ -564,8 +564,7 @@ MonoBehaviour:
       data:
         message:
           name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "\uD0C0\uB77D\uD55C \uD798\uC5D0 \uB208\uC774 \uBA40\uC5B4...
-            \uC18C\uC911\uD55C \uAC78 \uC78A\uACE0 \uC788\uC5C8\uC5B4..."
+          message: "\uD0C0\uB77D\uD55C \uD798\uC5D0 \uB208\uC774 \uBA40\uC5B4..."
     - rid: 521773745628250165
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -575,8 +574,7 @@ MonoBehaviour:
       data:
         message:
           name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "\uD0C0\uB77D\uD55C \uD798\uC5D0 \uB208\uC774 \uBA40\uC5B4...
-            \uC18C\uC911\uD55C \uAC78 \uC78A\uACE0 \uC788\uC5C8\uC5B4..."
+          message: "\uC18C\uC911\uD55C \uAC78 \uC78A\uACE0 \uC788\uC5C8\uC5B4..."
     - rid: 521773745628250167
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -30500,12 +30498,12 @@ PrefabInstance:
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.55
+      value: 2.7
       objectReference: {fileID: 0}
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2816292
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -36089,7 +36087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21622}
+  m_AnchoredPosition: {x: 0, y: 308.2163}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36913,8 +36911,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565192122}
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.6068391
+  m_Value: -0.0000003960542
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37639,7 +37637,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21622}
+  m_AnchoredPosition: {x: 0, y: 308.2163}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -41633,12 +41631,12 @@ PrefabInstance:
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.97
+      value: 87.4
       objectReference: {fileID: 0}
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.01
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -42762,6 +42760,7 @@ MonoBehaviour:
   trigger: 0
   triggerLimitCounter: 1
   eventSequence:
+  - rid: 521773835193679879
   - rid: 521773835193679874
   - rid: 521773745628250139
   - rid: 521773745628250132
@@ -42780,6 +42779,7 @@ MonoBehaviour:
   - rid: 521773835193679872
   - rid: 521773745628250158
   - rid: 521773771964809216
+  - rid: 521773835193679878
   references:
     version: 2
     RefIds:
@@ -42867,6 +42867,14 @@ MonoBehaviour:
       type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
       data:
         _animator: {fileID: 2099362349}
+    - rid: 521773835193679878
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 521773835193679879
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
 --- !u!1 &1865815903
 GameObject:
   m_ObjectHideFlags: 0
@@ -43440,8 +43448,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272479262}
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.6068391
+  m_Value: -0.0000003960542
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
