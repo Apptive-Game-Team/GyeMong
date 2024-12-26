@@ -47,11 +47,14 @@ public class PrintTextEvent : TextEvent
 {
     [SerializeField] private string header;
     [SerializeField] private string description;
+    [SerializeField] private Color textColor = Color.black;
     
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         HeaderText.text = header;
+        HeaderText.color = textColor;
         DescriptionText.text = description;
+        DescriptionText.color = textColor;
         return null;
     }
 }
