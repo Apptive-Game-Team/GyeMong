@@ -304,7 +304,15 @@ namespace playerCharacter
 
         private void Die()
         {
-            Destroy(gameObject);
+            //GameOver Event Triggered.
+            try
+            {
+                GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
+            }
+            catch
+            {
+                Debug.Log("PlayerGameOverEvent not found");
+            }
         }
 
         public void Bind(float duration)
