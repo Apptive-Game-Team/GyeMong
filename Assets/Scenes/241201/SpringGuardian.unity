@@ -20335,7 +20335,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.2162}
+  m_AnchoredPosition: {x: 0, y: 308.21698}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &286961927
@@ -20465,7 +20465,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.2162}
+  m_AnchoredPosition: {x: 0, y: 308.21698}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &326613589
@@ -39734,6 +39734,7 @@ GameObject:
   - component: {fileID: 1840872685}
   - component: {fileID: 1840872684}
   - component: {fileID: 1840872683}
+  - component: {fileID: 1840872688}
   m_Layer: 0
   m_Name: BossRoomEntrance
   m_TagString: Untagged
@@ -39953,6 +39954,53 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1840872688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840872681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 0
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 521773836373327896
+  - rid: 521773836373327897
+  - rid: 521773836373327895
+  - rid: 521773836373327899
+  - rid: 521773836373327898
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773836373327895
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 1840872683}
+    - rid: 521773836373327896
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 521773836373327897
+      type: {class: MoveCreatureEvent, ns: , asm: Assembly-CSharp}
+      data:
+        creatureType: 0
+        iControllable: {fileID: 0}
+        target: {x: 31, y: 35, z: 0}
+        speed: 1
+    - rid: 521773836373327898
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 521773836373327899
+      type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 455494628}
 --- !u!1 &1849812947
 GameObject:
   m_ObjectHideFlags: 0
@@ -40053,12 +40101,12 @@ PrefabInstance:
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.08
+      value: 30.98
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50
+      value: 34.53
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
@@ -40724,7 +40772,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 872356579}
   m_HandleRect: {fileID: 872356578}
   m_Direction: 2
-  m_Value: 0
+  m_Value: -0.0000023763253
   m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -41070,7 +41118,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 86957274}
   m_HandleRect: {fileID: 86957273}
   m_Direction: 2
-  m_Value: 0
+  m_Value: -0.0000023763253
   m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
