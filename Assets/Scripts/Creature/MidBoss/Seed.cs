@@ -22,8 +22,18 @@ public class Seed : MonoBehaviour
 
     private IEnumerator FireArrow()
     {
-        float randomAngle = Random.Range(0f, 360f);
-        direction = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0).normalized;
+        // 플레이어 방향 계산
+        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+
+        // 회전 기준 각도 계산
+        float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+
+        // 45도 범위 내 무작위 각도 생성
+        float angleRange = 45f;
+        float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
+
+        float randomAngleRad = randomAngle * Mathf.Deg2Rad;
+        direction = new Vector3(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad), 0).normalized;
 
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = player.transform.position;
@@ -36,7 +46,7 @@ public class Seed : MonoBehaviour
             distanceMovement = Vector3.Distance(startPosition, transform.position);
             yield return null;
         }
-        //랜덤 방향으로 날아가고 플레이어위치 - 시작 위치 만큼 날아감
+        // 랜덤 방향으로 날아가고 플레이어 위치 - 시작 위치 만큼 날아감
         yield return new WaitForSeconds(1f);
         Explode();
         Destroy(gameObject);
