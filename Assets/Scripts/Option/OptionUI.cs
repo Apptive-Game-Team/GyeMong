@@ -24,8 +24,6 @@ public class OptionUI : SingletonObject<OptionUI>
                 if (!(SceneManager.GetActiveScene().name == "TitleScene")) OpenOrCloseOption();
             }
         }
-
-        PauseOrResumeGame();
     }
 
     private void FindOptionImage()
@@ -39,6 +37,8 @@ public class OptionUI : SingletonObject<OptionUI>
     {   
         isOptionOpened = !isOptionOpened;
         optionImage.gameObject.SetActive(isOptionOpened);
+        
+        PauseOrResumeGame();
     }
 
     private void PauseOrResumeGame()

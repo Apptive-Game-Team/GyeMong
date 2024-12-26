@@ -27,8 +27,6 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
 
     private Coroutine eventLoop = null;
 
-    public static Dictionary<string, List<ToggeableCondition>> toggleableConditions = new();
-
     public Event[] EventSequence => eventSequence.ToArray(); 
     
     public void SetTriggerLimitCounter(int counter)
@@ -58,12 +56,7 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
         List<ToggeableCondition> conditions = FindToggleableConditions();
         foreach (ToggeableCondition condition in conditions)
         {
-            string tag = condition.GetTag();
-            if (!toggleableConditions.ContainsKey(tag))
-            {
-                toggleableConditions.Add(tag, new List<ToggeableCondition>());
-            }
-            toggleableConditions[tag].Add(condition);
+            condition.Check();
         }
     }
 

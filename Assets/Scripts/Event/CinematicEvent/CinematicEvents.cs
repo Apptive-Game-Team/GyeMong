@@ -17,6 +17,8 @@ public class MoveCreatureEvent : CinematicEvent
     [SerializeField] private float speed;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
+        bool isEnable = InputManager.Instance.GetKeyActive(ActionCode.MoveDown);
+        InputManager.Instance.SetActionState(false);
         IControllable iControllable = null;
         if (creatureType == CreatureType.Selectable)
         {
@@ -27,7 +29,8 @@ public class MoveCreatureEvent : CinematicEvent
             iControllable = (IControllable) PlayerCharacter.Instance;
         }
         
-        return iControllable.MoveTo(target, speed);
+        yield return iControllable.MoveTo(target, speed);
+        InputManager.Instance.SetActionState(isEnable);
     }
 }
 

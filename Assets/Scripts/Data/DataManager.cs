@@ -22,6 +22,27 @@ public class DataManager : SingletonObject<DataManager>
     // 특정 구역 저장
     public void SaveSection<T>(T sectionData, string fileName) where T : class
     {
+#if UNITY_EDITOR
+        string json = JsonUtility.ToJson(sectionData, true); // JSON으로 직렬화
+        string filePath = Path.Combine(savePath, fileName + ".json");
+        // 파일의 읽기 전용 속성을 해제 (파일이 이미 존재할 경우)
+        if (File.Exists(filePath))
+        {
+            FileAttributes attributes = File.GetAttributes(filePath);
+            if (attributes.HasFlag(FileAttributes.ReadOnly))
+            {
+                File.SetAttributes(filePath, attributes & ~FileAttributes.ReadOnly);
+            }
+        }
+
+        // 파일 저장
+        File.WriteAllText(filePath, json);
+
+        // 파일을 다시 읽기 전용으로 설정
+        File.SetAttributes(filePath, FileAttributes.ReadOnly);
+
+        Debug.Log($"{fileName} saved at {savePath} as ReadOnly.");
+#else
         string json = JsonUtility.ToJson(sectionData, true); // JSON으로 직렬화
         string encryptedData = Encrypt(json); // JSON 데이터를 암호화
         string filePath = Path.Combine(savePath, fileName + ".json");
@@ -43,6 +64,8 @@ public class DataManager : SingletonObject<DataManager>
         File.SetAttributes(filePath, FileAttributes.ReadOnly);
 
         Debug.Log($"{fileName} saved at {savePath} as ReadOnly and encrypted.");
+#endif
+        
     }
 
     // 특정 구역 불러오기
@@ -51,9 +74,23 @@ public class DataManager : SingletonObject<DataManager>
         string filePath = Path.Combine(savePath, fileName + ".json");
         if (File.Exists(filePath))
         {
+#if UNITY_EDITOR
+            string json = File.ReadAllText(filePath); // 파일에서 json 데이터 읽기
+            try
+            {
+                return JsonUtility.FromJson<T>(json); // JSON에서 객체로 역직렬화
+            }
+            catch
+            {
+                json = Decrypt(json); // 데이터를 복호화
+                return JsonUtility.FromJson<T>(json); // JSON에서 객체로 역직렬화
+            }
+            
+#else
             string encryptedData = File.ReadAllText(filePath); // 파일에서 암호화된 데이터 읽기
             string json = Decrypt(encryptedData); // 데이터를 복호화
             return JsonUtility.FromJson<T>(json); // JSON에서 객체로 역직렬화
+#endif
         }
         else
         {

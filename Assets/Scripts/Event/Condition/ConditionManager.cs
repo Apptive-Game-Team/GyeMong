@@ -54,7 +54,6 @@ public class ConditionManager : SingletonObject<ConditionManager>
 {
     private const string CONDITION_FILE = "conditions";
     private Dictionary<string, bool> _conditions;
-    [SerializeReference] private Conditions asdf;
     public Dictionary<string, bool> Conditions
     {
         get
@@ -62,7 +61,6 @@ public class ConditionManager : SingletonObject<ConditionManager>
             if (_conditions == null)
             {
                 _conditions = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE).GetConditions();
-                asdf = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE);
             }
 
             return _conditions;
@@ -75,7 +73,6 @@ public class ConditionManager : SingletonObject<ConditionManager>
 
     public void Save()
     {
-        asdf = new Conditions(_conditions);
-        DataManager.Instance.SaveSection(asdf, CONDITION_FILE);
+        DataManager.Instance.SaveSection(new Conditions(_conditions), CONDITION_FILE);
     }
 }
