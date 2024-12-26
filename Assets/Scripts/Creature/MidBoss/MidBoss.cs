@@ -105,7 +105,7 @@ public class MidBoss : Boss
 
             Vector3 playerDirection = (player.transform.position - transform.position).normalized;
             meleeAttackPrefab.transform.position = transform.position + playerDirection * MeleeAttackRange;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
 
             meleeAttackPrefab.SetActive(false);
         }
