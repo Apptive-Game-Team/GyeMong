@@ -96,7 +96,7 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern2()//±Ù°Å¸®
     {
         ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
