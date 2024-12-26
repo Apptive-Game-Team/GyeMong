@@ -41,11 +41,11 @@ public abstract class Boss : Creature
             case 2:
                 curHealth = maxHealthP2;
                 break;
-
             default:
+                curHealth = 200f;
                 break;
         }
-    } //�ִ������� �߰��� case�߰�
+    }
     protected void CheckPhaseTransition()
     {
         if (curHealth <= 0)
