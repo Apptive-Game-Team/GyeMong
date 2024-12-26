@@ -119,7 +119,7 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (trigger == EventTrigger.OnCollisionEnter && triggerLimitCounter != 0)
+        if (trigger == EventTrigger.OnCollisionEnter && collision.CompareTag("Player") && triggerLimitCounter != 0)
         {
             TriggerEvent();
             triggerLimitCounter -= 1;
