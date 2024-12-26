@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public abstract class Boss : Creature
@@ -111,27 +113,25 @@ public abstract class Boss : Creature
         if (player != null)
         {
             float backStepSpeed = 50f;
-            Vector3 direction = (transform.position - player.transform.position).normalized; // �÷��̾� �ݴ� ����
+            Vector3 direction = (transform.position - player.transform.position).normalized;
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            float checkRadius = 1f; // �浹 ���� �ݰ�
-            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle"); // ��ֹ� ���̾�
-
-            while (true)
+            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+            float currentDistance = Vector3.Distance(transform.position, player.transform.position);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+            int count=0;
+            while (hit.collider != null && count<360)
             {
-                float currentDistance = Vector3.Distance(transform.position, player.transform.position);
-                if (currentDistance >= targetDistance)
-                {
-                    break;
-                }
-                RaycastHit2D hit = Physics2D.CircleCast(transform.position, checkRadius, direction, backStepSpeed * Time.deltaTime, obstacleLayer);
-                if (hit.collider != null)
-                {
-                    break; // �浹 �� �齺�� �ߴ�
-                }
-                // MovePosition���� �̵�
+                float angle = UnityEngine.Random.Range(0,360f);
+                direction = Quaternion.Euler(0, 0, angle) * direction;
+                hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+                count++;
+            }
+            while (currentDistance < targetDistance)
+            {
+                currentDistance = Vector3.Distance(transform.position, player.transform.position);
                 Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
                 rb.MovePosition(newPosition);
-                yield return null; // ���� �����ӱ��� ���
+                yield return null;
             }
             yield return new WaitForSeconds(0.5f);
         }

@@ -105,9 +105,11 @@ public class OnHitState : BaseState
     public OnHitState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
+        animator.SetBool("onHit", true);
     }
     public override void OnStateExit()
     {
+        animator.SetBool("onHit", false);
     }
     public override void OnStateUpdate()
     {
@@ -139,6 +141,7 @@ public class DashState : BaseState
     }
     public override void OnStateUpdate()
     {
+        animator.SetFloat("dashType", _creature.dashType);
         animator.SetFloat("xDir", _creature.moveDir.x);
         animator.SetFloat("yDir", _creature.moveDir.y);
     }
