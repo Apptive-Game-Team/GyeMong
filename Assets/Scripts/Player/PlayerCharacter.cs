@@ -50,8 +50,6 @@ namespace playerCharacter
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
-
-            LoadPlayerData();
         }
 
         private void Update()
