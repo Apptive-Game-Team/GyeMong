@@ -76,7 +76,6 @@ public class MidBoss : Boss
         }
         else
         {
-            ChangeState(State.DASH);
             distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance < RangedAttackRange)
             {
@@ -92,11 +91,11 @@ public class MidBoss : Boss
 
     protected override IEnumerator ExecutePattern2()//±Ù°Å¸®
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(0.2f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(0.2f);
             ChangeState(State.ATTACK);
             meleeAttackPrefab.SetActive(true);
 
@@ -105,9 +104,9 @@ public class MidBoss : Boss
             yield return new WaitForSeconds(0.3f);
 
             meleeAttackPrefab.SetActive(false);
+            ChangeState(State.IDLE);
         }
         yield return null;
-        ChangeState(State.IDLE);
     }
     protected override IEnumerator ExecutePattern3()//ÃßÀû
     {
@@ -142,7 +141,6 @@ public class MidBoss : Boss
         }
         else
         {
-            ChangeState(State.DASH);
             distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance < RangedAttackRange)
             {
@@ -163,18 +161,22 @@ public class MidBoss : Boss
     }
     protected override IEnumerator ExecutePattern5()//µ¢Äð ÈÖµÎ¸£±â
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(0.5f);
-        ChangeState(State.ATTACK);
-        float duration = 2f;
-        float elapsed = 0f;
-        Instantiate(vinePrefab, transform.position, Quaternion.identity);
-        while (elapsed < duration)
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= MeleeAttackRange)
         {
-            elapsed += Time.deltaTime;
-            yield return null;
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(0.5f);
+            ChangeState(State.ATTACK);
+            float duration = 2f;
+            float elapsed = 0f;
+            Instantiate(vinePrefab, transform.position, Quaternion.identity);
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+            }
+            ChangeState(State.IDLE);
         }
-        ChangeState(State.IDLE);
+        yield return null;
     }
 
     protected override void SelectRandomPattern()
