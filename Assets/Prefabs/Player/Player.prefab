@@ -166,7 +166,6 @@ MonoBehaviour:
   moveSpeed: 2
   sprintSpeed: 4
   dashSpeed: 10
-  vfxRenderer: {fileID: 0}
 --- !u!114 &4047033506906318720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -866,6 +865,9 @@ MonoBehaviour:
   - rid: 5246442373933432834
   - rid: 5246442373933432835
   - rid: 5246442374326124547
+  - rid: 5246442374326124552
+  - rid: 5246442374326124553
+  - rid: 5246442374326124554
   references:
     version: 2
     RefIds:
@@ -886,6 +888,15 @@ MonoBehaviour:
       type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 777777
+    - rid: 5246442374326124552
+      type: {class: LoadDataEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5246442374326124553
+      type: {class: ClearTextEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5246442374326124554
+      type: {class: FadeInEvent, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!1 &8969485596856853325
 GameObject:
   m_ObjectHideFlags: 0
