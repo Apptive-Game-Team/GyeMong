@@ -139,6 +139,7 @@ public class DashState : BaseState
     }
     public override void OnStateUpdate()
     {
+        animator.SetFloat("dashType", _creature.dashType);
         animator.SetFloat("xDir", _creature.moveDir.x);
         animator.SetFloat("yDir", _creature.moveDir.y);
     }

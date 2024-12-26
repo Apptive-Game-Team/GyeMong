@@ -76,6 +76,8 @@ public class MidBoss : Boss
         }
         else
         {
+            dashType = 1;
+            ChangeState(State.DASH);
             distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance < RangedAttackRange)
             {
@@ -143,6 +145,8 @@ public class MidBoss : Boss
         }
         else
         {
+            dashType = 1;
+            ChangeState(State.DASH);
             distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance < RangedAttackRange)
             {
