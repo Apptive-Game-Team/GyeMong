@@ -194,14 +194,14 @@ public class MidBoss : Boss
 
         if (currentPhase == 1)
         {
-            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
         }
         else
         {
-            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
