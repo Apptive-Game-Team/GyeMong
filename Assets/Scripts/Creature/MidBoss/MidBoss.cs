@@ -68,7 +68,7 @@ public class MidBoss : Boss
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(0.5f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
+        if (distance >= RangedAttackRange)
         {
             ChangeState(State.ATTACK);
             Instantiate(arrowPrefab, transform.position, Quaternion.identity);
@@ -77,13 +77,10 @@ public class MidBoss : Boss
         else
         {
             ChangeState(State.DASH);
-            while (distance > RangedAttackRange)
+            distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance < RangedAttackRange)
             {
-                speed = 10f;
-                Vector3 direction = (player.transform.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
-                distance = Vector3.Distance(transform.position, player.transform.position);
-                yield return null;
+                yield return StartCoroutine(BackStep(RangedAttackRange));
             }
             ChangeState(State.ATTACK);
             speed = 1f;
@@ -131,7 +128,7 @@ public class MidBoss : Boss
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(1f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
+        if (distance >= RangedAttackRange)
         {
             ChangeState(State.ATTACK);
             int count = 0;
@@ -146,13 +143,10 @@ public class MidBoss : Boss
         else
         {
             ChangeState(State.DASH);
-            while (distance > RangedAttackRange)
+            distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance < RangedAttackRange)
             {
-                speed = 10f;
-                Vector3 direction = (player.transform.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
-                distance = Vector3.Distance(transform.position, player.transform.position);
-                yield return null;
+                yield return StartCoroutine(BackStep(RangedAttackRange));
             }
             ChangeState(State.ATTACK);
             speed = 1f;
