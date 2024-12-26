@@ -53,7 +53,7 @@ public class MidBoss : Boss
         CheckPhaseTransition();
     }
 
-    protected override IEnumerator ExecutePattern0()
+    protected override IEnumerator ExecutePattern0()//¹é½ºÅÜ
     {
         ChangeState(State.ATTACK);
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -63,7 +63,7 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern1()
+    protected override IEnumerator ExecutePattern1()//¿ø°Å¸® È°
     {
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(0.5f);
@@ -93,8 +93,10 @@ public class MidBoss : Boss
         ChangeState(State.IDLE);
     }
 
-    protected override IEnumerator ExecutePattern2()
+    protected override IEnumerator ExecutePattern2()//±Ù°Å¸®
     {
+        ChangeState(State.CHANGINGPATTERN);
+        yield return new WaitForSeconds(0.5f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
@@ -110,7 +112,7 @@ public class MidBoss : Boss
         yield return null;
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern3()
+    protected override IEnumerator ExecutePattern3()//ÃßÀû
     {
         ChangeState(State.MOVE);
         float duration = 2f;
@@ -124,7 +126,7 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern4()
+    protected override IEnumerator ExecutePattern4()//¿ø°Å¸® ¾¾¾Ñ
     {
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(1f);
@@ -165,7 +167,7 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern5()
+    protected override IEnumerator ExecutePattern5()//µ¢Äð ÈÖµÎ¸£±â
     {
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(0.5f);
