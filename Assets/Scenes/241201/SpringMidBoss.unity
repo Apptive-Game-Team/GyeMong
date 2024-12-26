@@ -36089,7 +36089,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21628}
+  m_AnchoredPosition: {x: 0, y: 308.21622}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36914,7 +36914,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6068435
+  m_Size: 0.6068391
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37639,7 +37639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21628}
+  m_AnchoredPosition: {x: 0, y: 308.21622}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -42762,7 +42762,7 @@ MonoBehaviour:
   trigger: 0
   triggerLimitCounter: 1
   eventSequence:
-  - rid: 521773745628250143
+  - rid: 521773835193679874
   - rid: 521773745628250139
   - rid: 521773745628250132
   - rid: 521773745628250133
@@ -42777,7 +42777,7 @@ MonoBehaviour:
   - rid: 521773745628250157
   - rid: 521773745628250136
   - rid: 521773745628250140
-  - rid: 521773745628250142
+  - rid: 521773835193679872
   - rid: 521773745628250158
   - rid: 521773771964809216
   references:
@@ -42821,14 +42821,6 @@ MonoBehaviour:
       type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
       data:
         triggerable: {fileID: 1852717527}
-    - rid: 521773745628250142
-      type: {class: StartAnimatiorEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 2099362349}
-    - rid: 521773745628250143
-      type: {class: StopAnimatiorEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 2099362349}
     - rid: 521773745628250152
       type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -42867,6 +42859,14 @@ MonoBehaviour:
       type: {class: ShakeCameraEvent, ns: , asm: Assembly-CSharp}
       data:
         time: 0.2
+    - rid: 521773835193679872
+      type: {class: StartAnimatorEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 2099362349}
+    - rid: 521773835193679874
+      type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 2099362349}
 --- !u!1 &1865815903
 GameObject:
   m_ObjectHideFlags: 0
@@ -43441,7 +43441,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6068435
+  m_Size: 0.6068391
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

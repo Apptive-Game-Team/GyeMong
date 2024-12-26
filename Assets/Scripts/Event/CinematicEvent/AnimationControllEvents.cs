@@ -6,7 +6,7 @@ public abstract class AnimationControllEvent : CinematicEvent
     [SerializeField] protected Animator _animator;
 }
 
-public class StopAnimatiorEvent : AnimationControllEvent
+public class StopAnimatorEvent : AnimationControllEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
@@ -16,7 +16,7 @@ public class StopAnimatiorEvent : AnimationControllEvent
     }
 }
 
-public class StartAnimatiorEvent : AnimationControllEvent
+public class StartAnimatorEvent : AnimationControllEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
