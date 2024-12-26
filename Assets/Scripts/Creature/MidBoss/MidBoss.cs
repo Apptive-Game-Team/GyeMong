@@ -28,7 +28,7 @@ public class MidBoss : Boss
         maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
-        speed = 1f;
+        speed = 2f;
         detectionRange = 10f;
         MeleeAttackRange = 2f;
         RangedAttackRange = 6f;
@@ -66,7 +66,7 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern1()//¿ø°Å¸® È°
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance >= RangedAttackRange)
+        if (distance >= RangedAttackRange/2)
         {
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(0.5f);
@@ -136,7 +136,7 @@ public class MidBoss : Boss
     protected override IEnumerator ExecutePattern4()//¿ø°Å¸® ¾¾¾Ñ
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance >= RangedAttackRange)
+        if (distance >= RangedAttackRange/2)
         {
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(1f);
