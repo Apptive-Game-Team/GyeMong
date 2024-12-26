@@ -37,7 +37,7 @@ public class Arrow : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(20);
         }
     }
 }

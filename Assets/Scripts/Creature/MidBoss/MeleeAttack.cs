@@ -9,7 +9,7 @@ public class MeleeAttack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(20);
         }
     }
 }

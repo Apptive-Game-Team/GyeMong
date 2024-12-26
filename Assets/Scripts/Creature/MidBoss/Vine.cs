@@ -17,7 +17,7 @@ public class Vine : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(15, true);
+            PlayerCharacter.Instance.TakeDamage(20, true);
         }
     }
 }

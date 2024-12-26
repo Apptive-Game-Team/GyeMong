@@ -57,7 +57,7 @@ public class Seed : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(20);
         }
     }
 
@@ -69,7 +69,7 @@ public class Seed : MonoBehaviour
         {
             if (enemy.CompareTag("Player"))
             {
-                PlayerCharacter.Instance.TakeDamage(15);
+                PlayerCharacter.Instance.TakeDamage(10);
             }
         }
     }
