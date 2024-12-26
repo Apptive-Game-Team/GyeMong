@@ -40,7 +40,6 @@ namespace playerCharacter
         private bool isDefending = false;
         private bool canMove = true;
         private bool isInvincible = false;
-        public VisualEffect vfxRenderer;
 
         private void Start()
         {
@@ -57,11 +56,6 @@ namespace playerCharacter
 
         private void Update()
         {
-            if (SceneManager.GetActiveScene().name == "SpringPuzzle2")
-            {
-                vfxRenderer.SetVector3("ColliderPos", transform.position);
-            }
-
             if (!isControlled)
             {
                 if (canMove)
