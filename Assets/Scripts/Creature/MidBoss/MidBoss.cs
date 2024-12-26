@@ -114,6 +114,13 @@ public class MidBoss : Boss
     }
     protected override IEnumerator ExecutePattern3()//추적
     {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= MeleeAttackRange)
+        {
+            // 근거리 사거리 내에 플레이어가 있으면 패턴을 건너뛰고 IDLE 상태로 변경
+            ChangeState(State.IDLE);
+            yield break;
+        }
         ChangeState(State.MOVE);
         float duration = 2f;
         float elapsed = 0f;
