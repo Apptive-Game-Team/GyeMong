@@ -36,35 +36,45 @@ public class ShowBossHealthBarEvent : BossHpBarEvent
     HpBarController.gameObject.SetActive(true);
     HpBarController.ClearBoss();
     HpBarController.UpdateHp(0);
-
-    // Vector3 defaultScale = HpBarController.transform.localScale;
-    Vector3 defaultPosition = HpBarController.transform.position;
-
-    // 시작 위치 설정 (화면 위에서 시작)
-    Vector3 startPosition = defaultPosition + new Vector3(0, 100, 0); // Y축으로 2.0만큼 위로 이동
     
-    HpBarController.transform.position = startPosition;
-    // HpBarController.transform.localScale = defaultScale * 0.9f;
-    float timer = 0;
+    yield return DropHpBar();
+    yield return ReboundHpBar();
+    yield return FillHpBar();
+    
+    HpBarController.SetBoss(_boss);
+  }
 
+  private IEnumerator DropHpBar()
+  {
+    Vector3 defaultPosition = HpBarController.transform.position;
+    Vector3 startPosition = defaultPosition + new Vector3(0, 100, 0);
+    HpBarController.transform.position = startPosition;
+    float timer = 0;
     while (timer < TIME)
     {
       timer += DELTA_TIME;
       float progress = Mathf.Pow(timer / TIME, 2);
-      float scaleRate = Mathf.Lerp(0.9f, 1, Mathf.Sin(progress * Mathf.PI));
-      // HpBarController.transform.localScale = defaultScale * scaleRate;
-      HpBarController.transform.position = Vector3.Lerp(startPosition, defaultPosition, progress );
-
+      HpBarController.transform.position = Vector3.Lerp(startPosition, defaultPosition, progress);
       yield return new WaitForSeconds(DELTA_TIME);
     }
     HpBarController.transform.position = defaultPosition;
-
-    // HpBarController.transform.localScale = defaultScale;
-
-    yield return FillHpBar();
-    HpBarController.SetBoss(_boss);
   }
 
+  private IEnumerator ReboundHpBar()
+  {
+    Vector3 defaultPosition = HpBarController.transform.position;
+    Vector3 reboundPosition = defaultPosition + new Vector3(0, 20, 0);
+    float timer = 0;
+    while (timer < TIME/2)
+    {
+      timer += DELTA_TIME;
+      float progress = Mathf.Sin((timer / (TIME / 2)) * Mathf.PI);
+      HpBarController.transform.position = Vector3.Lerp(defaultPosition, reboundPosition, progress);
+      yield return new WaitForSeconds(DELTA_TIME);
+    }
+    HpBarController.transform.position = defaultPosition;
+  }
+  
   private IEnumerator FillHpBar()
   {
     HpBarController.UpdateHp(0);
