@@ -23810,6 +23810,7 @@ MonoBehaviour:
   triggerLimitCounter: -1
   eventSequence:
   - rid: 521773836373327900
+  - rid: 521773836373327901
   references:
     version: 2
     RefIds:
@@ -23817,6 +23818,11 @@ MonoBehaviour:
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 0}
+    - rid: 521773836373327901
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: spring_guardian_down
+        condition: 1
 --- !u!4 &553630110
 Transform:
   m_ObjectHideFlags: 0
@@ -40829,7 +40835,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 872356578}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6068404
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -41175,7 +41181,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 86957273}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6068404
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
