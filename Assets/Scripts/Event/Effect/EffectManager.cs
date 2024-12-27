@@ -76,6 +76,14 @@ public class EffectManager : SingletonObject<EffectManager>
         return Fade(black, 1);
     }
 
+    public IEnumerator FadeInFirst()
+    {
+        Color color = black.color;
+        color.a = 1;
+        black.color = color;
+        return Fade(black, 0);
+    }
+
 
     private IEnumerator Fade(RawImage image, float targetAlpha, float duration = 0.5f)
     {
