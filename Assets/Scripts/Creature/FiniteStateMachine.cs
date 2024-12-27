@@ -146,6 +146,23 @@ public class DashState : BaseState
         animator.SetFloat("yDir", _creature.moveDir.y);
     }
 }
+public class ChangingPhaseState : BaseState
+{
+    public ChangingPhaseState(Creature creature) : base(creature) { }
+    public override void OnStateEnter()
+    {
+        animator.SetBool("isChangePhase", true);
+    }
+    public override void OnStateExit()
+    {
+        animator.SetBool("isChangePhase", false);
+    }
+    public override void OnStateUpdate()
+    {
+        animator.SetFloat("xDir", _creature.moveDir.x);
+        animator.SetFloat("yDir", _creature.moveDir.y);
+    }
+}
 public class FiniteStateMachine
 {
     public FiniteStateMachine(BaseState initState)

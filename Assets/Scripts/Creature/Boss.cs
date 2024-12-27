@@ -62,14 +62,22 @@ public abstract class Boss : Creature
         if (currentPhase < maxPhase)
         {
             currentPhase++;
-            SetupPhase();
-            GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
+            StopAllCoroutines();
+            StartCoroutine(ChangingPhase());
         }
         else
         {
             Die();
             wall.SetActive(false);
         }
+    }
+    public IEnumerator ChangingPhase()
+    {
+        ChangeState(State.CHANGINGPHASE);
+        yield return new WaitForSeconds(3f);
+        SetupPhase();
+        GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
+        ChangeState(State.IDLE);
     }
     public Coroutine currentPatternCoroutine;
     protected void ExecuteCurrentPattern()

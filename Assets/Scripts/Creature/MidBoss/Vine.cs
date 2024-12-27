@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Vine : MonoBehaviour
 {
-    private float attackdamage = MidBoss.Instance.defaultDamage;
+    private float attackdamage;
     private void OnEnable()
     {
+        attackdamage = MidBoss.Instance.defaultDamage;
         StartCoroutine(ActivateVine());
     }
     private IEnumerator ActivateVine()
