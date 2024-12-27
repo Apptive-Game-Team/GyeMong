@@ -1,18 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.VFX;
 
-public class Puzzle2RewardClaim : MonoBehaviour
+public class Puzzle2RewardClaim : MonoBehaviour, IEventTriggerable
 {
-    Tilemap fogTilemap;
-
-    private void Start()
+    [SerializeField] private VisualEffect vfxRenderer;
+    
+    private const float DELTA_TIME = 0.02f;
+    private IEnumerator ClearFog()
     {
-        fogTilemap = GameObject.Find("fogTilemap").GetComponent<Tilemap>();
+        float timer = 0;
+        float clearTime = 5f;
+        float currentRadius = vfxRenderer.GetFloat("Radius");
+        float targetRadius = 10;
+        float deltaRadius = (targetRadius - currentRadius) * (DELTA_TIME/clearTime);
+        while (timer < clearTime)
+        {
+            vfxRenderer.SetFloat("Radius", currentRadius += deltaRadius);
+            yield return new WaitForSeconds(DELTA_TIME);
+            timer += DELTA_TIME;
+        }
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        fogTilemap.gameObject.SetActive(false);
+        StartCoroutine(ClearFog());
+    }
+
+    public void Trigger()
+    {
+        StartCoroutine(ClearFog());
     }
 }
