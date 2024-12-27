@@ -862,10 +862,12 @@ MonoBehaviour:
   triggerLimitCounter: 1
   eventSequence:
   - rid: 5246442373933432833
+  - rid: 5246442393686769664
   - rid: 5246442373933432834
   - rid: 5246442373933432835
   - rid: 5246442374326124547
   - rid: 5246442374326124552
+  - rid: 5246442393686769665
   - rid: 5246442374326124553
   - rid: 5246442374326124554
   references:
@@ -897,6 +899,14 @@ MonoBehaviour:
     - rid: 5246442374326124554
       type: {class: FadeInEvent, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 5246442393686769664
+      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 0}
+    - rid: 5246442393686769665
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 5083188182615057341}
 --- !u!1 &8969485596856853325
 GameObject:
   m_ObjectHideFlags: 0

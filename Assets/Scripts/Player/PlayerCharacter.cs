@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace playerCharacter
 {
-    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable
+    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
     {
         [SerializeField] private float curHealth;
         public float maxHealth;
@@ -366,6 +366,12 @@ namespace playerCharacter
             animator.SetBool("isMove", false);
             soundController.SetBool(PlayerSoundType.FOOT, false);
             isControlled = false;
+        }
+
+        public void Trigger()
+        {
+            curHealth = maxHealth;
+            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / maxHealth));
         }
     }
 }
