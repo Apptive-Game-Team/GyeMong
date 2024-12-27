@@ -71,7 +71,6 @@ public class PrintTextEvent : TextEvent
         color.a = 1;
         HeaderText.color = color;
         DescriptionText.color = color;
-        return null;
     }
 }
 
