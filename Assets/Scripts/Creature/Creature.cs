@@ -20,7 +20,7 @@ public class Creature : MonoBehaviour
     public int dashType;
     protected float maxHealth;
     [SerializeField] protected float curHealth;
-    protected float AttackDamage;
+    public float defaultDamage;
     protected float speed;
     protected float detectionRange;
     protected float MeleeAttackRange;

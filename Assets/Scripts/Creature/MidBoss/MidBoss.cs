@@ -28,6 +28,7 @@ public class MidBoss : Boss
         maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
+        defaultDamage = 20f;
         speed = 2f;
         detectionRange = 10f;
         MeleeAttackRange = 2f;

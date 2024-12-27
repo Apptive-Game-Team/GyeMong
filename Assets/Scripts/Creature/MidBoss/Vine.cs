@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Vine : MonoBehaviour
 {
+    private float attackdamage = MidBoss.Instance.defaultDamage;
     private void OnEnable()
     {
         StartCoroutine(ActivateVine());
@@ -17,7 +18,7 @@ public class Vine : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(20, true);
+            PlayerCharacter.Instance.TakeDamage(attackdamage, true);
         }
     }
 }

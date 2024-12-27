@@ -8,7 +8,7 @@ public class Seed : MonoBehaviour
     private GameObject player;
     private Vector3 direction;
     private float speed = 10f;
-
+    private float attackdamage = MidBoss.Instance.defaultDamage;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -57,7 +57,7 @@ public class Seed : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(20);
+            PlayerCharacter.Instance.TakeDamage(attackdamage);
         }
     }
 
@@ -69,7 +69,7 @@ public class Seed : MonoBehaviour
         {
             if (enemy.CompareTag("Player"))
             {
-                PlayerCharacter.Instance.TakeDamage(10);
+                PlayerCharacter.Instance.TakeDamage(attackdamage/2);
             }
         }
     }
