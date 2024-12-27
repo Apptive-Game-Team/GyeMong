@@ -86,3 +86,11 @@ public class FadeOutEvent : EffectEvent
         return EffectManager.Instance.FadeOut();
     }
 }
+
+public class FadeInFirstEvent : EffectEvent
+{
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        return EffectManager.Instance.FadeInFirst();
+    }
+}

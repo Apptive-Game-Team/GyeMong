@@ -54,3 +54,43 @@ public class ClearImageEvent : ImageEvent
         return null;
     }
 }
+
+public class MoveImageEvent : ImageEvent
+{
+    [SerializeField] private Sprite sprite;
+    [SerializeField] private Vector2 startPosition = new Vector2(0, 500);
+    [SerializeField] private Vector2 endPosition = new Vector2(0, 0);
+    [SerializeField] private float moveTime = 1f;
+    [SerializeField] private Vector2 targetSize = new Vector2(100, 100);
+    private const float DELTA_TIME = 0.02f;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        Image.sprite = sprite;
+        Image.color = new Color(Image.color.r, Image.color.g, Image.color.b, 0);
+
+        RectTransform rectTransform = Image.rectTransform;
+        rectTransform.anchoredPosition = startPosition;
+        rectTransform.sizeDelta = targetSize;
+
+        float timer = 0f;
+        Color color = Image.color;
+
+        while (timer < moveTime)
+        {
+            timer += DELTA_TIME;
+            float t = Mathf.Clamp01(timer / moveTime);
+
+            rectTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, t);
+
+            color.a = t;
+            Image.color = color;
+
+            yield return new WaitForSeconds(DELTA_TIME);
+        }
+
+        rectTransform.anchoredPosition = endPosition;
+        color.a = 1f;
+        Image.color = color;
+    }
+}
