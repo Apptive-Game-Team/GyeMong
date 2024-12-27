@@ -41,6 +41,8 @@ namespace playerCharacter
         private bool canMove = true;
         private bool isInvincible = false;
 
+        public bool isStartButton = false;
+
         private void Start()
         {
             playerRb = GetComponent<Rigidbody2D>();
@@ -332,11 +334,12 @@ namespace playerCharacter
         public void LoadPlayerData()
         {
             PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
-            if (!playerData.isFirst)
+            if (!playerData.isFirst && !isStartButton)
             {
                 gameObject.transform.position = playerData.playerPosition;
                 lastMovementDirection = playerData.playerDirection;
             }
+            isStartButton = false;
         }
 
         public IEnumerator MoveTo(Vector3 target, float speed)
