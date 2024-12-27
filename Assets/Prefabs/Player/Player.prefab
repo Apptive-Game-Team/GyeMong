@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6259209506450466507}
   - component: {fileID: 3862622192896607297}
   - component: {fileID: 8464625720961678176}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -43,6 +43,7 @@ Transform:
   - {fileID: 6636292142979290372}
   - {fileID: 1463749916195872088}
   - {fileID: 8849795757512225535}
+  - {fileID: 7163263139275431806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6789909978568326617
@@ -255,7 +256,7 @@ GameObject:
   - component: {fileID: 8696735159682376834}
   - component: {fileID: 4399698847234571254}
   - component: {fileID: 921394711613564468}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordSwingSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +398,7 @@ GameObject:
   - component: {fileID: 6636292142979290372}
   - component: {fileID: 5254527465290047558}
   - component: {fileID: 5576554380004658484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordAttackSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -539,7 +540,7 @@ GameObject:
   - component: {fileID: 8199917625744208188}
   - component: {fileID: 5231700200157876853}
   - component: {fileID: 3389118194136624774}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FootSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +682,7 @@ GameObject:
   - component: {fileID: 1463749916195872088}
   - component: {fileID: 6224962399545623568}
   - component: {fileID: 2563819676121873246}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordDefendSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,6 +813,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &8586548682964966064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7163263139275431806}
+  m_Layer: 8
+  m_Name: MapSectionInteractor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7163263139275431806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8586548682964966064}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2490236768487297665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8969485596856853325
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,7 +855,7 @@ GameObject:
   - component: {fileID: 8849795757512225535}
   - component: {fileID: 4723462319351427139}
   - component: {fileID: 7646244511748963561}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DashSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1016,6 +1048,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354279042027975731, guid: 875c47ed22de1104bbad6f8f665b07b0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7354279042027975731, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}
