@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6259209506450466507}
   - component: {fileID: 3862622192896607297}
   - component: {fileID: 8464625720961678176}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 8696735159682376834}
   - component: {fileID: 4399698847234571254}
   - component: {fileID: 921394711613564468}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordSwingSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 6636292142979290372}
   - component: {fileID: 5254527465290047558}
   - component: {fileID: 5576554380004658484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordAttackSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 8199917625744208188}
   - component: {fileID: 5231700200157876853}
   - component: {fileID: 3389118194136624774}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FootSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 1463749916195872088}
   - component: {fileID: 6224962399545623568}
   - component: {fileID: 2563819676121873246}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordDefendSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -918,7 +918,7 @@ GameObject:
   - component: {fileID: 8849795757512225535}
   - component: {fileID: 4723462319351427139}
   - component: {fileID: 7646244511748963561}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DashSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1111,6 +1111,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354279042027975731, guid: 875c47ed22de1104bbad6f8f665b07b0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7354279042027975731, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}

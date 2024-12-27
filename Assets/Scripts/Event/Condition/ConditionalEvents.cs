@@ -45,10 +45,10 @@ public class ConditionalBranchEvent : ConditionalEvent
     {
         if (_condition.Check())
         {
-            return eventInTrue?.Execute();
+            return eventInTrue?.Execute(eventObject);
         } else
         {
-            return eventInFalse?.Execute();
+            return eventInFalse?.Execute(eventObject);
         }
     }
 
@@ -68,7 +68,7 @@ public class ConditionalLoopEvent : ConditionalEvent
     {
         while (_condition.Check())
         {
-            yield return loopBodyevent?.Execute();
+            yield return loopBodyevent?.Execute(eventObject);
         }
     }
 
