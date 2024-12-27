@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class SaveDataEvent : Event
 {
     private PlayerData playerData = new();
+    private Puzzle3Flag puzzle3Flag = new();
+    private RuneDatas runeData = new();
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         playerData.isFirst = false;
@@ -11,7 +13,12 @@ public class SaveDataEvent : Event
         playerData.playerPosition = PlayerCharacter.Instance.GetPlayerPosition();
         playerData.playerDirection = PlayerCharacter.Instance.GetPlayerDirection();
 
+        puzzle3Flag.puzzle3Flag = PuzzleController.Instance.isPuzzleCleared;
+        
+        // runeData.runeDatas =
+
         DataManager.Instance.SaveSection(playerData, "PlayerData");
+        DataManager.Instance.SaveSection(puzzle3Flag, "Puzzle3Flag");
         ConditionManager.Instance.Save();
 
         yield return null;

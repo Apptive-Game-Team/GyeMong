@@ -11,6 +11,12 @@ public class PlayerData
 }
 
 [System.Serializable]
+public class RuneDatas
+{
+    public List<RuneData> runeDatas;
+}
+
+[System.Serializable]
 public class SoundData
 {
     public float masterVolume = 1f;
@@ -36,4 +42,10 @@ public class KeyMappingEntry
         this.actionCode = actionCode.ToString();
         this.keyCode = keyCode.ToString();
     }
+}
+
+[System.Serializable]
+public class Puzzle3Flag
+{
+    public bool puzzle3Flag = false;
 }

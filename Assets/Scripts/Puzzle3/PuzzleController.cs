@@ -19,6 +19,8 @@ public class PuzzleController : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
+        LoadFlag();
+
         if (rune == null || rune.activeSelf) isPuzzleCleared = true;
 
         Transform canvas = transform.parent.Find("TimeWatch");
@@ -102,5 +104,11 @@ public class PuzzleController : MonoBehaviour
         timeWatchImage.gameObject.SetActive(false);
         SetUpInitialRotation();
         isPuzzleStart = false;
+    }
+
+    private void LoadFlag()
+    {
+        Puzzle3Flag flag = DataManager.Instance.LoadSection<Puzzle3Flag>("Puzzle3Flag");
+        isPuzzleCleared = flag.puzzle3Flag;
     }
 }
