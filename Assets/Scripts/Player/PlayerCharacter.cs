@@ -40,7 +40,6 @@ namespace playerCharacter
         private bool isDefending = false;
         private bool canMove = true;
         private bool isInvincible = false;
-        public VisualEffect vfxRenderer;
 
         private void Start()
         {
@@ -51,17 +50,10 @@ namespace playerCharacter
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
-
-            LoadPlayerData();
         }
 
         private void Update()
         {
-            if (SceneManager.GetActiveScene().name == "SpringPuzzle2")
-            {
-                vfxRenderer.SetVector3("ColliderPos", transform.position);
-            }
-
             if (!isControlled)
             {
                 if (canMove)
@@ -329,7 +321,7 @@ namespace playerCharacter
             return lastMovementDirection;
         }
 
-        private void LoadPlayerData()
+        public void LoadPlayerData()
         {
             PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
             if (!playerData.isFirst)

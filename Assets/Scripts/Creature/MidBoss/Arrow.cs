@@ -7,6 +7,7 @@ public class Arrow : MonoBehaviour
     private GameObject player;
     private Vector3 direction;
     private float speed = 15f;
+    private float attackdamage = MidBoss.Instance.defaultDamage;
 
     private void Awake()
     {
@@ -37,7 +38,7 @@ public class Arrow : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(attackdamage);
         }
     }
 }
