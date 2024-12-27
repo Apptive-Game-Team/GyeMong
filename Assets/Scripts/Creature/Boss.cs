@@ -74,9 +74,9 @@ public abstract class Boss : Creature
     public IEnumerator ChangingPhase()
     {
         ChangeState(State.CHANGINGPHASE);
-        yield return new WaitForSeconds(3f);
         SetupPhase();
         GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
+        yield return new WaitForSeconds(2f);
         ChangeState(State.IDLE);
     }
     public Coroutine currentPatternCoroutine;

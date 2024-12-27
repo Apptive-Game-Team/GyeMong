@@ -33041,6 +33041,12 @@ MonoBehaviour:
   trigger: 4
   triggerLimitCounter: 1
   eventSequence:
+  - rid: 7405124568204705794
+  - rid: 7405124568204705796
+  - rid: 7405124568204705797
+  - rid: 7405124568204705800
+  - rid: 7405124568204705799
+  - rid: 7405124568204705795
   - rid: 7405124568204705793
   - rid: 7405124568204705792
   references:
@@ -33054,6 +33060,30 @@ MonoBehaviour:
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 2099362344}
+    - rid: 7405124568204705794
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 7405124568204705795
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 7405124568204705796
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7405124568204705797
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uCD0C\uC7A5"
+          message: "\uC640 \u3148\u3134\uC138\uB124"
+    - rid: 7405124568204705799
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7405124568204705800
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
 --- !u!4 &778397832
 Transform:
   m_ObjectHideFlags: 0
@@ -35959,7 +35989,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21613}
+  m_AnchoredPosition: {x: 0, y: 308.21628}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36788,7 +36818,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6007823
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37513,7 +37543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21613}
+  m_AnchoredPosition: {x: 0, y: 308.21628}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -45174,7 +45204,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6007823
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
