@@ -63,10 +63,12 @@ public abstract class Boss : Creature
         {
             currentPhase++;
             SetupPhase();
+            GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
         }
         else
         {
             Die();
+            wall.SetActive(false);
         }
     }
     public Coroutine currentPatternCoroutine;
