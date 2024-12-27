@@ -6,6 +6,7 @@ public class SaveDataEvent : Event
     private PlayerData playerData = new();
     private Puzzle3Flag puzzle3Flag = new();
     private RuneDatas runeData = new();
+    private RuneComponent runeComponent;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         playerData.isFirst = false;
@@ -14,11 +15,14 @@ public class SaveDataEvent : Event
         playerData.playerDirection = PlayerCharacter.Instance.GetPlayerDirection();
 
         puzzle3Flag.puzzle3Flag = PuzzleController.Instance.isPuzzleCleared;
-        
-        // runeData.runeDatas =
+
+        runeComponent = PlayerCharacter.Instance.GetComponent<RuneComponent>();
+        runeData.AcquiredRuneDatas = runeComponent.AcquiredRuneList;
+        runeData.EquippedRuneDatas = runeComponent.EquippedRuneList;
 
         DataManager.Instance.SaveSection(playerData, "PlayerData");
         DataManager.Instance.SaveSection(puzzle3Flag, "Puzzle3Flag");
+        DataManager.Instance.SaveSection(runeData, "RuneData");
         ConditionManager.Instance.Save();
 
         yield return null;
@@ -27,9 +31,23 @@ public class SaveDataEvent : Event
 public class LoadDataEvent : Event
 {
     private PlayerData playerData;
+    private RuneDatas runeData;
+    private RuneComponent runeComponent;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
+        runeData = DataManager.Instance.LoadSection<RuneDatas>("RuneData");
+
+        runeComponent = PlayerCharacter.Instance.GetComponent<RuneComponent>();
+
+        for (int i = 0;i < runeData.AcquiredRuneDatas.Count;i++) 
+        {
+            runeComponent.AcquireRune(runeData.AcquiredRuneDatas[i]);
+        }
+        for (int i = 0;i < runeData.EquippedRuneDatas.Count;i++)
+        {
+            runeComponent.EquipRune(runeData.EquippedRuneDatas[i]);
+        }
 
         SceneManager.LoadScene(playerData.sceneName);
         PlayerCharacter.Instance.LoadPlayerData();
