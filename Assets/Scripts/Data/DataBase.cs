@@ -13,7 +13,8 @@ public class PlayerData
 [System.Serializable]
 public class RuneDatas
 {
-    public List<RuneData> runeDatas;
+    public List<RuneData> AcquiredRuneDatas = new();
+    public List<RuneData> EquippedRuneDatas = new();
 }
 
 [System.Serializable]
