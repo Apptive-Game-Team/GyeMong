@@ -57,6 +57,20 @@ public class PrintTextEvent : TextEvent
         HeaderText.color = textColor;
         DescriptionText.text = description;
         DescriptionText.color = textColor;
+        Color color = HeaderText.color;
+        color.a = 0;
+        float timer = 0;
+        while (timer < RANGE_TIME)
+        {
+            timer += DELTA_TIME;
+            color.a += DELTA_TIME / RANGE_TIME;
+            HeaderText.color = color;
+            DescriptionText.color = color;
+            yield return new WaitForSeconds(DELTA_TIME);
+        }
+        color.a = 1;
+        HeaderText.color = color;
+        DescriptionText.color = color;
         return null;
     }
 }
