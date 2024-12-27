@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace playerCharacter
 {
-    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable
+    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
     {
         [SerializeField] private float curHealth;
         public float maxHealth;
@@ -296,7 +296,15 @@ namespace playerCharacter
 
         private void Die()
         {
-            Destroy(gameObject);
+            //GameOver Event Triggered.
+            try
+            {
+                GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
+            }
+            catch
+            {
+                Debug.Log("PlayerGameOverEvent not found");
+            }
         }
 
         public void Bind(float duration)
@@ -336,21 +344,24 @@ namespace playerCharacter
             isControlled = true;   
             animator.SetBool("isMove", true);
             soundController.SetBool(PlayerSoundType.FOOT, true);
-
-            movement.x = target.x - transform.position.x;
-            movement.y = target.y - transform.position.y;
-            movement.Normalize();
-            animator.SetFloat("xDir", movement.x);
-            animator.SetFloat("yDir", movement.y);
             
             while (true)
             {
-                playerRb.velocity = movement * speed;
-                if (Vector3.Distance(transform.position, target) < 0.1f)
+                Vector3 direction = (target - transform.position).normalized;
+                
+                animator.SetFloat("xDir", direction.x);
+                animator.SetFloat("yDir", direction.y);
+                
+                float step = speed * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, target, step);
+                
+                if ((target - transform.position).sqrMagnitude <= 0.01f)
                 {
                     break;
                 }
-                yield return new WaitForSeconds(0.02f);
+                animator.SetFloat("speed", speed);
+        
+                yield return null;
             }
             playerRb.velocity = movement * speed;
             animator.SetFloat("speed", speed);
@@ -358,6 +369,12 @@ namespace playerCharacter
             animator.SetBool("isMove", false);
             soundController.SetBool(PlayerSoundType.FOOT, false);
             isControlled = false;
+        }
+
+        public void Trigger()
+        {
+            curHealth = maxHealth;
+            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / maxHealth));
         }
     }
 }

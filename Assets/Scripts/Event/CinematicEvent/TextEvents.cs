@@ -49,11 +49,14 @@ public class PrintTextEvent : TextEvent
     protected const float RANGE_TIME = 1f;
     [SerializeField] private string header;
     [SerializeField] private string description;
+    [SerializeField] private Color textColor = Color.black;
+    
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         HeaderText.text = header;
+        HeaderText.color = textColor;
         DescriptionText.text = description;
-        
+        DescriptionText.color = textColor;
         Color color = HeaderText.color;
         color.a = 0;
         float timer = 0;
@@ -68,6 +71,7 @@ public class PrintTextEvent : TextEvent
         color.a = 1;
         HeaderText.color = color;
         DescriptionText.color = color;
+        return null;
     }
 }
 
