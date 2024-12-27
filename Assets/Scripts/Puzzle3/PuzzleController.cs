@@ -19,7 +19,7 @@ public class PuzzleController : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        LoadFlag();
+        LoadClearFlag();
 
         if (rune == null || rune.activeSelf) isPuzzleCleared = true;
 
@@ -106,7 +106,7 @@ public class PuzzleController : MonoBehaviour
         isPuzzleStart = false;
     }
 
-    private void LoadFlag()
+    private void LoadClearFlag()
     {
         Puzzle3Flag flag = DataManager.Instance.LoadSection<Puzzle3Flag>("Puzzle3Flag");
         isPuzzleCleared = flag.puzzle3Flag;
