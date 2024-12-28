@@ -54,7 +54,7 @@ public class Guardian : Boss
         CheckPhaseTransition();
     }
 
-    protected override IEnumerator ExecutePattern0()
+    protected override IEnumerator ExecutePattern0() // Melee Attack
     {
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(2f);
@@ -71,7 +71,7 @@ public class Guardian : Boss
         yield return null;
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern1()
+    protected override IEnumerator ExecutePattern1() // Falling Cube Attack
     {
         _animator.SetBool("Toss", true);
         ChangeState(State.CHANGINGPATTERN);
@@ -89,7 +89,7 @@ public class Guardian : Boss
         _animator.SetBool("Toss", false);
     }
 
-    protected override IEnumerator ExecutePattern2()
+    protected override IEnumerator ExecutePattern2() // Charge Shield
     {
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(2f);
@@ -107,7 +107,7 @@ public class Guardian : Boss
         ChangeState(State.ATTACK);
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern4()
+    protected override IEnumerator ExecutePattern4() // Up Stone Attack
     {
         _animator.SetBool("OneHand", true);
         ChangeState(State.CHANGINGPATTERN);
@@ -148,7 +148,7 @@ public class Guardian : Boss
             }
         }
     }
-        protected override IEnumerator ExecutePattern5()
+        protected override IEnumerator ExecutePattern5() // Melee Attack
         {
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(2f);
