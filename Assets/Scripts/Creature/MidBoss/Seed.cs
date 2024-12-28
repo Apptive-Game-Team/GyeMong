@@ -11,11 +11,13 @@ public class Seed : MonoBehaviour
     private float attackdamage;
     
     private SoundObject _soundObject;
+    private SoundObject _explosionSoundObject;
     private EventObject _eventObject;
     private void Awake()
     {
         _eventObject = GetComponent<EventObject>();
         _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
+        _explosionSoundObject = GetComponent<SoundObject>();
         player = GameObject.FindGameObjectWithTag("Player");
         direction = (player.transform.position - transform.position).normalized;
     }
@@ -54,9 +56,10 @@ public class Seed : MonoBehaviour
             distanceMovement = Vector3.Distance(startPosition, transform.position);
             yield return null;
         }
+        _soundObject.PlayAsync();
         // ���� �������� ���ư��� �÷��̾� ��ġ - ���� ��ġ ��ŭ ���ư�
         yield return new WaitForSeconds(1f);
-        _soundObject.PlayAsync();
+        
         Explode();
     }
 
@@ -73,6 +76,7 @@ public class Seed : MonoBehaviour
     private void Explode()
     {
         transform.rotation = Quaternion.identity;
+        _explosionSoundObject.PlayAsync();
         _eventObject.Trigger();
         float explosionRadius = 2f;
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius);

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1813008252662639558}
   - component: {fileID: 7136526515895070149}
   - component: {fileID: 1862771403402579794}
+  - component: {fileID: 8282123524516236359}
   m_Layer: 0
   m_Name: MidBossSeed
   m_TagString: Untagged
@@ -207,3 +208,16 @@ MonoBehaviour:
     - rid: 521773891873669121
       type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
       data: 
+--- !u!114 &8282123524516236359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df41e182033742d8a743905e984913f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceName: ENEMY_Seed_Explosion
