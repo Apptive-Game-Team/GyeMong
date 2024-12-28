@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class MeleeAttack : MonoBehaviour
 {
-    private float attackdamage;
+    public float attackdamage;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        attackdamage = MidBoss.Instance.defaultDamage;
+        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         if (other.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(attackdamage.Value);
+            PlayerCharacter.Instance.TakeDamage(attackdamage);
         }
     }
 }

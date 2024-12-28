@@ -5,17 +5,17 @@ using UnityEngine;
 public class MidBossRoomEntrance : MonoBehaviour, IEventTriggerable
 {
     [SerializeField] MidBoss midBoss;
-    // public void OnTriggerExit2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         if (midBoss != null && midBoss.curState == Creature.State.NONE)
-    //         {
-    //             midBoss.StartDetectingPlayer();
-    //         }
-    //     }
-    // }
-
+    
+    private void Start()
+    {
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_midboss_down", out bool down))
+        {
+            if (down)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
     public void Trigger()
     { 
         if (midBoss != null && midBoss.curState == Creature.State.NONE)

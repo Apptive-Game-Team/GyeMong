@@ -17,7 +17,7 @@ public class Arrow : MonoBehaviour
 
     private void OnEnable()
     {
-        attackdamage = MidBoss.Instance.defaultDamage;
+        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(FireArrow());
     }
 

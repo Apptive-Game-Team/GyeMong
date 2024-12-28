@@ -162,14 +162,21 @@ public abstract class Boss : Creature
                 hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
                 count++;
             }
-            while (currentDistance < targetDistance)
+            if(hit.collider == null)
             {
-                currentDistance = Vector3.Distance(transform.position, player.transform.position);
-                Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
-                rb.MovePosition(newPosition);
+                while (currentDistance < targetDistance)
+                {
+                    currentDistance = Vector3.Distance(transform.position, player.transform.position);
+                    Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
+                    rb.MovePosition(newPosition);
+                    yield return null;
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
                 yield return null;
             }
-            yield return new WaitForSeconds(0.5f);
         }
     }
     public IEnumerator DetectPlayerCoroutine()

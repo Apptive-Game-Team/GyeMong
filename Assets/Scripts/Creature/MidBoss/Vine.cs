@@ -7,7 +7,7 @@ public class Vine : MonoBehaviour
     private float attackdamage;
     private void OnEnable()
     {
-        attackdamage = MidBoss.Instance.defaultDamage;
+        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(ActivateVine());
     }
     private IEnumerator ActivateVine()
