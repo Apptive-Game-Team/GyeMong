@@ -19,6 +19,13 @@ public class Guardian : Boss
     
     void Start()
     {
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_guardian_down", out bool down))
+        {
+            if (down)
+            {
+                Destroy(gameObject);
+            }
+        }
         curState = State.NONE;
         _fsm = new FiniteStateMachine(new IdleState<Guardian>(this));
         maxPhase = 2;
@@ -198,32 +205,6 @@ public class Guardian : Boss
         }
     }
     
-    // protected override IEnumerator ExecutePattern5() // Melee Attack
-    // {
-    //     ChangeState(State.CHANGINGPATTERN);
-    //     yield return new WaitForSeconds(2f);
-    //     ChangeState(State.ATTACK);
-    //     float distance = Vector3.Distance(transform.position, player.transform.position);
-    //     if (distance <= MeleeAttackRange)
-    //     {
-    //         _animator.SetBool("TwoHand", true);
-    //         meleeAttackPrefab2.SetActive(true);
-    //         
-    //         // �÷��̾� ���� ���
-    //         Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-    //
-    //         // �ݶ��̴��� �÷��̾� �������� �̵�
-    //         meleeAttackPrefab2.transform.position = transform.position + playerDirection * MeleeAttackRange;
-    //
-    //         // ���� ���� �ð�
-    //         yield return new WaitForSeconds(1f);
-    //
-    //         meleeAttackPrefab2.SetActive(false);
-    //         _animator.SetBool("TwoHand", false);
-    //     }
-    //     yield return null;
-    //     ChangeState(State.IDLE);
-    // }
     protected override void SelectRandomPattern()
     {
         int randomIndex;
