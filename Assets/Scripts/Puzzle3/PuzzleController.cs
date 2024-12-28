@@ -46,6 +46,7 @@ public class PuzzleController : MonoBehaviour
             // rune.SetActive(true);
             RuneObjectCreator.Instance.DrawRuneObject(1,rune.transform.position); //dont need rune gameobj
             isPuzzleCleared = true;
+            SaveClearFlag();
         }
     }
 
@@ -106,9 +107,13 @@ public class PuzzleController : MonoBehaviour
         isPuzzleStart = false;
     }
 
+    private void SaveClearFlag()
+    {
+        ConditionManager.Instance.Conditions.Add("spring_puzzle3_clear", isPuzzleCleared);
+    }
+
     private void LoadClearFlag()
     {
-        Puzzle3Flag flag = DataManager.Instance.LoadSection<Puzzle3Flag>("Puzzle3Flag");
-        isPuzzleCleared = flag.puzzle3Flag;
+        isPuzzleCleared = ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle3_clear");
     }
 }

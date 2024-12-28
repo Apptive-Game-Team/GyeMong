@@ -44,9 +44,3 @@ public class KeyMappingEntry
         this.keyCode = keyCode.ToString();
     }
 }
-
-[System.Serializable]
-public class Puzzle3Flag
-{
-    public bool puzzle3Flag = false;
-}

@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public class SaveDataEvent : Event
 {
     private PlayerData playerData = new();
-    private Puzzle3Flag puzzle3Flag = new();
     private RuneDatas runeData = new();
     private RuneComponent runeComponent;
     public override IEnumerator Execute(EventObject eventObject = null)
@@ -14,15 +13,15 @@ public class SaveDataEvent : Event
         playerData.playerPosition = PlayerCharacter.Instance.GetPlayerPosition();
         playerData.playerDirection = PlayerCharacter.Instance.GetPlayerDirection();
 
-        puzzle3Flag.puzzle3Flag = PuzzleController.Instance.isPuzzleCleared;
-
         runeComponent = PlayerCharacter.Instance.GetComponent<RuneComponent>();
         runeData.AcquiredRuneDatas = runeComponent.AcquiredRuneList;
         runeData.EquippedRuneDatas = runeComponent.EquippedRuneList;
 
         DataManager.Instance.SaveSection(playerData, "PlayerData");
-        DataManager.Instance.SaveSection(puzzle3Flag, "Puzzle3Flag");
         DataManager.Instance.SaveSection(runeData, "RuneData");
+        // ConditionManager.Instance.Conditions.Add("spring_puzzle3_clear", puzzle3Flag.puzzle3Flag);
+        // ConditionManager.Instance.Conditions["spring_puzzle3_clear"] = puzzle3Flag.puzzle3Flag;
+        // ConditionManager.Instance.Conditions["spring_puzzle3_clear"]
         ConditionManager.Instance.Save();
 
         yield return null;
