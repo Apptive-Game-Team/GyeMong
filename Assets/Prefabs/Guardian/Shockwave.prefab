@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3610578329581568504}
   - component: {fileID: 2096135843370694871}
   - component: {fileID: 8155886504737565004}
+  - component: {fileID: 5213761979183187592}
   m_Layer: 0
   m_Name: Shockwave
   m_TagString: Untagged
@@ -156,3 +157,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.2}
   serializedVersion: 2
   m_Radius: 0.3
+--- !u!114 &5213761979183187592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6910081737103628750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe20b09676f64aacbeb756425a472d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
