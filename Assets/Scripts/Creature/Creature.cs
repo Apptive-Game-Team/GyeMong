@@ -50,6 +50,7 @@ public class Creature : MonoBehaviour
         {
             float temp = shield;
             shield = 0;
+            OnShieldBroken();
             curHealth -= (damage-temp);
         }
     }
@@ -130,6 +131,10 @@ public class Creature : MonoBehaviour
         ChangeState(State.ONHIT);
         yield return null;
         ChangeState(curState_);
+    }
+
+    protected virtual void OnShieldBroken()
+    {
     }
 }
 
