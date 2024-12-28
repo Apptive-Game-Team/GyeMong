@@ -307,6 +307,11 @@ namespace playerCharacter
             }
         }
 
+        public void SetPlayerMove(bool _canMove)
+        {
+            canMove = _canMove;
+        }
+
         public void Bind(float duration)
         {
             StartCoroutine(BindCoroutine(duration));

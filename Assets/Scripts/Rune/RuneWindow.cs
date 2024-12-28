@@ -28,6 +28,7 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
     {
         isOptionOpened = !isOptionOpened;
         gameObject.SetActive(isOptionOpened);
+        PlayerCharacter.Instance.SetPlayerMove(!isOptionOpened);
     }
 
     public void Init()
