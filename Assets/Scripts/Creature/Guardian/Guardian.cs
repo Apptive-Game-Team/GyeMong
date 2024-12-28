@@ -62,8 +62,10 @@ public class Guardian : Boss
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
+            _animator.SetBool("TwoHand", true);
             meleeAttackPrefab1.SetActive(true);
             yield return new WaitForSeconds(1f);
+            _animator.SetBool("TwoHand", false);
         }
         meleeAttackPrefab1.SetActive(false);
         yield return null;
@@ -148,13 +150,13 @@ public class Guardian : Boss
     }
         protected override IEnumerator ExecutePattern5()
         {
-            _animator.SetBool("TwoHand", true);
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(2f);
             ChangeState(State.ATTACK);
             float distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance <= MeleeAttackRange)
             {
+                _animator.SetBool("TwoHand", true);
                 meleeAttackPrefab2.SetActive(true);
                 
                 // �÷��̾� ���� ���
@@ -167,10 +169,10 @@ public class Guardian : Boss
                 yield return new WaitForSeconds(0.2f);
 
                 meleeAttackPrefab2.SetActive(false);
+                _animator.SetBool("TwoHand", false);
             }
             yield return null;
             ChangeState(State.IDLE);
-            _animator.SetBool("TwoHand", false);
         }
     protected override void SelectRandomPattern()
     {
