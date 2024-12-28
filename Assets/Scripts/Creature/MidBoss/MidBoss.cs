@@ -125,9 +125,11 @@ public class MidBoss : Boss
         footSoundController.SetBool(true);
         float duration = 2f;
         float elapsed = 0f;
-
-        while (elapsed < duration)
+    
+        
+        while (elapsed < duration && distance > MeleeAttackRange)
         {
+            distance = Vector3.Distance(transform.position, player.transform.position);
             TrackPlayer();
             elapsed += Time.deltaTime;
             yield return null;
