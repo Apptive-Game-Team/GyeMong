@@ -2,6 +2,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.VersionControl;
 
 public abstract class ChatEvent : Event
 {
@@ -33,5 +34,17 @@ public class ShowChatEvent : ChatEvent
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         return EffectManager.Instance.GetChatController().Chat(message);
+    }
+}
+
+[Serializable]
+public class MultipleShowChatEvent : ChatEvent
+{
+    [SerializeField]
+    MultiChatMessage messages;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        return EffectManager.Instance.GetChatController().MultipleChat(messages);
     }
 }
