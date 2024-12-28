@@ -20345,7 +20345,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.2163}
+  m_AnchoredPosition: {x: 0, y: 308.21722}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &286961927
@@ -20475,7 +20475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.2163}
+  m_AnchoredPosition: {x: 0, y: 308.21722}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &326613589
@@ -22037,7 +22037,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -40192,7 +40192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLoop: 0
   trigger: 0
-  triggerLimitCounter: -1
+  triggerLimitCounter: 1
   eventSequence:
   - rid: 521773836373327896
   - rid: 521773836373327897
@@ -40889,7 +40889,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 872356579}
   m_HandleRect: {fileID: 872356578}
   m_Direction: 2
-  m_Value: -0.0000003960542
+  m_Value: -0.0000031684335
   m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -41235,7 +41235,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 86957274}
   m_HandleRect: {fileID: 86957273}
   m_Direction: 2
-  m_Value: -0.0000003960542
+  m_Value: -0.0000031684335
   m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
