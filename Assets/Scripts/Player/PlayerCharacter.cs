@@ -145,7 +145,7 @@ namespace playerCharacter
             
             if (isDefending)
             {
-                soundController.Trigger(PlayerSoundType.SWORD_DEFEND);
+                soundController.Trigger(PlayerSoundType.SWORD_DEFEND_HIT);
                 if (Time.time - defendStartTime < parryTime) 
                 {
                     damage = 0f;
@@ -270,6 +270,7 @@ namespace playerCharacter
             playerRb.velocity = Vector2.zero;
 
             defendStartTime = Time.time;
+            soundController.Trigger(PlayerSoundType.SWORD_DEFEND_START);
 
             yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
 
