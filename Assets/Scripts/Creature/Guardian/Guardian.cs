@@ -111,9 +111,8 @@ public class Guardian : Boss
     {
         _animator.SetBool("OneHand", true);
         ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         ChangeState(State.ATTACK);
-        yield return new WaitForSeconds(0.5f);
 
         int numberOfObjects = 5; // ������ ������Ʈ ��
         float interval = 0.2f; // ���� ����
@@ -166,7 +165,7 @@ public class Guardian : Boss
                 meleeAttackPrefab2.transform.position = transform.position + playerDirection * MeleeAttackRange;
 
                 // ���� ���� �ð�
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(1f);
 
                 meleeAttackPrefab2.SetActive(false);
                 _animator.SetBool("TwoHand", false);
