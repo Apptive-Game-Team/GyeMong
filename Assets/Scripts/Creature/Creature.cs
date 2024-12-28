@@ -77,7 +77,14 @@ public class Creature : MonoBehaviour
                 }
             case State.IDLE:
                 {
-                    _fsm.ChangeState(new IdleState(this)); 
+                    if (this.GetType() == typeof(Guardian))
+                    {
+                        _fsm.ChangeState(new IdleState<Guardian>(this)); 
+                    }
+                    else if (this.GetType() == typeof(MidBoss))
+                    {
+                        _fsm.ChangeState(new IdleState<MidBoss>(this)); 
+                    }
                     break;
                 }
             case State.MOVE:
