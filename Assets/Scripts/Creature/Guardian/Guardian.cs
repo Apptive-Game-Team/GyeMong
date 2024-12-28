@@ -14,6 +14,9 @@ public class Guardian : Boss
     private Shield shieldComponenet;
     [SerializeField] private Animator _animator;
     
+    [SerializeField] private SoundObject _soundObject;
+    [SerializeField] private SoundObject _tossSoundObject;
+    
     void Start()
     {
         curState = State.NONE;
@@ -76,6 +79,7 @@ public class Guardian : Boss
     {
         _animator.SetBool("Toss", true);
         ChangeState(State.CHANGINGPATTERN);
+        StartCoroutine(_tossSoundObject.Play());
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         GameObject cube= Instantiate(cubePrefab, player.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
@@ -129,6 +133,8 @@ public class Guardian : Boss
             Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
             GameObject floor = Instantiate(floorPrefab, spawnPosition, Quaternion.identity);
             spawnedObjects.Add(floor);
+            _soundObject.SetSoundSourceByName("ENEMY_Shockwave");
+            StartCoroutine(_soundObject.Play());
             yield return new WaitForSeconds(interval); // ���� ������Ʈ �������� ���
         }
 
@@ -182,6 +188,8 @@ public class Guardian : Boss
         for (int i = startRadius; i <= targetRadius; i++)
         {
             Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
+            _soundObject.SetSoundSourceByName("ENEMY_Shockwave");
+            StartCoroutine(_soundObject.Play());
             for (int j = 0; j < points.Length; j++)
             {
                 Instantiate(shockwavePrefab, points[j], Quaternion.identity);
