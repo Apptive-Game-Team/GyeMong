@@ -21,15 +21,18 @@ public class MazeDarkness : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other) 
     {
-        if (other.CompareTag("Player"))
+        if (!ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle1_clear"))
         {
-            bool previousState = isInMaze;
-            isInMaze = player.transform.position.y > transform.position.y;
-
-            if (previousState != isInMaze)
+            if (other.CompareTag("Player"))
             {
-                StopAllCoroutines();
-                StartCoroutine(ChangeIntensity(isInMaze));
+                bool previousState = isInMaze;
+                isInMaze = player.transform.position.y > transform.position.y;
+
+                if (previousState != isInMaze)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(ChangeIntensity(isInMaze));
+                }
             }
         }
     }
