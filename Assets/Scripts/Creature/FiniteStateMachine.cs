@@ -36,7 +36,7 @@ public class IdleState : BaseState
     public IdleState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
-        MidBoss.Instance.currentPatternCoroutine = null;
+        Boss.Instance.currentPatternCoroutine = null;
     }
     public override void OnStateExit()
     {
