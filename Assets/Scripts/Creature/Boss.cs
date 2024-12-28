@@ -148,11 +148,12 @@ public abstract class Boss : Creature
     {
         if (player != null)
         {
-            float backStepSpeed = 50f;
-            Vector3 direction = (transform.position - player.transform.position).normalized;
+            Vector3 playerPosition = player.transform.position;
+            float backStepSpeed = 50;
+            Vector3 direction = (transform.position - playerPosition).normalized;
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
-            float currentDistance = Vector3.Distance(transform.position, player.transform.position);
+            float currentDistance = Vector3.Distance(transform.position, playerPosition);
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
             int count=0;
             while (hit.collider != null && count<360)
@@ -164,14 +165,18 @@ public abstract class Boss : Creature
             }
             if(hit.collider == null)
             {
-                while (currentDistance < targetDistance)
+                currentDistance = targetDistance;
+                count = 0;
+                float deltaTime = 0.02f;
+                while (currentDistance > 0 && count < 100000)
                 {
-                    currentDistance = Vector3.Distance(transform.position, player.transform.position);
-                    Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
+                    Vector3 deltaDistance = direction * backStepSpeed * deltaTime;
+                    currentDistance -= deltaDistance.magnitude;
+                    Vector3 newPosition = transform.position + deltaDistance;
                     rb.MovePosition(newPosition);
-                    yield return null;
+                    count++;
+                    yield return new WaitForSeconds(deltaTime);
                 }
-                yield return new WaitForSeconds(0.5f);
             }
             else
             {
