@@ -25,7 +25,7 @@ public class Guardian : Boss
         shieldComponenet = GetComponent<Shield>();
         speed = 1f;
         detectionRange = 10f;
-        MeleeAttackRange = 2f;
+        MeleeAttackRange = 5f;
         RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
         wall.SetActive(false);
