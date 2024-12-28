@@ -67,7 +67,10 @@ public class MidBoss : Boss
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+
+            GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            RotateArrowTowardsPlayer(arrow);
+            //Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
         }
         else
@@ -83,10 +86,20 @@ public class MidBoss : Boss
             yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
             speed = 1f;
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+
+            GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            RotateArrowTowardsPlayer(arrow);
+            //Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
         }
         ChangeState(State.IDLE);
+    }
+
+    private void RotateArrowTowardsPlayer(GameObject arrow)
+    {
+        Vector3 direction = (player.transform.position - arrow.transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     protected override IEnumerator ExecutePattern2()//±Ù°Å¸®
