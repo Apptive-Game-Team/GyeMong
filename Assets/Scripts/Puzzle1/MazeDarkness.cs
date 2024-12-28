@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class MazeDarkness : MonoBehaviour
+public class MazeDarkness : MonoBehaviour, IEventTriggerable
 {
     private Light2D globalLight;
     private GameObject playerLight;
@@ -21,17 +21,25 @@ public class MazeDarkness : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other) 
     {
-        if (other.CompareTag("Player"))
+        if (!ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle1_clear"))
         {
-            bool previousState = isInMaze;
-            isInMaze = player.transform.position.y > transform.position.y;
-
-            if (previousState != isInMaze)
+            if (other.CompareTag("Player"))
             {
-                StopAllCoroutines();
-                StartCoroutine(ChangeIntensity(isInMaze));
+                bool previousState = isInMaze;
+                isInMaze = player.transform.position.y > transform.position.y;
+
+                if (previousState != isInMaze)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(ChangeIntensity(isInMaze));
+                }
             }
         }
+    }
+
+    public void Trigger()
+    {
+        StartCoroutine(ChangeIntensity(false));
     }
 
     private IEnumerator ChangeIntensity(bool isInMaze)

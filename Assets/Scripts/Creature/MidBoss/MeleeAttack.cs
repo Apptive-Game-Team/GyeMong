@@ -11,7 +11,7 @@ public class MeleeAttack : MonoBehaviour
         attackdamage = MidBoss.Instance.defaultDamage;
         if (other.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(attackdamage);
+            PlayerCharacter.Instance.TakeDamage(attackdamage.Value);
         }
     }
 }

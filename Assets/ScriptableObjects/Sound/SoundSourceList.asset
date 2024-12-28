@@ -67,3 +67,15 @@ MonoBehaviour:
   - name: EFFECT_Dash
     type: 1
     clip: {fileID: 8300000, guid: 0c0d8724e1ec344b88a3e5f45183ba05, type: 3}
+  - name: ENEMY_Shockwave
+    type: 3
+    clip: {fileID: 8300000, guid: 0a7e6008cf37148a5b479c5bf4537dda, type: 3}
+  - name: ENEMY_Toss
+    type: 3
+    clip: {fileID: 8300000, guid: eec2faa7c0a9042f3bded3aad046b348, type: 3}
+  - name: ENEMY_Rock_Explosion
+    type: 3
+    clip: {fileID: 8300000, guid: 93d0515e7e04c41bd9bbd3722d40204f, type: 3}
+  - name: ENEMY_Root
+    type: 3
+    clip: {fileID: 8300000, guid: d1afc9db5130a40a4813ba0202c7d267, type: 3}

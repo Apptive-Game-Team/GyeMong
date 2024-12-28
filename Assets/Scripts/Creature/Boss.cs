@@ -1,14 +1,36 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public abstract class Boss : Creature
 {
+    private static Dictionary<Type, Boss> _instances = new Dictionary<Type, Boss>();
+    
+    public static T GetInstance<T>() where T : Boss
+    {
+        Type type = typeof(T);
+        if (_instances.TryGetValue(type, out Boss instance))
+        {
+            return instance as T;
+        }
+        return null;
+    }
+    
+    protected virtual void Awake()
+    {
+        Type type = GetType();
+        
+        if (_instances.ContainsKey(type) && _instances[type] != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        _instances[type] = this;
+    }
+
+    
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
     protected int currentPhase = 1;

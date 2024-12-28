@@ -51,6 +51,7 @@ public class Creature : MonoBehaviour
         {
             float temp = shield;
             shield = 0;
+            OnShieldBroken();
             curHealth -= (damage-temp);
         }
     }
@@ -78,7 +79,14 @@ public class Creature : MonoBehaviour
                 }
             case State.IDLE:
                 {
-                    _fsm.ChangeState(new IdleState(this)); 
+                    if (this.GetType() == typeof(Guardian))
+                    {
+                        _fsm.ChangeState(new IdleState<Guardian>(this)); 
+                    }
+                    else if (this.GetType() == typeof(MidBoss))
+                    {
+                        _fsm.ChangeState(new IdleState<MidBoss>(this)); 
+                    }
                     break;
                 }
             case State.MOVE:
@@ -129,6 +137,10 @@ public class Creature : MonoBehaviour
         ChangeState(State.ONHIT);
         yield return null;
         ChangeState(curState_);
+    }
+
+    protected virtual void OnShieldBroken()
+    {
     }
 }
 
