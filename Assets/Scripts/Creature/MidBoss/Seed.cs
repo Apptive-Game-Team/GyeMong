@@ -9,8 +9,11 @@ public class Seed : MonoBehaviour
     private Vector3 direction;
     private float speed = 10f;
     private float attackdamage;
+    
+    private SoundObject _soundObject;
     private void Awake()
     {
+        _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
         player = GameObject.FindGameObjectWithTag("Player");
         direction = (player.transform.position - transform.position).normalized;
     }
@@ -23,13 +26,13 @@ public class Seed : MonoBehaviour
 
     private IEnumerator FireArrow()
     {
-        // ÇÃ·¹ÀÌ¾î ¹æÇâ °è»ê
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
 
-        // È¸Àü ±âÁØ °¢µµ °è»ê
+        // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
 
-        // 45µµ ¹üÀ§ ³» ¹«ÀÛÀ§ °¢µµ »ý¼º
+        // 45ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         float angleRange = 45f;
         float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
 
@@ -49,8 +52,9 @@ public class Seed : MonoBehaviour
             distanceMovement = Vector3.Distance(startPosition, transform.position);
             yield return null;
         }
-        // ·£´ý ¹æÇâÀ¸·Î ³¯¾Æ°¡°í ÇÃ·¹ÀÌ¾î À§Ä¡ - ½ÃÀÛ À§Ä¡ ¸¸Å­ ³¯¾Æ°¨
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½Å­ ï¿½ï¿½ï¿½Æ°ï¿½
         yield return new WaitForSeconds(1f);
+        _soundObject.PlayAsync();
         Explode();
         Destroy(gameObject);
     }
@@ -59,6 +63,7 @@ public class Seed : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            _soundObject.PlayAsync();
             Destroy(gameObject);
             PlayerCharacter.Instance.TakeDamage(attackdamage);
         }
