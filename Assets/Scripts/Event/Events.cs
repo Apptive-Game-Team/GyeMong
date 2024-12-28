@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using playerCharacter;
 
 [Serializable]
 public abstract class Event
@@ -45,6 +46,19 @@ public class WarpPortalEvent : Event
         return PortalManager.Instance.TransitScene(portalID);
     }
 }
+
+[Serializable]
+
+public class TransformPortalEvent : Event
+{
+    public Vector3 destination;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        PlayerCharacter.Instance.transform.position = destination;
+        return null;
+    }
+}
+
 
 [Serializable]
 public class DelayEvent : Event
