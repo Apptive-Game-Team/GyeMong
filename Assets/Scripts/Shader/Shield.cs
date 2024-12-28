@@ -12,6 +12,11 @@ public class Shield : MonoBehaviour
     {
         shieldMaterial = boss.GetComponent<Renderer>().material;
     }
+    public void SetActive(bool flag)
+    {
+        isShieldActive = flag;
+        ChangeShieldState(isShieldActive);
+    }
 
     public void OnButtonClick()
     {

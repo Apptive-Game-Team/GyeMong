@@ -7,7 +7,7 @@ public class Arrow : MonoBehaviour
     private GameObject player;
     private Vector3 direction;
     private float speed = 15f;
-    private float attackdamage = MidBoss.Instance.defaultDamage;
+    private float attackdamage = MidBoss.GetInstance<MidBoss>().defaultDamage;
 
     private void Awake()
     {
