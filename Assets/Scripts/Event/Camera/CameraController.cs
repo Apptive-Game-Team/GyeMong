@@ -108,15 +108,19 @@ public class CameraController : MonoBehaviour
         
     }
 
-    public IEnumerator MoveTo(Vector3 target, float duration)
+    public IEnumerator MoveTo(Vector3 target, float duration, float size)
     {
         float timer = 0;
         Vector3 startPosition = transform.position;
+        
+        Camera camera = GetComponent<Camera>();
+        float startSize = camera.orthographicSize;
         while (timer < duration)
         {
             yield return new WaitForSeconds(0.02f);
             timer += 0.02f;
             transform.position = Vector3.Lerp(startPosition, target, timer / duration);
+            camera.orthographicSize = Mathf.Lerp(startSize, size, timer / duration);
         }
     }
     
