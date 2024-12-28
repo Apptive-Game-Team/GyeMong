@@ -63,8 +63,9 @@ public class Guardian : Boss
         if (distance <= MeleeAttackRange)
         {
             _animator.SetBool("TwoHand", true);
-            meleeAttackPrefab1.SetActive(true);
+            // meleeAttackPrefab1.SetActive(true);
             yield return new WaitForSeconds(1f);
+            yield return MakeShockwave(4);
             _animator.SetBool("TwoHand", false);
         }
         meleeAttackPrefab1.SetActive(false);
@@ -175,10 +176,9 @@ public class Guardian : Boss
         return points;
     }
 
-    private IEnumerator MakeShockwave()
+    private IEnumerator MakeShockwave(int targetRadius = 14)
     {
         int startRadius = 4;
-        int targetRadius = 14;
         for (int i = startRadius; i <= targetRadius; i++)
         {
             Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
