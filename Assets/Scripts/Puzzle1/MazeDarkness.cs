@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class MazeDarkness : MonoBehaviour
+public class MazeDarkness : MonoBehaviour, IEventTriggerable
 {
     private Light2D globalLight;
     private GameObject playerLight;
@@ -35,6 +35,11 @@ public class MazeDarkness : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Trigger()
+    {
+        StartCoroutine(ChangeIntensity(false));
     }
 
     private IEnumerator ChangeIntensity(bool isInMaze)
