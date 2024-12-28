@@ -7,9 +7,13 @@ public class RootPatternManger : MonoBehaviour
     [SerializeField] private GameObject rootPrefab;
     private GameObject[] rootObjects;
     [SerializeField] private List<GameObject> rootSpawnZone;
+    
+    private SoundObject soundObject;
+    
     private void Awake()
     {
         gameObject.SetActive(false);
+        soundObject = GetComponent<SoundObject>();
     }
     void OnEnable()
     {
@@ -45,6 +49,7 @@ public class RootPatternManger : MonoBehaviour
     }
     private void ActivateRootObjects(int[] indices)
     {
+        StartCoroutine(soundObject.Play());
         foreach (int index in indices)
         {
             rootObjects[index].SetActive(true);
