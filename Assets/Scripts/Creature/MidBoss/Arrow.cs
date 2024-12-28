@@ -8,10 +8,11 @@ public class Arrow : MonoBehaviour
     private Vector3 direction;
     private float speed = 15f;
     private float attackdamage;
-
+    private SoundObject _soundObject;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
         direction = (player.transform.position - transform.position).normalized;
     }
 
@@ -38,6 +39,7 @@ public class Arrow : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            _soundObject.PlayAsync();
             Destroy(gameObject);
             PlayerCharacter.Instance.TakeDamage(attackdamage);
         }
