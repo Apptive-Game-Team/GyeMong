@@ -13,6 +13,7 @@ public class MidBoss : Boss
     Vector3 meleeAttackPrefabPos;
     
     private FootSoundController footSoundController;
+    [SerializeField] private SoundObject arrowSoundObject;
 
     void Start()
     {
@@ -71,6 +72,7 @@ public class MidBoss : Boss
             ChangeState(State.ATTACK);
             GameObject arrow =  Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             RotateArrowTowardsPlayer(arrow);
+            StartCoroutine(arrowSoundObject.Play());
             yield return new WaitForSeconds(1f);
         }
         else // Back Step
@@ -88,6 +90,7 @@ public class MidBoss : Boss
             speed = 1f;
             GameObject arrow =  Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             RotateArrowTowardsPlayer(arrow);
+            StartCoroutine(arrowSoundObject.Play());
             yield return new WaitForSeconds(1f);
         }
         ChangeState(State.IDLE);
@@ -150,6 +153,7 @@ public class MidBoss : Boss
             {
                 GameObject seed = Instantiate(seedPrefab, transform.position, Quaternion.identity);
                 RotateArrowTowardsPlayer(seed);
+                StartCoroutine(arrowSoundObject.Play());
                 count++;
                 yield return new WaitForSeconds(0.25f);
             }
@@ -173,6 +177,7 @@ public class MidBoss : Boss
             {
                 GameObject seed = Instantiate(seedPrefab, transform.position, Quaternion.identity);
                 RotateArrowTowardsPlayer(seed);
+                StartCoroutine(arrowSoundObject.Play());
                 count++;
                 yield return new WaitForSeconds(0.25f);
             }
