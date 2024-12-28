@@ -35,6 +35,8 @@ public class Seed : MonoBehaviour
         float randomAngleRad = randomAngle * Mathf.Deg2Rad;
         direction = new Vector3(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad), 0).normalized;
 
+        transform.rotation = Quaternion.Euler(0, 0, randomAngle);
+
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = player.transform.position;
         float distance = Vector3.Distance(startPosition, targetPosition);
