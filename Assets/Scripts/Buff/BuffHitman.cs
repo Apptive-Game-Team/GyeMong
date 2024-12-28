@@ -8,6 +8,7 @@ public class BuffHitman : MonoBehaviour
 {
     public void ActiveRune_Breeze(BuffData buff)
     {
+        EffectCreator.Instance.CreateEffect(1,PlayerCharacter.Instance.transform);
         PlayerCharacter.Instance.Heal(buff.amount1);
         Debug.Log("Rune_Breeze Healed");
     }
