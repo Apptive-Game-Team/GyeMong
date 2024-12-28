@@ -9,14 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: e3a9fa0ac279f464ba526ba7b9a3696b, type: 3}
   m_Name: EffectDataList
   m_EditorClassIdentifier: Assembly-CSharp::EffectDataList
   effectDataList:
-  - name: Deafult_VFX
+  - name: Default_VFX
     id: 0
-    effectPrefab: {fileID: 0}
+    effectPrefab: {fileID: 3374530587131183719, guid: dd8c0c294b15b7c409efc6ed7fe23ef0,
+      type: 3}
   - name: Buff_Heal_VFX
     id: 1
     effectPrefab: {fileID: 3386692244697617875, guid: b9112e620e6bcb144ac6ec4c86254f94,
+      type: 3}
+  - name: Buff_Snare_VFX
+    id: 2
+    effectPrefab: {fileID: 3386692244697617875, guid: 918ba2e9e5ce5d74fb63485cd83a928c,
       type: 3}
