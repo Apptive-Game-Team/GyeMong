@@ -8,6 +8,8 @@ public class Cube : MonoBehaviour
     private GameObject player;
 
     private bool isFalled = false;
+
+    [SerializeField] private SoundObject _soundObject;
     
     private void OnEnable()
     {
@@ -56,12 +58,13 @@ public class Cube : MonoBehaviour
         
         Collider2D collider = GetComponent<Collider2D>();
         isFalled = true;
+        StartCoroutine(_soundObject.Play());
         if (collider != null)
         {
             collider.isTrigger = false;
         }
-
         yield return new WaitForSeconds(1f);
+        
         Destroy(gameObject);
     }
 
