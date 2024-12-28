@@ -19,12 +19,19 @@ public class Guardian : Boss
     
     void Start()
     {
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_guardian_down", out bool down))
+        {
+            if (down)
+            {
+                Destroy(gameObject);
+            }
+        }
         curState = State.NONE;
         _fsm = new FiniteStateMachine(new IdleState<Guardian>(this));
         maxPhase = 2;
         maxHealthP1 = 200f;
         maxHealthP2 = 300f;
-        shield = 50f;
+        shield = 0f;
         shieldComponenet = GetComponent<Shield>();
         speed = 1f;
         detectionRange = 10f;
@@ -41,32 +48,23 @@ public class Guardian : Boss
 
     void Update()
     {
-        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN)
-        {
-            return;
-        }
-        if(curState == State.IDLE)
+        if (curState == State.IDLE && currentPatternCoroutine == null)
         {
             SelectRandomPattern();
             ExecuteCurrentPattern();
         }
         _fsm.UpdateState();
     }
-    protected override void Die()
-    {
-        CheckPhaseTransition();
-    }
 
     protected override IEnumerator ExecutePattern0() // Melee Attack
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(2f);
-        ChangeState(State.ATTACK);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(2f);
+            ChangeState(State.ATTACK);
             _animator.SetBool("TwoHand", true);
-            // meleeAttackPrefab1.SetActive(true);
             yield return new WaitForSeconds(1f);
             yield return MakeShockwave(4);
             _animator.SetBool("TwoHand", false);
@@ -198,32 +196,6 @@ public class Guardian : Boss
         }
     }
     
-    // protected override IEnumerator ExecutePattern5() // Melee Attack
-    // {
-    //     ChangeState(State.CHANGINGPATTERN);
-    //     yield return new WaitForSeconds(2f);
-    //     ChangeState(State.ATTACK);
-    //     float distance = Vector3.Distance(transform.position, player.transform.position);
-    //     if (distance <= MeleeAttackRange)
-    //     {
-    //         _animator.SetBool("TwoHand", true);
-    //         meleeAttackPrefab2.SetActive(true);
-    //         
-    //         // �÷��̾� ���� ���
-    //         Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-    //
-    //         // �ݶ��̴��� �÷��̾� �������� �̵�
-    //         meleeAttackPrefab2.transform.position = transform.position + playerDirection * MeleeAttackRange;
-    //
-    //         // ���� ���� �ð�
-    //         yield return new WaitForSeconds(1f);
-    //
-    //         meleeAttackPrefab2.SetActive(false);
-    //         _animator.SetBool("TwoHand", false);
-    //     }
-    //     yield return null;
-    //     ChangeState(State.IDLE);
-    // }
     protected override void SelectRandomPattern()
     {
         int randomIndex;
@@ -235,14 +207,14 @@ public class Guardian : Boss
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 0));
         }
         else
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
         }
