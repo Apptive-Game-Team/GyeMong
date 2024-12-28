@@ -9,8 +9,15 @@ public class Seed : MonoBehaviour
     private Vector3 direction;
     private float speed = 10f;
     private float attackdamage;
+    
+    private SoundObject _soundObject;
+    private SoundObject _explosionSoundObject;
+    private EventObject _eventObject;
     private void Awake()
     {
+        _eventObject = GetComponent<EventObject>();
+        _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
+        _explosionSoundObject = GetComponent<SoundObject>();
         player = GameObject.FindGameObjectWithTag("Player");
         direction = (player.transform.position - transform.position).normalized;
     }
@@ -23,13 +30,13 @@ public class Seed : MonoBehaviour
 
     private IEnumerator FireArrow()
     {
-        // ÇÃ·¹ÀÌ¾î ¹æÇâ °è»ê
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
 
-        // È¸Àü ±âÁØ °¢µµ °è»ê
+        // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
 
-        // 45µµ ¹üÀ§ ³» ¹«ÀÛÀ§ °¢µµ »ý¼º
+        // 45ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         float angleRange = 45f;
         float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
 
@@ -49,16 +56,18 @@ public class Seed : MonoBehaviour
             distanceMovement = Vector3.Distance(startPosition, transform.position);
             yield return null;
         }
-        // ·£´ý ¹æÇâÀ¸·Î ³¯¾Æ°¡°í ÇÃ·¹ÀÌ¾î À§Ä¡ - ½ÃÀÛ À§Ä¡ ¸¸Å­ ³¯¾Æ°¨
+        _soundObject.PlayAsync();
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½Å­ ï¿½ï¿½ï¿½Æ°ï¿½
         yield return new WaitForSeconds(1f);
+        
         Explode();
-        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
+            _soundObject.PlayAsync();
             Destroy(gameObject);
             PlayerCharacter.Instance.TakeDamage(attackdamage);
         }
@@ -66,6 +75,9 @@ public class Seed : MonoBehaviour
 
     private void Explode()
     {
+        transform.rotation = Quaternion.identity;
+        _explosionSoundObject.PlayAsync();
+        _eventObject.Trigger();
         float explosionRadius = 2f;
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach (Collider2D enemy in hitEnemies)

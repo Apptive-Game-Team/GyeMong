@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
   - component: {fileID: 7136526515895070149}
+  - component: {fileID: 1862771403402579794}
+  - component: {fileID: 8282123524516236359}
   m_Layer: 0
   m_Name: MidBossSeed
   m_TagString: Untagged
@@ -171,3 +173,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e07d49a98aa7f4a982b722a751286a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1862771403402579794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 521773891873669120
+  - rid: 521773891873669121
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773891873669120
+      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
+      data:
+        frames:
+        - {fileID: -260354713, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
+        - {fileID: -1621672695, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
+        - {fileID: 914368034, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
+        - {fileID: -772426026, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
+        - {fileID: 836349468, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
+        - {fileID: 1881104222, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
+        deltaTime: 0.1
+    - rid: 521773891873669121
+      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
+      data: 
+--- !u!114 &8282123524516236359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df41e182033742d8a743905e984913f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceName: ENEMY_Seed_Explosion
