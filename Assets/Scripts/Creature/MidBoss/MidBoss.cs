@@ -14,6 +14,7 @@ public class MidBoss : Boss
     
     private FootSoundController footSoundController;
     [SerializeField] private SoundObject arrowSoundObject;
+    [SerializeField] private SoundObject vineSoundObject;
 
     void Start()
     {
@@ -193,6 +194,7 @@ public class MidBoss : Boss
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
+            vineSoundObject.PlayAsync();
             float duration = 2f;
             float elapsed = 0f;
             Instantiate(vinePrefab, transform.position, Quaternion.identity);
@@ -201,6 +203,7 @@ public class MidBoss : Boss
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+            vineSoundObject.Stop();
         }
         yield return null;
         ChangeState(State.IDLE);

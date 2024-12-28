@@ -416,6 +416,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52292342}
   m_CullTransparentMesh: 1
+--- !u!1 &61378128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 61378129}
+  - component: {fileID: 61378130}
+  m_Layer: 0
+  m_Name: VineSoundObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &61378129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61378128}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2099362348}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &61378130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61378128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df41e182033742d8a743905e984913f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceName: ENEMY_Vine
 --- !u!1001 &94970493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36363,7 +36408,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21695}
+  m_AnchoredPosition: {x: 0, y: 308.21667}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -37191,7 +37236,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565192122}
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
-  m_Value: -0.0000023763253
+  m_Value: -0.0000015842168
   m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -37917,7 +37962,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21695}
+  m_AnchoredPosition: {x: 0, y: 308.21667}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -45622,7 +45667,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272479262}
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
-  m_Value: -0.0000023763253
+  m_Value: -0.0000015842168
   m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -47561,6 +47606,7 @@ MonoBehaviour:
     type: 3}
   meleeAttackPrefab: {fileID: 2000658387}
   arrowSoundObject: {fileID: 1691577989}
+  vineSoundObject: {fileID: 61378130}
 --- !u!61 &2099362345
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -47701,6 +47747,7 @@ Transform:
   - {fileID: 2000658388}
   - {fileID: 673843793}
   - {fileID: 1691577988}
+  - {fileID: 61378129}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2099362349
