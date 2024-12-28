@@ -1,24 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public abstract class Boss : Creature
 {
-    public static Boss Instance { get; private set; }
+    private static Dictionary<Type, Boss> _instances = new Dictionary<Type, Boss>();
     
-    private void Awake()
+    public static T GetInstance<T>() where T : Boss
     {
-        if (Instance != null && Instance != this)
+        Type type = typeof(T);
+        if (_instances.TryGetValue(type, out Boss instance))
+        {
+            return instance as T;
+        }
+        return null;
+    }
+    
+    protected virtual void Awake()
+    {
+        Type type = GetType();
+        
+        if (_instances.ContainsKey(type) && _instances[type] != this)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        
+        _instances[type] = this;
     }
 
     
