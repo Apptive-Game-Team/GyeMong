@@ -10,7 +10,7 @@ public class Guardian : Boss
     [SerializeField] private GameObject floorPrefab;
     [SerializeField] private GameObject meleeAttackPrefab1;
     [SerializeField] private GameObject meleeAttackPrefab2;
-
+    [SerializeField] private GameObject shockwavePrefab;
     private Shield shieldComponenet;
     [SerializeField] private Animator _animator;
     
@@ -147,32 +147,75 @@ public class Guardian : Boss
             }
         }
     }
-        protected override IEnumerator ExecutePattern5() // Melee Attack
+    protected override IEnumerator ExecutePattern5() // Shockwave Attack
+    {
+        ChangeState(State.CHANGINGPATTERN);
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.ATTACK);
+
+        _animator.SetBool("LongTwoHand", true);
+        yield return new WaitForSeconds(2f);
+        yield return MakeShockwave();
+        _animator.SetBool("LongTwoHand", false);
+        
+        yield return null;
+        ChangeState(State.IDLE);
+    }
+    
+    private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
+    {
+        Vector3[] points = new Vector3[numberOfPoints];
+        for (int i = 0; i < numberOfPoints; i++)
         {
-            ChangeState(State.CHANGINGPATTERN);
-            yield return new WaitForSeconds(2f);
-            ChangeState(State.ATTACK);
-            float distance = Vector3.Distance(transform.position, player.transform.position);
-            if (distance <= MeleeAttackRange)
-            {
-                _animator.SetBool("TwoHand", true);
-                meleeAttackPrefab2.SetActive(true);
-                
-                // �÷��̾� ���� ���
-                Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-
-                // �ݶ��̴��� �÷��̾� �������� �̵�
-                meleeAttackPrefab2.transform.position = transform.position + playerDirection * MeleeAttackRange;
-
-                // ���� ���� �ð�
-                yield return new WaitForSeconds(1f);
-
-                meleeAttackPrefab2.SetActive(false);
-                _animator.SetBool("TwoHand", false);
-            }
-            yield return null;
-            ChangeState(State.IDLE);
+            float angle = i * Mathf.PI * 2 / numberOfPoints;
+            float x = center.x + Mathf.Cos(angle) * radius;
+            float y = center.y + Mathf.Sin(angle) * radius;
+            points[i] = new Vector3(x, y, 0);
         }
+        return points;
+    }
+
+    private IEnumerator MakeShockwave()
+    {
+        int startRadius = 4;
+        int targetRadius = 14;
+        for (int i = startRadius; i <= targetRadius; i++)
+        {
+            Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
+            for (int j = 0; j < points.Length; j++)
+            {
+                Instantiate(shockwavePrefab, points[j], Quaternion.identity);
+            }
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+    
+    // protected override IEnumerator ExecutePattern5() // Melee Attack
+    // {
+    //     ChangeState(State.CHANGINGPATTERN);
+    //     yield return new WaitForSeconds(2f);
+    //     ChangeState(State.ATTACK);
+    //     float distance = Vector3.Distance(transform.position, player.transform.position);
+    //     if (distance <= MeleeAttackRange)
+    //     {
+    //         _animator.SetBool("TwoHand", true);
+    //         meleeAttackPrefab2.SetActive(true);
+    //         
+    //         // �÷��̾� ���� ���
+    //         Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+    //
+    //         // �ݶ��̴��� �÷��̾� �������� �̵�
+    //         meleeAttackPrefab2.transform.position = transform.position + playerDirection * MeleeAttackRange;
+    //
+    //         // ���� ���� �ð�
+    //         yield return new WaitForSeconds(1f);
+    //
+    //         meleeAttackPrefab2.SetActive(false);
+    //         _animator.SetBool("TwoHand", false);
+    //     }
+    //     yield return null;
+    //     ChangeState(State.IDLE);
+    // }
     protected override void SelectRandomPattern()
     {
         int randomIndex;
