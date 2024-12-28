@@ -15,6 +15,13 @@ public class MidBoss : Boss
     
     void Start()
     {
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_midboss_down", out bool down))
+        {
+            if(down)
+            {
+                Destroy(gameObject);
+            }
+        }
         curState = State.NONE;
         _fsm = new FiniteStateMachine(new IdleState<MidBoss>(this));
         maxPhase = 2;

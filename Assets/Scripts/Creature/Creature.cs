@@ -12,7 +12,8 @@ public class Creature : MonoBehaviour
         CHANGINGPATTERN,
         ONHIT,
         STUN,
-        DASH
+        DASH,
+        CHANGINGPHASE
     }
     protected FiniteStateMachine _fsm;
     public State curState;
@@ -116,6 +117,11 @@ public class Creature : MonoBehaviour
             case State.DASH:
                 {
                     _fsm.ChangeState(new DashState(this));
+                    break;
+                }
+            case State.CHANGINGPHASE:
+                {
+                    _fsm.ChangeState(new ChangingPhaseState(this));
                     break;
                 }
         }

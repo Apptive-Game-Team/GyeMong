@@ -84,12 +84,22 @@ public abstract class Boss : Creature
         if (currentPhase < maxPhase)
         {
             currentPhase++;
-            SetupPhase();
+            StopAllCoroutines();
+            StartCoroutine(ChangingPhase());
         }
         else
         {
             Die();
+            wall.SetActive(false);
         }
+    }
+    public IEnumerator ChangingPhase()
+    {
+        ChangeState(State.CHANGINGPHASE);
+        SetupPhase();
+        GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.IDLE);
     }
     public Coroutine currentPatternCoroutine;
     protected void ExecuteCurrentPattern()
@@ -152,14 +162,21 @@ public abstract class Boss : Creature
                 hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
                 count++;
             }
-            while (currentDistance < targetDistance)
+            if(hit.collider == null)
             {
-                currentDistance = Vector3.Distance(transform.position, player.transform.position);
-                Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
-                rb.MovePosition(newPosition);
+                while (currentDistance < targetDistance)
+                {
+                    currentDistance = Vector3.Distance(transform.position, player.transform.position);
+                    Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
+                    rb.MovePosition(newPosition);
+                    yield return null;
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
                 yield return null;
             }
-            yield return new WaitForSeconds(0.5f);
         }
     }
     public IEnumerator DetectPlayerCoroutine()

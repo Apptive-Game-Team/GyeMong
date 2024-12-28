@@ -8,7 +8,7 @@ public class Seed : MonoBehaviour
     private GameObject player;
     private Vector3 direction;
     private float speed = 10f;
-    private float attackdamage = MidBoss.GetInstance<MidBoss>().defaultDamage;
+    private float attackdamage;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -17,6 +17,7 @@ public class Seed : MonoBehaviour
 
     private void OnEnable()
     {
+        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(FireArrow());
     }
 
