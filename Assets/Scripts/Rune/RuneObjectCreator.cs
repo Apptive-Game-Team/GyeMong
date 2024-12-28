@@ -41,13 +41,13 @@ public class RuneObjectCreator : SingletonObject<RuneObjectCreator>
         return runeObj;
     }
 
-    private void DoTest()
+    private void CreatePuzzle1Rune()
     {
-        DrawRuneObject(3, new Vector3(-2,-2,0));
+        DrawRuneObject(2, new Vector3(-75,80,0));
     }
 
     private void Start()
     {
-        DoTest();
+        CreatePuzzle1Rune();
     }
 }
