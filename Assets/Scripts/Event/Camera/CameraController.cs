@@ -126,14 +126,27 @@ public class CameraController : MonoBehaviour
     
     public IEnumerator ShakeCamera(float time)
     {
+        Vector3 originalPosition = transform.position;
         float timer = 0;
         isShaking = true;
         while (timer < time)
         {
             yield return new WaitForSeconds(SHAKE_DELAY);
             timer += 0.1f;
-            transform.position = player.transform.position + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.forward * defaultCameraZ;
+            if (!isFollowing)
+            {
+                transform.position = originalPosition + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.forward * defaultCameraZ;
+            }
+            else
+            {
+                transform.position = player.transform.position + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.forward * defaultCameraZ;
+            }
+            
         }
         isShaking = false;
+        if (!isFollowing)
+        {
+            transform.position = originalPosition;
+        }
     }
 }
