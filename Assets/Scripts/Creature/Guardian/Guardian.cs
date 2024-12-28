@@ -11,6 +11,8 @@ public class Guardian : Boss
     [SerializeField] private GameObject meleeAttackPrefab1;
     [SerializeField] private GameObject meleeAttackPrefab2;
 
+    [SerializeField] private Animator _animator;
+    
     void Start()
     {
         curState = State.NONE;
@@ -25,6 +27,8 @@ public class Guardian : Boss
         RangedAttackRange = 6f;
         player = GameObject.FindGameObjectWithTag("Player");
         wall.SetActive(false);
+        meleeAttackPrefab2.GetComponent<MeleeAttack>().attackdamage = defaultDamage;
+        meleeAttackPrefab1.GetComponent<MeleeAttack>().attackdamage = defaultDamage;
         meleeAttackPrefab1.SetActive(false);
         meleeAttackPrefab2.SetActive(false);
         SetupPhase();
@@ -65,6 +69,7 @@ public class Guardian : Boss
     }
     protected override IEnumerator ExecutePattern1()
     {
+        _animator.SetBool("Toss", true);
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
@@ -77,6 +82,7 @@ public class Guardian : Boss
         }
         yield return null;
         ChangeState(State.IDLE);
+        _animator.SetBool("Toss", false);
     }
 
     protected override IEnumerator ExecutePattern2()
@@ -98,6 +104,7 @@ public class Guardian : Boss
     }
     protected override IEnumerator ExecutePattern4()
     {
+        _animator.SetBool("OneHand", true);
         ChangeState(State.CHANGINGPATTERN);
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
@@ -122,6 +129,7 @@ public class Guardian : Boss
 
         StartCoroutine(DestroyFloor(spawnedObjects, 0.5f));
         ChangeState(State.IDLE);
+        _animator.SetBool("OneHand", false);
     }
     private IEnumerator DestroyFloor(List<GameObject> objects, float delay)
     {
@@ -137,6 +145,7 @@ public class Guardian : Boss
     }
         protected override IEnumerator ExecutePattern5()
         {
+            _animator.SetBool("TwoHand", true);
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(2f);
             ChangeState(State.ATTACK);
@@ -158,6 +167,7 @@ public class Guardian : Boss
             }
             yield return null;
             ChangeState(State.IDLE);
+            _animator.SetBool("TwoHand", false);
         }
     protected override void SelectRandomPattern()
     {
