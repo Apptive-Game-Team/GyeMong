@@ -20064,7 +20064,7 @@ Transform:
   m_GameObject: {fileID: 244338003}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.87, y: -42.43, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23859,6 +23859,7 @@ MonoBehaviour:
   eventSequence:
   - rid: 521773836373327900
   - rid: 521773836373327901
+  - rid: 521773882682900481
   references:
     version: 2
     RefIds:
@@ -23871,6 +23872,9 @@ MonoBehaviour:
       data:
         tag: spring_guardian_down
         condition: 1
+    - rid: 521773882682900481
+      type: {class: StartFollowCameraEvent, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!4 &553630110
 Transform:
   m_ObjectHideFlags: 0
@@ -25246,7 +25250,7 @@ Transform:
   m_GameObject: {fileID: 659515675}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31, y: -42.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34574,79 +34578,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1323290678}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1323884552
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 28.427258
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 34.678604
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.8107556
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2903112264547902694, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7820030691431913668, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: isLoop
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8583689789694271782, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-        type: 3}
-      propertyPath: m_Name
-      value: Floor
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0, type: 3}
 --- !u!1 &1331573755
 GameObject:
   m_ObjectHideFlags: 0
@@ -35873,7 +35804,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -35898,7 +35829,7 @@ Transform:
   m_GameObject: {fileID: 1474724845}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 31.21, y: 15, z: -10}
+  m_LocalPosition: {x: 31, y: 39, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40263,8 +40194,10 @@ MonoBehaviour:
   eventSequence:
   - rid: 521773836373327896
   - rid: 521773836373327897
-  - rid: 521773836373327895
+  - rid: 521773882682900482
+  - rid: 521773882682900483
   - rid: 521773836373327899
+  - rid: 521773836373327895
   - rid: 521773836373327898
   references:
     version: 2
@@ -40292,6 +40225,15 @@ MonoBehaviour:
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 455494628}
+    - rid: 521773882682900482
+      type: {class: StopFollowCameraEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 521773882682900483
+      type: {class: CameraMoveEvent, ns: , asm: Assembly-CSharp}
+      data:
+        target: {x: 31, y: 39, z: -10}
+        size: 8
+        duration: 2
 --- !u!1 &1849812947
 GameObject:
   m_ObjectHideFlags: 0
@@ -40946,7 +40888,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 872356578}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.60290307
+  m_Size: 0.6065059
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -41292,7 +41234,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 86957273}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.60290307
+  m_Size: 0.6065059
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -42492,4 +42434,3 @@ SceneRoots:
   - {fileID: 1777554342}
   - {fileID: 1508380644}
   - {fileID: 553630110}
-  - {fileID: 1323884552}
