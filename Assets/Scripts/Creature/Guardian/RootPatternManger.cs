@@ -27,7 +27,7 @@ public class RootPatternManger : MonoBehaviour
     {
         while(true)
         {
-            int caseNumber = Random.Range(1, 2);
+            int caseNumber = Random.Range(1, 3);
             if (!rootObjects[0].activeSelf && !rootObjects[3].activeSelf)
             {
                 switch (caseNumber)
