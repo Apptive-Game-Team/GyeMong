@@ -11,6 +11,13 @@ public class PlayerData
 }
 
 [System.Serializable]
+public class RuneDatas
+{
+    public List<RuneData> AcquiredRuneDatas = new();
+    public List<RuneData> EquippedRuneDatas = new();
+}
+
+[System.Serializable]
 public class SoundData
 {
     public float masterVolume = 1f;

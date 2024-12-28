@@ -1,3 +1,4 @@
+using playerCharacter;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,7 @@ public class StartButton : MonoBehaviour
 
     public void StartGame()
     {
+        PlayerCharacter.Instance.isStartButton = true;
         optionExitButton.SetActive(true);
         SceneManager.LoadScene("TutorialScene");
     }
