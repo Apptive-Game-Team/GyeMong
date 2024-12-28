@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventObject : InteractableObject, IAttackable
+public class EventObject : InteractableObject, IAttackable, IEventTriggerable
 {
     private enum EventTrigger
     {
@@ -27,13 +27,21 @@ public class EventObject : InteractableObject, IAttackable
 
     private Coroutine eventLoop = null;
 
-    public static Dictionary<string, List<ToggeableCondition>> toggleableConditions = new();
-
+    public Event[] EventSequence => eventSequence.ToArray(); 
+    
+    public void SetTriggerLimitCounter(int counter)
+    {
+        triggerLimitCounter = counter;
+    }
     private List<ToggeableCondition> FindToggleableConditions()
     {
         List<ToggeableCondition> result = new List<ToggeableCondition>();
         foreach (Event @event in eventSequence)
         {
+            if (@event == null)
+            {
+                continue;
+            }
             List<ToggeableCondition> temp = @event.FindToggleableConditions();
             if (temp != null)
             {
@@ -45,15 +53,10 @@ public class EventObject : InteractableObject, IAttackable
 
     private void InitializeToggleableConditions()
     {
-        List<ToggeableCondition> conditions =  FindToggleableConditions();
+        List<ToggeableCondition> conditions = FindToggleableConditions();
         foreach (ToggeableCondition condition in conditions)
         {
-            string tag = condition.GetTag();
-            if (!toggleableConditions.ContainsKey(tag))
-            {
-                toggleableConditions.Add(tag, new List<ToggeableCondition>());
-            }
-            toggleableConditions[tag].Add(condition);
+            condition.Check();
         }
     }
 
@@ -79,7 +82,16 @@ public class EventObject : InteractableObject, IAttackable
         eventLoop = null;
     }
 
-    public void TriggerEvent()
+    public void Trigger()
+    {
+        if (trigger == EventTrigger.OnCalled && triggerLimitCounter != 0)
+        {
+            TriggerEvent();
+            triggerLimitCounter -= 1;
+        }
+    }
+    
+    private void TriggerEvent()
     {
         if (eventLoop != null)
         {
@@ -107,7 +119,7 @@ public class EventObject : InteractableObject, IAttackable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (trigger == EventTrigger.OnCollisionEnter && triggerLimitCounter != 0)
+        if (trigger == EventTrigger.OnCollisionEnter && collision.CompareTag("Player") && triggerLimitCounter != 0)
         {
             TriggerEvent();
             triggerLimitCounter -= 1;

@@ -121,15 +121,12 @@ public class InputManager : SingletonObject<InputManager>
     /// <returns>True if key was pressed down, false otherwise</returns>
     public bool GetKeyDown(ActionCode action)
     {
-        if (keyDownBools[action])
+        if (keyActiveFlags[action] && keyDownBools[action])
         {
             keyDownBools[action] = false;
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /// <summary>
@@ -161,7 +158,6 @@ public class InputManager : SingletonObject<InputManager>
         {
             directionList.Remove(Vector2.down);
         }
-
         if (GetKey(ActionCode.MoveLeft))
         {
             if (!directionList.Contains(Vector2.left))

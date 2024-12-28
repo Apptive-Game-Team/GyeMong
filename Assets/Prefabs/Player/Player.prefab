@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6259209506450466507}
   - component: {fileID: 3862622192896607297}
   - component: {fileID: 8464625720961678176}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -44,6 +44,7 @@ Transform:
   - {fileID: 1463749916195872088}
   - {fileID: 8014581959096472874}
   - {fileID: 8849795757512225535}
+  - {fileID: 816956232922337044}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6789909978568326617
@@ -66,7 +67,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -256,7 +257,7 @@ GameObject:
   - component: {fileID: 8696735159682376834}
   - component: {fileID: 4399698847234571254}
   - component: {fileID: 921394711613564468}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordSwingSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +399,7 @@ GameObject:
   - component: {fileID: 6636292142979290372}
   - component: {fileID: 5254527465290047558}
   - component: {fileID: 5576554380004658484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordAttackSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,7 +683,7 @@ GameObject:
   - component: {fileID: 8199917625744208188}
   - component: {fileID: 5231700200157876853}
   - component: {fileID: 3389118194136624774}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FootSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -824,7 +825,7 @@ GameObject:
   - component: {fileID: 1463749916195872088}
   - component: {fileID: 6224962399545623568}
   - component: {fileID: 2563819676121873246}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordDefendSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -955,6 +956,100 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5735253051398769773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 816956232922337044}
+  - component: {fileID: 2378595295194506218}
+  m_Layer: 0
+  m_Name: PlayerGameOverEvent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &816956232922337044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735253051398769773}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2490236768487297665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2378595295194506218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735253051398769773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 5246442373933432833
+  - rid: 5246442393686769664
+  - rid: 5246442373933432834
+  - rid: 5246442373933432835
+  - rid: 5246442374326124547
+  - rid: 5246442374326124552
+  - rid: 5246442393686769665
+  - rid: 5246442374326124553
+  - rid: 5246442374326124554
+  references:
+    version: 2
+    RefIds:
+    - rid: 5246442373933432833
+      type: {class: FadeOutEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5246442373933432834
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 5246442373933432835
+      type: {class: PrintTextEvent, ns: , asm: Assembly-CSharp}
+      data:
+        header: GAME OVER
+        description: Press Interaction Key to Revive
+        textColor: {r: 1, g: 1, b: 1, a: 1}
+    - rid: 5246442374326124547
+      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 777777
+    - rid: 5246442374326124552
+      type: {class: LoadDataEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5246442374326124553
+      type: {class: ClearTextEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5246442374326124554
+      type: {class: FadeInEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5246442393686769664
+      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 0}
+    - rid: 5246442393686769665
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 5083188182615057341}
 --- !u!1 &8969485596856853325
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +1061,7 @@ GameObject:
   - component: {fileID: 8849795757512225535}
   - component: {fileID: 4723462319351427139}
   - component: {fileID: 7646244511748963561}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DashSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1159,6 +1254,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354279042027975731, guid: 875c47ed22de1104bbad6f8f665b07b0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7354279042027975731, guid: 875c47ed22de1104bbad6f8f665b07b0,
         type: 3}

@@ -12,14 +12,16 @@ public class Creature : MonoBehaviour
         CHANGINGPATTERN,
         ONHIT,
         STUN,
-        DASH
+        DASH,
+        CHANGINGPHASE
     }
     protected FiniteStateMachine _fsm;
     public State curState;
     public int curPattern;
+    public int dashType;
     protected float maxHealth;
     [SerializeField] protected float curHealth;
-    protected float AttackDamage;
+    public float defaultDamage;
     protected float speed;
     protected float detectionRange;
     protected float MeleeAttackRange;
@@ -49,11 +51,20 @@ public class Creature : MonoBehaviour
         {
             float temp = shield;
             shield = 0;
+            OnShieldBroken();
             curHealth -= (damage-temp);
         }
     }
-    protected virtual void Die()
+    protected virtual void Die() // Clear Event
     {
+        try
+        {
+            GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
+        }
+        catch
+        {
+            Debug.Log("BossDownEventObject not found");
+        }
         Destroy(gameObject);
     }
     public virtual void ChangeState(State nextState)
@@ -68,7 +79,14 @@ public class Creature : MonoBehaviour
                 }
             case State.IDLE:
                 {
-                    _fsm.ChangeState(new IdleState(this)); 
+                    if (this.GetType() == typeof(Guardian))
+                    {
+                        _fsm.ChangeState(new IdleState<Guardian>(this)); 
+                    }
+                    else if (this.GetType() == typeof(MidBoss))
+                    {
+                        _fsm.ChangeState(new IdleState<MidBoss>(this)); 
+                    }
                     break;
                 }
             case State.MOVE:
@@ -101,19 +119,28 @@ public class Creature : MonoBehaviour
                     _fsm.ChangeState(new DashState(this));
                     break;
                 }
+            case State.CHANGINGPHASE:
+                {
+                    _fsm.ChangeState(new ChangingPhaseState(this));
+                    break;
+                }
         }
     }
     public void OnHit()
     {
-        StopAllCoroutines();
         StartCoroutine(OnHitCoroutine());
     }
 
     private IEnumerator OnHitCoroutine()
     {
+        State curState_ = curState;
         ChangeState(State.ONHIT);
-        yield return new WaitForSeconds(0.5f);
-        ChangeState(State.IDLE);
+        yield return null;
+        ChangeState(curState_);
+    }
+
+    protected virtual void OnShieldBroken()
+    {
     }
 }
 

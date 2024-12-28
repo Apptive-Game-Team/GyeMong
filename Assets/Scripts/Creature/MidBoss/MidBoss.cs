@@ -6,29 +6,29 @@ using UnityEngine;
 
 public class MidBoss : Boss
 {
-    public static MidBoss Instance { get; private set; }
+    
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
     [SerializeField] private GameObject meleeAttackPrefab;
     Vector3 meleeAttackPrefabPos;
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+    
     void Start()
     {
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_midboss_down", out bool down))
+        {
+            if(down)
+            {
+                Destroy(gameObject);
+            }
+        }
         curState = State.NONE;
-        _fsm = new FiniteStateMachine(new IdleState(this));
+        _fsm = new FiniteStateMachine(new IdleState<MidBoss>(this));
         maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
-        speed = 1f;
+        defaultDamage = 20f;
+        speed = 2f;
         detectionRange = 10f;
         MeleeAttackRange = 2f;
         RangedAttackRange = 6f;
@@ -48,12 +48,7 @@ public class MidBoss : Boss
         }
         _fsm.UpdateState();
     }
-    protected override void Die()
-    {
-        CheckPhaseTransition();
-    }
-
-    protected override IEnumerator ExecutePattern0()
+    protected override IEnumerator ExecutePattern0()//¹é½ºÅÜ
     {
         ChangeState(State.ATTACK);
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -63,60 +58,70 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern1()
+    protected override IEnumerator ExecutePattern1()//¿ø°Å¸® È°
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(0.5f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
+        if (distance >= RangedAttackRange/2)
         {
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+
+            GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            RotateArrowTowardsPlayer(arrow);
+            //Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
         }
         else
         {
+            dashType = 1;
             ChangeState(State.DASH);
-            while (distance > RangedAttackRange)
+            distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance < RangedAttackRange)
             {
-                speed = 10f;
-                Vector3 direction = (player.transform.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
-                distance = Vector3.Distance(transform.position, player.transform.position);
-                yield return null;
+                yield return StartCoroutine(BackStep(RangedAttackRange));
             }
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
             speed = 1f;
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+
+            GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            RotateArrowTowardsPlayer(arrow);
+            //Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
         }
         ChangeState(State.IDLE);
     }
 
-    protected override IEnumerator ExecutePattern2()
+    protected override IEnumerator ExecutePattern2()//±Ù°Å¸®
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(0.2f);
             ChangeState(State.ATTACK);
             meleeAttackPrefab.SetActive(true);
 
-            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-
-            // ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             meleeAttackPrefab.transform.position = transform.position + playerDirection * MeleeAttackRange;
-
-            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
 
             meleeAttackPrefab.SetActive(false);
         }
         yield return null;
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern3()
+    protected override IEnumerator ExecutePattern3()//ÃßÀû
     {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= MeleeAttackRange)
+        {
+            // ±Ù°Å¸® »ç°Å¸® ³»¿¡ ÇÃ·¹ÀÌ¾î°¡ ÀÖÀ¸¸é ÆÐÅÏÀ» °Ç³Ê¶Ù°í IDLE »óÅÂ·Î º¯°æ
+            ChangeState(State.IDLE);
+            yield break;
+        }
         ChangeState(State.MOVE);
         float duration = 2f;
         float elapsed = 0f;
@@ -129,13 +134,13 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern4()
+    protected override IEnumerator ExecutePattern4()//¿ø°Å¸® ¾¾¾Ñ
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(1f);
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= RangedAttackRange)
+        if (distance >= RangedAttackRange/2)
         {
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(1f);
             ChangeState(State.ATTACK);
             int count = 0;
             while (count < 4)
@@ -148,18 +153,16 @@ public class MidBoss : Boss
         }
         else
         {
+            dashType = 1;
             ChangeState(State.DASH);
-            // ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
-            while (distance > RangedAttackRange)
+            distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance < RangedAttackRange)
             {
-                speed = 10f;
-                Vector3 direction = (player.transform.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
-                distance = Vector3.Distance(transform.position, player.transform.position);
-                yield return null;
+                yield return StartCoroutine(BackStep(RangedAttackRange));
             }
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(1f);
             ChangeState(State.ATTACK);
-            // ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
             speed = 1f;
             int count = 0;
             while (count < 4)
@@ -172,19 +175,24 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern5()
+    protected override IEnumerator ExecutePattern5()//µ¢Äð ÈÖµÎ¸£±â
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(0.5f);
-        ChangeState(State.ATTACK);
-        float duration = 2f;
-        float elapsed = 0f;
-        Instantiate(vinePrefab, transform.position, Quaternion.identity);
-        while (elapsed < duration)
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= MeleeAttackRange)
         {
-            elapsed += Time.deltaTime;
-            yield return null;
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(0.5f);
+            ChangeState(State.ATTACK);
+            float duration = 2f;
+            float elapsed = 0f;
+            Instantiate(vinePrefab, transform.position, Quaternion.identity);
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
         }
+        yield return null;
         ChangeState(State.IDLE);
     }
 
@@ -193,28 +201,33 @@ public class MidBoss : Boss
         int randomIndex;
         List<int> weightedPatterns = new List<int>();
 
-        // ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         if (currentPhase == 1)
         {
-            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
         }
         else
         {
-            weightedPatterns.AddRange(Enumerable.Repeat(0, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(0, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 12));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
             weightedPatterns.AddRange(Enumerable.Repeat(4, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(5, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(5, 8));
         }
         do
         {
             randomIndex = Random.Range(0, weightedPatterns.Count);
-        } while (weightedPatterns[randomIndex] == lastPattern); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ù½ï¿½ ï¿½Ì±ï¿½
+        } while (weightedPatterns[randomIndex] == lastPattern);
         curPattern = weightedPatterns[randomIndex];
-        lastPattern = curPattern; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        lastPattern = curPattern;
+    }
+    private void RotateArrowTowardsPlayer(GameObject arrow)
+    {
+        Vector3 direction = (player.transform.position - arrow.transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 }

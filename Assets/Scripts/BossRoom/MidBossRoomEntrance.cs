@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MidBossRoomEntrance : MonoBehaviour
+public class MidBossRoomEntrance : MonoBehaviour, IEventTriggerable
 {
     [SerializeField] MidBoss midBoss;
-    public void OnTriggerExit2D(Collider2D other)
+    
+    private void Start()
     {
-        if (other.CompareTag("Player"))
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_midboss_down", out bool down))
         {
-            if (midBoss != null && midBoss.curState == Creature.State.NONE)
+            if (down)
             {
-                midBoss.StartDetectingPlayer();
+                Destroy(gameObject);
             }
+        }
+    }
+    public void Trigger()
+    { 
+        if (midBoss != null && midBoss.curState == Creature.State.NONE)
+        {
+            midBoss.StartDetectingPlayer();
         }
     }
 }

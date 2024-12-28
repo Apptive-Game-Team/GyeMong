@@ -19,6 +19,8 @@ public class PuzzleController : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
+        LoadClearFlag();
+
         if (rune == null || rune.activeSelf) isPuzzleCleared = true;
 
         Transform canvas = transform.parent.Find("TimeWatch");
@@ -44,6 +46,7 @@ public class PuzzleController : MonoBehaviour
             // rune.SetActive(true);
             RuneObjectCreator.Instance.DrawRuneObject(1,rune.transform.position); //dont need rune gameobj
             isPuzzleCleared = true;
+            SaveClearFlag();
         }
     }
 
@@ -102,5 +105,15 @@ public class PuzzleController : MonoBehaviour
         timeWatchImage.gameObject.SetActive(false);
         SetUpInitialRotation();
         isPuzzleStart = false;
+    }
+
+    private void SaveClearFlag()
+    {
+        ConditionManager.Instance.Conditions.Add("spring_puzzle3_clear", isPuzzleCleared);
+    }
+
+    private void LoadClearFlag()
+    {
+        isPuzzleCleared = ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle3_clear");
     }
 }

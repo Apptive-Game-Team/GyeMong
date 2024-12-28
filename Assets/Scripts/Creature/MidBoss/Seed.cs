@@ -8,7 +8,7 @@ public class Seed : MonoBehaviour
     private GameObject player;
     private Vector3 direction;
     private float speed = 10f;
-
+    private float attackdamage;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -17,13 +17,26 @@ public class Seed : MonoBehaviour
 
     private void OnEnable()
     {
+        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(FireArrow());
     }
 
     private IEnumerator FireArrow()
     {
-        float randomAngle = Random.Range(0f, 360f);
-        direction = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0).normalized;
+        // 플레이어 방향 계산
+        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+
+        // 회전 기준 각도 계산
+        float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+
+        // 45도 범위 내 무작위 각도 생성
+        float angleRange = 45f;
+        float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
+
+        float randomAngleRad = randomAngle * Mathf.Deg2Rad;
+        direction = new Vector3(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad), 0).normalized;
+
+        transform.rotation = Quaternion.Euler(0, 0, randomAngle);
 
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = player.transform.position;
@@ -36,7 +49,7 @@ public class Seed : MonoBehaviour
             distanceMovement = Vector3.Distance(startPosition, transform.position);
             yield return null;
         }
-        //랜덤 방향으로 날아가고 플레이어위치 - 시작 위치 만큼 날아감
+        // 랜덤 방향으로 날아가고 플레이어 위치 - 시작 위치 만큼 날아감
         yield return new WaitForSeconds(1f);
         Explode();
         Destroy(gameObject);
@@ -47,7 +60,7 @@ public class Seed : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(attackdamage);
         }
     }
 
@@ -59,7 +72,7 @@ public class Seed : MonoBehaviour
         {
             if (enemy.CompareTag("Player"))
             {
-                PlayerCharacter.Instance.TakeDamage(15);
+                PlayerCharacter.Instance.TakeDamage(attackdamage/2);
             }
         }
     }

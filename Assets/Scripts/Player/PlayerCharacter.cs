@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
+using UnityEngine.SceneManagement;
 
 namespace playerCharacter
 {
-    public class PlayerCharacter : SingletonObject<PlayerCharacter>
+    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
     {
         [SerializeField] private float curHealth;
         public float maxHealth;
         public float attackPower;
-
+        private bool isControlled = false;
         private Vector2 movement;
         private Vector2 lastMovementDirection;
         private Rigidbody2D playerRb;
@@ -39,6 +41,8 @@ namespace playerCharacter
         private bool canMove = true;
         private bool isInvincible = false;
 
+        public bool isStartButton = false;
+
         private void Start()
         {
             playerRb = GetComponent<Rigidbody2D>();
@@ -48,18 +52,19 @@ namespace playerCharacter
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
-
-            LoadPlayerData();
         }
 
         private void Update()
         {
-            if (canMove)
+            if (!isControlled)
             {
-                HandleInput();
+                if (canMove)
+                {
+                    HandleInput();
+                }
+                UpdateState();
+                
             }
-            UpdateState();
-
         }
 
         private void FixedUpdate()
@@ -137,13 +142,13 @@ namespace playerCharacter
             }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, bool isUnblockable = false)
         {
             if (isInvincible) return;
             
             StartCoroutine(EffectManager.Instance.ShakeCamera());
             
-            if (isDefending)
+            if (!isUnblockable && isDefending)
             {
                 soundController.Trigger(PlayerSoundType.SWORD_DEFEND_HIT);
                 if (Time.time - defendStartTime < parryTime) 
@@ -294,7 +299,15 @@ namespace playerCharacter
 
         private void Die()
         {
-            Destroy(gameObject);
+            //GameOver Event Triggered.
+            try
+            {
+                GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
+            }
+            catch
+            {
+                Debug.Log("PlayerGameOverEvent not found");
+            }
         }
 
         public void Bind(float duration)
@@ -319,14 +332,53 @@ namespace playerCharacter
             return lastMovementDirection;
         }
 
-        private void LoadPlayerData()
+        public void LoadPlayerData()
         {
             PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
-            if (!playerData.isFirst)
+            if (!playerData.isFirst && !isStartButton)
             {
                 gameObject.transform.position = playerData.playerPosition;
                 lastMovementDirection = playerData.playerDirection;
             }
+            isStartButton = false;
+        }
+
+        public IEnumerator MoveTo(Vector3 target, float speed)
+        {
+            isControlled = true;   
+            animator.SetBool("isMove", true);
+            soundController.SetBool(PlayerSoundType.FOOT, true);
+            
+            while (true)
+            {
+                Vector3 direction = (target - transform.position).normalized;
+                
+                animator.SetFloat("xDir", direction.x);
+                animator.SetFloat("yDir", direction.y);
+                
+                float step = speed * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, target, step);
+                
+                if ((target - transform.position).sqrMagnitude <= 0.01f)
+                {
+                    break;
+                }
+                animator.SetFloat("speed", speed);
+        
+                yield return null;
+            }
+            playerRb.velocity = movement * speed;
+            animator.SetFloat("speed", speed);
+            
+            animator.SetBool("isMove", false);
+            soundController.SetBool(PlayerSoundType.FOOT, false);
+            isControlled = false;
+        }
+
+        public void Trigger()
+        {
+            curHealth = maxHealth;
+            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / maxHealth));
         }
     }
 }

@@ -31,12 +31,12 @@ public class NoneState : BaseState
     {
     }
 }
-public class IdleState : BaseState
+public class IdleState<T> : BaseState where T : Boss
 {
     public IdleState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
-        MidBoss.Instance.currentPatternCoroutine = null;
+        Boss.GetInstance<T>().currentPatternCoroutine = null;
     }
     public override void OnStateExit()
     {
@@ -105,9 +105,11 @@ public class OnHitState : BaseState
     public OnHitState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
+        animator.SetBool("onHit", true);
     }
     public override void OnStateExit()
     {
+        animator.SetBool("onHit", false);
     }
     public override void OnStateUpdate()
     {
@@ -136,6 +138,24 @@ public class DashState : BaseState
     public override void OnStateExit()
     {
         animator.SetBool("isDash", false);
+    }
+    public override void OnStateUpdate()
+    {
+        animator.SetFloat("dashType", _creature.dashType);
+        animator.SetFloat("xDir", _creature.moveDir.x);
+        animator.SetFloat("yDir", _creature.moveDir.y);
+    }
+}
+public class ChangingPhaseState : BaseState
+{
+    public ChangingPhaseState(Creature creature) : base(creature) { }
+    public override void OnStateEnter()
+    {
+        animator.SetBool("isChangePhase", true);
+    }
+    public override void OnStateExit()
+    {
+        animator.SetBool("isChangePhase", false);
     }
     public override void OnStateUpdate()
     {

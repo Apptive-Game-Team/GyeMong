@@ -1,19 +1,62 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public abstract class Boss : Creature
 {
+    private static Dictionary<Type, Boss> _instances = new Dictionary<Type, Boss>();
+    
+    public static T GetInstance<T>() where T : Boss
+    {
+        Type type = typeof(T);
+        if (_instances.TryGetValue(type, out Boss instance))
+        {
+            return instance as T;
+        }
+        return null;
+    }
+    
+    protected virtual void Awake()
+    {
+        Type type = GetType();
+        
+        if (_instances.ContainsKey(type) && _instances[type] != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        _instances[type] = this;
+    }
+
+    
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
-    protected int currentPhase = 2;//Å×½ºÆ®¿ë ¿ø·¡´Â 1
+    protected int currentPhase = 1;
     protected int maxPhase;
     protected float maxHealthP1;
     protected float maxHealthP2;
-    protected int lastPattern = -1; // Á÷Àü ÆÐÅÏÀ» ÀúÀå
 
+    public float CurrentHp
+    {
+        get { return curHealth; }
+    }
+
+    public int CurrentPhase
+    {
+        get { return currentPhase; }
+    }
+    public Tuple<int, float, float> BossInfo
+    {
+        get { return new Tuple<int, float, float>(currentPhase, maxHealthP1, maxHealthP2); }
+    }
+    protected int lastPattern = -1;
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        CheckPhaseTransition();
+    }
     protected void SetupPhase()
     {
         switch (currentPhase)
@@ -24,11 +67,11 @@ public abstract class Boss : Creature
             case 2:
                 curHealth = maxHealthP2;
                 break;
-
             default:
+                curHealth = 200f;
                 break;
         }
-    } //ÃÖ´ëÆäÀÌÁî Ãß°¡½Ã caseÃß°¡
+    }
     protected void CheckPhaseTransition()
     {
         if (curHealth <= 0)
@@ -41,17 +84,27 @@ public abstract class Boss : Creature
         if (currentPhase < maxPhase)
         {
             currentPhase++;
-            SetupPhase();
+            StopAllCoroutines();
+            StartCoroutine(ChangingPhase());
         }
         else
         {
             Die();
+            wall.SetActive(false);
         }
+    }
+    public IEnumerator ChangingPhase()
+    {
+        ChangeState(State.CHANGINGPHASE);
+        SetupPhase();
+        GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
+        yield return new WaitForSeconds(2f);
+        ChangeState(State.IDLE);
     }
     public Coroutine currentPatternCoroutine;
     protected void ExecuteCurrentPattern()
     {
-        if (currentPatternCoroutine != null) return; // Áßº¹ ½ÇÇà ¹æÁö
+        if (currentPatternCoroutine != null) return; // ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         switch (curPattern)
         {
             case 0:
@@ -73,14 +126,14 @@ public abstract class Boss : Creature
                 currentPatternCoroutine = StartCoroutine(ExecutePattern5());
                 break;
         }
-    } //º¸À¯ ÆÐÅÏ Ãß°¡½Ã caseÃß°¡
+    } //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ caseï¿½ß°ï¿½
     protected abstract IEnumerator ExecutePattern0();
     protected abstract IEnumerator ExecutePattern1();
     protected abstract IEnumerator ExecutePattern2();
     protected abstract IEnumerator ExecutePattern3();
     protected abstract IEnumerator ExecutePattern4();
     protected abstract IEnumerator ExecutePattern5();
-    protected abstract void SelectRandomPattern();//ÆÐÅÏ ¼±ÅÃ ¸Å¼­µå Ãß»óÈ­
+    protected abstract void SelectRandomPattern();//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¼ï¿½ï¿½ï¿½ ï¿½ß»ï¿½È­
     public void TrackPlayer()
     {
         if (player != null)
@@ -96,29 +149,34 @@ public abstract class Boss : Creature
         if (player != null)
         {
             float backStepSpeed = 50f;
-            Vector3 direction = (transform.position - player.transform.position).normalized; // ÇÃ·¹ÀÌ¾î ¹Ý´ë ¹æÇâ
+            Vector3 direction = (transform.position - player.transform.position).normalized;
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            float checkRadius = 1f; // Ãæµ¹ °¨Áö ¹Ý°æ
-            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle"); // Àå¾Ö¹° ·¹ÀÌ¾î
-
-            while (true)
+            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+            float currentDistance = Vector3.Distance(transform.position, player.transform.position);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+            int count=0;
+            while (hit.collider != null && count<360)
             {
-                float currentDistance = Vector3.Distance(transform.position, player.transform.position);
-                if (currentDistance >= targetDistance)
-                {
-                    break;
-                }
-                RaycastHit2D hit = Physics2D.CircleCast(transform.position, checkRadius, direction, backStepSpeed * Time.deltaTime, obstacleLayer);
-                if (hit.collider != null)
-                {
-                    break; // Ãæµ¹ ½Ã ¹é½ºÅÜ Áß´Ü
-                }
-                // MovePositionÀ¸·Î ÀÌµ¿
-                Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
-                rb.MovePosition(newPosition);
-                yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
+                float angle = UnityEngine.Random.Range(0,360f);
+                direction = Quaternion.Euler(0, 0, angle) * direction;
+                hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+                count++;
             }
-            yield return new WaitForSeconds(0.5f);
+            if(hit.collider == null)
+            {
+                while (currentDistance < targetDistance)
+                {
+                    currentDistance = Vector3.Distance(transform.position, player.transform.position);
+                    Vector3 newPosition = transform.position + direction * backStepSpeed * Time.deltaTime;
+                    rb.MovePosition(newPosition);
+                    yield return null;
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
     public IEnumerator DetectPlayerCoroutine()
@@ -129,7 +187,6 @@ public abstract class Boss : Creature
             if (distance <= detectionRange)
             {
                 wall.SetActive(true);
-                Debug.Log("qkqh");
                 StopDetectingPlayer();
                 ChangeState(State.IDLE);
                 yield break;

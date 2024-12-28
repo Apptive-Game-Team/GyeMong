@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Vine : MonoBehaviour
 {
-    private bool hasDamaged = false; // 데미지를 한 번만 주기 위한 플래그
+    private float attackdamage;
     private void OnEnable()
     {
+        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(ActivateVine());
     }
     private IEnumerator ActivateVine()
@@ -14,12 +15,11 @@ public class Vine : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (!hasDamaged && other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(15);
-            hasDamaged = true;  // 데미지를 한 번만 주도록 설정
+            PlayerCharacter.Instance.TakeDamage(attackdamage, true);
         }
     }
 }
