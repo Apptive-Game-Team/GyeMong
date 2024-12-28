@@ -63,7 +63,7 @@ public class RuneComponent : MonoBehaviour
 
     public bool isRune(int id)
     {
-        return acquiredRuneList.Exists(x => x.id.Equals(id));
+        return equippedRuneList.Exists(x => x.id.Equals(id));
     }
 }
 

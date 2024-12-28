@@ -12,6 +12,13 @@ public class RootPatternManger : MonoBehaviour
     
     private void Awake()
     {
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_midboss_down", out bool down))
+        {
+            if (down)
+            {
+                Destroy(gameObject);
+            }
+        }
         gameObject.SetActive(false);
         soundObject = GetComponent<SoundObject>();
     }
