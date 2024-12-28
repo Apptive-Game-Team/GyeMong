@@ -11,6 +11,7 @@ public class Guardian : Boss
     [SerializeField] private GameObject meleeAttackPrefab1;
     [SerializeField] private GameObject meleeAttackPrefab2;
 
+    private Shield shieldComponenet;
     [SerializeField] private Animator _animator;
     
     void Start()
@@ -21,6 +22,7 @@ public class Guardian : Boss
         maxHealthP1 = 200f;
         maxHealthP2 = 300f;
         shield = 50f;
+        shieldComponenet = GetComponent<Shield>();
         speed = 1f;
         detectionRange = 10f;
         MeleeAttackRange = 2f;
@@ -91,6 +93,7 @@ public class Guardian : Boss
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         shield = 30f;
+        shieldComponenet.SetActive(true);
         yield return null;
         ChangeState(State.IDLE);
     }
@@ -208,7 +211,14 @@ public class Guardian : Boss
     {
         ChangeState(State.STUN);
         shield = 0f;
+        shieldComponenet.SetActive(false);
         yield return new WaitForSeconds(5f);
         ChangeState(State.IDLE);
+    }
+
+    protected override void OnShieldBroken()
+    {
+        base.OnShieldBroken();
+        shieldComponenet.SetActive(false);
     }
 }
