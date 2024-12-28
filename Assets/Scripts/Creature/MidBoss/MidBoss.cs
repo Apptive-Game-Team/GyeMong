@@ -95,13 +95,6 @@ public class MidBoss : Boss
         ChangeState(State.IDLE);
     }
 
-    private void RotateArrowTowardsPlayer(GameObject arrow)
-    {
-        Vector3 direction = (player.transform.position - arrow.transform.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-    }
-
     protected override IEnumerator ExecutePattern2()//±Ù°Å¸®
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -231,5 +224,11 @@ public class MidBoss : Boss
         } while (weightedPatterns[randomIndex] == lastPattern);
         curPattern = weightedPatterns[randomIndex];
         lastPattern = curPattern;
+    }
+    private void RotateArrowTowardsPlayer(GameObject arrow)
+    {
+        Vector3 direction = (player.transform.position - arrow.transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 }
