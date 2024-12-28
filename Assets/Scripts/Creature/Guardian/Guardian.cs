@@ -48,11 +48,7 @@ public class Guardian : Boss
 
     void Update()
     {
-        if (curState == State.NONE || curState == State.ATTACK || curState == State.CHANGINGPATTERN)
-        {
-            return;
-        }
-        if(curState == State.IDLE)
+        if (curState == State.IDLE && currentPatternCoroutine == null)
         {
             SelectRandomPattern();
             ExecuteCurrentPattern();
