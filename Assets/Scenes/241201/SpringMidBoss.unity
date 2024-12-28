@@ -33008,6 +33008,97 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774461617}
   m_CullTransparentMesh: 1
+--- !u!1 &778397830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 778397832}
+  - component: {fileID: 778397831}
+  m_Layer: 0
+  m_Name: PhaseChangeObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &778397831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778397830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 7405124568204705794
+  - rid: 7405124568204705796
+  - rid: 7405124568204705797
+  - rid: 7405124568204705800
+  - rid: 7405124568204705799
+  - rid: 7405124568204705795
+  - rid: 7405124568204705793
+  - rid: 7405124568204705792
+  references:
+    version: 2
+    RefIds:
+    - rid: 7405124568204705792
+      type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 2099362344}
+    - rid: 7405124568204705793
+      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 2099362344}
+    - rid: 7405124568204705794
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 7405124568204705795
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 7405124568204705796
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7405124568204705797
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uCD0C\uC7A5"
+          message: "\uC640 \u3148\u3134\uC138\uB124"
+    - rid: 7405124568204705799
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7405124568204705800
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+--- !u!4 &778397832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778397830}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 89.256165, y: 11.613763, z: -0.17530909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &788483717
 GameObject:
   m_ObjectHideFlags: 0
@@ -35898,7 +35989,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.2167}
+  m_AnchoredPosition: {x: 0, y: 308.217}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36726,8 +36817,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565192122}
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
-  m_Value: -0.0000015842168
-  m_Size: 0.6068435
+  m_Value: -0.0000023763253
+  m_Size: 0.59752727
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37452,7 +37543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.2167}
+  m_AnchoredPosition: {x: 0, y: 308.217}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -42591,10 +42682,10 @@ MonoBehaviour:
   - rid: 521773745628250157
   - rid: 521773745628250136
   - rid: 521773745628250140
+  - rid: 521773835193679878
   - rid: 521773835193679872
   - rid: 521773745628250158
   - rid: 521773771964809216
-  - rid: 521773835193679878
   references:
     version: 2
     RefIds:
@@ -45112,8 +45203,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272479262}
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
-  m_Value: -0.0000015842168
-  m_Size: 0.6068435
+  m_Value: -0.0000023763253
+  m_Size: 0.59752727
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -47039,6 +47130,7 @@ MonoBehaviour:
   curPattern: 0
   dashType: 0
   curHealth: 0
+  defaultDamage: 0
   shield: 0
   wall: {fileID: 1893575457}
   arrowPrefab: {fileID: 1349092434517921609, guid: 698ededced094f444b9cd52caa8c484b,
@@ -48087,6 +48179,7 @@ SceneRoots:
   - {fileID: 2099362348}
   - {fileID: 3039129871713629899}
   - {fileID: 97916096}
+  - {fileID: 778397832}
   - {fileID: 1982295878}
   - {fileID: 158713062}
   - {fileID: 259237549}

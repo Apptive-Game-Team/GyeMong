@@ -8,7 +8,7 @@ public class Seed : MonoBehaviour
     private GameObject player;
     private Vector3 direction;
     private float speed = 10f;
-    private float attackdamage = MidBoss.GetInstance<MidBoss>().defaultDamage;
+    private float attackdamage;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -17,6 +17,7 @@ public class Seed : MonoBehaviour
 
     private void OnEnable()
     {
+        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(FireArrow());
     }
 
@@ -34,6 +35,8 @@ public class Seed : MonoBehaviour
 
         float randomAngleRad = randomAngle * Mathf.Deg2Rad;
         direction = new Vector3(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad), 0).normalized;
+
+        transform.rotation = Quaternion.Euler(0, 0, randomAngle);
 
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = player.transform.position;
