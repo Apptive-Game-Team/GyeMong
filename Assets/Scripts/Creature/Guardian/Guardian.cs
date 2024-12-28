@@ -62,14 +62,13 @@ public class Guardian : Boss
 
     protected override IEnumerator ExecutePattern0() // Melee Attack
     {
-        ChangeState(State.CHANGINGPATTERN);
-        yield return new WaitForSeconds(2f);
-        ChangeState(State.ATTACK);
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
+            ChangeState(State.CHANGINGPATTERN);
+            yield return new WaitForSeconds(2f);
+            ChangeState(State.ATTACK);
             _animator.SetBool("TwoHand", true);
-            // meleeAttackPrefab1.SetActive(true);
             yield return new WaitForSeconds(1f);
             yield return MakeShockwave(4);
             _animator.SetBool("TwoHand", false);

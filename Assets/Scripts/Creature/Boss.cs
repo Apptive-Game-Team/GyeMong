@@ -33,7 +33,7 @@ public abstract class Boss : Creature
     
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
-    protected int currentPhase = 1;
+    protected int currentPhase = 2;
     protected int maxPhase;
     protected float maxHealthP1;
     protected float maxHealthP2;
