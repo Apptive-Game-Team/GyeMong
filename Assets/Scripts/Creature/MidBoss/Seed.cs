@@ -11,8 +11,10 @@ public class Seed : MonoBehaviour
     private float attackdamage;
     
     private SoundObject _soundObject;
+    private EventObject _eventObject;
     private void Awake()
     {
+        _eventObject = GetComponent<EventObject>();
         _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
         player = GameObject.FindGameObjectWithTag("Player");
         direction = (player.transform.position - transform.position).normalized;
@@ -56,7 +58,6 @@ public class Seed : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _soundObject.PlayAsync();
         Explode();
-        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -71,6 +72,8 @@ public class Seed : MonoBehaviour
 
     private void Explode()
     {
+        transform.rotation = Quaternion.identity;
+        _eventObject.Trigger();
         float explosionRadius = 2f;
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach (Collider2D enemy in hitEnemies)
