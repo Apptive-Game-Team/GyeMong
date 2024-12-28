@@ -43,6 +43,7 @@ public class StartFollowCameraEvent : CameraEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
+        CameraController.GetComponent<Camera>().orthographicSize = 5;
         CameraController.IsFollowing = true;
         return null;
     }  
@@ -51,9 +52,10 @@ public class StartFollowCameraEvent : CameraEvent
 public class CameraMoveEvent : CameraEvent
 {
     [SerializeField] private Vector3 target;
+    [SerializeField] private float size = 5;
     [SerializeField] private float duration;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        return CameraController.MoveTo(target, duration);
+        return CameraController.MoveTo(target, duration, size);
     }
 }
