@@ -20240,7 +20240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21646}
+  m_AnchoredPosition: {x: 0, y: 308.21716}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &286961927
@@ -20370,7 +20370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21646}
+  m_AnchoredPosition: {x: 0, y: 308.21716}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &326613589
@@ -21717,6 +21717,7 @@ MonoBehaviour:
   defaultDamage: 0
   shield: 0
   wall: {fileID: 1037969029}
+  mapPattern: {fileID: 1866070731}
   cubePrefab: {fileID: 6652684582878580984, guid: b6cc82c53b6c35e4aa9323338bbcf981,
     type: 3}
   cubeShadowPrefab: {fileID: 6652684582878580984, guid: 24aa209d7a5bd6e44b1344ba2f62e25b,
@@ -23600,6 +23601,12 @@ MonoBehaviour:
   eventSequence:
   - rid: 521773836373327900
   - rid: 521773836373327901
+  - rid: 7405124598596370437
+  - rid: 7405124598596370432
+  - rid: 7405124598596370435
+  - rid: 7405124598596370439
+  - rid: 7405124598596370436
+  - rid: 7405124598596370438
   - rid: 521773882682900481
   references:
     version: 2
@@ -23616,6 +23623,30 @@ MonoBehaviour:
     - rid: 521773882682900481
       type: {class: StartFollowCameraEvent, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 7405124598596370432
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7405124598596370435
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uACE8\uB818"
+          message: "...\uC544...\uACE0\uB9D9\uB2E4..."
+    - rid: 7405124598596370436
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7405124598596370437
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 7405124598596370438
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 7405124598596370439
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
 --- !u!4 &553630110
 Transform:
   m_ObjectHideFlags: 0
@@ -26461,6 +26492,97 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872356577}
   m_CullTransparentMesh: 1
+--- !u!1 &881519362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 881519364}
+  - component: {fileID: 881519363}
+  m_Layer: 0
+  m_Name: PhaseChangeObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &881519363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881519362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 7405124568204705794
+  - rid: 7405124568204705796
+  - rid: 7405124568204705797
+  - rid: 7405124568204705800
+  - rid: 7405124568204705799
+  - rid: 7405124568204705795
+  - rid: 7405124568204705793
+  - rid: 7405124568204705792
+  references:
+    version: 2
+    RefIds:
+    - rid: 7405124568204705792
+      type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 455494628}
+    - rid: 7405124568204705793
+      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 455494628}
+    - rid: 7405124568204705794
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 7405124568204705795
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 7405124568204705796
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7405124568204705797
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uACE8\uB818"
+          message: ...
+    - rid: 7405124568204705799
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7405124568204705800
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+--- !u!4 &881519364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881519362}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 89.256165, y: 11.613763, z: -0.17530909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &888225798
 GameObject:
   m_ObjectHideFlags: 0
@@ -39858,8 +39980,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 872356579}
   m_HandleRect: {fileID: 872356578}
   m_Direction: 2
-  m_Value: -0.0000007921084
-  m_Size: 0.5915897
+  m_Value: -0.0000031684335
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -40204,8 +40326,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 86957274}
   m_HandleRect: {fileID: 86957273}
   m_Direction: 2
-  m_Value: -0.0000007921084
-  m_Size: 0.5915897
+  m_Value: -0.0000031684335
+  m_Size: 0.6068435
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -41193,3 +41315,4 @@ SceneRoots:
   - {fileID: 1777554342}
   - {fileID: 1508380644}
   - {fileID: 553630110}
+  - {fileID: 881519364}

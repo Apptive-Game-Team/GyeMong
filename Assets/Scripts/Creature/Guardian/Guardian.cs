@@ -31,7 +31,7 @@ public class Guardian : Boss
         maxPhase = 2;
         maxHealthP1 = 200f;
         maxHealthP2 = 300f;
-        shield = 50f;
+        shield = 0f;
         shieldComponenet = GetComponent<Shield>();
         speed = 1f;
         detectionRange = 10f;
@@ -54,10 +54,6 @@ public class Guardian : Boss
             ExecuteCurrentPattern();
         }
         _fsm.UpdateState();
-    }
-    protected override void Die()
-    {
-        CheckPhaseTransition();
     }
 
     protected override IEnumerator ExecutePattern0() // Melee Attack

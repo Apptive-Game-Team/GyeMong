@@ -32,8 +32,9 @@ public abstract class Boss : Creature
 
     
     public GameObject wall;
+    public GameObject mapPattern;
     private Coroutine detectPlayerRoutine;
-    protected int currentPhase = 2;
+    protected int currentPhase = 1;
     protected int maxPhase;
     protected float maxHealthP1;
     protected float maxHealthP2;
@@ -91,6 +92,7 @@ public abstract class Boss : Creature
         {
             Die();
             wall.SetActive(false);
+            mapPattern.SetActive(false);
         }
     }
     public IEnumerator ChangingPhase()
