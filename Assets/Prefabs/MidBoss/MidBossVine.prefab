@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
   - component: {fileID: 6526184810629786778}
+  - component: {fileID: 2608428945595376751}
   m_Layer: 0
   m_Name: MidBossVine
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.086, y: 1.0406, z: 0.040643148}
-  m_LocalScale: {x: 25, y: 25, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,15 +77,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.20832676, g: 0.24528301, b: 0.1976148, a: 1}
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.2, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &8557463274029972440
@@ -157,7 +158,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &6526184810629786778
 MonoBehaviour:
@@ -171,3 +172,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c811cbaa9ee0de41ab96048f4c20a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2608428945595376751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 1
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 521773891873669122
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773891873669122
+      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
+      data:
+        frames:
+        - {fileID: 21300000, guid: 2ec89d0c0b5764ee9b09f7256f5fb277, type: 3}
+        - {fileID: 21300000, guid: 743e4af482abf47788ef4754ee6d5cab, type: 3}
+        - {fileID: 21300000, guid: bd0cb68e2ef9b41809dc88119a4880a2, type: 3}
+        - {fileID: 21300000, guid: ff0cfd3e3524940d3b1345ba7bfb38a3, type: 3}
+        - {fileID: 21300000, guid: 562c0739ff55346c2a29f49ad7355c03, type: 3}
+        - {fileID: 21300000, guid: c7558db62a9e14b79b1ccfff09670269, type: 3}
+        deltaTime: 0.1
