@@ -16,7 +16,7 @@ public class MidBoss : Boss
     void Start()
     {
         curState = State.NONE;
-        _fsm = new FiniteStateMachine(new IdleState(this));
+        _fsm = new FiniteStateMachine(new IdleState<MidBoss>(this));
         maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;

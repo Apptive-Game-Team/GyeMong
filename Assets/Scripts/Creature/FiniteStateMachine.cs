@@ -31,12 +31,12 @@ public class NoneState : BaseState
     {
     }
 }
-public class IdleState : BaseState
+public class IdleState<T> : BaseState where T : Boss
 {
     public IdleState(Creature creature) : base(creature) { }
     public override void OnStateEnter()
     {
-        Boss.Instance.currentPatternCoroutine = null;
+        Boss.GetInstance<T>().currentPatternCoroutine = null;
     }
     public override void OnStateExit()
     {

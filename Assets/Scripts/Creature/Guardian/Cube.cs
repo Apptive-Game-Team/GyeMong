@@ -75,7 +75,7 @@ public class Cube : MonoBehaviour
         {
             Destroy(gameObject);
             Destroy(shadow);
-            Guardian.Instance.Stun();
+            Guardian.GetInstance<Guardian>().Stun();
         }
     }
     GameObject shadow;

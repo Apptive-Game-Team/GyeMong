@@ -14,7 +14,7 @@ public class Guardian : Boss
     void Start()
     {
         curState = State.NONE;
-        _fsm = new FiniteStateMachine(new IdleState(this));
+        _fsm = new FiniteStateMachine(new IdleState<Guardian>(this));
         maxPhase = 2;
         maxHealthP1 = 200f;
         maxHealthP2 = 300f;
