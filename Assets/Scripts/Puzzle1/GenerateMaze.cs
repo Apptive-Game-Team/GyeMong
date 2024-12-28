@@ -11,6 +11,7 @@ public class GenerateMaze : MonoBehaviour
     [SerializeField] Tilemap floorTilemap;
     [SerializeField] Tilemap thornTilemap;
     [SerializeField] Tile wallTile;
+    [SerializeField] Tile shortWallTile;
     [SerializeField] Tile floorTile;
     [SerializeField] Tile thornTile;
     [SerializeField] GameObject shadowCasterPrefab;
@@ -125,8 +126,15 @@ public class GenerateMaze : MonoBehaviour
                 }
                 else
                 {
-                    wallTilemap.SetTile(tilePosition, wallTile);
-                    CreateShadowCaster(tilePosition);
+                    if (ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle1_clear"))
+                    {
+                        wallTilemap.SetTile(tilePosition, shortWallTile);
+                    }
+                    else
+                    {
+                        wallTilemap.SetTile(tilePosition, wallTile);
+                        CreateShadowCaster(tilePosition);
+                    } 
                 }
             }
         }

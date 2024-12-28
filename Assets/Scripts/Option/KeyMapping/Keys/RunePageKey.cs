@@ -2,17 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunePageKey : MonoBehaviour
+public class RunePageKey : KeyMapping
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    protected override ActionCode ActionCode => ActionCode.RunePage;
 }

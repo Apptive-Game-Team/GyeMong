@@ -7,6 +7,10 @@ public class Cube : MonoBehaviour
 {
     private GameObject player;
 
+    private bool isFalled = false;
+
+    [SerializeField] private SoundObject _soundObject;
+    
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -32,15 +36,15 @@ public class Cube : MonoBehaviour
 
     private IEnumerator StartFalling()
     {
-        float accele = 70f; // Áß·Â°¡¼Óµµ (°¡¼Óµµ Å©±â)
-        float speed = 0f; // ÃÊ±â ¼Óµµ
-        float currentSpeed = speed; // ÇöÀç ¼Óµµ
+        float accele = 70f; // ï¿½ß·Â°ï¿½ï¿½Óµï¿½ (ï¿½ï¿½ï¿½Óµï¿½ Å©ï¿½ï¿½)
+        float speed = 0f; // ï¿½Ê±ï¿½ ï¿½Óµï¿½
+        float currentSpeed = speed; // ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½
         Vector3 targetPosition = player.transform.position;
         Vector3 startPosition = transform.position;
 
         while (transform.position.y > targetPosition.y)
         {
-            //¼Óµµ = ÃÊ±â¼Óµµ + °¡¼Óµµ * ½Ã°£
+            //ï¿½Óµï¿½ = ï¿½Ê±ï¿½Óµï¿½ + ï¿½ï¿½ï¿½Óµï¿½ * ï¿½Ã°ï¿½
             currentSpeed += accele * Time.deltaTime;
 
             //s = vt
@@ -50,14 +54,17 @@ public class Cube : MonoBehaviour
             yield return null;
         }
 
-        // ³«ÇÏ ¿Ï·á ÈÄ ColliderÀÇ isTrigger¸¦ ÇØÁ¦
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ Colliderï¿½ï¿½ isTriggerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        
         Collider2D collider = GetComponent<Collider2D>();
+        isFalled = true;
+        StartCoroutine(_soundObject.Play());
         if (collider != null)
         {
             collider.isTrigger = false;
         }
-
         yield return new WaitForSeconds(1f);
+        
         Destroy(gameObject);
     }
 
@@ -66,16 +73,17 @@ public class Cube : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             PlayerCharacter.Instance.TakeDamage(10);
-            //ÇÃ·¹ÀÌ¾î°¡ ¸Â°í Àá½Ã ¹«Àû µÇ´Â ±â´ÉÀ» ³ÖÀ» ÇÊ¿ä°¡ ÀÖ¾îº¸ÀÓ
+            //ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ä°¡ ï¿½Ö¾îº¸ï¿½ï¿½
         }
+        
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Boss"))
+        if (isFalled && other.CompareTag("Boss"))
         {
             Destroy(gameObject);
             Destroy(shadow);
-            Guardian.Instance.Stun();
+            Guardian.GetInstance<Guardian>().Stun();
         }
     }
     GameObject shadow;

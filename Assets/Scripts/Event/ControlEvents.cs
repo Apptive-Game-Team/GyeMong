@@ -12,7 +12,6 @@ public class SetKeyInputEvent : ControlEvent
     [SerializeField] private bool _isEnable;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        Debug.Log(_isEnable);
         InputManager.Instance.SetActionState(_isEnable);
         yield return null;
     }

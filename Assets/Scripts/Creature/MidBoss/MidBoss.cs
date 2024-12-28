@@ -6,25 +6,17 @@ using UnityEngine;
 
 public class MidBoss : Boss
 {
-    public static MidBoss Instance { get; private set; }
+    
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
     [SerializeField] private GameObject meleeAttackPrefab;
     Vector3 meleeAttackPrefabPos;
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+    
     void Start()
     {
         curState = State.NONE;
-        _fsm = new FiniteStateMachine(new IdleState(this));
+        _fsm = new FiniteStateMachine(new IdleState<MidBoss>(this));
         maxPhase = 2;
         maxHealthP1 = 100f;
         maxHealthP2 = 200f;
