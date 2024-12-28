@@ -9,6 +9,19 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Boss : Creature
 {
+    public static Boss Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    
     public GameObject wall;
     private Coroutine detectPlayerRoutine;
     protected int currentPhase = 1;

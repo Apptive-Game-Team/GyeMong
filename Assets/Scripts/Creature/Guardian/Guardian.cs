@@ -5,22 +5,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 public class Guardian : Boss
 {
-    public static Guardian Instance { get; private set; }
-
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private GameObject cubeShadowPrefab;
     [SerializeField] private GameObject floorPrefab;
     [SerializeField] private GameObject meleeAttackPrefab1;
     [SerializeField] private GameObject meleeAttackPrefab2;
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+
     void Start()
     {
         curState = State.NONE;
