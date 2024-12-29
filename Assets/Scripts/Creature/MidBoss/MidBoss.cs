@@ -218,7 +218,7 @@ public class MidBoss : Boss
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 0));
             weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
-            weightedPatterns.AddRange(Enumerable.Repeat(2, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(2, 8));
             weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
         }
         else
