@@ -33,6 +33,7 @@ public class MidBoss : Boss
         maxHealthP2 = 200f;
         defaultDamage = 20f;
         speed = 2f;
+        shield = 0f;
         detectionRange = 10f;
         MeleeAttackRange = 2f;
         RangedAttackRange = 6f;

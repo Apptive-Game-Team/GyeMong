@@ -46,6 +46,11 @@ public abstract class Boss : Creature
         get { return curHealth; }
     }
 
+    public float CurrentShield
+    {
+        get { return shield; }
+    }
+
     public int CurrentPhase
     {
         get { return currentPhase; }

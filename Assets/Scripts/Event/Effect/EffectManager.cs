@@ -31,9 +31,9 @@ public class EffectManager : SingletonObject<EffectManager>
         this.cameraController = cameraController;
     }
 
-    public void UpdateHpBar(float hp)
+    public void UpdateHpBar(float hp, float shield)
     {
-        hpBarController.UpdateHp(hp);
+        hpBarController.UpdateHp(hp, shield);
     }
     
     public HpBarController GetHpBarController()
