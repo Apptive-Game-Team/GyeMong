@@ -162,6 +162,7 @@ public class Creature : MonoBehaviour
 
     protected virtual void OnShieldBroken()
     {
+        gameObject.GetComponent<Renderer>().material.SetFloat("_isShieldActive", 0f);
         gameObject.GetComponent<Renderer>().material = materials[0];
     }
 }
