@@ -152,15 +152,17 @@ namespace playerCharacter
             
             if (!isUnblockable && isDefending)
             {
-                soundController.Trigger(PlayerSoundType.SWORD_DEFEND_HIT);
+                
                 if (Time.time - defendStartTime < parryTime) 
                 {
+                    soundController.Trigger(PlayerSoundType.SWORD_DEFEND_PERFECT);
                     damage = 0f;
                     Debug.Log($"Perfect Defend, damage : {damage}");
                     return;
                 }
                 else 
                 {
+                    soundController.Trigger(PlayerSoundType.SWORD_DEFEND_HIT);
                     damage /= 2f;
                     Debug.Log($"Defend, damage : {damage}");
                 }
