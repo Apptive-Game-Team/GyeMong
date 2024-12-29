@@ -49,7 +49,7 @@ public class LoadDataEvent : Event
         }
 
         SceneManager.LoadScene(playerData.sceneName);
-        PlayerCharacter.Instance.LoadPlayerData();
+        DataManager.Instance.LoadPlayerData();
         yield return null;
     }
 }
