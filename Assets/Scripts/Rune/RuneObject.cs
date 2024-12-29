@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RuneObject : MonoBehaviour
 {
-    RuneData runeData;
+    [SerializeField] RuneData runeData;
     SpriteRenderer spriteRenderer;
     EventObject eventObject;
 

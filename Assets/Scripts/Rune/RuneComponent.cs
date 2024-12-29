@@ -18,7 +18,6 @@ public class RuneComponent : MonoBehaviour
     private void Start()
     {
         _buffComp = GetComponent<BuffComponent>();
-        TestAcquire();
     }
 
     private void TestAcquire()
