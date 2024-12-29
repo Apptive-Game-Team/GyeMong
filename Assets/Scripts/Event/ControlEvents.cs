@@ -46,7 +46,7 @@ public class NestedEventEvent : ControlEvent
     {
         foreach (Event @event in events)
         {
-            yield return @event.Execute();
+            yield return @event?.Execute();
         }
     }
     
@@ -60,7 +60,7 @@ public class NestedEventEvent : ControlEvent
         List<ToggeableCondition> result = new List<ToggeableCondition>();
         foreach (Event @event in events)
         {
-            List<ToggeableCondition> temp = @event.FindToggleableConditions();
+            List<ToggeableCondition> temp = @event?.FindToggleableConditions();
             if (temp != null)
             {
                 result.AddRange(temp);
