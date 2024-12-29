@@ -99,6 +99,7 @@ public class Guardian : Boss
         ChangeState(State.ATTACK);
         shield = 30f;
         gameObject.GetComponent<Renderer>().material = materials[1];
+        gameObject.GetComponent<Renderer>().material.SetFloat("_isShieldActive", 1f);
         shieldComponenet.SetActive(true);
         yield return null;
         ChangeState(State.IDLE);
@@ -237,6 +238,8 @@ public class Guardian : Boss
         ChangeState(State.STUN);
         shield = 0f;
         shieldComponenet.SetActive(false);
+        gameObject.GetComponent<Renderer>().material.SetFloat("_isShieldActive", 0f);
+        gameObject.GetComponent<Renderer>().material = materials[0];
         yield return new WaitForSeconds(5f);
         ChangeState(State.IDLE);
     }

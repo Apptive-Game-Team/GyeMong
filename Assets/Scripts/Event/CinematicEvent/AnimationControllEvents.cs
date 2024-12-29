@@ -10,7 +10,6 @@ public class StopAnimatorEvent : AnimationControllEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        Debug.Log(_animator);
         _animator.enabled = false;
         return null;
     }
