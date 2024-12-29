@@ -40,14 +40,14 @@ public class RuneObjectCreator : SingletonObject<RuneObjectCreator>
         rune.TryInit(runeDataList.GetRuneData(runeID));
         return runeObj;
     }
-
-    private void DoTest()
-    {
-        DrawRuneObject(3, new Vector3(-2,-2,0));
-    }
-
-    private void Start()
-    {
-        DoTest();
-    }
+    //
+    // private void CreatePuzzle1Rune()
+    // {
+    //     DrawRuneObject(2, new Vector3(-75,80,0));
+    // }
+    //
+    // private void Start()
+    // {
+    //     CreatePuzzle1Rune();
+    // }
 }

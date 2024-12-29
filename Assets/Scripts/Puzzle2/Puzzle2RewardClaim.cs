@@ -25,6 +25,19 @@ public class Puzzle2RewardClaim : MonoBehaviour, IEventTriggerable
     private void OnTriggerEnter2D(Collider2D collision)
     {
         StartCoroutine(ClearFog());
+        if (ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle2_rune_drop"))
+        {
+            if (!ConditionManager.Instance.Conditions["spring_puzzle2_rune_drop"])
+            {
+                RuneObjectCreator.Instance.DrawRuneObject(2, transform.position);
+            }
+        }
+        else
+        {
+            ConditionManager.Instance.Conditions.Add("spring_puzzle2_rune_drop", true);
+            RuneObjectCreator.Instance.DrawRuneObject(2, transform.position);
+        }
+        
     }
 
     public void Trigger()

@@ -42,7 +42,7 @@ namespace playerCharacter
         private bool canMove = true;
         private bool isInvincible = false;
 
-        public bool isStartButton = false;
+
         public Material[] materials;
 
         private void Start()
@@ -319,6 +319,11 @@ namespace playerCharacter
             }
         }
 
+        public void SetPlayerMove(bool _canMove)
+        {
+            canMove = _canMove;
+        }
+
         public void Bind(float duration)
         {
             StartCoroutine(BindCoroutine(duration));
@@ -341,20 +346,9 @@ namespace playerCharacter
             return lastMovementDirection;
         }
 
-        public void LoadPlayerData()
-        {
-            PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
-            if (!playerData.isFirst && !isStartButton)
-            {
-                print("qwd");
-                gameObject.transform.position = playerData.playerPosition;
-                lastMovementDirection = playerData.playerDirection;
-                StartCoroutine(LoadPlayerEffect());
-            }
-            isStartButton = false;
-        }
 
-        private IEnumerator LoadPlayerEffect()
+
+        public IEnumerator LoadPlayerEffect()
         {
             Renderer renderer = gameObject.GetComponent<Renderer>();
             renderer.material = materials[1];
