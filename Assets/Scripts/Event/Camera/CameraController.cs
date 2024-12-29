@@ -9,8 +9,8 @@ public class CameraController : MonoBehaviour
     private GameObject player;
     private int defaultCameraZ = -10;
 
-    private const float SHAKE_AMOUNT = 0.1f;
-    private const float SHAKE_DELAY = 0.1f;
+    private const float SHAKE_AMOUNT = 0.05f;
+    private const float SHAKE_DELAY = 0.05f;
     private bool isShaking = false;
     private bool isFollowing = true;
 
@@ -143,7 +143,7 @@ public class CameraController : MonoBehaviour
         while (timer < time)
         {
             yield return new WaitForSeconds(SHAKE_DELAY);
-            timer += 0.1f;
+            timer += SHAKE_DELAY;
             if (!isFollowing)
             {
                 transform.position = originalPosition + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.forward * defaultCameraZ;
