@@ -218,9 +218,9 @@ public class MidBoss : Boss
         if (currentPhase == 1)
         {
             weightedPatterns.AddRange(Enumerable.Repeat(0, 0));
-            weightedPatterns.AddRange(Enumerable.Repeat(1, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(1, 3));
             weightedPatterns.AddRange(Enumerable.Repeat(2, 8));
-            weightedPatterns.AddRange(Enumerable.Repeat(3, 5));
+            weightedPatterns.AddRange(Enumerable.Repeat(3, 4));
         }
         else
         {

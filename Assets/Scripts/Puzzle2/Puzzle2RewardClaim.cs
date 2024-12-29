@@ -42,7 +42,6 @@ public class Puzzle2RewardClaim : MonoBehaviour, IEventTriggerable
 
     public void Trigger()
     {
-        RuneObjectCreator.Instance.DrawRuneObject(3, transform.position);
         StartCoroutine(ClearFog());
     }
 }
