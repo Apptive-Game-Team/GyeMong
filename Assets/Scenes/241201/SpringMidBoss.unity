@@ -36142,7 +36142,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21664}
+  m_AnchoredPosition: {x: 0, y: 308.21628}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36970,8 +36970,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565192122}
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
-  m_Value: -0.0000015842168
-  m_Size: 0.60682327
+  m_Value: 0
+  m_Size: 0.6039645
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37696,7 +37696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21664}
+  m_AnchoredPosition: {x: 0, y: 308.21628}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -45161,8 +45161,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272479262}
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
-  m_Value: -0.0000015842168
-  m_Size: 0.60682327
+  m_Value: 0
+  m_Size: 0.6039645
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -47091,6 +47091,8 @@ MonoBehaviour:
   curHealth: 0
   defaultDamage: 0
   shield: 0
+  materials:
+  - {fileID: 2100000, guid: 40ac6f0cd04e4b14cb38a521126ba3d0, type: 2}
   wall: {fileID: 1893575457}
   mapPattern: {fileID: 0}
   arrowPrefab: {fileID: 1349092434517921609, guid: 698ededced094f444b9cd52caa8c484b,
