@@ -3,9 +3,11 @@ using System.IO;
 using UnityEngine;
 using System.Security.Cryptography;
 using System.Text;
+using playerCharacter;
 
 public class DataManager : SingletonObject<DataManager>
 {
+    public bool isStartButton = false;
     private readonly string savePath = Application.dataPath + "/Database";
     private readonly string encryptionKey = "GyemongFighting!"; // 16, 24, 32 글자로 key 설정
 
@@ -140,5 +142,17 @@ public class DataManager : SingletonObject<DataManager>
 
             InputManager.Instance.SetKey(actionCode, keyCode);
         }
+    }
+
+    public void LoadPlayerData()
+    {
+        PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
+        if (!playerData.isFirst && !DataManager.Instance.isStartButton)
+        {
+            print("qwd");
+            PlayerCharacter.Instance.transform.position = playerData.playerPosition;
+            StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
+        }
+        DataManager.Instance.isStartButton = false;
     }
 }
