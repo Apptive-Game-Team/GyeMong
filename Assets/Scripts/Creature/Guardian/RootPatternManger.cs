@@ -12,7 +12,7 @@ public class RootPatternManger : MonoBehaviour
     
     private void Awake()
     {
-        if (ConditionManager.Instance.Conditions.TryGetValue("spring_midboss_down", out bool down))
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_guardian_down", out bool down))
         {
             if (down)
             {

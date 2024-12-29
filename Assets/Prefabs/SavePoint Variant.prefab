@@ -102,7 +102,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: eventSequence.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -127,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: eventSequence.Array.data[4]
-      value: -2
+      value: 521773911791632385
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -148,6 +148,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[521773745628250174]
       value: Assembly-CSharp CloseChatEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[521773911791632385]
+      value: Assembly-CSharp HealEvent
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
