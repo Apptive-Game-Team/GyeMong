@@ -53,7 +53,7 @@ public class EffectManager : SingletonObject<EffectManager>
     /// <summary>
     /// vibrate camera
     /// </summary>
-    public IEnumerator ShakeCamera(float time=0.5f)
+    public IEnumerator ShakeCamera(float time=0.25f)
     {
         return cameraController.ShakeCamera(time);
     }
