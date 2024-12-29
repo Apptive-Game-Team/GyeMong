@@ -12,6 +12,13 @@ public struct ChatMessage
     public string message;
 }
 
+[Serializable]
+public struct MultiChatMessage
+{
+    public string name;
+    public List<string> messages;
+}
+
 public class ChatController : MonoBehaviour
 {
 
@@ -63,9 +70,30 @@ public class ChatController : MonoBehaviour
         yield return ShowChat(chatMessage.message);
     }
 
+    public IEnumerator MultipleChat(MultiChatMessage multiChatMessage)
+    {
+        nameText.text = multiChatMessage.name;
+        messageText.text = "";
+
+        foreach (string line in multiChatMessage.messages)
+        {
+            yield return ShowMultipleChat(line);
+            messageText.text += "\n";
+        }
+    }
+
     private IEnumerator ShowChat(string message)
     {
         foreach (char c in message)
+        {
+            messageText.text += c;
+            yield return new WaitForSeconds(SHOW_CHAT_DELAY);
+        }
+    }
+
+    private IEnumerator ShowMultipleChat(string messages)
+    {
+        foreach (char c in messages)
         {
             messageText.text += c;
             yield return new WaitForSeconds(SHOW_CHAT_DELAY);

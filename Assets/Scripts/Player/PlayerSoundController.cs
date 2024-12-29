@@ -7,9 +7,10 @@ namespace playerCharacter
     {
         SWORD_SWING = 0,
         SWORD_ATTACK = 1,
-        SWORD_DEFEND = 2,
+        SWORD_DEFEND_START = 2,
         FOOT = 3,
         DASH = 4,
+        SWORD_DEFEND_HIT = 5,
     }
 
     public enum FloorType
@@ -42,7 +43,8 @@ namespace playerCharacter
             soundObjects.Add(PlayerSoundType.DASH, transform.Find("DashSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.SWORD_SWING, transform.Find("SwordSwingSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.SWORD_ATTACK, transform.Find("SwordAttackSound").GetComponent<SoundObject>());
-            soundObjects.Add(PlayerSoundType.SWORD_DEFEND, transform.Find("SwordDefendSound").GetComponent<SoundObject>());
+            soundObjects.Add(PlayerSoundType.SWORD_DEFEND_START, transform.Find("SwordDefendSound").GetComponent<SoundObject>());
+            soundObjects.Add(PlayerSoundType.SWORD_DEFEND_HIT, transform.Find("SwordDefendHitSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.FOOT, transform.Find("FootSound").GetComponent<SoundObject>());
         }
 

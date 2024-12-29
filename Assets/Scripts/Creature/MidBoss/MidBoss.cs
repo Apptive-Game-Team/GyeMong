@@ -1,20 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
+using playerCharacter;
 using UnityEngine;
 
 public class MidBoss : Boss
 {
-    
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
     [SerializeField] private GameObject meleeAttackPrefab;
     Vector3 meleeAttackPrefabPos;
     
+    private FootSoundController footSoundController;
+    [SerializeField] private SoundObject arrowSoundObject;
+    [SerializeField] private SoundObject vineSoundObject;
+
     void Start()
     {
+        if (ConditionManager.Instance.Conditions.TryGetValue("spring_midboss_down", out bool down))
+        {
+            if(down)
+            {
+                Destroy(gameObject);
+            }
+        }
+
         curState = State.NONE;
         _fsm = new FiniteStateMachine(new IdleState<MidBoss>(this));
         maxPhase = 2;
@@ -29,6 +40,7 @@ public class MidBoss : Boss
         wall.SetActive(false);
         meleeAttackPrefab.SetActive(false);
         SetupPhase();
+        footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
     }
 
     protected override void Update()
@@ -41,7 +53,7 @@ public class MidBoss : Boss
         }
         _fsm.UpdateState();
     }
-    protected override IEnumerator ExecutePattern0()//¹é½ºÅÜ
+     protected override IEnumerator ExecutePattern0() // Back Step
     {
         ChangeState(State.ATTACK);
         float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -51,7 +63,7 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern1()//¿ø°Å¸® È°
+    protected override IEnumerator ExecutePattern1() // Ranged Attack
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance >= RangedAttackRange/2)
@@ -59,10 +71,12 @@ public class MidBoss : Boss
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            GameObject arrow =  Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            RotateArrowTowardsPlayer(arrow);
+            StartCoroutine(arrowSoundObject.Play());
             yield return new WaitForSeconds(1f);
         }
-        else
+        else // Back Step
         {
             dashType = 1;
             ChangeState(State.DASH);
@@ -75,13 +89,15 @@ public class MidBoss : Boss
             yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
             speed = 1f;
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            GameObject arrow =  Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            RotateArrowTowardsPlayer(arrow);
+            StartCoroutine(arrowSoundObject.Play());
             yield return new WaitForSeconds(1f);
         }
         ChangeState(State.IDLE);
     }
 
-    protected override IEnumerator ExecutePattern2()//±Ù°Å¸®
+    protected override IEnumerator ExecutePattern2() // Melee Attack
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
@@ -100,28 +116,32 @@ public class MidBoss : Boss
         yield return null;
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern3()//ÃßÀû
+    protected override IEnumerator ExecutePattern3() // Walk
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
         {
-            // ±Ù°Å¸® »ç°Å¸® ³»¿¡ ÇÃ·¹ÀÌ¾î°¡ ÀÖÀ¸¸é ÆÐÅÏÀ» °Ç³Ê¶Ù°í IDLE »óÅÂ·Î º¯°æ
+            // ï¿½Ù°Å¸ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç³Ê¶Ù°ï¿½ IDLE ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
             ChangeState(State.IDLE);
             yield break;
         }
         ChangeState(State.MOVE);
+        footSoundController.SetBool(true);
         float duration = 2f;
         float elapsed = 0f;
-
-        while (elapsed < duration)
+    
+        
+        while (elapsed < duration && distance > MeleeAttackRange)
         {
+            distance = Vector3.Distance(transform.position, player.transform.position);
             TrackPlayer();
             elapsed += Time.deltaTime;
             yield return null;
         }
+        footSoundController.SetBool(false);
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern4()//¿ø°Å¸® ¾¾¾Ñ
+    protected override IEnumerator ExecutePattern4() // Seed Ranged Attack
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance >= RangedAttackRange/2)
@@ -132,13 +152,15 @@ public class MidBoss : Boss
             int count = 0;
             while (count < 4)
             {
-                Instantiate(seedPrefab, transform.position, Quaternion.identity);
+                GameObject seed = Instantiate(seedPrefab, transform.position, Quaternion.identity);
+                RotateArrowTowardsPlayer(seed);
+                StartCoroutine(arrowSoundObject.Play());
                 count++;
                 yield return new WaitForSeconds(0.25f);
             }
             yield return null;
         }
-        else
+        else // Back Step
         {
             dashType = 1;
             ChangeState(State.DASH);
@@ -154,7 +176,9 @@ public class MidBoss : Boss
             int count = 0;
             while (count < 4)
             {
-                Instantiate(seedPrefab, transform.position, Quaternion.identity);
+                GameObject seed = Instantiate(seedPrefab, transform.position, Quaternion.identity);
+                RotateArrowTowardsPlayer(seed);
+                StartCoroutine(arrowSoundObject.Play());
                 count++;
                 yield return new WaitForSeconds(0.25f);
             }
@@ -162,7 +186,7 @@ public class MidBoss : Boss
         }
         ChangeState(State.IDLE);
     }
-    protected override IEnumerator ExecutePattern5()//µ¢Äð ÈÖµÎ¸£±â
+    protected override IEnumerator ExecutePattern5() // Vine Melee Attack
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= MeleeAttackRange)
@@ -170,6 +194,7 @@ public class MidBoss : Boss
             ChangeState(State.CHANGINGPATTERN);
             yield return new WaitForSeconds(0.5f);
             ChangeState(State.ATTACK);
+            vineSoundObject.PlayAsync();
             float duration = 2f;
             float elapsed = 0f;
             Instantiate(vinePrefab, transform.position, Quaternion.identity);
@@ -178,6 +203,7 @@ public class MidBoss : Boss
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+            vineSoundObject.Stop();
         }
         yield return null;
         ChangeState(State.IDLE);
@@ -210,5 +236,12 @@ public class MidBoss : Boss
         } while (weightedPatterns[randomIndex] == lastPattern);
         curPattern = weightedPatterns[randomIndex];
         lastPattern = curPattern;
+    }
+    
+    private void RotateArrowTowardsPlayer(GameObject arrow)
+    {
+        Vector3 direction = (player.transform.position - arrow.transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 }

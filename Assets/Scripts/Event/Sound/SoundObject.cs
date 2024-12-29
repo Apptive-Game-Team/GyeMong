@@ -75,6 +75,11 @@ public class SoundObject : MonoBehaviour
         yield return new WaitWhile(()=>audioSource.isPlaying);
     }
 
+    public void PlayAsync()
+    {
+        StartCoroutine(Play());
+    }
+
     public SoundType GetSoundType()
     {
         return soundType;
