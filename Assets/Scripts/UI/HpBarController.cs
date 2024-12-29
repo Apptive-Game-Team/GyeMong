@@ -85,6 +85,7 @@ public class HpBarController : MonoBehaviour
     
     public void ClearBoss()
     {
+        _maxHp = DEFAULT_HP;
         boss = null;
     }
 }
