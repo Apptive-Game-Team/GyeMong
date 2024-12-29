@@ -129,6 +129,7 @@ public class DataManager : SingletonObject<DataManager>
     }
     private void LoadKeyMappings()
     {
+        InputManager.Instance.SetDefaultKey();
         KeyMappingData keyMappingData = LoadSection<KeyMappingData>("KeyMappingData");
         for (int i = 0; i < keyMappingData.keyBindings.Count; i++)
         {

@@ -68,7 +68,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: de56a6b3ebfee9940bdcedb5b20cee67, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -169,6 +169,9 @@ MonoBehaviour:
   sprintSpeed: 4
   dashSpeed: 10
   isStartButton: 0
+  materials:
+  - {fileID: 2100000, guid: de56a6b3ebfee9940bdcedb5b20cee67, type: 2}
+  - {fileID: 2100000, guid: 9aca40901bb145b4f940529ee4b672e8, type: 2}
 --- !u!114 &4047033506906318720
 MonoBehaviour:
   m_ObjectHideFlags: 0

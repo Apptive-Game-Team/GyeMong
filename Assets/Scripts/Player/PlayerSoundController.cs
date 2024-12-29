@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,12 @@ namespace playerCharacter
         private Coroutine footSoundCoroutine = null;
         private void Awake()
         {
+            InitializeSoundObjects();
+        }
+
+        private void InitializeSoundObjects()
+        {
+            soundObjects = new();
             soundObjects.Add(PlayerSoundType.DASH, transform.Find("DashSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.SWORD_SWING, transform.Find("SwordSwingSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.SWORD_ATTACK, transform.Find("SwordAttackSound").GetComponent<SoundObject>());
@@ -71,7 +78,7 @@ namespace playerCharacter
                     soundBools[sound] = true;
                     footSoundCoroutine = StartCoroutine(PlaySequentialSound(sound));
                 }
-                else if (!active && soundBools[sound])
+                else if (!active && soundBools[sound])//
                 {
                     StopCoroutine(footSoundCoroutine);
                     footSoundCoroutine = null;
@@ -84,7 +91,13 @@ namespace playerCharacter
                 soundBools.Add(sound, false);
                 SetBool(sound, active);
             }
-            
+            catch (NullReferenceException)
+            {
+                footSoundCoroutine = null;
+                soundBools[sound] = false;
+                InitializeSoundObjects();
+                soundObjects[sound].Stop();
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
@@ -94,7 +107,16 @@ namespace playerCharacter
             while (true)
             {
                 index %= footSounds[curFootSoundIndex].GetLength();
-                soundObjects[sound].SetSoundSource(footSounds[curFootSoundIndex].GetSoundSource(index));
+                try
+                {
+                    soundObjects[sound].SetSoundSource(footSounds[curFootSoundIndex].GetSoundSource(index));
+                }
+                catch (KeyNotFoundException)
+                {
+                    InitializeSoundObjects();
+                    continue;
+                }
+                
                 yield return soundObjects[sound].Play();
                 index += 1;
             }

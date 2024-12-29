@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CameraController : MonoBehaviour
 {
@@ -95,16 +97,25 @@ public class CameraController : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
-        if (IsPointInsidePolygon(player.transform.position, polygon))
+        try
         {
-            transform.position = player.transform.position + Vector3.forward * defaultCameraZ;
+            if (IsPointInsidePolygon(player.transform.position, polygon))
+            {
+                transform.position = player.transform.position + Vector3.forward * defaultCameraZ;
+            }
+            else
+            {
+                Vector2 closestPoint = FindClosestPoint(player.transform.position, polygon);
+                Vector3 closestPoint3D = new Vector3(closestPoint.x, closestPoint.y, defaultCameraZ);
+                transform.position = closestPoint3D;
+            }
         }
-        else
+        catch (NullReferenceException)
         {
-            Vector2 closestPoint = FindClosestPoint(player.transform.position, polygon);
-            Vector3 closestPoint3D = new Vector3(closestPoint.x, closestPoint.y, defaultCameraZ);
-            transform.position = closestPoint3D;
+            BoundarySetter setter =  FindObjectOfType<BoundarySetter>();
+            setter.Start();
         }
+        
         
     }
 

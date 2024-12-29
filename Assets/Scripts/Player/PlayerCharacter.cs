@@ -32,8 +32,9 @@ namespace playerCharacter
 
         private float parryTime = 0.5f;
         private float defendStartTime = 0f;
+        private float blinkDelay = 0.2f;
         
-        private float invincibilityDuration = 3.0f;
+        private float invincibilityDuration = 1.0f;
 
         private bool isDashing = false;
         private bool isAttacking = false;
@@ -42,6 +43,7 @@ namespace playerCharacter
         private bool isInvincible = false;
 
         public bool isStartButton = false;
+        public Material[] materials;
 
         private void Start()
         {
@@ -193,22 +195,27 @@ namespace playerCharacter
         {
             isInvincible = true;
 
-            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
-            {
-                float elapsedTime = 0f;
-                bool isVisible = true;
+            // SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            // if (spriteRenderer != null)
+            // {
+            //     float elapsedTime = 0f;
+            //     bool isVisible = true;
 
-                while (elapsedTime < invincibilityDuration)
-                {
-                    elapsedTime += 0.2f;
-                    isVisible = !isVisible;
-                    spriteRenderer.enabled = isVisible;
-                    yield return new WaitForSeconds(0.1f);
-                }
+            //     while (elapsedTime < invincibilityDuration)
+            //     {
+            //         elapsedTime += 0.2f;
+            //         isVisible = !isVisible;
+            //         spriteRenderer.enabled = isVisible;
+            //         yield return new WaitForSeconds(0.1f);
+            //     }
 
-                spriteRenderer.enabled = true;
-            }
+            //     spriteRenderer.enabled = true;
+            // }
+            Material material = gameObject.GetComponent<Renderer>().material;
+            material.SetFloat("_BlinkTrigger", 1f);
+            yield return new WaitForSeconds(blinkDelay);
+            material.SetFloat("_BlinkTrigger", 0f);
+            yield return new WaitForSeconds(invincibilityDuration - blinkDelay);
 
             isInvincible = false;
         }
@@ -339,10 +346,29 @@ namespace playerCharacter
             PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
             if (!playerData.isFirst && !isStartButton)
             {
+                print("qwd");
                 gameObject.transform.position = playerData.playerPosition;
                 lastMovementDirection = playerData.playerDirection;
+                StartCoroutine(LoadPlayerEffect());
             }
             isStartButton = false;
+        }
+
+        private IEnumerator LoadPlayerEffect()
+        {
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            renderer.material = materials[1];
+            float ratio = 0f;
+            renderer.material.SetFloat("_Value", ratio);
+            yield return new WaitForSeconds(2f);
+            while (true)
+            {   
+                renderer.material.SetFloat("_Value", ratio);
+                ratio += 0.04f;
+                yield return new WaitForSeconds(0.08f);
+                if (ratio > 1.0f) break;
+            }
+            renderer.material = materials[0];
         }
 
         public IEnumerator MoveTo(Vector3 target, float speed)

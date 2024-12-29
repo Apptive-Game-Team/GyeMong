@@ -98,6 +98,7 @@ public class Guardian : Boss
         yield return new WaitForSeconds(2f);
         ChangeState(State.ATTACK);
         shield = 30f;
+        gameObject.GetComponent<Renderer>().material = materials[1];
         shieldComponenet.SetActive(true);
         yield return null;
         ChangeState(State.IDLE);
