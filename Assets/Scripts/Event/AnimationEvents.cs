@@ -10,13 +10,16 @@ public class AnimationEvent : Event {
     [SerializeField]
     private float deltaTime = 0.1f;
 
+    [SerializeField] private SpriteRenderer _renderer = null;
+
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        SpriteRenderer renderer = eventObject.GetComponent<SpriteRenderer>();
+        if (_renderer == null) 
+            _renderer = eventObject.GetComponent<SpriteRenderer>();
         foreach(Sprite sprite in frames)
         {
             yield return new WaitForSeconds(deltaTime);
-            renderer.sprite = sprite;           
+            _renderer.sprite = sprite;           
         }
     }
 }
