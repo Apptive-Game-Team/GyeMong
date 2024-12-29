@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public enum SoundType
@@ -47,6 +48,11 @@ public class SoundManager : SingletonObject<SoundManager>
 
     private void Start()
     {
+        GetSoundObjects();
+    }
+
+    private void GetSoundObjects()
+    {
         soundObjects = new List<SoundObject>(FindObjectsOfType<SoundObject>());
     }
 
@@ -83,5 +89,20 @@ public class SoundManager : SingletonObject<SoundManager>
             return volumes[type];
         }
         
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GetSoundObjects();
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
