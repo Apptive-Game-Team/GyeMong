@@ -42,7 +42,7 @@ public class Creature : MonoBehaviour
     }
     public virtual void TakeDamage(float damage)
     {
-        OnHit();
+        //OnHit();
         if (shield >= damage)
         {
             shield -= damage;
