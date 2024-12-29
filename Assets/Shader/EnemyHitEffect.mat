@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8593821214883395118
+--- !u!114 &-8411998743722144210
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HitEffect
-  m_Shader: {fileID: -6465566751694194690, guid: 4a3ef418a74e9354684c7bcc19ccbcda,
+  m_Name: EnemyHitEffect
+  m_Shader: {fileID: -6465566751694194690, guid: 09dc40e486d945e4ea5db19a61869acd,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -41,14 +41,6 @@ Material:
         m_Texture: {fileID: 2800000, guid: d373da4ce1c384c83929ea393212971d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Texture2DAsset_1fd9fb2ea52541a0b7d63c66598e9c81_Out_0_Texture2D:
-        m_Texture: {fileID: 2800000, guid: d373da4ce1c384c83929ea393212971d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture2DAsset_536fdf9716cf4af48a8bf2f978f20666_Out_0_Texture2D:
-        m_Texture: {fileID: 2800000, guid: d373da4ce1c384c83929ea393212971d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -64,8 +56,5 @@ Material:
     m_Ints: []
     m_Floats:
     - _BlinkTrigger: 0
-    - _SpawnHeight: 0.1
-    - _Value: 1
-    m_Colors:
-    - _Color: {r: 0, g: 0.3244352, b: 4, a: 0}
+    m_Colors: []
   m_BuildTextureStacks: []
