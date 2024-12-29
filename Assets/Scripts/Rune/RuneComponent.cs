@@ -51,7 +51,7 @@ public class RuneComponent : MonoBehaviour
 
     public void UnequipRune(RuneData runeData)
     {
-        equippedRuneList.Remove(runeData);
+        equippedRuneList.RemoveAll(x=>x.id == runeData.id);
         _buffComp.DeleteBuff(runeData.runeBuff);
     }
 
