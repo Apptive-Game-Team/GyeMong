@@ -25,6 +25,7 @@ public class Puzzle2RewardClaim : MonoBehaviour, IEventTriggerable
     private void OnTriggerEnter2D(Collider2D collision)
     {
         StartCoroutine(ClearFog());
+        RuneObjectCreator.Instance.DrawRuneObject(2, transform.position);
     }
 
     public void Trigger()
