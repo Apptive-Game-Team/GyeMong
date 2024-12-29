@@ -149,6 +149,7 @@ public class BGMEvent : Event
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         SoundObject soundObject = SoundManager.Instance.GetBgmObject();
+        SoundManager.Instance.soundObjects.Add(soundObject);
         soundObject.SetSoundSourceByName(bgmName);
         return soundObject.Play();
     }
