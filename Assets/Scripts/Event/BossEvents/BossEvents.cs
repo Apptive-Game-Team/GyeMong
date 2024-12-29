@@ -35,7 +35,7 @@ public class ShowBossHealthBarEvent : BossHpBarEvent
   {
     HpBarController.gameObject.SetActive(true);
     HpBarController.ClearBoss();
-    HpBarController.UpdateHp(0);
+    HpBarController.UpdateHp(0,0);
     
     yield return DropHpBar();
     yield return ReboundHpBar();
@@ -77,17 +77,17 @@ public class ShowBossHealthBarEvent : BossHpBarEvent
   
   private IEnumerator FillHpBar()
   {
-    HpBarController.UpdateHp(0);
+    HpBarController.UpdateHp(0,0);
     float timer = 0;
     float progress = 0;
     while (timer < FILL_TIME && progress <= 1)
     {
       timer += DELTA_TIME;
-      HpBarController.UpdateHp(DEFAULT_HP * progress);
+      HpBarController.UpdateHp(DEFAULT_HP * progress,0);
       progress = Mathf.Pow(timer / FILL_TIME, 2);
       yield return new WaitForSeconds(DELTA_TIME);
     }
-    HpBarController.UpdateHp(DEFAULT_HP);
+    HpBarController.UpdateHp(DEFAULT_HP, 0);
   }
 }
 
