@@ -10,6 +10,7 @@ public enum SceneID
     SPRING_BOSS = 2,
     SPRING_PUZZLE2 = 3,
     SPRING_MID_BOSS = 4,
+    TUTORIAL = 5,
 }
 
 

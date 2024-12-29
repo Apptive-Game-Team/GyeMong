@@ -14,6 +14,7 @@ public enum PortalID
     SPRING_MAIN_TO_MID_BOSS = 6,
     SPRING_MID_BOSS_TO_MAIN = 7,
     SPRING_TOWN = 8,
+    MAIN_TO_TUTORIAL = 9,
 }
 
 [Serializable]
