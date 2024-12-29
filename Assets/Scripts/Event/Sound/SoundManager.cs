@@ -73,6 +73,15 @@ public class SoundManager : SingletonObject<SoundManager>
 
     public float GetVolume(SoundType type)
     {
-        return volumes[type];
+        try
+        {
+            return volumes[type];
+        }
+        catch (KeyNotFoundException)
+        {
+            InitializeVolumes();
+            return volumes[type];
+        }
+        
     }
 }

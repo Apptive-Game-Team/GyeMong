@@ -36142,7 +36142,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21616}
+  m_AnchoredPosition: {x: 0, y: 308.21664}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1077251268
@@ -36970,8 +36970,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565192122}
   m_HandleRect: {fileID: 1565192121}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.60160035
+  m_Value: -0.0000015842168
+  m_Size: 0.60682327
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37696,7 +37696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21616}
+  m_AnchoredPosition: {x: 0, y: 308.21664}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1226039010
@@ -42619,7 +42619,6 @@ GameObject:
   - component: {fileID: 1852717531}
   - component: {fileID: 1852717530}
   - component: {fileID: 1852717529}
-  - component: {fileID: 1852717528}
   - component: {fileID: 1852717527}
   - component: {fileID: 1852717532}
   m_Layer: 0
@@ -42657,33 +42656,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   midBoss: {fileID: 2099362344}
---- !u!50 &1852717528
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1852717525}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &1852717529
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45189,8 +45161,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272479262}
   m_HandleRect: {fileID: 1272479261}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.60160035
+  m_Value: -0.0000015842168
+  m_Size: 0.60682327
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -47119,8 +47091,6 @@ MonoBehaviour:
   curHealth: 0
   defaultDamage: 0
   shield: 0
-  materials:
-  - {fileID: 2100000, guid: 40ac6f0cd04e4b14cb38a521126ba3d0, type: 2}
   wall: {fileID: 1893575457}
   mapPattern: {fileID: 0}
   arrowPrefab: {fileID: 1349092434517921609, guid: 698ededced094f444b9cd52caa8c484b,
@@ -47202,7 +47172,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &2099362347
 SpriteRenderer:
@@ -47224,7 +47194,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 40ac6f0cd04e4b14cb38a521126ba3d0, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

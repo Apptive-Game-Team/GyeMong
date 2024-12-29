@@ -7,7 +7,7 @@ public class BoundarySetter : MonoBehaviour
 {
     [SerializeField] private List<Vector2> boundaryPoints;
     
-    private void Awake()
+    public void Start()
     {
         CameraController.BoundaryPoints = boundaryPoints;
     }
