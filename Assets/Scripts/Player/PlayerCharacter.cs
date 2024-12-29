@@ -361,8 +361,8 @@ namespace playerCharacter
             while (true)
             {   
                 renderer.material.SetFloat("_Value", ratio);
-                ratio += 0.15f;
-                yield return new WaitForSeconds(0.15f);
+                ratio += 0.04f;
+                yield return new WaitForSeconds(0.08f);
                 if (ratio > 1.0f) break;
             }
             renderer.material = materials[0];
