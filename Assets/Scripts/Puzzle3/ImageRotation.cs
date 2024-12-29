@@ -20,7 +20,7 @@ public class ImageRotation : MonoBehaviour
     {
         if (isAttached && isRotating && !PuzzleController.Instance.isPuzzleCleared)
         {
-            if (Input.GetKeyDown(KeyCode.Z))
+            if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
             {
                 StartCoroutine(RotateImage());
                 PuzzleController.Instance.isPuzzleStart = true;
