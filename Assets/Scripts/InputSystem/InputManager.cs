@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using KeyNotFoundException = System.Collections.Generic.KeyNotFoundException;
 
 public enum ActionCode
 {
@@ -29,21 +30,26 @@ public class InputManager : SingletonObject<InputManager>
     private Dictionary<ActionCode, bool> keyDownBoolsForListener = new Dictionary<ActionCode, bool>();
     private Dictionary<ActionCode, Coroutine> keyDownCounterCoroutine = new Dictionary<ActionCode, Coroutine>();
     private Dictionary<ActionCode, bool> keyActiveFlags = new Dictionary<ActionCode, bool>();
-    private Dictionary<ActionCode, KeyCode> keyMappings = new Dictionary<ActionCode, KeyCode>()
+    private Dictionary<ActionCode, KeyCode> keyMappings = new Dictionary<ActionCode, KeyCode>();
+
+    public void SetDefaultKey()
     {
-        { ActionCode.Attack, KeyCode.A},
-        { ActionCode.Defend, KeyCode.S},
-        { ActionCode.Dash, KeyCode.X},
-        { ActionCode.Run, KeyCode.LeftShift},
-        { ActionCode.Interaction, KeyCode.Z },
-        { ActionCode.MoveUp, KeyCode.UpArrow },
-        { ActionCode.MoveDown, KeyCode.DownArrow },
-        { ActionCode.MoveRight, KeyCode.RightArrow },
-        { ActionCode.MoveLeft, KeyCode.LeftArrow },
-        { ActionCode.RunePage, KeyCode.I },
-        { ActionCode.Option, KeyCode.Escape},
-        { ActionCode.SelectClick, KeyCode.Mouse0 },
-    };
+        keyMappings = new Dictionary<ActionCode, KeyCode>()
+        {
+            { ActionCode.Attack, KeyCode.A},
+            { ActionCode.Defend, KeyCode.S},
+            { ActionCode.Dash, KeyCode.X},
+            { ActionCode.Run, KeyCode.LeftShift},
+            { ActionCode.Interaction, KeyCode.Z },
+            { ActionCode.MoveUp, KeyCode.UpArrow },
+            { ActionCode.MoveDown, KeyCode.DownArrow },
+            { ActionCode.MoveRight, KeyCode.RightArrow },
+            { ActionCode.MoveLeft, KeyCode.LeftArrow },
+            { ActionCode.RunePage, KeyCode.I },
+            { ActionCode.Option, KeyCode.Escape},
+            { ActionCode.SelectClick, KeyCode.Mouse0 },
+        };
+    }
 
     Vector3 moveVector = new Vector3();
     private List<Vector2> directionList = new List<Vector2>();
@@ -121,10 +127,19 @@ public class InputManager : SingletonObject<InputManager>
     /// <returns>True if key was pressed down, false otherwise</returns>
     public bool GetKeyDown(ActionCode action)
     {
-        if (keyActiveFlags[action] && keyDownBools[action])
+        try
         {
+            if (keyActiveFlags[action] && keyDownBools[action])
+            {
+                keyDownBools[action] = false;
+                return true;
+            }
+
+        }
+        catch (KeyNotFoundException e)
+        {
+            keyActiveFlags[action] = true;
             keyDownBools[action] = false;
-            return true;
         }
         return false;
     }
@@ -203,7 +218,15 @@ public class InputManager : SingletonObject<InputManager>
     /// <returns>True if key is held down, otherwise false</returns>
     public bool GetKey(ActionCode action)
     {
-        return (Input.GetKey(keyMappings[action]) && keyActiveFlags[action]);
+        try
+        {
+            return (Input.GetKey(keyMappings[action]) && keyActiveFlags[action]);
+        }
+        catch (KeyNotFoundException e)
+        {
+            SetDefaultKey();
+            return false;
+        }
     }
 
     /// <summary>
@@ -226,20 +249,32 @@ public class InputManager : SingletonObject<InputManager>
     {
         foreach (ActionCode action in keyMappings.Keys)
         {
-            if (keyActiveFlags[action])
+            try
             {
-                if (Input.GetKeyDown(keyMappings[action]))
+                if (keyActiveFlags[action])
                 {
-                    keyDownBools[action] = true;
-                    keyDownBoolsForListener[action] = true;
-                    Coroutine tempCoroutine = keyDownCounterCoroutine[action];
-                    if (tempCoroutine != null)
+                    if (Input.GetKeyDown(keyMappings[action]))//
                     {
-                        StopCoroutine(tempCoroutine);
+                        keyDownBools[action] = true;
+                        keyDownBoolsForListener[action] = true;
+                        Coroutine tempCoroutine = keyDownCounterCoroutine[action];
+                        if (tempCoroutine != null)
+                        {
+                            StopCoroutine(tempCoroutine);
+                        }
+
+                        keyDownCounterCoroutine[action] = StartCoroutine(KeyDownCounter(action));
                     }
-                    keyDownCounterCoroutine[action] = StartCoroutine(KeyDownCounter(action));
                 }
             }
+            catch (KeyNotFoundException e)
+            {
+                SetDefaultKey();
+                keyDownCounterCoroutine[action] = null;
+                keyDownBools[action] = false;
+                keyActiveFlags[action] = true;
+            }
+            
         }
 
     }
@@ -285,11 +320,12 @@ public class InputManager : SingletonObject<InputManager>
 
     private void Start()
     {
+        SetDefaultKey();
         InitKeyDownDictionarys();
         StartCoroutine(CallListenersCoroutine());
     }
 
-    private void CallOnKeyListeners(ActionCode action)
+    private void CallOnKeyListeners(ActionCode action)//
     {
         foreach (IInputListener listener in inputListeners)
         {
