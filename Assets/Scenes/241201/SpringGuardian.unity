@@ -20240,7 +20240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21716}
+  m_AnchoredPosition: {x: 0, y: 308.21622}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &286961927
@@ -20370,7 +20370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21716}
+  m_AnchoredPosition: {x: 0, y: 308.21622}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &326613589
@@ -21716,6 +21716,9 @@ MonoBehaviour:
   curHealth: 0
   defaultDamage: 0
   shield: 0
+  materials:
+  - {fileID: 2100000, guid: 40ac6f0cd04e4b14cb38a521126ba3d0, type: 2}
+  - {fileID: 2100000, guid: abe7f89fee460a844a43194b1e6cf4b4, type: 2}
   wall: {fileID: 1037969029}
   mapPattern: {fileID: 1866070731}
   cubePrefab: {fileID: 6652684582878580984, guid: b6cc82c53b6c35e4aa9323338bbcf981,
@@ -21786,7 +21789,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.5199995, y: 11.5199995}
+    oldSize: {x: 10.4829645, y: 10.472727}
     newSize: {x: 11.5199995, y: 11.5199995}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -21836,7 +21839,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -500274925, guid: b358a5540535e4e0081a6a57572748f8, type: 3}
+  m_Sprite: {fileID: -15224446, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -39042,7 +39045,6 @@ GameObject:
   - component: {fileID: 1840872687}
   - component: {fileID: 1840872686}
   - component: {fileID: 1840872685}
-  - component: {fileID: 1840872684}
   - component: {fileID: 1840872683}
   - component: {fileID: 1840872688}
   m_Layer: 0
@@ -39081,33 +39083,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guardian: {fileID: 455494628}
   rootPatternManger: {fileID: 1866070731}
---- !u!50 &1840872684
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840872681}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &1840872685
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39280,12 +39255,16 @@ MonoBehaviour:
   trigger: 0
   triggerLimitCounter: 1
   eventSequence:
+  - rid: 521773906431836161
+  - rid: 521773906431836163
   - rid: 521773836373327896
   - rid: 521773836373327897
   - rid: 521773882682900482
   - rid: 521773882682900483
+  - rid: 521773906431836160
   - rid: 521773836373327899
   - rid: 521773836373327895
+  - rid: 521773906431836162
   - rid: 521773836373327898
   references:
     version: 2
@@ -39322,6 +39301,47 @@ MonoBehaviour:
         target: {x: 31, y: 39, z: -10}
         size: 8
         duration: 2
+    - rid: 521773906431836160
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 521773906431836165
+        - rid: 521773906431836166
+        - rid: 521773906431836164
+    - rid: 521773906431836161
+      type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 455494633}
+    - rid: 521773906431836162
+      type: {class: StartAnimatorEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 455494633}
+    - rid: 521773906431836163
+      type: {class: ChangeSpriteEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 455494632}
+        _sprite: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808, type: 3}
+    - rid: 521773906431836164
+      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
+      data:
+        frames:
+        - {fileID: 1979126298, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+        - {fileID: -15224446, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+        - {fileID: 588034305, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+        - {fileID: 1568532850, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+        - {fileID: -2034889144, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+        - {fileID: 2020349588, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+        deltaTime: 0.5
+        _renderer: {fileID: 455494632}
+    - rid: 521773906431836165
+      type: {class: ChangeSpriteEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 455494632}
+        _sprite: {fileID: 1979126298, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+    - rid: 521773906431836166
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0.4
 --- !u!1 &1849812947
 GameObject:
   m_ObjectHideFlags: 0
@@ -39980,8 +40000,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 872356579}
   m_HandleRect: {fileID: 872356578}
   m_Direction: 2
-  m_Value: -0.0000031684335
-  m_Size: 0.6068435
+  m_Value: 0
+  m_Size: 0.6068117
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -40326,8 +40346,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 86957274}
   m_HandleRect: {fileID: 86957273}
   m_Direction: 2
-  m_Value: -0.0000031684335
-  m_Size: 0.6068435
+  m_Value: 0
+  m_Size: 0.6068117
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
