@@ -63,7 +63,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: c8ffa2f1b3f724813888410f84ac35a5, type: 3}
   - name: EFFECT_Sword_Defend_Start
     type: 1
-    clip: {fileID: 8300000, guid: 40bd0d44e30944ae6968bbaf8538ce37, type: 3}
+    clip: {fileID: 8300000, guid: c90511ce35ef5af42a2001c04ea508b1, type: 3}
   - name: EFFECT_Dash
     type: 1
     clip: {fileID: 8300000, guid: 93e12f8ced00f405dbc82db9f55c91a9, type: 3}
@@ -92,5 +92,8 @@ MonoBehaviour:
     type: 3
     clip: {fileID: 8300000, guid: 662dc2c91d272408890e7ac1ab267dae, type: 3}
   - name: EFFECT_Sword_Defend_Hit
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: 6948407687f944b1684dd3a488fc074e, type: 3}
+  - name: EFFECT_Sword_Defend_Perfect
+    type: 1
+    clip: {fileID: 8300000, guid: 40bd0d44e30944ae6968bbaf8538ce37, type: 3}
