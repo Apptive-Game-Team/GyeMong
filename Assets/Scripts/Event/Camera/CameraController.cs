@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class CameraController : MonoBehaviour
 {
     private GameObject player;
-    private int defaultCameraZ = -10;
+    private int defaultCameraZ = -20;
 
     private const float SHAKE_AMOUNT = 0.05f;
     private const float SHAKE_DELAY = 0.05f;
