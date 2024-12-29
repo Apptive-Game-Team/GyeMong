@@ -29,6 +29,14 @@ public class Creature : MonoBehaviour
     public Vector2 moveDir { get; private set; }
     [SerializeField] protected float shield;
     protected GameObject player;
+    public Material[] materials;
+    private float blinkDelay = 0.15f;
+
+    protected virtual void Awake()
+    {
+        gameObject.GetComponent<Renderer>().material = materials[0];
+    }
+
     protected virtual void Update()
     {
         Vector3 targetPosition = player.transform.position;
@@ -52,6 +60,7 @@ public class Creature : MonoBehaviour
             float temp = shield;
             shield = 0;
             OnShieldBroken();
+            OnHitEffect();
             curHealth -= (damage-temp);
         }
     }
@@ -139,8 +148,21 @@ public class Creature : MonoBehaviour
         ChangeState(curState_);
     }
 
+    private void OnHitEffect()
+    {
+        StartCoroutine(OnHitEffectCoroutine());
+    }
+
+    private IEnumerator OnHitEffectCoroutine()
+    {
+        gameObject.GetComponent<Renderer>().material.SetFloat("_BlinkTrigger", 1f);
+        yield return new WaitForSeconds(blinkDelay);
+        gameObject.GetComponent<Renderer>().material.SetFloat("_BlinkTrigger", 0f);
+    }
+
     protected virtual void OnShieldBroken()
     {
+        gameObject.GetComponent<Renderer>().material = materials[0];
     }
 }
 

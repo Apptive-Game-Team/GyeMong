@@ -17,8 +17,10 @@ public abstract class Boss : Creature
         return null;
     }
     
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         Type type = GetType();
         
         if (_instances.ContainsKey(type) && _instances[type] != this)
@@ -86,6 +88,7 @@ public abstract class Boss : Creature
         {
             currentPhase++;
             StopAllCoroutines();
+            gameObject.GetComponent<Renderer>().material.SetFloat("_BlinkTrigger", 0f);
             StartCoroutine(ChangingPhase());
         }
         else
