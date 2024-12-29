@@ -25,7 +25,7 @@ public class Cube : MonoBehaviour
         {
             if (player != null)
             {
-                transform.position = player.transform.position + new Vector3 (0,4,0);
+                transform.position = player.transform.position + new Vector3 (0, 30, 0);
             }
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -37,7 +37,7 @@ public class Cube : MonoBehaviour
     private IEnumerator StartFalling()
     {
         float accele = 70f; // �߷°��ӵ� (���ӵ� ũ��)
-        float speed = 0f; // �ʱ� �ӵ�
+        float speed = 70f; // �ʱ� �ӵ�
         float currentSpeed = speed; // ���� �ӵ�
         Vector3 targetPosition = player.transform.position;
         Vector3 startPosition = transform.position;
