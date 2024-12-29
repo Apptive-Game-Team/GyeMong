@@ -13,8 +13,8 @@ public class StartButton : MonoBehaviour
 
     public void StartGame()
     {
-        PlayerCharacter.Instance.isStartButton = true;
         optionExitButton.SetActive(true);
         SceneManager.LoadScene("TutorialScene");
+        DataManager.Instance.isStartButton = true;
     }
 }
