@@ -107,6 +107,7 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         foreach(var runeData in playerRuneComp.EquippedRuneList)
         {
             RuneUIObject runeUI = Instantiate(runeIcon, EquipRuneListUI.transform);
+            runeUI.uiState = RuneUIState.EQUIPPED;
             runeIcon.Init(runeData);
             selectableUIs.Add(runeUI);
         }
@@ -119,6 +120,7 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         foreach(var runeData in playerRuneComp.AcquiredRuneList)
         {
             RuneUIObject runeUI = Instantiate(runeIcon, AcquiredRuneListUI.transform);
+            runeUI.uiState = RuneUIState.UNEQUIPPED;
             runeIcon.Init(runeData);
             selectableUIs.Add(runeUI);
         }

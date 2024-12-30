@@ -16,7 +16,7 @@ public class CreateRuneEvent : Event
 
 public class AcquireRuneEvent : Event
 {
-    [SerializeField] int runeID;
+    [SerializeField] public int runeID;
 
     public override IEnumerator Execute(EventObject eventObject = null)
     {
@@ -33,21 +33,24 @@ public class RuneObjectCreator : SingletonObject<RuneObjectCreator>
     [SerializeField] public RuneDataList runeDataList;
     [SerializeField] GameObject runeGameObject;
 
-    public GameObject DrawRuneObject(int runeID, Vector3 pos)
+    public GameObject DrawRuneObject(int _runeID, Vector3 pos)
     {
         GameObject runeObj = Instantiate(runeGameObject, pos, Quaternion.identity);
         RuneObject rune = runeObj.GetComponent<RuneObject>();
-        rune.TryInit(runeDataList.GetRuneData(runeID));
+        EventObject eventObj = runeObj.GetComponent<EventObject>();
+        AcquireRuneEvent acquireRuneEvent = eventObj.EventSequence[0] as AcquireRuneEvent;
+        acquireRuneEvent.runeID = _runeID;
+        rune.TryInit(runeDataList.GetRuneData(_runeID));
         return runeObj;
     }
-
-    private void CreatePuzzle1Rune()
-    {
-        DrawRuneObject(2, new Vector3(-75,80,0));
-    }
-
-    private void Start()
-    {
-        CreatePuzzle1Rune();
-    }
+    //
+    // private void CreatePuzzle1Rune()
+    // {
+    //     DrawRuneObject(2, new Vector3(-75,80,0));
+    // }
+    //
+    // private void Start()
+    // {
+    //     CreatePuzzle1Rune();
+    // }
 }

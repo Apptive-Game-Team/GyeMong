@@ -28,6 +28,11 @@ public class SoundController : SingletonObject<SoundController>
         bgmVolumeSlider.value = soundData.bgmVolume;
         effectVolumeSlider.value = soundData.sfxVolume;
 
+        SoundManager.Instance.SetMasterVolume(soundData.masterVolume);
+        SoundManager.Instance.SetVolume(SoundType.UI, soundData.UIVolume);
+        SoundManager.Instance.SetVolume(SoundType.BGM, soundData.bgmVolume);
+        SoundManager.Instance.SetVolume(SoundType.EFFECT, soundData.sfxVolume);
+
         masterVolumeSlider.onValueChanged.AddListener(UpdateMasterVolume);
         uiVolumeSlider.onValueChanged.AddListener(UpdateUIVolume);
         bgmVolumeSlider.onValueChanged.AddListener(UpdateBgmVolume);
@@ -53,4 +58,5 @@ public class SoundController : SingletonObject<SoundController>
     {
         SoundManager.Instance.SetVolume(SoundType.EFFECT, value);
     }
+    
 }

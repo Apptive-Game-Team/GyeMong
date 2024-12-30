@@ -37,6 +37,15 @@ public abstract class Event
     }
 }
 
+public class HealEvent : Event
+{
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        PlayerCharacter.Instance.Heal(1000);
+        yield return null;
+    }
+}
+
 [Serializable]
 public class WarpPortalEvent : Event
 {
@@ -149,6 +158,7 @@ public class BGMEvent : Event
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         SoundObject soundObject = SoundManager.Instance.GetBgmObject();
+        SoundManager.Instance.soundObjects.Add(soundObject);
         soundObject.SetSoundSourceByName(bgmName);
         return soundObject.Play();
     }

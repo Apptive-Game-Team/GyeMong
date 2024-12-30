@@ -79,6 +79,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300114, guid: 99611d99d82c24a6ca48de3c0b39fa62,
         type: 3}
+    - target: {fileID: 2478308951613359036, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2706223787955244828, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_Radius
@@ -97,7 +102,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: eventSequence.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -122,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: eventSequence.Array.data[4]
-      value: -2
+      value: 521773911791632385
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -146,6 +151,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
+      propertyPath: managedReferences[521773911791632385]
+      value: Assembly-CSharp HealEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
       propertyPath: managedReferences[521773745628250173].message.name
       value: System
       objectReference: {fileID: 0}
@@ -162,5 +172,60 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4934385667042233568, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1874063298036568991}
   m_SourcePrefab: {fileID: 100100000, guid: f79cf1be3a37447669edd05f233eeeec, type: 3}
+--- !u!1 &274988743954673226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4934385667042233568, guid: f79cf1be3a37447669edd05f233eeeec,
+    type: 3}
+  m_PrefabInstance: {fileID: 5164082106090054314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1874063298036568991
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274988743954673226}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.15625, y: 2.28125}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

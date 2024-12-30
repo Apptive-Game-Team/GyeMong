@@ -18,7 +18,6 @@ public class RuneComponent : MonoBehaviour
     private void Start()
     {
         _buffComp = GetComponent<BuffComponent>();
-        TestAcquire();
     }
 
     private void TestAcquire()
@@ -52,7 +51,7 @@ public class RuneComponent : MonoBehaviour
 
     public void UnequipRune(RuneData runeData)
     {
-        equippedRuneList.Remove(runeData);
+        equippedRuneList.RemoveAll(x=>x.id == runeData.id);
         _buffComp.DeleteBuff(runeData.runeBuff);
     }
 

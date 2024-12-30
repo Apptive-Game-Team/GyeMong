@@ -24,7 +24,7 @@ public enum RuneUIState
 public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
 {
     [SerializeField] RuneData runeData;
-    [SerializeField] RuneUIState uiState;
+    [SerializeField] public RuneUIState uiState;
 
     [SerializeField] Image uiImage;
 
