@@ -19,6 +19,6 @@ MonoBehaviour:
   - material: {fileID: 2100000, guid: 40ac6f0cd04e4b14cb38a521126ba3d0, type: 2}
     materialType: 1
     triggerName: _BlinkTrigger
-  - material: {fileID: 0}
+  - material: {fileID: 2100000, guid: abe7f89fee460a844a43194b1e6cf4b4, type: 2}
     materialType: 2
     triggerName: _isShieldActive
