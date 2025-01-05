@@ -30,11 +30,6 @@ public class Golem : Boss
         currentShield = 0f;
     }
     
-    public override void TakeDamage(float damage)
-    {
-        throw new System.NotImplementedException();
-    }
-    
     private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
     {
         Vector3[] points = new Vector3[numberOfPoints];
@@ -125,7 +120,7 @@ public class Golem : Boss
         public override IEnumerator StateCoroutine()
         {
             yield return new WaitForSeconds(2f);
-            currentShield = 30f;
+            Golem.currentShield = 30f;
             Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
             Golem.MaterialController.SetFloat(1);
             
@@ -154,17 +149,17 @@ public class Golem : Boss
              Vector3 direction = Golem.DirectionToPlayer;
              Vector3 startPosition = Golem.transform.position;
 
-             Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval));
-
-             Golem.StartCoroutine(DestroyFloor(spawnedObjects, 0.5f));
+             Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
+             
              Golem.Animator.SetBool("OneHand", false);
+             
+             yield return new WaitForSeconds(2f);
              
              creature.ChangeState();
         }
         
-        private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval)
+        private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
         {
-            List<GameObject> spawnedObjects = new List<GameObject>();
             for (int i = 0; i <= numberOfObjects; i++)
             {
                 Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
@@ -172,21 +167,9 @@ public class Golem : Boss
                 spawnedObjects.Add(floor);
                 Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 Golem.StartCoroutine(Golem._shockwavesoundObject.Play());
-                yield return new WaitForSeconds(interval); // ���� ������Ʈ �������� ���
+                yield return new WaitForSeconds(interval);
             }
             yield return spawnedObjects;
-        }
-        
-        private IEnumerator DestroyFloor(List<GameObject> objects, float delay)
-        {
-            yield return new WaitForSeconds(delay); 
-            foreach (GameObject obj in objects)
-            {
-                if (obj != null)
-                { 
-                    Destroy(obj);
-                } 
-            }
         }
     } 
     
