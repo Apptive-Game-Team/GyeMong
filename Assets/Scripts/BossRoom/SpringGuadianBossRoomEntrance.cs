@@ -21,13 +21,12 @@ public class SpringGuardianBossRoomEntrance : MonoBehaviour, IEventTriggerable
     {
         if (guardian != null)
         {
-            // guardian.StartDetectingPlayer();
+            guardian.ChangeState();
         }
         if(rootPatternManger != null)
         {
             rootPatternManger.SetActive(true);
         }
-        Destroy(gameObject);
     }
 }
 

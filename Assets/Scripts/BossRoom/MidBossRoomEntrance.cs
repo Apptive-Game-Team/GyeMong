@@ -20,8 +20,7 @@ public class MidBossRoomEntrance : MonoBehaviour, IEventTriggerable
     { 
         if (midBoss != null)
         {
-            // midBoss.StartDetectingPlayer();
-            Destroy(gameObject);
+            midBoss.ChangeState();
         }
     }
 }
