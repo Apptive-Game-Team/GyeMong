@@ -67,6 +67,7 @@ public class Cube : BossAttack
         yield return new WaitForSeconds(1f);
         
         Destroy(gameObject);
+        Destroy(shadow);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -74,7 +75,6 @@ public class Cube : BossAttack
         if (collision.collider.CompareTag("Player"))
         {
             PlayerCharacter.Instance.TakeDamage(damage);
-            //�÷��̾ �°� ��� ���� �Ǵ� ����� ���� �ʿ䰡 �־��
         }
         
     }
@@ -82,9 +82,9 @@ public class Cube : BossAttack
     {
         if (isFalled && other.CompareTag("Boss"))
         {
+            other.GetComponent<Boss>().StartCoroutine(other.GetComponent<Boss>().Stun());
             Destroy(gameObject);
             Destroy(shadow);
-            other.GetComponent<Boss>().Stun();
         }
     }
     GameObject shadow;
