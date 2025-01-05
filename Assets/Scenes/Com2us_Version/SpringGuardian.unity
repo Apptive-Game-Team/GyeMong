@@ -20327,6 +20327,8 @@ MonoBehaviour:
   trigger: 4
   triggerLimitCounter: -1
   eventSequence:
+  - rid: 3294223817106784261
+  - rid: 3294223817106784262
   - rid: 521773836373327900
   - rid: 521773836373327901
   - rid: 7405124598596370437
@@ -20351,6 +20353,15 @@ MonoBehaviour:
     - rid: 521773882682900481
       type: {class: StartFollowCameraEvent, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 3294223817106784261
+      type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 455494633}
+    - rid: 3294223817106784262
+      type: {class: ChangeSpriteEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 455494632}
+        _sprite: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808, type: 3}
     - rid: 7405124598596370432
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -21839,7 +21850,7 @@ MonoBehaviour:
     - rid: 7405124568204705792
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 0}
+        _boss: {fileID: 1654955325}
     - rid: 7405124568204705793
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
