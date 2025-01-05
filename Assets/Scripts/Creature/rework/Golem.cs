@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -81,7 +82,7 @@ public class Golem : Boss
             _animator.SetBool("TwoHand", true);
             
             yield return new WaitForSeconds(2f);
-            yield return Golem.MakeShockwave();
+            yield return Golem.MakeShockwave(4);
             
             _animator.SetBool("TwoHand", false);
             creature.ChangeState();
@@ -142,7 +143,70 @@ public class Golem : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            
+            _animator.SetBool("OneHand", true);
+            yield return new WaitForSeconds(1f);
+
+             int numberOfObjects = 5;
+             float interval = 0.2f;
+             float fixedDistance = 7f;
+
+             List<GameObject> spawnedObjects = new List<GameObject>();
+
+             Vector3 direction = Golem.DirectionToPlayer;
+             Vector3 startPosition = Golem.transform.position;
+
+             Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval));
+
+             Golem.StartCoroutine(DestroyFloor(spawnedObjects, 0.5f));
+             _animator.SetBool("OneHand", false);
+             
+             creature.ChangeState();
+        }
+        
+        private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval)
+        {
+            List<GameObject> spawnedObjects = new List<GameObject>();
+            for (int i = 0; i <= numberOfObjects; i++)
+            {
+                Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
+                GameObject floor = Instantiate(Golem.floorPrefab, spawnPosition, Quaternion.identity);
+                spawnedObjects.Add(floor);
+                Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");
+                Golem.StartCoroutine(Golem._shockwavesoundObject.Play());
+                yield return new WaitForSeconds(interval); // ���� ������Ʈ �������� ���
+            }
+            yield return spawnedObjects;
+        }
+        
+        private IEnumerator DestroyFloor(List<GameObject> objects, float delay)
+        {
+            yield return new WaitForSeconds(delay); 
+            foreach (GameObject obj in objects)
+            {
+                if (obj != null)
+                { 
+                    Destroy(obj);
+                } 
+            }
         }
     } 
+    
+    protected class ShockwaveAttack : GolemState
+    {
+        public override int GetWeight()
+        {
+            return (Golem.CurrentPhase == 1) ? 5 : 0;
+        }
+
+        public override IEnumerator StateCoroutine()
+        {
+            _animator.SetBool("TwoHand", true);
+            
+            yield return new WaitForSeconds(2f);
+            yield return Golem.MakeShockwave(14);
+            
+            _animator.SetBool("TwoHand", false);
+            creature.ChangeState();
+        }
+    }
 }
