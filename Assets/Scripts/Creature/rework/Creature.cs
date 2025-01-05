@@ -120,7 +120,7 @@ public abstract class Creature : MonoBehaviour, IAttackable
         }
     }
 
-    public void OnAttacked(float damage)
+    public virtual void OnAttacked(float damage)
     {
         if (currentShield >= damage)
          {

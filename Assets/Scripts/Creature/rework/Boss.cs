@@ -12,6 +12,12 @@ public abstract class Boss : Creature
     public int CurrentPhase {get { return currentPhase; }}
     public float CurrentMaxHp {get { return maxHps[currentPhase]; }}
 
+    public override void OnAttacked(float damage)
+    {
+        base.OnAttacked(damage);
+        CheckPhaseTransition();
+    }
+    
     protected void CheckPhaseTransition()
     {
         if (currentHp <= 0)
@@ -22,12 +28,12 @@ public abstract class Boss : Creature
     
     protected void TransPhase()
     {
-        if (currentPhase < maxPhase)
+        if (currentPhase <  maxPhase)
         {
             currentPhase++;
             StopAllCoroutines();
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-            // StartCoroutine(ChangingPhase());
+            StartCoroutine(ChangingPhase());
         }
         else
         {
@@ -35,6 +41,14 @@ public abstract class Boss : Creature
         }
     }
 
+    public IEnumerator ChangingPhase()
+    {
+        currentHp = CurrentMaxHp;
+        GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
+        yield return new WaitForSeconds(2f);
+        ChangeState();
+     }
+    
     public override IEnumerator Stun()
     {
         currentShield = 0f;
