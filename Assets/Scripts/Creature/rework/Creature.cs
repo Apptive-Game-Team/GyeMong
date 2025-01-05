@@ -20,8 +20,8 @@ public abstract class Creature : MonoBehaviour
     protected float detectionRange;
     public float MeleeAttackRange {get; protected set;}
     public float RangedAttackRange {get; protected set;}
-    
-    private Animator _animator;
+
+    protected Animator _animator;
     private MaterialController _materialController;
     public MaterialController MaterialController
     {

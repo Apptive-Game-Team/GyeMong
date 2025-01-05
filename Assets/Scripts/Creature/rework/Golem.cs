@@ -15,7 +15,6 @@ public class Golem : Boss
     [SerializeField] private GameObject meleeAttackPrefab2;
     [SerializeField] private GameObject shockwavePrefab;
     private Shield shieldComponenet;
-    [SerializeField] private static Animator _animator;
 
     [SerializeField] private SoundObject _shockwavesoundObject;
     public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
@@ -65,12 +64,12 @@ public class Golem : Boss
         }
     }
 
-    protected abstract class GolemState : BaseState
+    public abstract class GolemState : BaseState
     {
         public Golem Golem => creature as Golem;
     }
     
-    protected class MeleeAttack : GolemState
+    public class MeleeAttack : GolemState
     { 
         public override int GetWeight()
         {
@@ -79,17 +78,17 @@ public class Golem : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            _animator.SetBool("TwoHand", true);
+            Golem.Animator.SetBool("TwoHand", true);
             
             yield return new WaitForSeconds(2f);
             yield return Golem.MakeShockwave(4);
             
-            _animator.SetBool("TwoHand", false);
+            Golem.Animator.SetBool("TwoHand", false);
             creature.ChangeState();
         }
     }
 
-    protected class FallingCubeAttack : GolemState
+    public class FallingCubeAttack : GolemState
     {
         public override int GetWeight()
         {
@@ -98,7 +97,7 @@ public class Golem : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            _animator.SetBool("Toss", true);
+            Golem.Animator.SetBool("Toss", true);
             
             creature.StartCoroutine(Golem.TossSoundObject.Play());
             yield return new WaitForSeconds(2f);
@@ -108,7 +107,7 @@ public class Golem : Boss
             GameObject shadow = Instantiate(Golem.cubeShadowPrefab, PlayerCharacter.Instance.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
             cubeComponent.DetectShadow(shadow);
 
-            _animator.SetBool("Toss", false);
+            Golem.Animator.SetBool("Toss", false);
             
             yield return new WaitUntil(()=>cube.IsDestroyed());
             
@@ -116,7 +115,7 @@ public class Golem : Boss
         }
     }   
 
-    protected class ChargeShield : GolemState
+    public class ChargeShield : GolemState
     {
         public override int GetWeight()
         {
@@ -134,7 +133,7 @@ public class Golem : Boss
         }
     }
 
-    protected class UpStoneAttack : GolemState
+    public class UpStoneAttack : GolemState
     {
         public override int GetWeight()
         {
@@ -143,7 +142,7 @@ public class Golem : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            _animator.SetBool("OneHand", true);
+            Golem.Animator.SetBool("OneHand", true);
             yield return new WaitForSeconds(1f);
 
              int numberOfObjects = 5;
@@ -158,7 +157,7 @@ public class Golem : Boss
              Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval));
 
              Golem.StartCoroutine(DestroyFloor(spawnedObjects, 0.5f));
-             _animator.SetBool("OneHand", false);
+             Golem.Animator.SetBool("OneHand", false);
              
              creature.ChangeState();
         }
@@ -191,7 +190,7 @@ public class Golem : Boss
         }
     } 
     
-    protected class ShockwaveAttack : GolemState
+    public class ShockwaveAttack : GolemState
     {
         public override int GetWeight()
         {
@@ -200,12 +199,12 @@ public class Golem : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            _animator.SetBool("TwoHand", true);
+            Golem.Animator.SetBool("TwoHand", true);
             
             yield return new WaitForSeconds(2f);
             yield return Golem.MakeShockwave(14);
             
-            _animator.SetBool("TwoHand", false);
+            Golem.Animator.SetBool("TwoHand", false);
             creature.ChangeState();
         }
     }
