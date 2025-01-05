@@ -31,7 +31,7 @@ public abstract class Boss : Creature
         {
             currentPhase++;
             StopAllCoroutines();
-            gameObject.GetComponent<Renderer>().material.SetFloat("_BlinkTrigger", 0f);
+            MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
             // StartCoroutine(ChangingPhase());
         }
         else
