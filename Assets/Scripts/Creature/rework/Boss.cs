@@ -35,9 +35,11 @@ public abstract class Boss : Creature
         }
     }
 
-    public void Stun()
+    public override IEnumerator Stun()
     {
-        
+        currentShield = 0f;
+        MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+        yield return base.Stun();
     }
     
     protected void Die() // Boss Clear Event
