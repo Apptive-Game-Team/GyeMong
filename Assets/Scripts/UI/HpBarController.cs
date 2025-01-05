@@ -18,8 +18,7 @@ public class HpBarController : MonoBehaviour
     
     public const float DEFAULT_HP = 100;
     
-    private int currentPhase = 0;
-    private List<float> maxHps = new List<float>();
+    private int currentPhase = -1;
     private void Awake()
     {
         _curHpBar = transform.Find("CurHp").GetComponent<RectTransform>();
@@ -44,16 +43,13 @@ public class HpBarController : MonoBehaviour
                 if (currentPhase != boss.CurrentPhase)
                 {
                     currentPhase = boss.CurrentPhase;
-                    _maxHp = maxHps[currentPhase - 1];
+                    _maxHp = boss.CurrentMaxHp;
                 }
             }
             else
             {
-                Tuple<int, float, float> bossInfo = boss.BossInfo;
-                maxHps.Add(bossInfo.Item2);
-                maxHps.Add(bossInfo.Item3);
                 currentPhase = boss.CurrentPhase;
-                _maxHp = maxHps[currentPhase - 1];
+                _maxHp = boss.CurrentMaxHp;
                 _isBossSetUp = true;
             }
         }
