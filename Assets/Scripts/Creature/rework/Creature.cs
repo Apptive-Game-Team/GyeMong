@@ -46,7 +46,7 @@ public abstract class Creature : MonoBehaviour
     }
     
     public float DistanceToPlayer => Vector3.Distance(transform.position, PlayerCharacter.Instance.transform.position);
-
+    public Vector3 DirectionToPlayer => (PlayerCharacter.Instance.transform.position - transform.position).normalized;
 
     public abstract void TakeDamage(float damage);
     public abstract void ChangeState();
