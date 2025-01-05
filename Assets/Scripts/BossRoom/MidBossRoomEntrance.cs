@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MidBossRoomEntrance : MonoBehaviour, IEventTriggerable
 {
-    [SerializeField] MidBoss midBoss;
+    [SerializeField] Elf midBoss;
     
     private void Start()
     {
@@ -18,9 +18,10 @@ public class MidBossRoomEntrance : MonoBehaviour, IEventTriggerable
     }
     public void Trigger()
     { 
-        if (midBoss != null && midBoss.curState == Creature.State.NONE)
+        if (midBoss != null)
         {
-            midBoss.StartDetectingPlayer();
+            // midBoss.StartDetectingPlayer();
+            Destroy(gameObject);
         }
     }
 }
