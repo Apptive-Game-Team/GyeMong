@@ -1,14 +1,14 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using Rework;
 using UnityEngine;
 
-public class Seed : MonoBehaviour
+public class Seed : BossAttack
 {
     private GameObject player;
     private Vector3 direction;
     private float speed = 10f;
-    private float attackdamage;
     
     private SoundObject _soundObject;
     private SoundObject _explosionSoundObject;
@@ -24,7 +24,6 @@ public class Seed : MonoBehaviour
 
     private void OnEnable()
     {
-        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(FireArrow());
     }
 
@@ -69,7 +68,7 @@ public class Seed : MonoBehaviour
         {
             _soundObject.PlayAsync();
             Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(attackdamage);
+            PlayerCharacter.Instance.TakeDamage(damage);
         }
     }
 
@@ -84,7 +83,7 @@ public class Seed : MonoBehaviour
         {
             if (enemy.CompareTag("Player"))
             {
-                PlayerCharacter.Instance.TakeDamage(attackdamage/2);
+                PlayerCharacter.Instance.TakeDamage(damage/2);
             }
         }
     }

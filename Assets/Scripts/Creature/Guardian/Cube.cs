@@ -1,9 +1,10 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using Rework;
 using UnityEngine;
 
-public class Cube : MonoBehaviour
+public class Cube : BossAttack
 {
     private GameObject player;
 
@@ -72,7 +73,7 @@ public class Cube : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(damage);
             //�÷��̾ �°� ��� ���� �Ǵ� ����� ���� �ʿ䰡 �־��
         }
         
@@ -83,7 +84,7 @@ public class Cube : MonoBehaviour
         {
             Destroy(gameObject);
             Destroy(shadow);
-            Guardian.GetInstance<Guardian>().Stun();
+            other.GetComponent<Boss>().Stun();
         }
     }
     GameObject shadow;

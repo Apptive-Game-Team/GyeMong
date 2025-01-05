@@ -1,13 +1,12 @@
 using playerCharacter;
 using System.Collections;
+using Rework;
 using UnityEngine;
 
-public class Vine : MonoBehaviour
+public class Vine : BossAttack
 {
-    private float attackdamage;
     private void OnEnable()
     {
-        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(ActivateVine());
     }
     private IEnumerator ActivateVine()
@@ -19,7 +18,7 @@ public class Vine : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(attackdamage, true);
+            PlayerCharacter.Instance.TakeDamage(damage, true);
         }
     }
 }
