@@ -66,20 +66,11 @@ public class Golem : Boss
 
     protected abstract class GolemState : BaseState
     {
-        public Golem golem;
-        public override void OnStateEnter()
-        {
-            golem = creature as Golem;
-        }
+        public Golem Golem => creature as Golem;
     }
     
     protected class MeleeAttack : GolemState
     { 
-        public override void OnStateEnter()
-        {
-            _animator.SetBool("TwoHand", true);
-        }
-
         public override int GetWeight()
         {
             return (creature.DistanceToPlayer < creature.MeleeAttackRange) ? 5 : 0;
@@ -87,16 +78,13 @@ public class Golem : Boss
 
         public override IEnumerator StateCoroutine()
         {
+            _animator.SetBool("TwoHand", true);
+            
             yield return new WaitForSeconds(2f);
-            yield return golem.MakeShockwave();
-            creature.ChangeState();
-        }
-        
-        public override void OnStateUpdate() { }
-
-        public override void OnStateExit()
-        {
+            yield return Golem.MakeShockwave();
+            
             _animator.SetBool("TwoHand", false);
+            creature.ChangeState();
         }
     }
 
@@ -109,26 +97,21 @@ public class Golem : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            creature.StartCoroutine(golem.TossSoundObject.Play());
+            _animator.SetBool("Toss", true);
+            
+            creature.StartCoroutine(Golem.TossSoundObject.Play());
             yield return new WaitForSeconds(2f);
-            GameObject cube= Object.Instantiate(golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
+            GameObject cube= Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
             Cube cubeComponent = cube.GetComponent<Cube>();
             cubeComponent.SetDamage(creature.damage);
-            GameObject shadow =  Object.Instantiate(golem.cubeShadowPrefab, PlayerCharacter.Instance.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
+            GameObject shadow = Instantiate(Golem.cubeShadowPrefab, PlayerCharacter.Instance.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
             cubeComponent.DetectShadow(shadow);
-            
-        }
-        
-        public override void OnStateEnter()
-        {
-            _animator.SetBool("Toss", true);
-        }
 
-        public override void OnStateUpdate() {}
-
-        public override void OnStateExit()
-        {
             _animator.SetBool("Toss", false);
+            
+            yield return new WaitUntil(()=>cube.IsDestroyed());
+            
+            creature.ChangeState();
         }
     }   
 
@@ -143,15 +126,23 @@ public class Golem : Boss
         {
             yield return new WaitForSeconds(2f);
             currentShield = 30f;
-            creature.GetComponent<Renderer>().material = golem.materials[1];
-            creature.GetComponent<Renderer>().material.SetFloat("_isShieldActive", 1f);
-            creature.shieldComponenet.SetActive(true);
+            Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
+            Golem.MaterialController.SetFloat(1);
+            
+            creature.ChangeState();
+        }
+    }
+
+    protected class UpStoneAttack : GolemState
+    {
+        public override int GetWeight()
+        {
+            return (Golem.CurrentPhase == 0) ? 5 : 0;
         }
 
-        public override void OnStateEnter() {}
-
-        public override void OnStateUpdate() {}
-
-        public override void OnStateExit() {}
-    }
+        public override IEnumerator StateCoroutine()
+        {
+            
+        }
+    } 
 }
