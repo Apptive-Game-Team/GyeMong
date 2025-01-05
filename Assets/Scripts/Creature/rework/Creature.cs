@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using playerCharacter;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Creature : MonoBehaviour
 {
@@ -20,6 +23,8 @@ public abstract class Creature : MonoBehaviour
     protected float detectionRange;
     public float MeleeAttackRange {get; protected set;}
     public float RangedAttackRange {get; protected set;}
+
+    private Coroutine _currentStateCoroutine;
 
     protected Animator _animator;
     private MaterialController _materialController;
@@ -50,7 +55,24 @@ public abstract class Creature : MonoBehaviour
     public Vector3 DirectionToPlayer => (PlayerCharacter.Instance.transform.position - transform.position).normalized;
 
     public abstract void TakeDamage(float damage);
-    public abstract void ChangeState();
+
+    public void ChangeState()
+    {
+        if (_currentStateCoroutine != null)
+            StopCoroutine(_currentStateCoroutine);
+        
+        BaseState[] states = States;
+        BaseState nextState = null;
+        List<int> weights = new();
+        int index = 0;
+        int randomIndex;
+        foreach (BaseState state in states)
+        {
+            weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
+        }
+        randomIndex = Random.Range(0, weights.Count);
+        _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
+    }
     
     protected IEnumerator Blink()
     {
@@ -83,6 +105,7 @@ public abstract class Creature : MonoBehaviour
                     if (!type.IsAbstract)
                     {
                         states.Add(Activator.CreateInstance(type) as BaseState);
+                        states[states.Count - 1].creature = this;
                     }
                 }
                 _states = states.ToArray();
