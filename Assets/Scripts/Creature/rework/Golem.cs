@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using playerCharacter;
@@ -20,13 +21,18 @@ public class Golem : Boss
     public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
     [SerializeField] private SoundObject _tossSoundObject;
     public SoundObject TossSoundObject => _tossSoundObject;
-    
-    
+
+    private void Start()
+    {
+        Initialize();
+    }
+
     private void Initialize()
     {
         maxPhase = 2;
         maxHps.Add(200f);
         maxHps.Add(300f);
+        currentHp = maxHps[currentPhase];
         currentShield = 0f;
     }
     
