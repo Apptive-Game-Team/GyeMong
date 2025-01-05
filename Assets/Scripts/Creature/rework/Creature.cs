@@ -21,6 +21,18 @@ public abstract class Creature : MonoBehaviour
     public float RangedAttackRange {get; protected set;}
     
     private Animator _animator;
+    private MaterialController _materialController;
+    public MaterialController MaterialController
+    {
+        get
+        {
+            if (_materialController == null)
+            {
+                _materialController = GetComponent<MaterialController>();
+            }
+            return _materialController;
+        }
+    }
     public Animator Animator
     {
         get
