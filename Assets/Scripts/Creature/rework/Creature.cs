@@ -60,11 +60,34 @@ public abstract class Creature : MonoBehaviour
         MaterialController.SetFloat(0);
     }
 
-    protected abstract class BaseState
+    public abstract class BaseState
     {
         public Creature creature;
         public abstract int GetWeight();
         public abstract IEnumerator StateCoroutine();
+    }
+    
+    private BaseState[] _states;
+    public BaseState[] States
+    {
+        get
+        {
+            if (_states == null)
+            {
+                List<BaseState> states = new List<BaseState>();
+                Type parentType = GetType();
+                Type[] stateTypes = parentType.GetNestedTypes();
+                foreach (Type type in stateTypes)
+                {
+                    if (!type.IsAbstract)
+                    {
+                        states.Add(Activator.CreateInstance(type) as BaseState);
+                    }
+                }
+                _states = states.ToArray();
+            }
+            return _states;
+        }
     }
 }
 
