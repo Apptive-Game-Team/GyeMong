@@ -62,13 +62,7 @@ public abstract class Creature : MonoBehaviour
     {
         public Creature creature;
         public abstract int GetWeight();
-        public virtual IEnumerator StateCoroutine()
-        {
-            return null;
-        }
-        public abstract void OnStateEnter();
-        public abstract void OnStateUpdate();
-        public abstract void OnStateExit();
+        public abstract IEnumerator StateCoroutine();
     }
 }
 
