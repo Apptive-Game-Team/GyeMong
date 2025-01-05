@@ -53,9 +53,11 @@ public abstract class Creature : MonoBehaviour
     
     protected IEnumerator Blink()
     {
-        gameObject.GetComponent<Renderer>().material.SetFloat("_BlinkTrigger", 1f);
+        MaterialController.SetMaterial(MaterialController.MaterialType.HIT);
+        MaterialController.SetFloat(1);
         yield return new WaitForSeconds(BLINK_DELAY);
-        gameObject.GetComponent<Renderer>().material.SetFloat("_BlinkTrigger", 0f);
+        MaterialController.SetMaterial(MaterialController.MaterialType.HIT);
+        MaterialController.SetFloat(0);
     }
 
     protected abstract class BaseState
