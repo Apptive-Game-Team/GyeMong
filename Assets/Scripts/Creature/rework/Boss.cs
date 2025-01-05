@@ -11,11 +11,6 @@ public abstract class Boss : Creature
     
     public int CurrentPhase {get { return currentPhase; }}
     public float CurrentMaxHp {get { return maxHps[currentPhase]; }}
-    
-    public override void ChangeState()
-    {
-        throw new NotImplementedException();
-    }
 
     protected void CheckPhaseTransition()
     {
