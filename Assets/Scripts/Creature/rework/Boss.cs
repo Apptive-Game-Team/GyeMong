@@ -10,7 +10,16 @@ public abstract class Boss : Creature
     protected List<float> maxHps = new List<float>();
     
     public int CurrentPhase {get { return currentPhase; }}
-    public float CurrentMaxHp {get { return maxHps[currentPhase]; }}
+    public float CurrentMaxHp {get {
+        try
+        {
+            return maxHps[currentPhase];
+        }
+        catch (Exception)
+        {
+            return 100;
+        }
+    }}
 
     public override void OnAttacked(float damage)
     {
@@ -28,7 +37,7 @@ public abstract class Boss : Creature
     
     protected void TransPhase()
     {
-        if (currentPhase <  maxPhase)
+        if (currentPhase < maxHps.Count-1)
         {
             currentPhase++;
             StopAllCoroutines();
@@ -37,6 +46,7 @@ public abstract class Boss : Creature
         }
         else
         {
+            MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
             Die();
         }
     }
@@ -60,6 +70,7 @@ public abstract class Boss : Creature
     {
         try
         {
+            StopAllCoroutines();
             GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
         }
         catch
