@@ -7,14 +7,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public abstract class Creature : MonoBehaviour
+public abstract class Creature : MonoBehaviour, IAttackable
 {
     private const float BLINK_DELAY = 0.15f;
     
     protected float maxHp;
     protected float currentHp;
     public float CurrentHp {get { return currentHp; }}
-    public static float currentShield;
+    public float currentShield;
     public float CurrentShield {get { return currentShield; }}
 
     public float damage;
@@ -54,8 +54,6 @@ public abstract class Creature : MonoBehaviour
     public float DistanceToPlayer => Vector3.Distance(transform.position, PlayerCharacter.Instance.transform.position);
     public Vector3 DirectionToPlayer => (PlayerCharacter.Instance.transform.position - transform.position).normalized;
 
-    public abstract void TakeDamage(float damage);
-
     public void ChangeState()
     {
         if (_currentStateCoroutine != null)
@@ -81,6 +79,13 @@ public abstract class Creature : MonoBehaviour
         yield return new WaitForSeconds(BLINK_DELAY);
         MaterialController.SetMaterial(MaterialController.MaterialType.HIT);
         MaterialController.SetFloat(0);
+    }
+    
+    public virtual IEnumerator Stun()
+    {
+         StopCoroutine(_currentStateCoroutine);
+         yield return new WaitForSeconds(5f);
+         ChangeState();
     }
 
     public abstract class BaseState
@@ -112,6 +117,22 @@ public abstract class Creature : MonoBehaviour
             }
             return _states;
         }
+    }
+
+    public void OnAttacked(float damage)
+    {
+        if (currentShield >= damage)
+         {
+             currentShield -= damage;
+         }
+         else
+         {
+             float temp = currentShield;
+             currentShield = 0;
+             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+             StartCoroutine(Blink());
+             currentHp -= (damage-temp);
+         }
     }
 }
 
