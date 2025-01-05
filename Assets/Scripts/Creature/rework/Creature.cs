@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using playerCharacter;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -77,8 +76,10 @@ public abstract class Creature : MonoBehaviour, IAttackable
         MaterialController.SetMaterial(MaterialController.MaterialType.HIT);
         MaterialController.SetFloat(1);
         yield return new WaitForSeconds(BLINK_DELAY);
-        MaterialController.SetMaterial(MaterialController.MaterialType.HIT);
-        MaterialController.SetFloat(0);
+        if (MaterialController.GetCurrentMaterialType() == MaterialController.MaterialType.HIT)
+        {
+            MaterialController.SetFloat(0);
+        }
     }
     
     public virtual IEnumerator Stun()
