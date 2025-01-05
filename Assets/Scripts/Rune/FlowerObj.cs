@@ -20,7 +20,7 @@ public class FlowerObj : MonoBehaviour
         var creature = collision.GetComponent<Creature>();
         if (creature != null)
         {
-            creature.TakeDamage(attackDamage);
+            creature.OnAttacked(attackDamage);
         }
     }
 }
