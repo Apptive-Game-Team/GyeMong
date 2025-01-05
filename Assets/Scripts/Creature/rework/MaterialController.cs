@@ -22,6 +22,11 @@ public class MaterialController : MonoBehaviour
         _renderer.material = _currentMaterialData.material;
     }
     
+    public MaterialType GetCurrentMaterialType()
+    {
+        return _currentMaterialData.materialType;
+    }
+    
     public void SetMaterial(MaterialType type)
     {
         _currentMaterialData = _materialDatas.Get(type);
