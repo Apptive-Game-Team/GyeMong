@@ -88,6 +88,52 @@ public abstract class Creature : MonoBehaviour, IAttackable
          yield return new WaitForSeconds(5f);
          ChangeState();
     }
+    
+    public void TrackPlayer()
+    {
+        float step = speed * Time.deltaTime;
+        Vector3 targetPosition = PlayerCharacter.Instance.transform.position;
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, step);
+        transform.position = newPosition;
+    }
+    
+    public IEnumerator BackStep(float targetDistance)
+     {
+         Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
+         float backStepSpeed = 50;
+         Vector3 direction = (transform.position - playerPosition).normalized;
+         Rigidbody2D rb = GetComponent<Rigidbody2D>();
+         LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+         float currentDistance = Vector3.Distance(transform.position, playerPosition);
+         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+         int count=0;
+         while (hit.collider != null && count<360)
+         {
+             float angle = UnityEngine.Random.Range(0,360f);
+             direction = Quaternion.Euler(0, 0, angle) * direction;
+             hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+             count++;
+         }
+         if(hit.collider == null)
+         {
+             currentDistance = targetDistance;
+             count = 0;
+             float deltaTime = 0.02f;
+             while (currentDistance > 0 && count < 100000)
+             {
+                 Vector3 deltaDistance = direction * backStepSpeed * deltaTime;
+                 currentDistance -= deltaDistance.magnitude;
+                 Vector3 newPosition = transform.position + deltaDistance;
+                 rb.MovePosition(newPosition);
+                 count++;
+                 yield return new WaitForSeconds(deltaTime);
+             }
+         }
+         else
+         {
+             yield return null;
+         }
+     }
 
     public abstract class BaseState
     {
