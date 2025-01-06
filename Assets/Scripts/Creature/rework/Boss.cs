@@ -21,6 +21,13 @@ public abstract class Boss : Creature
         }
     }}
 
+    protected void Start()
+    {
+        Initialize();
+    }
+
+    protected abstract void Initialize();
+
     public override void OnAttacked(float damage)
     {
         base.OnAttacked(damage);

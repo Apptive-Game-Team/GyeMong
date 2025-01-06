@@ -22,12 +22,9 @@ public class Golem : Boss
     [SerializeField] private SoundObject _tossSoundObject;
     public SoundObject TossSoundObject => _tossSoundObject;
 
-    private void Start()
-    {
-        Initialize();
-    }
 
-    private void Initialize()
+
+    protected override void Initialize()
     {
         maxPhase = 2;
         maxHps.Add(200f);
