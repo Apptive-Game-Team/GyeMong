@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class MaterialController : MonoBehaviour
 {
-    
     public enum MaterialType
     {
         DEFAULT,
         HIT,
         SHIELD,
     }
-    
     
     [SerializeField] private MaterialDatas _materialDatas;
     private Renderer _renderer;
@@ -37,7 +35,4 @@ public class MaterialController : MonoBehaviour
     {
         _renderer.material.SetFloat(_currentMaterialData.triggerName, value);
     }
-    
-    
-    
 }

@@ -5,8 +5,6 @@ using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
-
 public class Golem : Boss
 {
     [SerializeField] public GameObject cubePrefab;
@@ -21,9 +19,7 @@ public class Golem : Boss
     public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
     [SerializeField] private SoundObject _tossSoundObject;
     public SoundObject TossSoundObject => _tossSoundObject;
-
-
-
+    
     protected override void Initialize()
     {
         maxPhase = 2;

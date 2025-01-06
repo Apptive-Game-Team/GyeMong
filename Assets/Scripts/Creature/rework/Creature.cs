@@ -139,6 +139,7 @@ public abstract class Creature : MonoBehaviour, IAttackable
     {
         public Creature creature;
         public abstract int GetWeight();
+
         public abstract IEnumerator StateCoroutine();
     }
     
