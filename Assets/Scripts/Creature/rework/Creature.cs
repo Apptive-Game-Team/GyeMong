@@ -59,7 +59,6 @@ public abstract class Creature : MonoBehaviour, IAttackable
             StopCoroutine(_currentStateCoroutine);
         
         BaseState[] states = States;
-        BaseState nextState = null;
         List<int> weights = new();
         int index = 0;
         int randomIndex;
