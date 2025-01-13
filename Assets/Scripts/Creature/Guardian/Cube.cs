@@ -78,8 +78,9 @@ public class Cube : GrazeController
         }
         
     }
-    private void OnTriggerStay2D(Collider2D other)
+    protected override void OnTriggerStay2D(Collider2D other)
     {
+        base.OnTriggerStay2D(other);
         if (isFalled && other.CompareTag("Boss"))
         {
             Destroy(gameObject);

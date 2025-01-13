@@ -15,8 +15,9 @@ public class Vine : GrazeController
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
-    private void OnTriggerStay2D(Collider2D other)
+    protected override void OnTriggerStay2D(Collider2D other)
     {
+        base.OnTriggerStay2D(other);
         if (other.CompareTag("Player"))
         {
             isAttacked = true;
