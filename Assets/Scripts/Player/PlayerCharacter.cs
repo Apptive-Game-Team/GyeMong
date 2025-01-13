@@ -10,6 +10,10 @@ namespace playerCharacter
     {
         [SerializeField] private float curHealth;
         public float maxHealth;
+        [SerializeField] private float curSkillGauge;
+        public float GetCurSkillGauge() { return curSkillGauge; }
+        public float maxSkillGauge;
+        public float gaugeIncreaseValue;
         public float attackPower;
         private bool isControlled = false;
         private Vector2 movement;
@@ -54,6 +58,9 @@ namespace playerCharacter
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
+            maxSkillGauge = 100f;
+            curSkillGauge = 0f;
+            gaugeIncreaseValue = 10f;
         }
 
         private void Update()
@@ -188,6 +195,15 @@ namespace playerCharacter
             if (curHealth > maxHealth)
             {
                 curHealth = maxHealth;
+            }
+        }
+
+        public void IncreaseGauge(float ratio)
+        {
+            curSkillGauge += gaugeIncreaseValue / ratio;
+            if (curSkillGauge > maxSkillGauge)
+            {
+                curSkillGauge = maxSkillGauge;
             }
         }
         
