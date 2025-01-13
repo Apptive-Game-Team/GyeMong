@@ -33,7 +33,7 @@ public abstract class GrazeController : MonoBehaviour
         {
             isAttached = false;
             PlayerCharacter.Instance.IncreaseGauge(attackDistance);
-            Debug.Log($"Gauge Increased with ratio {attackDistance} and value {10f / attackDistance}");
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / attackDistance} with ratio {attackDistance}");
         }
     }
 
@@ -42,7 +42,7 @@ public abstract class GrazeController : MonoBehaviour
         if (isAttached && !isAttacked)
         {
             PlayerCharacter.Instance.IncreaseGauge(attackDistance);
-            Debug.Log($"Gauge Increased with ratio {attackDistance} and value {10f / attackDistance}");
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / attackDistance} with ratio {attackDistance}");
         }
     }
 
@@ -51,7 +51,7 @@ public abstract class GrazeController : MonoBehaviour
         if (isAttached && !isAttacked)
         {
             PlayerCharacter.Instance.IncreaseGauge(attackDistance);
-            Debug.Log($"Gauge Increased with ratio {attackDistance} and value {10f / attackDistance}");
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / attackDistance} with ratio {attackDistance}");
         }
     }
 }
