@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cube : MonoBehaviour
+public class Cube : GrazeController
 {
     private GameObject player;
 
@@ -72,6 +72,7 @@ public class Cube : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
+            isAttacked = true;
             PlayerCharacter.Instance.TakeDamage(10);
             //�÷��̾ �°� ��� ���� �Ǵ� ����� ���� �ʿ䰡 �־��
         }

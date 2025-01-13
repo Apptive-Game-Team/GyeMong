@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeAttack : MonoBehaviour
+public class MeleeAttack : GrazeController
 {
     public float attackdamage;
     private void OnTriggerEnter2D(Collider2D other)
@@ -11,6 +11,7 @@ public class MeleeAttack : MonoBehaviour
         attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         if (other.CompareTag("Player"))
         {
+            isAttacked = true;
             PlayerCharacter.Instance.TakeDamage(attackdamage);
         }
     }

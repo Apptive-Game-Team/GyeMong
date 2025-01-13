@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Root : MonoBehaviour
+public class Root : GrazeController
 {
     private void OnEnable()
     {
@@ -18,6 +18,7 @@ public class Root : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
+            isAttacked = true;
             PlayerCharacter.Instance.TakeDamage(10);
         }
     }

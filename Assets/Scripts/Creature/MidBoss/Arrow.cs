@@ -2,7 +2,7 @@ using playerCharacter;
 using System.Collections;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Arrow : GrazeController
 {
     private GameObject player;
     private Vector3 direction;
@@ -39,6 +39,7 @@ public class Arrow : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            isAttacked = true;
             _soundObject.PlayAsync();
             Destroy(gameObject);
             PlayerCharacter.Instance.TakeDamage(attackdamage);

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Seed : MonoBehaviour
+public class Seed : GrazeController
 {
     private GameObject player;
     private Vector3 direction;
@@ -67,6 +67,7 @@ public class Seed : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            isAttacked = true;
             _soundObject.PlayAsync();
             Destroy(gameObject);
             PlayerCharacter.Instance.TakeDamage(attackdamage);
@@ -84,6 +85,7 @@ public class Seed : MonoBehaviour
         {
             if (enemy.CompareTag("Player"))
             {
+                isAttacked = true;
                 PlayerCharacter.Instance.TakeDamage(attackdamage/2);
             }
         }

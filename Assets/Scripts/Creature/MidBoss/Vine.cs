@@ -2,7 +2,7 @@ using playerCharacter;
 using System.Collections;
 using UnityEngine;
 
-public class Vine : MonoBehaviour
+public class Vine : GrazeController
 {
     private float attackdamage;
     private void OnEnable()
@@ -19,6 +19,7 @@ public class Vine : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            isAttacked = true;
             PlayerCharacter.Instance.TakeDamage(attackdamage, true);
         }
     }
