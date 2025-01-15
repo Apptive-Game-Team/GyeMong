@@ -134,6 +134,23 @@ public class Elf : Boss
             Elf.ChangeState();
         }
     }
+    public class MeleeAttack : ElfState
+    {
+        public override int GetWeight()
+        {
+            return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
+        }
+        public override IEnumerator StateCoroutine()
+        {
+            yield return new WaitForSeconds(0.2f);
+            Elf.meleeAttackPrefab.SetActive(true);
+            Vector3 direction = Elf.DirectionToPlayer;
+            Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
+            yield return new WaitForSeconds(0.3f);
+            Elf.meleeAttackPrefab.SetActive(false);
+            Elf.ChangeState();
+        }
+    }
 }
 
 
