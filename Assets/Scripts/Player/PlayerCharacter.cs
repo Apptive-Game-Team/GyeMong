@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace playerCharacter
         public float GetCurSkillGauge() { return curSkillGauge; }
         public float maxSkillGauge;
         public float gaugeIncreaseValue;
+        public float skillUsageGauge = 30f;
         public float attackPower;
         private bool isControlled = false;
         private Vector2 movement;
@@ -27,6 +29,7 @@ namespace playerCharacter
         public float moveSpeed = 2.0f;
         public float sprintSpeed = 4.0f;
         public float dashSpeed = 10.0f;
+        public float skillSpeed = 10.0f;
 
         private float dashDuration = 0.1f;
         private float dashDistance = 5.0f;
@@ -116,9 +119,9 @@ namespace playerCharacter
                 StartCoroutine(Attack());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Defend) && !isDefending)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Defend) && !isAttacking && curSkillGauge > skillUsageGauge)
             {
-                StartCoroutine(Defend());
+                StartCoroutine(SkillAttack());
             }
         }
 
@@ -290,6 +293,28 @@ namespace playerCharacter
             isAttacking = false;
         }
 
+        private IEnumerator SkillAttack()
+        {
+            soundController.Trigger(PlayerSoundType.SWORD_SWING);
+            isAttacking = true;
+            canMove = false;
+            animator.SetBool("isAttacking", true);
+
+            SpawnAttackCollider();
+            SpawnSkillCollider();
+
+            movement = Vector2.zero;
+            playerRb.velocity = Vector2.zero;
+
+            yield return new WaitForSeconds(delayTime);
+
+            animator.SetBool("isAttacking", false);
+            canMove = true;
+            isAttacking = false;
+
+            curSkillGauge -= skillUsageGauge;
+        }
+
         private IEnumerator Defend()
         {
             isDefending = true;
@@ -320,6 +345,21 @@ namespace playerCharacter
             GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation);
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
             Destroy(attackCollider, delayTime);
+        }
+
+        private void SpawnSkillCollider()
+        {
+            Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
+
+            float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+
+            GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation);
+            Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
+            skillRigidbody.velocity = lastMovementDirection.normalized * skillSpeed;
+
+            attackCollider.GetComponent<AttackCollider>().Init(soundController);
+            Destroy(attackCollider, delayTime * 2);
         }
 
         private void Die()
