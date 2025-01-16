@@ -11,7 +11,7 @@ public class Slime : Creature
     private SlimeAnimator _slimeAnimator;
     [SerializeField] private SlimeSprites sprites;
     private Coroutine faceToPlayerCoroutine;
-
+    
     public override void OnAttacked(float damage)
     {
         base.OnAttacked(damage);
@@ -70,10 +70,10 @@ public class Slime : Creature
         public override IEnumerator StateCoroutine()
         {
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
             GameObject arrow =  Instantiate((creature as Slime).rangedAttack, creature.transform.position, Quaternion.identity);
             (creature as Slime).RotateArrowTowardsPlayer(arrow);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
             yield return new WaitForSeconds(1);
             creature.ChangeState();
@@ -90,9 +90,9 @@ public class Slime : Creature
         public override IEnumerator StateCoroutine()
         {
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
             PlayerCharacter.Instance.TakeDamage(creature.damage);
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
             yield return new WaitForSeconds(1);
             creature.ChangeState();

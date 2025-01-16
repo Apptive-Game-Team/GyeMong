@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class SlimeAnimator : MonoBehaviour
 {
+    public static float ANIMATION_DELTA_TIME = 0.4f;
+    
     private SpriteRenderer spriteRenderer;
     private SlimeSprites sprites;
     private Coroutine currentAnimation;
@@ -54,7 +56,7 @@ public class SlimeAnimator : MonoBehaviour
         for (int i = 0; i < sprites.Length; i++)
         {
             spriteRenderer.sprite = sprites[i];
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(ANIMATION_DELTA_TIME);
         }
     }
 }
