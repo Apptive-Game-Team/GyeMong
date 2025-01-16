@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1575476083440185309
+--- !u!1 &3037104521305943131
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5240044703147885952}
-  - component: {fileID: 9139042694557012840}
-  - component: {fileID: 9189588732985311286}
-  - component: {fileID: 4628387912193389940}
-  - component: {fileID: 472581398010295902}
-  - component: {fileID: 7812082113936600769}
+  - component: {fileID: 3177125301614160029}
+  - component: {fileID: 8398534771569484446}
+  - component: {fileID: 792450951232701171}
+  - component: {fileID: 1299270633434595725}
+  - component: {fileID: 1186087241229166475}
   m_Layer: 0
-  m_Name: DevilSlime
+  m_Name: SlimeAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5240044703147885952
+--- !u!4 &3177125301614160029
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575476083440185309}
+  m_GameObject: {fileID: 3037104521305943131}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.56, y: 37.62, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 30.630564, y: 37.63655, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2409928544951738292}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &9139042694557012840
+--- !u!212 &8398534771569484446
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575476083440185309}
+  m_GameObject: {fileID: 3037104521305943131}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -76,8 +76,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 240f5b4cc9a8b45abaccfec8f2f1d49c, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 19a633cde105948a5889609c2131bbba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -88,79 +88,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9189588732985311286
+--- !u!114 &792450951232701171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575476083440185309}
+  m_GameObject: {fileID: 3037104521305943131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f89c82ebb29f4cc3ba8b1bf1d88777c, type: 3}
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHp: 3
-  currentShield: 0
-  damage: 10
-  rangedAttack: {fileID: 3037104521305943131, guid: 559dabb4b36234bd7b9ef2b99fcaf287,
-    type: 3}
-  sprites: {fileID: 11400000, guid: f017ccb99e2ef4f52b7afcb9aeee0d8f, type: 2}
---- !u!58 &4628387912193389940
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575476083440185309}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
---- !u!114 &472581398010295902
+  isLoop: 1
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 3294224070563332096
+  references:
+    version: 2
+    RefIds:
+    - rid: 3294224070563332096
+      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
+      data:
+        frames:
+        - {fileID: 21300000, guid: 19a633cde105948a5889609c2131bbba, type: 3}
+        - {fileID: 21300000, guid: 1d930323345774908a86c2db50277c6b, type: 3}
+        deltaTime: 0.1
+        _renderer: {fileID: 8398534771569484446}
+--- !u!114 &1299270633434595725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575476083440185309}
+  m_GameObject: {fileID: 3037104521305943131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d66079f6584a2b8638783f028adf4f, type: 3}
+  m_Script: {fileID: 11500000, guid: d57f0854c331f884b9f10cc8f7f923da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _materialDatas: {fileID: 11400000, guid: b83ab9d50893f408cbb45301ce80bf11, type: 2}
---- !u!58 &7812082113936600769
+--- !u!58 &1186087241229166475
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575476083440185309}
+  m_GameObject: {fileID: 3037104521305943131}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -188,4 +162,49 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.4
+  m_Radius: 2
+--- !u!1 &3186221089309415068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2409928544951738292}
+  - component: {fileID: 6238569988654163873}
+  m_Layer: 0
+  m_Name: ArrowHitSoundObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2409928544951738292
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186221089309415068}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 512.9927, y: -173.12323, z: 8.805588}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3177125301614160029}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6238569988654163873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186221089309415068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df41e182033742d8a743905e984913f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceName: ENEMY_Arrow_Attack

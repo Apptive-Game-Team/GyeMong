@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Slime : Creature
 {
+    [SerializeField] private GameObject rangedAttack;
     private IDetector<PlayerCharacter> _detector;
     private IPathFinder _pathFinder;
     private SlimeAnimator _slimeAnimator;
@@ -69,6 +70,8 @@ public class Slime : Creature
         public override IEnumerator StateCoroutine()
         {
             yield return (creature as Slime)?._slimeAnimator.SyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
+            GameObject arrow =  Instantiate((creature as Slime).rangedAttack, creature.transform.position, Quaternion.identity);
+            (creature as Slime).RotateArrowTowardsPlayer(arrow);
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
             yield return new WaitForSeconds(1);
             creature.ChangeState();
@@ -135,5 +138,12 @@ public class Slime : Creature
             (creature as Slime)?.StopCoroutine((creature as Slime)?.faceToPlayerCoroutine);
             return (creature as Slime)?._slimeAnimator.SyncPlay(SlimeAnimator.AnimationType.DIE);;
         }
+    }
+    
+    private void RotateArrowTowardsPlayer(GameObject arrow)
+    {
+        Vector3 direction = DirectionToPlayer; 
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 }
