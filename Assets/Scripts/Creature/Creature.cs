@@ -52,6 +52,18 @@ public abstract class Creature : MonoBehaviour, IAttackable
     
     public float DistanceToPlayer => Vector3.Distance(transform.position, PlayerCharacter.Instance.transform.position);
     public Vector3 DirectionToPlayer => (PlayerCharacter.Instance.transform.position - transform.position).normalized;
+    public DirectionType GetDirectionToPlayer(Vector2 directionToPlayer)
+    {
+        directionToPlayer.Normalize();
+        if (Mathf.Abs(directionToPlayer.x) > Mathf.Abs(directionToPlayer.y))
+        {
+            return directionToPlayer.x > 0 ? DirectionType.RIGHT : DirectionType.LEFT;
+        }
+        else
+        {
+            return directionToPlayer.y > 0 ? DirectionType.FRONT : DirectionType.BACK;
+        }
+    }
 
     public void ChangeState()
     {
