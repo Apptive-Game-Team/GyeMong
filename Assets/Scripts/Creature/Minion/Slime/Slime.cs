@@ -84,7 +84,10 @@ public class Slime : Creature
 
         public override IEnumerator StateCoroutine()
         {
-            yield return (creature as Slime)?._slimeAnimator.SyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
+            (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
+            yield return new WaitForSeconds(0.1f);
+            PlayerCharacter.Instance.TakeDamage(creature.damage);
+            yield return new WaitForSeconds(0.2f);
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
             yield return new WaitForSeconds(1);
             creature.ChangeState();
