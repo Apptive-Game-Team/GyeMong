@@ -44,7 +44,7 @@ public class AnimationList
 public class AnimationData
 {
     public DirectionType Direction;
-    public Animation animation;
+    public AnimationClip animationClip;
 }
 
 [CreateAssetMenu(fileName = "AnimationDataList", menuName = "ScriptableObject/new AnimationDataList")]

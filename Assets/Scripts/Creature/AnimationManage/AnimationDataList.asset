@@ -12,4 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d04af058cae9b24e937aeecef10bff8, type: 3}
   m_Name: AnimationDataList
   m_EditorClassIdentifier: 
-  creatureData: []
+  creatureTypeData:
+  - Name: BOSS
+    Type: 3
+    creatureData:
+    - creatureName: ELF
+      animationData:
+      - animationName: IDLE
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: d597e11f295d5ec43914f39197b99505,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: d300890a5b69fd64eb25ff3895d2fd71,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: d1379bde33a4a4044bdb08a688932b4c,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 9bd74bf07d14c044299e8aa3b78d1e34,
+            type: 2}
+      - animationName: 
+        animationData: []
+      - animationName: 
+        animationData: []
