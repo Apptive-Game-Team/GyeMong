@@ -69,9 +69,11 @@ public class Slime : Creature
 
         public override IEnumerator StateCoroutine()
         {
-            yield return (creature as Slime)?._slimeAnimator.SyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
+            (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
+            yield return new WaitForSeconds(0.4f);
             GameObject arrow =  Instantiate((creature as Slime).rangedAttack, creature.transform.position, Quaternion.identity);
             (creature as Slime).RotateArrowTowardsPlayer(arrow);
+            yield return new WaitForSeconds(0.5f);
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
             yield return new WaitForSeconds(1);
             creature.ChangeState();
@@ -88,9 +90,9 @@ public class Slime : Creature
         public override IEnumerator StateCoroutine()
         {
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.8f);
             PlayerCharacter.Instance.TakeDamage(creature.damage);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.4f);
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
             yield return new WaitForSeconds(1);
             creature.ChangeState();
@@ -106,7 +108,7 @@ public class Slime : Creature
 
         public override IEnumerator StateCoroutine()
         {
-            (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+            (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
             float duration = 2f;
             float timer = 0f;
             
@@ -116,6 +118,7 @@ public class Slime : Creature
                 yield return null;
                 creature.TrackPath((creature as Slime)?._pathFinder.FindPath(creature.transform.position, PlayerCharacter.Instance.transform.position));
             }
+            
             (creature as Slime)?._slimeAnimator.Stop();
             creature.ChangeState();
         }
@@ -136,7 +139,8 @@ public class Slime : Creature
         public override IEnumerator StateCoroutine()
         {
             (creature as Slime)?.StopCoroutine((creature as Slime)?.faceToPlayerCoroutine);
-            return (creature as Slime)?._slimeAnimator.SyncPlay(SlimeAnimator.AnimationType.DIE);;
+            (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DIE);
+            yield return null;
         }
     }
     
