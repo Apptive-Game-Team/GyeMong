@@ -11,7 +11,7 @@ public abstract class Creature : MonoBehaviour, IAttackable
     private const float BLINK_DELAY = 0.15f;
     
     protected float maxHp;
-    protected float currentHp;
+    [SerializeField] protected float currentHp;
     public float CurrentHp {get { return currentHp; }}
     public float currentShield;
     public float CurrentShield {get { return currentShield; }}
@@ -69,6 +69,11 @@ public abstract class Creature : MonoBehaviour, IAttackable
         }
         randomIndex = Random.Range(0, weights.Count);
         _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
+    }
+
+    public void ChangeState(BaseState state)
+    {
+        _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
     }
     
     protected IEnumerator Blink()
