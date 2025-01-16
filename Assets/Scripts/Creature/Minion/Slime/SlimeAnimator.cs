@@ -26,10 +26,6 @@ public class SlimeAnimator : MonoBehaviour
     
     public IEnumerator SyncPlay(AnimationType type, bool loop = false)
     {
-        if (currentAnimation != null)
-        {
-            Stop();
-        }
         do
         {
             yield return PlayerAnimation(sprites.GetSprite(type));
