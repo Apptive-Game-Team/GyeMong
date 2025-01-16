@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpringGuardianBossRoomEntrance : MonoBehaviour, IEventTriggerable
 {
-    [SerializeField] Guardian guardian;
+    [SerializeField] Golem guardian;
     [SerializeField] GameObject rootPatternManger;
     private void Start()
     {
@@ -19,9 +19,9 @@ public class SpringGuardianBossRoomEntrance : MonoBehaviour, IEventTriggerable
 
     public void Trigger()
     {
-        if (guardian != null && guardian.curState == Creature.State.NONE)
+        if (guardian != null)
         {
-            guardian.StartDetectingPlayer();
+            guardian.ChangeState();
         }
         if(rootPatternManger != null)
         {

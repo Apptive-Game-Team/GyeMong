@@ -1,13 +1,13 @@
 using playerCharacter;
 using System.Collections;
+using Rework;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Arrow : BossAttack
 {
     private GameObject player;
     private Vector3 direction;
     private float speed = 15f;
-    private float attackdamage;
     private SoundObject _soundObject;
     private void Awake()
     {
@@ -18,7 +18,6 @@ public class Arrow : MonoBehaviour
 
     private void OnEnable()
     {
-        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(FireArrow());
     }
 
@@ -41,7 +40,7 @@ public class Arrow : MonoBehaviour
         {
             _soundObject.PlayAsync();
             Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(attackdamage);
+            PlayerCharacter.Instance.TakeDamage(damage);
         }
     }
 }

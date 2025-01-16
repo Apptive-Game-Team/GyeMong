@@ -1,9 +1,10 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using Rework;
 using UnityEngine;
 
-public class Cube : MonoBehaviour
+public class Cube : BossAttack
 {
     private GameObject player;
 
@@ -66,14 +67,14 @@ public class Cube : MonoBehaviour
         yield return new WaitForSeconds(1f);
         
         Destroy(gameObject);
+        Destroy(shadow);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(10);
-            //�÷��̾ �°� ��� ���� �Ǵ� ����� ���� �ʿ䰡 �־��
+            PlayerCharacter.Instance.TakeDamage(damage);
         }
         
     }
@@ -81,9 +82,9 @@ public class Cube : MonoBehaviour
     {
         if (isFalled && other.CompareTag("Boss"))
         {
+            other.GetComponent<Boss>().StartCoroutine(other.GetComponent<Boss>().Stun());
             Destroy(gameObject);
             Destroy(shadow);
-            Guardian.GetInstance<Guardian>().Stun();
         }
     }
     GameObject shadow;

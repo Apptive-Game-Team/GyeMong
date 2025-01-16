@@ -126,7 +126,7 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
         }
     }
 
-    public void OnAttacked()
+    public void OnAttacked(float damage = 0)
     {
         if (trigger == EventTrigger.OnAttacked && triggerLimitCounter != 0)
         {

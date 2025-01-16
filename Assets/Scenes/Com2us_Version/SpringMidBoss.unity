@@ -29795,7 +29795,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.2169
+      value: 308.21613
       objectReference: {fileID: 0}
     - target: {fileID: 1370121933915850358, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -29912,7 +29912,7 @@ PrefabInstance:
     - target: {fileID: 2649768473112061072, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.2169
+      value: 308.21613
       objectReference: {fileID: 0}
     - target: {fileID: 2691256379806927063, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -30334,11 +30334,11 @@ MonoBehaviour:
     - rid: 7405124568204705792
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 2099362344}
+        _boss: {fileID: 5581117415951231125}
     - rid: 7405124568204705793
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 2099362344}
+        _boss: {fileID: 0}
     - rid: 7405124568204705794
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -35858,7 +35858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11474868d8cd9c44ba76708aeee04074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  midBoss: {fileID: 2099362344}
+  midBoss: {fileID: 5581117415951231125}
 --- !u!61 &1852717529
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36133,7 +36133,7 @@ MonoBehaviour:
     - rid: 521773745628250158
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 2099362344}
+        _boss: {fileID: 5581117415951231125}
     - rid: 521773771964809216
       type: {class: ShakeCameraEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -38963,18 +38963,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2099118112}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2099362344 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7005071047910558363, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
-    type: 3}
-  m_PrefabInstance: {fileID: 5581117415951231120}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b0e25d8f4f1cbc4b8b729b4f708811a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &2099362347 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 1241953916927290027, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
@@ -39483,11 +39471,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7005071047910558363, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
-        type: 3}
-      propertyPath: wall
-      value: 
-      objectReference: {fileID: 1893575457}
     - target: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
       propertyPath: m_Name
@@ -39498,6 +39481,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
+--- !u!114 &5581117415951231125 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5581117415951231120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cbe0d89f0c4ce6a638ff23b8c6743d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
