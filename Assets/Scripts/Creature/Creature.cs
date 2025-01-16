@@ -73,6 +73,8 @@ public abstract class Creature : MonoBehaviour, IAttackable
 
     public void ChangeState(BaseState state)
     {
+        if (_currentStateCoroutine != null)
+            StopCoroutine(_currentStateCoroutine);
         _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
     }
     
