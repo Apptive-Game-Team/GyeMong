@@ -20,6 +20,7 @@ public abstract class Creature : MonoBehaviour, IAttackable
     
     protected float speed;
     protected float detectionRange;
+    public float DetectionRange {get { return detectionRange; }}
     public float MeleeAttackRange {get; protected set;}
     public float RangedAttackRange {get; protected set;}
 
