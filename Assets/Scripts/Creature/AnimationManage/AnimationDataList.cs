@@ -31,13 +31,13 @@ public class CreatureTypeData
 [Serializable]
 public class CreatureData
 {
-    public string Name;
+    public string creatureName;
     public List<AnimationList> animationData;
 }
 [Serializable]
 public class AnimationList
 {
-    public string Name;
+    public string animationName;
     public List<AnimationData> animationData;
 }
 [Serializable]

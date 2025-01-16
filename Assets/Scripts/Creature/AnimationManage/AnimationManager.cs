@@ -10,14 +10,20 @@ public class AnimationManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
     }
-
-    /*public IEnumerator TransitScene(PortalID portalID)
+    public Animation TakeAnimation(CreatureType creatureType, string creatureName, string animationName, DirectionType directionType)
     {
-        yield return EffectManager.Instance.FadeOut();
-        PortalData portalData = portalDataList.GetPortalDataByID(portalID);
-        SceneData sceneData = sceneDataList.GetSceneDataByID(portalData.sceneID);
-        SceneManager.LoadScene(sceneData.sceneName);
-        playerCharacter.PlayerCharacter.Instance.transform.position = portalData.destination;
-        StartCoroutine(EffectManager.Instance.FadeIn());
-    }*/
+        // CreatureTypeData 검색
+        var creatureTypeData = animationDataList.creatureTypeData.Find(ct => ct.Type == creatureType);
+        
+        // CreatureData 검색
+        var creatureData = creatureTypeData.creatureData.Find(cd => cd.creatureName == creatureName);
+
+        // AnimationList 검색
+        var animationList = creatureData.animationData.Find(al => al.animationName == animationName);
+       
+        // AnimationData 검색
+        var animationData = animationList.animationData.Find(ad => ad.Direction == directionType);
+
+        return animationData.animation;
+    }
 }
