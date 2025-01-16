@@ -97,6 +97,27 @@ public abstract class Creature : MonoBehaviour, IAttackable
         transform.position = newPosition;
     }
     
+    public void TrackPath(List<Vector2> path)
+    {
+        if (path == null || path.Count == 0)
+        {
+            return;
+        }
+        
+        Vector2 currentTarget = path[0];
+        
+        Vector3 currentPosition = transform.position;
+        Vector3 targetPosition = new Vector3(currentTarget.x, currentTarget.y, currentPosition.z);
+        
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(currentPosition, targetPosition, step);
+        
+        if (Vector3.Distance(currentPosition, targetPosition) < 0.1f)
+        {
+            path.RemoveAt(0);
+        }
+    }
+    
     public IEnumerator BackStep(float targetDistance)
      {
          Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
