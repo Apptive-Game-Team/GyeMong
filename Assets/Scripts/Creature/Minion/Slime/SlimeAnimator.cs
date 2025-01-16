@@ -54,7 +54,7 @@ public class SlimeAnimator : MonoBehaviour
         for (int i = 0; i < sprites.Length; i++)
         {
             spriteRenderer.sprite = sprites[i];
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.4f);
         }
     }
 }
