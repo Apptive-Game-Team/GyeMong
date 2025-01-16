@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AnimationManager : MonoBehaviour
+public class AnimationManager : SingletonObject<AnimationManager>
 {
     [SerializeField] AnimationDataList animationDataList;
     private void Start()
