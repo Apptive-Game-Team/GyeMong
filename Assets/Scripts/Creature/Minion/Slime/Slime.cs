@@ -9,15 +9,43 @@ public class Slime : Creature
     private IPathFinder _pathFinder;
     private SlimeAnimator _slimeAnimator;
     [SerializeField] private SlimeSprites sprites;
+    private Coroutine faceToPlayerCoroutine;
+
+    public override void OnAttacked(float damage)
+    {
+        base.OnAttacked(damage);
+        if (currentHp <= 0)
+        {
+            ChangeState(new SlimeDieState(this));
+        }
+    }
+    
+    public IEnumerator FaceToPlayer()
+    {
+        float scale = transform.localScale.x;
+        while (true)
+        {
+            if (PlayerCharacter.Instance.transform.position.x < transform.position.x)
+            {
+                transform.localScale = new Vector3(-scale, scale, scale);
+            }
+            else
+            {
+                transform.localScale = new Vector3(scale, scale, scale);
+            }
+            yield return null;
+        }
+    }
+    
     private void Start()
     {
         Initialize();
         ChangeState();
+        faceToPlayerCoroutine = StartCoroutine(FaceToPlayer());
     }
 
     private void Initialize()
     {
-        maxHp = 50;
         currentHp = maxHp;
         currentShield = 0;
         damage = 10;
@@ -84,6 +112,25 @@ public class Slime : Creature
             }
             (creature as Slime)?._slimeAnimator.Stop();
             creature.ChangeState();
+        }
+    }
+    
+    public class SlimeDieState : BaseState
+    {
+        public SlimeDieState() { }
+        public SlimeDieState(Creature creature)
+        {
+            this.creature = creature;
+        }
+        public override int GetWeight()
+        {
+            return 0;
+        }
+
+        public override IEnumerator StateCoroutine()
+        {
+            (creature as Slime)?.StopCoroutine((creature as Slime)?.faceToPlayerCoroutine);
+            return (creature as Slime)?._slimeAnimator.SyncPlay(SlimeAnimator.AnimationType.DIE);;
         }
     }
 }
