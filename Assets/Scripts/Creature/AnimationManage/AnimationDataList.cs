@@ -16,7 +16,7 @@ public enum DirectionType
 {
     IDLE = 0,
     FRONT = 1,
-    BAKC = 2,
+    BACK = 2,
     LEFT = 3,
     RIGHT = 4
 }
