@@ -170,6 +170,8 @@ MonoBehaviour:
   attackPower: 0
   attackColliderPrefab: {fileID: 2848122850891802944, guid: 8e8beeeb017f3414891b7e04a9438725,
     type: 3}
+  skillColliderPrefab: {fileID: 2848122850891802944, guid: fcbd072696f050e4a98ba91984d66a04,
+    type: 3}
   moveSpeed: 2
   sprintSpeed: 4
   dashSpeed: 10

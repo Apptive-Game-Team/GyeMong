@@ -25,6 +25,7 @@ namespace playerCharacter
         private PlayerSoundController soundController;
         
         public GameObject attackColliderPrefab;
+        public GameObject skillColliderPrefab;
 
         public float moveSpeed = 2.0f;
         public float sprintSpeed = 4.0f;
@@ -284,7 +285,9 @@ namespace playerCharacter
 
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
+
             canMove = true;
+            
             yield return new WaitForSeconds(delayTime);
 
 
@@ -306,10 +309,12 @@ namespace playerCharacter
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
 
+            canMove = true;
+
             yield return new WaitForSeconds(delayTime);
 
             animator.SetBool("isAttacking", false);
-            canMove = true;
+            
             isAttacking = false;
 
             curSkillGauge -= skillUsageGauge;
@@ -354,7 +359,8 @@ namespace playerCharacter
             float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
-            GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation);
+            GameObject attackCollider = Instantiate(skillColliderPrefab, spawnPosition, spawnRotation, transform);
+
             Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
             skillRigidbody.velocity = lastMovementDirection.normalized * skillSpeed;
 
