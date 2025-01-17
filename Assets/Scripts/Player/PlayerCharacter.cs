@@ -263,7 +263,7 @@ namespace playerCharacter
             }
 
             playerRb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(delayTime);
+            //yield return new WaitForSeconds(delayTime);
 
             canMove = true;
             animator.SetBool("isDashing", false);
@@ -284,12 +284,12 @@ namespace playerCharacter
 
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
-
+            canMove = true;
             yield return new WaitForSeconds(delayTime);
 
 
             animator.SetBool("isAttacking", false);
-            canMove = true;
+            
             isAttacking = false;
         }
 
@@ -342,7 +342,7 @@ namespace playerCharacter
             float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
-            GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation);
+            GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation, transform);
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
             Destroy(attackCollider, delayTime);
         }
