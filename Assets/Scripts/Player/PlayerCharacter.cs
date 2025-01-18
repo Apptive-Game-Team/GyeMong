@@ -121,7 +121,7 @@ namespace playerCharacter
                 StartCoroutine(Attack());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Defend) && !isAttacking && curSkillGauge > skillUsageGauge)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge > skillUsageGauge)
             {
                 StartCoroutine(SkillAttack());
             }
@@ -340,24 +340,24 @@ namespace playerCharacter
             isAttacking = false;
         }
 
-        private IEnumerator Defend()
-        {
-            isDefending = true;
-            canMove = false;
-            animator.SetBool("isDefending", true);
+        // private IEnumerator Defend()
+        // {
+        //     isDefending = true;
+        //     canMove = false;
+        //     animator.SetBool("isDefending", true);
 
-            movement = Vector2.zero;
-            playerRb.velocity = Vector2.zero;
+        //     movement = Vector2.zero;
+        //     playerRb.velocity = Vector2.zero;
 
-            defendStartTime = Time.time;
-            soundController.Trigger(PlayerSoundType.SWORD_DEFEND_START);
+        //     defendStartTime = Time.time;
+        //     soundController.Trigger(PlayerSoundType.SWORD_DEFEND_START);
 
-            yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
+        //     yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
 
-            animator.SetBool("isDefending", false);
-            canMove = true;
-            isDefending = false;
-        }
+        //     animator.SetBool("isDefending", false);
+        //     canMove = true;
+        //     isDefending = false;
+        // }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider()

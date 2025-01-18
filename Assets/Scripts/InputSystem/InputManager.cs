@@ -7,7 +7,7 @@ using KeyNotFoundException = System.Collections.Generic.KeyNotFoundException;
 public enum ActionCode
 {
     Attack,
-    Defend,
+    Skill,
     Dash,
     Run,
     Interaction,
@@ -37,7 +37,7 @@ public class InputManager : SingletonObject<InputManager>
         keyMappings = new Dictionary<ActionCode, KeyCode>()
         {
             { ActionCode.Attack, KeyCode.A},
-            { ActionCode.Defend, KeyCode.S},
+            { ActionCode.Skill, KeyCode.S},
             { ActionCode.Dash, KeyCode.X},
             { ActionCode.Run, KeyCode.LeftShift},
             { ActionCode.Interaction, KeyCode.Z },
