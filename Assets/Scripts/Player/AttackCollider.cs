@@ -39,6 +39,7 @@ public class AttackCollider : MonoBehaviour
             _eventObject.Trigger();
             _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
             creature.TakeDamage(attackDamage);
+            PlayerCharacter.Instance.IncreaseGauge();
             //Bad Way But..
             if (PlayerCharacter.Instance.GetComponent<RuneComponent>().isRune(3))
             {

@@ -15,6 +15,7 @@ namespace playerCharacter
         public float GetCurSkillGauge() { return curSkillGauge; }
         public float maxSkillGauge;
         public float gaugeIncreaseValue;
+        public float attackGaugeIncreaseValue;
         public float skillUsageGauge = 30f;
         public float attackPower;
         private bool isControlled = false;
@@ -65,6 +66,7 @@ namespace playerCharacter
             maxSkillGauge = 100f;
             curSkillGauge = 0f;
             gaugeIncreaseValue = 10f;
+            attackGaugeIncreaseValue = 3f;
         }
 
         private void Update()
@@ -180,16 +182,36 @@ namespace playerCharacter
             }
 
             curHealth -= damage;
+            TakeGauge();
             //EffectManager.Instance.UpdateHpBar(curHealth);
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/maxHealth));
             
             if (curHealth <= 0)
             {
+                StartCoroutine(TriggerInvincibility());
                 Die();
             }
             else
             {
                 StartCoroutine(TriggerInvincibility());
+            }
+        }
+
+        public void TakeGauge()
+        {
+            curSkillGauge -= gaugeIncreaseValue;
+            if (curSkillGauge < 0)
+            {
+                curSkillGauge = 0f;
+            }
+        }
+
+        public void IncreaseGauge()
+        {
+            curSkillGauge += attackGaugeIncreaseValue;
+            if (curSkillGauge > maxSkillGauge)
+            {
+                curSkillGauge = maxSkillGauge;
             }
         }
 
