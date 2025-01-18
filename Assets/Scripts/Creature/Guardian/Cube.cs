@@ -1,9 +1,10 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using Rework;
 using UnityEngine;
 
-public class Cube : GrazeController
+public class Cube : BossAttack
 {
     private GameObject player;
 
@@ -66,26 +67,24 @@ public class Cube : GrazeController
         yield return new WaitForSeconds(1f);
         
         Destroy(gameObject);
+        Destroy(shadow);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
-            isAttacked = true;
-            PlayerCharacter.Instance.TakeDamage(10);
-            //�÷��̾ �°� ��� ���� �Ǵ� ����� ���� �ʿ䰡 �־��
+            PlayerCharacter.Instance.TakeDamage(damage);
         }
         
     }
-    protected override void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        base.OnTriggerStay2D(other);
         if (isFalled && other.CompareTag("Boss"))
         {
+            other.GetComponent<Boss>().StartCoroutine(other.GetComponent<Boss>().Stun());
             Destroy(gameObject);
             Destroy(shadow);
-            Guardian.GetInstance<Guardian>().Stun();
         }
     }
     GameObject shadow;

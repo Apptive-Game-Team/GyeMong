@@ -1,14 +1,14 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using Rework;
 using UnityEngine;
 
-public class Seed : GrazeController
+public class Seed : BossAttack
 {
     private GameObject player;
     private Vector3 direction;
     private float speed = 10f;
-    private float attackdamage;
     
     private SoundObject _soundObject;
     private SoundObject _explosionSoundObject;
@@ -24,7 +24,6 @@ public class Seed : GrazeController
 
     private void OnEnable()
     {
-        attackdamage = Boss.GetInstance<MidBoss>().defaultDamage;
         StartCoroutine(FireArrow());
     }
 
@@ -63,15 +62,13 @@ public class Seed : GrazeController
         Explode();
     }
 
-    protected override void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        base.OnTriggerEnter2D(other);
         if (other.CompareTag("Player"))
         {
-            isAttacked = true;
             _soundObject.PlayAsync();
             Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(attackdamage);
+            PlayerCharacter.Instance.TakeDamage(damage);
         }
     }
 
@@ -86,8 +83,7 @@ public class Seed : GrazeController
         {
             if (enemy.CompareTag("Player"))
             {
-                isAttacked = true;
-                PlayerCharacter.Instance.TakeDamage(attackdamage/2);
+                PlayerCharacter.Instance.TakeDamage(damage/2);
             }
         }
     }

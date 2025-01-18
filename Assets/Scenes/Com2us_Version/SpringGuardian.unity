@@ -19496,18 +19496,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 416511942}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &455494628 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8491541913333171741, guid: 541b7061a84e84331a9394f8687c118f,
-    type: 3}
-  m_PrefabInstance: {fileID: 82750442117599301}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc7d8be4569e8a84392c05f95862a72f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &455494632 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7964644178919621293, guid: 541b7061a84e84331a9394f8687c118f,
@@ -20339,6 +20327,8 @@ MonoBehaviour:
   trigger: 4
   triggerLimitCounter: -1
   eventSequence:
+  - rid: 3294223817106784261
+  - rid: 3294223817106784262
   - rid: 521773836373327900
   - rid: 521773836373327901
   - rid: 7405124598596370437
@@ -20363,6 +20353,15 @@ MonoBehaviour:
     - rid: 521773882682900481
       type: {class: StartFollowCameraEvent, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 3294223817106784261
+      type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 455494633}
+    - rid: 3294223817106784262
+      type: {class: ChangeSpriteEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 455494632}
+        _sprite: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808, type: 3}
     - rid: 7405124598596370432
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -21851,11 +21850,11 @@ MonoBehaviour:
     - rid: 7405124568204705792
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 455494628}
+        _boss: {fileID: 1654955325}
     - rid: 7405124568204705793
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 455494628}
+        _boss: {fileID: 0}
     - rid: 7405124568204705794
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -28992,6 +28991,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1653341602}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1654955325 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+    type: 3}
+  m_PrefabInstance: {fileID: 82750442117599301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10de140f082f4f7ca309adbc8ac74248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1655908088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30347,7 +30358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989042df59e846e4a9bdb3e2a2765fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guardian: {fileID: 455494628}
+  guardian: {fileID: 1654955325}
   rootPatternManger: {fileID: 1866070731}
 --- !u!61 &1840872685
 BoxCollider2D:
@@ -30529,9 +30540,9 @@ MonoBehaviour:
   - rid: 521773882682900483
   - rid: 521773906431836160
   - rid: 521773836373327899
-  - rid: 521773836373327895
   - rid: 521773906431836162
   - rid: 521773836373327898
+  - rid: 521773836373327895
   references:
     version: 2
     RefIds:
@@ -30557,7 +30568,7 @@ MonoBehaviour:
     - rid: 521773836373327899
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 455494628}
+        _boss: {fileID: 1654955325}
     - rid: 521773882682900482
       type: {class: StopFollowCameraEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -32306,16 +32317,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guardian
       objectReference: {fileID: 0}
-    - target: {fileID: 8491541913333171741, guid: 541b7061a84e84331a9394f8687c118f,
-        type: 3}
-      propertyPath: wall
-      value: 
-      objectReference: {fileID: 1037969029}
-    - target: {fileID: 8491541913333171741, guid: 541b7061a84e84331a9394f8687c118f,
-        type: 3}
-      propertyPath: mapPattern
-      value: 
-      objectReference: {fileID: 1866070731}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
