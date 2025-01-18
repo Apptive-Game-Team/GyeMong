@@ -32,7 +32,7 @@ public abstract class GrazeController : MonoBehaviour
         if (other.CompareTag("GrazeCollider") && !isAttacked)
         {
             isAttached = false;
-            PlayerCharacter.Instance.IncreaseGauge(attackDistance);
+            PlayerCharacter.Instance.GrazeIncreaseGauge(attackDistance);
             Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / attackDistance} with ratio {attackDistance}");
         }
     }
@@ -41,7 +41,7 @@ public abstract class GrazeController : MonoBehaviour
     {
         if (isAttached && !isAttacked)
         {
-            PlayerCharacter.Instance.IncreaseGauge(attackDistance);
+            PlayerCharacter.Instance.GrazeIncreaseGauge(attackDistance);
             Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / attackDistance} with ratio {attackDistance}");
         }
     }
@@ -50,7 +50,7 @@ public abstract class GrazeController : MonoBehaviour
     {
         if (isAttached && !isAttacked)
         {
-            PlayerCharacter.Instance.IncreaseGauge(attackDistance);
+            PlayerCharacter.Instance.GrazeIncreaseGauge(attackDistance);
             Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / attackDistance} with ratio {attackDistance}");
         }
     }

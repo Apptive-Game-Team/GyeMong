@@ -66,7 +66,7 @@ namespace playerCharacter
             maxSkillGauge = 100f;
             curSkillGauge = 0f;
             gaugeIncreaseValue = 10f;
-            attackGaugeIncreaseValue = 3f;
+            attackGaugeIncreaseValue = 2f;
         }
 
         private void Update()
@@ -205,7 +205,7 @@ namespace playerCharacter
             }
         }
 
-        public void IncreaseGauge()
+        public void AttackIncreaseGauge()
         {
             curSkillGauge += attackGaugeIncreaseValue;
             if (curSkillGauge > maxSkillGauge)
@@ -223,7 +223,7 @@ namespace playerCharacter
             }
         }
 
-        public void IncreaseGauge(float ratio)
+        public void GrazeIncreaseGauge(float ratio)
         {
             curSkillGauge += gaugeIncreaseValue / ratio;
             if (curSkillGauge > maxSkillGauge)

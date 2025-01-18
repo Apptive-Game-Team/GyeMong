@@ -23,7 +23,7 @@ public class SkillGaugeController : MonoBehaviour
     private void UpdateSkillGauge()
     {
         skillSlider.value = PlayerCharacter.Instance.GetCurSkillGauge() / PlayerCharacter.Instance.maxSkillGauge;
-        if (PlayerCharacter.Instance.GetCurSkillGauge() > PlayerCharacter.Instance.skillUsageGauge)
+        if (PlayerCharacter.Instance.GetCurSkillGauge() >= PlayerCharacter.Instance.skillUsageGauge)
         {
             gaugeEffectMaterial.SetFloat("_isUsable", 1);
         }
