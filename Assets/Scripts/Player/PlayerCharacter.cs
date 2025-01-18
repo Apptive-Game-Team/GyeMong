@@ -78,7 +78,6 @@ namespace playerCharacter
                     HandleInput();
                 }
                 UpdateState();
-                
             }
         }
 
@@ -325,6 +324,7 @@ namespace playerCharacter
             canMove = false;
             animator.SetBool("isAttacking", true);
 
+            curSkillGauge -= skillUsageGauge;
             SpawnAttackCollider();
             SpawnSkillCollider();
 
@@ -338,8 +338,6 @@ namespace playerCharacter
             animator.SetBool("isAttacking", false);
             
             isAttacking = false;
-
-            curSkillGauge -= skillUsageGauge;
         }
 
         private IEnumerator Defend()
