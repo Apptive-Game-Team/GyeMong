@@ -9,13 +9,6 @@ namespace runeSystem.RuneTreeSystem
         [SerializeField] private List<RuneTreeNode> _children = new List<RuneTreeNode>();
         private int _depth;
         private Transform _transform;
-
-        public static RuneTreeNode Create(RuneTreeNode parent, RuneData runeData)
-        {
-            RuneTreeNode newNode = new RuneTreeNode();
-            newNode.Init(parent, runeData);
-            return newNode;
-        }
         
         public void Init(RuneTreeNode parent, RuneData newData)
         {
@@ -29,13 +22,21 @@ namespace runeSystem.RuneTreeSystem
             {
                 _depth = 0;
             }
-            
             Init(newData);
         }
 
         private void SetChild(RuneTreeNode runeTreeNode)
         {
-            _children.Add(runeTreeNode);
+            if (runeTreeNode == this)
+            {
+                Debug.LogError("Cannot set a node as its own child.");
+                return;
+            }
+
+            if (!_children.Contains(runeTreeNode))
+            {
+                _children.Add(runeTreeNode);
+            }
         }
 
         Transform ITreeLayoutNode.transform => transform;
