@@ -8,7 +8,8 @@ public class TreeLayoutGroup : MonoBehaviour
     ITreeLayoutNode[] nodes;
     ITreeLayoutNode root;
     
-    [SerializeField] float margin = 30;
+    [SerializeField] float marginX = 100;
+    [SerializeField] float marginY = 30;
     [SerializeField] float nodeWidth = 100;
     [SerializeField] float nodeHeight = 100;
     
@@ -16,7 +17,7 @@ public class TreeLayoutGroup : MonoBehaviour
 
     private float width, height;
     
-    private void OnEnable()
+    private void Update()
     {
         ReDraw();
     }
@@ -27,7 +28,7 @@ public class TreeLayoutGroup : MonoBehaviour
         height = rectTransform.sizeDelta.y;
         nodes = GetComponentsInChildren<ITreeLayoutNode>();
         root = GetRoot();
-        DrawNodes(root, new Vector2(margin, height/2), height);
+        DrawNodes(root, new Vector2(marginX, height/2), height/2);
     }
     
     private ITreeLayoutNode GetRoot()
@@ -44,18 +45,20 @@ public class TreeLayoutGroup : MonoBehaviour
     
     private void DrawNodes(ITreeLayoutNode node, Vector2 position, float height)
     {
-        node.transform.GetComponent<RectTransform>().localPosition = position;
-        float nodePositionY = position.y - height/2 + margin;
-        float nodePositionDeltaY = (height - 2 * margin) / Mathf.Max(1, node.GetChildrenCount() - 1);
+        node.transform.GetComponent<RectTransform>().anchoredPosition = position;
+        
+        if (node.GetChildrenCount() == 0) return;
+        
+        float nodePositionY = position.y - height/2 + marginY;
+        float nodePositionDeltaY = (height - 2 * marginY) / Mathf.Max(1, node.GetChildrenCount() - 1);
         for (int i = 0; i < node.GetChildrenCount(); i++)
         {
             DrawNodes(node.GetChild(i), 
                 new Vector2(
-                    position.x + margin + nodeWidth/2, 
+                    position.x + marginX + nodeWidth/2, 
                     nodePositionY + nodePositionDeltaY * i
                     ), 
                 height/node.GetChildrenCount());
         }
     }
-
 }
