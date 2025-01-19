@@ -166,6 +166,7 @@ MonoBehaviour:
   curSkillGauge: 0
   maxSkillGauge: 0
   gaugeIncreaseValue: 0
+  attackGaugeIncreaseValue: 0
   skillUsageGauge: 30
   attackPower: 0
   attackColliderPrefab: {fileID: 2848122850891802944, guid: 8e8beeeb017f3414891b7e04a9438725,
@@ -1214,9 +1215,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7423271450192686111}
   - component: {fileID: 3044974218133478415}
+  - component: {fileID: 3331409257553659352}
   m_Layer: 8
   m_Name: GrazeCollider
-  m_TagString: GrazeCollider
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1271,6 +1273,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.0770155
+--- !u!114 &3331409257553659352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224576282899367610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e43d40f80945a4d802ffb82cbb4140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAttackDistance: 1
 --- !u!1 &8969485596856853325
 GameObject:
   m_ObjectHideFlags: 0
