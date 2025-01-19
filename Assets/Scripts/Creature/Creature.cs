@@ -11,7 +11,7 @@ public abstract class Creature : MonoBehaviour, IAttackable
     private const float BLINK_DELAY = 0.15f;
     
     protected float maxHp;
-    protected float currentHp;
+    [SerializeField] protected float currentHp;
     public float CurrentHp {get { return currentHp; }}
     public float currentShield;
     public float CurrentShield {get { return currentShield; }}
@@ -20,6 +20,7 @@ public abstract class Creature : MonoBehaviour, IAttackable
     
     protected float speed;
     protected float detectionRange;
+    public float DetectionRange {get { return detectionRange; }}
     public float MeleeAttackRange {get; protected set;}
     public float RangedAttackRange {get; protected set;}
 
@@ -69,6 +70,13 @@ public abstract class Creature : MonoBehaviour, IAttackable
         randomIndex = Random.Range(0, weights.Count);
         _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
     }
+
+    public void ChangeState(BaseState state)
+    {
+        if (_currentStateCoroutine != null)
+            StopCoroutine(_currentStateCoroutine);
+        _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
+    }
     
     protected IEnumerator Blink()
     {
@@ -94,6 +102,27 @@ public abstract class Creature : MonoBehaviour, IAttackable
         Vector3 targetPosition = PlayerCharacter.Instance.transform.position;
         Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, step);
         transform.position = newPosition;
+    }
+    
+    public void TrackPath(List<Vector2> path)
+    {
+        if (path == null || path.Count == 0)
+        {
+            return;
+        }
+        
+        Vector2 currentTarget = path[0];
+        
+        Vector3 currentPosition = transform.position;
+        Vector3 targetPosition = new Vector3(currentTarget.x, currentTarget.y, currentPosition.z);
+        
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(currentPosition, targetPosition, step);
+        
+        if (Vector3.Distance(currentPosition, targetPosition) < 0.1f)
+        {
+            path.RemoveAt(0);
+        }
     }
     
     public IEnumerator BackStep(float targetDistance)
