@@ -200,7 +200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 110, y: 30}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8044350904525208094
@@ -216,19 +216,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runeData:
-    name: 
-    id: 0
-    description: 
+    parentID: 1
+    name: "\uACE8\uB818\uC758 \uB8EC"
+    id: 3
+    description: "\uACE8\uACE8\uB818\uB818"
     runeImage: {fileID: 0}
     runeBuff:
-      buffType: 0
-      disposeMode: 0
+      buffType: 104
+      disposeMode: 2
       buffActiveMode: 0
       duration: 0
-      amount1: 0
+      amount1: 1
       amount2: 0
   uiState: 0
-  uiImage: {fileID: 0}
+  uiImage: {fileID: 6546578019850912495}
+  _parent: {fileID: 0}
+  _children: []
 --- !u!1 &6836604358095013428
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +297,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1650ed56f27e1504faef336c81799de5, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
