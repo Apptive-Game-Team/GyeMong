@@ -1,6 +1,7 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using runeSystem.RuneTreeSystem;
 using UnityEngine;
 
 public interface ISelectableContainerUI
@@ -8,8 +9,10 @@ public interface ISelectableContainerUI
     public void OnKeyInput();
 }
 
+// Rune UI Object
 public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
 {
+    // RuneComponent (Connect to BuffComponent)
     RuneComponent playerRuneComp;
 
     [SerializeField] List<SelectableUI> selectableUIs;
@@ -19,11 +22,11 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
     [SerializeField] GameObject cursorUI;
     [SerializeField] GameObject EquipRuneListUI;
     [SerializeField] GameObject AcquiredRuneListUI;
-    [SerializeField] RuneUIObject runeIcon;
+    [SerializeField] RuneTreeNode runeIcon;
     [SerializeField] GameObject runeIcon_Empty;
     [SerializeField] GameObject runeCanvas;
     [SerializeReference] GameObject runeDescriptionUI;
-
+    
     public void OpenOrCloseOption()
     {
         isOptionOpened = !isOptionOpened;
@@ -31,6 +34,7 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         PlayerCharacter.Instance.SetPlayerMove(!isOptionOpened);
     }
 
+    // Initialize RuneWindow (Caching RuneComponent, Draw UI, Draw Cursor)
     public void Init()
     {
         playerRuneComp = PlayerCharacter.Instance.GetComponent<RuneComponent>();
@@ -38,6 +42,7 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         StartCoroutine(DrawUICursor(0));
     }
 
+    // managing Move Cursor and interact
     public void OnKeyInput()
     {
         if(InputManager.Instance.GetKeyDown(ActionCode.MoveUp) || InputManager.Instance.GetKeyDown(ActionCode.MoveLeft))
@@ -74,6 +79,8 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         }
         yield return null;
     }
+    
+    // move cursor to selectable UI
     IEnumerator MoveUICursor()
     {
         cursorUI.GetComponent<RectTransform>().position = selectableUIs[currentCursorNum].GetComponent<RectTransform>().position;
