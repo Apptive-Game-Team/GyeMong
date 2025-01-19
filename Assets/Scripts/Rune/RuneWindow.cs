@@ -14,6 +14,10 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
 {
     // RuneComponent (Connect to BuffComponent)
     RuneComponent playerRuneComp;
+    
+    private RuneTreeSetter runeTreeSetter;
+    [SerializeField] private List<RuneDataList> runeDataLists;
+    private int currentRuneDataListIndex = 0;
 
     [SerializeField] List<SelectableUI> selectableUIs;
     int currentCursorNum;
@@ -97,6 +101,8 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
     
     public void ReDrawUI()
     {
+        runeTreeSetter = new RuneTreeSetter(runeDataLists[currentRuneDataListIndex], this);
+        
         foreach(Transform obj in EquipRuneListUI.transform)
         {
             Destroy(obj.gameObject);
@@ -123,15 +129,8 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         {
             Instantiate(runeIcon_Empty, EquipRuneListUI.transform);
         }
-
-        foreach(var runeData in playerRuneComp.AcquiredRuneList)
-        {
-            RuneUIObject runeUI = Instantiate(runeIcon, AcquiredRuneListUI.transform);
-            runeUI.uiState = RuneUIState.UNEQUIPPED;
-            runeIcon.Init(runeData);
-            selectableUIs.Add(runeUI);
-        }
-
+        
+        runeTreeSetter.SetTree();
     }
 
     protected override void Awake()
@@ -149,6 +148,46 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
     {
         Init();
         gameObject.SetActive(isOptionOpened);
+    }
+    
+    public class RuneTreeSetter
+    {
+        private RuneDataList runeDataList;
+        private RuneWindow runeWindow;
+        private List<RuneTreeNode> nodes = new List<RuneTreeNode>();
+        
+        public RuneTreeSetter(RuneDataList runeDataList, RuneWindow runeWindow)
+        {
+            this.runeDataList = runeDataList;
+            this.runeWindow = runeWindow;
+        }
+
+        public void SetTree()
+        {
+            nodes.Clear();
+            foreach(RuneData runeData in runeDataList.runeDataList)
+            {
+                RuneTreeNode runeUI = Instantiate(runeWindow.runeIcon, runeWindow.AcquiredRuneListUI.transform);
+                runeUI.gameObject.name = runeData.name + " Icon";
+                
+                runeUI.uiState = RuneUIState.UNEQUIPPED;
+                runeUI.Init(FindNodeById(runeData.parentID), runeData);
+                nodes.Add(runeUI);
+                runeWindow.selectableUIs.Add(runeUI);
+            }
+        }
+        
+        private RuneTreeNode FindNodeById(int id)
+        {
+            foreach(RuneTreeNode node in nodes)
+            {
+                if(id == node.ID)
+                {
+                    return node;
+                }
+            }
+            return null;
+        }
     }
 }
 
