@@ -1,6 +1,4 @@
 using playerCharacter;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,10 +25,9 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
     [SerializeField] public RuneUIState uiState;
 
     [SerializeField] Image uiImage;
-
-    private void Update()
-    {
-    }
+    
+    public int ID => runeData.id;
+    public int ParentID => runeData.parentID;
 
     public void Init(RuneData newData)
     {
