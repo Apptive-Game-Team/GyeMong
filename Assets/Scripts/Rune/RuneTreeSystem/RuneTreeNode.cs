@@ -5,11 +5,9 @@ namespace runeSystem.RuneTreeSystem
 {
     public class RuneTreeNode : RuneUIObject, ITreeLayoutNode
     {
-        private RuneTreeNode _parent;
-        private List<RuneTreeNode> _children = new List<RuneTreeNode>();
+        [SerializeField] private RuneTreeNode _parent;
+        [SerializeField] private List<RuneTreeNode> _children = new List<RuneTreeNode>();
         private int _depth;
-        
-        private RuneUIObject runeUIObject;
         private Transform _transform;
 
         public static RuneTreeNode Create(RuneTreeNode parent, RuneData runeData)
@@ -22,9 +20,17 @@ namespace runeSystem.RuneTreeSystem
         public void Init(RuneTreeNode parent, RuneData newData)
         {
             _parent = parent;
-            _parent.SetChild(this);
-            _depth = _parent.GetDepth() + 1;
-            runeUIObject.Init(newData);
+            if (_parent != null)
+            {
+                _parent.SetChild(this);
+                _depth = _parent.GetDepth() + 1;
+            }
+            else
+            {
+                _depth = 0;
+            }
+            
+            Init(newData);
         }
 
         private void SetChild(RuneTreeNode runeTreeNode)
