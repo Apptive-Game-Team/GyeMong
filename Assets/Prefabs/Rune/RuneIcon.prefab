@@ -174,7 +174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4306392246555238859}
-  - component: {fileID: 1973841249885499902}
+  - component: {fileID: 8044350904525208094}
   m_Layer: 5
   m_Name: RuneIcon
   m_TagString: Untagged
@@ -203,7 +203,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1973841249885499902
+--- !u!114 &8044350904525208094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,23 +212,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 3492416717782468039}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e00bfd54391e03b4096d1d8ceca0e283, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d04cbbf6eb34312818f3c3e3e9208c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   runeData:
     name: 
     id: 0
     description: 
-    runeImage: {fileID: 21300000, guid: a24cec790ecd2e946988439077181c4d, type: 3}
+    runeImage: {fileID: 0}
     runeBuff:
       buffType: 0
-      disposeMode: 2
+      disposeMode: 0
       buffActiveMode: 0
       duration: 0
       amount1: 0
       amount2: 0
   uiState: 0
-  uiImage: {fileID: 6546578019850912495}
+  uiImage: {fileID: 0}
 --- !u!1 &6836604358095013428
 GameObject:
   m_ObjectHideFlags: 0
