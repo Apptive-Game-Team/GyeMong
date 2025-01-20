@@ -109,7 +109,8 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         }
         foreach(Transform obj in AcquiredRuneListUI.transform)
         {
-            Destroy(obj.gameObject);
+            if (obj.GetComponent<ITreeLayoutNode>() != null)
+                Destroy(obj.gameObject);
         }
 
         selectableUIs.Clear();
