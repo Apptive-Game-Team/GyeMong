@@ -52,7 +52,7 @@ public class Elf : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            //Elf.Animator.SetBool("isMove", true);
+            Elf.Animator.SetBool("isMove", true);
 
             float duration = 2f;
             float timer = 0f;
@@ -62,13 +62,13 @@ public class Elf : Boss
                 timer += Time.deltaTime;
                 yield return null;
                 Elf.TrackPlayer();
-                DirectionType direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
-                AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "Move", direction);
-               /*Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
-                Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);*/
+                //DirectionType direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
+                //AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "Move", direction);
+                Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+                Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             }
             
-            //Elf.Animator.SetBool("isMove", false);
+            Elf.Animator.SetBool("isMove", false);
             Elf.ChangeState();
         }
     }
@@ -82,16 +82,16 @@ public class Elf : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            //Elf.Animator.SetBool("isDash", true);
+            Elf.Animator.SetBool("isDash", true);
 
-            //Elf.Animator.SetFloat("dashType", 1);
-            //Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
-            //Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
-            DirectionType direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
-            AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "BackStep", direction);
+            Elf.Animator.SetFloat("dashType", 1);
+            Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+            Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
+            //DirectionType direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
+            //AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "BackStep", direction);
             yield return Elf.BackStep(Elf.RangedAttackRange);
             
-            //Elf.Animator.SetBool("isDash", false);
+            Elf.Animator.SetBool("isDash", false);
             Elf.ChangeState();
         }
     }
@@ -106,9 +106,9 @@ public class Elf : Boss
         public override IEnumerator StateCoroutine()
         {
              yield return new WaitForSeconds(0.5f);
-            DirectionType direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
-            AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "RangeAttack", direction);
-            GameObject arrow =  Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+             //DirectionType direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
+             //AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "RangeAttack", direction);
+             GameObject arrow =  Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
              Elf.RotateArrowTowardsPlayer(arrow);
              yield return Elf.arrowSoundObject.Play();
              yield return new WaitForSeconds(1f);
@@ -129,8 +129,8 @@ public class Elf : Boss
         public override IEnumerator StateCoroutine()
         {
             yield return new WaitForSeconds(1f);
-            DirectionType direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
-            AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "RangeAttack", direction);
+            //DirectionType direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
+            //AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "RangeAttack", direction);
             int count = 0;
             while (count < 4)
             {
@@ -151,8 +151,8 @@ public class Elf : Boss
         public override IEnumerator StateCoroutine()
         {
             yield return new WaitForSeconds(0.2f);
-            DirectionType _direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
-            AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "MeleeAttack", _direction);
+            //DirectionType _direction = Elf.GetDirectionToPlayer(Elf.DirectionToPlayer);
+            //AnimationManager.Instance.PlayAnimation(Elf.gameObject, CreatureType.BOSS, "Elf", "MeleeAttack", _direction);
             Elf.meleeAttackPrefab.SetActive(true);
             Vector3 direction = Elf.DirectionToPlayer;
             Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
