@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TreeLayoutGroup : MonoBehaviour
 {
+    [SerializeField] ITreeLineDrawer lineDrawer;
     ITreeLayoutNode[] nodes;
     ITreeLayoutNode root;
     
@@ -16,7 +17,12 @@ public class TreeLayoutGroup : MonoBehaviour
     private RectTransform rectTransform => GetComponent<RectTransform>();
 
     private float width, height;
-    
+
+    private void Awake()
+    {
+        lineDrawer = GetComponentInChildren<ITreeLineDrawer>();
+    }
+
     private void Update()
     {
         ReDraw();
@@ -24,6 +30,7 @@ public class TreeLayoutGroup : MonoBehaviour
 
     public void ReDraw()
     {
+        lineDrawer.ClearLines();
         width = rectTransform.sizeDelta.x;
         height = rectTransform.sizeDelta.y;
         nodes = GetComponentsInChildren<ITreeLayoutNode>();
@@ -53,6 +60,11 @@ public class TreeLayoutGroup : MonoBehaviour
         float nodePositionDeltaY = (height - 2 * marginY) / Mathf.Max(1, node.GetChildrenCount() - 1);
         for (int i = 0; i < node.GetChildrenCount(); i++)
         {
+            lineDrawer.ConnectNodes(position, 
+                new Vector2(
+                    position.x + marginX + nodeWidth, 
+                    nodePositionY + nodePositionDeltaY * i
+                    ));
             DrawNodes(node.GetChild(i), 
                 new Vector2(
                     position.x + marginX + nodeWidth/2, 
