@@ -6,71 +6,99 @@ using UnityEngine;
 
 public class GrazeController : MonoBehaviour
 {
+    public static GrazeController Instance { get; set;}
     [SerializeField] private float maxAttackDistance = 1f;
     private List<Collider2D> activeColliders = new();
-    private Dictionary<Collider2D, float> distanceMap = new();
-    public Dictionary<Collider2D, bool> attackedMap = new();
+    private Dictionary<Collider2D, float> colliderDistanceMap = new();
+    public Dictionary<Collider2D, bool> colliderAttackedMap = new();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else Destroy(gameObject);
+    }
 
     private void Update()
     {
-        foreach (var collider in activeColliders)
+        for (int i = activeColliders.Count - 1; i >= 0; i--)
         {
-            if (!attackedMap[collider])
+            Collider2D collider = activeColliders[i];
+
+            if (collider.gameObject == null)
             {
-                if (!collider.gameObject.activeSelf || collider.gameObject.IsDestroyed())
+                if (!colliderAttackedMap[collider])
                 {
                     Grazed(collider);
+                    RemoveCollider(collider);
+                }
+                else
+                {
+                    RemoveCollider(collider);
                 }
             }
+
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (other.CompareTag("EnemyAttack"))
+        if (collider.CompareTag("EnemyAttack"))
         {
-            if (!activeColliders.Contains(other))
+            if (!activeColliders.Contains(collider))
             {
-                activeColliders.Add(other);
-                distanceMap[other] = maxAttackDistance;
-                attackedMap[other] = false;
-                Debug.Log($"Collider entered: {other.name}");
+                activeColliders.Add(collider);
+                colliderDistanceMap[collider] = maxAttackDistance;
+                colliderAttackedMap[collider] = false;
+                Debug.Log($"Collider entered: {collider.name}");
             }
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D collider)
     {
-        if (other.CompareTag("EnemyAttack"))
+        if (collider.CompareTag("EnemyAttack"))
         {
-            float curDistance = Vector2.Distance(transform.position, other.transform.position);
+            float curDistance = Vector2.Distance(transform.position, collider.transform.position);
 
-            if (distanceMap.ContainsKey(other))
+            if (colliderDistanceMap.ContainsKey(collider))
             {
-                distanceMap[other] = Mathf.Min(curDistance, distanceMap[other]);
+                colliderDistanceMap[collider] = Mathf.Min(curDistance, colliderDistanceMap[collider]);
             }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D collider)
     {
-        if (other.CompareTag("EnemyAttack"))
+        if (collider.CompareTag("EnemyAttack"))
         {
-            if (activeColliders.Contains(other))
+            if (activeColliders.Contains(collider) && !colliderAttackedMap[collider])
             {
-                Grazed(other);
+                Grazed(collider);
+                RemoveCollider(collider);
+            }
+            else
+            {
+                RemoveCollider(collider);
             }
         }
     }
 
     private void Grazed(Collider2D collider)
     {
-        if (distanceMap.TryGetValue(collider, out float distance))
+        if (colliderDistanceMap.TryGetValue(collider, out float distance))
         {
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / distance} with ratio {distance}");
-            activeColliders.Remove(collider);
-            distanceMap.Remove(collider);
         }
+    }
+
+    private void RemoveCollider(Collider2D collider)
+    {
+        activeColliders.Remove(collider);
+        colliderDistanceMap.Remove(collider);
+        colliderAttackedMap.Remove(collider);
     }
 }

@@ -19496,18 +19496,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 416511942}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &455494628 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8491541913333171741, guid: 541b7061a84e84331a9394f8687c118f,
-    type: 3}
-  m_PrefabInstance: {fileID: 82750442117599301}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc7d8be4569e8a84392c05f95862a72f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &455494632 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7964644178919621293, guid: 541b7061a84e84331a9394f8687c118f,
@@ -21851,11 +21839,11 @@ MonoBehaviour:
     - rid: 7405124568204705792
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 455494628}
+        _boss: {fileID: 0}
     - rid: 7405124568204705793
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 455494628}
+        _boss: {fileID: 0}
     - rid: 7405124568204705794
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -28731,6 +28719,16 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5234390641593683249, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5234390641593683249, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5746332601320074700, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_fontAsset
@@ -30347,7 +30345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989042df59e846e4a9bdb3e2a2765fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guardian: {fileID: 455494628}
+  guardian: {fileID: 0}
   rootPatternManger: {fileID: 1866070731}
 --- !u!61 &1840872685
 BoxCollider2D:
@@ -30557,7 +30555,7 @@ MonoBehaviour:
     - rid: 521773836373327899
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 455494628}
+        _boss: {fileID: 0}
     - rid: 521773882682900482
       type: {class: StopFollowCameraEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -30665,7 +30663,7 @@ PrefabInstance:
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 37.16
+      value: 35.17
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
@@ -30705,41 +30703,6 @@ PrefabInstance:
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2492478671208829351, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2492478671208829351, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2492478671208829351, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2492478671208829351, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2492478671208829351, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6259209506450466507, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7969873626946254296, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
