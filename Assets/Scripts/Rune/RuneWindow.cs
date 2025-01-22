@@ -30,6 +30,9 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
     [SerializeField] GameObject runeIcon_Empty;
     [SerializeField] GameObject runeCanvas;
     [SerializeReference] GameObject runeDescriptionUI;
+
+    private CursorTargetSelector _cursorTargetSelector;
+    private SelectableUI _currentCursoredObject;
     
     public void OpenOrCloseOption()
     {
@@ -43,57 +46,63 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
     {
         playerRuneComp = PlayerCharacter.Instance.GetComponent<RuneComponent>();
         ReDrawUI();
-        StartCoroutine(DrawUICursor(0));
+        StartCoroutine(DrawUICursor());
     }
 
     // managing Move Cursor and interact
     public void OnKeyInput()
     {
-        if(InputManager.Instance.GetKeyDown(ActionCode.MoveUp) || InputManager.Instance.GetKeyDown(ActionCode.MoveLeft))
+        int x = InputManager.Instance.GetKeyDown(ActionCode.MoveRight) ? 1 :
+            InputManager.Instance.GetKeyDown(ActionCode.MoveLeft) ? -1 : 0;
+
+        int y = InputManager.Instance.GetKeyDown(ActionCode.MoveUp) ? 1 :
+            InputManager.Instance.GetKeyDown(ActionCode.MoveDown) ? -1 : 0;
+        if (!(x == 0 && y == 0))
         {
-            StartCoroutine(DrawUICursor(-1));
+            _currentCursoredObject = _cursorTargetSelector.SelectTarget( 
+                (x, y)
+                , _currentCursoredObject);
+            StartCoroutine(DrawUICursor());
         }
-        else if(InputManager.Instance.GetKeyDown(ActionCode.MoveDown) || InputManager.Instance.GetKeyDown(ActionCode.MoveRight))
+        
+
+        if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
         {
-            StartCoroutine(DrawUICursor(1));
-        }
-        else if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
-        {
-            selectableUIs[currentCursorNum].OnInteract();
+            _currentCursoredObject.OnInteract();
         }
     }
 
-    IEnumerator DrawUICursor(int step) 
+    IEnumerator DrawUICursor() 
     {
-        yield return SetCursorNum(step);
+        // yield return SetCursorNum(step);
         yield return MoveUICursor();
         yield return DrawDescriptionUI();
     }
-    IEnumerator SetCursorNum(int step)
-    {
-        int listLength = selectableUIs.Count;
-        currentCursorNum += step;
-        if (currentCursorNum >= listLength)
-        {
-            currentCursorNum = 0;
-        }
-        if(currentCursorNum < 0)
-        {
-            currentCursorNum += listLength;
-        }
-        yield return null;
-    }
+    // IEnumerator SetCursorNum(int step)
+    // {
+    //     int listLength = selectableUIs.Count;
+    //     currentCursorNum += step;
+    //     if (currentCursorNum >= listLength)
+    //     {
+    //         currentCursorNum = 0;
+    //     }
+    //     if(currentCursorNum < 0)
+    //     {
+    //         currentCursorNum += listLength;
+    //     }
+    //     yield return null;
+    // }
     
     // move cursor to selectable UI
     IEnumerator MoveUICursor()
     {
-        cursorUI.GetComponent<RectTransform>().position = selectableUIs[currentCursorNum].GetComponent<RectTransform>().position;
+        cursorUI.GetComponent<RectTransform>().position = _currentCursoredObject.GetComponent<RectTransform>().position;
         yield return null;
     }
 
     IEnumerator DrawDescriptionUI()
     {
-        IDescriptionalUI descriptionalUI = selectableUIs[currentCursorNum] as IDescriptionalUI;
+        IDescriptionalUI descriptionalUI = _currentCursoredObject as IDescriptionalUI;
         IDescriptionUI descriptionUI =  runeDescriptionUI.GetComponent<IDescriptionUI>();
         descriptionalUI.SetDescription(descriptionUI);
         yield return null;
@@ -132,6 +141,8 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         }
         
         runeTreeSetter.SetTree();
+        _cursorTargetSelector = new CursorTargetSelector(selectableUIs);
+        _currentCursoredObject = selectableUIs[0];
     }
 
     protected override void Awake()
