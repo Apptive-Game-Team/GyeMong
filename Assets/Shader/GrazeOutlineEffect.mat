@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2853088161044615852
+--- !u!114 &-221488492393131561
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkillGaugeEffect
-  m_Shader: {fileID: -6465566751694194690, guid: 2c1cbb11ae4f01e4d8a10e9cf5ff3908,
+  m_Name: GrazeOutlineEffect
+  m_Shader: {fileID: -6465566751694194690, guid: df406b2b3c4215f4593c55b6a065e3b7,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -55,10 +55,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _QueueControl: 0
-    - _QueueOffset: 0
-    - _isUsable: 1
+    - _OutlineAlpha: 1
+    - _OutlineThickness: 0.01
     m_Colors:
-    - _OutLineColor: {r: 17.13202, g: 20.73854, b: 30.36779, a: 1}
-    - _VoronoiColor: {r: 2, g: 2, b: 2, a: 0}
+    - _OutlineColor: {r: 256, g: 256, b: 256, a: 3.3699977}
   m_BuildTextureStacks: []
