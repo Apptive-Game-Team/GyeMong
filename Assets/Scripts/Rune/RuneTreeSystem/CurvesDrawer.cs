@@ -6,10 +6,11 @@ namespace runeSystem.RuneTreeSystem
 {
     public class CurvesDrawer : Image
     {
-        [SerializeField] public Sprite sprite;
-        [SerializeField] public Color tintColor = Color.black;
-        [SerializeField] public float thickness = 1f;
-        [SerializeField] public int meshDetail = 10;
+        [SerializeField] protected Sprite sprite;
+        [SerializeField] protected Color tintColor = Color.black;
+        [SerializeField] protected float thickness = 5f;
+        [SerializeField] protected int meshDetail = 20;
+        
         private List<(Vector2 pos, Color32 color, Vector2 uv)> _vertices;
         private List<(int idx, int idx2, int idx3)> _triangles;
         
