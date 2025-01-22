@@ -39,7 +39,6 @@ public class GrazeController : MonoBehaviour
                     RemoveCollider(collider);
                 }
             }
-
         }
     }
 
@@ -91,6 +90,7 @@ public class GrazeController : MonoBehaviour
         if (colliderDistanceMap.TryGetValue(collider, out float distance))
         {
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
+            GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
             Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / distance} with ratio {distance}");
         }
     }
