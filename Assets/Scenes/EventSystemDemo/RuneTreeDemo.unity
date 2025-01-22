@@ -557,7 +557,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -567,10 +567,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
-  sprite: {fileID: 0}
-  tintColor: {r: 0, g: 0, b: 0, a: 1}
-  thickness: 1
-  meshDetail: 10
 --- !u!222 &563575434
 CanvasRenderer:
   m_ObjectHideFlags: 0
