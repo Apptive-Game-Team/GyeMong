@@ -320,7 +320,7 @@ namespace playerCharacter
 
         private IEnumerator SkillAttack()
         {
-            soundController.Trigger(PlayerSoundType.SWORD_SWING);
+            soundController.Trigger(PlayerSoundType.SWORD_SKILL);
             isAttacking = true;
             canMove = false;
             animator.SetBool("isAttacking", true);

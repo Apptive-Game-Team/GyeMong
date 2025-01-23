@@ -7,13 +7,14 @@ namespace playerCharacter
     public enum PlayerSoundType
     {
         SWORD_SWING = 0,
-        SWORD_ATTACK = 1,
-        SWORD_DEFEND_START = 2,
-        FOOT = 3,
-        DASH = 4,
-        SWORD_DEFEND_HIT = 5,
-        SWORD_DEFEND_PERFECT = 6,
-        GRAZE = 7,
+        SWORD_SKILL = 1,
+        SWORD_ATTACK = 2,
+        SWORD_DEFEND_START = 3,
+        FOOT = 4,
+        DASH = 5,
+        SWORD_DEFEND_HIT = 6,
+        SWORD_DEFEND_PERFECT = 7,
+        GRAZE = 8,
     }
 
     public enum FloorType
@@ -57,6 +58,7 @@ namespace playerCharacter
             soundObjects.Add(PlayerSoundType.SWORD_DEFEND_PERFECT, transform.Find("SwordDefendPerfectSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.FOOT, transform.Find("FootSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.GRAZE, transform.Find("GrazeSound").GetComponent<SoundObject>());
+            soundObjects.Add(PlayerSoundType.SWORD_SKILL, transform.Find("SwordSkillSound").GetComponent<SoundObject>());
         }
 
         public void SetRun(bool isRun)
