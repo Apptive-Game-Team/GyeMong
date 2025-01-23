@@ -121,7 +121,7 @@ namespace playerCharacter
                 StartCoroutine(Attack());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge > skillUsageGauge)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge >= skillUsageGauge)
             {
                 StartCoroutine(SkillAttack());
             }
