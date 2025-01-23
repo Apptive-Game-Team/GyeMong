@@ -225,6 +225,7 @@ namespace playerCharacter
 
         public void GrazeIncreaseGauge(float ratio)
         {
+            soundController.Trigger(PlayerSoundType.GRAZE);
             curSkillGauge += gaugeIncreaseValue / ratio;
             if (curSkillGauge > maxSkillGauge)
             {
