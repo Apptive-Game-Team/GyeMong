@@ -1,9 +1,10 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using Rework;
 using UnityEngine;
 
-public class Root : MonoBehaviour
+public class Root : BossAttack
 {
     private void OnEnable()
     {
@@ -18,7 +19,7 @@ public class Root : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            PlayerCharacter.Instance.TakeDamage(10);
+            PlayerCharacter.Instance.TakeDamage(damage);
         }
     }
 }
