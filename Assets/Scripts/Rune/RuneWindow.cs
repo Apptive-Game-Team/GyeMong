@@ -1,7 +1,9 @@
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using runeSystem.RuneTreeSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public interface ISelectableContainerUI
@@ -40,12 +42,18 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         gameObject.SetActive(isOptionOpened);
         PlayerCharacter.Instance.SetPlayerMove(!isOptionOpened);
     }
+    
+    public void ChangeRuneDataList(int index)
+    {
+        currentRuneDataListIndex = index;
+        StartCoroutine(ReDrawUI());
+    }
 
     // Initialize RuneWindow (Caching RuneComponent, Draw UI, Draw Cursor)
     public void Init()
     {
         playerRuneComp = PlayerCharacter.Instance.GetComponent<RuneComponent>();
-        ReDrawUI();
+        StartCoroutine(ReDrawUI());
         StartCoroutine(DrawUICursor());
     }
 
@@ -76,7 +84,10 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
     {
         // yield return SetCursorNum(step);
         yield return MoveUICursor();
-        yield return DrawDescriptionUI();
+        if (_currentCursoredObject is IDescriptionalUI)
+        {
+            yield return DrawDescriptionUI();
+        }
     }
     // IEnumerator SetCursorNum(int step)
     // {
@@ -108,7 +119,7 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         yield return null;
     }
     
-    public void ReDrawUI()
+    public IEnumerator ReDrawUI()
     {
         runeTreeSetter = new RuneTreeSetter(runeDataLists[currentRuneDataListIndex], this);
         
@@ -116,14 +127,13 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
         {
             Destroy(obj.gameObject);
         }
-        foreach(Transform obj in AcquiredRuneListUI.transform)
+
+        foreach (Transform obj in AcquiredRuneListUI.transform)
         {
             if (obj.GetComponent<ITreeLayoutNode>() != null)
                 Destroy(obj.gameObject);
         }
 
-        selectableUIs.Clear();
-        
         int maxSlotNum = playerRuneComp.MaxRuneEquipNum;
         int equippedSlotNum = playerRuneComp.EquippedRuneList.Count;
         int emptySlotNum = maxSlotNum- equippedSlotNum;
@@ -132,17 +142,20 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
             RuneUIObject runeUI = Instantiate(runeIcon, EquipRuneListUI.transform);
             runeUI.uiState = RuneUIState.EQUIPPED;
             runeIcon.Init(runeData);
-            selectableUIs.Add(runeUI);
         }
 
         for(int i = 0; i < emptySlotNum; i++)
         {
             Instantiate(runeIcon_Empty, EquipRuneListUI.transform);
         }
-        
         runeTreeSetter.SetTree();
+        selectableUIs = null;
+        yield return null;
+        selectableUIs = transform.GetComponentsInChildren<SelectableUI>().Where(ui => ui != null && ui.gameObject != null).ToList();
         _cursorTargetSelector = new CursorTargetSelector(selectableUIs);
-        _currentCursoredObject = selectableUIs[0];
+        _currentCursoredObject = selectableUIs[5];
+        
+        StartCoroutine(DrawUICursor());
     }
 
     protected override void Awake()
@@ -185,7 +198,6 @@ public class RuneWindow : SingletonObject<RuneWindow>, ISelectableContainerUI
                 runeUI.uiState = RuneUIState.UNEQUIPPED;
                 runeUI.Init(FindNodeById(runeData.parentID), runeData);
                 nodes.Add(runeUI);
-                runeWindow.selectableUIs.Add(runeUI);
             }
         }
         
