@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace playerCharacter
 {
@@ -384,6 +385,10 @@ namespace playerCharacter
 
             Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
             skillRigidbody.velocity = lastMovementDirection.normalized * skillSpeed;
+
+            Material attackParticle = attackCollider.transform.Find("Particle System").GetComponent<Renderer>().material;
+            attackParticle.SetFloat("_Rotation", Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x));
+            Debug.Log(Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x));
 
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
             Destroy(attackCollider, delayTime * 2);
