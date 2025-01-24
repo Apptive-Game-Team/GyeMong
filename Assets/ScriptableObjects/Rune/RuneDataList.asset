@@ -24,6 +24,7 @@ MonoBehaviour:
       duration: 0
       amount1: 0
       amount2: 0
+    availableOptions: []
   - name: "\uBD04\uBC14\uB78C\uC758 \uB8EC"
     id: 1
     description: "\uB530\uC2A4\uD55C \uBD04\uBC14\uB78C\uC774 \uCCB4\uB825\uC744
@@ -37,6 +38,18 @@ MonoBehaviour:
       duration: 1
       amount1: 1
       amount2: 0
+    availableOptions:
+    - name: 
+      id: 0
+      description: 
+      optionImage: {fileID: 0}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
   - name: "\uAC00\uC2DC\uB369\uAD74\uC758 \uB8EC"
     id: 2
     description: "\uC77C\uC815\uC2DC\uAC04\uB9C8\uB2E4 \uC801\uC758 \uC6C0\uC9C1\uC784\uC744
@@ -51,6 +64,7 @@ MonoBehaviour:
       duration: 10
       amount1: 6
       amount2: 1
+    availableOptions: []
   - name: "\uAF43\uC758 \uCD95\uBCF5\uC758 \uB8EC"
     id: 3
     description: "\uADFC\uC811 \uACF5\uACA9\uC2DC \uC801\uC5D0\uAC8C \uAC1C\uD654\uB97C
@@ -64,6 +78,7 @@ MonoBehaviour:
       duration: 0
       amount1: 0.2
       amount2: 0
+    availableOptions: []
   - name: "\uACE8\uB818\uC758 \uB8EC"
     id: 4
     description: "\uACE8\uACE8\uB818\uB818"
@@ -75,3 +90,4 @@ MonoBehaviour:
       duration: 0
       amount1: 1
       amount2: 0
+    availableOptions: []

@@ -11,6 +11,16 @@ public class RuneData
     public string description;
     public Sprite runeImage;
     public BuffData runeBuff;
+    public List<RuneOption> availableOptions;
+}
+[Serializable]
+public class RuneOption
+{
+    public string name;
+    public int id;
+    public string description;
+    public Sprite optionImage;
+    public BuffData optionBuff;
 }
 
 [CreateAssetMenu(fileName = "RuneDataList",menuName ="ScriptableObject/RuneDataList")]
