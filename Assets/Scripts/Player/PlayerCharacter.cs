@@ -147,17 +147,11 @@ namespace playerCharacter
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
 
-            // if (isMoving)
-            // {
-            //     lastMovementDirection = movement;
-            //     animator.SetFloat("xDir", movement.x);
-            //     animator.SetFloat("yDir", movement.y);
-            // }
-            // else
-            // {
-            //     animator.SetFloat("xDir", lastMovementDirection.x);
-            //     animator.SetFloat("yDir", lastMovementDirection.y);
-            // }
+            if (!isDashing && isMoving)
+            {
+                lastMovementDirection = movement;
+            }
+
             animator.SetFloat("xDir", mouseDirection.x);
             animator.SetFloat("yDir", mouseDirection.y);
         }
@@ -270,13 +264,13 @@ namespace playerCharacter
 
         private IEnumerator Dash()
         {
-            movement = Vector2.zero;
             isDashing = true;
             canMove = false;
+            movement = Vector2.zero;
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
             
-            Vector2 dashDirection = lastMovementDirection.normalized;
+            Vector2 dashDirection = lastMovementDirection;
             Vector2 startPosition = playerRb.position;
             Vector2 targetPosition = startPosition + dashDirection * dashDistance;
 

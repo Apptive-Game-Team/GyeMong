@@ -38,8 +38,8 @@ public class InputManager : SingletonObject<InputManager>
         {
             { ActionCode.Attack, KeyCode.Mouse0 },
             { ActionCode.Skill, KeyCode.Mouse1 },
-            { ActionCode.Dash, KeyCode.X },
-            { ActionCode.Run, KeyCode.LeftShift },
+            { ActionCode.Dash, KeyCode.LeftShift },
+            { ActionCode.Run, KeyCode.P },
             { ActionCode.Interaction, KeyCode.Space },
             { ActionCode.MoveUp, KeyCode.W },
             { ActionCode.MoveDown, KeyCode.S },
