@@ -1,9 +1,6 @@
 
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
-using UnityEngine.SceneManagement;
 
 namespace playerCharacter
 {
@@ -40,7 +37,6 @@ namespace playerCharacter
         private float delayTime = 0.2f;
 
         private float parryTime = 0.5f;
-        private float defendStartTime = 0f;
         private float blinkDelay = 0.2f;
         
         private float invincibilityDuration = 1.0f;
@@ -48,7 +44,6 @@ namespace playerCharacter
 
         private bool isDashing = false;
         private bool isAttacking = false;
-        private bool isDefending = false;
         private bool canMove = true;
         private bool isInvincible = false;
 
@@ -157,28 +152,9 @@ namespace playerCharacter
             if (isInvincible) return;
             
             StartCoroutine(EffectManager.Instance.ShakeCamera());
-            
-            if (!isUnblockable && isDefending)
-            {
-                
-                if (Time.time - defendStartTime < parryTime) 
-                {
-                    soundController.Trigger(PlayerSoundType.SWORD_DEFEND_PERFECT);
-                    damage = 0f;
-                    Debug.Log($"Perfect Defend, damage : {damage}");
-                    return;
-                }
-                else 
-                {
-                    soundController.Trigger(PlayerSoundType.SWORD_DEFEND_HIT);
-                    damage /= 2f;
-                    Debug.Log($"Defend, damage : {damage}");
-                }
-            }
 
             curHealth -= damage;
             TakeGauge();
-            //EffectManager.Instance.UpdateHpBar(curHealth);
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/maxHealth));
             
             if (curHealth <= 0)
@@ -232,23 +208,7 @@ namespace playerCharacter
         private IEnumerator TriggerInvincibility()
         {
             isInvincible = true;
-
-            // SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            // if (spriteRenderer != null)
-            // {
-            //     float elapsedTime = 0f;
-            //     bool isVisible = true;
-
-            //     while (elapsedTime < invincibilityDuration)
-            //     {
-            //         elapsedTime += 0.2f;
-            //         isVisible = !isVisible;
-            //         spriteRenderer.enabled = isVisible;
-            //         yield return new WaitForSeconds(0.1f);
-            //     }
-
-            //     spriteRenderer.enabled = true;
-            // }
+            
             Material material = gameObject.GetComponent<Renderer>().material;
             material.SetFloat("_BlinkTrigger", 1f);
             yield return new WaitForSeconds(blinkDelay);
@@ -275,14 +235,11 @@ namespace playerCharacter
             while (elapsedTime < dashDuration)
             {
                 elapsedTime += Time.deltaTime;
-
-                /*playerRb.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration);*/
                 playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration));
                 yield return null;
             }
 
             playerRb.velocity = Vector2.zero;
-            //yield return new WaitForSeconds(delayTime);
 
             canMove = true;
             animator.SetBool("isDashing", false);
@@ -336,25 +293,6 @@ namespace playerCharacter
             
             isAttacking = false;
         }
-
-        // private IEnumerator Defend()
-        // {
-        //     isDefending = true;
-        //     canMove = false;
-        //     animator.SetBool("isDefending", true);
-
-        //     movement = Vector2.zero;
-        //     playerRb.velocity = Vector2.zero;
-
-        //     defendStartTime = Time.time;
-        //     soundController.Trigger(PlayerSoundType.SWORD_DEFEND_START);
-
-        //     yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
-
-        //     animator.SetBool("isDefending", false);
-        //     canMove = true;
-        //     isDefending = false;
-        // }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider()
@@ -417,9 +355,9 @@ namespace playerCharacter
 
         private IEnumerator BindCoroutine(float duration)
         {
-            canMove = false; // ������ ����
-            yield return new WaitForSeconds(duration); // ������ �ð� ���
-            canMove = true; // ������ �簳
+            canMove = false;
+            yield return new WaitForSeconds(duration);
+            canMove = true;
         }
 
         public Vector3 GetPlayerPosition()
