@@ -29,8 +29,7 @@ namespace playerCharacter
         public GameObject attackColliderPrefab;
         public GameObject skillColliderPrefab;
 
-        public float moveSpeed = 2.0f;
-        public float sprintSpeed = 4.0f;
+        public float moveSpeed = 4.0f;
         public float dashSpeed = 10.0f;
         public float skillSpeed = 10.0f;
 
@@ -38,13 +37,14 @@ namespace playerCharacter
         private float dashDistance = 5.0f;
         private float dashCooldown = 1.0f;
 
-        private float delayTime = 0.3f;
+        private float delayTime = 0.2f;
 
         private float parryTime = 0.5f;
         private float defendStartTime = 0f;
         private float blinkDelay = 0.2f;
         
         private float invincibilityDuration = 1.0f;
+        private bool isMoving = false;
 
         private bool isDashing = false;
         private bool isAttacking = false;
@@ -130,17 +130,13 @@ namespace playerCharacter
 
         private void MoveCharacter()
         {
-            bool isRun = InputManager.Instance.GetKey(ActionCode.Run);
-            float speed = isRun ? sprintSpeed : moveSpeed;
-            soundController.SetRun(isRun);
-            playerRb.velocity = movement * speed;
-
-            animator.SetFloat("speed", speed);
+            soundController.SetRun(isMoving);
+            playerRb.velocity = movement * moveSpeed;
         }
 
         private void UpdateState()
         {
-            bool isMoving = movement.magnitude > 0;
+            isMoving = movement.magnitude > 0;
             animator.SetBool("isMove", isMoving);
             soundController.SetBool(PlayerSoundType.FOOT, isMoving);
 
