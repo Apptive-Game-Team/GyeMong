@@ -21,6 +21,7 @@ namespace playerCharacter
         private bool isControlled = false;
         private Vector2 movement;
         private Vector2 lastMovementDirection;
+        private Vector2 mousePosition;
         private Rigidbody2D playerRb;
         private Animator animator;
         private PlayerSoundController soundController;
@@ -143,17 +144,22 @@ namespace playerCharacter
             animator.SetBool("isMove", isMoving);
             soundController.SetBool(PlayerSoundType.FOOT, isMoving);
 
-            if (isMoving)
-            {
-                lastMovementDirection = movement;
-                animator.SetFloat("xDir", movement.x);
-                animator.SetFloat("yDir", movement.y);
-            }
-            else
-            {
-                animator.SetFloat("xDir", lastMovementDirection.x);
-                animator.SetFloat("yDir", lastMovementDirection.y);
-            }
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+
+            // if (isMoving)
+            // {
+            //     lastMovementDirection = movement;
+            //     animator.SetFloat("xDir", movement.x);
+            //     animator.SetFloat("yDir", movement.y);
+            // }
+            // else
+            // {
+            //     animator.SetFloat("xDir", lastMovementDirection.x);
+            //     animator.SetFloat("yDir", lastMovementDirection.y);
+            // }
+            animator.SetFloat("xDir", mouseDirection.x);
+            animator.SetFloat("yDir", mouseDirection.y);
         }
 
         public void TakeDamage(float damage, bool isUnblockable = false)
@@ -363,9 +369,11 @@ namespace playerCharacter
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider()
         {
-            Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+            Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
 
-            float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
             GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation, transform);
@@ -375,15 +383,20 @@ namespace playerCharacter
 
         private void SpawnSkillCollider()
         {
-            Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+            Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
 
-            float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
             GameObject attackCollider = Instantiate(skillColliderPrefab, spawnPosition, spawnRotation, transform);
 
+            Material attackParticle = attackCollider.transform.Find("Particle System").GetComponent<Renderer>().material;
+            attackParticle.SetFloat("_Rotation", Mathf.Atan2(mouseDirection.y, mouseDirection.x));
+
             Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
-            skillRigidbody.velocity = lastMovementDirection.normalized * skillSpeed;
+            skillRigidbody.velocity = mouseDirection.normalized * skillSpeed;
 
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
             Destroy(attackCollider, delayTime * 2);
