@@ -679,6 +679,11 @@ PrefabInstance:
       propertyPath: nodes.Array.data[3].startNode
       value: 
       objectReference: {fileID: 416107706}
+    - target: {fileID: 4021245198337996307, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: acquiredRuneListUI
+      value: 
+      objectReference: {fileID: 888451984}
     - target: {fileID: 4164742057843772627, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
       propertyPath: _runeID
@@ -739,6 +744,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 196
       objectReference: {fileID: 0}
+    - target: {fileID: 6794156809581901355, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: acquiredRuneListUI
+      value: 
+      objectReference: {fileID: 888451984}
     - target: {fileID: 7618350676042751725, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
       propertyPath: m_Pivot.x
@@ -859,6 +869,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SeasonSelectButton, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 8547617327384169200, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: acquiredRuneListUI
+      value: 
+      objectReference: {fileID: 888451984}
+    - target: {fileID: 8560631924120796808, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: acquiredRuneListUI
+      value: 
+      objectReference: {fileID: 888451984}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5348500608749307274, guid: a8c638ca210ca99478b7eae65070be1d, type: 3}
@@ -870,6 +890,12 @@ PrefabInstance:
 --- !u!224 &828519025 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6164220414196188556, guid: a8c638ca210ca99478b7eae65070be1d,
+    type: 3}
+  m_PrefabInstance: {fileID: 756630917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &888451984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6356460406871862128, guid: a8c638ca210ca99478b7eae65070be1d,
     type: 3}
   m_PrefabInstance: {fileID: 756630917}
   m_PrefabAsset: {fileID: 0}
@@ -90317,7 +90343,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 339.4848
+      value: 308.2162
       objectReference: {fileID: 0}
     - target: {fileID: 2049541664315578251, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -90332,7 +90358,7 @@ PrefabInstance:
     - target: {fileID: 2649768473112061072, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 339.4848
+      value: 308.2162
       objectReference: {fileID: 0}
     - target: {fileID: 2691256379806927063, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
