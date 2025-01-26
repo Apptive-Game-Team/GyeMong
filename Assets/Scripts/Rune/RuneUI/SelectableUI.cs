@@ -15,5 +15,5 @@ public abstract class SelectableUI : MonoBehaviour, ISelectableUI
 
 public interface ISelectableUI
 {
-
+    public void OnInteract();
 }

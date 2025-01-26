@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UI.mouse_input;
 using UnityEngine;
@@ -44,7 +41,7 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListe
         textDescription.text = descriptionSet.Description;
     }
 
-    public void OnMouseInput(MouseInputState state, SelectableUI ui)
+    public void OnMouseInput(MouseInputState state, ISelectableUI ui)
     {
         if (state == MouseInputState.ENTERED)
         {
