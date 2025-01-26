@@ -4,40 +4,40 @@ using TMPro;
 using UnityEngine;
 
 public class Elf : Boss
-{ 
+{
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject seedPrefab;
     [SerializeField] private GameObject vinePrefab;
     [SerializeField] private GameObject meleeAttackPrefab;
     Vector3 meleeAttackPrefabPos;
-    
+
     private FootSoundController footSoundController;
     [SerializeField] private SoundObject arrowSoundObject;
     [SerializeField] private SoundObject vineSoundObject;
-    
+
     protected override void Initialize()
     {
-         maxPhase = 2;
-         maxHps.Add(100f);
-         maxHps.Add(200f);
-         currentHp = maxHps[currentPhase];
-         damage = 20f;
-         speed = 2f;
-         currentShield = 0f;
-         detectionRange = 10f;
-         MeleeAttackRange = 2f;
-         RangedAttackRange = 6f;
-         meleeAttackPrefab.SetActive(false);
-         footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
+        maxPhase = 2;
+        maxHps.Add(100f);
+        maxHps.Add(200f);
+        currentHp = maxHps[currentPhase];
+        damage = 20f;
+        speed = 2f;
+        currentShield = 0f;
+        detectionRange = 10f;
+        MeleeAttackRange = 2f;
+        RangedAttackRange = 6f;
+        meleeAttackPrefab.SetActive(false);
+        footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
     }
-    
+
     private void RotateArrowTowardsPlayer(GameObject arrow)
     {
-        Vector3 direction = DirectionToPlayer; 
+        Vector3 direction = DirectionToPlayer;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-     }
-    
+    }
+
     public abstract class ElfState : BaseState
     {
         public Elf Elf => creature as Elf;
@@ -56,7 +56,7 @@ public class Elf : Boss
 
             float duration = 2f;
             float timer = 0f;
-            
+
             while (duration > timer && Elf.DistanceToPlayer > Elf.MeleeAttackRange)
             {
                 timer += Time.deltaTime;
@@ -65,12 +65,12 @@ public class Elf : Boss
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             }
-            
+
             Elf.Animator.SetBool("iMove", false);
             Elf.ChangeState();
         }
     }
-    
+
     public new class BackStep : ElfState
     {
         public override int GetWeight()
@@ -86,7 +86,7 @@ public class Elf : Boss
             Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
             Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             yield return Elf.BackStep(Elf.RangedAttackRange);
-            
+
             Elf.Animator.SetBool("isDash", false);
             Elf.ChangeState();
         }
@@ -96,17 +96,17 @@ public class Elf : Boss
     {
         public override int GetWeight()
         {
-            return (Elf.DistanceToPlayer > Elf.RangedAttackRange/2) ? 5 : 0;
+            return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
         }
 
         public override IEnumerator StateCoroutine()
         {
-             yield return new WaitForSeconds(0.5f);
-             GameObject arrow =  Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
-             Elf.RotateArrowTowardsPlayer(arrow);
-             yield return Elf.arrowSoundObject.Play();
-             yield return new WaitForSeconds(1f);
-             Elf.ChangeState();
+            yield return new WaitForSeconds(0.5f);
+            GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+            Elf.RotateArrowTowardsPlayer(arrow);
+            yield return Elf.arrowSoundObject.Play();
+            yield return new WaitForSeconds(1f);
+            Elf.ChangeState();
         }
     }
     public class SeedRangedAttak : ElfState
@@ -135,6 +135,23 @@ public class Elf : Boss
         }
     }
     public class MeleeAttack : ElfState
+    {
+        public override int GetWeight()
+        {
+            return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
+        }
+        public override IEnumerator StateCoroutine()
+        {
+            yield return new WaitForSeconds(0.2f);
+            Elf.meleeAttackPrefab.SetActive(true);
+            Vector3 direction = Elf.DirectionToPlayer;
+            Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
+            yield return new WaitForSeconds(0.3f);
+            Elf.meleeAttackPrefab.SetActive(false);
+            Elf.ChangeState();
+        }
+    }
+    public class WhipAttack : ElfState
     {
         public override int GetWeight()
         {
