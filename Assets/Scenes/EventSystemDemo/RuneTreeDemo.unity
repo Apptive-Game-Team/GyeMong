@@ -594,6 +594,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 891050942535858620, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 891050942535858620, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -635
+      objectReference: {fileID: 0}
     - target: {fileID: 1506566618716517169, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -698,6 +708,21 @@ PrefabInstance:
         type: 3}
       propertyPath: _runeID
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781960463790634081, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: m_margin.w
+      value: 457.67526
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201620072625285254, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201620072625285254, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -608
       objectReference: {fileID: 0}
     - target: {fileID: 5490139606923430721, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
