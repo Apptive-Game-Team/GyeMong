@@ -38,8 +38,6 @@ namespace UI.mouse_input
             {
                 _lastHoveredUI = _hoveredUI;
                 _hoveredUI = _hoverDetector.GetHoveredUI();
-                if (_hoveredUI != null)
-                    print(_hoveredUI);
                 CheckClick();
                 CheckLongClick();
                 CheckEnterExit();
