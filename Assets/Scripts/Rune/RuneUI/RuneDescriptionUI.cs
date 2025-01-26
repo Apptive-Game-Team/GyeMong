@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UI.mouse_input;
 using UnityEngine;
 
 public class DescriptionSet
@@ -25,11 +27,16 @@ public interface IDescriptionUI
     public void SetDescription(DescriptionSet description);
 }
 
-public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI
+public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListener
 {
 
     [SerializeField] TextMeshProUGUI textTitle;
     [SerializeField] TextMeshProUGUI textDescription;
+
+    private void Start()
+    {
+        MouseInputManager.Instance.AddListener(this);
+    }
 
     public void SetDescription(DescriptionSet descriptionSet)
     {
@@ -37,4 +44,15 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI
         textDescription.text = descriptionSet.Description;
     }
 
+    public void OnMouseInput(MouseInputState state, SelectableUI ui)
+    {
+        if (state == MouseInputState.ENTERED)
+        {
+            if (ui is RuneUIObject)
+            {
+                RuneUIObject runeUI = (RuneUIObject)ui;
+                SetDescription(runeUI.BuildDescriptionSet());
+            }
+        }
+    }
 }
