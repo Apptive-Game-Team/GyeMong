@@ -58,6 +58,6 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
             uiState = RuneUIState.UNEQUIPPED;
         }
 
-        RuneWindow.Instance.Init();
+        // RuneWindow.Instance.Init();
     }
 }
