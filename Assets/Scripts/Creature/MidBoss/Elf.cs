@@ -172,7 +172,11 @@ public class Elf : Boss
     {
         public override int GetWeight()
         {
-            return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
+            if (Elf.CurrentPhase == 1)
+            {
+                return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
+            }
+            return 0;
         }
         public override IEnumerator StateCoroutine()
         {
