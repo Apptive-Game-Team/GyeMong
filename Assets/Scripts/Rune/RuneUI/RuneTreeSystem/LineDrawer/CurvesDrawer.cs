@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -101,4 +102,34 @@ namespace runeSystem.RuneTreeSystem
                    Mathf.Pow(t, 3) * points[3];
         }
     }
+    
+#if UNITY_EDITOR
+    [CustomEditor(typeof(CurvesDrawer))]
+    public class CurvesDrawerInspector : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+            
+            var targetType = typeof(CurvesDrawer);
+            var fields = targetType.GetFields(
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.DeclaredOnly
+            );
+
+            foreach (var field in fields)
+            {
+                var property = serializedObject.FindProperty(field.Name);
+                if (property != null)
+                {
+                    EditorGUILayout.PropertyField(property, true);
+                }
+            }
+            
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+#endif
 }
