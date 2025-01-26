@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8702645042044850078}
   - component: {fileID: 8628976831561150042}
   - component: {fileID: 920296923335997972}
+  - component: {fileID: 1477627723524179649}
   m_Layer: 5
   m_Name: RuneUI
   m_TagString: Untagged
@@ -75,3 +76,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1477627723524179649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121354514756666443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e740471c0ee4dc5b29885935bc63edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runeDataList: {fileID: 11400000, guid: e75646a9c3cff4c5b9d674a9041e7fd7, type: 2}
+  _runeID: 0
+  _runeUIObjectPrefab: {fileID: 8044350904525208094, guid: 22525c2b35b8d44d98cfc06ae5b23d22,
+    type: 3}
