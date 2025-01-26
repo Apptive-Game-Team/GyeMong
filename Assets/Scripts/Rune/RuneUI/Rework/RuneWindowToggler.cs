@@ -1,4 +1,6 @@
 using playerCharacter;
+using UI.mouse_input;
+using UnityEngine.UI;
 
 public class RuneWindowToggler : SingletonObject<RuneWindowToggler>
 {
@@ -20,5 +22,6 @@ public class RuneWindowToggler : SingletonObject<RuneWindowToggler>
     private void OnEnable()
     {
         gameObject.SetActive(isOptionOpened);
+        MouseInputManager.Instance.SetRaycaster(GetComponent<GraphicRaycaster>());
     }
 }
