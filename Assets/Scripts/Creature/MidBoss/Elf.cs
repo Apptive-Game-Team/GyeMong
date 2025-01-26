@@ -100,6 +100,8 @@ public class Elf : Boss
 
         public override IEnumerator StateCoroutine()
         {
+            Elf.Animator.SetBool("attackDelay", true);
+            Elf.Animator.SetFloat("attackType", 0);
             yield return new WaitForSeconds(0.5f);
             GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
             Elf.RotateArrowTowardsPlayer(arrow);
@@ -121,6 +123,8 @@ public class Elf : Boss
 
         public override IEnumerator StateCoroutine()
         {
+            Elf.Animator.SetBool("attackDelay", true);
+            Elf.Animator.SetFloat("attackType", 1);
             yield return new WaitForSeconds(1f);
             int count = 0;
             while (count < 4)
@@ -141,6 +145,8 @@ public class Elf : Boss
         }
         public override IEnumerator StateCoroutine()
         {
+            Elf.Animator.SetBool("attackDelay", true);
+            Elf.Animator.SetFloat("attackType", 2);
             yield return new WaitForSeconds(0.2f);
             Elf.meleeAttackPrefab.SetActive(true);
             Vector3 direction = Elf.DirectionToPlayer;
@@ -158,6 +164,8 @@ public class Elf : Boss
         }
         public override IEnumerator StateCoroutine()
         {
+            Elf.Animator.SetBool("attackDelay", true);
+            Elf.Animator.SetFloat("attackType", 3);
             yield return new WaitForSeconds(0.2f);
             Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(2f);
