@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 8314717043691235268}
   - component: {fileID: 2282991294140229619}
   - component: {fileID: 1549155792632907152}
+  - component: {fileID: 6499585692059791595}
   m_Layer: 5
   m_Name: EquipRuneListUI
   m_TagString: Untagged
@@ -265,6 +266,22 @@ MonoBehaviour:
   m_Spacing: {x: 25, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &6499585692059791595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681709069434726872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6118c135d846d4a1681a07d60cba0c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runeIcon: {fileID: 8044350904525208094, guid: 22525c2b35b8d44d98cfc06ae5b23d22,
+    type: 3}
+  runeIcon_Empty: {fileID: 3492416717782468039, guid: 22525c2b35b8d44d98cfc06ae5b23d22,
+    type: 3}
 --- !u!1 &690784949313070804
 GameObject:
   m_ObjectHideFlags: 0
