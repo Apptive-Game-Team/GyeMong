@@ -104,10 +104,13 @@ public class Elf : Boss
             Elf.Animator.SetFloat("attackType", 0);
             yield return new WaitForSeconds(0.5f);
             Elf.Animator.SetBool("attackDelay", false);
+            Elf.Animator.SetBool("isAttack", true);
+            Elf.Animator.SetFloat("attackType", 0);
             GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
             Elf.RotateArrowTowardsPlayer(arrow);
             yield return Elf.arrowSoundObject.Play();
             yield return new WaitForSeconds(1f);
+            Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
         }
     }
@@ -128,6 +131,8 @@ public class Elf : Boss
             Elf.Animator.SetFloat("attackType", 1);
             yield return new WaitForSeconds(1f);
             Elf.Animator.SetBool("attackDelay", false);
+            Elf.Animator.SetBool("isAttack", true);
+            Elf.Animator.SetFloat("attackType", 1);
             int count = 0;
             while (count < 4)
             {
@@ -136,6 +141,7 @@ public class Elf : Boss
                 yield return Elf.arrowSoundObject.Play();
                 count++;
             }
+            Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
         }
     }
@@ -151,11 +157,14 @@ public class Elf : Boss
             Elf.Animator.SetFloat("attackType", 2);
             yield return new WaitForSeconds(0.2f);
             Elf.Animator.SetBool("attackDelay", false);
+            Elf.Animator.SetBool("isAttack", true);
+            Elf.Animator.SetFloat("attackType", 2);
             Elf.meleeAttackPrefab.SetActive(true);
             Vector3 direction = Elf.DirectionToPlayer;
             Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
             yield return new WaitForSeconds(0.3f);
             Elf.meleeAttackPrefab.SetActive(false);
+            Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
         }
     }
@@ -171,8 +180,11 @@ public class Elf : Boss
             Elf.Animator.SetFloat("attackType", 3);
             yield return new WaitForSeconds(0.2f);
             Elf.Animator.SetBool("attackDelay", false);
+            Elf.Animator.SetBool("isAttack", true);
+            Elf.Animator.SetFloat("attackType", 3);
             Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(2f);
+            Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
         }
     }
