@@ -160,11 +160,8 @@ public class Elf : Boss
         public override IEnumerator StateCoroutine()
         {
             yield return new WaitForSeconds(0.2f);
-            Elf.meleeAttackPrefab.SetActive(true);
-            Vector3 direction = Elf.DirectionToPlayer;
-            Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
-            yield return new WaitForSeconds(0.3f);
-            Elf.meleeAttackPrefab.SetActive(false);
+            Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(2f);
             Elf.ChangeState();
         }
     }
