@@ -53,7 +53,7 @@ public class Elf : Boss
         public override IEnumerator StateCoroutine()
         {
             Elf.Animator.SetBool("isMove", true);
-
+            Elf.Animator.SetFloat("moveType", 0);
             float duration = 2f;
             float timer = 0f;
 
@@ -80,14 +80,13 @@ public class Elf : Boss
 
         public override IEnumerator StateCoroutine()
         {
-            Elf.Animator.SetBool("isDash", true);
-
-            Elf.Animator.SetFloat("dashType", 1);
+            Elf.Animator.SetBool("isMove", true);
+            Elf.Animator.SetFloat("moveType", 1);
             Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
             Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             yield return Elf.BackStep(Elf.RangedAttackRange);
 
-            Elf.Animator.SetBool("isDash", false);
+            Elf.Animator.SetBool("isMove", false);
             Elf.ChangeState();
         }
     }
