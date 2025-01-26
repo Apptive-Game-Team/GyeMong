@@ -60,4 +60,9 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
 
         // RuneWindow.Instance.Init();
     }
+
+    public override void OnLongInteract()
+    {
+        throw new System.NotImplementedException();
+    }
 }

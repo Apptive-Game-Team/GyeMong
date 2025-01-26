@@ -13,4 +13,9 @@ public class SeasonSelectButton : SelectableUI
             acquiredRuneListUI.transform.GetChild(i).gameObject.SetActive(seasonIndex == i);
         } 
     }
+
+    public override void OnLongInteract()
+    {
+        throw new System.NotImplementedException();
+    }
 }
