@@ -5,8 +5,12 @@ using UnityEngine;
 public class SeasonSelectButton : SelectableUI
 {
     [SerializeField] private int seasonIndex;
+    [SerializeField] private GameObject acquiredRuneListUI;
     public override void OnInteract()
     {
-        RuneWindow.Instance.ChangeRuneDataList(seasonIndex);
+        for (int i = 0; i < acquiredRuneListUI.transform.childCount; i++)
+        {
+            acquiredRuneListUI.transform.GetChild(i).gameObject.SetActive(seasonIndex == i);
+        } 
     }
 }
