@@ -374,7 +374,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1552003383977004075}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RuneWindow, Assembly-CSharp
         m_MethodName: ChangeRuneDataList
         m_Mode: 3
@@ -792,8 +792,8 @@ GameObject:
   - component: {fileID: 5558592881974755421}
   - component: {fileID: 8780318445877987263}
   - component: {fileID: 5774095160070544005}
-  - component: {fileID: 1552003383977004075}
   - component: {fileID: 395408363677150551}
+  - component: {fileID: 7488018920032594240}
   m_Layer: 5
   m_Name: RuneWindow
   m_TagString: Untagged
@@ -865,31 +865,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1552003383977004075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877093930163910305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18c93738d3b726f4896e016308a7a0bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runeDataLists:
-  - {fileID: 11400000, guid: e75646a9c3cff4c5b9d674a9041e7fd7, type: 2}
-  - {fileID: 11400000, guid: 99965b61ec1694d70af05d5f58008ea9, type: 2}
-  selectableUIs: []
-  cursorUI: {fileID: 662183979445518144}
-  EquipRuneListUI: {fileID: 681709069434726872}
-  AcquiredRuneListUI: {fileID: 6356460406871862128}
-  runeIcon: {fileID: 8044350904525208094, guid: 22525c2b35b8d44d98cfc06ae5b23d22,
-    type: 3}
-  runeIcon_Empty: {fileID: 6478281533961071843, guid: fad2676e9ef78481fb935a372a4b8e33,
-    type: 3}
-  runeCanvas: {fileID: 0}
-  runeDescriptionUI: {fileID: 4061001046579219496}
 --- !u!223 &395408363677150551
 Canvas:
   m_ObjectHideFlags: 0
@@ -913,6 +888,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &7488018920032594240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877093930163910305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6010f53e52e74a459b152b9716464dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1890360486454134374
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1022,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1552003383977004075}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RuneWindow, Assembly-CSharp
         m_MethodName: ChangeRuneDataList
         m_Mode: 3
@@ -1664,7 +1651,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1552003383977004075}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RuneWindow, Assembly-CSharp
         m_MethodName: ChangeRuneDataList
         m_Mode: 3
@@ -1818,7 +1805,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5588611573282155906
 Canvas:
   m_ObjectHideFlags: 0
@@ -1840,7 +1827,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 11
   m_TargetDisplay: 0
 --- !u!114 &-699792847610852616
 MonoBehaviour:
@@ -2197,7 +2184,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1552003383977004075}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RuneWindow, Assembly-CSharp
         m_MethodName: ChangeRuneDataList
         m_Mode: 3
@@ -2366,7 +2353,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 821836735015960147}
-  - component: {fileID: 1215330007962465396}
   - component: {fileID: 3794892385535301348}
   - component: {fileID: 5029260593289057028}
   m_Layer: 5
@@ -2396,22 +2382,6 @@ RectTransform:
   m_AnchoredPosition: {x: -154.09326, y: 0}
   m_SizeDelta: {x: -880.8037, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1215330007962465396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6356460406871862128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bff78766d9154fb9b63c3942f14819d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  marginX: 100
-  marginY: 30
-  nodeWidth: 100
-  nodeHeight: 100
 --- !u!222 &3794892385535301348
 CanvasRenderer:
   m_ObjectHideFlags: 0
