@@ -108,6 +108,13 @@ namespace UI.mouse_input
             foreach (var listener in _listeners)
             {
                 listener.OnMouseInput(state, ui);
+                if (state == MouseInputState.CLICKED)
+                {
+                    ui.OnInteract();
+                } else if (state == MouseInputState.LONG_CLICKED)
+                {
+                    ui.OnLongInteract();
+                }
             }
         }
         
