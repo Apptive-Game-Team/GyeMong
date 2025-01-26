@@ -103,6 +103,7 @@ public class Elf : Boss
             Elf.Animator.SetBool("attackDelay", true);
             Elf.Animator.SetFloat("attackType", 0);
             yield return new WaitForSeconds(0.5f);
+            Elf.Animator.SetBool("attackDelay", false);
             GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
             Elf.RotateArrowTowardsPlayer(arrow);
             yield return Elf.arrowSoundObject.Play();
@@ -126,6 +127,7 @@ public class Elf : Boss
             Elf.Animator.SetBool("attackDelay", true);
             Elf.Animator.SetFloat("attackType", 1);
             yield return new WaitForSeconds(1f);
+            Elf.Animator.SetBool("attackDelay", false);
             int count = 0;
             while (count < 4)
             {
@@ -148,6 +150,7 @@ public class Elf : Boss
             Elf.Animator.SetBool("attackDelay", true);
             Elf.Animator.SetFloat("attackType", 2);
             yield return new WaitForSeconds(0.2f);
+            Elf.Animator.SetBool("attackDelay", false);
             Elf.meleeAttackPrefab.SetActive(true);
             Vector3 direction = Elf.DirectionToPlayer;
             Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
@@ -167,6 +170,7 @@ public class Elf : Boss
             Elf.Animator.SetBool("attackDelay", true);
             Elf.Animator.SetFloat("attackType", 3);
             yield return new WaitForSeconds(0.2f);
+            Elf.Animator.SetBool("attackDelay", false);
             Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(2f);
             Elf.ChangeState();
