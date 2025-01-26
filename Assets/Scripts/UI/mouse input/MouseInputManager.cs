@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.mouse_input
 {
@@ -19,18 +20,30 @@ namespace UI.mouse_input
         public static float LONG_CLICK_TIME = 0.5f;
         
         List<IMouseInputListener> _listeners = new List<IMouseInputListener>();
+
+        private UIHoverDetector _hoverDetector;
         
-        private SelectableUI _lastHoveredUI;
-        private SelectableUI _hoveredUI;
+        private ISelectableUI _lastHoveredUI;
+        private ISelectableUI _hoveredUI;
         private Coroutine _longClickCoroutine;
+        
+        public void SetRaycaster(GraphicRaycaster raycaster)
+        {
+            _hoverDetector = new UIHoverDetector(raycaster);
+        }
         
         private void Update()
         {
-            _lastHoveredUI = _hoveredUI;
-            _hoveredUI = GetHoveredUI();
-            CheckClick();
-            CheckLongClick();
-            CheckEnterExit();
+            if (_hoverDetector != null)
+            {
+                _lastHoveredUI = _hoveredUI;
+                _hoveredUI = _hoverDetector.GetHoveredUI();
+                if (_hoveredUI != null)
+                    print(_hoveredUI);
+                CheckClick();
+                CheckLongClick();
+                CheckEnterExit();
+            }
         }
 
         public void AddListener(IMouseInputListener listener)
@@ -57,7 +70,7 @@ namespace UI.mouse_input
         {
             if (Input.GetMouseButtonDown(0))
             {
-                SelectableUI _clickedUI = GetClickedUI();
+                ISelectableUI _clickedUI = GetClickedUI();
                 if (_clickedUI != null)
                 {
                     NotifyListeners(MouseInputState.CLICKED, _clickedUI);
@@ -92,7 +105,7 @@ namespace UI.mouse_input
             }
         }
         
-        private void NotifyListeners(MouseInputState state, SelectableUI ui)
+        private void NotifyListeners(MouseInputState state, ISelectableUI ui)
         {
             foreach (var listener in _listeners)
             {
@@ -100,28 +113,11 @@ namespace UI.mouse_input
             }
         }
         
-        private SelectableUI GetClickedUI()
+        private ISelectableUI GetClickedUI()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit))
-                {
-                    return hit.collider.GetComponent<SelectableUI>();
-                }
-            }
-            return null;
-        }
-        
-        
-        private SelectableUI GetHoveredUI()
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                return hit.collider.GetComponent<SelectableUI>();
+                return _hoverDetector.GetHoveredUI();
             }
             return null;
         }
