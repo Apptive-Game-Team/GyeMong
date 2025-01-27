@@ -66,7 +66,7 @@ public class Elf : Boss
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             }
 
-            Elf.Animator.SetBool("iMove", false);
+            Elf.Animator.SetBool("isMove", false);
             Elf.ChangeState();
         }
     }
