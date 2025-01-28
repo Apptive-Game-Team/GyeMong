@@ -32,7 +32,7 @@ public class RuneComponent : MonoBehaviour
     {
         if(InputManager.Instance.GetKeyDown(ActionCode.RunePage))
         {
-            RuneWindow.Instance.OpenOrCloseOption();
+            RuneWindowToggler.Instance.OpenOrCloseOption();
         }
     }
 
