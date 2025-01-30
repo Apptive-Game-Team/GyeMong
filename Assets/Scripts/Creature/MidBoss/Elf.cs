@@ -62,12 +62,15 @@ public class Elf : Boss
                 timer += Time.deltaTime;
                 yield return null;
                 Elf.TrackPlayer();
-                Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
-                Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             }
 
             Elf.Animator.SetBool("isMove", false);
             Elf.ChangeState();
+        }
+        public override void OnStateUpdate()
+        {
+            Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+            Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
         }
     }
 
@@ -82,12 +85,15 @@ public class Elf : Boss
         {
             Elf.Animator.SetBool("isMove", true);
             Elf.Animator.SetFloat("moveType", 1);
-            Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
-            Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             yield return Elf.BackStep(Elf.RangedAttackRange);
 
             Elf.Animator.SetBool("isMove", false);
             Elf.ChangeState();
+        }
+        public override void OnStateUpdate()
+        {
+            Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+            Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
         }
     }
 
@@ -112,6 +118,11 @@ public class Elf : Boss
             yield return new WaitForSeconds(1f);
             Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
+        }
+        public override void OnStateUpdate()
+        {
+            Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+            Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
         }
     }
     public class SeedRangedAttak : ElfState
@@ -144,6 +155,11 @@ public class Elf : Boss
             Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
         }
+        public override void OnStateUpdate()
+        {
+            Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+            Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
+        }
     }
     public class MeleeAttack : ElfState
     {
@@ -166,6 +182,11 @@ public class Elf : Boss
             Elf.meleeAttackPrefab.SetActive(false);
             Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
+        }
+        public override void OnStateUpdate()
+        {
+            Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+            Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
         }
     }
     public class WhipAttack : ElfState
@@ -190,6 +211,11 @@ public class Elf : Boss
             yield return new WaitForSeconds(2f);
             Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
+        }
+        public override void OnStateUpdate()
+        {
+            Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+            Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
         }
     }
 }

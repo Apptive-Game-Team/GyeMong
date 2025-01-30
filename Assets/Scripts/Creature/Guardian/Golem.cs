@@ -80,6 +80,11 @@ public class Golem : Boss
             Golem.Animator.SetBool("TwoHand", false);
             creature.ChangeState();
         }
+        public override void OnStateUpdate()
+        {
+            Golem.Animator.SetFloat("xDir", Golem.DirectionToPlayer.x);
+            Golem.Animator.SetFloat("yDir", Golem.DirectionToPlayer.y);
+        }
     }
 
     public class FallingCubeAttack : GolemState
@@ -107,6 +112,11 @@ public class Golem : Boss
             
             creature.ChangeState();
         }
+        public override void OnStateUpdate()
+        {
+            Golem.Animator.SetFloat("xDir", Golem.DirectionToPlayer.x);
+            Golem.Animator.SetFloat("yDir", Golem.DirectionToPlayer.y);
+        }
     }   
 
     public class ChargeShield : GolemState
@@ -124,6 +134,11 @@ public class Golem : Boss
             Golem.MaterialController.SetFloat(1);
             
             creature.ChangeState();
+        }
+        public override void OnStateUpdate()
+        {
+            Golem.Animator.SetFloat("xDir", Golem.DirectionToPlayer.x);
+            Golem.Animator.SetFloat("yDir", Golem.DirectionToPlayer.y);
         }
     }
 
@@ -170,6 +185,11 @@ public class Golem : Boss
             }
             yield return spawnedObjects;
         }
+        public override void OnStateUpdate()
+        {
+            Golem.Animator.SetFloat("xDir", Golem.DirectionToPlayer.x);
+            Golem.Animator.SetFloat("yDir", Golem.DirectionToPlayer.y);
+        }
     } 
     
     public class ShockwaveAttack : GolemState
@@ -188,6 +208,11 @@ public class Golem : Boss
             
             Golem.Animator.SetBool("TwoHand", false);
             creature.ChangeState();
+        }
+        public override void OnStateUpdate()
+        {
+            Golem.Animator.SetFloat("xDir", Golem.DirectionToPlayer.x);
+            Golem.Animator.SetFloat("yDir", Golem.DirectionToPlayer.y);
         }
     }
 }

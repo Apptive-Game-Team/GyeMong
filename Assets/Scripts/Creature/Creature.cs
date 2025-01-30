@@ -27,6 +27,13 @@ public abstract class Creature : MonoBehaviour, IAttackable
 
     protected Animator _animator;
     private MaterialController _materialController;
+    private void Update()
+    {
+        if (_currentState != null)
+        {
+            _currentState.OnStateUpdate();
+        }
+    }
     public MaterialController MaterialController
     {
         get
@@ -64,7 +71,7 @@ public abstract class Creature : MonoBehaviour, IAttackable
             return directionToPlayer.y > 0 ? DirectionType.FRONT : DirectionType.BACK;
         }
     }
-
+    private BaseState _currentState;
     public void ChangeState()
     {
         if (_currentStateCoroutine != null)
@@ -79,6 +86,7 @@ public abstract class Creature : MonoBehaviour, IAttackable
             weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
         }
         randomIndex = Random.Range(0, weights.Count);
+        _currentState = states[weights[randomIndex]];
         _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
     }
     
@@ -152,8 +160,8 @@ public abstract class Creature : MonoBehaviour, IAttackable
         public abstract int GetWeight();
 
         public abstract IEnumerator StateCoroutine();
+        public abstract void OnStateUpdate();
     }
-    
     private BaseState[] _states;
     public BaseState[] States
     {
