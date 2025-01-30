@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d04af058cae9b24e937aeecef10bff8, type: 3}
+  m_Name: AnimationDataList
+  m_EditorClassIdentifier: 
+  creatureTypeData:
+  - Name: BOSS
+    Type: 3
+    creatureData:
+    - creatureName: Elf
+      animationData:
+      - animationName: IDLE
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: d597e11f295d5ec43914f39197b99505,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: d300890a5b69fd64eb25ff3895d2fd71,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: d1379bde33a4a4044bdb08a688932b4c,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 9bd74bf07d14c044299e8aa3b78d1e34,
+            type: 2}
+      - animationName: DASH
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: b928ef0bdb2170c458e23ab73d534193,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 32060b46aecbfe746ae2126ec141c7b2,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: b99043cebc5f5c8459aabad960db6fc5,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 4a1f97cfd041d8644a95cbc291d1d21c,
+            type: 2}
+      - animationName: MeleeAttack
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: 59c7685c255374347bb2003fc321896d,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 05e952dc49465f5409ba3b14691d23cc,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: b046df632b07a4b4e9a79c750477f604,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 36e2c0301056db6469cc5d125f5af79e,
+            type: 2}
+      - animationName: RangeAttack
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: 24d00fd0ca1e5d24d94f9715037f8d0b,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: e36cf89dcff6e0549b3c9622d70285aa,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: 088de0385c1e79149b38911cbf68bf25,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 44032077f37f1124088496cec6e07e5d,
+            type: 2}
+      - animationName: WhipAttack
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: a12cf2d67a553d144b44907f73c30040,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: a8ef3d736efe10f44bd87fd7d333ccbb,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: bf28e5898495ea64bbeebdef32e93b36,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 442877fbc32c3e647971e20470ef7fdc,
+            type: 2}
+      - animationName: ReadyMelee
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: 00d2eaad28221fd4b922ad27b1e2049a,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 028e2fc61c5877241ae6592d5bce469a,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: 9db1478fd25e1aa43b25c2bc30c7e67b,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 9f246135266b4d7488b1ef202668375d,
+            type: 2}
+      - animationName: ReadyRange
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: 9b081c6d93c2122499cf8546757397a9,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 9778a3b6efc454b4ebd44dd436f0ec8c,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: 01fac6ab333782e46a6be4609264f5b2,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 6fd5795f96093804ea9a50e8c90a031c,
+            type: 2}
+      - animationName: ReadyRangeSeed
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: 851535de03aa9a243b46127a5f466a28,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 463db041bc3281e4683e3965522a6c9c,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: 794b448cb1c25c2459a41debef0b0621,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: d7af05ff29ba72547b7e5d6aabaa254e,
+            type: 2}
+      - animationName: ReadyRangeWhip
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: dc755a869c05f9e41ba07e5052715c3b,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 85553d0824ce4834a87de7f352ea54dc,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: 36af58c248cc9364d85d00d459038345,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 738fd80b8a97afc45a9dfad3c3e78fa9,
+            type: 2}
+      - animationName: ChangePhase
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: 42296ae1c305ff040966a7f84d5b30e1,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 9112ae399ab453f47baed97943045e1c,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: c0301ce3b7190604b9d25ba0d9fd36cc,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 8749c7d212f4b4b4cbe0e9fdd23cc114,
+            type: 2}
+      - animationName: Move
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: b991f0e6848bc4a41bae39c3b86b88fe,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 36a24f6fcfd36a5429da986fbe320034,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: 709e476de53b16443af97308d3372434,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 172de7cdd9af0e74aac65237accc6164,
+            type: 2}
+      - animationName: BackStep
+        animationData:
+        - Direction: 1
+          animationClip: {fileID: 7400000, guid: 4e67a23dd7693b743bd8a1b240736076,
+            type: 2}
+        - Direction: 2
+          animationClip: {fileID: 7400000, guid: 7bfab2ce482a5b14b8a00336ee836df9,
+            type: 2}
+        - Direction: 3
+          animationClip: {fileID: 7400000, guid: 2c1ca7046f2f59740b3ea3335b8fdfe6,
+            type: 2}
+        - Direction: 4
+          animationClip: {fileID: 7400000, guid: 60df52c7c14eaec48ba55d3e7ef2d9f8,
+            type: 2}
