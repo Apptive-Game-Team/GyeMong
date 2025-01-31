@@ -6,6 +6,7 @@ using System;
 [Serializable]
 public class RuneData
 {
+    public int parentID;
     public string name;
     public int id;
     public string description;
