@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5213761979183187592}
   m_Layer: 0
   m_Name: Shockwave
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,6 +67,7 @@ MonoBehaviour:
         - {fileID: 555509500, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
         - {fileID: 1924693295, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
         deltaTime: 0.1
+        _renderer: {fileID: 0}
     - rid: 521773882682900485
       type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
       data: 

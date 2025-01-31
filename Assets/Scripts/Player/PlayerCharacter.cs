@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,12 @@ namespace playerCharacter
     {
         [SerializeField] private float curHealth;
         public float maxHealth;
+        [SerializeField] private float curSkillGauge;
+        public float GetCurSkillGauge() { return curSkillGauge; }
+        public float maxSkillGauge;
+        public float gaugeIncreaseValue;
+        public float attackGaugeIncreaseValue;
+        public float skillUsageGauge = 30f;
         public float attackPower;
         private bool isControlled = false;
         private Vector2 movement;
@@ -19,10 +26,12 @@ namespace playerCharacter
         private PlayerSoundController soundController;
         
         public GameObject attackColliderPrefab;
+        public GameObject skillColliderPrefab;
 
         public float moveSpeed = 2.0f;
         public float sprintSpeed = 4.0f;
         public float dashSpeed = 10.0f;
+        public float skillSpeed = 10.0f;
 
         private float dashDuration = 0.1f;
         private float dashDistance = 5.0f;
@@ -54,6 +63,10 @@ namespace playerCharacter
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
+            maxSkillGauge = 100f;
+            curSkillGauge = 0f;
+            gaugeIncreaseValue = 10f;
+            attackGaugeIncreaseValue = 2f;
         }
 
         private void Update()
@@ -65,7 +78,6 @@ namespace playerCharacter
                     HandleInput();
                 }
                 UpdateState();
-                
             }
         }
 
@@ -109,9 +121,9 @@ namespace playerCharacter
                 StartCoroutine(Attack());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Defend) && !isDefending)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge >= skillUsageGauge)
             {
-                StartCoroutine(Defend());
+                StartCoroutine(SkillAttack());
             }
         }
 
@@ -169,16 +181,36 @@ namespace playerCharacter
             }
 
             curHealth -= damage;
+            TakeGauge();
             //EffectManager.Instance.UpdateHpBar(curHealth);
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/maxHealth));
             
             if (curHealth <= 0)
             {
+                StartCoroutine(TriggerInvincibility());
                 Die();
             }
             else
             {
                 StartCoroutine(TriggerInvincibility());
+            }
+        }
+
+        public void TakeGauge()
+        {
+            curSkillGauge -= gaugeIncreaseValue;
+            if (curSkillGauge < 0)
+            {
+                curSkillGauge = 0f;
+            }
+        }
+
+        public void AttackIncreaseGauge()
+        {
+            curSkillGauge += attackGaugeIncreaseValue;
+            if (curSkillGauge > maxSkillGauge)
+            {
+                curSkillGauge = maxSkillGauge;
             }
         }
 
@@ -188,6 +220,16 @@ namespace playerCharacter
             if (curHealth > maxHealth)
             {
                 curHealth = maxHealth;
+            }
+        }
+
+        public void GrazeIncreaseGauge(float ratio)
+        {
+            soundController.Trigger(PlayerSoundType.GRAZE);
+            curSkillGauge += gaugeIncreaseValue / ratio;
+            if (curSkillGauge > maxSkillGauge)
+            {
+                curSkillGauge = maxSkillGauge;
             }
         }
         
@@ -244,7 +286,7 @@ namespace playerCharacter
             }
 
             playerRb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(delayTime);
+            //yield return new WaitForSeconds(delayTime);
 
             canMove = true;
             animator.SetBool("isDashing", false);
@@ -266,32 +308,57 @@ namespace playerCharacter
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
 
+            canMove = true;
+            
             yield return new WaitForSeconds(delayTime);
 
 
             animator.SetBool("isAttacking", false);
-            canMove = true;
+            
             isAttacking = false;
         }
 
-        private IEnumerator Defend()
+        private IEnumerator SkillAttack()
         {
-            isDefending = true;
+            soundController.Trigger(PlayerSoundType.SWORD_SKILL);
+            isAttacking = true;
             canMove = false;
-            animator.SetBool("isDefending", true);
+            animator.SetBool("isAttacking", true);
+
+            curSkillGauge -= skillUsageGauge;
+            SpawnAttackCollider();
+            SpawnSkillCollider();
 
             movement = Vector2.zero;
             playerRb.velocity = Vector2.zero;
 
-            defendStartTime = Time.time;
-            soundController.Trigger(PlayerSoundType.SWORD_DEFEND_START);
-
-            yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
-
-            animator.SetBool("isDefending", false);
             canMove = true;
-            isDefending = false;
+
+            yield return new WaitForSeconds(delayTime);
+
+            animator.SetBool("isAttacking", false);
+            
+            isAttacking = false;
         }
+
+        // private IEnumerator Defend()
+        // {
+        //     isDefending = true;
+        //     canMove = false;
+        //     animator.SetBool("isDefending", true);
+
+        //     movement = Vector2.zero;
+        //     playerRb.velocity = Vector2.zero;
+
+        //     defendStartTime = Time.time;
+        //     soundController.Trigger(PlayerSoundType.SWORD_DEFEND_START);
+
+        //     yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
+
+        //     animator.SetBool("isDefending", false);
+        //     canMove = true;
+        //     isDefending = false;
+        // }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider()
@@ -301,9 +368,25 @@ namespace playerCharacter
             float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
-            GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation);
+            GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation, transform);
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
             Destroy(attackCollider, delayTime);
+        }
+
+        private void SpawnSkillCollider()
+        {
+            Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
+
+            float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+
+            GameObject attackCollider = Instantiate(skillColliderPrefab, spawnPosition, spawnRotation, transform);
+
+            Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
+            skillRigidbody.velocity = lastMovementDirection.normalized * skillSpeed;
+
+            attackCollider.GetComponent<AttackCollider>().Init(soundController);
+            Destroy(attackCollider, delayTime * 2);
         }
 
         private void Die()
