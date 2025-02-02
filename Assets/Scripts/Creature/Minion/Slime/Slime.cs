@@ -18,7 +18,24 @@ public class Slime : Creature
         if (currentHp <= 0)
         {
             ChangeState(new SlimeDieState(this));
+
+            //Spawn Test용도 추가코드
+            StartCoroutine(Death());
         }
+    }
+
+    //Spawn Test용도
+    public IEnumerator Death()
+    {
+        yield return new WaitForSeconds(2f);
+        gameObject.SetActive(false);
+    }
+
+    public void HealSlime()
+    {
+        Initialize();
+        ChangeState();
+        faceToPlayerCoroutine = StartCoroutine(FaceToPlayer());
     }
     
     public IEnumerator FaceToPlayer()
@@ -47,7 +64,9 @@ public class Slime : Creature
 
     private void Initialize()
     {
-        currentHp = maxHp;
+        //currentHp = maxHp;
+        currentHp = 3;
+
         currentShield = 0;
         damage = 10;
         speed = 2;
