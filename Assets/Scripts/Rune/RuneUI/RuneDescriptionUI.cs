@@ -1,6 +1,7 @@
 using TMPro;
 using UI.mouse_input;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DescriptionSet
 {
@@ -21,7 +22,7 @@ public class DescriptionSet
 
 public interface IDescriptionUI
 {
-    public void SetDescription(DescriptionSet description);
+    public void SetDescription(RuneData runeData);
 }
 
 public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListener
@@ -29,16 +30,22 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListe
 
     [SerializeField] TextMeshProUGUI textTitle;
     [SerializeField] TextMeshProUGUI textDescription;
+    [SerializeField] Image runeImageUI;
+    [SerializeField] Image runeOptionUI1;
+    [SerializeField] Image runeOptionUI2;
 
     private void Start()
     {
         MouseInputManager.Instance.AddListener(this);
     }
 
-    public void SetDescription(DescriptionSet descriptionSet)
+    public void SetDescription(RuneData runeData)
     {
-        textTitle.text = descriptionSet.Title; 
-        textDescription.text = descriptionSet.Description;
+        textTitle.text = runeData.name; 
+        textDescription.text = runeData.description;
+        runeImageUI.sprite = runeData.runeImage;
+        runeOptionUI1.sprite = runeData.availableOptions[0].optionImage;
+        runeOptionUI2.sprite = runeData.availableOptions[0].optionImage;
     }
 
     public void OnMouseInput(MouseInputState state, ISelectableUI ui)
@@ -48,7 +55,7 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListe
             if (ui is RuneUIObject)
             {
                 RuneUIObject runeUI = (RuneUIObject)ui;
-                SetDescription(runeUI.BuildDescriptionSet());
+                SetDescription(runeUI.RuneData);
             }
         }
     }

@@ -27,6 +27,32 @@ MonoBehaviour:
       duration: 1
       amount1: 1
       amount2: 0
+    availableOptions:
+    - name: "\uC138\uCEE8\uB4DC \uC708\uB4DC"
+      id: 0
+      description: "\uCCB4\uB825\uC774 30% \uC774\uD558\uAC00 \uB418\uBA74, \uCCB4\uB825\uC744
+        20% \uD68C\uBCF5\uD55C\uB2E4. (\uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04
+        120\uCD08)"
+      optionImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
+    - name: "\uD68C\uBCF5\uB825"
+      id: 1
+      description: "\uCCB4\uB825 \uD68C\uBCF5 \uC8FC\uAE30\uAC00 1\uCD08 \uAC10\uC18C\uD55C\uB2E4."
+      optionImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
+    isUnlocked: 1
   - parentID: 0
     name: "\uAC00\uC2DC\uB369\uAD74\uC758 \uB8EC"
     id: 1
@@ -42,6 +68,32 @@ MonoBehaviour:
       duration: 10
       amount1: 6
       amount2: 1
+    availableOptions:
+    - name: "\uC138\uCEE8\uB4DC \uC708\uB4DC"
+      id: 0
+      description: "\uCCB4\uB825\uC774 30% \uC774\uD558\uAC00 \uB418\uBA74, \uCCB4\uB825\uC744
+        20% \uD68C\uBCF5\uD55C\uB2E4. (\uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04
+        120\uCD08)"
+      optionImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
+    - name: "\uD68C\uBCF5\uB825"
+      id: 1
+      description: "\uCCB4\uB825 \uD68C\uBCF5 \uC8FC\uAE30\uAC00 1\uCD08 \uAC10\uC18C\uD55C\uB2E4."
+      optionImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
+    isUnlocked: 0
   - parentID: 0
     name: "\uAF43\uC758 \uCD95\uBCF5\uC758 \uB8EC"
     id: 2
@@ -56,6 +108,32 @@ MonoBehaviour:
       duration: 0
       amount1: 0.2
       amount2: 0
+    availableOptions:
+    - name: "\uC138\uCEE8\uB4DC \uC708\uB4DC"
+      id: 0
+      description: "\uCCB4\uB825\uC774 30% \uC774\uD558\uAC00 \uB418\uBA74, \uCCB4\uB825\uC744
+        20% \uD68C\uBCF5\uD55C\uB2E4. (\uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04
+        120\uCD08)"
+      optionImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
+    - name: "\uD68C\uBCF5\uB825"
+      id: 1
+      description: "\uCCB4\uB825 \uD68C\uBCF5 \uC8FC\uAE30\uAC00 1\uCD08 \uAC10\uC18C\uD55C\uB2E4."
+      optionImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
+    isUnlocked: 0
   - parentID: 1
     name: "\uACE8\uB818\uC758 \uB8EC"
     id: 3
@@ -68,3 +146,29 @@ MonoBehaviour:
       duration: 0
       amount1: 1
       amount2: 0
+    availableOptions:
+    - name: "\uC138\uCEE8\uB4DC \uC708\uB4DC"
+      id: 0
+      description: "\uCCB4\uB825\uC774 30% \uC774\uD558\uAC00 \uB418\uBA74, \uCCB4\uB825\uC744
+        20% \uD68C\uBCF5\uD55C\uB2E4. (\uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04
+        120\uCD08)"
+      optionImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
+    - name: "\uD68C\uBCF5\uB825"
+      id: 1
+      description: "\uCCB4\uB825 \uD68C\uBCF5 \uC8FC\uAE30\uAC00 1\uCD08 \uAC10\uC18C\uD55C\uB2E4."
+      optionImage: {fileID: 21300000, guid: 6f61a3db786fbba4f93eeee35bc67453, type: 3}
+      optionBuff:
+        buffType: 0
+        disposeMode: 0
+        buffActiveMode: 0
+        duration: 0
+        amount1: 0
+        amount2: 0
+    isUnlocked: 0

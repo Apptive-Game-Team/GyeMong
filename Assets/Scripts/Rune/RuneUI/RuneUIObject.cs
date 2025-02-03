@@ -20,7 +20,7 @@ public enum RuneUIState
     EQUIPPED,
 }
 
-public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI, IMouseInputListener
+public class RuneUIObject : SelectableUI, IInteractionalUI, IMouseInputListener
 {
     [SerializeField] RuneData runeData;
     [SerializeField] public RuneUIState uiState;
@@ -30,6 +30,8 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI, IM
     public int ID => runeData.id;
     public int ParentID => runeData.parentID;
 
+    public RuneData RuneData => runeData;
+    
     public void Init(RuneData newData)
     {
         runeData = newData;
@@ -42,16 +44,6 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI, IM
         {
             uiImage.color = Color.white;
         }
-    }
-
-    public void SetDescription(IDescriptionUI descriptionUI)
-    {
-        descriptionUI.SetDescription(BuildDescriptionSet());
-    }
-
-    public DescriptionSet BuildDescriptionSet()
-    {
-        return new DescriptionSet(runeData.name, runeData.description);
     }
 
     public override void OnInteract()
