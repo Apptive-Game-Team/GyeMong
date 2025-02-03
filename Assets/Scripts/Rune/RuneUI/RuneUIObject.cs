@@ -1,4 +1,5 @@
 using playerCharacter;
+using UI.mouse_input;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,7 @@ public enum RuneUIState
     EQUIPPED,
 }
 
-public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
+public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI, IMouseInputListener
 {
     [SerializeField] RuneData runeData;
     [SerializeField] public RuneUIState uiState;
@@ -33,6 +34,14 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
     {
         runeData = newData;
         uiImage.sprite = runeData.runeImage;
+        if (!runeData.isUnlocked)
+        {
+            uiImage.color = Color.gray;
+        }
+        else
+        {
+            uiImage.color = Color.white;
+        }
     }
 
     public void SetDescription(IDescriptionUI descriptionUI)
@@ -47,12 +56,12 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
 
     public override void OnInteract()
     {
-        if(uiState == RuneUIState.UNEQUIPPED) 
+        if(runeData.isUnlocked && uiState == RuneUIState.UNEQUIPPED) 
         {
             PlayerCharacter.Instance.GetComponent<RuneComponent>().EquipRune(runeData);
             uiState = RuneUIState.EQUIPPED;
         }
-        else if (uiState == RuneUIState.EQUIPPED)
+        else if (runeData.isUnlocked && uiState == RuneUIState.EQUIPPED)
         {
             PlayerCharacter.Instance.GetComponent<RuneComponent>().UnequipRune(runeData);
             uiState = RuneUIState.UNEQUIPPED;
@@ -63,6 +72,20 @@ public class RuneUIObject : SelectableUI, IDescriptionalUI, IInteractionalUI
 
     public override void OnLongInteract()
     {
-        throw new System.NotImplementedException();
+        //해금 부분
+        if (!runeData.isUnlocked)
+        {
+            runeData.isUnlocked = true;
+            Init(runeData);
+        }
+    }
+
+    public void OnMouseInput(MouseInputState state, ISelectableUI ui)
+    {
+        if (state.Equals(MouseInputState.LONG_CLICKED))
+        {
+            ui.OnLongInteract();
+            Init(runeData);
+        }
     }
 }

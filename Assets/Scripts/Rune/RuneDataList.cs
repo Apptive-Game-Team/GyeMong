@@ -13,6 +13,7 @@ public class RuneData
     public Sprite runeImage;
     public BuffData runeBuff;
     public List<RuneOption> availableOptions;
+    public bool isUnlocked;
 }
 [Serializable]
 public class RuneOption
