@@ -160,7 +160,9 @@ public abstract class Creature : MonoBehaviour, IAttackable
         public abstract int GetWeight();
 
         public abstract IEnumerator StateCoroutine();
-        public abstract void OnStateUpdate();
+        public virtual void OnStateUpdate()
+        { 
+        }
     }
     private BaseState[] _states;
     public BaseState[] States
