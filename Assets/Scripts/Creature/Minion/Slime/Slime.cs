@@ -24,9 +24,12 @@ public class Slime : Creature
         }
     }
 
-    //Spawn Test용도
+    //Spawn, GoldManager Test용도
     public IEnumerator Death()
     {
+        int goldReward = 10;
+        GoldManager.Instance.AddGold(goldReward);
+
         yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
     }
