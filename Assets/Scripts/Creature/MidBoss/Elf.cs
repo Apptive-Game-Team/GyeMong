@@ -164,7 +164,7 @@ public class Elf : Boss
             Elf.meleeAttackPrefab.SetActive(true);
             Vector3 direction = Elf.DirectionToPlayer;
             Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.05f);
             Elf.meleeAttackPrefab.SetActive(false);
             Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
