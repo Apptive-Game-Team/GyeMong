@@ -29,13 +29,8 @@ public class Seed : BossAttack
 
     private IEnumerator FireArrow()
     {
-        // �÷��̾� ���� ���
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-
-        // ȸ�� ���� ���� ���
         float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-
-        // 45�� ���� �� ������ ���� ����
         float angleRange = 45f;
         float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
 
@@ -56,7 +51,6 @@ public class Seed : BossAttack
             yield return null;
         }
         _soundObject.PlayAsync();
-        // ���� �������� ���ư��� �÷��̾� ��ġ - ���� ��ġ ��ŭ ���ư�
         yield return new WaitForSeconds(1f);
         
         Explode();
