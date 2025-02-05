@@ -389,6 +389,7 @@ MonoBehaviour:
   - rid: 521773745628250169
   - rid: 521773745628250161
   - rid: 521773745628250170
+  - rid: 3558735529444638722
   references:
     version: 2
     RefIds:
@@ -448,6 +449,11 @@ MonoBehaviour:
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 0}
+    - rid: 3558735529444638722
+      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 5581117415951231125}
+        bossRoomBoundary: {fileID: 1893575457}
 --- !u!4 &97916096
 Transform:
   m_ObjectHideFlags: 0
@@ -31022,7 +31028,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.2164
+      value: 308.21637
       objectReference: {fileID: 0}
     - target: {fileID: 1370121933915850358, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -31139,7 +31145,7 @@ PrefabInstance:
     - target: {fileID: 2649768473112061072, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.2164
+      value: 308.21637
       objectReference: {fileID: 0}
     - target: {fileID: 2691256379806927063, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -37957,6 +37963,7 @@ MonoBehaviour:
   - rid: 521773835193679878
   - rid: 521773745628250140
   - rid: 521773771964809216
+  - rid: 3558735529444638721
   references:
     version: 2
     RefIds:
@@ -38052,6 +38059,11 @@ MonoBehaviour:
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
         _isEnable: 0
+    - rid: 3558735529444638721
+      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 5581117415951231125}
+        bossRoomBoundary: {fileID: 1893575457}
 --- !u!1001 &1874622578
 PrefabInstance:
   m_ObjectHideFlags: 0
