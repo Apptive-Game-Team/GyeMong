@@ -1,9 +1,6 @@
 
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
-using UnityEngine.SceneManagement;
 
 namespace playerCharacter
 {
@@ -21,6 +18,7 @@ namespace playerCharacter
         private bool isControlled = false;
         private Vector2 movement;
         private Vector2 lastMovementDirection;
+        private Vector2 mousePosition;
         private Rigidbody2D playerRb;
         private Animator animator;
         private PlayerSoundController soundController;
@@ -28,8 +26,7 @@ namespace playerCharacter
         public GameObject attackColliderPrefab;
         public GameObject skillColliderPrefab;
 
-        public float moveSpeed = 2.0f;
-        public float sprintSpeed = 4.0f;
+        public float moveSpeed = 4.0f;
         public float dashSpeed = 10.0f;
         public float skillSpeed = 10.0f;
 
@@ -37,17 +34,16 @@ namespace playerCharacter
         private float dashDistance = 5.0f;
         private float dashCooldown = 1.0f;
 
-        private float delayTime = 0.3f;
+        private float delayTime = 0.2f;
 
         private float parryTime = 0.5f;
-        private float defendStartTime = 0f;
         private float blinkDelay = 0.2f;
         
         private float invincibilityDuration = 1.0f;
+        private bool isMoving = false;
 
         private bool isDashing = false;
         private bool isAttacking = false;
-        private bool isDefending = false;
         private bool canMove = true;
         private bool isInvincible = false;
 
@@ -129,31 +125,26 @@ namespace playerCharacter
 
         private void MoveCharacter()
         {
-            bool isRun = InputManager.Instance.GetKey(ActionCode.Run);
-            float speed = isRun ? sprintSpeed : moveSpeed;
-            soundController.SetRun(isRun);
-            playerRb.velocity = movement * speed;
-
-            animator.SetFloat("speed", speed);
+            soundController.SetRun(isMoving);
+            playerRb.velocity = movement * moveSpeed;
         }
 
         private void UpdateState()
         {
-            bool isMoving = movement.magnitude > 0;
+            isMoving = movement.magnitude > 0;
             animator.SetBool("isMove", isMoving);
             soundController.SetBool(PlayerSoundType.FOOT, isMoving);
 
-            if (isMoving)
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+
+            if (!isDashing && isMoving)
             {
                 lastMovementDirection = movement;
-                animator.SetFloat("xDir", movement.x);
-                animator.SetFloat("yDir", movement.y);
             }
-            else
-            {
-                animator.SetFloat("xDir", lastMovementDirection.x);
-                animator.SetFloat("yDir", lastMovementDirection.y);
-            }
+
+            animator.SetFloat("xDir", mouseDirection.x);
+            animator.SetFloat("yDir", mouseDirection.y);
         }
 
         public void TakeDamage(float damage, bool isUnblockable = false)
@@ -161,28 +152,9 @@ namespace playerCharacter
             if (isInvincible) return;
             
             StartCoroutine(EffectManager.Instance.ShakeCamera());
-            
-            if (!isUnblockable && isDefending)
-            {
-                
-                if (Time.time - defendStartTime < parryTime) 
-                {
-                    soundController.Trigger(PlayerSoundType.SWORD_DEFEND_PERFECT);
-                    damage = 0f;
-                    Debug.Log($"Perfect Defend, damage : {damage}");
-                    return;
-                }
-                else 
-                {
-                    soundController.Trigger(PlayerSoundType.SWORD_DEFEND_HIT);
-                    damage /= 2f;
-                    Debug.Log($"Defend, damage : {damage}");
-                }
-            }
 
             curHealth -= damage;
             TakeGauge();
-            //EffectManager.Instance.UpdateHpBar(curHealth);
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/maxHealth));
             
             if (curHealth <= 0)
@@ -236,23 +208,7 @@ namespace playerCharacter
         private IEnumerator TriggerInvincibility()
         {
             isInvincible = true;
-
-            // SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            // if (spriteRenderer != null)
-            // {
-            //     float elapsedTime = 0f;
-            //     bool isVisible = true;
-
-            //     while (elapsedTime < invincibilityDuration)
-            //     {
-            //         elapsedTime += 0.2f;
-            //         isVisible = !isVisible;
-            //         spriteRenderer.enabled = isVisible;
-            //         yield return new WaitForSeconds(0.1f);
-            //     }
-
-            //     spriteRenderer.enabled = true;
-            // }
+            
             Material material = gameObject.GetComponent<Renderer>().material;
             material.SetFloat("_BlinkTrigger", 1f);
             yield return new WaitForSeconds(blinkDelay);
@@ -264,13 +220,13 @@ namespace playerCharacter
 
         private IEnumerator Dash()
         {
-            movement = Vector2.zero;
             isDashing = true;
             canMove = false;
+            movement = Vector2.zero;
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
             
-            Vector2 dashDirection = lastMovementDirection.normalized;
+            Vector2 dashDirection = lastMovementDirection;
             Vector2 startPosition = playerRb.position;
             Vector2 targetPosition = startPosition + dashDirection * dashDistance;
 
@@ -279,14 +235,11 @@ namespace playerCharacter
             while (elapsedTime < dashDuration)
             {
                 elapsedTime += Time.deltaTime;
-
-                /*playerRb.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration);*/
                 playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration));
                 yield return null;
             }
 
             playerRb.velocity = Vector2.zero;
-            //yield return new WaitForSeconds(delayTime);
 
             canMove = true;
             animator.SetBool("isDashing", false);
@@ -341,31 +294,14 @@ namespace playerCharacter
             isAttacking = false;
         }
 
-        // private IEnumerator Defend()
-        // {
-        //     isDefending = true;
-        //     canMove = false;
-        //     animator.SetBool("isDefending", true);
-
-        //     movement = Vector2.zero;
-        //     playerRb.velocity = Vector2.zero;
-
-        //     defendStartTime = Time.time;
-        //     soundController.Trigger(PlayerSoundType.SWORD_DEFEND_START);
-
-        //     yield return new WaitWhile(()=>InputManager.Instance.GetKey(ActionCode.Defend));
-
-        //     animator.SetBool("isDefending", false);
-        //     canMove = true;
-        //     isDefending = false;
-        // }
-
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider()
         {
-            Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+            Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
 
-            float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
             GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation, transform);
@@ -375,15 +311,20 @@ namespace playerCharacter
 
         private void SpawnSkillCollider()
         {
-            Vector2 spawnPosition = playerRb.position + lastMovementDirection.normalized * 0.5f;
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+            Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
 
-            float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
             GameObject attackCollider = Instantiate(skillColliderPrefab, spawnPosition, spawnRotation, transform);
 
+            Material attackParticle = attackCollider.transform.Find("Particle System").GetComponent<Renderer>().material;
+            attackParticle.SetFloat("_Rotation", Mathf.Atan2(mouseDirection.y, mouseDirection.x));
+
             Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
-            skillRigidbody.velocity = lastMovementDirection.normalized * skillSpeed;
+            skillRigidbody.velocity = mouseDirection.normalized * skillSpeed;
 
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
             Destroy(attackCollider, delayTime * 2);
@@ -414,9 +355,9 @@ namespace playerCharacter
 
         private IEnumerator BindCoroutine(float duration)
         {
-            canMove = false; // ������ ����
-            yield return new WaitForSeconds(duration); // ������ �ð� ���
-            canMove = true; // ������ �簳
+            canMove = false;
+            yield return new WaitForSeconds(duration);
+            canMove = true;
         }
 
         public Vector3 GetPlayerPosition()
