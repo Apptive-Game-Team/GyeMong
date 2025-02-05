@@ -7,7 +7,24 @@ public abstract class BossEvent : Event
 {
   [SerializeField] protected Boss _boss;
 }
-
+public class ActivateBossRoomEvent : BossEvent
+{
+    [SerializeField] protected GameObject bossRoomBoundary;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        bossRoomBoundary.SetActive(true);
+        return null;
+    }
+}
+public class DeActivateBossRoomEvent : BossEvent
+{
+    [SerializeField] protected GameObject bossRoomBoundary;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        bossRoomBoundary.SetActive(false);
+        return null;
+    }
+}
 public abstract class BossHpBarEvent : BossEvent
 {
   private HpBarController _hpBarController;

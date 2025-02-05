@@ -19,8 +19,13 @@ public class Arrow : BossAttack
     private void OnEnable()
     {
         StartCoroutine(FireArrow());
+        RotateArrow();
     }
-
+    private void RotateArrow()
+    {
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
     private IEnumerator FireArrow()
     {
         Vector3 firePosition = transform.position;

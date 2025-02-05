@@ -25,17 +25,17 @@ public class Seed : BossAttack
     private void OnEnable()
     {
         StartCoroutine(FireArrow());
+        RotateArrow();
     }
-
+    private void RotateArrow()
+    {
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
     private IEnumerator FireArrow()
     {
-        // �÷��̾� ���� ���
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-
-        // ȸ�� ���� ���� ���
         float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-
-        // 45�� ���� �� ������ ���� ����
         float angleRange = 45f;
         float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
 
@@ -56,7 +56,6 @@ public class Seed : BossAttack
             yield return null;
         }
         _soundObject.PlayAsync();
-        // ���� �������� ���ư��� �÷��̾� ��ġ - ���� ��ġ ��ŭ ���ư�
         yield return new WaitForSeconds(1f);
         
         Explode();

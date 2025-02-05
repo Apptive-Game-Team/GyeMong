@@ -30,14 +30,6 @@ public class Elf : Boss
         meleeAttackPrefab.SetActive(false);
         footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
     }
-
-    private void RotateArrowTowardsPlayer(GameObject arrow)
-    {
-        Vector3 direction = DirectionToPlayer;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-    }
-
     public abstract class ElfState : BaseState
     {
         public Elf Elf => creature as Elf;
@@ -108,7 +100,6 @@ public class Elf : Boss
             Elf.Animator.SetBool("isAttack", true);
             Elf.Animator.SetFloat("attackType", 0);
             GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
-            Elf.RotateArrowTowardsPlayer(arrow);
             yield return Elf.arrowSoundObject.Play();
             yield return new WaitForSeconds(1f);
             Elf.Animator.SetBool("isAttack", false);
@@ -138,7 +129,6 @@ public class Elf : Boss
             while (count < 4)
             {
                 GameObject seed = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                Elf.RotateArrowTowardsPlayer(seed);
                 yield return Elf.arrowSoundObject.Play();
                 count++;
             }
@@ -160,10 +150,11 @@ public class Elf : Boss
             Elf.Animator.SetBool("attackDelay", false);
             Elf.Animator.SetBool("isAttack", true);
             Elf.Animator.SetFloat("attackType", 2);
+            yield return new WaitForSeconds(0.5f);
             Elf.meleeAttackPrefab.SetActive(true);
             Vector3 direction = Elf.DirectionToPlayer;
             Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.05f);
             Elf.meleeAttackPrefab.SetActive(false);
             Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
