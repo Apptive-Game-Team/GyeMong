@@ -29,7 +29,7 @@ public class GenerateMaze : MonoBehaviour
     {
         gridTile = new bool[width, height];
         thornGridTile = new bool[width, height];
-        start = new Vector2Int(1, height - 2); // 왼쪽 위(시작지점 or 끝지점)
+        start = new Vector2Int(1,height / 2); // 왼쪽 위(시작지점 or 끝지점)
 
         InitializeWalls();
         GenerateMap(start);
@@ -68,9 +68,9 @@ public class GenerateMaze : MonoBehaviour
             }
         }
 
-        gridTile[width - 2, 0] = true;
-        gridTile[1, height - 1] = true;
-        thornGridTile[width - 2, 1] = false;
+        gridTile[width - 1, height / 2] = true;
+        gridTile[0, height / 2] = true;
+        thornGridTile[width - 2, height / 2] = false;
         thornGridTile[1, height - 2] = false;
     }
 
