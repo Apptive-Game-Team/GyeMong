@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class Floor : BossAttack
 {
-    float damage = 30;
-    private void OnCollisionEnter2D(Collision2D collision)
+    new float damage = 30;
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             PlayerCharacter.Instance.TakeDamage(damage);
+            Debug.Log("Ãæµ¹ÇÔ ¤·¤·");
         }
     }
 }

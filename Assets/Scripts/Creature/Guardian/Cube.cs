@@ -69,14 +69,12 @@ public class Cube : BossAttack
         Destroy(gameObject);
         Destroy(shadow);
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             PlayerCharacter.Instance.TakeDamage(damage);
         }
-        
     }
     private void OnTriggerStay2D(Collider2D other)
     {
