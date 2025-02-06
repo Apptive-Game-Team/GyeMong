@@ -193,4 +193,9 @@ public class Golem : Boss
             creature.ChangeState();
         }
     }
+    protected override void Die()
+    {
+        base.Die();
+        RootPatternManger.Instance.DeActivateRootObjects();
+    }
 }

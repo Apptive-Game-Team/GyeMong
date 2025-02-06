@@ -73,7 +73,7 @@ public abstract class Boss : Creature
         yield return base.Stun();
     }
     
-    protected void Die() // Boss Clear Event
+    protected virtual void Die() // Boss Clear Event
     {
         try
         {
