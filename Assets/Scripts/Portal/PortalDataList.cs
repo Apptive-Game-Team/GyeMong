@@ -39,6 +39,8 @@ public enum PortalID
     RIGHT1_TO_RIGHT2 = 31,
     RIGHT2_TO_GUARDIAN = 32,
     GUARDIAN_TO_RIGHT2 = 33,
+    ABOVE3_TO_MAZE = 34,
+    MAZE_TO_ABOVE3 = 35,
 }
 
 [Serializable]

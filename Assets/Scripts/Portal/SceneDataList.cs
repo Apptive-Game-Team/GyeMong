@@ -24,6 +24,7 @@ public enum SceneID
     ReSpringGuardian = 16,
     ReSpringMidBoss = 17,
     ReSpringMain = 18,
+    Maze = 19,
 }
 
 
