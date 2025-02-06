@@ -32,7 +32,7 @@ public class RuneUpgradeUI : SelectableUI, IInteractionalUI, IMouseInputListener
         }
         else
         {
-            uiImage.color = Color.yellow;
+            uiImage.color = Color.white;
         }
     }
 
