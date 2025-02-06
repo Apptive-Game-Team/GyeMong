@@ -12,7 +12,7 @@ public class Floor : BossAttack
         if (other.CompareTag("Player"))
         {
             PlayerCharacter.Instance.TakeDamage(damage);
-            Debug.Log("Ãæµ¹ÇÔ ¤·¤·");
+            Debug.Log("asdfasdfasdf");
         }
     }
 }
