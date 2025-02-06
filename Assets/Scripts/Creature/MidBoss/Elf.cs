@@ -191,6 +191,11 @@ public class Elf : Boss
             Elf.ChangeState();
         }
     }
+    protected override void Die()
+    {
+        base.Die();
+        Animator.SetBool("isDown", true);
+    }
 }
 
 
