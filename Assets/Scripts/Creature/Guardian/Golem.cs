@@ -76,7 +76,7 @@ public class Golem : Boss
         {
             Golem.Animator.SetBool("TwoHand", true);
             
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             yield return Golem.MakeShockwave(4);
             
             Golem.Animator.SetBool("TwoHand", false);
@@ -185,7 +185,7 @@ public class Golem : Boss
         {
             Golem.Animator.SetBool("TwoHand", true);
             
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             yield return Golem.MakeShockwave(14);
             
             Golem.Animator.SetBool("TwoHand", false);
