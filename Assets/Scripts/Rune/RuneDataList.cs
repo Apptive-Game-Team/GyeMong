@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class RuneData
@@ -12,17 +13,19 @@ public class RuneData
     public string description;
     public Sprite runeImage;
     public BuffData runeBuff;
-    public List<RuneOption> availableOptions;
+    public List<RuneUpgrade> availableOptions;
     public bool isUnlocked;
 }
 [Serializable]
-public class RuneOption
+public class RuneUpgrade
 {
     public string name;
     public int id;
+    public int parentRuneID;
     public string description;
-    public Sprite optionImage;
+    public Sprite upgradeImage;
     public BuffData optionBuff;
+    public bool isUnlocked;
 }
 
 [CreateAssetMenu(fileName = "RuneDataList",menuName ="ScriptableObject/RuneDataList")]
@@ -40,5 +43,11 @@ public class RuneDataList : ScriptableObject
         }
 
         return runeData;
+    }
+
+    public RuneUpgrade GetRuneUpgrade(RuneData parentRune,int id)
+    {
+        RuneUpgrade runeUpgrade = parentRune.availableOptions[id];
+        return runeUpgrade;
     }
 }

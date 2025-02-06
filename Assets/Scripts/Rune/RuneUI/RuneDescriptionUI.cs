@@ -1,3 +1,4 @@
+using Rune.RuneUI.Rework;
 using TMPro;
 using UI.mouse_input;
 using UnityEngine;
@@ -31,8 +32,8 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListe
     [SerializeField] TextMeshProUGUI textTitle;
     [SerializeField] TextMeshProUGUI textDescription;
     [SerializeField] Image runeImageUI;
-    [SerializeField] Image runeOptionUI1;
-    [SerializeField] Image runeOptionUI2;
+    [SerializeField] RuneUpgradeUI runeOptionUI1;
+    [SerializeField] RuneUpgradeUI runeOptionUI2;
 
     private void Start()
     {
@@ -44,10 +45,20 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListe
         textTitle.text = runeData.name; 
         textDescription.text = runeData.description;
         runeImageUI.sprite = runeData.runeImage;
-        runeOptionUI1.sprite = runeData.availableOptions[0].optionImage;
-        runeOptionUI2.sprite = runeData.availableOptions[0].optionImage;
+        SetRuneUpgradeUI(runeData);
+    }    
+    public void SetDescription(RuneUpgrade upgradeData)
+    {
+        textTitle.text = upgradeData.name; 
+        textDescription.text = upgradeData.description;
     }
-
+    
+    public void SetRuneUpgradeUI(RuneData runeData)
+    {
+        runeOptionUI1.Init(runeData.availableOptions[0]);
+        runeOptionUI2.Init(runeData.availableOptions[1]);
+    }
+    
     public void OnMouseInput(MouseInputState state, ISelectableUI ui)
     {
         if (state == MouseInputState.ENTERED)
@@ -56,6 +67,11 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListe
             {
                 RuneUIObject runeUI = (RuneUIObject)ui;
                 SetDescription(runeUI.RuneData);
+            }
+            else if (ui is RuneUpgradeUI)
+            {
+                RuneUpgradeUI runeUpgradeUI = (RuneUpgradeUI)ui;
+                SetDescription(runeUpgradeUI.UpgradeData);
             }
         }
     }
