@@ -26,7 +26,7 @@ public class MazeDarkness : MonoBehaviour, IEventTriggerable
             if (other.CompareTag("Player"))
             {
                 bool previousState = isInMaze;
-                isInMaze = player.transform.position.y > transform.position.y;
+                isInMaze = player.transform.position.x < transform.position.x;
 
                 if (previousState != isInMaze)
                 {
