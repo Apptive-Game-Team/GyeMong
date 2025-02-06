@@ -55,7 +55,9 @@ public class Golem : Boss
             StartCoroutine(ShockwaveSoundObject.Play());
             for (int j = 0; j < points.Length; j++)
             {
-                Instantiate(shockwavePrefab, points[j], Quaternion.identity);
+                GameObject shockWave = Instantiate(shockwavePrefab, points[j], Quaternion.identity);
+                GuardianAttack shockWaveComponent = shockWave.GetComponent<GuardianAttack>();
+                shockWaveComponent.SetDamage(damage);
             }
             yield return new WaitForSeconds(0.3f);
         }
@@ -166,6 +168,8 @@ public class Golem : Boss
             {
                 Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
                 GameObject floor = Instantiate(Golem.floorPrefab, spawnPosition, Quaternion.identity);
+                Floor floorComponent = floor.GetComponent<Floor>();
+                floorComponent.SetDamage(Golem.damage);
                 spawnedObjects.Add(floor);
                 Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 Golem.StartCoroutine(Golem._shockwavesoundObject.Play());

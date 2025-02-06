@@ -101,6 +101,8 @@ public class Elf : Boss
             Elf.Animator.SetBool("isAttack", true);
             Elf.Animator.SetFloat("attackType", 0);
             GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+            Arrow arrowComponent = arrow.GetComponent<Arrow>();
+            arrowComponent.SetDamage(Elf.damage);
             yield return Elf.arrowSoundObject.Play();
             yield return new WaitForSeconds(1f);
             Elf.Animator.SetBool("isAttack", false);
@@ -130,6 +132,8 @@ public class Elf : Boss
             while (count < 4)
             {
                 GameObject seed = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                Seed seedComponent = seed.GetComponent<Seed>();
+                seedComponent.SetDamage(Elf.damage);
                 yield return Elf.arrowSoundObject.Play();
                 count++;
             }
@@ -179,7 +183,9 @@ public class Elf : Boss
             Elf.Animator.SetBool("attackDelay", false);
             Elf.Animator.SetBool("isAttack", true);
             Elf.Animator.SetFloat("attackType", 3);
-            Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
+            GameObject vine = Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
+            Vine vineComponent = vine.GetComponent<Vine>();
+            vineComponent.SetDamage(Elf.damage);
             yield return new WaitForSeconds(2f);
             Elf.Animator.SetBool("isAttack", false);
             Elf.ChangeState();
