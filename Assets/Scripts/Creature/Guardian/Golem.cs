@@ -10,8 +10,6 @@ public class Golem : Boss
     [SerializeField] public GameObject cubePrefab;
     [SerializeField] public GameObject cubeShadowPrefab;
     [SerializeField] private GameObject floorPrefab;
-    [SerializeField] private GameObject meleeAttackPrefab1;
-    [SerializeField] private GameObject meleeAttackPrefab2;
     [SerializeField] private GameObject shockwavePrefab;
     private Shield shieldComponenet;
 
@@ -27,6 +25,10 @@ public class Golem : Boss
         maxHps.Add(300f);
         currentHp = maxHps[currentPhase];
         currentShield = 0f;
+        damage = 30f;
+        currentShield = 0f;
+        detectionRange = 10f;
+        MeleeAttackRange = 4f;
     }
     
     private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
