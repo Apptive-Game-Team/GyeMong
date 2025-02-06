@@ -18,6 +18,7 @@ public class Elf : Boss
     protected override void Initialize()
     {
         maxPhase = 2;
+        maxHps.Clear();
         maxHps.Add(100f);
         maxHps.Add(200f);
         currentHp = maxHps[currentPhase];

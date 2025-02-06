@@ -21,6 +21,7 @@ public class Golem : Boss
     protected override void Initialize()
     {
         maxPhase = 2;
+        maxHps.Clear();
         maxHps.Add(200f);
         maxHps.Add(300f);
         currentHp = maxHps[currentPhase];
