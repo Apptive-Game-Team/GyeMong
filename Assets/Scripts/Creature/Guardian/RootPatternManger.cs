@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RootPatternManger : MonoBehaviour
+public class RootPatternManger : SingletonObject<RootPatternManger>
 {
     [SerializeField] private GameObject rootPrefab;
     private GameObject[] rootObjects;
@@ -60,6 +60,14 @@ public class RootPatternManger : MonoBehaviour
         foreach (int index in indices)
         {
             rootObjects[index].SetActive(true);
+        }
+    }
+    public void DeActivateRootObjects()
+    {
+        StopAllCoroutines();
+        foreach(GameObject gameObject in rootObjects)
+        {
+            gameObject.SetActive(false);
         }
     }
 }

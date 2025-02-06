@@ -10,8 +10,6 @@ public class Golem : Boss
     [SerializeField] public GameObject cubePrefab;
     [SerializeField] public GameObject cubeShadowPrefab;
     [SerializeField] private GameObject floorPrefab;
-    [SerializeField] private GameObject meleeAttackPrefab1;
-    [SerializeField] private GameObject meleeAttackPrefab2;
     [SerializeField] private GameObject shockwavePrefab;
     private Shield shieldComponenet;
 
@@ -23,10 +21,15 @@ public class Golem : Boss
     protected override void Initialize()
     {
         maxPhase = 2;
+        maxHps.Clear();
         maxHps.Add(200f);
         maxHps.Add(300f);
         currentHp = maxHps[currentPhase];
         currentShield = 0f;
+        damage = 30f;
+        currentShield = 0f;
+        detectionRange = 10f;
+        MeleeAttackRange = 4f;
     }
     
     private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
@@ -52,7 +55,9 @@ public class Golem : Boss
             StartCoroutine(ShockwaveSoundObject.Play());
             for (int j = 0; j < points.Length; j++)
             {
-                Instantiate(shockwavePrefab, points[j], Quaternion.identity);
+                GameObject shockWave = Instantiate(shockwavePrefab, points[j], Quaternion.identity);
+                GuardianAttack shockWaveComponent = shockWave.GetComponent<GuardianAttack>();
+                shockWaveComponent.SetDamage(damage);
             }
             yield return new WaitForSeconds(0.3f);
         }
@@ -74,7 +79,7 @@ public class Golem : Boss
         {
             Golem.Animator.SetBool("TwoHand", true);
             
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             yield return Golem.MakeShockwave(4);
             
             Golem.Animator.SetBool("TwoHand", false);
@@ -183,11 +188,16 @@ public class Golem : Boss
         {
             Golem.Animator.SetBool("TwoHand", true);
             
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             yield return Golem.MakeShockwave(14);
             
             Golem.Animator.SetBool("TwoHand", false);
             creature.ChangeState();
         }
+    }
+    protected override void Die()
+    {
+        base.Die();
+        RootPatternManger.Instance.DeActivateRootObjects();
     }
 }

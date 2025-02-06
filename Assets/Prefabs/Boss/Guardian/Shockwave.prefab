@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2096135843370694871}
   - component: {fileID: 8155886504737565004}
   - component: {fileID: 5213761979183187592}
+  - component: {fileID: 4058262523324732391}
   m_Layer: 0
   m_Name: Shockwave
   m_TagString: EnemyAttack
@@ -170,3 +171,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe20b09676f64aacbeb756425a472d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &4058262523324732391
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6910081737103628750}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7

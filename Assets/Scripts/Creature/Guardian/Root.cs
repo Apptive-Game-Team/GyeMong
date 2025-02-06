@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Root : BossAttack
 {
+    new float damage = 10;
     private void OnEnable()
     {
         StartCoroutine(OffRootObjects());
