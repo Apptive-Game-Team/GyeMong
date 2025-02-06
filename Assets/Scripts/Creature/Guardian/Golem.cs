@@ -168,8 +168,6 @@ public class Golem : Boss
             {
                 Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
                 GameObject floor = Instantiate(Golem.floorPrefab, spawnPosition, Quaternion.identity);
-                Floor floorComponent = floor.GetComponent<Floor>();
-                floorComponent.SetDamage(Golem.damage);
                 spawnedObjects.Add(floor);
                 Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 Golem.StartCoroutine(Golem._shockwavesoundObject.Play());

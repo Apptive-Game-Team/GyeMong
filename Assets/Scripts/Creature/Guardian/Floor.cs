@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Floor : BossAttack
 {
+    float damage = 30;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
