@@ -20338,6 +20338,7 @@ MonoBehaviour:
   - rid: 7405124598596370436
   - rid: 7405124598596370438
   - rid: 521773882682900481
+  - rid: 2578170190929068034
   references:
     version: 2
     RefIds:
@@ -20353,6 +20354,11 @@ MonoBehaviour:
     - rid: 521773882682900481
       type: {class: StartFollowCameraEvent, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 2578170190929068034
+      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1654955325}
+        bossRoomBoundary: {fileID: 1037969029}
     - rid: 3294223817106784261
       type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -22275,6 +22281,7 @@ GameObject:
   - component: {fileID: 935730801}
   - component: {fileID: 935730803}
   - component: {fileID: 935730802}
+  - component: {fileID: 935730804}
   m_Layer: 0
   m_Name: UnwalkableTile
   m_TagString: Untagged
@@ -24910,6 +24917,42 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &935730804
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935730800}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1001 &935844442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25435,7 +25478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!19719996 &1037969030
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -25508,17 +25551,7 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 1037969030}
-    m_ColliderPaths:
-    - - X: 320000000
-        Y: 280000000
-      - X: 300000000
-        Y: 280000000
-      - X: 300000000
-        Y: 250000000
-      - X: 320000000
-        Y: 250000000
+  m_ColliderPaths: []
   m_CompositePaths:
     m_Paths:
     - - {x: 31.999971, y: 25}
@@ -26062,6 +26095,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuneCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260879668609468630, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4781960463790634081, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
@@ -30543,6 +30581,7 @@ MonoBehaviour:
   - rid: 521773906431836162
   - rid: 521773836373327898
   - rid: 521773836373327895
+  - rid: 2578170190929068032
   references:
     version: 2
     RefIds:
@@ -30624,6 +30663,11 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 0.5
+    - rid: 2578170190929068032
+      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1654955325}
+        bossRoomBoundary: {fileID: 1037969029}
 --- !u!1 &1849812947
 GameObject:
   m_ObjectHideFlags: 0
@@ -30671,12 +30715,12 @@ PrefabInstance:
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.32
+      value: 31.02
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 37.16
+      value: 36.35
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
