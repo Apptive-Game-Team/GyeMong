@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/DemoDay_Version_0207/TitleScene.unity
+    guid: 25fbc63b9bcd7184b9864fc062c91db3
+  - enabled: 1
     path: Assets/Scenes/DemoDay_Version_0207/AboveRoad1.unity
     guid: 22ba5eba120b5dd46be1a44e37017964
   - enabled: 1
@@ -50,7 +53,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DemoDay_Version_0207/SpringPuzzle2.unity
     guid: 532c7af7c838f3e438a34100e5d637fd
-  - enabled: 1
-    path: Assets/Scenes/DemoDay_Version_0207/TitleScene.unity
-    guid: 25fbc63b9bcd7184b9864fc062c91db3
   m_configObjects: {}
