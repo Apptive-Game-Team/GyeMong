@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class MeleeAttack : BossAttack
 {
-    new float damage = 20;
     private void OnTriggerEnter2D(Collider2D other)
     {
+        damage = 20;
         if (other.CompareTag("Player"))
         {
             PlayerCharacter.Instance.TakeDamage(damage);

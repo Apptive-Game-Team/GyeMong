@@ -11,6 +11,20 @@ public enum SceneID
     SPRING_PUZZLE2 = 3,
     SPRING_MID_BOSS = 4,
     TUTORIAL = 5,
+    AboveRoad1 = 6,
+    AboveRoad2 = 7,
+    AboveRoad3 = 8,
+    BelowRoad1 = 9,
+    BelowRoad2 = 10,
+    LeftRoad1 = 11,
+    LeftRoad2 = 12,
+    RightRoad1 = 13,
+    RightRoad2 = 14,
+    ReTutorialScene = 15,
+    ReSpringGuardian = 16,
+    ReSpringMidBoss = 17,
+    ReSpringMain = 18,
+    Maze = 19,
 }
 
 

@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class Floor : BossAttack
 {
-    new float damage = 30;
     private void OnTriggerEnter2D(Collider2D other)
     {
+        damage = 30;
         if (other.CompareTag("Player"))
         {
             PlayerCharacter.Instance.TakeDamage(damage);

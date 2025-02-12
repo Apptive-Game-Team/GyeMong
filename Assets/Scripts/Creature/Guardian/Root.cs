@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Root : BossAttack
 {
-    new float damage = 10;
     private void OnEnable()
     {
         StartCoroutine(OffRootObjects());
@@ -18,6 +17,7 @@ public class Root : BossAttack
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        damage = 10;
         if (collision.collider.CompareTag("Player"))
         {
             PlayerCharacter.Instance.TakeDamage(damage);
