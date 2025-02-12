@@ -26,7 +26,7 @@ public class Puzzle2 : MonoBehaviour, IEventTriggerable
         rootNum = GetComponent<IntEventStatus>();
         eventObject = GetComponent<EventObject>();
         player = PlayerCharacter.Instance;
-        playerCollider = player.GetComponent<Collider2D>();
+        playerCollider = player.GetComponentInChildren<Collider2D>();
         GameObject pRoots = transform.Find("Roots").gameObject;
         roots = transform.Find("Roots").GetComponentsInChildren<Transform>()
             .Where(component => component.gameObject != pRoots && component.transform.parent == pRoots.transform)
