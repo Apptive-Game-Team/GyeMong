@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3989650450243143236}
   - component: {fileID: 6034467126718539793}
   - component: {fileID: 9179140320273774770}
-  - component: {fileID: 6027492287027366409}
+  - component: {fileID: 2139093655015063499}
   m_Layer: 9
-  m_Name: Portal
+  m_Name: Portal Variant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2492515186825879711}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 86.44, y: -11.49, z: 1.0157694}
+  m_LocalPosition: {x: 86.18, y: -10.97, z: 1.0157694}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLoop: 0
+  isLoop: 1
   trigger: 0
   triggerLimitCounter: -1
   eventSequence:
@@ -113,9 +113,9 @@ MonoBehaviour:
     - rid: 3636844143720267776
       type: {class: WarpPortalEvent, ns: , asm: Assembly-CSharp}
       data:
-        portalID: 27
---- !u!58 &6027492287027366409
-CircleCollider2D:
+        portalID: 23
+--- !u!61 &2139093655015063499
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -130,7 +130,7 @@ CircleCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 1
+  m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -146,6 +146,16 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.08312662}
+  m_Offset: {x: -0.009389766, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.16312663
+  m_Size: {x: 0.4665357, y: 0.16}
+  m_EdgeRadius: 0
