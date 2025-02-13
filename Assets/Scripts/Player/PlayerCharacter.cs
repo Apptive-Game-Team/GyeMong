@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -226,9 +227,12 @@ namespace playerCharacter
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
             
-            Vector2 dashDirection = lastMovementDirection;
+            Vector2 dashDirection = lastMovementDirection.normalized;
             Vector2 startPosition = playerRb.position;
-            Vector2 targetPosition = startPosition + dashDirection * dashDistance;
+
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, dashDistance, LayerMask.GetMask("Wall"));
+            Vector2 targetPosition = hit.collider == null ? startPosition + dashDirection * dashDistance : hit.point + hit.normal * 0.1f;
+            Debug.Log($"{startPosition} , {targetPosition} , {hit.collider}");
 
             float elapsedTime = 0f;
 
