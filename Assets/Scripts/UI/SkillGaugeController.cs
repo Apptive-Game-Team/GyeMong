@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using playerCharacter;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SkillGaugeController : MonoBehaviour
 {
@@ -22,14 +23,17 @@ public class SkillGaugeController : MonoBehaviour
 
     private void UpdateSkillGauge()
     {
-        skillSlider.value = PlayerCharacter.Instance.GetCurSkillGauge() / PlayerCharacter.Instance.maxSkillGauge;
-        if (PlayerCharacter.Instance.GetCurSkillGauge() >= PlayerCharacter.Instance.skillUsageGauge)
+        if (SceneManager.GetActiveScene().name != "TitleScene")
         {
-            gaugeEffectMaterial.SetFloat("_isUsable", 1);
-        }
-        else
-        {
-            gaugeEffectMaterial.SetFloat("_isUsable", 0);
+            skillSlider.value = PlayerCharacter.Instance.GetCurSkillGauge() / PlayerCharacter.Instance.maxSkillGauge;
+            if (PlayerCharacter.Instance.GetCurSkillGauge() >= PlayerCharacter.Instance.skillUsageGauge)
+            {
+                gaugeEffectMaterial.SetFloat("_isUsable", 1);
+            }
+            else
+            {
+                gaugeEffectMaterial.SetFloat("_isUsable", 0);
+            }
         }
     }
 }
