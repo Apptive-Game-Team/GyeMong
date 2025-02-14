@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.086, y: 1.0406, z: 0.040643148}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -148,7 +148,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.01774722, y: -0.0037362725}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -159,7 +159,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.21868137, y: 0.10098913}
   m_EdgeRadius: 0
 --- !u!114 &7136526515895070149
 MonoBehaviour:
@@ -198,12 +198,12 @@ MonoBehaviour:
       type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
       data:
         frames:
-        - {fileID: -260354713, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
-        - {fileID: -1621672695, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
-        - {fileID: 914368034, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
-        - {fileID: -772426026, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
-        - {fileID: 836349468, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
-        - {fileID: 1881104222, guid: 5a2f036399d074c4a8ff4c55e2bec21d, type: 3}
+        - {fileID: -1065740472, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
+        - {fileID: -1968753551, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
+        - {fileID: -859968383, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
+        - {fileID: 540752854, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
+        - {fileID: -1457230939, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
+        - {fileID: -1870672501, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
         deltaTime: 0.1
         _renderer: {fileID: 0}
     - rid: 521773891873669121

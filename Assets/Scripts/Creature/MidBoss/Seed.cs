@@ -73,7 +73,6 @@ public class Seed : BossAttack
 
     private void Explode()
     {
-        transform.rotation = Quaternion.identity;
         _explosionSoundObject.PlayAsync();
         _eventObject.Trigger();
         float explosionRadius = 2f;
