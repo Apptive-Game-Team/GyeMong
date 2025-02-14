@@ -80,7 +80,10 @@ namespace playerCharacter
 
         private void FixedUpdate()
         {
-            MoveCharacter();
+            if (!isControlled)
+            {
+                MoveCharacter();
+            }
         }
 
         private void HandleInput()
@@ -378,6 +381,8 @@ namespace playerCharacter
 
         public IEnumerator LoadPlayerEffect()
         {
+            isControlled = true;
+
             Renderer renderer = gameObject.GetComponent<Renderer>();
             renderer.material = materials[1];
             float ratio = 0f;
@@ -391,6 +396,8 @@ namespace playerCharacter
                 if (ratio > 1.0f) break;
             }
             renderer.material = materials[0];
+
+            isControlled = false;
         }
 
         public IEnumerator MoveTo(Vector3 target, float speed)
