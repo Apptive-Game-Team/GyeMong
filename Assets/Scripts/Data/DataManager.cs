@@ -7,8 +7,11 @@ using playerCharacter;
 
 public class DataManager : SingletonObject<DataManager>
 {
-    public bool isStartButton = false;
+#if UNITY_EDITOR
     private readonly string savePath = Application.dataPath + "/Database";
+#else
+    private readonly string savePath = Application.persistentDataPath + "/Database";
+#endif
     private readonly string encryptionKey = "GyemongFighting!"; // 16, 24, 32 글자로 key 설정
 
     protected override void Awake()
@@ -146,13 +149,12 @@ public class DataManager : SingletonObject<DataManager>
 
     public void LoadPlayerData()
     {
-        PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
-        if (!playerData.isFirst && !DataManager.Instance.isStartButton)
+        PlayerData playerData = LoadSection<PlayerData>("PlayerData");
+        if (!playerData.isFirst)
         {
             print("qwd");
             PlayerCharacter.Instance.transform.position = playerData.playerPosition;
             StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
         }
-        DataManager.Instance.isStartButton = false;
     }
 }
