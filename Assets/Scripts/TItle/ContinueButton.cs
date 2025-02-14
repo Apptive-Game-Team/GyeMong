@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class ContinueButton : MonoBehaviour
 {
     private PlayerData playerData;
+    private GameObject optionExitButton;
     private void Start() 
     {
         playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
         if (playerData.isFirst) gameObject.SetActive(!playerData.isFirst);
+        optionExitButton = GameObject.Find("OptionController").transform.GetChild(0).GetChild(0).Find("OptionExitButton").gameObject;
     }
 
     public async void ContinueGame()
@@ -22,16 +24,17 @@ public class ContinueButton : MonoBehaviour
             return;
         }
 
-        // ºñµ¿±âÀûÀ¸·Î Àå¸é ·Îµå
+        // ï¿½ñµ¿±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Îµï¿½
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
 
-        // Àå¸éÀÌ ¿ÏÀüÈ÷ ·ÎµåµÉ ¶§±îÁö ´ë±â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         while (!asyncOperation.isDone)
         {
             await Task.Yield();
         }
 
-        // Àå¸é ·Îµå°¡ ¿Ï·áµÈ µÚ ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ·Îµå
+        optionExitButton.SetActive(true);
+        // ï¿½ï¿½ï¿½ ï¿½Îµå°¡ ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
         DataManager.Instance.LoadPlayerData();
     }
 }
