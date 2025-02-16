@@ -437,5 +437,8 @@ namespace playerCharacter
             curHealth = maxHealth;
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / maxHealth));
         }
+        
+        public float CurrentHp { get { return curHealth; } }
+        public float MaxHp { get { return maxHealth; } }
     }
 }
