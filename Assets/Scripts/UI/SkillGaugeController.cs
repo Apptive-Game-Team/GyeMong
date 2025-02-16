@@ -1,29 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using playerCharacter;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillGaugeController : MonoBehaviour
+public class SkillGaugeController : GaugeController
 {
-    private Slider skillSlider;
     private Material gaugeEffectMaterial;
 
-    private void Awake()
+    protected override float GetCurrentGauge()
     {
-        skillSlider = GetComponent<Slider>();
-        gaugeEffectMaterial = transform.Find("Background").GetComponent<Image>().material;
+        return PlayerCharacter.Instance.GetCurSkillGauge();
     }
 
-    private void Update()
+    protected override float GetMaxGauge()
     {
-        UpdateSkillGauge();
+        return PlayerCharacter.Instance.maxSkillGauge;
     }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        gaugeEffectMaterial = transform.Find("Background").GetComponent<Image>().material;
+    }
+    
 
     private void UpdateSkillGauge()
     {
-        skillSlider.value = PlayerCharacter.Instance.GetCurSkillGauge() / PlayerCharacter.Instance.maxSkillGauge;
-        if (PlayerCharacter.Instance.GetCurSkillGauge() >= PlayerCharacter.Instance.skillUsageGauge)
+        base.UpdateSkillGauge();
+        if (GetCurrentGauge() >= GetMaxGauge())
         {
             gaugeEffectMaterial.SetFloat("_isUsable", 1);
         }
