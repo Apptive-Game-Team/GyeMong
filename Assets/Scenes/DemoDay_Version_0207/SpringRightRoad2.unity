@@ -2727,6 +2727,7 @@ GameObject:
   - component: {fileID: 549693567}
   - component: {fileID: 549693569}
   - component: {fileID: 549693568}
+  - component: {fileID: 549693570}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -20838,6 +20839,42 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &549693570
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549693566}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1001 &566723218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51522,7 +51559,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.21628
+      value: 308.21725
       objectReference: {fileID: 0}
     - target: {fileID: 1370121933915850358, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -51649,7 +51686,7 @@ PrefabInstance:
     - target: {fileID: 2649768473112061072, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.21628
+      value: 308.21725
       objectReference: {fileID: 0}
     - target: {fileID: 2691256379806927063, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
