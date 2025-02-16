@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using playerCharacter;
@@ -11,6 +12,7 @@ public class GrazeController : MonoBehaviour
     private List<Collider2D> activeColliders = new();
     private Dictionary<Collider2D, float> colliderDistanceMap = new();
     public Dictionary<Collider2D, bool> colliderAttackedMap = new();
+    private PlayerSoundController _playerSoundController;
 
     private void Awake()
     {
@@ -19,6 +21,11 @@ public class GrazeController : MonoBehaviour
             Instance = this;
         }
         else Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        _playerSoundController = transform.parent.GetComponent<PlayerSoundController>();
     }
 
     private void Update()
@@ -92,6 +99,8 @@ public class GrazeController : MonoBehaviour
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
             Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / distance} with ratio {distance}");
+            _playerSoundController.Trigger(PlayerSoundType.GRAZE);
+            GetComponentInChildren<EventObject>().Trigger();
         }
     }
 
