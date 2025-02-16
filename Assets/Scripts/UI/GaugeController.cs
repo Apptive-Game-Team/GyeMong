@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public abstract class GaugeController : MonoBehaviour
@@ -20,8 +21,11 @@ public abstract class GaugeController : MonoBehaviour
         UpdateSkillGauge();
     }
 
-    protected virtual  void UpdateSkillGauge()
+    protected virtual void UpdateSkillGauge()
     {
+        if (SceneManager.GetActiveScene().name == "TitleScene") {
+            return;
+        }
         skillSlider.value = GetCurrentGauge() / GetMaxGauge();
     }
 }

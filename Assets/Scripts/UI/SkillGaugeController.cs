@@ -26,18 +26,14 @@ public class SkillGaugeController : GaugeController
 
     private void UpdateSkillGauge()
     {
-        if (SceneManager.GetActiveScene().name != "TitleScene") {
-            base.UpdateSkillGauge();
-            if (GetCurrentGauge() >= GetMaxGauge()) {
-                if (PlayerCharacter.Instance.GetCurSkillGauge() >= PlayerCharacter.Instance.skillUsageGauge)
-                {
-                  gaugeEffectMaterial.SetFloat("_isUsable", 1);
-                }
-                else
-                {
-                  gaugeEffectMaterial.SetFloat("_isUsable", 0);
-                }
-            }
+        base.UpdateSkillGauge();
+        if (GetCurrentGauge() >= GetMaxGauge()) 
+        {
+          gaugeEffectMaterial.SetFloat("_isUsable", 1);
+        }
+        else
+        {
+          gaugeEffectMaterial.SetFloat("_isUsable", 0);
         }
     }
 }
