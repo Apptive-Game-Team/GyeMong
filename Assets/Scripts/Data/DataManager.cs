@@ -7,8 +7,11 @@ using playerCharacter;
 
 public class DataManager : SingletonObject<DataManager>
 {
-    public bool isStartButton = false;
+#if UNITY_EDITOR
     private readonly string savePath = Application.dataPath + "/Database";
+#else
+    private readonly string savePath = Application.persistentDataPath + "/Database";
+#endif
     private readonly string encryptionKey = "GyemongFighting!"; // 16, 24, 32 글자로 key 설정
 
     protected override void Awake()
@@ -45,29 +48,25 @@ public class DataManager : SingletonObject<DataManager>
 
         Debug.Log($"{fileName} saved at {savePath} as ReadOnly.");
 #else
+        EnsurePathExists();
         string json = JsonUtility.ToJson(sectionData, true); // JSON으로 직렬화
         string encryptedData = Encrypt(json); // JSON 데이터를 암호화
         string filePath = Path.Combine(savePath, fileName + ".json");
 
-        // 파일의 읽기 전용 속성을 해제 (파일이 이미 존재할 경우)
-        if (File.Exists(filePath))
-        {
-            FileAttributes attributes = File.GetAttributes(filePath);
-            if (attributes.HasFlag(FileAttributes.ReadOnly))
-            {
-                File.SetAttributes(filePath, attributes & ~FileAttributes.ReadOnly);
-            }
-        }
-
         // 파일 저장
         File.WriteAllText(filePath, encryptedData);
-
-        // 파일을 다시 읽기 전용으로 설정
-        File.SetAttributes(filePath, FileAttributes.ReadOnly);
 
         Debug.Log($"{fileName} saved at {savePath} as ReadOnly and encrypted.");
 #endif
         
+    }
+
+    private void EnsurePathExists()
+    {
+        if (!Directory.Exists(savePath))
+        {
+            Directory.CreateDirectory(savePath);
+        }
     }
 
     // 특정 구역 불러오기
@@ -146,13 +145,12 @@ public class DataManager : SingletonObject<DataManager>
 
     public void LoadPlayerData()
     {
-        PlayerData playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
-        if (!playerData.isFirst && !DataManager.Instance.isStartButton)
+        PlayerData playerData = LoadSection<PlayerData>("PlayerData");
+        if (!playerData.isFirst)
         {
             print("qwd");
             PlayerCharacter.Instance.transform.position = playerData.playerPosition;
             StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
         }
-        DataManager.Instance.isStartButton = false;
     }
 }

@@ -40,6 +40,7 @@ public class MazeDarkness : MonoBehaviour, IEventTriggerable
     public void Trigger()
     {
         StartCoroutine(ChangeIntensity(false));
+        isInMaze = false;
     }
 
     private IEnumerator ChangeIntensity(bool isInMaze)

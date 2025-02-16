@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -79,7 +80,10 @@ namespace playerCharacter
 
         private void FixedUpdate()
         {
-            MoveCharacter();
+            if (!isControlled)
+            {
+                MoveCharacter();
+            }
         }
 
         private void HandleInput()
@@ -226,9 +230,12 @@ namespace playerCharacter
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
             
-            Vector2 dashDirection = lastMovementDirection;
+            Vector2 dashDirection = lastMovementDirection.normalized;
             Vector2 startPosition = playerRb.position;
-            Vector2 targetPosition = startPosition + dashDirection * dashDistance;
+
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, dashDistance, LayerMask.GetMask("Wall"));
+            Vector2 targetPosition = hit.collider == null ? startPosition + dashDirection * dashDistance : hit.point + hit.normal * 0.1f;
+            Debug.Log($"{startPosition} , {targetPosition} , {hit.collider}");
 
             float elapsedTime = 0f;
 
@@ -374,6 +381,8 @@ namespace playerCharacter
 
         public IEnumerator LoadPlayerEffect()
         {
+            isControlled = true;
+
             Renderer renderer = gameObject.GetComponent<Renderer>();
             renderer.material = materials[1];
             float ratio = 0f;
@@ -387,6 +396,8 @@ namespace playerCharacter
                 if (ratio > 1.0f) break;
             }
             renderer.material = materials[0];
+
+            isControlled = false;
         }
 
         public IEnumerator MoveTo(Vector3 target, float speed)

@@ -1,6 +1,7 @@
 using playerCharacter;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SkillGaugeController : GaugeController
 {
@@ -25,14 +26,19 @@ public class SkillGaugeController : GaugeController
 
     private void UpdateSkillGauge()
     {
-        base.UpdateSkillGauge();
-        if (GetCurrentGauge() >= GetMaxGauge())
-        {
-            gaugeEffectMaterial.SetFloat("_isUsable", 1);
-        }
-        else
-        {
-            gaugeEffectMaterial.SetFloat("_isUsable", 0);
+        if (SceneManager.GetActiveScene().name != "TitleScene") {
+            base.UpdateSkillGauge();
+            if (GetCurrentGauge() >= GetMaxGauge()) {
+              skillSlider.value = PlayerCharacter.Instance.GetCurSkillGauge() / PlayerCharacter.Instance.maxSkillGauge;
+              if (PlayerCharacter.Instance.GetCurSkillGauge() >= PlayerCharacter.Instance.skillUsageGauge)
+              {
+                  gaugeEffectMaterial.SetFloat("_isUsable", 1);
+              }
+              else
+              {
+                  gaugeEffectMaterial.SetFloat("_isUsable", 0);
+              }
+            }
         }
     }
 }
