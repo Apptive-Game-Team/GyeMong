@@ -54,3 +54,19 @@ public class ControlShaderEvent : CinematicEvent
         return null;
     }
 }
+
+public class TimeScaleEvent : CinematicEvent
+{
+    [SerializeField] private float _timeScale = 0.1f;
+    [SerializeField] private float _modifyDuration = 0.1f;
+
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        float _nowTimeScale = Time.timeScale;
+        Time.timeScale = _timeScale;
+        yield return new WaitForSecondsRealtime(_modifyDuration);
+        Time.timeScale = _nowTimeScale;
+        
+    }
+}

@@ -187,18 +187,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runeData:
-    parentID: 1
-    name: "\uACE8\uB818\uC758 \uB8EC"
-    id: 3
-    description: "\uACE8\uACE8\uB818\uB818"
-    runeImage: {fileID: 0}
+    parentID: -1
+    name: "\uAE30\uBCF8\uAC12"
+    id: 0
+    description: "\uAE30\uBCF8\uAC12\uC785\uB2C8\uB2E4. \uBB34\uC5C7\uC744 \uAE30\uB300\uD558\uC168\uB098\uC694?"
+    runeImage: {fileID: 21300000, guid: 0563d9fbe266947709568aa02484c190, type: 3}
     runeBuff:
-      buffType: 104
+      buffType: 101
       disposeMode: 2
-      buffActiveMode: 0
-      duration: 0
+      buffActiveMode: 1
+      duration: 1
       amount1: 1
       amount2: 0
+    availableOptions: []
+    isUnlocked: 1
   uiState: 0
   uiImage: {fileID: 6546578019850912495}
   _parent: {fileID: 0}
@@ -306,7 +308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 831961701, guid: 01adcca9146bd4241895ed19adb8ec6f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 04b1651caca82f942bdee99982eef848, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
