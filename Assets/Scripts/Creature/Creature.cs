@@ -6,6 +6,14 @@ using playerCharacter;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+public enum DirectionType
+{
+    FRONT,
+    BACK,
+    LEFT,
+    RIGHT
+}
+
 public abstract class Creature : MonoBehaviour, IAttackable
 {
     private const float BLINK_DELAY = 0.15f;
