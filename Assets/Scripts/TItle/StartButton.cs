@@ -14,7 +14,6 @@ public class StartButton : MonoBehaviour
     public void StartGame()
     {
         optionExitButton.SetActive(true);
-        SceneManager.LoadScene("ReTutorialScene");
-        DataManager.Instance.isStartButton = true;
+        SceneManager.LoadScene("SpringTutorialScene");
     }
 }

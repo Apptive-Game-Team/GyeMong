@@ -165,4 +165,29 @@ public class CameraController : MonoBehaviour
             transform.position = originalPosition;
         }
     }
+    public IEnumerator ShakeCameratoDirection(float time, Vector3 direction)
+    {
+        Vector3 originalPosition = transform.position;
+        float timer = 0;
+        isShaking = true;
+        while (timer < time)
+        {
+            yield return new WaitForSeconds(SHAKE_DELAY);
+            timer += SHAKE_DELAY;
+            if (!isFollowing)
+            {
+                transform.position = originalPosition + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.forward * defaultCameraZ;
+            }
+            else
+            {
+                transform.position = CameraPosition + Random.insideUnitSphere * SHAKE_AMOUNT + Vector3.forward * defaultCameraZ;
+            }
+            
+        }
+        isShaking = false;
+        if (!isFollowing)
+        {
+            transform.position = originalPosition;
+        }
+    }
 }
