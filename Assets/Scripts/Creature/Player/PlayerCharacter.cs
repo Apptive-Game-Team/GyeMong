@@ -16,7 +16,7 @@ namespace playerCharacter
         public float attackGaugeIncreaseValue;
         public float skillUsageGauge = 30f;
         public float attackPower;
-        private bool isControlled = false;
+        public bool isControlled = false;
         private Vector2 movement;
         private Vector2 lastMovementDirection;
         private Vector2 mousePosition;
@@ -429,12 +429,12 @@ namespace playerCharacter
             
             animator.SetBool("isMove", false);
             soundController.SetBool(PlayerSoundType.FOOT, false);
-            isControlled = false;
         }
 
         public void Trigger()
         {
             curHealth = maxHealth;
+            curSkillGauge = 0f;
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / maxHealth));
         }
         
