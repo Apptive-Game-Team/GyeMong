@@ -11,7 +11,6 @@ public class GrazeController : MonoBehaviour
     [SerializeField] private float maxAttackDistance = 1f;
     private List<Collider2D> activeColliders = new();
     private Dictionary<Collider2D, float> colliderDistanceMap = new();
-    public Dictionary<Collider2D, bool> colliderAttackedMap = new();
     private PlayerSoundController _playerSoundController;
 
     private void Awake()
@@ -28,7 +27,7 @@ public class GrazeController : MonoBehaviour
         _playerSoundController = transform.parent.GetComponent<PlayerSoundController>();
     }
 
-    private void Update()
+/*    private void Update()
     {
         for (int i = activeColliders.Count - 1; i >= 0; i--)
         {
@@ -47,7 +46,7 @@ public class GrazeController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
@@ -57,7 +56,6 @@ public class GrazeController : MonoBehaviour
             {
                 activeColliders.Add(collider);
                 colliderDistanceMap[collider] = maxAttackDistance;
-                colliderAttackedMap[collider] = false;
                 Debug.Log($"Collider entered: {collider.name}");
             }
         }
@@ -80,7 +78,8 @@ public class GrazeController : MonoBehaviour
     {
         if (collider.CompareTag("EnemyAttack"))
         {
-            if (activeColliders.Contains(collider) && !colliderAttackedMap[collider])
+            if (activeColliders.Contains(collider) && !collider.GetComponent<EnemyAttackInfo>().isAttacked
+                && collider.GetComponent<EnemyAttackInfo>().grazable && !collider.GetComponent<EnemyAttackInfo>().grazed)
             {
                 Grazed(collider);
                 RemoveCollider(collider);
@@ -99,6 +98,7 @@ public class GrazeController : MonoBehaviour
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
             Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / distance} with ratio {distance}");
+            collider.GetComponent<EnemyAttackInfo>().grazed = true;
             _playerSoundController.Trigger(PlayerSoundType.GRAZE);
             GetComponentInChildren<EventObject>().Trigger();
         }
@@ -108,6 +108,5 @@ public class GrazeController : MonoBehaviour
     {
         activeColliders.Remove(collider);
         colliderDistanceMap.Remove(collider);
-        colliderAttackedMap.Remove(collider);
     }
 }

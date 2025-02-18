@@ -64,6 +64,9 @@ namespace playerCharacter
             curSkillGauge = 0f;
             gaugeIncreaseValue = 10f;
             attackGaugeIncreaseValue = 2f;
+
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            renderer.material = materials[0];
         }
 
         private void Update()
@@ -424,7 +427,7 @@ namespace playerCharacter
         
                 yield return null;
             }
-            playerRb.velocity = movement * speed;
+            playerRb.velocity = Vector2.zero;
             animator.SetFloat("speed", speed);
             
             animator.SetBool("isMove", false);

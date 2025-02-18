@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using Rework;
 using UnityEngine;
 
-public class MeleeAttack : BossAttack
+public class MeleeAttack : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    private float damage = 30f;
+    private EnemyAttackInfo enemyAttackInfo;
+
+    private void Awake()
     {
-        damage = 20;
-        if (other.CompareTag("Player"))
-        {
-            PlayerCharacter.Instance.TakeDamage(damage);
-        }
+        enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
+        enemyAttackInfo.Initialize(damage, null, false, false, false, false);
     }
 }

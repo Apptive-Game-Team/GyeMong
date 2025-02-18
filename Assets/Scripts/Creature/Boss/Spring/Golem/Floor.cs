@@ -4,15 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Floor : BossAttack
+public class Floor : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    private float damage = 30f;
+    private EnemyAttackInfo enemyAttackInfo;
+
+    private void Awake()
     {
-        damage = 30;
-        if (other.CompareTag("Player"))
-        {
-            PlayerCharacter.Instance.TakeDamage(damage);
-            Debug.Log("asdfasdfasdf");
-        }
+        enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
+        enemyAttackInfo.Initialize(damage, null, false, true, false, false);
     }
 }
