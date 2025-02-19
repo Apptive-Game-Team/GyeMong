@@ -1,50 +1,53 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class OptionUI : SingletonObject<OptionUI>
+namespace System.UI.Option
 {
-    private Image optionImage;
-    private bool isOptionOpened = false;
-    public bool isOptionUITop = true;
-
-    private void Start()
+    public class OptionUI : SingletonObject<OptionUI>
     {
-        FindOptionImage();
-        optionImage.gameObject.SetActive(isOptionOpened);
-    }
+        private Image optionImage;
+        private bool isOptionOpened = false;
+        public bool isOptionUITop = true;
 
-    private void Update()
-    {
-        //if (InputManager.Instance.GetKeyDown(ActionCode.Option))
-        if (isOptionUITop)
+        private void Start()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            FindOptionImage();
+            optionImage.gameObject.SetActive(isOptionOpened);
+        }
+
+        private void Update()
+        {
+            //if (InputManager.Instance.GetKeyDown(ActionCode.Option))
+            if (isOptionUITop)
             {
-                if (!(SceneManager.GetActiveScene().name == "TitleScene")) OpenOrCloseOption();
+                if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
+                {
+                    if (!(SceneManager.GetActiveScene().name == "TitleScene")) OpenOrCloseOption();
+                }
             }
         }
-    }
 
-    private void FindOptionImage()
-    {
-        Transform optionImageTransform = transform.Find("Canvas/OptionUI");
-        optionImage = optionImageTransform.GetComponent<Image>();
-    }
+        private void FindOptionImage()
+        {
+            Transform optionImageTransform = transform.Find("Canvas/OptionUI");
+            optionImage = optionImageTransform.GetComponent<Image>();
+        }
 
 
-    public void OpenOrCloseOption()
-    {   
-        isOptionOpened = !isOptionOpened;
-        optionImage.gameObject.SetActive(isOptionOpened);
+        public void OpenOrCloseOption()
+        {   
+            isOptionOpened = !isOptionOpened;
+            optionImage.gameObject.SetActive(isOptionOpened);
         
-        PauseOrResumeGame();
-    }
+            PauseOrResumeGame();
+        }
 
-    private void PauseOrResumeGame()
-    {
-        if (isOptionOpened) Time.timeScale = 0f;
-        else Time.timeScale = 1f;
-        InputManager.Instance.SetActionState(!isOptionOpened);
+        private void PauseOrResumeGame()
+        {
+            if (isOptionOpened) Time.timeScale = 0f;
+            else Time.timeScale = 1f;
+            InputManager.Instance.SetActionState(!isOptionOpened);
+        }
     }
 }
