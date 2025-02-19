@@ -27,6 +27,7 @@ namespace Map.Puzzle.FogMaze
 
         private void Update()
         {
+            // Update Player's Position to Fog
             vfxRenderer.SetVector3("ColliderPos", PlayerCharacter.Instance.transform.position);
         }
 
