@@ -3276,7 +3276,7 @@ MonoBehaviour:
     - rid: 521773836373327900
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 0}
+        _boss: {fileID: 1654955325}
     - rid: 521773836373327901
       type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -12610,6 +12610,16 @@ PrefabInstance:
     - target: {fileID: 3473976422114923717, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4691959356851513209, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4691959356851513209, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5234390641593683249, guid: b8346142fe6d243378a4a73c861e945e,
