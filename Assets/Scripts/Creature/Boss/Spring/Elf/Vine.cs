@@ -12,7 +12,7 @@ public class Vine : MonoBehaviour
     private void Awake()
     {
         enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-        enemyAttackInfo.Initialize(damage, null, false, true, false, false, true, attackDelay);
+        enemyAttackInfo.Initialize(damage, null, false, true, true, attackDelay);
     }
 
     private void OnEnable()
