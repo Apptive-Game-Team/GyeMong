@@ -148,7 +148,8 @@ public class Golem : Boss
              List<GameObject> spawnedObjects = new List<GameObject>();
 
              Vector3 direction = Golem.DirectionToPlayer;
-             Vector3 startPosition = Golem.transform.position;
+             Vector3 spawnStoneRadius = 2 * direction;
+             Vector3 startPosition = Golem.transform.position + spawnStoneRadius;
 
              Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
              
