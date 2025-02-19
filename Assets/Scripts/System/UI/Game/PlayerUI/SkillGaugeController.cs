@@ -1,39 +1,58 @@
+using Creature.Player.Interface.Listener;
 using playerCharacter;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class SkillGaugeController : GaugeController
+namespace System.UI.Game.PlayerUI
 {
-    private Material gaugeEffectMaterial;
-
-    protected override float GetCurrentGauge()
+    public class SkillGaugeController : GaugeController, ISkillGaugeChangeListener
     {
-        return PlayerCharacter.Instance.GetCurSkillGauge();
-    }
+        private Material gaugeEffectMaterial;
+        private float _skillGauge;
+        private float _maxSkillGauge;
 
-    protected override float GetMaxGauge()
-    {
-        return PlayerCharacter.Instance.maxSkillGauge;
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-        gaugeEffectMaterial = transform.Find("Background").GetComponent<Image>().material;
-    }
-    
-
-    private void UpdateSkillGauge()
-    {
-        base.UpdateSkillGauge();
-        if (GetCurrentGauge() >= GetMaxGauge()) 
+        protected override float GetCurrentGauge()
         {
-          gaugeEffectMaterial.SetFloat("_isUsable", 1);
+            return _skillGauge;
         }
-        else
+
+        protected override float GetMaxGauge()
         {
-          gaugeEffectMaterial.SetFloat("_isUsable", 0);
+            return _maxSkillGauge;
         }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            gaugeEffectMaterial = transform.Find("Background").GetComponent<Image>().material;
+        }
+
+        private void Start()
+        {
+            PlayerCharacter.Instance.changeListenerCaller.AddSkillGaugeChangeListener(this);
+            _maxSkillGauge = PlayerCharacter.Instance.maxSkillGauge;
+        }
+
+
+        private void UpdateSkillGauge()
+        {
+            base.UpdateSkillGauge();
+            if (GetCurrentGauge() >= GetMaxGauge()) 
+            {
+                gaugeEffectMaterial.SetFloat("_isUsable", 1);
+            }
+            else
+            {
+                gaugeEffectMaterial.SetFloat("_isUsable", 0);
+            }
+        }
+
+        public void OnChanged(float data)
+        {
+            _skillGauge = data;
+            UpdateSkillGauge();
+        }
+
+        protected override void Update() { } // Do not call base.Update()
     }
 }

@@ -15,7 +15,7 @@ public class FlowerObj : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var creature = collision.GetComponent<Creature>();
+        var creature = collision.GetComponent<Creature.Creature>();
         if (creature != null)
         {
             creature.OnAttacked(attackDamage);

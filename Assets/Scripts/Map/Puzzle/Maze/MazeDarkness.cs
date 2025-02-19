@@ -1,62 +1,43 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using playerCharacter;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class MazeDarkness : MonoBehaviour, IEventTriggerable
+namespace Map.Puzzle.Maze
 {
-    private Light2D globalLight;
-    private GameObject playerLight;
-    private GameObject player;
-    private bool isInMaze = false;
-    private const float changeRatio = 0.01f;
-
-    private void Start()
+    public class MazeDarkness : MonoBehaviour, IEventTriggerable
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        globalLight = GameObject.Find("GlobalLight2D").GetComponent<Light2D>();
-        playerLight = player.transform.Find("PlayerLight").GetComponent<Light2D>().gameObject;
-    }
-
-    private void OnTriggerExit2D(Collider2D other) 
-    {
-        if (!ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle1_clear"))
+        private GameObject _player;
+        private bool _isInMaze = false;
+        [SerializeField] private DarknessController _darknessController;
+        
+        private void Start()
         {
-            if (other.CompareTag("Player"))
-            {
-                bool previousState = isInMaze;
-                isInMaze = player.transform.position.x < transform.position.x;
+            _player = PlayerCharacter.Instance.gameObject;
+        }
 
-                if (previousState != isInMaze)
+        private void OnTriggerExit2D(Collider2D other) 
+        {
+            if (!ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle1_clear"))
+            {
+                if (other.CompareTag("Player"))
                 {
-                    StopAllCoroutines();
-                    StartCoroutine(ChangeIntensity(isInMaze));
+                    bool previousState = _isInMaze;
+                    _isInMaze = _player.transform.position.x < transform.position.x;
+
+                    if (previousState != _isInMaze)
+                    {
+                        StopAllCoroutines();
+                        StartCoroutine(_darknessController.ChangeIntensity(_isInMaze));
+                    }
                 }
             }
         }
-    }
 
-    public void Trigger()
-    {
-        StartCoroutine(ChangeIntensity(false));
-        isInMaze = false;
-    }
-
-    private IEnumerator ChangeIntensity(bool isInMaze)
-    {
-        float targetIntensity = isInMaze ? 0f : 1f;
-        float Ratio = 0f;
-
-        playerLight.SetActive(isInMaze);
-        while (Mathf.Abs(globalLight.intensity - targetIntensity) > 0.01f)
+        public void Trigger()
         {
-            Ratio += Time.deltaTime;
-            globalLight.intensity = Mathf.Lerp(globalLight.intensity, targetIntensity, Ratio);
-            yield return new WaitForSeconds(0.05f);
+            StartCoroutine(_darknessController.ChangeIntensity(false));
+            _isInMaze = false;
         }
-        globalLight.intensity = targetIntensity;
-
-        yield return null;
     }
 }

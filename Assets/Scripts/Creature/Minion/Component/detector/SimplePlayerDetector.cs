@@ -5,14 +5,14 @@ public class SimplePlayerDetector : MonoBehaviour, IDetector<PlayerCharacter>
 {
     private SimplePlayerDetector() { }
 
-    public static SimplePlayerDetector Create(Creature creature)
+    public static SimplePlayerDetector Create(Creature.Creature creature)
     {
         SimplePlayerDetector detector = creature.gameObject.AddComponent<SimplePlayerDetector>();
         detector.creature = creature;
         return detector;
     }
     
-    private Creature creature;
+    private Creature.Creature creature;
     
     public List<PlayerCharacter> DetectTargets()
     {
