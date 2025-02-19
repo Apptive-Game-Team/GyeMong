@@ -12,6 +12,18 @@ public class GoldManager : SingletonObject<GoldManager>
         Debug.Log("Gold: " + gold);
     }
 
+    public bool SpendGold(int amount)
+    {
+        if (gold - amount < 0)
+        {
+            Debug.Log("Not Enough Money");
+            return false;
+        }
+
+        gold -= amount;
+        return true;
+    }
+
     public int GetGold()
     {
         return gold;
