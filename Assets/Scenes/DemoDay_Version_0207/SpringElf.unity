@@ -368,7 +368,7 @@ MonoBehaviour:
     - rid: 521773745628250170
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 0}
+        _boss: {fileID: 5581117415951231125}
     - rid: 3558735529444638722
       type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -2158,6 +2158,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102274170672503387, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102274170672503387, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102274170672503387, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102274170672503387, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2238,6 +2253,16 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4691959356851513209, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4691959356851513209, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5234390641593683249, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2263,6 +2288,11 @@ PrefabInstance:
     - target: {fileID: 5746332601320074700, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8962702988656070529, guid: b8346142fe6d243378a4a73c861e945e,
@@ -2311,6 +2341,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 43350890857309593, guid: 2936ccf9d70c47744b2db8ce66734254,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 503181076111006708, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2329,7 +2364,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.2163
+      value: 237.86838
       objectReference: {fileID: 0}
     - target: {fileID: 1370121933915850358, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -2446,7 +2481,7 @@ PrefabInstance:
     - target: {fileID: 2649768473112061072, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.2163
+      value: 308.21625
       objectReference: {fileID: 0}
     - target: {fileID: 2691256379806927063, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -3076,7 +3111,7 @@ MonoBehaviour:
     - rid: 7405124568204705793
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 0}
+        _boss: {fileID: 5581117415951231125}
     - rid: 7405124568204705794
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:

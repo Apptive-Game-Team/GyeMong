@@ -42,7 +42,7 @@ public abstract class Boss : Creature
         }
     }
     
-    protected void TransPhase()
+    protected virtual void TransPhase()
     {
         if (currentPhase < maxHps.Count-1)
         {
@@ -73,7 +73,7 @@ public abstract class Boss : Creature
         yield return base.Stun();
     }
     
-    protected virtual void Die() // Boss Clear Event
+    protected virtual void Die()
     {
         try
         {

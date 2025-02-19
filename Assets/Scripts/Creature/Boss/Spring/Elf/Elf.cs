@@ -185,6 +185,10 @@ public class Elf : Boss
             Elf.ChangeState();
         }
     }
+    protected override void TransPhase()
+    {
+        base.TransPhase();
+    }
     protected override void Die()
     {
         base.Die();

@@ -405,7 +405,8 @@ namespace playerCharacter
 
         public IEnumerator MoveTo(Vector3 target, float speed)
         {
-            isControlled = true;   
+            isControlled = true;
+            playerRb.velocity = Vector2.zero;
             animator.SetBool("isMove", true);
             soundController.SetBool(PlayerSoundType.FOOT, true);
             
