@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using Rework;
 using UnityEngine;
 
-public class Seed : BossAttack
+public class Seed : MonoBehaviour
 {
     private GameObject player;
     private Vector3 direction;
     private float speed = 10f;
-    
+    private float damage = 20f;
+    private EnemyAttackInfo enemyAttackInfo;
+
     private SoundObject _soundObject;
     private SoundObject _explosionSoundObject;
     private EventObject _eventObject;
@@ -20,6 +22,9 @@ public class Seed : BossAttack
         _explosionSoundObject = GetComponent<SoundObject>();
         player = GameObject.FindGameObjectWithTag("Player");
         direction = (player.transform.position - transform.position).normalized;
+
+        enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
+        enemyAttackInfo.Initialize(damage, _soundObject, true, true);
     }
 
     private void OnEnable()
@@ -59,16 +64,6 @@ public class Seed : BossAttack
         yield return new WaitForSeconds(1f);
         
         Explode();
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _soundObject.PlayAsync();
-            Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(damage);
-        }
     }
 
     private void Explode()

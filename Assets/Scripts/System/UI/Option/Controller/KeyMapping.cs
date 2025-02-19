@@ -5,14 +5,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class KeyMapping : MonoBehaviour
+public class KeyMapping : MonoBehaviour
 {
-    protected abstract ActionCode ActionCode { get; }
-    
-    protected void BindKey(KeyCode newKey)
+    [SerializeField] private ActionCode actionCode;
+
+    private void BindKey(KeyCode newKey)
     {
         CheckDuplication(newKey);
-        InputManager.Instance.SetKey(ActionCode, newKey);
+        InputManager.Instance.SetKey(actionCode, newKey);
     }
     
     public void OnClickButton()

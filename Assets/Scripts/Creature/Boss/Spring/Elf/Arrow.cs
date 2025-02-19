@@ -3,17 +3,23 @@ using System.Collections;
 using Rework;
 using UnityEngine;
 
-public class Arrow : BossAttack
+public class Arrow : MonoBehaviour
 {
     private GameObject player;
     private Vector3 direction;
     private float speed = 15f;
     private SoundObject _soundObject;
+    private float damage = 20f;
+    private EnemyAttackInfo enemyAttackInfo;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
         direction = (player.transform.position - transform.position).normalized;
+
+        enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
+        enemyAttackInfo.Initialize(damage, _soundObject, true, true);
     }
 
     private void OnEnable()
@@ -37,15 +43,5 @@ public class Arrow : BossAttack
             yield return null;
         }
         Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _soundObject.PlayAsync();
-            Destroy(gameObject);
-            PlayerCharacter.Instance.TakeDamage(damage);
-        }
     }
 }

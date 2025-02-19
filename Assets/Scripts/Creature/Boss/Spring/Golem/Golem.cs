@@ -56,8 +56,6 @@ public class Golem : Boss
             for (int j = 0; j < points.Length; j++)
             {
                 GameObject shockWave = Instantiate(shockwavePrefab, points[j], Quaternion.identity);
-                GuardianAttack shockWaveComponent = shockWave.GetComponent<GuardianAttack>();
-                shockWaveComponent.SetDamage(damage);
             }
             yield return new WaitForSeconds(0.3f);
         }
@@ -102,7 +100,6 @@ public class Golem : Boss
             yield return new WaitForSeconds(2f);
             GameObject cube= Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
             Cube cubeComponent = cube.GetComponent<Cube>();
-            cubeComponent.SetDamage(creature.damage);
             GameObject shadow = Instantiate(Golem.cubeShadowPrefab, PlayerCharacter.Instance.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
             cubeComponent.DetectShadow(shadow);
 

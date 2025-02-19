@@ -296,7 +296,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -98.01001, y: 125}
+  m_AnchoredPosition: {x: -98.01001, y: 100}
   m_SizeDelta: {x: 196.02, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5741075700910792921
@@ -764,7 +764,7 @@ GameObject:
   - component: {fileID: 1837129979340642421}
   - component: {fileID: 6039762826866029393}
   - component: {fileID: 1241672328962063941}
-  - component: {fileID: 5826321139401608836}
+  - component: {fileID: 1773722185432681167}
   m_Layer: 0
   m_Name: InteractionKey
   m_TagString: Untagged
@@ -874,7 +874,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5826321139401608836}
+      - m_Target: {fileID: 1773722185432681167}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
         m_MethodName: OnClickButton
         m_Mode: 1
@@ -886,7 +886,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5826321139401608836
+--- !u!114 &1773722185432681167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -895,9 +895,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 949732559444676247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7c355e6aaa42e4fa85ad4e88ec7b6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCode: 3
 --- !u!1 &1000450157048501972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,7 +1094,7 @@ GameObject:
   - component: {fileID: 5318356330268254987}
   - component: {fileID: 2496913292473657721}
   - component: {fileID: 3883018926804988456}
-  - component: {fileID: 1760282187313608967}
+  - component: {fileID: 8012045298105646936}
   m_Layer: 0
   m_Name: MoveUpKey
   m_TagString: Untagged
@@ -1203,7 +1204,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1760282187313608967}
+      - m_Target: {fileID: 8012045298105646936}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
         m_MethodName: OnClickButton
         m_Mode: 1
@@ -1215,7 +1216,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1760282187313608967
+--- !u!114 &8012045298105646936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1224,9 +1225,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1512255152239029560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f610ad31687632a4d9b6924437455b39, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCode: 4
 --- !u!1 &1771679692181277981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,7 +1241,7 @@ GameObject:
   - component: {fileID: 7566487939206102377}
   - component: {fileID: 7960946705688113538}
   - component: {fileID: 8159044369474488219}
-  - component: {fileID: 2042507611353552113}
+  - component: {fileID: 2896647105256116551}
   m_Layer: 0
   m_Name: MoveDownKey
   m_TagString: Untagged
@@ -1349,7 +1351,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2042507611353552113}
+      - m_Target: {fileID: 2896647105256116551}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
         m_MethodName: OnClickButton
         m_Mode: 1
@@ -1361,7 +1363,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2042507611353552113
+--- !u!114 &2896647105256116551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1370,9 +1372,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1771679692181277981}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9625a756720522c4591e829610af6c67, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCode: 5
 --- !u!1 &1775723515957666334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1959,8 +1962,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1644076637570466387}
   m_HandleRect: {fileID: 43350890857309593}
   m_Direction: 2
-  m_Value: -0.00041783103
-  m_Size: 0.81928223
+  m_Value: 0.9999999
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2075,7 +2078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -98.01001, y: -250}
+  m_AnchoredPosition: {x: -98.01001, y: -400}
   m_SizeDelta: {x: 196.02, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2954733304003396061
@@ -2188,6 +2191,7 @@ GameObject:
   - component: {fileID: 4014750388629377560}
   - component: {fileID: 7360818724479554183}
   - component: {fileID: 9011298562813149351}
+  - component: {fileID: 6420789528692605051}
   m_Layer: 0
   m_Name: RunePageKey
   m_TagString: Untagged
@@ -2297,7 +2301,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6420789528692605051}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
         m_MethodName: OnClickButton
         m_Mode: 1
@@ -2309,6 +2313,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6420789528692605051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653556098037777176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionCode: 8
 --- !u!1 &2696435522498139573
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,7 +2506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -98.01001, y: -175}
+  m_AnchoredPosition: {x: -98.01001, y: -300}
   m_SizeDelta: {x: 196.02, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2642901958103565274
@@ -2602,7 +2619,7 @@ GameObject:
   - component: {fileID: 2173318542870068743}
   - component: {fileID: 3798730153736010911}
   - component: {fileID: 1579661513607904122}
-  - component: {fileID: 9056432268369262852}
+  - component: {fileID: 2245609624523126924}
   m_Layer: 0
   m_Name: MoveLeftKey
   m_TagString: Untagged
@@ -2712,7 +2729,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9056432268369262852}
+      - m_Target: {fileID: 2245609624523126924}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
         m_MethodName: OnClickButton
         m_Mode: 1
@@ -2724,7 +2741,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &9056432268369262852
+--- !u!114 &2245609624523126924
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2733,9 +2750,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3027899089321322223}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27dbae03b96727b418d3d35c0f346e0e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCode: 7
 --- !u!1 &3075561176889962431
 GameObject:
   m_ObjectHideFlags: 0
@@ -3045,7 +3063,7 @@ MonoBehaviour:
   m_Content: {fileID: 1048845799567201248}
   m_Horizontal: 1
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -3281,7 +3299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -98.01001, y: 275}
+  m_AnchoredPosition: {x: -98.01001, y: 300}
   m_SizeDelta: {x: 196.02, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3036859890967686312
@@ -3664,7 +3682,7 @@ GameObject:
   - component: {fileID: 1547581809423915088}
   - component: {fileID: 3603064457806413048}
   - component: {fileID: 1420545924024931267}
-  - component: {fileID: 7157664255357064217}
+  - component: {fileID: 8845868449066016266}
   m_Layer: 0
   m_Name: MoveRightKey
   m_TagString: Untagged
@@ -3774,9 +3792,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7157664255357064217}
+      - m_Target: {fileID: 8845868449066016266}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
-        m_MethodName: OnClickButton
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3786,7 +3804,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7157664255357064217
+--- !u!114 &8845868449066016266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3795,9 +3813,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4136830815099185833}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bf4a1f2ac8ca9b4b99c1ac81da044d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCode: 6
 --- !u!1 &4176573381122730082
 GameObject:
   m_ObjectHideFlags: 0
@@ -3839,7 +3858,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 308.21622}
+  m_AnchoredPosition: {x: 0, y: 308.21616}
   m_SizeDelta: {x: 0, y: 783.9529}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2953172905110635865
@@ -3968,7 +3987,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -98.01001, y: -25}
+  m_AnchoredPosition: {x: -98.01001, y: -100}
   m_SizeDelta: {x: 196.02, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &54165004069342261
@@ -4104,7 +4123,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -98.01001, y: -100}
+  m_AnchoredPosition: {x: -98.01001, y: -200}
   m_SizeDelta: {x: 196.02, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1827221396925473687
@@ -4734,7 +4753,7 @@ GameObject:
   - component: {fileID: 6438299301119818043}
   - component: {fileID: 8756398358476497834}
   - component: {fileID: 8574186933442524115}
-  - component: {fileID: 6608708369143325328}
+  - component: {fileID: 7178460708022613340}
   m_Layer: 0
   m_Name: AttackKey
   m_TagString: Untagged
@@ -4844,7 +4863,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6608708369143325328}
+      - m_Target: {fileID: 7178460708022613340}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
         m_MethodName: OnClickButton
         m_Mode: 1
@@ -4856,7 +4875,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6608708369143325328
+--- !u!114 &7178460708022613340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4865,9 +4884,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5748263370268451123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ff5557270805c546848aef44e993541, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCode: 0
 --- !u!1 &5839434013018981929
 GameObject:
   m_ObjectHideFlags: 0
@@ -5731,7 +5751,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -98.01001, y: 50}
+  m_AnchoredPosition: {x: -98.01001, y: 0}
   m_SizeDelta: {x: 196.02, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1042912242291559499
@@ -6077,7 +6097,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -98.01001, y: 350}
+  m_AnchoredPosition: {x: -98.01001, y: 400}
   m_SizeDelta: {x: 196.02, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6726527083242540000
@@ -6548,7 +6568,7 @@ GameObject:
   - component: {fileID: 8490477860361400725}
   - component: {fileID: 4525088178274899504}
   - component: {fileID: 8574879842985305317}
-  - component: {fileID: 4964666472459224032}
+  - component: {fileID: 8886781767851228033}
   m_Layer: 0
   m_Name: SkillKey
   m_TagString: Untagged
@@ -6658,7 +6678,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4964666472459224032}
+      - m_Target: {fileID: 8886781767851228033}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
         m_MethodName: OnClickButton
         m_Mode: 1
@@ -6670,7 +6690,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4964666472459224032
+--- !u!114 &8886781767851228033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6679,9 +6699,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8332369703824659068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f81d6f9224c7d464dbc704318c430e0e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCode: 1
 --- !u!1 &8395304372087386550
 GameObject:
   m_ObjectHideFlags: 0
@@ -6940,7 +6961,7 @@ GameObject:
   - component: {fileID: 8079757289960938574}
   - component: {fileID: 7089417466790636149}
   - component: {fileID: 1502888460142257966}
-  - component: {fileID: 8401846189047960764}
+  - component: {fileID: 2174077569061881099}
   m_Layer: 0
   m_Name: DashKey
   m_TagString: Untagged
@@ -7050,7 +7071,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8401846189047960764}
+      - m_Target: {fileID: 2174077569061881099}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
         m_MethodName: OnClickButton
         m_Mode: 1
@@ -7062,7 +7083,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8401846189047960764
+--- !u!114 &2174077569061881099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7071,9 +7092,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8794714695945645670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c63836163e6dfa64381f1709da51044f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c3681988c25f5647a3b1241ef1bdd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCode: 2
 --- !u!1 &8885160523504937797
 GameObject:
   m_ObjectHideFlags: 0
@@ -7114,10 +7136,10 @@ RectTransform:
   - {fileID: 6612253702984198810}
   m_Father: {fileID: 4886566422507522136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 104.92653}
-  m_SizeDelta: {x: 0, y: 580.6194}
+  m_AnchorMin: {x: 0.5, y: 0.043673962}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -196.02, y: 237.86841}
+  m_SizeDelta: {x: 392, y: 703.3241}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1434409495528686893
 MonoBehaviour:

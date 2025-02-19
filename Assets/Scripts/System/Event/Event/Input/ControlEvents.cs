@@ -13,6 +13,7 @@ public class SetKeyInputEvent : ControlEvent
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         InputManager.Instance.SetActionState(_isEnable);
+        playerCharacter.PlayerCharacter.Instance.isControlled = !_isEnable;
         yield return null;
     }
 }

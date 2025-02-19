@@ -4,14 +4,22 @@ using System.Collections.Generic;
 using Rework;
 using UnityEngine;
 
-public class Cube : BossAttack
+public class Cube : MonoBehaviour
 {
     private GameObject player;
+    private float damage = 30f;
+    private EnemyAttackInfo enemyAttackInfo;
 
     private bool isFalled = false;
 
     [SerializeField] private SoundObject _soundObject;
-    
+
+    private void Awake()
+    {
+        enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
+        enemyAttackInfo.Initialize(damage, _soundObject, false, true);
+    }
+
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -69,13 +77,7 @@ public class Cube : BossAttack
         Destroy(gameObject);
         Destroy(shadow);
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            PlayerCharacter.Instance.TakeDamage(damage);
-        }
-    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (isFalled && other.CompareTag("Boss"))
