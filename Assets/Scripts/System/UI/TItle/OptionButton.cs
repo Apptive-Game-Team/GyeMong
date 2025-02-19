@@ -7,6 +7,6 @@ public class OptionButton : MonoBehaviour
 {
     public void Option()
     {
-        OptionUI.Instance.OpenOrCloseOption();
+        OptionUIToggler.Instance.ToggleOption();
     }
 }

@@ -16,7 +16,7 @@ public class OptionExitButton : MonoBehaviour
     public void ExitButton()
     {
         gameObject.SetActive(false);
-        OptionUI.Instance.OpenOrCloseOption();
+        OptionUIToggler.Instance.ToggleOption();
         Destroy(PlayerCharacter.Instance.gameObject);
         SceneManager.LoadScene("TitleScene");
     }
