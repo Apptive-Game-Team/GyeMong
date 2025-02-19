@@ -7,6 +7,8 @@ using UnityEngine.VFX;
 
 namespace Map.Puzzle.FogMaze
 {
+    // Check Player is on Path
+    // and if Player is not on Path, then Trigger Event Object
     public class OnPathChecker : MonoBehaviour, IEventTriggerable
     {
         private Collider2D[] _paths;
@@ -20,33 +22,43 @@ namespace Map.Puzzle.FogMaze
     
         [SerializeField] private VisualEffect vfxRenderer;
     
-        int _curRootNum = 0;
+        private int _curRootNum = 0;
 
         private void Start()
         {
-            _rootNum = GetComponent<IntEventStatus>();
-            _eventObject = GetComponent<EventObject>();
-            _player = PlayerCharacter.Instance;
+            _rootNum = GetComponent<IntEventStatus>(); // for checking current root number
+            _eventObject = GetComponent<EventObject>(); // for triggering event
+            _player = PlayerCharacter.Instance; // for checking player position
             _playerCollider = _player.GetComponentInChildren<Collider2D>();
-            GameObject pRoots = transform.Find("Roots").gameObject;
-            _roots = transform.Find("Roots").GetComponentsInChildren<Transform>()
-                .Where(component => component.gameObject != pRoots && component.transform.parent == pRoots.transform)
-                .ToArray();;
-            Array.Sort(_roots, (a, b) => a.GetSiblingIndex().CompareTo(b.GetSiblingIndex()));
+            
+            InitializeRoots();
+            InitializePaths();
+        }
+
+        private void InitializePaths()
+        {
             Transform pathTransform = transform.Find("Path");
             _paths = pathTransform.GetComponentsInChildren<Collider2D>();
+        }
+        
+        private void InitializeRoots()
+        {
+            GameObject pRoots = transform.Find("Roots").gameObject; // for getting roots
+            _roots = transform.Find("Roots").GetComponentsInChildren<Transform>()
+                .Where(component => component.gameObject != pRoots && component.transform.parent == pRoots.transform)
+                .ToArray();
+            Array.Sort(_roots, (a, b) => a.GetSiblingIndex().CompareTo(b.GetSiblingIndex()));
         }
 
         private void Update()
         {
-            vfxRenderer.SetVector3("ColliderPos", PlayerCharacter.Instance.transform.position);
             if (!CheckOnPath())
             {
                 _eventObject.Trigger();
             }
         }
     
-        bool CheckOnPath()
+        bool CheckOnPath() // Check Player is on Path
         {
             bool isOn = false;
             foreach (Collider2D collider in _paths)
@@ -56,10 +68,11 @@ namespace Map.Puzzle.FogMaze
             return isOn;
         }
     
-        private void MovePlayerPosition()
+        private void MovePlayerPosition() // Move Player to Root Position
         {
             _player.transform.position = _roots[_rootNum.GetStatus()].position;
         }
+        
         public void Trigger()
         {
             MovePlayerPosition();
