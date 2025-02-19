@@ -5,48 +5,22 @@ using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GrazeController : MonoBehaviour
+public class GrazeController : SingletonObject<GrazeController>
 {
-    public static GrazeController Instance { get; set;}
     [SerializeField] private float maxAttackDistance = 1f;
     private List<Collider2D> activeColliders = new();
     private Dictionary<Collider2D, float> colliderDistanceMap = new();
     private PlayerSoundController _playerSoundController;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else Destroy(gameObject);
+        base.Awake();
     }
 
     private void Start()
     {
         _playerSoundController = transform.parent.GetComponent<PlayerSoundController>();
     }
-
-/*    private void Update()
-    {
-        for (int i = activeColliders.Count - 1; i >= 0; i--)
-        {
-            Collider2D collider = activeColliders[i];
-
-            if (collider.gameObject == null)
-            {
-                if (!colliderAttackedMap[collider])
-                {
-                    Grazed(collider);
-                    RemoveCollider(collider);
-                }
-                else
-                {
-                    RemoveCollider(collider);
-                }
-            }
-        }
-    }*/
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
