@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Map.Puzzle.Puzzle3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Util.Interface;
 
 public class PuzzleController : MonoBehaviour
 {
@@ -11,8 +13,8 @@ public class PuzzleController : MonoBehaviour
     public bool isPuzzleStart = false;
     public bool isPuzzleCleared = false;
     [SerializeField] GameObject rune;
-    private Image timeWatchImage;
-    private TextMeshProUGUI timeWatch;
+    
+    private Timer timer;
 
     private void Awake()
     {
@@ -23,9 +25,7 @@ public class PuzzleController : MonoBehaviour
 
         if (rune == null || rune.activeSelf) isPuzzleCleared = true;
 
-        Transform canvas = transform.parent.Find("TimeWatch");
-        timeWatchImage = canvas.GetChild(0).GetComponent<Image>();
-        timeWatch = canvas.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+        timer = FindFirstObjectByType<Timer>();
 
         if (!isPuzzleCleared)
         {
@@ -36,15 +36,15 @@ public class PuzzleController : MonoBehaviour
 
     private void Update()
     {
-        if (!isPuzzleCleared && isPuzzleStart && !timeWatchImage.gameObject.activeSelf)
+        if (!isPuzzleCleared && isPuzzleStart && !timer.IsTimerRunning)
         {
-            StartCoroutine(StartTimeWatchCoroutine());
+            timer.Play(30f, new TimeEndCallback(this));
         }
 
         if (CheckClear() && !isPuzzleCleared)
         {
             // rune.SetActive(true);
-            RuneObjectCreator.Instance.DrawRuneObject(1,rune.transform.position); //dont need rune gameobj
+            timer.Stop();
             isPuzzleCleared = true;
             SaveClearFlag();
         }
@@ -57,6 +57,8 @@ public class PuzzleController : MonoBehaviour
             puzzleImages.Add(image.gameObject);
         }
     }
+    
+    
 
     private void SetUpInitialRotation()
     {
@@ -84,29 +86,6 @@ public class PuzzleController : MonoBehaviour
         return true;
     }
 
-    private IEnumerator StartTimeWatchCoroutine()
-    {
-        timeWatchImage.gameObject.SetActive(true);
-        float remainTime = 30f;
-
-        while (remainTime > 0)
-        {
-            if (CheckClear())
-            {
-                timeWatchImage.gameObject.SetActive(false);
-                yield break;
-            }
-
-            remainTime -= Time.deltaTime;
-            timeWatch.text = remainTime.ToString("F2");
-            yield return null;
-        }
-
-        timeWatchImage.gameObject.SetActive(false);
-        SetUpInitialRotation();
-        isPuzzleStart = false;
-    }
-
     private void SaveClearFlag()
     {
         ConditionManager.Instance.Conditions.Add("spring_puzzle3_clear", isPuzzleCleared);
@@ -115,5 +94,20 @@ public class PuzzleController : MonoBehaviour
     private void LoadClearFlag()
     {
         isPuzzleCleared = ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle3_clear");
+    }
+
+    private class TimeEndCallback : ICallback
+    {
+        private PuzzleController _puzzleController;
+
+        public TimeEndCallback(PuzzleController puzzleController)
+        {
+            _puzzleController = puzzleController;
+        }
+        public void OnProcessCompleted()
+        {
+            _puzzleController.SetUpInitialRotation();
+            _puzzleController.isPuzzleStart = false;
+        }
     }
 }
