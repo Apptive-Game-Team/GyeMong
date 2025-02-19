@@ -8,24 +8,7 @@ public class HitCollider : MonoBehaviour
     {
         if (other.CompareTag("EnemyAttack"))
         {
-            EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
-            if (enemyAttackInfo == null) return;
-
-            enemyAttackInfo.isAttacked = true;
-            if (enemyAttackInfo.soundObject != null)
-            {
-                enemyAttackInfo.soundObject.PlayAsync();
-            }
-
-            if (enemyAttackInfo.isDestroyOnHit)
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                Destroy(other.gameObject);
-            }
-            else
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-            }
+            CheckAttacked(other);
         }
     }
 
@@ -33,39 +16,17 @@ public class HitCollider : MonoBehaviour
     {
         if (other.CompareTag("EnemyAttack"))
         {
-            EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
-            if (enemyAttackInfo == null) return;
-
-            if (enemyAttackInfo.isMultiHit)
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
-            }
+            CheckAttaching(other);
         }
     }
+
+
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.CompareTag("EnemyAttack"))
         {
-            EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<EnemyAttackInfo>();
-            if (enemyAttackInfo == null) return;
-
-            enemyAttackInfo.isAttacked = true;
-            if (enemyAttackInfo.soundObject != null)
-            {
-                enemyAttackInfo.soundObject.PlayAsync();
-            }
-
-            if (enemyAttackInfo.isDestroyOnHit)
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                Destroy(other.collider.gameObject);
-            }
-            else
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-            }
+            CheckAttacked(other.collider);
         }
     }
 
@@ -73,14 +34,41 @@ public class HitCollider : MonoBehaviour
     {
         if (other.collider.CompareTag("EnemyAttack"))
         {
-            EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<EnemyAttackInfo>();
-            if (enemyAttackInfo == null) return;
+            CheckAttaching(other.collider);
+        }
+    }
 
-            if (enemyAttackInfo.isMultiHit)
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
-            }
+    private void CheckAttacked(Collider2D other)
+    {
+        EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
+        if (enemyAttackInfo == null) return;
+
+        enemyAttackInfo.isAttacked = true;
+        if (enemyAttackInfo.soundObject != null)
+        {
+            enemyAttackInfo.soundObject.PlayAsync();
+        }
+
+        if (enemyAttackInfo.isDestroyOnHit)
+        {
+            playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+            Destroy(other.gameObject);
+        }
+        else
+        {
+            playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+        }
+    }
+
+    private void CheckAttaching(Collider2D other)
+    {
+        EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
+        if (enemyAttackInfo == null) return;
+
+        if (enemyAttackInfo.isMultiHit)
+        {
+            playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+            StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
         }
     }
 
