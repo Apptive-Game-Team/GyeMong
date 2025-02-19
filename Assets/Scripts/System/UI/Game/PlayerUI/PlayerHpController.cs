@@ -1,17 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
+using Creature.Player.Interface.Listener;
 using playerCharacter;
-using UnityEngine;
 
-public class PlayerHpController : GaugeController
+namespace System.UI.Game.PlayerUI
 {
-    protected override float GetCurrentGauge()
+    public class PlayerHpController : GaugeController, IHpChangeListener
     {
-        return PlayerCharacter.Instance.CurrentHp;
-    }
+        private float _hp;
+        private float _maxHp;
+        private void Start()
+        {
+            PlayerCharacter.Instance.changeListenerCaller.AddHpChangeListener(this);
+            _maxHp = PlayerCharacter.Instance.MaxHp;
+        }
 
-    protected override float GetMaxGauge()
-    {
-        return PlayerCharacter.Instance.MaxHp;
+        protected override float GetCurrentGauge()
+        {
+            return _hp;
+        }
+
+        protected override float GetMaxGauge()
+        {
+            return _maxHp;
+        }
+
+        public void OnChanged(float data)
+        {
+            _hp = data;
+            UpdateSkillGauge();
+        }
+    
+        protected override void Update() { } // Do not call base.Update()
     }
 }
