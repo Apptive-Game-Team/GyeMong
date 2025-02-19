@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Util.Interface;
 
-namespace Map.Puzzle.Puzzle3
+namespace Map.Puzzle.ImagePuzzle
 {
     public class Timer : MonoBehaviour
     {
