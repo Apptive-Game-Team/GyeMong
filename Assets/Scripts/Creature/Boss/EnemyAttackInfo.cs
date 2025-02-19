@@ -13,7 +13,7 @@ public class EnemyAttackInfo : MonoBehaviour
     public bool isMultiHit;
     public float multiHitDelay;
 
-    public void Initialize(float damage, SoundObject soundObject, bool isDestroyOnHit, bool grazable, bool grazed, bool isAttacked, bool isMultiHit = false, float multiHitDelay = 0f)
+    public void Initialize(float damage, SoundObject soundObject, bool isDestroyOnHit, bool grazable, bool grazed = false, bool isAttacked = false, bool isMultiHit = false, float multiHitDelay = 0f)
     {
         this.damage = damage;
         this.soundObject = soundObject;

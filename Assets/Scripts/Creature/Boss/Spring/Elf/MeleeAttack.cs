@@ -12,6 +12,6 @@ public class MeleeAttack : MonoBehaviour
     private void Awake()
     {
         enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-        enemyAttackInfo.Initialize(damage, null, false, false, false, false);
+        enemyAttackInfo.Initialize(damage, null, false, false);
     }
 }

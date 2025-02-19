@@ -24,7 +24,7 @@ public class Seed : MonoBehaviour
         direction = (player.transform.position - transform.position).normalized;
 
         enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-        enemyAttackInfo.Initialize(damage, _soundObject, true, true, false, false);
+        enemyAttackInfo.Initialize(damage, _soundObject, true, true);
     }
 
     private void OnEnable()

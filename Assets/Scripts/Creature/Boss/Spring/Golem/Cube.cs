@@ -17,7 +17,7 @@ public class Cube : MonoBehaviour
     private void Awake()
     {
         enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-        enemyAttackInfo.Initialize(damage, _soundObject, false, true, false, false);
+        enemyAttackInfo.Initialize(damage, _soundObject, false, true);
     }
 
     private void OnEnable()

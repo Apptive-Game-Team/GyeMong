@@ -12,6 +12,6 @@ public class GuardianAttack : MonoBehaviour
     private void Awake()
     {
         enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-        enemyAttackInfo.Initialize(damage, null, false, true, false, false);
+        enemyAttackInfo.Initialize(damage, null, false, true);
     }
 }

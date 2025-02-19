@@ -12,7 +12,7 @@ public class Root : MonoBehaviour
     private void Awake()
     {
         enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-        enemyAttackInfo.Initialize(damage, null, false, false, false, false);
+        enemyAttackInfo.Initialize(damage, null, false, false);
     }
     private void OnEnable()
     {
