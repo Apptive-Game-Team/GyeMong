@@ -26,7 +26,7 @@ public class KeyMapping : MonoBehaviour
         
         KeyCode pressedKey = GetPressedKey();
         BindKey(pressedKey);
-        KeyButtonTexts.Instance.UpdateKeyText();
+        OptionUI.Instance.GetKeyButtonTexts.UpdateKeyText();
     }
 
     private KeyCode GetPressedKey()

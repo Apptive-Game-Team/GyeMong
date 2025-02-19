@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SoundControlUI : SingletonObject<SoundControlUI>
+public class SoundControlUI : MonoBehaviour
 {
     private void Start()
     {

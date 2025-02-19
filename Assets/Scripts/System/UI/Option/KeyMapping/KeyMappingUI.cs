@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyMappingUI : SingletonObject<KeyMappingUI>
+public class KeyMappingUI : MonoBehaviour
 {
     private void Start()
     {

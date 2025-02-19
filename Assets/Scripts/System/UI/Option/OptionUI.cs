@@ -7,6 +7,14 @@ public class OptionUI : SingletonObject<OptionUI>
     private Image optionImage;
     private bool isOptionOpened = false;
     public bool isOptionUITop = true;
+    [SerializeField] private SoundControlUI soundControlUI;
+    public SoundControlUI GetSoundControlUI { get { return soundControlUI; } }
+    [SerializeField] private SoundController soundController;
+    public SoundController GetSoundController { get { return soundController; } }
+    [SerializeField] private KeyButtonTexts keyButtonTexts;
+    public KeyButtonTexts GetKeyButtonTexts { get { return keyButtonTexts;}}
+    [SerializeField] private KeyMappingUI keyMappingUI;
+    public KeyMappingUI GetKeyMappingUI { get { return keyMappingUI; } }
 
     private void Start()
     {

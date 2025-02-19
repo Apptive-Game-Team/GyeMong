@@ -3,15 +3,13 @@ using TMPro;
 using UnityEngine;
 using System;
 
-public class KeyButtonTexts : SingletonObject<KeyButtonTexts>
+public class KeyButtonTexts : MonoBehaviour
 {
     private List<Transform> keys = new();
     private List<TextMeshProUGUI> keyTexts = new();
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-        
         for (int i = 0;i < transform.childCount;i++)
         {
             keys.Add(transform.GetChild(i));

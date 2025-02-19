@@ -68,14 +68,14 @@ namespace UI.Option
         private void SoundControl()
         {
             OptionUI.Instance.isOptionUITop = false;
-            SoundControlUI.Instance.OpenSoundControlImage();
+            OptionUI.Instance.GetSoundControlUI.OpenSoundControlImage();
         }
 
         private void KeyMapping()
         {
             OptionUI.Instance.isOptionUITop = false;
-            KeyButtonTexts.Instance.UpdateKeyText();
-            KeyMappingUI.Instance.OpenKeyMappingUI();
+            OptionUI.Instance.GetKeyButtonTexts.UpdateKeyText();
+            OptionUI.Instance.GetKeyMappingUI.OpenKeyMappingUI();
         }
 
         private void OptionExit()

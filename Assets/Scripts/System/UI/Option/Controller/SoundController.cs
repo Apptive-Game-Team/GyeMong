@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundController : SingletonObject<SoundController>
+public class SoundController : MonoBehaviour
 {
     public Scrollbar masterVolumeSlider;
     public Scrollbar uiVolumeSlider;

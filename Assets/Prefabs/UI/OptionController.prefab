@@ -409,7 +409,6 @@ GameObject:
   - component: {fileID: 486469807317275288}
   - component: {fileID: 7976900986881550664}
   - component: {fileID: 2810485271363895964}
-  - component: {fileID: 5005068932866421154}
   m_Layer: 5
   m_Name: OptionExitButton
   m_TagString: Untagged
@@ -517,31 +516,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7976900986881550664}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5005068932866421154}
-        m_TargetAssemblyTypeName: OptionExitButton, Assembly-CSharp
-        m_MethodName: ExitButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &5005068932866421154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178031954845751145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd840c38fa1f7d42acf3d406ba0f17c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls: []
 --- !u!1 &564431563713537078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,7 +1648,6 @@ GameObject:
   - component: {fileID: 4963844148079477434}
   - component: {fileID: 1434401748528272183}
   - component: {fileID: 210140337652509555}
-  - component: {fileID: 4746710123583546130}
   m_Layer: 5
   m_Name: KeyMappingButton
   m_TagString: Untagged
@@ -1781,31 +1755,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1434401748528272183}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4746710123583546130}
-        m_TargetAssemblyTypeName: KeyMappingButton, Assembly-CSharp
-        m_MethodName: OnClickButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &4746710123583546130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2355077191172064102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14dbe60c94bb3a64495e70e04d566f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls: []
 --- !u!1 &2452137487869703890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,7 +1913,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 43350890857309593}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.51687187
+  m_Size: 0.25843588
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2338,7 +2288,6 @@ GameObject:
   - component: {fileID: 3718875494501851380}
   - component: {fileID: 2545921778488059860}
   - component: {fileID: 3725913046213602094}
-  - component: {fileID: 4299816826972740793}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -2446,31 +2395,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2545921778488059860}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4299816826972740793}
-        m_TargetAssemblyTypeName: ResumeButton, Assembly-CSharp
-        m_MethodName: OnclickButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &4299816826972740793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2696435522498139573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2249e43b1c2b99b48bf1c5645a346868, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls: []
 --- !u!1 &2926577253908435354
 GameObject:
   m_ObjectHideFlags: 0
@@ -3794,7 +3719,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8845868449066016266}
         m_TargetAssemblyTypeName: KeyMapping, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: OnClickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4991,7 +4916,6 @@ GameObject:
   - component: {fileID: 2427312393868670542}
   - component: {fileID: 4443712148593719572}
   - component: {fileID: 1740715905000080681}
-  - component: {fileID: 8092226386148005506}
   m_Layer: 5
   m_Name: SoundControlButton
   m_TagString: Untagged
@@ -5099,31 +5023,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4443712148593719572}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8092226386148005506}
-        m_TargetAssemblyTypeName: SoundControlButton, Assembly-CSharp
-        m_MethodName: OnClickButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &8092226386148005506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5885308843622235565}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26ad6134e877d9e478370d60337ffe5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls: []
 --- !u!1 &6132367541407520530
 GameObject:
   m_ObjectHideFlags: 0
@@ -6244,6 +6144,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOptionUITop: 1
+  soundControlUI: {fileID: 5560080869713159535}
+  soundController: {fileID: 2953172905110635865}
+  keyButtonTexts: {fileID: 1434409495528686893}
+  keyMappingUI: {fileID: 6049993090061014804}
 --- !u!1 &7926977778623836908
 GameObject:
   m_ObjectHideFlags: 0
@@ -7138,7 +7042,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.043673962}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -196.02, y: 237.86835}
+  m_AnchoredPosition: {x: -196.02, y: 237.86838}
   m_SizeDelta: {x: 392, y: 703.3241}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1434409495528686893
@@ -7274,7 +7178,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2049541664315578251}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6068435
+  m_Size: 0.60684085
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

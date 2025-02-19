@@ -19,10 +19,10 @@ public class SoundControlExitButton : MonoBehaviour
         OptionUI.Instance.isOptionUITop = true;
         SoundControlImage.gameObject.SetActive(false);
 
-        soundData.masterVolume = SoundController.Instance.masterVolumeSlider.value;
-        soundData.UIVolume = SoundController.Instance.uiVolumeSlider.value;
-        soundData.bgmVolume = SoundController.Instance.bgmVolumeSlider.value;
-        soundData.sfxVolume = SoundController.Instance.effectVolumeSlider.value;
+        soundData.masterVolume = OptionUI.Instance.GetSoundController.masterVolumeSlider.value;
+        soundData.UIVolume = OptionUI.Instance.GetSoundController.uiVolumeSlider.value;
+        soundData.bgmVolume = OptionUI.Instance.GetSoundController.bgmVolumeSlider.value;
+        soundData.sfxVolume = OptionUI.Instance.GetSoundController.effectVolumeSlider.value;
 
         DataManager.Instance.SaveSection<SoundData>(soundData, "SoundData");
     }

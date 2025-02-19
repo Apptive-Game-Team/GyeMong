@@ -5,17 +5,12 @@ using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GrazeController : SingletonObject<GrazeController>
+public class GrazeController : MonoBehaviour
 {
     [SerializeField] private float maxAttackDistance = 1f;
     private List<Collider2D> activeColliders = new();
     private Dictionary<Collider2D, float> colliderDistanceMap = new();
     private PlayerSoundController _playerSoundController;
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
     private void Start()
     {
