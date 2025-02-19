@@ -163,7 +163,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 237.86832
+      value: 237.86829
       objectReference: {fileID: 0}
     - target: {fileID: 1370121933915850358, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -25060,28 +25060,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuneCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 4260879668609468630, guid: a8c638ca210ca99478b7eae65070be1d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781960463790634081, guid: a8c638ca210ca99478b7eae65070be1d,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 12957c35a5327f94a8ba4ecf32e5dff5,
-        type: 2}
-    - target: {fileID: 4781960463790634081, guid: a8c638ca210ca99478b7eae65070be1d,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -3822564597673967843, guid: 12957c35a5327f94a8ba4ecf32e5dff5,
-        type: 2}
-    - target: {fileID: 4781960463790634081, guid: a8c638ca210ca99478b7eae65070be1d,
-        type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7618350676042751725, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
       propertyPath: m_Pivot.x
@@ -25180,23 +25158,6 @@ PrefabInstance:
     - target: {fileID: 7618350676042751725, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9019806527866282431, guid: a8c638ca210ca99478b7eae65070be1d,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 12957c35a5327f94a8ba4ecf32e5dff5,
-        type: 2}
-    - target: {fileID: 9019806527866282431, guid: a8c638ca210ca99478b7eae65070be1d,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -3822564597673967843, guid: 12957c35a5327f94a8ba4ecf32e5dff5,
-        type: 2}
-    - target: {fileID: 9019806527866282431, guid: a8c638ca210ca99478b7eae65070be1d,
-        type: 3}
-      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
