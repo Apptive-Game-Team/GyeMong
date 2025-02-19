@@ -52,8 +52,9 @@ public class GrazeController : SingletonObject<GrazeController>
     {
         if (collider.CompareTag("EnemyAttack"))
         {
-            if (activeColliders.Contains(collider) && !collider.GetComponent<EnemyAttackInfo>().isAttacked
-                && collider.GetComponent<EnemyAttackInfo>().grazable && !collider.GetComponent<EnemyAttackInfo>().grazed)
+            EnemyAttackInfo enemyAttackInfo = collider.GetComponent<EnemyAttackInfo>();
+            if (activeColliders.Contains(collider) && !enemyAttackInfo.isAttacked
+                && enemyAttackInfo.grazable && !enemyAttackInfo.grazed)
             {
                 Grazed(collider);
                 RemoveCollider(collider);
