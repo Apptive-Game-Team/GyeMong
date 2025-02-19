@@ -7,16 +7,13 @@ namespace Map.Puzzle.Maze
 {
     public class MazeDarkness : MonoBehaviour, IEventTriggerable
     {
-        private Light2D _globalLight;
-        private GameObject _playerLight;
         private GameObject _player;
         private bool _isInMaze = false;
-
+        [SerializeField] private DarknessController _darknessController;
+        
         private void Start()
         {
             _player = PlayerCharacter.Instance.gameObject;
-            _globalLight = GameObject.Find("GlobalLight2D").GetComponent<Light2D>();
-            _playerLight = _player.transform.Find("PlayerLight").GetComponent<Light2D>().gameObject;
         }
 
         private void OnTriggerExit2D(Collider2D other) 
@@ -31,7 +28,7 @@ namespace Map.Puzzle.Maze
                     if (previousState != _isInMaze)
                     {
                         StopAllCoroutines();
-                        StartCoroutine(ChangeIntensity(_isInMaze));
+                        StartCoroutine(_darknessController.ChangeIntensity(_isInMaze));
                     }
                 }
             }
@@ -39,25 +36,8 @@ namespace Map.Puzzle.Maze
 
         public void Trigger()
         {
-            StartCoroutine(ChangeIntensity(false));
+            StartCoroutine(_darknessController.ChangeIntensity(false));
             _isInMaze = false;
-        }
-
-        private IEnumerator ChangeIntensity(bool isInMaze)
-        {
-            float targetIntensity = isInMaze ? 0f : 1f;
-            float ratio = 0f;
-
-            _playerLight.SetActive(isInMaze);
-            while (Mathf.Abs(_globalLight.intensity - targetIntensity) > 0.01f)
-            {
-                ratio += Time.deltaTime;
-                _globalLight.intensity = Mathf.Lerp(_globalLight.intensity, targetIntensity, ratio);
-                yield return new WaitForSeconds(0.05f);
-            }
-            _globalLight.intensity = targetIntensity;
-
-            yield return null;
         }
     }
 }

@@ -19207,7 +19207,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 237.86829
+      value: 237.86826
       objectReference: {fileID: 0}
     - target: {fileID: 1370121933915850358, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -76345,6 +76345,7 @@ GameObject:
   - component: {fileID: 991403337}
   - component: {fileID: 991403335}
   - component: {fileID: 991403336}
+  - component: {fileID: 991403338}
   m_Layer: 0
   m_Name: MazeStart
   m_TagString: Untagged
@@ -76364,6 +76365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff5fedc0b8e7bb46b1429a28fbf226d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _darknessController: {fileID: 991403338}
 --- !u!58 &991403336
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -76414,6 +76416,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 404717162}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &991403338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991403334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47db825c83824219867d9b886424a7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1035935351
 GameObject:
   m_ObjectHideFlags: 0
