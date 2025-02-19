@@ -19207,7 +19207,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 237.86829
       objectReference: {fileID: 0}
     - target: {fileID: 1370121933915850358, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -78575,7 +78575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1841296631}
   - component: {fileID: 1841296633}
-  - component: {fileID: 1841296632}
+  - component: {fileID: 1841296634}
   m_Layer: 0
   m_Name: MazeEnd
   m_TagString: Untagged
@@ -78592,25 +78592,12 @@ Transform:
   m_GameObject: {fileID: 1841296630}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.51, y: 2, z: -10.202542}
+  m_LocalPosition: {x: -24, y: 2, z: -10.202542}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 404717162}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1841296632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841296630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed1741cfc4a7531489e076d988f3459d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMazeCleared: 0
 --- !u!58 &1841296633
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -78646,6 +78633,31 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1841296634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841296630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 0
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 2875236536718196737
+  references:
+    version: 2
+    RefIds:
+    - rid: 2875236536718196737
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: spring_puzzle1_clear
+        condition: 1
 --- !u!1001 &1910486603
 PrefabInstance:
   m_ObjectHideFlags: 0
