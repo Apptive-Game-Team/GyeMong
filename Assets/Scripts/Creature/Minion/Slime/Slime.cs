@@ -3,7 +3,7 @@ using System.Collections;
 using playerCharacter;
 using UnityEngine;
 
-public class Slime : Creature
+public class Slime : Creature.Creature
 {
     [SerializeField] private GameObject rangedAttack;
     private IDetector<PlayerCharacter> _detector;
@@ -19,12 +19,12 @@ public class Slime : Creature
         {
             ChangeState(new SlimeDieState(this));
 
-            //Spawn Test¿ëµµ Ãß°¡ÄÚµå
+            //Spawn Testï¿½ëµµ ï¿½ß°ï¿½ï¿½Úµï¿½
             StartCoroutine(Death());
         }
     }
 
-    //Spawn, GoldManager Test¿ëµµ
+    //Spawn, GoldManager Testï¿½ëµµ
     public IEnumerator Death()
     {
         int goldReward = 10;
@@ -149,7 +149,7 @@ public class Slime : Creature
     public class SlimeDieState : BaseState
     {
         public SlimeDieState() { }
-        public SlimeDieState(Creature creature)
+        public SlimeDieState(Creature.Creature creature)
         {
             this.creature = creature;
         }

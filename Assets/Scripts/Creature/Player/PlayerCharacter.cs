@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections;
+using Creature.Player.Component.Collider;
 using UnityEngine;
 
 namespace playerCharacter

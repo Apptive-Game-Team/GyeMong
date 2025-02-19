@@ -1,91 +1,93 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HitCollider : MonoBehaviour
+namespace Creature.Player.Component.Collider
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    public class HitCollider : MonoBehaviour
     {
-        if (other.CompareTag("EnemyAttack"))
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
-            if (enemyAttackInfo == null) return;
+            if (other.CompareTag("EnemyAttack"))
+            {
+                EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
+                if (enemyAttackInfo == null) return;
 
-            enemyAttackInfo.isAttacked = true;
-            if (enemyAttackInfo.soundObject != null)
-            {
-                enemyAttackInfo.soundObject.PlayAsync();
-            }
+                enemyAttackInfo.isAttacked = true;
+                if (enemyAttackInfo.soundObject != null)
+                {
+                    enemyAttackInfo.soundObject.PlayAsync();
+                }
 
-            if (enemyAttackInfo.isDestroyOnHit)
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                Destroy(other.gameObject);
-            }
-            else
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                if (enemyAttackInfo.isDestroyOnHit)
+                {
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    Destroy(other.gameObject);
+                }
+                else
+                {
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                }
             }
         }
-    }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("EnemyAttack"))
+        private void OnTriggerStay2D(Collider2D other)
         {
-            EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
-            if (enemyAttackInfo == null) return;
-
-            if (enemyAttackInfo.isMultiHit)
+            if (other.CompareTag("EnemyAttack"))
             {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
+                EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
+                if (enemyAttackInfo == null) return;
+
+                if (enemyAttackInfo.isMultiHit)
+                {
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
+                }
             }
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.collider.CompareTag("EnemyAttack"))
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<EnemyAttackInfo>();
-            if (enemyAttackInfo == null) return;
+            if (other.collider.CompareTag("EnemyAttack"))
+            {
+                EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<EnemyAttackInfo>();
+                if (enemyAttackInfo == null) return;
 
-            enemyAttackInfo.isAttacked = true;
-            if (enemyAttackInfo.soundObject != null)
-            {
-                enemyAttackInfo.soundObject.PlayAsync();
-            }
+                enemyAttackInfo.isAttacked = true;
+                if (enemyAttackInfo.soundObject != null)
+                {
+                    enemyAttackInfo.soundObject.PlayAsync();
+                }
 
-            if (enemyAttackInfo.isDestroyOnHit)
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                Destroy(other.collider.gameObject);
-            }
-            else
-            {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                if (enemyAttackInfo.isDestroyOnHit)
+                {
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    Destroy(other.collider.gameObject);
+                }
+                else
+                {
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                }
             }
         }
-    }
 
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.collider.CompareTag("EnemyAttack"))
+        private void OnCollisionStay2D(Collision2D other)
         {
-            EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<EnemyAttackInfo>();
-            if (enemyAttackInfo == null) return;
-
-            if (enemyAttackInfo.isMultiHit)
+            if (other.collider.CompareTag("EnemyAttack"))
             {
-                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
+                EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<EnemyAttackInfo>();
+                if (enemyAttackInfo == null) return;
+
+                if (enemyAttackInfo.isMultiHit)
+                {
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
+                }
             }
         }
-    }
 
-    private IEnumerator Wait(float delay)
-    {
-        yield return new WaitForSeconds(delay);
+        private IEnumerator Wait(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+        }
     }
 }
