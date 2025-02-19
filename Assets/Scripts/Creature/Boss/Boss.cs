@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Boss : Creature
+public abstract class Boss : Creature.Creature
 {
     protected int currentPhase = 0;
     protected int maxPhase;
