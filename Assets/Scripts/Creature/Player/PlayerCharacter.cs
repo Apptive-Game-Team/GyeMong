@@ -1,12 +1,16 @@
 
 using System;
 using System.Collections;
+using Creature.Player.Component;
+using Creature.Player.Component.Collider;
 using UnityEngine;
 
 namespace playerCharacter
 {
     public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
     {
+        public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
+        
         [SerializeField] private float curHealth;
         public float maxHealth;
         [SerializeField] private float curSkillGauge;
@@ -51,12 +55,9 @@ namespace playerCharacter
 
         public Material[] materials;
 
-        private void Start()
+        protected override void Awake()
         {
-            playerRb = GetComponent<Rigidbody2D>();
-            animator = GetComponent<Animator>();
-            soundController = GetComponent<PlayerSoundController>();
-
+            base.Awake();
             attackPower = 1f;
             maxHealth = 1000f;
             curHealth = maxHealth;
@@ -64,6 +65,13 @@ namespace playerCharacter
             curSkillGauge = 0f;
             gaugeIncreaseValue = 10f;
             attackGaugeIncreaseValue = 2f;
+        }
+
+        private void Start()
+        {
+            playerRb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+            soundController = GetComponent<PlayerSoundController>();
 
             Renderer renderer = gameObject.GetComponent<Renderer>();
             renderer.material = materials[0];
@@ -161,6 +169,7 @@ namespace playerCharacter
             StartCoroutine(EffectManager.Instance.ShakeCamera());
 
             curHealth -= damage;
+            changeListenerCaller.CallHpChangeListeners(curHealth);
             TakeGauge();
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/maxHealth));
             
@@ -182,6 +191,7 @@ namespace playerCharacter
             {
                 curSkillGauge = 0f;
             }
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
         }
 
         public void AttackIncreaseGauge()
@@ -191,6 +201,7 @@ namespace playerCharacter
             {
                 curSkillGauge = maxSkillGauge;
             }
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
         }
 
         public void Heal(float amount)
@@ -200,6 +211,7 @@ namespace playerCharacter
             {
                 curHealth = maxHealth;
             }
+            changeListenerCaller.CallHpChangeListeners(curHealth);
         }
 
         public void GrazeIncreaseGauge(float ratio)
@@ -210,6 +222,7 @@ namespace playerCharacter
             {
                 curSkillGauge = maxSkillGauge;
             }
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
         }
         
         private IEnumerator TriggerInvincibility()
@@ -289,6 +302,7 @@ namespace playerCharacter
             animator.SetBool("isAttacking", true);
 
             curSkillGauge -= skillUsageGauge;
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
             SpawnAttackCollider();
             SpawnSkillCollider();
 
@@ -405,7 +419,8 @@ namespace playerCharacter
 
         public IEnumerator MoveTo(Vector3 target, float speed)
         {
-            isControlled = true;   
+            isControlled = true;
+            playerRb.velocity = Vector2.zero;
             animator.SetBool("isMove", true);
             soundController.SetBool(PlayerSoundType.FOOT, true);
             
