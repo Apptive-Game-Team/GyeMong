@@ -242,6 +242,13 @@ namespace Creature
              currentHp -= (damage-temp);
          }
     }
+
+    public virtual void StartMob()
+    {
+        currentHp = maxHp;
+        currentShield = 0;
+        ChangeState();
+    }
 }
 }
 
