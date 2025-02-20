@@ -2364,7 +2364,7 @@ PrefabInstance:
     - target: {fileID: 1048845799567201248, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 237.86832
+      value: 237.86838
       objectReference: {fileID: 0}
     - target: {fileID: 1370121933915850358, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -2481,7 +2481,7 @@ PrefabInstance:
     - target: {fileID: 2649768473112061072, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 308.21655
+      value: 308.2163
       objectReference: {fileID: 0}
     - target: {fileID: 2691256379806927063, guid: 2936ccf9d70c47744b2db8ce66734254,
         type: 3}
@@ -3309,7 +3309,7 @@ PrefabInstance:
     - target: {fileID: 4260879668609468630, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4781960463790634081, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
@@ -7325,7 +7325,7 @@ GameObject:
   - component: {fileID: 1852717531}
   - component: {fileID: 1852717530}
   - component: {fileID: 1852717529}
-  - component: {fileID: 1852717527}
+  - component: {fileID: 1852717533}
   - component: {fileID: 1852717532}
   m_Layer: 0
   m_Name: BossRoomEntrance
@@ -7349,19 +7349,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1732503311}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1852717527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1852717525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11474868d8cd9c44ba76708aeee04074, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  midBoss: {fileID: 5581117415951231125}
 --- !u!61 &1852717529
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7603,7 +7590,7 @@ MonoBehaviour:
     - rid: 521773745628250140
       type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
       data:
-        triggerable: {fileID: 1852717527}
+        triggerable: {fileID: 1852717533}
     - rid: 521773745628250152
       type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -7663,6 +7650,19 @@ MonoBehaviour:
       data:
         _boss: {fileID: 5581117415951231125}
         bossRoomBoundary: {fileID: 111018401}
+--- !u!114 &1852717533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852717525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3a8fb646ac26b46928c3536d0f7b5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss: {fileID: 5581117415951231125}
 --- !u!4 &1881552973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1651988417783722526, guid: 4290f8ba02cb98b4bbf478be3a44815d,

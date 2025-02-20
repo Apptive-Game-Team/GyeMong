@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MidBossRoomEntrance : MonoBehaviour, IEventTriggerable
+/*public class MidBossRoomEntrance : MonoBehaviour, IEventTriggerable
 {
     [SerializeField] Elf midBoss;
     
@@ -23,5 +23,5 @@ public class MidBossRoomEntrance : MonoBehaviour, IEventTriggerable
             midBoss.ChangeState();
         }
     }
-}
+}*/
 

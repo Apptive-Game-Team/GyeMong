@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpringGuardianBossRoomEntrance : MonoBehaviour, IEventTriggerable
+/*public class SpringGuardianBossRoomEntrance : MonoBehaviour, IEventTriggerable
 {
     [SerializeField] Golem guardian;
     [SerializeField] GameObject rootPatternManger;
@@ -28,5 +28,5 @@ public class SpringGuardianBossRoomEntrance : MonoBehaviour, IEventTriggerable
             rootPatternManger.SetActive(true);
         }
     }
-}
+}*/
 
