@@ -105,7 +105,7 @@ public class EffectManager : SingletonObject<EffectManager>
     {
         hurtEffect = transform.Find("HurtEffect").GetComponent<RawImage>();
         black = transform.Find("Black").GetComponent<RawImage>();
-        hpBarController = transform.Find("HpBar").GetComponent<HpBarController>();
+        hpBarController = GameObject.Find("HpBar").GetComponent<HpBarController>();
     }
 
     protected override void Awake()
