@@ -3,44 +3,49 @@ using UnityEngine;
 
 namespace Util.ObjectCreator
 {
-    public class ObjectPool
+    public class ObjectPool<T> where T : Component
     {
-        private List<GameObject> _pool = new();
+        private List<T> _pool = new();
         private GameObject _prefab;
-        private int _numOfObjects;
         public ObjectPool(int numOfObjects, GameObject prefab)
         {
-            _numOfObjects = numOfObjects;
             _prefab = prefab;
+            if (_prefab.GetComponent<T>() == null)
+            {
+                _prefab.AddComponent<T>();
+            }
             CreateObjects(numOfObjects);
         }
 
-        public GameObject GetObject()
+        public T GetObject()
         {
-            foreach (GameObject obj in _pool)
+            foreach (T obj in _pool)
             {
-                if (!obj.activeSelf)
+                if (!obj.gameObject.activeInHierarchy)
                 {
                     return obj;
                 }
             }
 
-            GameObject newObj = Object.Instantiate(_prefab);
+            GameObject newGameObject = Object.Instantiate(_prefab);
+            T newObj = newGameObject.GetComponent<T>();
+            
             _pool.Add(newObj);
             return newObj;
         }
         
-        public void ReturnObject(GameObject obj)
+        public void ReturnObject(T obj)
         {
-            obj.SetActive(false);
+            obj.gameObject.SetActive(false);
         }
         
         private void CreateObjects(int numOfObjects)
         {
             for (int i = 0; i < numOfObjects; i++)
             {
-                GameObject obj = Object.Instantiate(_prefab);
-                obj.SetActive(false);
+                GameObject @gameObject = Object.Instantiate(_prefab);
+                T obj = gameObject.GetComponent<T>();
+                @gameObject.SetActive(false);
                 _pool.Add(obj);
             }
         }
