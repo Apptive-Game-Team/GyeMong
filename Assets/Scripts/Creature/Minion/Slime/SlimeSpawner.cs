@@ -1,38 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Util.ObjectCreator;
 
 public class SlimeSpawner : MonoBehaviour
 {
     [Header("Spawner Settings")]
-    public GameObject slimePrefab;
+    
+    [SerializeField] private GameObject slimePrefab;
+    private const int SLIME_SPAWN_DELAY = 5;
     public int maxSlimeCount = 5;
     public Vector2 spawnAreaSize = new Vector2(5f, 5f);
 
-    private List<GameObject> slimePool;
+    private ObjectPool _slimePool;
 
     void Start()
     {
-        slimePool = new List<GameObject>();
+        _slimePool = new ObjectPool(maxSlimeCount, slimePrefab);
 
-        for (int i = 0; i < maxSlimeCount; i++)
-        {
-            GameObject slime = Instantiate(slimePrefab);
-            slime.SetActive(false);
-            slimePool.Add(slime);
-        }
-
-        SpawnSlimes();
+        StartCoroutine(SpawnSlimeRoutine());
     }
-
-    void Update()
+    
+    private IEnumerator SpawnSlimeRoutine()
     {
-        foreach (GameObject slime in slimePool)
+        while (true)
         {
-            if (!slime.activeInHierarchy)
-            {
-                SpawnSlime(slime);
-            }
+            yield return new WaitForSeconds(SLIME_SPAWN_DELAY);
+            GameObject slime = _slimePool.GetObject();
+            SpawnSlime(slime);
         }
     }
 
@@ -44,14 +38,6 @@ public class SlimeSpawner : MonoBehaviour
 
         Slime slimeScript = slime.GetComponent<Slime>();
         slimeScript.HealSlime();
-    }
-
-    private void SpawnSlimes()
-    {
-        foreach (GameObject slime in slimePool)
-        {
-            SpawnSlime(slime);
-        }
     }
 
     private Vector3 GetRandomPosition()
