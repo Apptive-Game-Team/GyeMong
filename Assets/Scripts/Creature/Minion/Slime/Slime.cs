@@ -1,5 +1,6 @@
 using System.Collections;
 using playerCharacter;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Creature.Minion.Slime
@@ -7,6 +8,8 @@ namespace Creature.Minion.Slime
     public class Slime : Creature
     {
         private const int GOLD_REWARD = 10;
+        
+        private bool _isInitialized = false;
         
         [SerializeField] private GameObject rangedAttack;
         private IDetector<PlayerCharacter> _detector;
@@ -17,19 +20,18 @@ namespace Creature.Minion.Slime
     
         public override void OnAttacked(float damage)
         {
-            base.OnAttacked(damage);
-            if (currentHp <= 0)
+            if (currentState is not SlimeDieState)
             {
-                ChangeState(new SlimeDieState(this));
+                base.OnAttacked(damage);
+                if (currentHp <= 0)
+                {
+                    print(currentState);
+                    ChangeState(new SlimeDieState(this));
+                }
             }
         }
 
-        public override void StartMob()
-        {
-            Initialize();
-            ChangeState();
-            faceToPlayerCoroutine = StartCoroutine(FaceToPlayer());
-        }
+        public override void StartMob() { }
     
         public IEnumerator FaceToPlayer()
         {
@@ -55,6 +57,16 @@ namespace Creature.Minion.Slime
             faceToPlayerCoroutine = StartCoroutine(FaceToPlayer());
         }
 
+        private void OnEnable()
+        {
+            if (_isInitialized)
+            {
+                currentHp = maxHp;
+                ChangeState();
+                faceToPlayerCoroutine = StartCoroutine(FaceToPlayer());
+            }
+        }
+
         private void Initialize()
         {
             //currentHp = maxHp;
@@ -70,9 +82,16 @@ namespace Creature.Minion.Slime
             _detector = SimplePlayerDetector.Create(this);
             _pathFinder = new SimplePathFinder();
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
+            
+            _isInitialized = true;
+        }
+        
+        public abstract class SlimeState : BaseState
+        {
+            protected Slime Slime => creature as Slime;
         }
 
-        public class RangedAttackState : BaseState
+        public class RangedAttackState : SlimeState
         {
             public override int GetWeight()
             {
@@ -81,18 +100,18 @@ namespace Creature.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                GameObject arrow =  Instantiate((creature as Slime).rangedAttack, creature.transform.position, Quaternion.identity);
-                (creature as Slime).RotateArrowTowardsPlayer(arrow);
+                GameObject arrow =  Instantiate(Slime.rangedAttack, creature.transform.position, Quaternion.identity);
+                Slime.RotateArrowTowardsPlayer(arrow);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
                 yield return new WaitForSeconds(1);
                 creature.ChangeState();
             }
         }
     
-        public class MeleeAttackState : BaseState
+        public class MeleeAttackState : SlimeState
         {
             public override int GetWeight()
             {
@@ -101,17 +120,17 @@ namespace Creature.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
                 PlayerCharacter.Instance.TakeDamage(creature.damage);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
                 yield return new WaitForSeconds(1);
                 creature.ChangeState();
             }
         }
     
-        public class SlimeMoveState : BaseState
+        public class SlimeMoveState : SlimeState
         {
             public override int GetWeight()
             {
@@ -120,7 +139,7 @@ namespace Creature.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
                 float duration = 2f;
                 float timer = 0f;
             
@@ -128,15 +147,15 @@ namespace Creature.Minion.Slime
                 {
                     timer += Time.deltaTime;
                     yield return null;
-                    creature.TrackPath((creature as Slime)?._pathFinder.FindPath(creature.transform.position, PlayerCharacter.Instance.transform.position));
+                    creature.TrackPath(Slime._pathFinder.FindPath(creature.transform.position, PlayerCharacter.Instance.transform.position));
                 }
             
-                (creature as Slime)?._slimeAnimator.Stop();
+                Slime._slimeAnimator.Stop();
                 creature.ChangeState();
             }
         }
     
-        public class SlimeDieState : BaseState
+        public class SlimeDieState : SlimeState
         {
             public SlimeDieState() { }
             public SlimeDieState(Creature creature)
@@ -150,8 +169,9 @@ namespace Creature.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                (creature as Slime)?.StopCoroutine((creature as Slime)?.faceToPlayerCoroutine);
-                (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DIE);
+                // Slime.StopCoroutine(Slime.faceToPlayerCoroutine);
+                // ((Slime)creature).faceToPlayerCoroutine = null;
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DIE);
                 
                 GoldManager.Instance?.AddGold(GOLD_REWARD);
 
