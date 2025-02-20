@@ -26,6 +26,7 @@ public class HpBarController : MonoBehaviour
         RectTransform rectTransform = GetComponent<RectTransform>();
         _hpBarWidth = rectTransform.rect.width;
         _shieldBarWidth = rectTransform.rect.width;
+        EffectManager.Instance.CachingHpBar(this);
     }
 
     private void Update()
