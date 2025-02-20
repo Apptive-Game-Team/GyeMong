@@ -1,43 +1,37 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Util.ObjectCreator;
 
-public class EffectCreator : SingletonObject<EffectCreator>
+namespace Visual.Effect
 {
-    [SerializeField] EffectDataList effectDataList;
-
-    [SerializeField] List<EffectObject> effectPool;
-    [SerializeField] int poolSize = 10;
-
-    public void CreatePool()
+    public class EffectCreator : SingletonObject<EffectCreator>
     {
-        for (int i = 0; i < poolSize; i++)
+        [SerializeField] EffectDataList effectDataList;
+
+        private Dictionary<int, ObjectPool<EffectObject>> effectPools = new Dictionary<int, ObjectPool<EffectObject>>();
+        
+        [SerializeField] int poolSize = 10;
+
+        public void InitialObjectPool(int id)
         {
-            EffectObject effect = new EffectObject();
-            effectPool.Add(effect);
+            effectPools.Add(id, new ObjectPool<EffectObject>(1, effectDataList.GetEffectData(id).effectPrefab));
         }
-    }
-
-    public EffectObject GetPool(int id, Vector3 pos)
-    {
-        EffectObject eff = effectPool.Find(x => x.ID.Equals(id));
-        if (eff = null)
+        
+        public void CreateEffect(int id, Vector3 pos)
         {
-            Debug.LogError("There's no EffectObj with this id!");
-            return null;
+            if (!effectPools.ContainsKey(id)) 
+                InitialObjectPool(id); // late Initialize
+
+            effectPools[id].GetObject(pos).gameObject.SetActive(true);
         }
-        eff.transform.position = pos;
-        eff.gameObject.SetActive(true);
-        return eff;
-    }
 
-    public void CreateEffect(int id, Vector3 pos)
-    {
-        Instantiate(effectDataList.GetEffectData(id).effectPrefab, pos, Quaternion.identity);
-    }
+        public void CreateEffect(int id, Transform tr)
+        {
+            if (!effectPools.ContainsKey(id)) 
+                InitialObjectPool(id); // late Initialize
 
-    public void CreateEffect(int id, Transform tr)
-    {
-        Instantiate(effectDataList.GetEffectData(id).effectPrefab, tr);
+            effectPools[id].GetObject(tr).gameObject.SetActive(true);
+            // Instantiate(effectDataList.GetEffectData(id).effectPrefab, tr);
+        }
     }
 }
