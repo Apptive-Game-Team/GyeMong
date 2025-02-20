@@ -23,12 +23,4 @@ public class Root : MonoBehaviour
         yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
     }
-/*    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        damage = 10;
-        if (collision.collider.CompareTag("Player"))
-        {
-            PlayerCharacter.Instance.TakeDamage(damage);
-        }
-    }*/
 }

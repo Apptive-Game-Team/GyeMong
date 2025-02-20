@@ -45,26 +45,20 @@ public class Cube : MonoBehaviour
 
     private IEnumerator StartFalling()
     {
-        float accele = 70f; // �߷°��ӵ� (���ӵ� ũ��)
-        float speed = 70f; // �ʱ� �ӵ�
-        float currentSpeed = speed; // ���� �ӵ�
+        float accele = 70f;
+        float speed = 70f;
+        float currentSpeed = speed;
         Vector3 targetPosition = player.transform.position;
         Vector3 startPosition = transform.position;
 
         while (transform.position.y > targetPosition.y)
         {
-            //�ӵ� = �ʱ�ӵ� + ���ӵ� * �ð�
             currentSpeed += accele * Time.deltaTime;
-
-            //s = vt
             float newY = transform.position.y - currentSpeed * Time.deltaTime;
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
 
             yield return null;
         }
-
-        // ���� �Ϸ� �� Collider�� isTrigger�� ����
-        
         Collider2D collider = GetComponent<Collider2D>();
         isFalled = true;
         StartCoroutine(_soundObject.Play());
