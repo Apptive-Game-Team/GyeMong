@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UI.mouse_input
+namespace System.Input
 {
     [Serializable]
     public class UIHoverDetector
@@ -23,7 +22,7 @@ namespace UI.mouse_input
         {
             PointerEventData pointerData = new PointerEventData(_eventSystem)
             {
-                position = Input.mousePosition
+                position = UnityEngine.Input.mousePosition
             };
 
             List<RaycastResult> results = new List<RaycastResult>();

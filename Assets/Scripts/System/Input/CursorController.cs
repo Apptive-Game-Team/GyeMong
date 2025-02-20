@@ -13,7 +13,6 @@ public class CursorController : MonoBehaviour, IMouseInputListener
         if (state == MouseInputState.ENTERED)
         {
             MonoBehaviour mono = (MonoBehaviour) ui;
-            print("CursorController: " + mono.name);
             transform.position = mono.transform.position;
         }
     }

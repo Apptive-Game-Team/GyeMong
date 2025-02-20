@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Game.Rune.RuneUI;
 using UnityEngine;
 
 public class RuneComponent : MonoBehaviour
@@ -26,14 +27,6 @@ public class RuneComponent : MonoBehaviour
         AcquireRune(dataList.GetRuneData(1));
         AcquireRune(dataList.GetRuneData(2));
         AcquireRune(dataList.GetRuneData(3));
-    }
-    
-    private void Update()
-    {
-        if(InputManager.Instance.GetKeyDown(ActionCode.RunePage))
-        {
-            RuneWindowToggler.Instance.OpenOrCloseOption();
-        }
     }
 
     public void EquipRune(RuneData runeData)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using playerCharacter;
 using UnityEngine;
+using Visual.Effect;
 
 //Super-Crazy Primal Class...
 public class BuffHitman : MonoBehaviour
