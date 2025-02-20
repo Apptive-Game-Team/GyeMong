@@ -30,11 +30,11 @@ namespace System.UI.Game.PlayerUI
         private void Start()
         {
             PlayerCharacter.Instance.changeListenerCaller.AddSkillGaugeChangeListener(this);
-            _maxSkillGauge = PlayerCharacter.Instance.maxSkillGauge;
+            _maxSkillGauge = PlayerCharacter.Instance.MaxSkillGauge;
         }
 
 
-        private void UpdateSkillGauge()
+        protected override void UpdateSkillGauge()
         {
             base.UpdateSkillGauge();
             if (GetCurrentGauge() >= GetMaxGauge()) 

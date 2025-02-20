@@ -13,12 +13,14 @@ namespace Creature.Player.Component.Collider
         private EventObject _eventObject;
         private ParticleSystem _particleSystem;
         private ParticleSystem.ShapeModule _shape;
+        private PlayerCharacter player;
+
         private void Start()
         {
             _particleSystem = GetComponentInChildren<ParticleSystem>();
             _shape = _particleSystem.shape;//.GetComponent<ParticleSystem.ShapeModule>();
             _eventObject = GetComponent<EventObject>();
-            var player = PlayerCharacter.Instance;
+            player = PlayerCharacter.Instance;
             attackDamage = player.attackPower;
         }
 
@@ -39,7 +41,7 @@ namespace Creature.Player.Component.Collider
                 _eventObject.Trigger();
                 _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                 creature.OnAttacked(attackDamage);
-                PlayerCharacter.Instance.AttackIncreaseGauge();
+                AttackIncreaseGauge();
                 //Bad Way But..
                 if (PlayerCharacter.Instance.GetComponent<RuneComponent>().isRune(3))
                 {
@@ -81,6 +83,16 @@ namespace Creature.Player.Component.Collider
             {
                 Debug.Log("No SpriteRenderer found");
             }
+        }
+
+        private void AttackIncreaseGauge()
+        {
+            player.CurSkillGauge += player.AttackGaugeIncreaseValue;
+            if (player.CurSkillGauge > player.MaxSkillGauge)
+            {
+                player.CurSkillGauge = player.MaxSkillGauge;
+            }
+            player.changeListenerCaller.CallSkillGaugeChangeListeners(player.CurSkillGauge);
         }
     }
 }

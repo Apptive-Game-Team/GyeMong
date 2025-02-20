@@ -11,10 +11,12 @@ public class GrazeController : MonoBehaviour
     private List<Collider2D> activeColliders = new();
     private Dictionary<Collider2D, float> colliderDistanceMap = new();
     private PlayerSoundController _playerSoundController;
+    private PlayerCharacter player;
 
     private void Start()
     {
         _playerSoundController = transform.parent.GetComponent<PlayerSoundController>();
+        player = PlayerCharacter.Instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -65,9 +67,9 @@ public class GrazeController : MonoBehaviour
     {
         if (colliderDistanceMap.TryGetValue(collider, out float distance))
         {
-            PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
+            GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
-            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.gaugeIncreaseValue / distance} with ratio {distance}");
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.GaugeIncreaseValue / distance} with ratio {distance}");
             collider.GetComponent<EnemyAttackInfo>().grazed = true;
             _playerSoundController.Trigger(PlayerSoundType.GRAZE);
             GetComponentInChildren<EventObject>().Trigger();
@@ -78,5 +80,16 @@ public class GrazeController : MonoBehaviour
     {
         activeColliders.Remove(collider);
         colliderDistanceMap.Remove(collider);
+    }
+
+    private void GrazeIncreaseGauge(float ratio)
+    {
+        player.SoundController.Trigger(PlayerSoundType.GRAZE);
+        player.CurSkillGauge += player.GaugeIncreaseValue / ratio;
+        if (player.CurSkillGauge > player.MaxSkillGauge)
+        {
+            player.CurSkillGauge = player.MaxSkillGauge;
+        }
+        player.changeListenerCaller.CallSkillGaugeChangeListeners(player.CurSkillGauge);
     }
 }

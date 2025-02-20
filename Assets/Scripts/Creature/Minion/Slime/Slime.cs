@@ -113,7 +113,7 @@ public class Slime : Creature.Creature
         {
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
             yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
-            PlayerCharacter.Instance.TakeDamage(creature.damage);
+            //PlayerCharacter.Instance.TakeDamage(creature.damage);
             yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
             (creature as Slime)?._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
             yield return new WaitForSeconds(1);

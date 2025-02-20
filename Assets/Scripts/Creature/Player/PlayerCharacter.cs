@@ -9,15 +9,24 @@ namespace playerCharacter
 {
     public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
     {
+        [SerializeField] private HitCollider hitCollider;
+        public HitCollider HitCollider { get { return hitCollider; } }
+        [SerializeField] private GrazeController grazeController;
+        public GrazeController GrazeController { get { return grazeController; } }
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
         
         [SerializeField] private float curHealth;
-        public float maxHealth;
+        public float CurHealth { get { return curHealth; } set { curHealth = value; } }
+        private float maxHealth;
+        public float MaxHealth { get { return maxHealth; } }
         [SerializeField] private float curSkillGauge;
-        public float GetCurSkillGauge() { return curSkillGauge; }
-        public float maxSkillGauge;
-        public float gaugeIncreaseValue;
-        public float attackGaugeIncreaseValue;
+        public float CurSkillGauge { get { return curSkillGauge; } set { curSkillGauge = value; } }
+        private float maxSkillGauge;
+        public float MaxSkillGauge { get { return maxSkillGauge; } }
+        private float gaugeIncreaseValue;
+        public float GaugeIncreaseValue { get { return gaugeIncreaseValue; } }
+        private float attackGaugeIncreaseValue;
+        public float AttackGaugeIncreaseValue { get { return attackGaugeIncreaseValue; } }
         public float skillUsageGauge = 30f;
         public float attackPower;
         public bool isControlled = false;
@@ -27,12 +36,13 @@ namespace playerCharacter
         private Rigidbody2D playerRb;
         private Animator animator;
         private PlayerSoundController soundController;
+        public PlayerSoundController SoundController { get { return soundController; } }
         
         public GameObject attackColliderPrefab;
         public GameObject skillColliderPrefab;
 
         public float moveSpeed = 4.0f;
-        public float dashSpeed = 10.0f;
+        public float dashSpeed = 1.0f;
         public float skillSpeed = 10.0f;
 
         private float dashDuration = 0.1f;
@@ -41,7 +51,6 @@ namespace playerCharacter
 
         private float delayTime = 0.2f;
 
-        private float parryTime = 0.5f;
         private float blinkDelay = 0.2f;
         
         private float invincibilityDuration = 1.0f;
@@ -51,6 +60,7 @@ namespace playerCharacter
         private bool isAttacking = false;
         private bool canMove = true;
         private bool isInvincible = false;
+        public bool IsInvincible { get { return isInvincible; } }
 
 
         public Material[] materials;
@@ -162,48 +172,6 @@ namespace playerCharacter
             animator.SetFloat("yDir", mouseDirection.y);
         }
 
-        public void TakeDamage(float damage, bool isUnblockable = false)
-        {
-            if (isInvincible) return;
-            
-            StartCoroutine(EffectManager.Instance.ShakeCamera());
-
-            curHealth -= damage;
-            changeListenerCaller.CallHpChangeListeners(curHealth);
-            TakeGauge();
-            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/maxHealth));
-            
-            if (curHealth <= 0)
-            {
-                StartCoroutine(TriggerInvincibility());
-                Die();
-            }
-            else
-            {
-                StartCoroutine(TriggerInvincibility());
-            }
-        }
-
-        public void TakeGauge()
-        {
-            curSkillGauge -= gaugeIncreaseValue;
-            if (curSkillGauge < 0)
-            {
-                curSkillGauge = 0f;
-            }
-            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
-        }
-
-        public void AttackIncreaseGauge()
-        {
-            curSkillGauge += attackGaugeIncreaseValue;
-            if (curSkillGauge > maxSkillGauge)
-            {
-                curSkillGauge = maxSkillGauge;
-            }
-            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
-        }
-
         public void Heal(float amount)
         {
             curHealth += amount;
@@ -213,19 +181,8 @@ namespace playerCharacter
             }
             changeListenerCaller.CallHpChangeListeners(curHealth);
         }
-
-        public void GrazeIncreaseGauge(float ratio)
-        {
-            soundController.Trigger(PlayerSoundType.GRAZE);
-            curSkillGauge += gaugeIncreaseValue / ratio;
-            if (curSkillGauge > maxSkillGauge)
-            {
-                curSkillGauge = maxSkillGauge;
-            }
-            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
-        }
         
-        private IEnumerator TriggerInvincibility()
+        public IEnumerator TriggerInvincibility()
         {
             isInvincible = true;
             
@@ -257,7 +214,7 @@ namespace playerCharacter
 
             while (elapsedTime < dashDuration)
             {
-                elapsedTime += Time.deltaTime;
+                elapsedTime += dashSpeed * Time.deltaTime;
                 playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / dashDuration));
                 yield return null;
             }
@@ -354,7 +311,7 @@ namespace playerCharacter
             Destroy(attackCollider, delayTime * 2);
         }
 
-        private void Die()
+        public void Die()
         {
             //GameOver Event Triggered.
             try
@@ -372,18 +329,6 @@ namespace playerCharacter
             canMove = _canMove;
         }
 
-        public void Bind(float duration)
-        {
-            StartCoroutine(BindCoroutine(duration));
-        }
-
-        private IEnumerator BindCoroutine(float duration)
-        {
-            canMove = false;
-            yield return new WaitForSeconds(duration);
-            canMove = true;
-        }
-
         public Vector3 GetPlayerPosition()
         {
             return gameObject.transform.position;
@@ -393,8 +338,6 @@ namespace playerCharacter
         {
             return lastMovementDirection;
         }
-
-
 
         public IEnumerator LoadPlayerEffect()
         {
@@ -455,8 +398,5 @@ namespace playerCharacter
             curSkillGauge = 0f;
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / maxHealth));
         }
-        
-        public float CurrentHp { get { return curHealth; } }
-        public float MaxHp { get { return maxHealth; } }
     }
 }

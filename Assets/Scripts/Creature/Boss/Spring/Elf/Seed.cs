@@ -76,7 +76,7 @@ public class Seed : MonoBehaviour
         {
             if (enemy.CompareTag("Player"))
             {
-                PlayerCharacter.Instance.TakeDamage(damage/2);
+                PlayerCharacter.Instance.HitCollider.TakeDamage(damage/2);
             }
         }
     }
