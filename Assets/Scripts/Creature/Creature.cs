@@ -40,9 +40,9 @@ namespace Creature
     private MaterialController _materialController;
     private void Update()
     {
-        if (_currentState != null)
+        if (currentState != null)
         {
-            _currentState.OnStateUpdate();
+            currentState.OnStateUpdate();
         }
     }
     public MaterialController MaterialController
@@ -82,7 +82,7 @@ namespace Creature
             return directionToPlayer.y > 0 ? DirectionType.FRONT : DirectionType.BACK;
         }
     }
-    private BaseState _currentState;
+    protected BaseState currentState;
     public void ChangeState()
     {
         if (_currentStateCoroutine != null)
@@ -97,7 +97,7 @@ namespace Creature
             weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
         }
         randomIndex = Random.Range(0, weights.Count);
-        _currentState = states[weights[randomIndex]];
+        currentState = states[weights[randomIndex]];
         _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
     }
 
@@ -105,6 +105,7 @@ namespace Creature
     {
         if (_currentStateCoroutine != null)
             StopCoroutine(_currentStateCoroutine);
+        currentState = state;
         _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
     }
     
