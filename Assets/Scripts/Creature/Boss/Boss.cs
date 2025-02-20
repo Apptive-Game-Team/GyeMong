@@ -30,8 +30,11 @@ public abstract class Boss : Creature.Creature
 
     public override void OnAttacked(float damage)
     {
-        base.OnAttacked(damage);
-        CheckPhaseTransition();
+        if(currentHp > 0)
+        {
+            base.OnAttacked(damage);
+            CheckPhaseTransition();
+        }
     }
     
     protected void CheckPhaseTransition()
