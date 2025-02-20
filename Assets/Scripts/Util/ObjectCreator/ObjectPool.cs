@@ -33,6 +33,20 @@ namespace Util.ObjectCreator
             _pool.Add(newObj);
             return newObj;
         }
+
+        public T GetObject(Vector3 position)
+        {
+            T obj = GetObject();
+            obj.transform.position = position;
+            return obj;
+        }
+        
+        public T GetObject(Transform transform)
+        {
+            T obj = GetObject(transform.position);
+            obj.transform.parent = transform;
+            return obj;
+        }
         
         public void ReturnObject(T obj)
         {
