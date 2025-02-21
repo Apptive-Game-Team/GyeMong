@@ -23,9 +23,6 @@ namespace System.UI.Game.PlayerUI
 
         protected virtual void UpdateSkillGauge()
         {
-            if (SceneManager.GetActiveScene().name == "TitleScene") {
-                return;
-            }
             skillSlider.value = GetCurrentGauge() / GetMaxGauge();
         }
     }

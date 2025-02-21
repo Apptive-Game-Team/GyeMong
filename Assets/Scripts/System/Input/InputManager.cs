@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Input.Interface;
 using KeyNotFoundException = System.Collections.Generic.KeyNotFoundException;
 
 public enum ActionCode
@@ -323,11 +324,11 @@ public class InputManager : SingletonObject<InputManager>
         StartCoroutine(CallListenersCoroutine());
     }
 
-    private void CallOnKeyListeners(ActionCode action)//
+    private void CallOnKeyListeners(ActionCode action)
     {
         foreach (IInputListener listener in inputListeners)
         {
-            listener.OnKey(action);
+            listener.OnKey(action, InputType.Press);
 
         }
     }
@@ -336,7 +337,7 @@ public class InputManager : SingletonObject<InputManager>
     {
         foreach (IInputListener listener in inputListeners)
         {
-            listener.OnKeyDown(action);
+            listener.OnKey(action, InputType.Down);
 
         }
     }
@@ -345,7 +346,7 @@ public class InputManager : SingletonObject<InputManager>
     {
         foreach (IInputListener listener in inputListeners)
         {
-            listener.OnKeyUp(action);
+            listener.OnKey(action, InputType.Up);
 
         }
     }
