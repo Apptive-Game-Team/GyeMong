@@ -5,28 +5,30 @@ using UnityEngine;
 [Serializable]
 public class BuffComponent : MonoBehaviour ,IBuffSlave
 {
-    [SerializeField] List<BuffData> buffList = new List<BuffData>();
+    [SerializeField] List<BuffObject> buffList = new List<BuffObject>();
 
-    public void AddBuff(BuffData newBuff)
+    public void AddBuff(BuffObject newBuff)
     {
-        switch(newBuff.disposeMode)
+        buffList.Add(newBuff);
+        switch(newBuff.buffData.disposeMode)
         {
             case BuffDisposeMode.TEMPORARY:
-                buffList.Add(newBuff);
                 BuffManager.Instance.StartCoroutine(BuffManager.Instance.AddTemporaryBuff(newBuff, this));
                 break;
             case BuffDisposeMode.PERMANENT:
-                buffList.Add(newBuff);
                 BuffManager.Instance.AddRuneEvent(newBuff, this);
                 break;
         }
     }
 
-    public void DeleteBuff(BuffData buff)
+    public void DeleteBuff(BuffObject buff)
     {
         buffList.Remove(buff);
     }
-    
-    
+
+    public bool HasBuff(BuffData buff)
+    {
+        return buffList.Exists(x => x.buffData.buffType.Equals(buff.buffType));
+    }
 }
 

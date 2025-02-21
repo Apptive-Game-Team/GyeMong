@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Game.Buff.Component;
 using UnityEngine;
 
 public enum BuffType
@@ -47,59 +48,73 @@ public class BuffData
 
 public interface IBuffSlave
 {
-    public void AddBuff(BuffData newBuff);
-    public void DeleteBuff(BuffData newBuff);
+    public void AddBuff(BuffObject newBuff);
+    public void DeleteBuff(BuffObject newBuff);
 }
 
 public interface IBuffMaster
 {
-    public void AddRuneEvent(BuffData data, BuffComponent buffComp);
+    public void AddRuneEvent(BuffObject data, BuffComponent buffComp);
+}
+
+public class BuffObject //In-Game Buff Object... It has Data and In-Game Interact with other In-Game Object.
+{
+    public int ID;
+    public BuffData buffData;
+
+    public BuffObject(BuffData data)
+    {
+        ID = BuffManager.Instance.MakeBuffObjectID();
+        buffData = data;
+    }
 }
 
 public class BuffManager : SingletonObject<BuffManager>, IBuffMaster
 {
     [SerializeField] public RuneDataList runeDataList;
+    RuneEventListenerCaller _runeEventListenerCaller = new ();
+    
     BuffHitman buffHitman;
 
+    private int _nowBuffObjectID = 0;
+
+    public int MakeBuffObjectID()
+    {
+        int toReturnID = _nowBuffObjectID;
+        _nowBuffObjectID++;
+        return toReturnID;
+    }
+    
     private void Start()
     {
         buffHitman = new BuffHitman();
     }
-    public void AddRuneEvent(BuffData data, BuffComponent buffComp)
+    
+    public void AddRuneEvent(BuffObject data, BuffComponent buffComp)
     {
-        StartCoroutine(AddEverySecondBuff(data, buffComp));
-        Debug.Log(data.buffType);
+        //listener Add
+        // _runeEventListenerCaller.AddRuneEventListener();//Creature...
+        // if (!buffComp.HasBuff(data))
+        // {
+        //     StartCoroutine(AddEverySecondBuff(data, buffComp));
+        //     Debug.Log(data.buffType);   
+        // }
+        
     }
-    public void DeleteRuneEvent(BuffData data, BuffComponent buffComp)
+    public void DeleteRuneEvent(BuffObject data, BuffComponent buffComp)
     {
         buffComp.DeleteBuff(data);
     }
 
     //we need buffhandler.... tick dmg/heal or dispose by time...
 
-    public IEnumerator AddTemporaryBuff(BuffData data, BuffComponent buffComp)
+    public IEnumerator AddTemporaryBuff(BuffObject data, BuffComponent buffComp)
     {
-        Debug.Log(data.buffType);
-        yield return new WaitForSeconds(data.duration);
-        DeleteRuneEvent(data, buffComp);
-        Debug.Log(data.duration);
+        return null;
     }
 
-    public IEnumerator AddEverySecondBuff(BuffData data, BuffComponent buffComp)
+    public IEnumerator AddEverySecondBuff(BuffObject data, BuffComponent buffComp)
     {
-        while (true) 
-        {
-            yield return new WaitForSeconds(data.duration);
-            switch (data.buffType)
-            {
-                //Character Health not yet Implement...
-                case BuffType.RUNE_BREEZE:
-                    buffHitman.ActiveRune_Breeze(data);
-                    break;
-                case BuffType.RUNE_VINE:
-                    buffHitman.ActiveRune_Vine(data);
-                    break;
-            }
-        }
+        return null;
     }
 }

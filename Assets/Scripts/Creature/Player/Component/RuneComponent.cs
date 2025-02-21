@@ -19,14 +19,6 @@ public class RuneComponent : MonoBehaviour
     {
         _buffComp = GetComponent<BuffComponent>();
     }
-
-    private void TestAcquire()
-    {
-        RuneDataList dataList = RuneObjectCreator.Instance.runeDataList;
-        AcquireRune(dataList.GetRuneData(1));
-        AcquireRune(dataList.GetRuneData(2));
-        AcquireRune(dataList.GetRuneData(3));
-    }
     
     private void Update()
     {
@@ -41,7 +33,8 @@ public class RuneComponent : MonoBehaviour
         if(equippedRuneList.Count < maxRuneEquipNum) 
         {
             equippedRuneList.Add(runeData);
-            _buffComp.AddBuff(runeData.runeBuff);
+            BuffObject buffObject = new BuffObject(runeData.runeBuff);
+            _buffComp.AddBuff(buffObject);
         }
         else
         {
@@ -52,7 +45,7 @@ public class RuneComponent : MonoBehaviour
     public void UnequipRune(RuneData runeData)
     {
         equippedRuneList.RemoveAll(x=>x.id == runeData.id);
-        _buffComp.DeleteBuff(runeData.runeBuff);
+        // _buffComp.DeleteBuff(runeData.runeBuff);
     }
 
     public void AcquireRune(RuneData runeData)
