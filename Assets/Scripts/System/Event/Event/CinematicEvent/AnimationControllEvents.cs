@@ -23,3 +23,16 @@ public class StartAnimatorEvent : AnimationControllEvent
         return null;
     }
 }
+
+public class SetAnimatorParameter : AnimationControllEvent
+{
+    [SerializeField]
+    private string _name;
+    [SerializeField]
+    private int _value;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        _animator.SetFloat(_name, _value);
+        return null;
+    }
+}
