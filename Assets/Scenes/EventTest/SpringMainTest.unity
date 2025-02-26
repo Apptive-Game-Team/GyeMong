@@ -1541,7 +1541,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!1001 &257482602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27951,13 +27951,27 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 1
+    - rid: 2715780017853038690
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 2715780017853038691
+        - rid: 2715780017853038692
+    - rid: 2715780017853038691
+      type: {class: MovePositionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        gameObject: {fileID: 244854154}
+        targetPosition: {x: 100, y: 100, z: 0}
+    - rid: 2715780017853038692
+      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
+      data: 
     - rid: 5804568743836647424
       type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
       data:
         _condition:
           rid: 5804568743836647425
         eventInTrue:
-          rid: 5804568743836647426
+          rid: 2715780017853038690
         eventInFalse:
           rid: 5804568743836647427
     - rid: 5804568743836647425
@@ -27965,9 +27979,6 @@ MonoBehaviour:
       data:
         tag: is_main_event_cleared
         condition: 0
-    - rid: 5804568743836647426
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 5804568743836647427
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
