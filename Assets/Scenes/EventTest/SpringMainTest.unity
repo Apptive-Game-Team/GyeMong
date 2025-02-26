@@ -889,7 +889,9 @@ Transform:
   m_LocalPosition: {x: 184.84, y: -6.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1555441261}
+  - {fileID: 1192382417}
   m_Father: {fileID: 980073696}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &137121663
@@ -987,66 +989,83 @@ MonoBehaviour:
   trigger: 1
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 521773836373327906
-  - rid: 521773836373327907
-  - rid: 521773836373327909
-  - rid: 521773836373327910
-  - rid: 521773836373327911
-  - rid: 521773836373327912
-  - rid: 521773836373327913
-  - rid: 521773836373327914
-  - rid: 521773836373327919
-  - rid: 521773845150171137
+  - rid: 2715780017853038639
   references:
     version: 2
     RefIds:
-    - rid: 521773836373327906
-      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 521773836373327907
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+    - rid: 2715780017853038639
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
       data:
-        message:
-          name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "\uB098\uC758 \uC798\uBABB\uC73C\uB85C \uC232\uC774 \uD0C0\uB77D\uD588\uC9C0\uB9CC,
-            \uB108\uC758 \uC6A9\uAE30\uB85C \uC774 \uBAA8\uB4E0 \uAC78 \uBC14\uB85C\uC7A1\uC558\uB2E4."
-    - rid: 521773836373327909
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+        _condition:
+          rid: 2715780017853038640
+        eventInTrue:
+          rid: 2715780017853038648
+        eventInFalse:
+          rid: 2715780017853038650
+    - rid: 2715780017853038640
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
       data:
-        delayTime: 1
-    - rid: 521773836373327910
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "\uB369\uAD74\uC744 \uC81C\uAC70\uD558\uC5EC \uB124 \uAE38\uC744
-            \uC5F4\uACA0\uB2E4."
-    - rid: 521773836373327911
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 1
-    - rid: 521773836373327912
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "\uC11C\uCABD \uACE8\uB818\uC758 \uC0AC\uC6D0\uC73C\uB85C \uAC00\uAC70\uB77C."
-    - rid: 521773836373327913
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 1
-    - rid: 521773836373327914
-      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
-      data:
-        tag: distroy_vine
+        tag: elf_npc_first_interation
         condition: 1
-    - rid: 521773836373327919
+    - rid: 2715780017853038648
       type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
       data:
-        triggerable: {fileID: 0}
-    - rid: 521773845150171137
+        triggerable: {fileID: 1555441262}
+    - rid: 2715780017853038650
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 2715780017853038651
+        eventInTrue:
+          rid: 2715780017853038667
+        eventInFalse:
+          rid: 2715780017853038654
+    - rid: 2715780017853038651
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: spring_quest_clear
+        condition: 0
+    - rid: 2715780017853038654
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 1192382418}
+    - rid: 2715780017853038667
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 2715780017853038672
+        - rid: 2715780017853038668
+        - rid: 2715780017853038669
+        - rid: 2715780017853038671
+        - rid: 2715780017853038670
+        - rid: 2715780017853038673
+    - rid: 2715780017853038668
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038669
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC74C.. \uC790\uB124\uB294 \uC544\uC9C1 \uBB3C\uAC74\uB4E4\uC774 \uB2E4
+            \uC5C6\uB294\uAC70 \uAC19\uAD70?"
+          - "\uC870\uAE08 \uB354 \uACE0\uC0DD\uD558\uC2DC\uAC8C\uB098."
+    - rid: 2715780017853038670
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 2715780017853038671
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038672
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 2715780017853038673
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
 --- !u!212 &137121666
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -26912,6 +26931,162 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f79cf1be3a37447669edd05f233eeeec, type: 3}
+--- !u!1 &1192382416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1192382417}
+  - component: {fileID: 1192382418}
+  m_Layer: 9
+  m_Name: questCleared
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1192382417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192382416}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 137121662}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1192382418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192382416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 2715780017853038655
+  references:
+    version: 2
+    RefIds:
+    - rid: 2715780017853038655
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 2715780017853038656
+        eventInTrue:
+          rid: 2715780017853038660
+        eventInFalse:
+          rid: 2715780017853038681
+    - rid: 2715780017853038656
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: first_interation_after_spring_quest_cleared
+        condition: 1
+    - rid: 2715780017853038660
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 2715780017853038676
+        - rid: 2715780017853038679
+        - rid: 2715780017853038661
+        - rid: 2715780017853038662
+        - rid: 2715780017853038663
+        - rid: 2715780017853038664
+        - rid: 2715780017853038665
+        - rid: 2715780017853038666
+        - rid: 2715780017853038680
+        - rid: 2715780017853038677
+    - rid: 2715780017853038661
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC88B\uC544.. \uD544\uC694\uD55C \uBB3C\uAC74\uB4E4\uC740 \uB2E4 \uBAA8\uC778\uAC70
+            \uAC19\uAD70.."
+          - "\uC7A0\uC2DC\uB9CC \uAE30\uB2E4\uB824\uBCF4\uAC8C."
+    - rid: 2715780017853038662
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 2
+    - rid: 2715780017853038663
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC774\uAC83\uC744 \uAC00\uC838\uAC00 \uB369\uCFE8\uC5D0 \uBFCC\uB824\uBCF4\uAC8C."
+    - rid: 2715780017853038664
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038665
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038666
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: first_interation_after_spring_quest_cleared
+        condition: 0
+    - rid: 2715780017853038676
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 2715780017853038677
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 2715780017853038679
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038680
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038681
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 2715780017853038686
+        - rid: 2715780017853038683
+        - rid: 2715780017853038682
+        - rid: 2715780017853038685
+        - rid: 2715780017853038687
+    - rid: 2715780017853038682
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC774 \uC232\uC5D0 \uD3C9\uD654\uAC00 \uCC3E\uC544\uC624\uAE38.."
+    - rid: 2715780017853038683
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038685
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038686
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 2715780017853038687
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
 --- !u!1001 &1262285662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27962,6 +28137,153 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1553536408}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1555441260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1555441261}
+  - component: {fileID: 1555441262}
+  m_Layer: 9
+  m_Name: quest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1555441261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555441260}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 137121662}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1555441262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555441260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 2715780017853038675
+  - rid: 521773836373327906
+  - rid: 521773836373327907
+  - rid: 521773836373327909
+  - rid: 2715780017853038637
+  - rid: 521773836373327911
+  - rid: 2715780017853038638
+  - rid: 2715780017853038643
+  - rid: 2715780017853038644
+  - rid: 2715780017853038645
+  - rid: 2715780017853038646
+  - rid: 521773836373327913
+  - rid: 521773845150171137
+  - rid: 2715780017853038647
+  - rid: 2715780017853038674
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773836373327906
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 521773836373327907
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          message: "\uADF8\uB798.. \uC790\uB124\uAC00 \uC6D0\uD558\uB294\uAC74 \uBD04\uC758
+            \uC815\uC218 \uC77C\uD14C\uC9C0.."
+    - rid: 521773836373327909
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773836373327911
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773836373327913
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 521773845150171137
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038637
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uD558\uC9C0\uB9CC \uADF8 \uC815\uC218\uB294 \uC5EC\uAE30\uC5D0 \uC5C6\uB2E4."
+          - "\uB3D9\uCABD\uC5D0 \uC788\uB294 \uC9C0\uAE08\uC740 \uBD09\uC778\uB41C
+            \uC2E0\uC804 \uC548\uCABD\uC5D0 \uC788\uC9C0."
+    - rid: 2715780017853038638
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uADF8\uB9AC\uACE0 \uADF8 \uACF3\uC73C\uB85C \uAC00\uB294 \uAE38\uBAA9\uB610\uD55C"
+          - "\uC6B0\uB9AC\uAC00 \uB369\uCFE8\uB85C \uB9C9\uC544\uB1A8\uB2E4."
+    - rid: 2715780017853038643
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038644
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC790\uB124\uAC00 \uD574 \uC904 \uC77C\uC740 \uAC04\uB2E8\uD558\uB2E4."
+          - "\uADF8 \uB369\uCFE8\uC744 \uD574\uC81C\uD560 \uC218 \uC788\uB294 \uBB3C\uAC74\uB4E4\uC744
+            \uAD6C\uD574\uC624\uB294 \uAC83\uC774\uC9C0."
+    - rid: 2715780017853038645
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038646
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uADF8\uAC83\uB4E4\uC5D0 \uB300\uD55C \uC598\uAE30\uB294 \uC5EC\uAE30\uC788\uB294
+            \uC5D8\uD504"
+          - "\"\uC5D8\uB518\"\uACFC \"\uC6B8\uB518\"\uC774 \uC54C\uB824\uC904 \uAC83\uC77C\uC138."
+    - rid: 2715780017853038647
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: elf_npc_first_interation
+        condition: 0
+    - rid: 2715780017853038674
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 2715780017853038675
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
 --- !u!1 &1594212882
 GameObject:
   m_ObjectHideFlags: 0
