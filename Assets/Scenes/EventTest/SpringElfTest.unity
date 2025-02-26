@@ -2084,6 +2084,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e9787a85296984b9ffdfe6f00e3e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &730340172 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 192519716517853443, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+    type: 3}
+  m_PrefabInstance: {fileID: 730340167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &739417463 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1651988417783722526, guid: 4290f8ba02cb98b4bbf478be3a44815d,
@@ -5103,7 +5109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6782be068e96a4296993f3a6a7f712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationDataList: {fileID: 11400000, guid: b7953cf3eb5a8b14abe13b07ee939eee, type: 2}
 --- !u!224 &1471314056
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7474,6 +7479,7 @@ MonoBehaviour:
   - rid: 521773835193679872
   - rid: 521773745628250158
   - rid: 521773835193679878
+  - rid: 2715780017853038636
   - rid: 521773745628250140
   - rid: 521773771964809216
   - rid: 3558735529444638721
@@ -7552,6 +7558,12 @@ MonoBehaviour:
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
         _isEnable: 0
+    - rid: 2715780017853038636
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 730340172}
+        _name: speed
+        _value: 10
     - rid: 3558735529444638721
       type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
