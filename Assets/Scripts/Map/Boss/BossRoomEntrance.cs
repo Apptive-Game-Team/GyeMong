@@ -1,4 +1,7 @@
 using UnityEngine;
+using Creature.Boss;
+using Creature.Boss.Spring.Elf;
+using Creature.Boss.Spring.Golem;
 
 public class BossRoomEntrance : MonoBehaviour, IEventTriggerable
 {

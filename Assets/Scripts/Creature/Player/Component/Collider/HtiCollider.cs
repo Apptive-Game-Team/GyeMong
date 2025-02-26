@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Creature.Boss;
 
 namespace Creature.Player.Component.Collider
 {
