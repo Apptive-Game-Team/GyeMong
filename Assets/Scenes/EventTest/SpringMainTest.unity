@@ -1306,7 +1306,7 @@ Transform:
   m_GameObject: {fileID: 244854154}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 185.32, y: -6.55, z: 0}
+  m_LocalPosition: {x: 185.32, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1331,13 +1331,13 @@ MonoBehaviour:
   - rid: 2715780017853038622
   - rid: 2715780017853038614
   - rid: 2715780017853038610
-  - rid: 2715780017853038612
+  - rid: 2715780017853038624
   - rid: 2715780017853038615
-  - rid: 2715780017853038616
+  - rid: 2715780017853038625
   - rid: 2715780017853038617
-  - rid: 2715780017853038618
+  - rid: 2715780017853038626
   - rid: 2715780017853038619
-  - rid: 2715780017853038620
+  - rid: 2715780017853038627
   - rid: 2715780017853038621
   - rid: 2715780017853038611
   - rid: 2715780017853038600
@@ -1354,13 +1354,6 @@ MonoBehaviour:
     - rid: 2715780017853038611
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 2715780017853038612
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "\uC6EC\uB188\uC774\uB0D0! \uB2F9\uC7A5 \uC774\uACF3\uC5D0\uC11C
-            \uB098\uAC00\uB77C!"
     - rid: 2715780017853038614
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -1369,38 +1362,14 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 1
-    - rid: 2715780017853038616
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "..\uADF8\uB798? \uC6B0\uB9AC \uC544\uC774\uB97C \uAD6C\uD574\uC900\uAC74
-            \uACE0\uB9D9\uC9C0\uB9CC \uC678\uBD80\uC778\uC778 \uB124\uB188\uC744
-            \uBBFF\uC744 \uC21C \uC5C6"
     - rid: 2715780017853038617
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 1
-    - rid: 2715780017853038618
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "\uC74C.. \uB124\uB188\uC774 \uC6B0\uB9AC \uB300\uB959\uC744 \uAD6C\uD560
-            \uC6A9\uC0AC\uB77C\uACE0? \uBBFF\uAE30\uC9C0 \uC54A\uB294\uAD70.. \uB124\uB188\uC774
-            \uC9C4\uC9DC \uC6A9\uC0AC\uB77C\uBA74 \uB098\uC640 \uC2F8\uC6CC\uC11C
-            \uC790\uACA9\uC744 \uC99D\uBA85\uD574\uB77C!"
     - rid: 2715780017853038619
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 1
-    - rid: 2715780017853038620
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          message: "\uBD81\uCABD \uC232\uC73C\uB85C \uC640\uB77C. \uAE30\uB2E4\uB9AC\uACE0
-            \uC788\uC9C0."
     - rid: 2715780017853038621
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -1410,8 +1379,43 @@ MonoBehaviour:
       data:
         creatureType: 1
         iControllable: {fileID: 244854161}
-        target: {x: 180, y: -6.55, z: 0}
+        target: {x: 180, y: -6, z: 0}
         speed: 3
+    - rid: 2715780017853038624
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC6EC\uB188\uC774\uB0D0!!"
+          - "\uC678\uBD80\uC778\uC774 \uC5EC\uAE34 \uC5B4\uCA50 \uC77C\uC774\uC9C0?!"
+          - "\uB2F9\uC7A5 \uC774\uACF3\uC5D0\uC11C \uB098\uAC00\uB77C!"
+    - rid: 2715780017853038625
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "...\uADF8\uB798? \uC6B0\uB9AC \uC544\uC774\uB97C \uAD6C\uD574\uC92C\uB2E4\uACE0?"
+          - "\uADF8\uAC74 \uACE0\uB9D9\uC9C0\uB9CC \uC678\uBD80\uC778\uC778 \uB108\uB97C
+            \uBBFF\uC744 \uC21C \uC5C6\uB2E4."
+    - rid: 2715780017853038626
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC74C.. \uB108\uAC00 \uC6B0\uB9AC \uB300\uB959\uC744 \uAD6C\uD560 \uC6A9\uC0AC\uB77C\uACE0?"
+          - "\uBBFF\uAE30\uC9C0 \uC54A\uB294\uAD70.. \uB108\uAC00 \uC9C4\uC9DC \uC6A9\uC0AC\uB77C\uBA74
+            \uB098\uC640 \uC2F8\uC6CC\uC11C \uC790\uACA9\uC744 \uC99D\uBA85\uD574\uBD10\uB77C!"
+    - rid: 2715780017853038627
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uBD81\uCABD \uC232\uC73C\uB85C \uC640\uB77C."
+          - "\uADF8\uACF3\uC5D0\uC11C \uAE30\uB2E4\uB9AC\uC9C0."
 --- !u!58 &244854159
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -25607,7 +25611,7 @@ MonoBehaviour:
     - rid: 2715780017853038603
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
-        delayTime: 2
+        delayTime: 1.5
     - rid: 2715780017853038604
       type: {class: MovePositionEvent, ns: , asm: Assembly-CSharp}
       data:
