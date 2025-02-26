@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Rework
+namespace Creature.Boss
 {
     public class BossAttack : MonoBehaviour
     {

@@ -1,17 +1,19 @@
 using playerCharacter;
-using Rework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Floor : MonoBehaviour
+namespace Creature.Boss.Spring.Golem
 {
-    private float damage = 30f;
-    private EnemyAttackInfo enemyAttackInfo;
-
-    private void Awake()
+    public class Floor : MonoBehaviour
     {
-        enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-        enemyAttackInfo.Initialize(damage, null, false, true);
+        private float damage = 30f;
+        private EnemyAttackInfo enemyAttackInfo;
+
+        private void Awake()
+        {
+            enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
+            enemyAttackInfo.Initialize(damage, null, false, true);
+        }
     }
 }

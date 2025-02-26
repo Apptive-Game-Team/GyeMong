@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Creature.Boss;
 public class GrazeController : MonoBehaviour
 {
     public static GrazeController Instance { get; set;}
