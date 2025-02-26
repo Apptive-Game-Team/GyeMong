@@ -3,89 +3,96 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Boss : Creature.Creature
+namespace Creature.Boss
 {
-    protected int currentPhase = 0;
-    protected int maxPhase;
-    protected List<float> maxHps = new List<float>();
-    
-    public int CurrentPhase {get { return currentPhase; }}
-    public float CurrentMaxHp {get {
-        try
-        {
-            return maxHps[currentPhase];
-        }
-        catch (Exception)
-        {
-            return 100;
-        }
-    }}
+    public abstract class Boss : Creature
+    {
+        protected int currentPhase = 0;
+        protected int maxPhase;
+        protected List<float> maxHps = new List<float>();
 
-    protected void Start()
-    {
-        Initialize();
-    }
-
-    protected abstract void Initialize();
-
-    public override void OnAttacked(float damage)
-    {
-        if(currentHp > 0)
+        public int CurrentPhase { get { return currentPhase; } }
+        public float CurrentMaxHp
         {
-            base.OnAttacked(damage);
-            CheckPhaseTransition();
+            get
+            {
+                try
+                {
+                    return maxHps[currentPhase];
+                }
+                catch (Exception)
+                {
+                    return 100;
+                }
+            }
         }
-    }
-    
-    protected void CheckPhaseTransition()
-    {
-        if (currentHp <= 0)
+
+        protected void Start()
         {
-            TransPhase();
+            Initialize();
         }
-    }
-    
-    protected virtual void TransPhase()
-    {
-        if (currentPhase < maxHps.Count-1)
+
+        protected abstract void Initialize();
+
+        public override void OnAttacked(float damage)
         {
-            currentPhase++;
-            StopAllCoroutines();
+            if (currentHp > 0)
+            {
+                base.OnAttacked(damage);
+                CheckPhaseTransition();
+            }
+        }
+
+        protected void CheckPhaseTransition()
+        {
+            if (currentHp <= 0)
+            {
+                TransPhase();
+            }
+        }
+
+        protected virtual void TransPhase()
+        {
+            if (currentPhase < maxHps.Count - 1)
+            {
+                currentPhase++;
+                StopAllCoroutines();
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                StartCoroutine(ChangingPhase());
+            }
+            else
+            {
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                Die();
+            }
+        }
+
+        public IEnumerator ChangingPhase()
+        {
+            currentHp = CurrentMaxHp;
+            GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
+            yield return new WaitForSeconds(2f);
+            ChangeState();
+        }
+
+        public override IEnumerator Stun()
+        {
+            currentShield = 0f;
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-            StartCoroutine(ChangingPhase());
+            yield return base.Stun();
         }
-        else
-        {
-            MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-            Die();
-        }
-    }
 
-    public IEnumerator ChangingPhase()
-    {
-        currentHp = CurrentMaxHp;
-        GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
-        yield return new WaitForSeconds(2f);
-        ChangeState();
-     }
-    
-    public override IEnumerator Stun()
-    {
-        currentShield = 0f;
-        MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-        yield return base.Stun();
-    }
-    
-    protected virtual void Die()
-    {
-        try
+        protected virtual void Die()
         {
-            StopAllCoroutines();
-            GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
-        }
-        catch
-        {
-            Debug.Log("BossDownEventObject not found");
+            try
+            {
+                StopAllCoroutines();
+                GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
+            }
+            catch
+            {
+                Debug.Log("BossDownEventObject not found");
+            }
         }
     }
 }
