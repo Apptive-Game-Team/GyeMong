@@ -1335,6 +1335,8 @@ MonoBehaviour:
   - rid: 2715780017853038615
   - rid: 2715780017853038625
   - rid: 2715780017853038617
+  - rid: 2715780017853038628
+  - rid: 2715780017853038629
   - rid: 2715780017853038626
   - rid: 2715780017853038619
   - rid: 2715780017853038627
@@ -1416,6 +1418,16 @@ MonoBehaviour:
           messages:
           - "\uBD81\uCABD \uC232\uC73C\uB85C \uC640\uB77C."
           - "\uADF8\uACF3\uC5D0\uC11C \uAE30\uB2E4\uB9AC\uC9C0."
+    - rid: 2715780017853038628
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          message: ...
+    - rid: 2715780017853038629
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
 --- !u!58 &244854159
 CircleCollider2D:
   m_ObjectHideFlags: 0
