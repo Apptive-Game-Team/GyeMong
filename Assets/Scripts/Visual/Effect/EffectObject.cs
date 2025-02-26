@@ -1,21 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectObject : MonoBehaviour
+namespace Visual.Effect
 {
-    EffectData effectData;
-
-    public int ID
+    public class EffectObject : MonoBehaviour
     {
-        get
+        EffectData effectData;
+
+        public int ID
         {
-            return effectData.id;
+            get
+            {
+                return effectData.id;
+            }
         }
-    }
 
-    private void Start()
-    {
-        Destroy(gameObject, 0.5f);
+        private void OnEnable()
+        {
+            StartCoroutine(SetUnactive(0.5f));
+        }
+    
+        private IEnumerator SetUnactive(float time)
+        {
+            yield return new WaitForSeconds(time);
+            gameObject.SetActive(false);
+        }
     }
 }

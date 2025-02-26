@@ -1,15 +1,12 @@
-public interface IInputListener
+namespace System.Input.Interface
 {
-    public void OnKeyDown(ActionCode action)
+    public enum InputType
     {
-
+        Down, Up, Press
     }
-    public void OnKey(ActionCode action)
-    {
 
-    }
-    public void OnKeyUp(ActionCode action)
+    public interface IInputListener
     {
-
+        public void OnKey(ActionCode action, InputType type);
     }
 }

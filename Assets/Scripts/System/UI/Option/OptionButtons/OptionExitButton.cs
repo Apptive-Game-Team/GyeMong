@@ -1,3 +1,4 @@
+using System.UI.Option;
 using playerCharacter;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,7 +16,7 @@ public class OptionExitButton : MonoBehaviour
     public void ExitButton()
     {
         gameObject.SetActive(false);
-        OptionUI.Instance.OpenOrCloseOption();
+        OptionUIToggler.Instance.ToggleOption();
         Destroy(PlayerCharacter.Instance.gameObject);
         SceneManager.LoadScene("TitleScene");
     }
