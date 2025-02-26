@@ -29,7 +29,7 @@ public class SetAnimatorParameter : AnimationControllEvent
     [SerializeField]
     private string _name;
     [SerializeField]
-    private int _value;
+    private float _value;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         _animator.SetFloat(_name, _value);
