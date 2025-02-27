@@ -28,7 +28,7 @@ namespace Creature.Boss.Spring.Elf
             currentShield = 0f;
             detectionRange = 10f;
             MeleeAttackRange = 2f;
-            RangedAttackRange = 6f;
+            RangedAttackRange = 8f;
             meleeAttackPrefab.SetActive(false);
             footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
         }
