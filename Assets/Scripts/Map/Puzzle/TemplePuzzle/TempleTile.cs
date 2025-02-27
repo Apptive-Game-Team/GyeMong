@@ -1,4 +1,3 @@
-using Map.Puzzle.ImagePuzzle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +5,22 @@ using UnityEngine;
 public class TempleTile : MonoBehaviour
 {
     public TempleTileData templeTileData;
-
     private bool isAttached = false;
     private bool isRotating = false;
+    public bool iswalked = false;
+
+    public bool up;
+    public bool down;
+    public bool left;
+    public bool right;
+
+    private void Start()
+    {
+        up = templeTileData.up;
+        down = templeTileData.down;
+        left = templeTileData.left;
+        right = templeTileData.right;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -20,7 +32,7 @@ public class TempleTile : MonoBehaviour
 
     private void Update()
     {
-        if (isAttached&&!isRotating)
+        if (isAttached && !isRotating)
         {
             if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
             {
@@ -62,16 +74,16 @@ public class TempleTile : MonoBehaviour
     {
         bool temp;
 
-        temp = templeTileData.up;
-        templeTileData.up = templeTileData.left;
-        templeTileData.left = templeTileData.down;
-        templeTileData.down = templeTileData.right;
-        templeTileData.right = temp;
+        temp = up;
+        up = left;
+        left = down;
+        down = right;
+        right = temp;
 
-        Debug.Log("Up: " + templeTileData.up);
-        Debug.Log("Down: " + templeTileData.down);
-        Debug.Log("Left: " + templeTileData.left);
-        Debug.Log("Right: " + templeTileData.right);
+        Debug.Log("Up: " + up);
+        Debug.Log("Down: " + down);
+        Debug.Log("Left: " + left);
+        Debug.Log("Right: " + right);
 
         isRotating = false;
     }

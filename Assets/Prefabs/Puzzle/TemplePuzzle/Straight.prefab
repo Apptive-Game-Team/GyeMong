@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 304936081880468776}
   m_Layer: 0
   m_Name: Straight
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +99,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   templeTileData: {fileID: 11400000, guid: a5b91de0edf4d554790217cb1b3a510d, type: 2}
+  iswalked: 0
+  up: 0
+  down: 0
+  left: 0
+  right: 0
 --- !u!61 &304936081880468776
 BoxCollider2D:
   m_ObjectHideFlags: 0
