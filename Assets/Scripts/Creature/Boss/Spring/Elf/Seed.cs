@@ -17,6 +17,8 @@ namespace Creature.Boss.Spring.Elf
         private SoundObject _explosionSoundObject;
         private EventObject _eventObject;
         private Rigidbody2D rb;
+        private float targetDistance = 10f;
+        private float traveledDistance = 0f;
         private bool isReflected = false;
 
         private void Awake()
@@ -33,7 +35,7 @@ namespace Creature.Boss.Spring.Elf
 
         private void OnEnable()
         {
-            StartCoroutine(FireArrow());
+            StartCoroutine(FireArrow(targetDistance));
             RotateArrow();
         }
 
@@ -43,7 +45,7 @@ namespace Creature.Boss.Spring.Elf
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
-        private IEnumerator FireArrow()
+        private IEnumerator FireArrow(float remainingDistance)
         {
             Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
             float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
@@ -54,8 +56,16 @@ namespace Creature.Boss.Spring.Elf
             direction = new Vector3(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad), 0).normalized;
 
             transform.rotation = Quaternion.Euler(0, 0, randomAngle);
+            traveledDistance = 0f;
             rb.velocity = direction * speed;
-            yield return new WaitForSeconds(5f);
+            _soundObject.PlayAsync();
+            while (traveledDistance < remainingDistance)
+            {
+                traveledDistance += speed * Time.deltaTime;
+                yield return null;
+            }
+            rb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(1f);
             Explode();
         }
 
@@ -82,6 +92,7 @@ namespace Creature.Boss.Spring.Elf
                 isReflected = true;
                 Vector2 playerAttackDirection = PlayerCharacter.Instance.mouseDirection;
                 direction = playerAttackDirection.normalized;
+                traveledDistance = 0f;
                 rb.velocity = direction * speed;
                 RotateArrow();
             }
