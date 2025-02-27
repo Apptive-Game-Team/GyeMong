@@ -1,4 +1,5 @@
 using System.Collections;
+using Creature.Player.Component.Collider;
 using playerCharacter;
 using TMPro;
 using UnityEngine;
@@ -29,7 +30,6 @@ namespace Creature.Boss.Spring.Elf
             detectionRange = 10f;
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
-            meleeAttackPrefab.SetActive(false);
             footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
         }
         public abstract class ElfState : BaseState
@@ -140,6 +140,7 @@ namespace Creature.Boss.Spring.Elf
         }
         public class MeleeAttack : ElfState
         {
+            float delayTime = 0.5f;
             public override int GetWeight()
             {
                 return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
@@ -152,16 +153,24 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
+                SpawnAttackCollider();
                 yield return new WaitForSeconds(0.5f);
-                Elf.meleeAttackPrefab.SetActive(true);
-                Vector3 direction = Elf.DirectionToPlayer;
-                Elf.meleeAttackPrefab.transform.position = Elf.transform.position + Elf.DirectionToPlayer * Elf.MeleeAttackRange;
-                yield return new WaitForSeconds(0.05f);
-                Elf.meleeAttackPrefab.SetActive(false);
                 Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState();
             }
+            private void SpawnAttackCollider()
+            {
+                Vector3 direction = Elf.DirectionToPlayer;
+                Vector2 spawnPosition = Elf.transform.position + direction * 1f;
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+
+                GameObject attackCollider = Instantiate(Elf.meleeAttackPrefab, spawnPosition, spawnRotation, Elf.transform);
+                Destroy(attackCollider, delayTime);
+            }
         }
+        
         public class WhipAttack : ElfState
         {
             public override int GetWeight()
