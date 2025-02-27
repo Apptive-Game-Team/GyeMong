@@ -20589,6 +20589,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MidBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 8632344476378004022, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
       propertyPath: m_LocalScale.x
