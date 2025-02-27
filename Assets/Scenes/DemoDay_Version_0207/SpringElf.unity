@@ -20544,6 +20544,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
+      propertyPath: trunkPrefab
+      value: 
+      objectReference: {fileID: 8583689789694271782, guid: 06ce720769f51a94ab1f98f468cc718c,
+        type: 3}
+    - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
       propertyPath: meleeAttackPrefab
       value: 
       objectReference: {fileID: 1582423106245993158, guid: c36ee9d1cc715c342abb69e7151abce8,

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Creature.Player.Component.Collider;
 using playerCharacter;
 using TMPro;
@@ -10,6 +11,7 @@ namespace Creature.Boss.Spring.Elf
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject seedPrefab;
         [SerializeField] private GameObject vinePrefab;
+        [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
         Vector3 meleeAttackPrefabPos;
 
@@ -193,6 +195,40 @@ namespace Creature.Boss.Spring.Elf
                 yield return new WaitForSeconds(2f);
                 Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState();
+            }
+        }
+        public class TrunkAttack : ElfState
+        {
+            public override int GetWeight()
+            {
+                return (Elf.CurrentPhase == 0) ? 5 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                int numberOfObjects = 5;
+                float interval = 0.2f;
+                float fixedDistance = 7f;
+
+                List<GameObject> spawnedObjects = new List<GameObject>();
+
+                Vector3 direction = Elf.DirectionToPlayer;
+                Vector3 spawnStoneRadius = 2 * direction;
+                Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
+
+                Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
+                yield return new WaitForSeconds(2f);
+                Elf.ChangeState();
+            }
+            private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
+            {
+                for (int i = 0; i <= numberOfObjects; i++)
+                {
+                    Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
+                    GameObject floor = Instantiate(Elf.trunkPrefab, spawnPosition, Quaternion.identity);
+                    spawnedObjects.Add(floor);
+                    yield return new WaitForSeconds(interval);
+                }
+                yield return spawnedObjects;
             }
         }
         protected override void TransPhase()
