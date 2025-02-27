@@ -77,15 +77,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 12
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -772426026, guid: 486592b725286054a827bad22f44d8fa, type: 3}
+  m_Color: {r: 0.89433956, g: 0.05231038, b: 0.05231038, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.7599998, y: 5.7599998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &2740949399424765801
@@ -120,18 +120,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.21210802, y: 0.21949124}
+  m_Offset: {x: -0.026156425, y: -0.06788826}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.7599998, y: 5.7599998}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 5.7599998, y: 5.7599998}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.524319, y: 4.333505}
+  m_Size: {x: 0.6309943, y: 0.74971247}
   m_EdgeRadius: 0
 --- !u!50 &394299540722857273
 Rigidbody2D:
@@ -186,10 +186,10 @@ MonoBehaviour:
       type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
       data:
         frames:
-        - {fileID: 929469871, guid: 2194793274e0340e0affae6b0972e724, type: 3}
-        - {fileID: -1576842532, guid: 2194793274e0340e0affae6b0972e724, type: 3}
-        - {fileID: 1924862839, guid: 2194793274e0340e0affae6b0972e724, type: 3}
-        - {fileID: 66825293, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        - {fileID: -260354713, guid: 486592b725286054a827bad22f44d8fa, type: 3}
+        - {fileID: -1621672695, guid: 486592b725286054a827bad22f44d8fa, type: 3}
+        - {fileID: 914368034, guid: 486592b725286054a827bad22f44d8fa, type: 3}
+        - {fileID: -772426026, guid: 486592b725286054a827bad22f44d8fa, type: 3}
         deltaTime: 0.1
         _renderer: {fileID: 0}
     - rid: 3294223817106784258
