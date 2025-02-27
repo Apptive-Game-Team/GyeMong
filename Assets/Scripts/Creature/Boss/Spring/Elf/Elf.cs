@@ -148,7 +148,7 @@ namespace Creature.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
