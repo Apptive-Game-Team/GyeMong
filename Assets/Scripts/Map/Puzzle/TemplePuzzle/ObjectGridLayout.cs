@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectGridLayout : MonoBehaviour
 {
     public GameObject[] objectPrefabs;
+    public GameObject ballPrefab;
     public int rows = 4;
     public int columns = 4;
     public float spacing = 2f;
@@ -37,6 +38,14 @@ public class ObjectGridLayout : MonoBehaviour
                         float yPos = startPosition.y + (row * spacing);
 
                         obj.transform.position = new Vector3(xPos, yPos, 0f);
+
+                        if (objectIndex == 0)
+                        {
+                            GameObject ball = Instantiate(ballPrefab);
+
+                            ball.transform.position = new Vector3(xPos, yPos, 0f);
+                            ball.transform.SetParent(transform);
+                        }
 
                         obj.transform.SetParent(transform);
                     }

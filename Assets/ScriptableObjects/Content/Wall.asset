@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c39bf6a65fded4b449956d54c11fab28, type: 3}
-  m_Name: Curve
+  m_Name: Wall
   m_EditorClassIdentifier: 
   up: 0
-  down: 1
-  left: 1
+  down: 0
+  left: 0
   right: 0
