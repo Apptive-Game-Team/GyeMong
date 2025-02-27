@@ -59,19 +59,19 @@ public class BallMovement : MonoBehaviour
 
     Vector2 GetMoveDirection()
     {
-        if (CanMoveToTile(currentTile.transform.position, Vector2.up))
+        if (CanMoveToTile(currentTile.transform.position, Vector2.up) && currentTile.up)
         {
             return Vector2.up;
         }
-        else if (CanMoveToTile(currentTile.transform.position, Vector2.down))
+        else if (CanMoveToTile(currentTile.transform.position, Vector2.down) && currentTile.down)
         {
             return Vector2.down;
         }
-        else if (CanMoveToTile(currentTile.transform.position, Vector2.left))
+        else if (CanMoveToTile(currentTile.transform.position, Vector2.left) && currentTile.left)
         {
             return Vector2.left;
         }
-        else if (CanMoveToTile(currentTile.transform.position, Vector2.right))
+        else if (CanMoveToTile(currentTile.transform.position, Vector2.right) && currentTile.right)
         {
             return Vector2.right;
         }
