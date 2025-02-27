@@ -382,6 +382,8 @@ namespace playerCharacter
 
         private IEnumerator BindCoroutine(float duration)
         {
+            movement = Vector2.zero;
+            playerRb.velocity = Vector2.zero;
             canMove = false;
             yield return new WaitForSeconds(duration);
             canMove = true;
