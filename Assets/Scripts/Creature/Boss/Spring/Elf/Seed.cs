@@ -80,7 +80,8 @@ namespace Creature.Boss.Spring.Elf
             if (collision.CompareTag("PlayerAttack") && !isReflected)
             {
                 isReflected = true;
-                direction = -direction;
+                Vector2 playerAttackDirection = PlayerCharacter.Instance.mouseDirection;
+                direction = playerAttackDirection.normalized;
                 rb.velocity = direction * speed;
                 RotateArrow();
             }
