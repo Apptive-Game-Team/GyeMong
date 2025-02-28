@@ -13,7 +13,7 @@ namespace Creature.Boss.Spring.Elf
         [SerializeField] private GameObject vinePrefab;
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
-        [SerializeField] private GameObject BombPrefab;
+        //[SerializeField] private GameObject BombPrefab;
         Vector3 meleeAttackPrefabPos;
 
         private FootSoundController footSoundController;
@@ -232,7 +232,7 @@ namespace Creature.Boss.Spring.Elf
                 yield return spawnedObjects;
             }
         }
-        public class TransPhasePattern : ElfState
+        /*public class TransPhasePattern : ElfState
         {
             public float warningDuration = 2f;
             public int numWarnings = 8;
@@ -264,22 +264,10 @@ namespace Creature.Boss.Spring.Elf
                 }
                 return positions;
             }
-        }
+        }*/
         protected override void TransPhase()
         {
-            if (currentPhase < maxHps.Count - 1)
-            {
-                currentPhase++;
-                StopAllCoroutines();
-                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-                StartCoroutine(ChangingPhase());
-            }
-            else
-            {
-                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-                Die();
-            }
-            
+            base.TransPhase(); 
         }
         protected override void Die()
         {
