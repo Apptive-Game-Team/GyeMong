@@ -8,7 +8,6 @@ namespace Creature.Player.Component.Collider
     {
         public float attackDamage;
         //Bad Way But..
-        [SerializeField] private GameObject flowerObj;
         private PlayerSoundController _soundController;
         private EventObject _eventObject;
         private ParticleSystem _particleSystem;
@@ -26,6 +25,11 @@ namespace Creature.Player.Component.Collider
         {
             _soundController = soundController;
         }
+
+        public void SetDamage(float damage)
+        {
+            attackDamage = damage;
+        }
   
     
         private void OnTriggerEnter2D(Collider2D collision)
@@ -40,12 +44,6 @@ namespace Creature.Player.Component.Collider
                 _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                 creature.OnAttacked(attackDamage);
                 PlayerCharacter.Instance.AttackIncreaseGauge();
-                //Bad Way But..
-                if (PlayerCharacter.Instance.GetComponent<RuneComponent>().isRune(3))
-                {
-                    Debug.Log("Flower Rune Activated");
-                    Instantiate(flowerObj, collision.transform.position,quaternion.identity);
-                }
             } else
             {
                 IAttackable[] attackableObjects = collision.GetComponents<IAttackable>();

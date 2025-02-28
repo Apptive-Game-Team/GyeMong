@@ -4,6 +4,7 @@ using System.Collections;
 using Creature.Player.Component;
 using Creature.Player.Component.Collider;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace playerCharacter
 {
@@ -20,6 +21,8 @@ namespace playerCharacter
         public float attackGaugeIncreaseValue;
         public float skillUsageGauge = 30f;
         public float attackPower;
+        public float swordAuraCoef = 1f;
+        
         public bool isControlled = false;
         private Vector2 movement;
         private Vector2 lastMovementDirection;
@@ -30,7 +33,9 @@ namespace playerCharacter
         
         public GameObject attackColliderPrefab;
         public GameObject skillColliderPrefab;
-
+        public BuffComponent buffComp;
+        
+        
         public float moveSpeed = 4.0f;
         public float dashSpeed = 10.0f;
         public float skillSpeed = 10.0f;
@@ -350,7 +355,10 @@ namespace playerCharacter
             Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
             skillRigidbody.velocity = mouseDirection.normalized * skillSpeed;
 
-            attackCollider.GetComponent<AttackCollider>().Init(soundController);
+            AttackCollider atkComp = attackCollider.GetComponent<AttackCollider>();
+            atkComp.Init(soundController);
+            atkComp.SetDamage(attackPower * swordAuraCoef);
+            attackCollider.transform.localScale *= swordAuraCoef;
             Destroy(attackCollider, delayTime * 2);
         }
 

@@ -16,7 +16,7 @@ public enum DirectionType
 
 namespace Creature
 {
-    public abstract class Creature : MonoBehaviour, IAttackable, IRuneEventListener
+    public abstract class Creature : MonoBehaviour, IAttackable
 {
     private const float BLINK_DELAY = 0.15f;
     
@@ -242,11 +242,7 @@ namespace Creature
              currentHp -= (damage-temp);
          }
     }
-
-    public void OnChanged(BuffComponent data)
-    {
-        throw new NotImplementedException();//Actual Rune-Event (Heal...DOT...)
-    }
+    
 }
 }
 

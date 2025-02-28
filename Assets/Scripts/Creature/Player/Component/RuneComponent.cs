@@ -15,6 +15,8 @@ public class RuneComponent : MonoBehaviour
     public List<RuneData> AcquiredRuneList { get { return acquiredRuneList; } }
     public int MaxRuneEquipNum {  get { return maxRuneEquipNum; } }
 
+    private List<IEnumerator> _activatingCoroutines = new();
+    
     private void Start()
     {
         _buffComp = GetComponent<BuffComponent>();
@@ -33,8 +35,18 @@ public class RuneComponent : MonoBehaviour
         if(equippedRuneList.Count < maxRuneEquipNum) 
         {
             equippedRuneList.Add(runeData);
-            BuffObject buffObject = new BuffObject(runeData.runeBuff);
-            _buffComp.AddBuff(buffObject);
+            //효과 발동
+            switch (runeData.id)
+            {
+                case 0:
+                    IEnumerator _enumerator = RuneHitman.Instance.Activate_Breeze();
+                    _activatingCoroutines.Add(_enumerator);
+                    StartCoroutine(_enumerator);         
+                    break;
+                case 1:
+                    RuneHitman.Instance.Activate_SwordAuraExercise();
+                    break;
+            }
         }
         else
         {
@@ -45,6 +57,8 @@ public class RuneComponent : MonoBehaviour
     public void UnequipRune(RuneData runeData)
     {
         equippedRuneList.RemoveAll(x=>x.id == runeData.id);
+        StopCoroutine(_activatingCoroutines[0]);
+        _activatingCoroutines.Remove(_activatingCoroutines[0]);
         // _buffComp.DeleteBuff(runeData.runeBuff);
     }
 

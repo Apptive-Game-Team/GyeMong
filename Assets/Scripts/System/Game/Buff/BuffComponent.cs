@@ -3,22 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class BuffComponent : MonoBehaviour ,IBuffSlave
+public class BuffComponent
 {
-    [SerializeField] List<BuffObject> buffList = new List<BuffObject>();
+    List<BuffObject> buffList = new List<BuffObject>();
 
     public void AddBuff(BuffObject newBuff)
     {
         buffList.Add(newBuff);
-        switch(newBuff.buffData.disposeMode)
-        {
-            case BuffDisposeMode.TEMPORARY:
-                BuffManager.Instance.StartCoroutine(BuffManager.Instance.AddTemporaryBuff(newBuff, this));
-                break;
-            case BuffDisposeMode.PERMANENT:
-                BuffManager.Instance.AddRuneEvent(newBuff, this);
-                break;
-        }
+        BuffManager.Instance.StartCoroutine(BuffManager.Instance.AddTemporaryBuff(newBuff, this));
     }
 
     public void DeleteBuff(BuffObject buff)
