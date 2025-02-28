@@ -82,7 +82,6 @@ namespace Creature.Boss.Spring.Elf
                     PlayerCharacter.Instance.TakeDamage(damage / 2);
                 }
             }
-            Destroy(gameObject);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
