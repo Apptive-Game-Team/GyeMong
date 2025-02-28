@@ -20544,6 +20544,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
+      propertyPath: BombPrefab
+      value: 
+      objectReference: {fileID: 1349092434517921609, guid: db5b32d61bf31ba46b622c2da89e6cc0,
+        type: 3}
+    - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
       propertyPath: trunkPrefab
       value: 
       objectReference: {fileID: 8583689789694271782, guid: 06ce720769f51a94ab1f98f468cc718c,
