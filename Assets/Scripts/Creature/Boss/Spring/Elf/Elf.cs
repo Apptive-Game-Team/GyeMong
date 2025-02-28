@@ -13,6 +13,7 @@ namespace Creature.Boss.Spring.Elf
         [SerializeField] private GameObject vinePrefab;
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
+        [SerializeField] private GameObject BombPrefab;
         Vector3 meleeAttackPrefabPos;
 
         private FootSoundController footSoundController;
@@ -231,9 +232,54 @@ namespace Creature.Boss.Spring.Elf
                 yield return spawnedObjects;
             }
         }
+        public class TransPhasePattern : ElfState
+        {
+            public float warningDuration = 2f;
+            public int numWarnings = 8;
+            public float range = 10f;
+            public override int GetWeight()
+            {
+                return 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                List<Vector2> warningPositions = GenerateWarning(numWarnings, range);
+                foreach (var position in warningPositions)
+                {
+                    Instantiate(Elf.BombPrefab, position, Quaternion.identity);
+                }
+                yield return new WaitForSeconds(warningDuration);
+                Elf.ChangeState();
+            }
+            private List<Vector2> GenerateWarning(int count, float range)
+            {
+                List<Vector2> positions = new List<Vector2>();
+
+                for (int i = 0; i < count; i++)
+                {
+                    float x = Elf.transform.position.x + Random.Range(-range, range);
+                    float y = Elf.transform.position.y + Random.Range(-range, range);
+                    Vector2 randomPosition = new Vector2(x, y);
+                    positions.Add(randomPosition);
+                }
+                return positions;
+            }
+        }
         protected override void TransPhase()
         {
-            base.TransPhase();
+            if (currentPhase < maxHps.Count - 1)
+            {
+                currentPhase++;
+                StopAllCoroutines();
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                StartCoroutine(ChangingPhase());
+            }
+            else
+            {
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                Die();
+            }
+            
         }
         protected override void Die()
         {
