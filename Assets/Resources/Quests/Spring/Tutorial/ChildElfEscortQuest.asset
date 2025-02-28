@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: ChildElfEscortQuest
+  m_EditorClassIdentifier: Assembly-CSharp:System.Game.Quest.Quests:Quest/QuestInfo
+  questID: 0
+  questName: "\uAF2C\uB9C8\uB97C \uD638\uC704\uD558\uB77C"
+  questDescription: "\uAF2C\uB9C8\uB97C \uB9C8\uC744\uC5D0 \uB370\uB824\uB2E4 \uC8FC\uC5B4\uB77C"
+  questType: 0
+  goals:
+  - goalName: "\uAF2C\uB9C8\uB97C \uB9C8\uC744\uC5D0 \uB370\uB824\uB2E4\uC8FC\uC5B4\uB77C"
+    goalDescription: "\uAF2C\uB9C8\uB97C \uB9C8\uC744\uC5D0 \uB370\uB824\uB2E4\uC918\uB77C."
+    isCompleted: 0
