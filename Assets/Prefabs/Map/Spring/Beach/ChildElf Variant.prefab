@@ -477,6 +477,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7202374245483039801}
+    - targetCorrespondingSourceObject: {fileID: 6957355767428621729, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7678504274904714089}
   m_SourcePrefab: {fileID: 100100000, guid: 0c5675348f02d4990bd547afbd9aa5e9, type: 3}
 --- !u!4 &4003107261100600892 stripped
 Transform:
@@ -532,3 +536,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &-7678504274904714089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8934444904914948015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97bcc68eec26442b1a0aac62938c7679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _conditionString: SpringChildArriveTown
+  _conditionValue: 1
+  _sceneName: SpringTown
