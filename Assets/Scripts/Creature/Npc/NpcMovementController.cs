@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Event.Interface;
@@ -11,6 +12,7 @@ namespace Creature.Npc
         private IPathFinder _pathFinder = new SimplePathFinder();
         private const int MAX_DISTANCE_TO_PLAYER = 2;
         private const int PATH_FINDING_INTERVAL = 1;
+        [SerializeField] private Animator _animator;
 
         private void Start()
         {
@@ -64,11 +66,16 @@ namespace Creature.Npc
                 {
                     if (creature.DistanceToPlayer < MAX_DISTANCE_TO_PLAYER)
                     { // close to Player
-                        
+                        Npc._animator.SetBool("walking", false);
                     }
                     else
                     { // far from Player
+                        Npc._animator.SetBool("walking", true);
                         creature.transform.position = Vector3.MoveTowards(creature.transform.position, _target, creature.speed * Time.deltaTime);
+                        Vector3 direction = _target - creature.transform.position;
+                        
+                        Npc._animator.SetFloat("x", direction.x);
+                        Npc._animator.SetFloat("y", direction.y);
                     }
                     yield return null;
                 }
