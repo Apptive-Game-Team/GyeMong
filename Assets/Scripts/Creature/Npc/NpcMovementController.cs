@@ -15,7 +15,7 @@ namespace Creature.Npc
         private void Start()
         {
             speed = 1;
-            ChangeState(new NpcFollowingState() { creature = this });;
+            ChangeState(new NpcIdleState() { creature = this });;
         }
 
         public class NpcIdleState : NpcState
