@@ -56,7 +56,7 @@ namespace Creature.Player.Component.Collider
                     _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                     foreach (IAttackable @object in attackableObjects)
                     {
-                        @object.OnAttacked();
+                        @object.OnAttacked(attackDamage);
                     }
                 }
             }
