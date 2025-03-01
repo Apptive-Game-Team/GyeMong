@@ -14,7 +14,7 @@ namespace Creature.Npc
 
         private void Start()
         {
-            speed = 1;
+            speed = 3;
             ChangeState(new NpcIdleState() { creature = this });;
         }
 
@@ -68,7 +68,6 @@ namespace Creature.Npc
                     }
                     else
                     { // far from Player
-                        print("Following");
                         creature.transform.position = Vector3.MoveTowards(creature.transform.position, _target, creature.speed * Time.deltaTime);
                     }
                     yield return null;
