@@ -114,7 +114,7 @@ namespace Creature
         }
             
         currentState = state;
-        print(state.ToString());
+        
         _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
     }
     

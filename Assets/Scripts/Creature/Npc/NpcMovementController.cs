@@ -22,7 +22,7 @@ namespace Creature.Npc
         {
             public override IEnumerator StateCoroutine()
             {
-                return null;
+                yield return null;
             }
         }
         
