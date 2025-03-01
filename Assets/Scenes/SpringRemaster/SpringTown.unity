@@ -24607,6 +24607,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f79cf1be3a37447669edd05f233eeeec, type: 3}
+--- !u!114 &662955884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+    type: 3}
+  m_PrefabInstance: {fileID: 662955883}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &664556987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26991,7 +27003,6 @@ MonoBehaviour:
   triggerLimitCounter: -1
   eventSequence:
   - rid: 8330687370927013900
-  - rid: 8330687370927013906
   references:
     version: 2
     RefIds:
@@ -27015,13 +27026,62 @@ MonoBehaviour:
       type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
       data:
         events:
-        - rid: 8330687370927013904
-    - rid: 8330687370927013904
+        - rid: 8330687370927013907
+    - rid: 8330687370927013907
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 8330687370927013908
+        eventInTrue:
+          rid: 8330687370927013909
+        eventInFalse:
+          rid: 8330687370927013912
+    - rid: 8330687370927013908
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: SpringChildArriveTown
+        condition: 0
+    - rid: 8330687370927013909
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 8330687370927013910
+        - rid: 8330687370927013923
+    - rid: 8330687370927013910
       type: {class: ClearQuestGoalEvent, ns: System.Event.Event.Quest, asm: Assembly-CSharp}
       data:
         _id: 1
         _goalIndex: 0
-    - rid: 8330687370927013906
+    - rid: 8330687370927013912
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 8330687370927013919
+        - rid: 8330687370927013920
+        - rid: 8330687370927013921
+        - rid: 8330687370927013922
+        - rid: 8330687370927013913
+    - rid: 8330687370927013913
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 662955884}
+    - rid: 8330687370927013919
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8330687370927013920
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uB9C8\uC744 \uC8FC\uBBFC"
+          message: "\uC6EC\uB188\uC774\uB0D0!! \uB2F9\uC7A5 \uB9C8\uC744\uC744 \uB5A0\uB098\uB77C!!"
+    - rid: 8330687370927013921
+      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 9999
+    - rid: 8330687370927013922
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8330687370927013923
       type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
       data:
         triggerable: {fileID: 1515987413}
