@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4220342921350297961}
   - component: {fileID: 6117066810111736804}
+  - component: {fileID: 5974352236178966202}
   m_Layer: 9
   m_Name: BeforeQuestEvent
   m_TagString: Untagged
@@ -57,6 +58,7 @@ MonoBehaviour:
   - rid: 8330687368954118164
   - rid: 8330687368954118156
   - rid: 8330687370927013892
+  - rid: 8330687370927013896
   references:
     version: 2
     RefIds:
@@ -100,6 +102,46 @@ MonoBehaviour:
       type: {class: AddQuestEvent, ns: System.Event.Event.Quest, asm: Assembly-CSharp}
       data:
         _questInfo: {fileID: 11400000, guid: eb661f92b76914fdeac8d858e251caca, type: 2}
+    - rid: 8330687370927013896
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 5974352236178966202}
+--- !u!114 &5974352236178966202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8304293120243652650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8330687370927013893
+  - rid: 8330687370927013894
+  - rid: 8330687370927013895
+  references:
+    version: 2
+    RefIds:
+    - rid: 8330687370927013893
+      type: {class: OpenPopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
+      data:
+        _title: "[\uD29C\uD1A0\uB9AC\uC5BC] \uC0C1\uD638\uC791\uC6A9"
+        _message: "\"Space\"\uB97C \uB20C\uB7EC\uC11C \uC0C1\uD638\uC791\uC6A9 \uD569\uB2C8\uB2E4.
+          \uAF2C\uB9C8\uC5D0\uAC8C \uC0C1\uD638\uC791\uC6A9\uD558\uBA74, \uB530\uB77C\uC624\uAC70\uB098
+          \uB530\uB77C\uC624\uC9C0 \uC54A\uAC8C \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    - rid: 8330687370927013894
+      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 999
+    - rid: 8330687370927013895
+      type: {class: ClosePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
+      data: 
 --- !u!1001 &1977353433167440398
 PrefabInstance:
   m_ObjectHideFlags: 0
