@@ -8,6 +8,8 @@ public enum SceneID
     NONE = 0,
     SPRING_BEACH = 1,
     SPRING_BEACH_TO_MAIN_LOAD = 2,
+    SPRING_TOWN = 3,
+    SPRING_NORTH_FOREST = 4,
     // SPRING_MAIN = 1,
     // SPRING_BOSS = 2,
     // SPRING_PUZZLE2 = 3,

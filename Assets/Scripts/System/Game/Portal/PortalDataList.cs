@@ -6,8 +6,16 @@ using UnityEngine;
 public enum PortalID
 {
     NONE = 0,
+    // Beach
     SPRING_BEACH_TO_LOAD = 1,
     SPRING_LOAD_TO_BEACH = 2,
+    
+    // Town
+    SPRING_BEACH_LOAD_TO_TOWN = 3,
+    SPRING_TOWN_TO_BEACH_LOAD = 4,
+    SPRING_TOWN_TO_NORTH_FOREST = 5,
+    SPRING_NORTH_FOREST_TO_TOWN = 6,
+    
     // SPRING_MAIN_TO_BOSS = 1,
     // SPRING_BOSS_TO_MAIN = 2,
     // SPRING_MAIN_TO_PUZZLE2 = 3,
