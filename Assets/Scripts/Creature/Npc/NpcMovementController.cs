@@ -57,6 +57,7 @@ namespace Creature.Npc
             
             public override IEnumerator StateCoroutine()
             {
+                creature.transform.parent = PlayerCharacter.Instance.transform;
                 _pathFindingCoroutine = creature.StartCoroutine(PathFindingCoroutine());
                 
                 while (true)
@@ -77,6 +78,7 @@ namespace Creature.Npc
             public override void OnStateExit()
             {
                 creature.StopCoroutine(_pathFindingCoroutine);
+                creature.transform.parent = null;
             }
         }
         
