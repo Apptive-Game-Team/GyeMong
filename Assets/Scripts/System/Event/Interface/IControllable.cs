@@ -1,8 +1,10 @@
-
 using System.Collections;
 using UnityEngine;
 
-public interface IControllable
+namespace System.Event.Interface
 {
-    IEnumerator MoveTo(Vector3 target, float speed);
+    public interface IControllable
+    {
+        IEnumerator MoveTo(Vector3 target, float speed);
+    }
 }
