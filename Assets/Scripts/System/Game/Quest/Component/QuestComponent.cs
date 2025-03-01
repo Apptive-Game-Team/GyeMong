@@ -5,8 +5,13 @@ namespace System.Game.Quest.Component
 {
     public class QuestComponent : SingletonObject<QuestComponent>
     {
-        private List<Quests.Quest> _closedQuests = new();
-        private List<Quests.Quest> _activeQuests = new();
+        [SerializeField] private List<Quests.Quest> _closedQuests = new();
+        [SerializeField] private List<Quests.Quest> _activeQuests = new();
+
+        public Quests.Quest GetQuest(int id)
+        {
+            return _activeQuests.Find(quest => quest.GetQuestInfo.questID == id);
+        }
         
         public void AddQuest(Quests.Quest quest)
         {
@@ -17,17 +22,13 @@ namespace System.Game.Quest.Component
         public void UpdateQuests()
         {
             CheckClear();
-            foreach (Quests.Quest quest in _activeQuests)
-            {
-                quest.UpdateQuest();
-            }
         }
 
         private void CheckClear()
         {
             foreach (Quests.Quest quest in _activeQuests)
             {
-                if (quest.IsClear())
+                if (quest.IsClear)
                 {
                     quest.EndQuest();
                     _closedQuests.Add(quest);
