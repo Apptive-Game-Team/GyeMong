@@ -3381,6 +3381,14 @@ MonoBehaviour:
   trigger: 4
   triggerLimitCounter: -1
   eventSequence:
+  - rid: 8330687368954118155
+  - rid: 8330687368954118158
+  - rid: 8330687368954118159
+  - rid: 8330687368954118160
+  - rid: 8330687368954118163
+  - rid: 8330687368954118162
+  - rid: 8330687368954118164
+  - rid: 8330687368954118156
   - rid: 8330687368954118149
   references:
     version: 2
@@ -3389,6 +3397,42 @@ MonoBehaviour:
       type: {class: AddQuestEvent, ns: System.Event.Event.Quest, asm: Assembly-CSharp}
       data:
         _questInfo: {fileID: 11400000, guid: eb661f92b76914fdeac8d858e251caca, type: 2}
+    - rid: 8330687368954118155
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8330687368954118156
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8330687368954118158
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uAF2C\uB9C8"
+          message: ".. \uB3C4\uC640\uC904 \uC218 \uC788\uB098\uC694..? \uBB34\uC11C\uC6CC\uC694.."
+    - rid: 8330687368954118159
+      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 99999
+    - rid: 8330687368954118160
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: ...
+          message: "(\uB044\uB355\uB044\uB355)"
+    - rid: 8330687368954118162
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uAF2C\uB9C8"
+          message: "\uB9C8\uC744\uAE4C\uC9C0 \uAC19\uC774 \uAC00\uC8FC\uC138\uC694!"
+    - rid: 8330687368954118163
+      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 99999
+    - rid: 8330687368954118164
+      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 99999
 --- !u!1001 &1398845155
 PrefabInstance:
   m_ObjectHideFlags: 0
