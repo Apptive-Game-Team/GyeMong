@@ -620,13 +620,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
+      propertyPath: managedReferences[8330687368954118166]
+      value: Assembly-CSharp ConditionalBranchEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: managedReferences[8330687368954118167]
+      value: Assembly-CSharp ToggeableCondition
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: managedReferences[8330687368954118169]
+      value: Assembly-CSharp ParticleEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: managedReferences[8330687368954118170]
+      value: Assembly-CSharp TriggerEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: managedReferences[8330687368954118171]
+      value: Assembly-CSharp TriggerEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
       propertyPath: managedReferences[2875236736649920513].tag
       value: Spring_Tutorial_E
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: managedReferences[8330687368954118152].tag
-      value: ChildEscortQuestIsStarted
+      value: SpringChildEscortIsStarted
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: managedReferences[8330687368954118167].tag
+      value: SpringChildEscortIsCleared
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -655,6 +685,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
+      propertyPath: managedReferences[8330687368954118167].condition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
       propertyPath: managedReferences[2875236736649920512]._condition
       value: 2875236736649920513
       objectReference: {fileID: 0}
@@ -665,13 +700,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
+      propertyPath: managedReferences[8330687368954118166]._condition
+      value: 8330687368954118167
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
       propertyPath: managedReferences[2875236736649920512].eventInTrue
       value: 8330687368954118144
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: managedReferences[8330687368954118151].eventInTrue
-      value: 8330687368954118153
+      value: 8330687368954118166
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -685,6 +725,21 @@ PrefabInstance:
       objectReference: {fileID: 1041804848}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
+      propertyPath: managedReferences[8330687368954118166].eventInTrue
+      value: 8330687368954118170
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: managedReferences[8330687368954118170].triggerable
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: managedReferences[8330687368954118171].triggerable
+      value: 
+      objectReference: {fileID: 506829397}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
       propertyPath: managedReferences[2875236736649920512].eventInFalse
       value: -2
       objectReference: {fileID: 0}
@@ -692,6 +747,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[8330687368954118151].eventInFalse
       value: 8330687368954118154
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: managedReferences[8330687368954118166].eventInFalse
+      value: 8330687368954118171
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}

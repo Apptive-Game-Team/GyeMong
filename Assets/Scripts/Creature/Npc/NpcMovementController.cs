@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Creature.Npc
 {
-    public class NpcMovementController : Creature, IControllable
+    public class NpcMovementController : Creature, IControllable, IEventTriggerable
     {
         private IPathFinder _pathFinder = new SimplePathFinder();
         private const int MAX_DISTANCE_TO_PLAYER = 2;
@@ -96,6 +96,18 @@ namespace Creature.Npc
             {
                 transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
                 yield return null;
+            }
+        }
+
+        public void Trigger() // toggle Npc's state
+        {
+            if (currentState is NpcIdleState)
+            {
+                ChangeState(new NpcFollowingState() { creature = this });
+            }
+            else
+            {
+                ChangeState(new NpcIdleState() { creature = this });
             }
         }
     }
