@@ -19,7 +19,7 @@ namespace Creature.Player.Component.Collider
             _shape = _particleSystem.shape;//.GetComponent<ParticleSystem.ShapeModule>();
             _eventObject = GetComponent<EventObject>();
             var player = PlayerCharacter.Instance;
-            attackDamage = player.attackPower;
+            attackDamage = player.stat.attackPower.GetValue();
         }
 
         public void Init(PlayerSoundController soundController)

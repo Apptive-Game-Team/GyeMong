@@ -10,7 +10,7 @@ namespace System.UI.Game.PlayerUI
         private void Start()
         {
             PlayerCharacter.Instance.changeListenerCaller.AddHpChangeListener(this);
-            _maxHp = PlayerCharacter.Instance.MaxHp;
+            _maxHp = PlayerCharacter.Instance.stat.healthMax.GetValue();
         }
 
         protected override float GetCurrentGauge()
