@@ -30,7 +30,7 @@ namespace System.Event.Event.Quest
         private int _goalIndex;
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            Game.Quest.Quests.Quest quest =  QuestComponent.Instance.GetQuest(_id);
+            Game.Quest.Quests.Quest quest = QuestComponent.Instance.GetQuest(_id);
             quest.ClearGoal(_goalIndex);
             return null;
         }
