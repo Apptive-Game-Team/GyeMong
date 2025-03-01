@@ -24740,7 +24740,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
-      value: 15
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4934385667042233568, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -27087,6 +27087,89 @@ MonoBehaviour:
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
         _isEnable: 1
+--- !u!1 &1220289604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1220289605}
+  - component: {fileID: 1220289606}
+  m_Layer: 0
+  m_Name: Quest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1220289605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220289604}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1956241473}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1220289606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220289604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8330687370927013900
+  - rid: 8330687370927013906
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8330687370927013900
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 8330687370927013901
+        eventInTrue:
+          rid: -2
+        eventInFalse:
+          rid: 8330687370927013903
+    - rid: 8330687370927013901
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: SpringChildEscortIsCleared
+        condition: 0
+    - rid: 8330687370927013903
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 8330687370927013904
+    - rid: 8330687370927013904
+      type: {class: ClearQuestGoalEvent, ns: System.Event.Event.Quest, asm: Assembly-CSharp}
+      data:
+        _id: 1
+        _goalIndex: 0
+    - rid: 8330687370927013906
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 1515987413}
 --- !u!1001 &1262285662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27911,7 +27994,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515987411}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -27931,7 +28014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 0
-  trigger: 2
+  trigger: 4
   triggerLimitCounter: -1
   eventSequence:
   - rid: 5804568743836647424
@@ -30003,6 +30086,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1220289605}
   - {fileID: 1515987412}
   - {fileID: 244854156}
   - {fileID: 888998230}
