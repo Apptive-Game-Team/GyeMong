@@ -2860,24 +2860,34 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 8330687370927013888
-  - rid: 8330687370927013889
-  - rid: 8330687370927013890
+  - rid: 8330687392900710404
+  - rid: 8330687392900710406
   references:
     version: 2
     RefIds:
-    - rid: 8330687370927013888
-      type: {class: OpenPopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
+    - rid: 8330687392900710404
+      type: {class: EnqueueEvent, ns: , asm: Assembly-CSharp}
+      data:
+        e:
+          rid: 8330687392900710405
+    - rid: 8330687392900710405
+      type: {class: SkippablePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
+      data:
+        _title: "[\uD29C\uD1A0\uB9AC\uC5BC] \uC0C1\uD638\uC791\uC6A9"
+        _message: "\"Space\"\uB85C popup \uCC3D\uC744 \uB118\uAE30\uACE0, \uC0AC\uB78C\uC5D0\uAC8C
+          \uB9D0\uC744 \uAC78 \uC218 \uC788\uB2E4."
+        _duration: 999
+    - rid: 8330687392900710406
+      type: {class: EnqueueEvent, ns: , asm: Assembly-CSharp}
+      data:
+        e:
+          rid: 8330687392900710407
+    - rid: 8330687392900710407
+      type: {class: SkippablePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
       data:
         _title: "[\uD29C\uD1A0\uB9AC\uC5BC] \uC774\uB3D9"
         _message: "\"W, A, S, D\"\uB85C \uC774\uB3D9"
-    - rid: 8330687370927013889
-      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 999
-    - rid: 8330687370927013890
-      type: {class: ClosePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
-      data: 
+        _duration: 999
 --- !u!4 &545334271
 Transform:
   m_ObjectHideFlags: 0
@@ -3452,8 +3462,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 49194295218117097, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1423850741}
   m_SourcePrefab: {fileID: 100100000, guid: 64f1ae9c03ebe9d4c9496b6f4942f313, type: 3}
+--- !u!1 &1423850740 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 49194295218117097, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+    type: 3}
+  m_PrefabInstance: {fileID: 1423850739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1423850741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423850740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9263955e57e244df9941554340e4e028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1591745910
 GameObject:
   m_ObjectHideFlags: 0

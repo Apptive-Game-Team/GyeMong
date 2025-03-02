@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 3862622192896607297}
   - component: {fileID: 8464625720961678176}
   - component: {fileID: 3579436764185913057}
+  - component: {fileID: 8884589751490043246}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -336,11 +337,6 @@ MonoBehaviour:
   _statData: {fileID: 11400000, guid: 70df7f5775b4eb54994283a5875ac117, type: 2}
   curHealth: 0
   curSkillGauge: 0
-  maxSkillGauge: 0
-  gaugeIncreaseValue: 0
-  attackGaugeIncreaseValue: 0
-  skillUsageGauge: 30
-  attackPower: 0
   isControlled: 0
   attackColliderPrefab: {fileID: 2848122850891802944, guid: 8e8beeeb017f3414891b7e04a9438725,
     type: 3}
@@ -405,8 +401,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2d4c0d2e39a14437a3b2ab0e9d6bad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closedQuests: []
-  _activeQuests: []
+  _quests: []
+--- !u!114 &8884589751490043246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49194295218117097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9263955e57e244df9941554340e4e028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1335504902609846588
 GameObject:
   m_ObjectHideFlags: 0

@@ -122,26 +122,23 @@ MonoBehaviour:
   trigger: 4
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 8330687370927013893
-  - rid: 8330687370927013894
-  - rid: 8330687370927013895
+  - rid: 8330687392900710408
   references:
     version: 2
     RefIds:
-    - rid: 8330687370927013893
-      type: {class: OpenPopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
+    - rid: 8330687392900710408
+      type: {class: EnqueueEvent, ns: , asm: Assembly-CSharp}
+      data:
+        e:
+          rid: 8330687392900710409
+    - rid: 8330687392900710409
+      type: {class: SkippablePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
       data:
         _title: "[\uD29C\uD1A0\uB9AC\uC5BC] \uC0C1\uD638\uC791\uC6A9"
         _message: "\"Space\"\uB97C \uB20C\uB7EC\uC11C \uC0C1\uD638\uC791\uC6A9 \uD569\uB2C8\uB2E4.
           \uAF2C\uB9C8\uC5D0\uAC8C \uC0C1\uD638\uC791\uC6A9\uD558\uBA74, \uB530\uB77C\uC624\uAC70\uB098
           \uB530\uB77C\uC624\uC9C0 \uC54A\uAC8C \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
-    - rid: 8330687370927013894
-      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 999
-    - rid: 8330687370927013895
-      type: {class: ClosePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
-      data: 
+        _duration: 999
 --- !u!1001 &1977353433167440398
 PrefabInstance:
   m_ObjectHideFlags: 0

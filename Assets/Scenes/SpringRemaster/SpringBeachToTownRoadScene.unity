@@ -647,12 +647,12 @@ PrefabInstance:
     - target: {fileID: 5240044703147885952, guid: 0232f58ad0114474bb8dfe3a5dd84a2a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.532856
+      value: 1.03
       objectReference: {fileID: 0}
     - target: {fileID: 5240044703147885952, guid: 0232f58ad0114474bb8dfe3a5dd84a2a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.551799
+      value: 0.57
       objectReference: {fileID: 0}
     - target: {fileID: 5240044703147885952, guid: 0232f58ad0114474bb8dfe3a5dd84a2a,
         type: 3}
@@ -4864,12 +4864,12 @@ PrefabInstance:
     - target: {fileID: 5240044703147885952, guid: 0232f58ad0114474bb8dfe3a5dd84a2a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.0717344
+      value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 5240044703147885952, guid: 0232f58ad0114474bb8dfe3a5dd84a2a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6829085
+      value: -0.92
       objectReference: {fileID: 0}
     - target: {fileID: 5240044703147885952, guid: 0232f58ad0114474bb8dfe3a5dd84a2a,
         type: 3}
@@ -5576,48 +5576,48 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 8330687370927013924
-  - rid: 8330687370927013925
-  - rid: 8330687370927013926
-  - rid: 8330687370927013929
-  - rid: 8330687370927013930
-  - rid: 8330687370927013931
-  - rid: 8330687370927013932
+  - rid: 8330687392900710410
+  - rid: 8330687392900710412
+  - rid: 8330687392900710414
   references:
     version: 2
     RefIds:
-    - rid: 8330687370927013924
-      type: {class: OpenPopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
+    - rid: 8330687392900710410
+      type: {class: EnqueueEvent, ns: , asm: Assembly-CSharp}
+      data:
+        e:
+          rid: 8330687392900710411
+    - rid: 8330687392900710411
+      type: {class: SkippablePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
       data:
         _title: "[\uD29C\uD1A0\uB9AC\uC5BC] \uACF5\uACA9"
         _message: "\"\uB9C8\uC6B0\uC2A4 \uC88C\uD074\uB9AD\"\uC73C\uB85C \uACF5\uACA9\uD55C\uB2E4."
-    - rid: 8330687370927013925
-      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+        _duration: 9999
+    - rid: 8330687392900710412
+      type: {class: EnqueueEvent, ns: , asm: Assembly-CSharp}
       data:
-        delayTime: 9999
-    - rid: 8330687370927013926
-      type: {class: ClosePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
-      data: 
-    - rid: 8330687370927013929
-      type: {class: OpenPopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
+        e:
+          rid: 8330687392900710413
+    - rid: 8330687392900710413
+      type: {class: SkippablePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
       data:
         _title: "[\uD29C\uD1A0\uB9AC\uC5BC] \uC2A4\uCE58\uAE30"
         _message: "\"\uC6D0\uAC70\uB9AC \uACF5\uACA9\"\uC5D0 \uC2A4\uCE58\uBA74 \uC2A4\uD0AC
           \uAC8C\uC774\uC9C0\uAC00 \uCC2C\uB2E4. \"\uB9C8\uC6B0\uC2A4 \uC6B0\uD074\uB9AD\"\uC73C\uB85C
           \uC6D0\uAC70\uB9AC \uACF5\uACA9\uC774 \uAC00\uB2A5\uD558\uB2E4."
-    - rid: 8330687370927013930
-      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+        _duration: 9999
+    - rid: 8330687392900710414
+      type: {class: EnqueueEvent, ns: , asm: Assembly-CSharp}
       data:
-        delayTime: 9999
-    - rid: 8330687370927013931
-      type: {class: ClosePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
-      data: 
-    - rid: 8330687370927013932
-      type: {class: OpenPopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
+        e:
+          rid: 8330687392900710415
+    - rid: 8330687392900710415
+      type: {class: SkippablePopupWindowEvent, ns: System.Event.Event, asm: Assembly-CSharp}
       data:
         _title: 
         _message: "\uC55E\uC758 \uC2AC\uB77C\uC784 \uB465\uC9C0\uB97C \uACF5\uACA9\uC73C\uB85C
           \uBD80\uC234\uBCF4\uC790"
+        _duration: 9999
 --- !u!4 &1665972470
 Transform:
   m_ObjectHideFlags: 0
@@ -5850,12 +5850,12 @@ PrefabInstance:
     - target: {fileID: 1004266812231937355, guid: 7daeed62427ff47e4a7612401d73d268,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.61
+      value: 1.29
       objectReference: {fileID: 0}
     - target: {fileID: 1004266812231937355, guid: 7daeed62427ff47e4a7612401d73d268,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.32
+      value: -1.07
       objectReference: {fileID: 0}
     - target: {fileID: 1004266812231937355, guid: 7daeed62427ff47e4a7612401d73d268,
         type: 3}
