@@ -262,8 +262,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e9787a85296984b9ffdfe6f00e3e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stat:
+    healthMax:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    skillUsageGauge:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    attackPower:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    grazeMax:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    grazeGainOnGraze:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    grazeGainOnAttack:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    moveSpeed:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    dashSpeed:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    skillSpeed:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    dashDuration:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    dashDistance:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    dashCooldown:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    attackDelay:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+    invincibilityDuration:
+      defaultValue: 0
+      flatValue: 0
+      percentValue: 0
+      finalPercentValue: 0
+  _statData: {fileID: 11400000, guid: 70df7f5775b4eb54994283a5875ac117, type: 2}
   curHealth: 0
-  maxHealth: 100
   curSkillGauge: 0
   maxSkillGauge: 0
   gaugeIncreaseValue: 0
@@ -275,9 +346,6 @@ MonoBehaviour:
     type: 3}
   skillColliderPrefab: {fileID: 2848122850891802944, guid: fcbd072696f050e4a98ba91984d66a04,
     type: 3}
-  moveSpeed: 4
-  dashSpeed: 10
-  skillSpeed: 10
   materials:
   - {fileID: 2100000, guid: de56a6b3ebfee9940bdcedb5b20cee67, type: 2}
   - {fileID: 2100000, guid: 9aca40901bb145b4f940529ee4b672e8, type: 2}
