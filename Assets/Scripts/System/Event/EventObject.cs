@@ -84,7 +84,7 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
 
     public void Trigger()
     {
-        if (trigger == EventTrigger.OnCalled && triggerLimitCounter != 0)
+        if (triggerLimitCounter != 0)
         {
             TriggerEvent();
             triggerLimitCounter -= 1;

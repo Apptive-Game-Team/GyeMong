@@ -105,13 +105,15 @@ public class EffectManager : SingletonObject<EffectManager>
     {
         hurtEffect = transform.Find("HurtEffect").GetComponent<RawImage>();
         black = transform.Find("Black").GetComponent<RawImage>();
-        hpBarController = transform.Find("HpBar").GetComponent<HpBarController>();
     }
-
+    public void CachingHpBar(HpBarController controller)
+    {
+        hpBarController = controller;
+        hpBarController.gameObject.SetActive(false);
+    }
     protected override void Awake()
     {
         base.Awake();
         CachingComponents();
-        hpBarController.gameObject.SetActive(false);
     }
 }

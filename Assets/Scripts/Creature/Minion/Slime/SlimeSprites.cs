@@ -1,3 +1,4 @@
+using Creature.Minion.Slime;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SlimeSprites", menuName = "ScriptableObject/SlimeSprites")]

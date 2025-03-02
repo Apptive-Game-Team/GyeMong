@@ -789,7 +789,6 @@ GameObject:
   - component: {fileID: 8780318445877987263}
   - component: {fileID: 5774095160070544005}
   - component: {fileID: 395408363677150551}
-  - component: {fileID: 7488018920032594240}
   - component: {fileID: 2454783064627277184}
   m_Layer: 5
   m_Name: RuneWindow
@@ -797,7 +796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5558592881974755421
 RectTransform:
   m_ObjectHideFlags: 0
@@ -885,18 +884,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &7488018920032594240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877093930163910305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6010f53e52e74a459b152b9716464dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2454783064627277184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1876,6 +1863,7 @@ GameObject:
   - component: {fileID: 7618350676042751725}
   - component: {fileID: 5588611573282155906}
   - component: {fileID: -699792847610852616}
+  - component: {fileID: 6021922388506155008}
   m_Layer: 0
   m_Name: RuneCanvas
   m_TagString: Untagged
@@ -1949,6 +1937,19 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &6021922388506155008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4260879668609468630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6010f53e52e74a459b152b9716464dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _window: {fileID: 1877093930163910305}
 --- !u!1 &4708936149385585761
 GameObject:
   m_ObjectHideFlags: 0

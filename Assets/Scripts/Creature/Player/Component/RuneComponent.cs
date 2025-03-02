@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Game.Rune.RuneUI;
 using UnityEngine;
 
 public class RuneComponent : MonoBehaviour
@@ -21,13 +22,13 @@ public class RuneComponent : MonoBehaviour
     {
         _buffComp = GetComponent<BuffComponent>();
     }
-    
-    private void Update()
+
+    private void TestAcquire()
     {
-        if(InputManager.Instance.GetKeyDown(ActionCode.RunePage))
-        {
-            RuneWindowToggler.Instance.OpenOrCloseOption();
-        }
+        RuneDataList dataList = RuneObjectCreator.Instance.runeDataList;
+        AcquireRune(dataList.GetRuneData(1));
+        AcquireRune(dataList.GetRuneData(2));
+        AcquireRune(dataList.GetRuneData(3));
     }
 
     public void EquipRune(RuneData runeData)

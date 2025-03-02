@@ -1,27 +1,13 @@
-using playerCharacter;
-using UI.mouse_input;
-using UnityEngine.UI;
+using System.UI;
 
-public class RuneWindowToggler : SingletonObject<RuneWindowToggler>
+namespace System.Game.Rune.RuneUI
 {
-    private bool isOptionOpened;
-    
-    public void OpenOrCloseOption()
+    public class RuneWindowToggler : UIWindowToggler<RuneWindowToggler>
     {
-        isOptionOpened = !isOptionOpened;
-        gameObject.SetActive(isOptionOpened);
-        PlayerCharacter.Instance.SetPlayerMove(!isOptionOpened);
-    }
-    
-    protected override void Awake()
-    {
-        base.Awake();   
-        DontDestroyOnLoad(transform.parent.gameObject);
-    }
-    
-    private void OnEnable()
-    {
-        gameObject.SetActive(isOptionOpened);
-        MouseInputManager.Instance.SetRaycaster(GetComponent<GraphicRaycaster>());
+        protected override void Awake()
+        {
+            base.Awake();
+            toggleKeyActionCode = ActionCode.RunePage;
+        }
     }
 }

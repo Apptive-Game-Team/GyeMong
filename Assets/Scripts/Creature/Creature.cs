@@ -28,7 +28,7 @@ namespace Creature
 
     public float damage;
     
-    protected float speed;
+    protected internal float speed;
     protected float detectionRange;
     public float DetectionRange {get { return detectionRange; }}
     public float MeleeAttackRange {get; protected set;}
@@ -40,9 +40,9 @@ namespace Creature
     private MaterialController _materialController;
     private void Update()
     {
-        if (_currentState != null)
+        if (currentState != null)
         {
-            _currentState.OnStateUpdate();
+            currentState.OnStateUpdate();
         }
     }
     public MaterialController MaterialController
@@ -82,11 +82,15 @@ namespace Creature
             return directionToPlayer.y > 0 ? DirectionType.FRONT : DirectionType.BACK;
         }
     }
-    private BaseState _currentState;
+    protected BaseState currentState;
     public void ChangeState()
     {
         if (_currentStateCoroutine != null)
+        {
+            currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
+        }
+            
         
         BaseState[] states = States;
         List<int> weights = new();
@@ -97,14 +101,20 @@ namespace Creature
             weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
         }
         randomIndex = Random.Range(0, weights.Count);
-        _currentState = states[weights[randomIndex]];
+        currentState = states[weights[randomIndex]];
         _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
     }
 
     public void ChangeState(BaseState state)
     {
         if (_currentStateCoroutine != null)
+        {
+            currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
+        }
+            
+        currentState = state;
+        
         _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
     }
     
@@ -120,10 +130,12 @@ namespace Creature
     }
     
     public virtual IEnumerator Stun()
-    {
-         StopCoroutine(_currentStateCoroutine);
-         yield return new WaitForSeconds(5f);
-         ChangeState();
+    { 
+        currentState.OnStateExit();
+        StopCoroutine(_currentStateCoroutine);
+         
+        yield return new WaitForSeconds(5f);
+        ChangeState();
     }
     
     public void TrackPlayer()
@@ -202,6 +214,10 @@ namespace Creature
         public virtual void OnStateUpdate()
         { 
         }
+        
+        public virtual void OnStateExit()
+        {
+        }
     }
     private BaseState[] _states;
     public BaseState[] States
@@ -242,7 +258,13 @@ namespace Creature
              currentHp -= (damage-temp);
          }
     }
-    
+
+    public virtual void StartMob()
+    {
+        currentHp = maxHp;
+        currentShield = 0;
+        ChangeState();
+    }
 }
 }
 
