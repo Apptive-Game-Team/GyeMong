@@ -25663,7 +25663,7 @@ MonoBehaviour:
     - rid: 2715780017853038623
       type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
       data:
-        _animator: {fileID: 1731116453}
+        _animator: {fileID: 0}
         _name: speed
         _value: 10
 --- !u!1001 &898458981
@@ -27997,7 +27997,7 @@ MonoBehaviour:
     - rid: 5804568743836647432
       type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
       data:
-        _animator: {fileID: 1731116453}
+        _animator: {fileID: 244854160}
         _name: speed
         _value: 1
 --- !u!1001 &1535209672
@@ -29101,12 +29101,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1583867805196641088, guid: 1d7e118437dcedd4cbeb69b4783e0b2f,
     type: 3}
   m_PrefabInstance: {fileID: 1686612971}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1731116453 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 192519716517853443, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
-    type: 3}
-  m_PrefabInstance: {fileID: 131510566}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1731893991
 PrefabInstance:

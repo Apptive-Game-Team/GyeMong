@@ -28,7 +28,7 @@ namespace Creature
 
     public float damage;
     
-    protected float speed;
+    protected internal float speed;
     protected float detectionRange;
     public float DetectionRange {get { return detectionRange; }}
     public float MeleeAttackRange {get; protected set;}
@@ -86,7 +86,11 @@ namespace Creature
     public void ChangeState()
     {
         if (_currentStateCoroutine != null)
+        {
+            currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
+        }
+            
         
         BaseState[] states = States;
         List<int> weights = new();
@@ -104,8 +108,13 @@ namespace Creature
     public void ChangeState(BaseState state)
     {
         if (_currentStateCoroutine != null)
+        {
+            currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
+        }
+            
         currentState = state;
+        
         _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
     }
     
@@ -121,10 +130,12 @@ namespace Creature
     }
     
     public virtual IEnumerator Stun()
-    {
-         StopCoroutine(_currentStateCoroutine);
-         yield return new WaitForSeconds(5f);
-         ChangeState();
+    { 
+        currentState.OnStateExit();
+        StopCoroutine(_currentStateCoroutine);
+         
+        yield return new WaitForSeconds(5f);
+        ChangeState();
     }
     
     public void TrackPlayer()
@@ -202,6 +213,10 @@ namespace Creature
         public abstract IEnumerator StateCoroutine();
         public virtual void OnStateUpdate()
         { 
+        }
+        
+        public virtual void OnStateExit()
+        {
         }
     }
     private BaseState[] _states;
