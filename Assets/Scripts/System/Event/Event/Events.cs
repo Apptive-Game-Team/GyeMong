@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Creature.Player.Component;
 using Unity.VisualScripting;
 using playerCharacter;
 
@@ -218,5 +219,16 @@ public class TriggerEvent : Event
         }
         
         return null;
+    }
+}
+
+public class EnqueueEvent : Event
+{
+    [SerializeReference]
+    private Event e;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        EventQueue.Instance.AddEvent(e);
+        yield return null;
     }
 }
