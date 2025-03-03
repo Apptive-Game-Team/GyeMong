@@ -15,10 +15,10 @@ namespace Creature.Minion.Slime
         [SerializeField] private float moveSpeed;
         [SerializeField] private float health;
         [SerializeField] private Transform target;
+        private const float divideRatio = 0.6f;
 
         private void Awake()
         {
-            target = PlayerCharacter.Instance.gameObject.transform;
             slimePrefab = gameObject;
             divisionLevel = 0;
             maxDivisionLevel = 2;
@@ -29,6 +29,7 @@ namespace Creature.Minion.Slime
 
         private void Start()
         {
+            target = PlayerCharacter.Instance.gameObject.transform;
             StartCoroutine(AttackPattern());
         }
 
@@ -119,7 +120,7 @@ namespace Creature.Minion.Slime
                 GameObject newSlime = Instantiate(slimePrefab, spawnPosition, Quaternion.identity);
                 Destroy(newSlime.GetComponent<DivisionSlime>());
 
-                newSlime.transform.localScale = new Vector2(transform.localScale.x * 0.7f, transform.localScale.y * 0.7f);
+                newSlime.transform.localScale = new Vector2(transform.localScale.x * divideRatio, transform.localScale.y * divideRatio);
 
                 newSlime.transform.localScale = Vector3.zero;
                 newSlime.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBounce);
@@ -127,11 +128,7 @@ namespace Creature.Minion.Slime
                     .OnComplete(() => newSlime.transform.DOMoveY(spawnPosition.y, 0.3f).SetEase(Ease.InBounce));
 
                 DivisionSlime slimeComponent = newSlime.AddComponent<DivisionSlime>();
-
-                if (slimeComponent != null)
-                {
-                    slimeComponent.divisionLevel = divisionLevel + 1;
-                }
+                slimeComponent.divisionLevel = divisionLevel + 1;
             }
         }
     }

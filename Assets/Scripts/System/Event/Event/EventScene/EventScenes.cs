@@ -34,13 +34,13 @@ public class SlimeEvents : EventScene
         slime.SetActive(true);
         Vector3 startPosition = slime.transform.position;
         Vector3 targetPosition = targetSlime.transform.position;
-        float duration = 2f;
+        float duration = Random.Range(1.5f, 2.5f);
         float elapsedTime = 0f;
         float delay = 0.01f;
 
         while (elapsedTime < duration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += delay;
             float t = elapsedTime / duration;
             slime.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
             yield return new WaitForSeconds(delay);
