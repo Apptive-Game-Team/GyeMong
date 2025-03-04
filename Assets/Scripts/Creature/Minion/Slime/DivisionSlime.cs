@@ -1,42 +1,71 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using playerCharacter;
-using Creature;
 
 namespace Creature.Minion.Slime
 {
     public class DivisionSlime : Creature
     {
+        private const float divideRatio = 0.6f;
+        private const float damageRatio = 0.5f;
         public GameObject slimePrefab;
-        [SerializeField] public int divisionLevel;
+        [SerializeField] private int divisionLevel;
         [SerializeField] private int maxDivisionLevel;
-        [SerializeField] private float attackRange;
         [SerializeField] private float moveSpeed;
         [SerializeField] private Transform target;
-        private const float divideRatio = 0.6f;
+        private GameObject rangedAttack;
+        private float meleeAttackDelay;
+        private float dashAttackDelay;
+        private float rangedAttackDelay;
+        private float animatorDelay;
+        private Animator animator;
+        private Coroutine startCoroutine;
+        private Coroutine curCoroutine;
+        private bool isMove = true;
 
         private void Awake()
         {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            animator = GetComponent<Animator>();
             currentHp = 10f;
+
             slimePrefab = gameObject;
+
             divisionLevel = 0;
             maxDivisionLevel = 2;
-            attackRange = 2f;
+            MeleeAttackRange = 2f;
+            RangedAttackRange = 10f;
             moveSpeed = Random.Range(2.5f, 3.5f);
+
+            rangedAttack = transform.GetChild(0).gameObject;
+
+            meleeAttackDelay = 0.3f;
+            rangedAttackDelay = 1f;
+            dashAttackDelay = 1f;
+            animatorDelay= 0.5f;
+
+            damage = 10f;
         }
 
         private void Start()
         {
             target = PlayerCharacter.Instance.gameObject.transform;
-            StartCoroutine(AttackPattern());
+            startCoroutine = StartCoroutine(Patterns());
         }
 
         private void Update()
         {
             if (target == null) return;
-            MoveTowardsTarget();
+            if (isMove)
+            {
+                MoveTowardsTarget();
+            }
+            FaceToPlayer();
         }
 
         private void MoveTowardsTarget()
@@ -45,7 +74,20 @@ namespace Creature.Minion.Slime
             transform.position += direction * moveSpeed * Time.deltaTime;
         }
 
-        private IEnumerator AttackPattern()
+        public void FaceToPlayer()
+        {
+            float scale = Mathf.Abs(transform.localScale.x);
+            if (PlayerCharacter.Instance.transform.position.x < transform.position.x)
+            {
+                transform.localScale = new Vector3(-scale, transform.localScale.y, transform.localScale.z);
+            }
+            else
+            {
+                transform.localScale = new Vector3(scale, transform.localScale.y, transform.localScale.z);
+            }
+        }
+
+        private IEnumerator Patterns()
         {
             while (true)
             {
@@ -57,19 +99,22 @@ namespace Creature.Minion.Slime
 
                 float distance = Vector3.Distance(transform.position, target.position);
 
-                if (distance <= attackRange)
+                if (distance <= MeleeAttackRange)
                 {
-                    MeleeAttack();
+                    curCoroutine = StartCoroutine(MeleeAttack());
                 }
                 else
                 {
-                    if (Random.value < 0.5f)
+                    if (distance <= RangedAttackRange)
                     {
-                        RangedAttack();
-                    }
-                    else
-                    {
-                        DashAttack();
+                        if (Random.value < 0.5f)
+                        {
+                            curCoroutine = StartCoroutine(RangedAttack());
+                        }
+                        else
+                        {
+                            curCoroutine = StartCoroutine(DashAttack());
+                        }
                     }
                 }
 
@@ -77,19 +122,58 @@ namespace Creature.Minion.Slime
             }
         }
 
-        private void MeleeAttack()
+        private IEnumerator MeleeAttack()
         {
+            if (curCoroutine != null) StopCoroutine(curCoroutine);
+            isMove = false;
+            animator.SetTrigger("MeleeCharge");
+            yield return new WaitForSeconds(meleeAttackDelay);
 
+            animator.SetTrigger("MeleeAttack");
+            if (Random.value < 0.5f) PlayerCharacter.Instance.TakeDamage(damage);
+
+            yield return new WaitForSeconds(animatorDelay);
+            animator.SetTrigger("Idle");
+            yield return new WaitForSeconds(animatorDelay);
+            isMove = true;
         }
 
-        private void RangedAttack()
+        private IEnumerator RangedAttack()
         {
+            if (curCoroutine != null) StopCoroutine(curCoroutine);
+            isMove = false;
+            animator.SetTrigger("RangedCharge");
+            yield return new WaitForSeconds(rangedAttackDelay);
 
+            animator.SetTrigger("RangedAttack");
+            GameObject attack = Instantiate(rangedAttack, transform.position, Quaternion.identity);
+            attack.transform.localScale = transform.localScale * divideRatio;
+            attack.SetActive(true);
+
+            yield return new WaitForSeconds(animatorDelay);
+            animator.SetTrigger("Idle");
+            yield return new WaitForSeconds(animatorDelay);
+            isMove = true;
         }
 
-        private void DashAttack()
+        private IEnumerator DashAttack()
         {
-            
+            if (curCoroutine != null) StopCoroutine(curCoroutine);
+            isMove = false;
+            animator.SetTrigger("MeleeCharge");
+
+            Vector3 direction = (target.position - transform.position).normalized;
+            float dashDistance = 0.5f;
+            Vector3 dashTargetPosition = target.position + direction * dashDistance;
+            yield return new WaitForSeconds(dashAttackDelay);
+
+            animator.SetTrigger("DashAttack");
+            transform.DOMove(dashTargetPosition, 0.3f).SetEase(Ease.OutQuad);
+
+            yield return new WaitForSeconds(animatorDelay);
+            animator.SetTrigger("Idle");
+            yield return new WaitForSeconds(animatorDelay);
+            isMove = true; 
         }
 
         public override void OnAttacked(float damage)
@@ -97,17 +181,23 @@ namespace Creature.Minion.Slime
             base.OnAttacked(damage);
             if (currentHp <= 0)
             {
-                Die();
+                StartCoroutine(Die());
             }
         }
 
-        private void Die()
+        private IEnumerator Die()
         {
+            StopCoroutine(startCoroutine);
+
             if (divisionLevel < maxDivisionLevel)
             {
                 Divide();
             }
-
+            else
+            {
+                animator.SetTrigger("Dead");
+                yield return new WaitForSeconds(0.3f);
+            }
             Destroy(gameObject);
         }
 
@@ -126,6 +216,9 @@ namespace Creature.Minion.Slime
                     .OnComplete(() => newSlime.transform.DOMoveY(spawnPosition.y, 0.3f).SetEase(Ease.InBounce));
 
                 DivisionSlime slimeComponent = newSlime.AddComponent<DivisionSlime>();
+                slimeComponent.damage *= damageRatio;
+                slimeComponent.MeleeAttackRange *= divideRatio;
+                slimeComponent.RangedAttackRange *= divideRatio;
                 slimeComponent.divisionLevel = divisionLevel + 1;
             }
         }
