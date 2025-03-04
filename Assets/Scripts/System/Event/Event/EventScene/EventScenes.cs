@@ -47,6 +47,8 @@ public class SlimeEvents : EventScene
         }
         slime.SetActive(false);
 
-        targetSlime.transform.localScale *= 1.15f;
+        targetSlime.transform.localScale *= 1.25f;
+        yield return new WaitForSeconds(0.2f);
+        targetSlime.transform.localScale *= 0.92f;
     }
 }
