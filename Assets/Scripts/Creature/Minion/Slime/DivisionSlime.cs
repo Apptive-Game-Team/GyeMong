@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using playerCharacter;
+using Creature;
 
 namespace Creature.Minion.Slime
 {
-    public class DivisionSlime : MonoBehaviour, IAttackable
+    public class DivisionSlime : Creature
     {
         public GameObject slimePrefab;
         [SerializeField] public int divisionLevel;
         [SerializeField] private int maxDivisionLevel;
         [SerializeField] private float attackRange;
         [SerializeField] private float moveSpeed;
-        [SerializeField] private float health;
         [SerializeField] private Transform target;
         private const float divideRatio = 0.6f;
 
         private void Awake()
         {
+            currentHp = 10f;
             slimePrefab = gameObject;
             divisionLevel = 0;
             maxDivisionLevel = 2;
             attackRange = 2f;
             moveSpeed = Random.Range(2.5f, 3.5f);
-            health = 10f;
         }
 
         private void Start()
@@ -69,7 +69,7 @@ namespace Creature.Minion.Slime
                     }
                     else
                     {
-                        ChargeAttack();
+                        DashAttack();
                     }
                 }
 
@@ -87,15 +87,15 @@ namespace Creature.Minion.Slime
 
         }
 
-        private void ChargeAttack()
+        private void DashAttack()
         {
-
+            
         }
 
-        public void OnAttacked(float damage)
+        public override void OnAttacked(float damage)
         {
-            health -= damage;
-            if (health <= 0)
+            base.OnAttacked(damage);
+            if (currentHp <= 0)
             {
                 Die();
             }
@@ -117,13 +117,11 @@ namespace Creature.Minion.Slime
             {
                 Vector3 spawnPosition = transform.position + Random.insideUnitSphere;
                 
-                GameObject newSlime = Instantiate(slimePrefab, spawnPosition, Quaternion.identity);
+                GameObject newSlime = Instantiate(gameObject, spawnPosition, Quaternion.identity);
                 Destroy(newSlime.GetComponent<DivisionSlime>());
-
-                newSlime.transform.localScale = new Vector2(transform.localScale.x * divideRatio, transform.localScale.y * divideRatio);
-
-                newSlime.transform.localScale = Vector3.zero;
-                newSlime.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBounce);
+                
+                newSlime.transform.localScale = transform.localScale * divideRatio;
+                
                 newSlime.transform.DOMoveY(spawnPosition.y + 1f, 0.3f).SetEase(Ease.OutQuad)
                     .OnComplete(() => newSlime.transform.DOMoveY(spawnPosition.y, 0.3f).SetEase(Ease.InBounce));
 

@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 178848123}
   - component: {fileID: 178848122}
   - component: {fileID: 178848124}
+  - component: {fileID: 178848125}
   m_Layer: 0
   m_Name: DivisionSlime
   m_TagString: Untagged
@@ -233,7 +234,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 40ac6f0cd04e4b14cb38a521126ba3d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -332,6 +333,19 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &178848125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178848121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d66079f6584a2b8638783f028adf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materialDatas: {fileID: 11400000, guid: b83ab9d50893f408cbb45301ce80bf11, type: 2}
 --- !u!1 &195094137
 GameObject:
   m_ObjectHideFlags: 0
