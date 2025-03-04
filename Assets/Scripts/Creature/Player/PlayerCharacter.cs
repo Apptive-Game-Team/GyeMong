@@ -333,9 +333,9 @@ namespace playerCharacter
 
             AttackCollider atkComp = attackCollider.GetComponent<AttackCollider>();
             atkComp.Init(soundController);
-            atkComp.SetDamage(attackPower * swordAuraCoef);
-            attackCollider.transform.localScale *= swordAuraCoef;
-            Destroy(attackCollider, delayTime * 2);
+            atkComp.SetDamage(stat.attackPower.GetValue() * stat.skillCoef.GetValue());
+            attackCollider.transform.localScale *= stat.skillCoef.GetValue();
+            Destroy(attackCollider, stat.attackDelay.GetValue() * 2);
         }
 
         private void Die()

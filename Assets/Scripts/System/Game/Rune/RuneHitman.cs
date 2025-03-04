@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using playerCharacter;
 using UnityEngine;
+using Visual.Effect;
 
 //Super-Crazy Primal Class...
 public class RuneHitman : SingletonObject<RuneHitman>
@@ -12,7 +13,7 @@ public class RuneHitman : SingletonObject<RuneHitman>
         {
             yield return new WaitForSeconds(3f);
             EffectCreator.Instance.CreateEffect(1,PlayerCharacter.Instance.transform);
-            PlayerCharacter.Instance.Heal(PlayerCharacter.Instance.maxHealth * 0.01f);
+            PlayerCharacter.Instance.Heal(PlayerCharacter.Instance.stat.healthMax.GetValue());
             Debug.Log("Rune_Breeze Healed");    
         }
     }
@@ -20,12 +21,10 @@ public class RuneHitman : SingletonObject<RuneHitman>
     
     public void Activate_SwordAuraExercise()
     {
-        PlayerCharacter.Instance.swordAuraCoef = 1.5f;
     }
 
     public void Activate_SwordAuraExercise_Effecient()
     {
-        PlayerCharacter.Instance.skillUsageGauge *= 0.9f;
     }
 
     public void Activate_SwordAuraExercise_LimitBreak()

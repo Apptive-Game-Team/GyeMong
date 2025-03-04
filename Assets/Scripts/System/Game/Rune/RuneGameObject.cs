@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RuneObject : MonoBehaviour
+public class RuneGameObject : MonoBehaviour
 {
     [SerializeField] RuneData runeData;
     SpriteRenderer spriteRenderer;

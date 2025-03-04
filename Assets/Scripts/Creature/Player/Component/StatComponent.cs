@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 [Serializable]
@@ -24,6 +25,7 @@ using UnityEngine;
         public Stat healthMax;
         public Stat skillUsageGauge;
         public Stat attackPower;
+        public Stat skillCoef;
         public Stat grazeMax;
         public Stat grazeGainOnGraze;
         public Stat grazeGainOnAttack;
