@@ -148,7 +148,6 @@ namespace Creature.Minion.Slime
 
             animator.SetTrigger("RangedAttack");
             GameObject attack = Instantiate(rangedAttack, transform.position, Quaternion.identity, transform);
-            attack.transform.localScale = transform.localScale * divideRatio;
             attack.SetActive(true);
 
             yield return new WaitForSeconds(animatorDelay);
