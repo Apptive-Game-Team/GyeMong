@@ -31,12 +31,14 @@ public class SlimeEvents : EventScene
 
     private IEnumerator MoveSlimeToTarget(GameObject slime)
     {
-        slime.SetActive(true);
         Vector3 startPosition = slime.transform.position;
         Vector3 targetPosition = targetSlime.transform.position;
         float duration = Random.Range(1.5f, 2.5f);
         float elapsedTime = 0f;
         float delay = 0.01f;
+        Vector3 scale = slime.transform.localScale;
+        slime.transform.localScale = startPosition.x < targetPosition.x ? scale : new Vector3(-scale.x, scale.y, scale.z);
+        slime.SetActive(true);
 
         while (elapsedTime < duration)
         {
