@@ -143,7 +143,7 @@ namespace Creature.Boss.Spring.Elf
         }
         public class MeleeAttack : ElfState
         {
-            float delayTime = 0.5f;
+            float meleeAttackdelayTime = 0.5f;
             public override int GetWeight()
             {
                 return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
@@ -152,12 +152,12 @@ namespace Creature.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(meleeAttackdelayTime);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
                 SpawnAttackCollider();
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(meleeAttackdelayTime);
                 Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState();
             }
