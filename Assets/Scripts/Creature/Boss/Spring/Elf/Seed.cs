@@ -20,6 +20,8 @@ namespace Creature.Boss.Spring.Elf
         private float targetDistance = 10f;
         private float traveledDistance = 0f;
         private bool isReflected = false;
+        private float angleRange = 20f;
+        private float explosionRadius = 2f;
 
         private void Awake()
         {
@@ -49,7 +51,6 @@ namespace Creature.Boss.Spring.Elf
         {
             Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
             float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-            float angleRange = 20f;
             float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
 
             float randomAngleRad = randomAngle * Mathf.Deg2Rad;
@@ -73,7 +74,6 @@ namespace Creature.Boss.Spring.Elf
         {
             _explosionSoundObject.PlayAsync();
             _eventObject.Trigger();
-            float explosionRadius = 2f;
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
             foreach (Collider2D enemy in hitEnemies)
             {
