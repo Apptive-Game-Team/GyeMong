@@ -9,20 +9,25 @@ namespace Creature.Boss.Spring.Elf
     {
         private GameObject player;
         private Vector3 direction;
-        private float speed = 10f;
+        private float speed = 15f;
         private float damage = 20f;
         private EnemyAttackInfo enemyAttackInfo;
 
         private SoundObject _soundObject;
         private SoundObject _explosionSoundObject;
         private EventObject _eventObject;
+        private Rigidbody2D rb;
+        private float targetDistance = 10f;
+        private float traveledDistance = 0f;
+        private bool isReflected = false;
+
         private void Awake()
         {
             _eventObject = GetComponent<EventObject>();
             _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
             _explosionSoundObject = GetComponent<SoundObject>();
             player = GameObject.FindGameObjectWithTag("Player");
-            direction = (player.transform.position - transform.position).normalized;
+            rb = GetComponent<Rigidbody2D>();
 
             enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
             enemyAttackInfo.Initialize(damage, _soundObject, true, true);
@@ -30,40 +35,37 @@ namespace Creature.Boss.Spring.Elf
 
         private void OnEnable()
         {
-            StartCoroutine(FireArrow());
+            StartCoroutine(FireArrow(targetDistance));
             RotateArrow();
         }
+
         private void RotateArrow()
         {
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
-        private IEnumerator FireArrow()
+
+        private IEnumerator FireArrow(float remainingDistance)
         {
             Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
             float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-            float angleRange = 45f;
+            float angleRange = 20f;
             float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
 
             float randomAngleRad = randomAngle * Mathf.Deg2Rad;
             direction = new Vector3(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad), 0).normalized;
 
             transform.rotation = Quaternion.Euler(0, 0, randomAngle);
-
-            Vector3 startPosition = transform.position;
-            Vector3 targetPosition = player.transform.position;
-            float distance = Vector3.Distance(startPosition, targetPosition);
-            float distanceMovement = 0f;
-
-            while (distanceMovement < distance)
+            traveledDistance = 0f;
+            rb.velocity = direction * speed;
+            _soundObject.PlayAsync();
+            while (traveledDistance < remainingDistance)
             {
-                transform.position += direction * speed * Time.deltaTime;
-                distanceMovement = Vector3.Distance(startPosition, transform.position);
+                traveledDistance += speed * Time.deltaTime;
                 yield return null;
             }
-            _soundObject.PlayAsync();
+            rb.velocity = Vector2.zero;
             yield return new WaitForSeconds(1f);
-
             Explode();
         }
 
@@ -79,6 +81,24 @@ namespace Creature.Boss.Spring.Elf
                 {
                     PlayerCharacter.Instance.TakeDamage(damage / 2);
                 }
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("PlayerAttack") && !isReflected)
+            {
+                isReflected = true;
+                Vector2 playerAttackDirection = PlayerCharacter.Instance.mouseDirection;
+                direction = playerAttackDirection.normalized;
+                traveledDistance = 0f;
+                rb.velocity = direction * speed;
+                RotateArrow();
+            }
+            else if (collision.CompareTag("Boss") && isReflected)
+            {
+                collision.GetComponent<Boss>().StartCoroutine(collision.GetComponent<Boss>().Stun());
+                Destroy(gameObject);
             }
         }
     }

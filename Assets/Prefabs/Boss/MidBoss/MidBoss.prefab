@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 2303165326997353410}
   m_Layer: 0
   m_Name: MidBoss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -189,7 +189,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8632344476378004022}
   - {fileID: 7688074528975113545}
   - {fileID: 799734533708190611}
   - {fileID: 1168519218985706024}
@@ -400,6 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19cbe0d89f0c4ce6a638ff23b8c6743d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHp: 0
   currentShield: 0
   damage: 10
   arrowPrefab: {fileID: 1349092434517921609, guid: 698ededced094f444b9cd52caa8c484b,
@@ -408,86 +408,6 @@ MonoBehaviour:
     type: 3}
   vinePrefab: {fileID: 1349092434517921609, guid: fb62a8a2deaf08d40a4dfed66f56462b,
     type: 3}
-  meleeAttackPrefab: {fileID: 6925505104704221292}
+  meleeAttackPrefab: {fileID: 0}
   arrowSoundObject: {fileID: 5473089280011465190}
   vineSoundObject: {fileID: 1832858006457810338}
---- !u!1001 &8496519385973068458
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 844737725874419187}
-    m_Modifications:
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.07999992
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1582423106245993158, guid: c36ee9d1cc715c342abb69e7151abce8,
-        type: 3}
-      propertyPath: m_Name
-      value: MeleeAttack
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c36ee9d1cc715c342abb69e7151abce8, type: 3}
---- !u!1 &6925505104704221292 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1582423106245993158, guid: c36ee9d1cc715c342abb69e7151abce8,
-    type: 3}
-  m_PrefabInstance: {fileID: 8496519385973068458}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8632344476378004022 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 154684577958717596, guid: c36ee9d1cc715c342abb69e7151abce8,
-    type: 3}
-  m_PrefabInstance: {fileID: 8496519385973068458}
-  m_PrefabAsset: {fileID: 0}

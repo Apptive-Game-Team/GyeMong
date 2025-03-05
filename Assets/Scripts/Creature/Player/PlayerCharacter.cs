@@ -21,6 +21,9 @@ namespace playerCharacter
         private Vector2 movement;
         private Vector2 lastMovementDirection;
         private Vector2 mousePosition;
+        public Vector2 mouseDirection { get; private set; }
+
+
         private Rigidbody2D playerRb;
         private Animator animator;
         private PlayerSoundController soundController;
@@ -133,7 +136,7 @@ namespace playerCharacter
             soundController.SetBool(PlayerSoundType.FOOT, isMoving);
 
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+            mouseDirection = (mousePosition - playerRb.position).normalized;
 
             if (!isDashing && isMoving)
             {
@@ -304,7 +307,7 @@ namespace playerCharacter
         private void SpawnAttackCollider()
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+            mouseDirection = (mousePosition - playerRb.position).normalized;
             Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
 
             float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
@@ -361,6 +364,8 @@ namespace playerCharacter
 
         private IEnumerator BindCoroutine(float duration)
         {
+            movement = Vector2.zero;
+            playerRb.velocity = Vector2.zero;
             canMove = false;
             yield return new WaitForSeconds(duration);
             canMove = true;
