@@ -10,10 +10,10 @@ namespace Creature.Minion.Slime
         private const float divideRatio = 0.6f;
         private const float damageRatio = 0.5f;
         public GameObject slimePrefab;
-        [SerializeField] private int divisionLevel;
-        [SerializeField] private int maxDivisionLevel;
-        [SerializeField] private float moveSpeed;
-        [SerializeField] private Transform target;
+        private int divisionLevel;
+        private int maxDivisionLevel;
+        private float moveSpeed;
+        private Transform target;
         private GameObject rangedAttack;
         private float meleeAttackDelay;
         private float dashAttackDelay;
@@ -38,7 +38,7 @@ namespace Creature.Minion.Slime
 
             divisionLevel = 0;
             maxDivisionLevel = 2;
-            MeleeAttackRange = 2f;
+            MeleeAttackRange = 4f;
             RangedAttackRange = 10f;
             moveSpeed = Random.Range(2.5f, 3.5f);
 
@@ -130,7 +130,8 @@ namespace Creature.Minion.Slime
             yield return new WaitForSeconds(meleeAttackDelay);
 
             animator.SetTrigger("MeleeAttack");
-            if (Random.value < 0.5f) PlayerCharacter.Instance.TakeDamage(damage);
+            float distance = Vector3.Distance(transform.position, target.position);
+            if (distance < MeleeAttackRange) PlayerCharacter.Instance.TakeDamage(damage);
 
             yield return new WaitForSeconds(animatorDelay);
             animator.SetTrigger("Idle");
