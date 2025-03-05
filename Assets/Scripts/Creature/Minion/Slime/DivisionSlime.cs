@@ -147,7 +147,7 @@ namespace Creature.Minion.Slime
             yield return new WaitForSeconds(rangedAttackDelay);
 
             animator.SetTrigger("RangedAttack");
-            GameObject attack = Instantiate(rangedAttack, transform.position, Quaternion.identity);
+            GameObject attack = Instantiate(rangedAttack, transform.position, Quaternion.identity, transform);
             attack.transform.localScale = transform.localScale * divideRatio;
             attack.SetActive(true);
 
