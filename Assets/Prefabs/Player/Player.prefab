@@ -341,6 +341,7 @@ MonoBehaviour:
   _statData: {fileID: 11400000, guid: 70df7f5775b4eb54994283a5875ac117, type: 2}
   curHealth: 0
   curSkillGauge: 0
+  swordAuraCoef: 1
   isControlled: 0
   attackColliderPrefab: {fileID: 2848122850891802944, guid: 8e8beeeb017f3414891b7e04a9438725,
     type: 3}
@@ -1602,37 +1603,37 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 5246442373933432833
-      type: {class: FadeOutEvent, ns: , asm: Assembly-CSharp}
+      type: {class: FadeOutEvent, ns: '', asm: Assembly-CSharp}
       data: 
     - rid: 5246442373933432834
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      type: {class: DelayEvent, ns: '', asm: Assembly-CSharp}
       data:
         delayTime: 1
     - rid: 5246442373933432835
-      type: {class: PrintTextEvent, ns: , asm: Assembly-CSharp}
+      type: {class: PrintTextEvent, ns: '', asm: Assembly-CSharp}
       data:
         header: GAME OVER
         description: Press Interaction Key to Revive
         textColor: {r: 1, g: 1, b: 1, a: 1}
     - rid: 5246442374326124547
-      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
+      type: {class: SkippableDelayEvent, ns: '', asm: Assembly-CSharp}
       data:
         delayTime: 777777
     - rid: 5246442374326124552
-      type: {class: LoadDataEvent, ns: , asm: Assembly-CSharp}
+      type: {class: LoadDataEvent, ns: '', asm: Assembly-CSharp}
       data: 
     - rid: 5246442374326124553
-      type: {class: ClearTextEvent, ns: , asm: Assembly-CSharp}
+      type: {class: ClearTextEvent, ns: '', asm: Assembly-CSharp}
       data: 
     - rid: 5246442374326124554
-      type: {class: FadeInEvent, ns: , asm: Assembly-CSharp}
+      type: {class: FadeInEvent, ns: '', asm: Assembly-CSharp}
       data: 
     - rid: 5246442393686769664
-      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
+      type: {class: HideBossHealthBarEvent, ns: '', asm: Assembly-CSharp}
       data:
         _boss: {fileID: 0}
     - rid: 5246442393686769665
-      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      type: {class: TriggerEvent, ns: '', asm: Assembly-CSharp}
       data:
         triggerable: {fileID: 5083188182615057341}
 --- !u!1 &6030112658111273419
@@ -1688,7 +1689,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 668130699139874817
-      type: {class: TimeScaleEvent, ns: , asm: Assembly-CSharp}
+      type: {class: TimeScaleEvent, ns: '', asm: Assembly-CSharp}
       data:
         _timeScale: 0.5
         _modifyDuration: 0.3

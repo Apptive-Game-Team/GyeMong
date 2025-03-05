@@ -44,7 +44,7 @@ namespace playerCharacter
             base.Awake();
             
             stat = _statData.stat;
-            curHealth = stat.healthMax.GetValue();
+            curHealth = stat.healthMax.TotalValue;
             curSkillGauge = 0f;
         }
 
@@ -113,7 +113,7 @@ namespace playerCharacter
                 StartCoroutine(Attack());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge >= stat.skillUsageGauge.GetValue())
+            if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge >= stat.skillUsageGauge.TotalValue)
             {
                 StartCoroutine(SkillAttack());
             }
@@ -122,7 +122,7 @@ namespace playerCharacter
         private void MoveCharacter()
         {
             soundController.SetRun(isMoving);
-            playerRb.velocity = movement * stat.moveSpeed.GetValue();
+            playerRb.velocity = movement * stat.moveSpeed.TotalValue;
         }
 
         private void UpdateState()
@@ -152,7 +152,7 @@ namespace playerCharacter
             curHealth -= damage;
             changeListenerCaller.CallHpChangeListeners(curHealth);
             TakeGauge();
-            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/stat.healthMax.GetValue()));
+            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/stat.healthMax.TotalValue));
             
             if (curHealth <= 0)
             {
@@ -167,7 +167,7 @@ namespace playerCharacter
 
         public void TakeGauge()
         {
-            curSkillGauge -= stat.grazeGainOnGraze.GetValue();
+            curSkillGauge -= stat.grazeGainOnGraze.TotalValue;
             if (curSkillGauge < 0)
             {
                 curSkillGauge = 0f;
@@ -177,10 +177,10 @@ namespace playerCharacter
 
         public void AttackIncreaseGauge()
         {
-            curSkillGauge += stat.grazeGainOnAttack.GetValue();
-            if (curSkillGauge > stat.grazeMax.GetValue())
+            curSkillGauge += stat.grazeGainOnAttack.TotalValue;
+            if (curSkillGauge > stat.grazeMax.TotalValue)
             {
-                curSkillGauge = stat.grazeMax.GetValue();
+                curSkillGauge = stat.grazeMax.TotalValue;
             }
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
         }
@@ -188,9 +188,9 @@ namespace playerCharacter
         public void Heal(float amount)
         {
             curHealth += amount;
-            if (curHealth > stat.healthMax.GetValue())
+            if (curHealth > stat.healthMax.TotalValue)
             {
-                curHealth = stat.healthMax.GetValue();
+                curHealth = stat.healthMax.TotalValue;
             }
             changeListenerCaller.CallHpChangeListeners(curHealth);
         }
@@ -198,10 +198,10 @@ namespace playerCharacter
         public void GrazeIncreaseGauge(float ratio)
         {
             soundController.Trigger(PlayerSoundType.GRAZE);
-            curSkillGauge += stat.grazeGainOnGraze.GetValue() / ratio;
-            if (curSkillGauge > stat.grazeMax.GetValue())
+            curSkillGauge += stat.grazeGainOnGraze.TotalValue / ratio;
+            if (curSkillGauge > stat.grazeMax.TotalValue)
             {
-                curSkillGauge = stat.grazeMax.GetValue();
+                curSkillGauge = stat.grazeMax.TotalValue;
             }
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
         }
@@ -214,7 +214,7 @@ namespace playerCharacter
             material.SetFloat("_BlinkTrigger", 1f);
             yield return new WaitForSeconds(blinkDelay);
             material.SetFloat("_BlinkTrigger", 0f);
-            yield return new WaitForSeconds(stat.invincibilityDuration.GetValue() - blinkDelay);
+            yield return new WaitForSeconds(stat.invincibilityDuration.TotalValue - blinkDelay);
 
             isInvincible = false;
         }
@@ -230,16 +230,16 @@ namespace playerCharacter
             Vector2 dashDirection = lastMovementDirection.normalized;
             Vector2 startPosition = playerRb.position;
 
-            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.dashDistance.GetValue(), LayerMask.GetMask("Wall"));
-            Vector2 targetPosition = hit.collider == null ? startPosition + dashDirection * stat.dashDistance.GetValue() : hit.point + hit.normal * 0.1f;
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.dashDistance.TotalValue, LayerMask.GetMask("Wall"));
+            Vector2 targetPosition = hit.collider == null ? startPosition + dashDirection * stat.dashDistance.TotalValue : hit.point + hit.normal * 0.1f;
             Debug.Log($"{startPosition} , {targetPosition} , {hit.collider}");
 
             float elapsedTime = 0f;
 
-            while (elapsedTime < stat.dashDuration.GetValue())
+            while (elapsedTime < stat.dashDuration.TotalValue)
             {
                 elapsedTime += Time.deltaTime;
-                playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / stat.dashDuration.GetValue()));
+                playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / stat.dashDuration.TotalValue));
                 yield return null;
             }
 
@@ -248,7 +248,7 @@ namespace playerCharacter
             canMove = true;
             animator.SetBool("isDashing", false);
 
-            yield return new WaitForSeconds(stat.dashCooldown.GetValue());
+            yield return new WaitForSeconds(stat.dashCooldown.TotalValue);
 
             isDashing = false;
         }
@@ -267,7 +267,7 @@ namespace playerCharacter
 
             canMove = true;
             
-            yield return new WaitForSeconds(stat.attackDelay.GetValue());
+            yield return new WaitForSeconds(stat.attackDelay.TotalValue);
 
 
             animator.SetBool("isAttacking", false);
@@ -282,7 +282,7 @@ namespace playerCharacter
             canMove = false;
             animator.SetBool("isAttacking", true);
 
-            curSkillGauge -= stat.skillUsageGauge.GetValue();
+            curSkillGauge -= stat.skillUsageGauge.TotalValue;
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
             SpawnAttackCollider();
             SpawnSkillCollider();
@@ -292,7 +292,7 @@ namespace playerCharacter
 
             canMove = true;
 
-            yield return new WaitForSeconds(stat.attackDelay.GetValue());
+            yield return new WaitForSeconds(stat.attackDelay.TotalValue);
 
             animator.SetBool("isAttacking", false);
             
@@ -311,7 +311,7 @@ namespace playerCharacter
 
             GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation, transform);
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
-            Destroy(attackCollider, stat.attackDelay.GetValue());
+            Destroy(attackCollider, stat.attackDelay.TotalValue);
         }
 
         private void SpawnSkillCollider()
@@ -329,13 +329,13 @@ namespace playerCharacter
             attackParticle.SetFloat("_Rotation", Mathf.Atan2(mouseDirection.y, mouseDirection.x));
 
             Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
-            skillRigidbody.velocity = mouseDirection.normalized * stat.skillSpeed.GetValue();
+            skillRigidbody.velocity = mouseDirection.normalized * stat.skillSpeed.TotalValue;
 
             AttackCollider atkComp = attackCollider.GetComponent<AttackCollider>();
             atkComp.Init(soundController);
-            atkComp.SetDamage(stat.attackPower.GetValue() * stat.skillCoef.GetValue());
-            attackCollider.transform.localScale *= stat.skillCoef.GetValue();
-            Destroy(attackCollider, stat.attackDelay.GetValue() * 2);
+            atkComp.SetDamage(stat.attackPower.TotalValue * stat.skillCoef.TotalValue);
+            attackCollider.transform.localScale *= stat.skillCoef.TotalValue;
+            Destroy(attackCollider, stat.attackDelay.TotalValue * 2);
         }
 
         private void Die()
@@ -435,9 +435,9 @@ namespace playerCharacter
 
         public void Trigger()
         {
-            curHealth = stat.healthMax.GetValue();
+            curHealth = stat.healthMax.TotalValue;
             curSkillGauge = 0f;
-            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / stat.healthMax.GetValue()));
+            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / stat.healthMax.TotalValue));
         }
         
         public float CurrentHp { get { return curHealth; } }

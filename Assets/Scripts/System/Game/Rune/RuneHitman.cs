@@ -13,7 +13,7 @@ public class RuneHitman : SingletonObject<RuneHitman>
         {
             yield return new WaitForSeconds(3f);
             EffectCreator.Instance.CreateEffect(1,PlayerCharacter.Instance.transform);
-            PlayerCharacter.Instance.Heal(PlayerCharacter.Instance.stat.healthMax.GetValue());
+            PlayerCharacter.Instance.Heal(PlayerCharacter.Instance.stat.healthMax.TotalValue);
             Debug.Log("Rune_Breeze Healed");    
         }
     }

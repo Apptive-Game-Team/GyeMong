@@ -7,14 +7,16 @@ namespace System.Game.Rune
     }
     
     //Parameter : Stat, Value
-    public class ChangeValueRune : IRune
+    public class ModifyStatRune : IRune
     {
 
         public void OnActivate(RuneContext context)
         {
-            if (context is ChangeValueContext changeValueContext)
+            if (context is ModifyStatContext changeValueContext)
             {
-                //How to Find Specific Stats in StatComp..?
+                //How to Find Specific Stats in StatComp?
+                //Implement in StatComp, And I call the method.
+                //statComp.ChangeValueMethod();
             }
         }
 
@@ -49,12 +51,12 @@ namespace System.Game.Rune
         
     }
 
-    public class ChangeValueContext : RuneContext
+    public class ModifyStatContext : RuneContext
     {
         public StatComponent StatComp { get; }
         public float Amount { get; }
 
-        public ChangeValueContext(StatComponent stat, float amount)
+        public ModifyStatContext(StatComponent stat, float amount)
         {
             StatComp = stat;
             Amount = amount;

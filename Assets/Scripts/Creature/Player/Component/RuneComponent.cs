@@ -10,26 +10,13 @@ public class RuneComponent : MonoBehaviour
     [SerializeField] List<RuneData> acquiredRuneList = new List<RuneData>();
     int maxRuneEquipNum = 2;
 
-    private BuffComponent _buffComp;
+    private BuffComponent _buffComp = new BuffComponent();
     
     public List<RuneData> EquippedRuneList {  get { return equippedRuneList; } }
     public List<RuneData> AcquiredRuneList { get { return acquiredRuneList; } }
     public int MaxRuneEquipNum {  get { return maxRuneEquipNum; } }
 
     private List<IEnumerator> _activatingCoroutines = new();
-    
-    private void Start()
-    {
-        _buffComp = GetComponent<BuffComponent>();
-    }
-
-    private void TestAcquire()
-    {
-        RuneDataList dataList = RuneObjectCreator.Instance.runeDataList;
-        AcquireRune(dataList.GetRuneData(1));
-        AcquireRune(dataList.GetRuneData(2));
-        AcquireRune(dataList.GetRuneData(3));
-    }
 
     public void EquipRune(RuneData runeData)
     {

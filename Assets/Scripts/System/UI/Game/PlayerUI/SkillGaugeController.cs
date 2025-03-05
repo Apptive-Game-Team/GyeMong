@@ -30,7 +30,7 @@ namespace System.UI.Game.PlayerUI
         private void Start()
         {
             PlayerCharacter.Instance.changeListenerCaller.AddSkillGaugeChangeListener(this);
-            _maxSkillGauge = PlayerCharacter.Instance.stat.grazeMax.GetValue();
+            _maxSkillGauge = PlayerCharacter.Instance.stat.grazeMax.TotalValue;
         }
 
 

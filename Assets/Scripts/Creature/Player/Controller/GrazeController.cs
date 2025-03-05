@@ -97,7 +97,7 @@ public class GrazeController : MonoBehaviour
         {
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
-            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.grazeGainOnGraze.GetValue() / distance} with ratio {distance}");
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.grazeGainOnGraze.TotalValue / distance} with ratio {distance}");
             collider.GetComponent<EnemyAttackInfo>().grazed = true;
             _playerSoundController.Trigger(PlayerSoundType.GRAZE);
             GetComponentInChildren<EventObject>().Trigger();
