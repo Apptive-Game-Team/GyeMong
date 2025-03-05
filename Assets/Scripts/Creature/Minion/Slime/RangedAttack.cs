@@ -17,7 +17,8 @@ namespace Creature.Minion.Slime
         {
             player = PlayerCharacter.Instance.gameObject;
             direction = (player.transform.position - transform.position).normalized;
-
+            RotateArrow();
+            
             speed = 15f;
             damage = transform.parent.GetComponent<DivisionSlime>().damage;
 
@@ -28,7 +29,6 @@ namespace Creature.Minion.Slime
         private void OnEnable()
         {
             StartCoroutine(FireArrow());
-            RotateArrow();
         }
         private void RotateArrow()
         {

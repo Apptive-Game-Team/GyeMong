@@ -187,6 +187,7 @@ namespace Creature.Minion.Slime
 
         private IEnumerator Die()
         {
+            isMove = false;
             StopCoroutine(startCoroutine);
 
             if (divisionLevel < maxDivisionLevel)
