@@ -9,15 +9,17 @@ namespace Creature.Minion.Slime
     {
         private GameObject player;
         private Vector3 direction;
-        private float speed = 15f;
-        private SoundObject _soundObject;
-        private float damage = 20f;
+        private float speed;
+        private float damage;
         private EnemyAttackInfo enemyAttackInfo;
 
         private void Awake()
         {
             player = PlayerCharacter.Instance.gameObject;
             direction = (player.transform.position - transform.position).normalized;
+
+            speed = 15f;
+            damage = transform.parent.GetComponent<DivisionSlime>().damage;
 
             enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
             enemyAttackInfo.Initialize(damage, null, true, true);
@@ -31,7 +33,7 @@ namespace Creature.Minion.Slime
         private void RotateArrow()
         {
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, -angle));
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
         private IEnumerator FireArrow()
         {
