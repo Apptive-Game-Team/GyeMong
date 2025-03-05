@@ -10,11 +10,12 @@ namespace System.UI
     {
         protected ActionCode toggleKeyActionCode;
         private bool _isOptionOpened = false;
+        [SerializeField] private GameObject _window;
 
         protected void OpenOrCloseOption()
         {
             _isOptionOpened = !_isOptionOpened;
-            gameObject.SetActive(_isOptionOpened);
+            _window.SetActive(_isOptionOpened);
             PlayerCharacter.Instance.SetPlayerMove(!_isOptionOpened);
         }
     
@@ -26,8 +27,8 @@ namespace System.UI
 
         private void OnEnable()
         {
-            gameObject.SetActive(_isOptionOpened);
-            MouseInputManager.Instance.SetRaycaster(GetComponentInChildren<GraphicRaycaster>());
+            _window.SetActive(_isOptionOpened);
+            MouseInputManager.Instance.SetRaycaster(_window.GetComponentInChildren<GraphicRaycaster>());
         }
 
         public void OnKey(ActionCode action, InputType type)
