@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using playerCharacter;
+using Creature.Boss;
+using Unity.VisualScripting;
 
 namespace Creature.Minion.Slime
 {
@@ -23,6 +25,7 @@ namespace Creature.Minion.Slime
         private Coroutine startCoroutine;
         private Coroutine curCoroutine;
         private bool isMove = true;
+        private EnemyAttackInfo enemyAttackInfo;
 
         private void Awake()
         {
@@ -50,6 +53,9 @@ namespace Creature.Minion.Slime
             animatorDelay= 0.5f;
 
             damage = 10f;
+
+            enemyAttackInfo = transform.AddComponent<EnemyAttackInfo>();
+            enemyAttackInfo.Initialize(damage / 2, null, false, false, true, meleeAttackDelay);
         }
 
         private void Start()
@@ -163,7 +169,7 @@ namespace Creature.Minion.Slime
             animator.SetTrigger("MeleeCharge");
 
             Vector3 direction = (target.position - transform.position).normalized;
-            float dashDistance = 0.5f;
+            float dashDistance = 1.5f;
             Vector3 dashTargetPosition = target.position + direction * dashDistance;
             yield return new WaitForSeconds(dashAttackDelay);
 
