@@ -17,6 +17,7 @@ namespace Creature.Minion.Slime
         private float moveSpeed;
         private Transform target;
         private GameObject rangedAttack;
+        private float patternDelay;
         private float meleeAttackDelay;
         private float dashAttackDelay;
         private float rangedAttackDelay;
@@ -46,6 +47,7 @@ namespace Creature.Minion.Slime
 
             rangedAttack = transform.GetChild(0).gameObject;
 
+            patternDelay = 2f;
             meleeAttackDelay = 0.3f;
             rangedAttackDelay = 1f;
             dashAttackDelay = 1f;
@@ -120,7 +122,7 @@ namespace Creature.Minion.Slime
                     }
                 }
 
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(patternDelay);
             }
         }
 
