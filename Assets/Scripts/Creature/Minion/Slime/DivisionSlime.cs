@@ -25,7 +25,6 @@ namespace Creature.Minion.Slime
         private Coroutine startCoroutine;
         private Coroutine curCoroutine;
         private bool isMove = true;
-        private EnemyAttackInfo enemyAttackInfo;
 
         private void Awake()
         {
@@ -53,9 +52,6 @@ namespace Creature.Minion.Slime
             animatorDelay= 0.5f;
 
             damage = 10f;
-
-            enemyAttackInfo = transform.AddComponent<EnemyAttackInfo>();
-            enemyAttackInfo.Initialize(damage / 2, null, false, false, true, meleeAttackDelay);
         }
 
         private void Start()
