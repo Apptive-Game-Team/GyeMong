@@ -1,4 +1,5 @@
 using System.Collections;
+using Creature.Player.Component;
 
 namespace System.Game.Rune
 {
@@ -10,14 +11,7 @@ namespace System.Game.Rune
         ADD_BUFF,
         CHANGE_PLAYER_INPUT,
     }
-
-    public enum StatValueType
-    {
-        DEFAULT_VALUE,
-        FLAT_VALUE,
-        PERCENT_VALUE,
-        FINAL_PERCENT_VALUE,
-    }
+    
     
     public interface IRune
     {
@@ -36,7 +30,7 @@ namespace System.Game.Rune
                 //How to Find Specific Stats in StatComp?
                 //Implement in StatComp, And I call the method.
                 //statComp.ChangeValueMethod();
-                changeValueContext.StatComp.ModifyStat(changeValueContext.StatName, changeValueContext.ValueName, changeValueContext.Amount);
+                changeValueContext.StatComp.SetStatValue(changeValueContext.StatType, changeValueContext.ValueType, changeValueContext.Value);
             }
         }
 
@@ -96,17 +90,17 @@ namespace System.Game.Rune
     public class ModifyStatContext : RuneContext
     {
         public StatComponent StatComp { get;}
-        public string StatName { get; } //TO DO. Change into Enum.
-        public string ValueName { get; } //TO DO. Change into Enum.
-        public float Amount { get; }
+        public StatType StatType { get; } //TO DO. Change into Enum.
+        public StatValueType ValueType { get; } 
+        public float Value { get; }
 
         //Too Many Parameters. Struct. Need.
-        public ModifyStatContext(StatComponent statComp, string statName, string valueName ,float amount)
+        public ModifyStatContext(StatComponent statComp, StatType statType, StatValueType statValueType , float value)
         {
             StatComp = statComp;
-            StatName = statName;
-            ValueName = valueName;
-            Amount = amount;
+            StatType = statType;
+            ValueType = statValueType;
+            Value = value;
         }
     }
 

@@ -5,6 +5,8 @@ using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
 using Creature.Boss;
+using Creature.Player.Component;
+
 public class GrazeController : MonoBehaviour
 {
     public static GrazeController Instance { get; set;}
@@ -97,7 +99,7 @@ public class GrazeController : MonoBehaviour
         {
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
-            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.grazeGainOnGraze.TotalValue / distance} with ratio {distance}");
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.GrazeGainOnGraze / distance} with ratio {distance}");
             collider.GetComponent<EnemyAttackInfo>().grazed = true;
             _playerSoundController.Trigger(PlayerSoundType.GRAZE);
             GetComponentInChildren<EventObject>().Trigger();

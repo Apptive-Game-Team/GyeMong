@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Creature.Player.Component;
 using playerCharacter;
 using UnityEngine;
 using Visual.Effect;
@@ -13,7 +14,7 @@ public class RuneHitman : SingletonObject<RuneHitman>
         {
             yield return new WaitForSeconds(3f);
             EffectCreator.Instance.CreateEffect(1,PlayerCharacter.Instance.transform);
-            PlayerCharacter.Instance.Heal(PlayerCharacter.Instance.stat.healthMax.TotalValue);
+            PlayerCharacter.Instance.Heal(PlayerCharacter.Instance.stat.HealthMax);
             Debug.Log("Rune_Breeze Healed");    
         }
     }

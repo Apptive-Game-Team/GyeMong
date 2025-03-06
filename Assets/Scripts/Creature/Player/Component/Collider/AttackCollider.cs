@@ -7,7 +7,7 @@ namespace Creature.Player.Component.Collider
     public class AttackCollider : MonoBehaviour
     {
         public float attackDamage;
-        //Bad Way But..
+        //Bad Way But.
         private PlayerSoundController _soundController;
         private EventObject _eventObject;
         private ParticleSystem _particleSystem;
@@ -18,7 +18,7 @@ namespace Creature.Player.Component.Collider
             _shape = _particleSystem.shape;//.GetComponent<ParticleSystem.ShapeModule>();
             _eventObject = GetComponent<EventObject>();
             var player = PlayerCharacter.Instance;
-            attackDamage = player.stat.attackPower.TotalValue;
+            attackDamage = player.stat.AttackPower;
         }
 
         public void Init(PlayerSoundController soundController)
