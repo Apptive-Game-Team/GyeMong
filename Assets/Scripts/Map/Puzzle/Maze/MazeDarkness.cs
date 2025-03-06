@@ -28,7 +28,8 @@ namespace Map.Puzzle.Maze
                     if (previousState != _isInMaze)
                     {
                         StopAllCoroutines();
-                        StartCoroutine(_darknessController.ChangeIntensity(_isInMaze));
+                        _darknessController.SetPlayerLight(_isInMaze);
+                        StartCoroutine(_darknessController.ChangeIntensity(_isInMaze ? 0f : 1f));
                     }
                 }
             }
@@ -36,7 +37,7 @@ namespace Map.Puzzle.Maze
 
         public void Trigger()
         {
-            StartCoroutine(_darknessController.ChangeIntensity(false));
+            StartCoroutine(_darknessController.ChangeIntensity(1f));
             _isInMaze = false;
         }
     }
