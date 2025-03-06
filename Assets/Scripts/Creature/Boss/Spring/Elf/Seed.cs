@@ -5,14 +5,11 @@ using UnityEngine;
 
 namespace Creature.Boss.Spring.Elf
 {
-    public class Seed : MonoBehaviour
+    public class Seed : BossAttack
     {
-        private GameObject player;
         private Vector3 direction;
         private float speed = 15f;
-        private float damage = 20f;
         private EnemyAttackInfo enemyAttackInfo;
-
         private SoundObject _soundObject;
         private SoundObject _explosionSoundObject;
         private EventObject _eventObject;
@@ -22,15 +19,14 @@ namespace Creature.Boss.Spring.Elf
         private bool isReflected = false;
         private float angleRange = 20f;
         private float explosionRadius = 2f;
-
+         
         private void Awake()
         {
+            damage = 20f;
             _eventObject = GetComponent<EventObject>();
             _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
             _explosionSoundObject = GetComponent<SoundObject>();
-            player = GameObject.FindGameObjectWithTag("Player");
             rb = GetComponent<Rigidbody2D>();
-
             enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
             enemyAttackInfo.Initialize(damage, _soundObject, true, true);
         }
