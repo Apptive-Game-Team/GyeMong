@@ -54,6 +54,16 @@ public class BallMovement : MonoBehaviour
                 direction = GetMoveDirection();
             }
 
+            if (GoalCheck())
+            {
+                Debug.Log("Success");
+            }
+
+            else
+            {
+                Debug.Log("Nope");
+            }
+
             isMoving = false;
         }
     }
@@ -110,6 +120,19 @@ public class BallMovement : MonoBehaviour
             }
         }
 
+        return false;
+    }
+    public bool GoalCheck()
+    {
+        Collider2D hit = Physics2D.OverlapBox(transform.position, new Vector2(0.1f, 0.1f), 0f);
+
+        if (hit != null && hit.CompareTag("Tile"))
+        {
+            if (hit.gameObject.name == "Goal(Clone)")
+            {
+                return true;
+            }
+        }
         return false;
     }
 
