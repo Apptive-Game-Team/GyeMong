@@ -8,9 +8,12 @@ public class BallMovement : MonoBehaviour
     private float delayTime = 1f;
     public TempleTile currentTile;
     private bool isMoving = false;
+    private Vector3 startPosition;
+    private List<TempleTile> visitedTiles = new List<TempleTile>();
 
     void Start()
     {
+        startPosition = transform.position;
         currentTile = GetCurrentTile();
     }
 
@@ -45,6 +48,7 @@ public class BallMovement : MonoBehaviour
                 if (currentTile != null)
                 {
                     currentTile.iswalked = true;
+                    visitedTiles.Add(currentTile);
                 }
 
                 yield return new WaitForSeconds(delayTime);
@@ -54,6 +58,8 @@ public class BallMovement : MonoBehaviour
                 direction = GetMoveDirection();
             }
 
+            isMoving = false;
+
             if (GoalCheck())
             {
                 Debug.Log("Success");
@@ -62,9 +68,8 @@ public class BallMovement : MonoBehaviour
             else
             {
                 Debug.Log("Nope");
+                ReturnToStartPosition();
             }
-
-            isMoving = false;
         }
     }
 
@@ -134,6 +139,19 @@ public class BallMovement : MonoBehaviour
             }
         }
         return false;
+    }
+
+    void ReturnToStartPosition()
+    {
+        transform.position = startPosition;
+        currentTile = GetCurrentTile();
+
+        foreach (TempleTile tile in visitedTiles)
+        {
+            tile.iswalked = false;
+        }
+
+        visitedTiles.Clear();
     }
 
     TempleTile GetCurrentTile()
