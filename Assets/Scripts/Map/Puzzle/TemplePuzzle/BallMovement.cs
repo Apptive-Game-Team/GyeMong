@@ -14,7 +14,15 @@ public class BallMovement : MonoBehaviour
         currentTile = GetCurrentTile();
     }
 
-    private void Update()
+    /*private void Update()
+    {
+        if (!isMoving)
+        {
+            StartCoroutine(MoveBall());
+        }
+    }*/
+
+    public void StartMoveBall()
     {
         if (!isMoving)
         {
