@@ -32,6 +32,12 @@ public class BuffObject //In-Game Buff Object... It has Data and In-Game Interac
         buffData = data;
     }
 }
+
+public interface IBuffTriggerable
+{
+    
+}
+
 public class BuffManager : SingletonObject<BuffManager>
     {
         [SerializeField] public RuneDataList runeDataList;
@@ -49,5 +55,5 @@ public class BuffManager : SingletonObject<BuffManager>
         {
             return null;
         }
-
+        
     }

@@ -102,10 +102,8 @@ namespace Creature.Player.Component
             ValueEntry valueEntry = valueEntries.Find(x => x.valueType == valueType);
             return valueEntry.value;
         }
-        
-        public float TotalValue =>
-            (GetValue(StatValueType.DEFAULT_VALUE) * GetValue(StatValueType.PERCENT_VALUE) + GetValue(StatValueType.FLAT_VALUE)) 
-            * (1 + GetValue(StatValueType.FINAL_PERCENT_VALUE));
+
+        public float TotalValue => (GetValue(StatValueType.DEFAULT_VALUE) * (1 + GetValue(StatValueType.PERCENT_VALUE)) + GetValue(StatValueType.FLAT_VALUE)) * (1 + GetValue(StatValueType.FINAL_PERCENT_VALUE));
     }
 
     [Serializable]
@@ -156,8 +154,13 @@ namespace Creature.Player.Component
 
         public void SetStatValue(StatType statType, StatValueType statValueType, float value)
         {
-            Stat stat = statEntries.Find(x => x.statType == statType).stat;
-            stat.SetValue(statValueType, value);
+            StatEntry statEntry = statEntries.Find(x => x.statType == statType);
+            if (statEntry is null)
+            {
+                statEntry = new StatEntry(statType, new Stat());
+                statEntries.Add(statEntry);
+            }
+            statEntry.stat.SetValue(statValueType, value);
         }
     }
 }

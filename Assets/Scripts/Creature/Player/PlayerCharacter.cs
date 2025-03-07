@@ -43,7 +43,7 @@ namespace playerCharacter
         {
             base.Awake();
             
-            stat = _statData.stat;
+            stat = _statData.GetStatComp();
             curHealth = stat.HealthMax;
             curSkillGauge = 0f;
         }
