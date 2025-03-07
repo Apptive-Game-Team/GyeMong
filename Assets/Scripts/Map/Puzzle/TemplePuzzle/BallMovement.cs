@@ -14,14 +14,6 @@ public class BallMovement : MonoBehaviour
         currentTile = GetCurrentTile();
     }
 
-    /*private void Update()
-    {
-        if (!isMoving)
-        {
-            StartCoroutine(MoveBall());
-        }
-    }*/
-
     public void StartMoveBall()
     {
         if (!isMoving)
@@ -32,14 +24,13 @@ public class BallMovement : MonoBehaviour
 
     IEnumerator MoveBall()
     {
-        Debug.Log("MoveBall");
         if (currentTile != null)
         {
             isMoving = true;
 
             Vector2 direction = GetMoveDirection();
 
-            if (direction != Vector2.zero)
+            while (direction != Vector2.zero)
             {
                 Vector3 targetPosition = currentTile.transform.position + (Vector3)direction;
 
@@ -59,6 +50,8 @@ public class BallMovement : MonoBehaviour
                 yield return new WaitForSeconds(delayTime);
 
                 currentTile = GetCurrentTile();
+
+                direction = GetMoveDirection();
             }
 
             isMoving = false;

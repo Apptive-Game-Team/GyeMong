@@ -20,7 +20,6 @@ public class BallButton : MonoBehaviour
         {
             if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
             {
-                Debug.Log("¾öÁØ½Ä");
                 BallMovement ball = FindObjectOfType<BallMovement>();
                 ball.StartMoveBall();
             }
