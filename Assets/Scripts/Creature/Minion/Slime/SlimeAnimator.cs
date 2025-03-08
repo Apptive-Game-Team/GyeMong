@@ -19,6 +19,11 @@ namespace Creature.Minion.Slime
             animator.sprites = sprites;
             return animator;
         }
+        
+        public void SetSprites(SlimeSprites sprites)
+        {
+            this.sprites = sprites;
+        }
 
         public enum AnimationType
         {
