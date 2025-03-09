@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8620803811093990874}
   - component: {fileID: 12177543809506495}
   - component: {fileID: 3690366075533505093}
-  - component: {fileID: 8482983778149798817}
   - component: {fileID: -5296203552307042005}
+  - component: {fileID: 3512257973603151227}
   m_Layer: 0
   m_Name: DivisionSlime
   m_TagString: EnemyAttack
@@ -154,27 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _materialDatas: {fileID: 11400000, guid: b83ab9d50893f408cbb45301ce80bf11, type: 2}
---- !u!95 &8482983778149798817
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7314021124766925139}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e9bfbb47dfa846b41ba9fde0ba9f92bd, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-5296203552307042005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +174,23 @@ MonoBehaviour:
   isAttacked: 0
   isMultiHit: 1
   multiHitDelay: 0.3
+--- !u!114 &3512257973603151227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7314021124766925139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e58dac7a67ef34a8a273d7e88c06a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHp: 0
+  currentShield: 0
+  damage: 0
+  slimePrefab: {fileID: 0}
+  sprites: {fileID: 11400000, guid: 0a34adb09c2d8496eb57c520266f0392, type: 2}
 --- !u!1 &8632254398384193936
 GameObject:
   m_ObjectHideFlags: 0
