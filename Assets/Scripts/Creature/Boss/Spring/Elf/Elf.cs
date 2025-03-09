@@ -170,7 +170,7 @@ namespace Creature.Boss.Spring.Elf
                 Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
                 GameObject attackCollider = Instantiate(Elf.meleeAttackPrefab, spawnPosition, spawnRotation, Elf.transform);
-                Destroy(attackCollider, delayTime);
+                Destroy(attackCollider, meleeAttackdelayTime);
             }
         }
         
