@@ -10,6 +10,7 @@ namespace Creature.Minion.Slime
         private SpriteRenderer spriteRenderer;
         private SlimeSprites sprites;
         private Coroutine currentAnimation;
+        public AnimationType CurrentAnimationType { get; private set; }
         private bool stopCurrentAnimation = false;
     
         public static SlimeAnimator Create(GameObject parent, SlimeSprites sprites)
@@ -35,6 +36,7 @@ namespace Creature.Minion.Slime
     
         public IEnumerator SyncPlay(AnimationType type, bool loop = false)
         {
+            CurrentAnimationType = type;
             do
             {
                 yield return PlayerAnimation(sprites.GetSprite(type));
