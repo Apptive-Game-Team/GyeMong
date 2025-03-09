@@ -9,8 +9,6 @@ namespace Creature.Boss.Spring.Elf
     {
         private Vector3 direction;
         private float speed = 15f;
-        private EnemyAttackInfo enemyAttackInfo;
-        private SoundObject _soundObject;
         private SoundObject _explosionSoundObject;
         private EventObject _eventObject;
         private Rigidbody2D rb;
@@ -20,15 +18,14 @@ namespace Creature.Boss.Spring.Elf
         private float angleRange = 20f;
         private float explosionRadius = 2f;
          
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             damage = 20f;
             _eventObject = GetComponent<EventObject>();
             _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
             _explosionSoundObject = GetComponent<SoundObject>();
             rb = GetComponent<Rigidbody2D>();
-            enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-            enemyAttackInfo.Initialize(damage, _soundObject, true, true);
         }
 
         private void OnEnable()

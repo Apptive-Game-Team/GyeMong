@@ -6,12 +6,13 @@ namespace Creature.Boss
     {
         protected GameObject player;
         protected float damage;
-        private EnemyAttackInfo enemyAttackInfo;
-        private void Awake()
+        protected EnemyAttackInfo enemyAttackInfo;
+        protected SoundObject _soundObject;
+        protected virtual void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
             enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-            enemyAttackInfo.Initialize(damage, null, false, false);
+            enemyAttackInfo.Initialize(damage, _soundObject, false, false);
         }
     }
 }
