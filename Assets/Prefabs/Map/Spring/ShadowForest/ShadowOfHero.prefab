@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6461032320277226082}
   - component: {fileID: 1870561164529817492}
   - component: {fileID: 7406045931409298177}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SwordSwingSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,9 +156,9 @@ GameObject:
   - component: {fileID: 6414133220352662843}
   - component: {fileID: 3072472423355051887}
   - component: {fileID: 729723143805690462}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ShadowOfHero
-  m_TagString: Player
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 1227143049088628836}
   - component: {fileID: 2249563331465874036}
   - component: {fileID: 5435697336522272700}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: DashSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 2625117660256665037}
   - component: {fileID: 5463815573564788782}
   - component: {fileID: 1909290654538425003}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SwordSkillSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 1549784125184667164}
   - component: {fileID: 2656434681453653333}
   - component: {fileID: 3389752483582218527}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SwordDefendSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -912,7 +912,7 @@ GameObject:
   - component: {fileID: 7410557740291524683}
   - component: {fileID: 8109282842441142231}
   - component: {fileID: 2047501324802107149}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: FootSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1054,7 +1054,7 @@ GameObject:
   - component: {fileID: 374313878543355821}
   - component: {fileID: 3836460182521403804}
   - component: {fileID: 3280840573467410212}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SwordDefendPerfectSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1196,7 +1196,7 @@ GameObject:
   - component: {fileID: 2243486851055909697}
   - component: {fileID: 7477999103348181904}
   - component: {fileID: 8455458274385528600}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SwordAttackSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
