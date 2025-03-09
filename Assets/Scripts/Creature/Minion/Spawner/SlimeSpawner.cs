@@ -5,3 +5,4 @@ namespace Creature.Minion.Slime
         
     }
 }
+

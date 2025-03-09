@@ -8,6 +8,15 @@ namespace System.Game.Quest.Component
     {
         [SerializeField] private List<Quests.Quest> _quests = new();
 
+        protected override void Awake() // for debug
+        {
+            base.Awake();
+            foreach (var quest in _quests)
+            {
+                quest.StartQuest();
+            }
+        }
+
         public Quests.Quest GetQuest(int id)
         {
             return _quests.Find(quest => quest.GetQuestInfo.questID == id);
