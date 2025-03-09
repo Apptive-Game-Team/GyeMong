@@ -264,6 +264,7 @@ namespace Creature.Boss.Spring.Elf
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
 
+                yield return new WaitForSeconds(1f);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
                 yield return new WaitForSeconds(2f);
                 Elf.ChangeState();
