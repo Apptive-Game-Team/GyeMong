@@ -7,7 +7,6 @@ namespace Creature.Player.Component.Collider
     public class AttackCollider : MonoBehaviour
     {
         public float attackDamage;
-        //Bad Way But.
         private PlayerSoundController _soundController;
         private EventObject _eventObject;
         private ParticleSystem _particleSystem;

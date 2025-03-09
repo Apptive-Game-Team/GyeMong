@@ -16,7 +16,7 @@ public enum DirectionType
 
 namespace Creature
 {
-    public abstract class Creature : MonoBehaviour, IAttackable
+    public abstract class Creature : MonoBehaviour, IAttackable, IBuffable
 {
     private const float BLINK_DELAY = 0.15f;
     

@@ -47,7 +47,7 @@ namespace System.Game.Rune
         {
             if (context is RunCoroutineContext runCoroutineContext)
             {
-                
+                RuneConditionChecker.Instance.AddRuneCondition(runCoroutineContext.runeCondition); 
             }
         }
 
@@ -62,9 +62,9 @@ namespace System.Game.Rune
     {
         public void OnActivate(RuneContext context)
         {
-            if (context is RunCoroutineContext runCoroutineContext)
+            if (context is AddBuffContext addBuffContext)
             {
-                
+                addBuffContext.BuffComp.AddBuff(addBuffContext.BuffData);
             }
         }
 
@@ -86,11 +86,11 @@ namespace System.Game.Rune
     {
         
     }
-
+    
     public class ModifyStatContext : RuneContext
     {
         public StatComponent StatComp { get;}
-        public StatType StatType { get; } //TO DO. Change into Enum.
+        public StatType StatType { get; } 
         public StatValueType ValueType { get; } 
         public float Value { get; }
 
@@ -106,19 +106,20 @@ namespace System.Game.Rune
 
     public class RunCoroutineContext : RuneContext
     {
-        private IEnumerator _coroutine;
+        public RuneCondition runeCondition;
     }    
     public class AddBuffContext : RuneContext
     {
         public BuffComponent BuffComp { get;}
-        public BuffObject BuffObject { get;}
+        public BuffData BuffData { get;}
 
-        public AddBuffContext(BuffComponent buffComp, BuffObject buffObject)
+        public AddBuffContext(BuffComponent buffComp, BuffData buffData)
         {
             BuffComp = buffComp;
-            BuffObject = buffObject;
+            BuffData = buffData;
         }
     }    
+    
     //How to Make PlayerInput class?
     //Members : KeyAction, PLayerAction,
     //I Want to Change PlayerAction or KeyAction to RuneActivated-Things.
@@ -126,4 +127,6 @@ namespace System.Game.Rune
     {
         
     }
+    
+    
 }

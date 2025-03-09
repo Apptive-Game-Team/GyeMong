@@ -9,11 +9,12 @@ using UnityEngine.Serialization;
 
 namespace playerCharacter
 {
-    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
+    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable, IBuffable
     {
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
         
         public StatComponent stat;
+        public BuffComponent buffComponent;
         [SerializeField] private StatData _statData;
         [SerializeField] private float curHealth;
         [SerializeField] private float curSkillGauge;

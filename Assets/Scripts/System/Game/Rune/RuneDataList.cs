@@ -23,7 +23,6 @@ public class RuneUpgrade
     public int parentRuneID;
     public string description;
     public Sprite upgradeImage;
-    public BuffData optionBuff;
     public bool isUnlocked;
 }
 
