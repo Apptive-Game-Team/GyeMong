@@ -15,24 +15,6 @@ public class TemplePuzzleManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-
-            DisableDuplicateScripts();
         }
-    }
-
-    private void DisableDuplicateScripts()
-    {
-        EventObject[] scripts = Door.GetComponents<EventObject>();
-
-        scripts[0].enabled = true;
-        scripts[1].enabled = false;
-    }
-
-    public void UnlockDoor()
-    {
-        EventObject[] scripts = Door.GetComponents<EventObject>();
-
-        scripts[0].enabled = false;
-        scripts[1].enabled = true;
     }
 }

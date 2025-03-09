@@ -1918,10 +1918,10 @@ GameObject:
   m_Component:
   - component: {fileID: 497318183}
   - component: {fileID: 497318182}
+  - component: {fileID: 497318186}
   - component: {fileID: 497318181}
   - component: {fileID: 497318185}
   - component: {fileID: 497318184}
-  - component: {fileID: 497318186}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -2024,7 +2024,7 @@ Transform:
   m_GameObject: {fileID: 497318180}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.58, y: -11.75, z: 0}
+  m_LocalPosition: {x: -37.81, y: -22.36, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20773,7 +20773,7 @@ MonoBehaviour:
   rows: 5
   columns: 5
   spacing: 1
-  objectIndices: 0412311112322232111132224
+  objectIndices: 0222311112322232111132224
   startPosition: {x: -40, y: -20, z: 0}
 --- !u!1 &698848804
 GameObject:

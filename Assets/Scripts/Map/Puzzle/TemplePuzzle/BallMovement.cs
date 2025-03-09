@@ -64,7 +64,6 @@ public class BallMovement : MonoBehaviour
             {
                 Debug.Log("Success");
                 TemplePuzzleManager.instance.isCleared = true;
-                TemplePuzzleManager.instance.UnlockDoor();
                 ConditionManager.Instance.Conditions["SpringTemplePuzzleIsCleared"] = true;
             }
 
