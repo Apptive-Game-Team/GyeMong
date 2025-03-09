@@ -90,8 +90,6 @@ namespace Creature
             currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
         }
-            
-        
         BaseState[] states = States;
         List<int> weights = new();
         int index = 0;
@@ -112,7 +110,7 @@ namespace Creature
             currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
         }
-            
+           
         currentState = state;
         
         _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
@@ -207,22 +205,51 @@ namespace Creature
                 yield return null;
             }
         }
+        public IEnumerator RushAttack()
+        {
+            float TARGET_OFFSET = 1f;
+            Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
+            float chargeSpeed = 50f;
+            Vector3 direction = (playerPosition - transform.position).normalized;
+            float targetDistance = Vector3.Distance(transform.position, playerPosition) - TARGET_OFFSET;
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
 
+            if (hit.collider != null)
+            {
+                yield break;
+            }
+
+            float elapsedTime = 0f;
+            float duration = targetDistance / chargeSpeed;
+
+            while (elapsedTime < duration)
+            {
+                Vector3 newPosition = Vector3.Lerp(transform.position, playerPosition, elapsedTime / duration);
+                rb.MovePosition(newPosition);
+                elapsedTime += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            rb.MovePosition(playerPosition - direction);
+        }
 
         public abstract class BaseState
-    {
-        public Creature creature;
-        public abstract int GetWeight();
-
-        public abstract IEnumerator StateCoroutine();
-        public virtual void OnStateUpdate()
-        { 
-        }
-        
-        public virtual void OnStateExit()
         {
+            public Creature creature;
+            public abstract int GetWeight();
+            public abstract IEnumerator StateCoroutine();
+            public virtual void OnStateUpdate()
+            { 
+            }
+            public virtual void OnStateExit()
+            {
+            }
+            public virtual Dictionary<Type, int> GetNextStateWeights()
+            {
+                return new Dictionary<Type, int>();
+            }
         }
-    }
     private BaseState[] _states;
     public BaseState[] States
     {

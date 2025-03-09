@@ -4,6 +4,7 @@ using Creature.Player.Component.Collider;
 using playerCharacter;
 using TMPro;
 using UnityEngine;
+using static Creature.Minion.Slime.Slime;
 namespace Creature.Boss.Spring.Elf
 {
     public class Elf : Boss
@@ -45,7 +46,7 @@ namespace Creature.Boss.Spring.Elf
             }
         }
 
-        public class MoveState : ElfState
+        /*public class MoveState : ElfState
         {
             public override int GetWeight()
             {
@@ -69,7 +70,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isMove", false);
                 Elf.ChangeState();
             }
-        }
+        }*/
 
         public new class BackStep : ElfState
         {
@@ -88,7 +89,23 @@ namespace Creature.Boss.Spring.Elf
                 Elf.ChangeState();
             }
         }
+        public new class RushAttack : ElfState
+        {
+            public override int GetWeight()
+            {
+                return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
+            }
 
+            public override IEnumerator StateCoroutine()
+            {
+                Elf.Animator.SetBool("isMove", true);
+                Elf.Animator.SetFloat("moveType", 1);
+                yield return Elf.RushAttack();
+
+                Elf.Animator.SetBool("isMove", false);
+                Elf.ChangeState();
+            }
+        }
         public class RangedAttack : ElfState
         {
             public override int GetWeight()
