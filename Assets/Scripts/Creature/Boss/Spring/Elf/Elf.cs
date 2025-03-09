@@ -36,7 +36,7 @@ namespace Creature.Boss.Spring.Elf
             RangedAttackRange = 8f;
             footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
         }
-        public abstract class ElfState : BaseState
+        public abstract class ElfState : BossState
         {
             public Elf Elf => creature as Elf;
             public override void OnStateUpdate()
@@ -97,15 +97,15 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isMove", false);
                 Elf.ChangeState();
             }
-            /*public override Dictionary<System.Type, int> GetNextStateWeights()
+            public override Dictionary<System.Type, int> GetNextStateWeights()
             {
                 return new Dictionary<System.Type, int>
                 {
-                    { typeof(RushAttack), 3 },
-                    { typeof(RangedAttackState), 10 },
-                    { typeof(MeleeAttackState), 5 } 
+                    { typeof(RangedAttackState), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) && (Elf.CurrentPhase == 1)  ? 5 : 0},
+                    { typeof(TrunkAttack),  5}
                 };
-            }*/
+            }
         }
         public new class RushAttack : ElfState
         {
@@ -122,6 +122,14 @@ namespace Creature.Boss.Spring.Elf
 
                 Elf.Animator.SetBool("isMove", false);
                 Elf.ChangeState();
+            }
+            public override Dictionary<System.Type, int> GetNextStateWeights()
+            {
+                return new Dictionary<System.Type, int>
+                {
+                    { typeof(MeleeAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(WhipAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 5 : 0}
+                };
             }
         }
         public class RangedAttack : ElfState

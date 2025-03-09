@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using playerCharacter;
 using UnityEngine;
+using static Creature.Boss.Boss;
 using Random = UnityEngine.Random;
 
 public enum DirectionType
@@ -85,23 +86,26 @@ namespace Creature
         protected BaseState currentState;
         public void ChangeState()
         {
-            if (currentState == null)
-            {
-                BaseState[] states = States;
-                List<int> weights = new();
-                int index = 0;
-                int randomIndex;
-                foreach (BaseState state in states)
-                    weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
-                randomIndex = Random.Range(0, weights.Count);
-                currentState = states[weights[randomIndex]];
-                _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
-            }
             if (_currentStateCoroutine != null)
             {
                 currentState.OnStateExit();
                 StopCoroutine(_currentStateCoroutine);
             }
+            if (currentState == null)
+            {
+                SetInitialState();
+            }
+            if (currentState is BossState)
+            {
+                ChangeStateForBoss();
+            }
+            else
+            {
+                ChangeStateForNormal();
+            }
+        }
+        private void ChangeStateForBoss()
+        {
             List<System.Type> weightedStates = new();
             Dictionary<System.Type, int> nextStateWeights = currentState.GetNextStateWeights();
 
@@ -112,13 +116,41 @@ namespace Creature
                     weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
                 }
             }
-
             System.Type nextStateType = weightedStates[Random.Range(0, weightedStates.Count)];
             currentState = States.First(s => s.GetType() == nextStateType);
             _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
         }
+        private void ChangeStateForNormal()
+        {
+            List<int> weights = new();
+            int index = 0;
+            BaseState[] states = States;
 
+            foreach (BaseState state in states)
+            {
+                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
+            }
 
+            int randomIndex = Random.Range(0, weights.Count);
+            currentState = states[weights[randomIndex]];
+            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
+        }
+        private void SetInitialState()
+        {
+            BaseState[] states = States;
+            List<int> weights = new();
+            int index = 0;
+            int randomIndex;
+
+            foreach (BaseState state in states)
+            {
+                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
+            }
+
+            randomIndex = Random.Range(0, weights.Count);
+            currentState = states[weights[randomIndex]];
+            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
+        }
         public void ChangeState(BaseState state)
         {
             if (_currentStateCoroutine != null)
