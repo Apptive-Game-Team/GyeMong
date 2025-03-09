@@ -46,3 +46,18 @@ public class MultipleShowChatEvent : ChatEvent
         return EffectManager.Instance.GetChatController().MultipleChat(messages);
     }
 }
+
+[Serializable]
+public class SpeechBubbleChatEvent : ChatEvent
+{
+    [SerializeField] 
+    GameObject NPC;
+    [SerializeField]
+    string message;
+    [SerializeField]
+    float destroyDelay;
+    public override IEnumerator Execute(EventObject eventObject)
+    {
+        return EffectManager.Instance.GetChatController().ShowSpeechBubbleChat(NPC, message, destroyDelay);
+    }
+}

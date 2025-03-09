@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using playerCharacter;
 
 public abstract class ControlEvent : Event { }
 
@@ -13,7 +14,8 @@ public class SetKeyInputEvent : ControlEvent
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         InputManager.Instance.SetActionState(_isEnable);
-        playerCharacter.PlayerCharacter.Instance.isControlled = !_isEnable;
+        PlayerCharacter.Instance.isControlled = !_isEnable;
+        PlayerCharacter.Instance.StopPlayer();
         yield return null;
     }
 }
