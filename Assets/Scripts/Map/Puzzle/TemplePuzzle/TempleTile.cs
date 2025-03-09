@@ -80,11 +80,6 @@ public class TempleTile : MonoBehaviour
         down = right;
         right = temp;
 
-        Debug.Log("Up: " + up);
-        Debug.Log("Down: " + down);
-        Debug.Log("Left: " + left);
-        Debug.Log("Right: " + right);
-
         isRotating = false;
     }
 }

@@ -63,6 +63,8 @@ public class BallMovement : MonoBehaviour
             if (GoalCheck())
             {
                 Debug.Log("Success");
+                TemplePuzzleManager.instance.isCleared = true;
+                TemplePuzzleManager.instance.UnlockDoor();
             }
 
             else
