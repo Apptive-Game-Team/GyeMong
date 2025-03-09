@@ -140,14 +140,13 @@ namespace Creature
             BaseState[] states = States;
             List<int> weights = new();
             int index = 0;
-            int randomIndex;
 
             foreach (BaseState state in states)
             {
                 weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
             }
 
-            randomIndex = Random.Range(0, weights.Count);
+            int randomIndex = Random.Range(0, weights.Count);
             currentState = states[weights[randomIndex]];
             _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
         }
