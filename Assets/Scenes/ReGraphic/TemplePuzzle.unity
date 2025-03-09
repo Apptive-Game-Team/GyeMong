@@ -1921,6 +1921,7 @@ GameObject:
   - component: {fileID: 497318181}
   - component: {fileID: 497318185}
   - component: {fileID: 497318184}
+  - component: {fileID: 497318186}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -1941,7 +1942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 0
-  trigger: 1
+  trigger: 4
   triggerLimitCounter: -1
   eventSequence:
   - rid: 4949243949170819073
@@ -2087,7 +2088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 0
-  trigger: 1
+  trigger: 4
   triggerLimitCounter: -1
   eventSequence:
   - rid: 4949243994021298177
@@ -2102,6 +2103,48 @@ MonoBehaviour:
       type: {class: WarpPortalEvent, ns: , asm: Assembly-CSharp}
       data:
         portalID: 32
+--- !u!114 &497318186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497318180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 1
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 4949243994021298179
+  references:
+    version: 2
+    RefIds:
+    - rid: 4949243994021298179
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 4949243994021298180
+        eventInTrue:
+          rid: 4949243994021298181
+        eventInFalse:
+          rid: 4949243994021298182
+    - rid: 4949243994021298180
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: SpringTemplePuzzleIsCleared
+        condition: 0
+    - rid: 4949243994021298181
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 497318185}
+    - rid: 4949243994021298182
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 497318181}
 --- !u!1001 &531520367
 PrefabInstance:
   m_ObjectHideFlags: 0
