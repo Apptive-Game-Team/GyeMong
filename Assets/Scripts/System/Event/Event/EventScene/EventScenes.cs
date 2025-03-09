@@ -26,7 +26,8 @@ public class SlimeEvents : EventScene
         }
 
         yield return new WaitForSeconds(3f);
-        targetSlime.AddComponent<DivisionSlime>();
+        targetSlime.GetComponent<DivisionSlime>().StartMob();
+        // targetSlime.AddComponent<DivisionSlime>();
     }
 
     private IEnumerator MoveSlimeToTarget(GameObject slime)
