@@ -2,12 +2,17 @@ using UnityEngine;
 
 namespace Creature.Boss
 {
-    public class BossAttack : MonoBehaviour
+    public abstract class BossAttack : MonoBehaviour
     {
+        protected GameObject player;
         protected float damage;
-        public void SetDamage(float damage)
+        protected EnemyAttackInfo enemyAttackInfo;
+        protected SoundObject _soundObject;
+        protected virtual void Awake()
         {
-            this.damage = damage;
+            player = GameObject.FindGameObjectWithTag("Player");
+            enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
+            enemyAttackInfo.Initialize(damage, _soundObject, false, false);
         }
     }
 }

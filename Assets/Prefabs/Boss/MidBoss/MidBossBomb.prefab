@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 6903973534843988526}
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
-  - component: {fileID: 7136526515895070149}
   - component: {fileID: 1862771403402579794}
   - component: {fileID: 8282123524516236359}
   m_Layer: 0
-  m_Name: MidBossSeed
+  m_Name: MidBossBomb
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.086, y: 1.0406, z: 0.040643148}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 0acfd596f5d11ef42bf588db1dc95b35, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -626865562, guid: f92605f60800cab4db0f0d3c1685d62b, type: 3}
+  m_Color: {r: 1, g: 0.17911121, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -148,31 +147,19 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01774722, y: -0.0037362725}
+  m_Offset: {x: 0.015419066, y: -0.060119152}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.25}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.25, y: 0.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21868137, y: 0.10098913}
+  m_Size: {x: 0.51717865, y: 0.48571932}
   m_EdgeRadius: 0
---- !u!114 &7136526515895070149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349092434517921609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e07d49a98aa7f4a982b722a751286a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1862771403402579794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +192,7 @@ MonoBehaviour:
         - {fileID: -1457230939, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
         - {fileID: -1870672501, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
         deltaTime: 0.1
-        _renderer: {fileID: 6903973534843988526}
+        _renderer: {fileID: 0}
     - rid: 521773891873669121
       type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
       data: 
