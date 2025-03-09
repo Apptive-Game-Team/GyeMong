@@ -54,11 +54,6 @@ namespace Creature.Minion.Slime
             }
         }
 
-        private void Awake()
-        {
-            
-        }
-
         protected virtual void Start()
         {
             Initialize();

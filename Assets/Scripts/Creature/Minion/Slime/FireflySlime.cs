@@ -24,8 +24,13 @@ namespace Creature.Minion.Slime
             _light.SetActive(_isOn);
             base.Initialize();
         }
-        
-        
+
+        public override void StartMob()
+        {
+            _isOn = true;
+            _light.SetActive(_isOn);
+            _slimeAnimator.SetSprites(_spriteOnVersion);
+        }
 
         public override void OnAttacked(float damage)
         {
