@@ -44,6 +44,15 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             }
+            public override Dictionary<System.Type, int> GetNextStateWeights()
+            {
+                Dictionary<System.Type, int> weights = new();
+                foreach (ElfState state in Elf.States)
+                {
+                    weights[state.GetType()] = state.GetWeight();
+                }
+                return weights;
+            }
         }
 
         /*public class MoveState : ElfState
@@ -88,6 +97,15 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isMove", false);
                 Elf.ChangeState();
             }
+            /*public override Dictionary<System.Type, int> GetNextStateWeights()
+            {
+                return new Dictionary<System.Type, int>
+                {
+                    { typeof(RushAttack), 3 },
+                    { typeof(RangedAttackState), 10 },
+                    { typeof(MeleeAttackState), 5 } 
+                };
+            }*/
         }
         public new class RushAttack : ElfState
         {
