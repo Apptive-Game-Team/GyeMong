@@ -1,4 +1,5 @@
 using System.Collections;
+using Map.Puzzle.FogMaze;
 using UnityEngine;
 
 namespace Creature.Minion.Slime
@@ -7,10 +8,24 @@ namespace Creature.Minion.Slime
     {
         [SerializeField] private SlimeSprites _spriteOnVersion;
         [SerializeField] private SlimeSprites _spriteOffVersion;
+        [SerializeField] private GameObject _light;
+        
         private bool _isOn = true;
         private const float LIGHT_DELAY = 5f;
+        private FogController _fogController;
         
         private Coroutine _lightCoroutine;
+
+        protected override void Initialize()
+        {
+            _fogController = FindObjectOfType<FogController>();
+            _fogController.AddTransform(transform);
+            
+            _light.SetActive(_isOn);
+            base.Initialize();
+        }
+        
+        
 
         public override void OnAttacked(float damage)
         {
@@ -30,9 +45,13 @@ namespace Creature.Minion.Slime
         private IEnumerator CountSwapSprites()
         {
             _isOn = false;
+            _light.SetActive(false);
+            _fogController.RemoveTransform(transform);
             _slimeAnimator.SetSprites(_spriteOffVersion);
             yield return new WaitForSeconds(LIGHT_DELAY);
             _isOn = true;
+            _light.SetActive(true);
+            _fogController.AddTransform(transform);
             _slimeAnimator.SetSprites(_spriteOnVersion);
         }
 

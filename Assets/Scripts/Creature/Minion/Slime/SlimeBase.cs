@@ -53,7 +53,7 @@ namespace Creature.Minion.Slime
             }
         }
         
-        private void Start()
+        protected virtual void Start()
         {
             Initialize();
             ChangeState();
@@ -70,11 +70,11 @@ namespace Creature.Minion.Slime
             }
         }
 
-        private void Initialize()
+        protected virtual void Initialize()
         {
             //currentHp = maxHp;
             currentHp = 3;
-
+            
             currentShield = 0;
             damage = 10;
             speed = 2;

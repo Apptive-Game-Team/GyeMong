@@ -45,16 +45,17 @@ namespace Creature.Minion.Slime
     
         public void AsyncPlay(AnimationType type, bool loop = false)
         {
-            if (currentAnimation != null)
-            {
-                Stop();
-            }
+            Stop();
             currentAnimation = StartCoroutine(SyncPlay(type, loop));
         }
     
         public void Stop()
         {
-            StopCoroutine(currentAnimation);
+            if (currentAnimation != null)
+            {
+                StopCoroutine(currentAnimation);
+            }
+
             currentAnimation = null;
         }
 
