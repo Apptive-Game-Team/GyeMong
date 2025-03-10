@@ -3031,6 +3031,53 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af5331454817c405f982b661525cf4a6, type: 3}
+--- !u!1 &812878835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 812878837}
+  - component: {fileID: 812878836}
+  m_Layer: 0
+  m_Name: ChildElfCreator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &812878836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812878835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510ca1b6b5b1c4a48a574c4af0c414fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8934444904914948015, guid: 845dcf3fceef847748adb1c4078ac491, type: 3}
+  _conditionKey1: 
+  _conditionKey2: SpringChildEscortIsStarted
+--- !u!4 &812878837
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812878835}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.034081, y: -1.3591499, z: -0.0725774}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &842680980
 GameObject:
   m_ObjectHideFlags: 0
@@ -5235,74 +5282,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8c638ca210ca99478b7eae65070be1d, type: 3}
---- !u!1001 &1595919170206676193
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.5308781
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.043521523
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.0157694
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003107261100600892, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8934444904914948015, guid: 845dcf3fceef847748adb1c4078ac491,
-        type: 3}
-      propertyPath: m_Name
-      value: ChildElf
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 845dcf3fceef847748adb1c4078ac491, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -5321,6 +5300,6 @@ SceneRoots:
   - {fileID: 216580616}
   - {fileID: 86768398}
   - {fileID: 842680982}
-  - {fileID: 1595919170206676193}
   - {fileID: 1251935902}
   - {fileID: 545334271}
+  - {fileID: 812878837}

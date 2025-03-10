@@ -11,5 +11,6 @@ namespace Creature.Minion.Slime
         public class SlimeMeleeAttackState : MeleeAttackState {}
         public class DieState : SlimeDieState { }
         public class MoveState : SlimeMoveState { }
+        public class SlimeIdleState : IdleState { }
     }
 }

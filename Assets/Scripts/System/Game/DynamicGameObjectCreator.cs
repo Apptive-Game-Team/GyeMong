@@ -10,7 +10,7 @@ namespace System.Game
 
         private void Start()
         {
-            bool condition1 = false;
+            bool condition1 = true;
             bool condition2 = false;
 
             if (!string.IsNullOrEmpty(_conditionKey1))
