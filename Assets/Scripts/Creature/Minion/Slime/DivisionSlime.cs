@@ -1,9 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using playerCharacter;
-using Creature.Boss;
-using Unity.VisualScripting;
 
 namespace Creature.Minion.Slime
 {
@@ -14,16 +13,10 @@ namespace Creature.Minion.Slime
         private int divisionLevel;
         private int maxDivisionLevel;
         private float moveSpeed;
-        private Transform target;
         private GameObject rangedAttack;
         private float patternDelay;
-        private float meleeAttackDelay;
         private float dashAttackDelay;
-        private float rangedAttackDelay;
         private float animatorDelay;
-        private Animator animator;
-        private Coroutine startCoroutine;
-        private Coroutine curCoroutine;
         private bool isMove = true;
         private SlimeAnimator _slimeAnimator;
         [SerializeField] private SlimeSprites sprites;
@@ -39,7 +32,7 @@ namespace Creature.Minion.Slime
         {
             _slimeAnimator = GetComponent<SlimeAnimator>();
             
-            currentHp = 10f;
+            maxHp = 10f;
 
             _isStart = false;
             
@@ -51,48 +44,149 @@ namespace Creature.Minion.Slime
 
             rangedAttack = transform.GetChild(0).gameObject;
 
-            patternDelay = 2f;
-            meleeAttackDelay = 0.3f;
-            rangedAttackDelay = 1f;
+            patternDelay = 1f;
             dashAttackDelay = 1f;
             animatorDelay= 0.5f;
 
             damage = 10f;
         }
 
-        public void StartMob()
+        public override void StartMob()
         {
-            target = PlayerCharacter.Instance.gameObject.transform;
-            startCoroutine = StartCoroutine(Patterns());
+            base.StartMob();
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             _isStart = true;
         }
 
-        private void Update()
+        public abstract class DivisionSlimeState : BaseState
         {
-            if (!_isStart) return;
-            
-            if (target == null) return;
-            if (isMove)
+            public DivisionSlime DivisionSlime => creature as DivisionSlime;
+            public override void OnStateUpdate()
             {
-                MoveTowardsTarget();
+                if (!DivisionSlime._isStart) return;
+                
+                if (PlayerCharacter.Instance.gameObject == null) return;
+                if (DivisionSlime.isMove)
+                {
+                    DivisionSlime.MoveTowardsTarget();
+                    DivisionSlime.FaceToPlayer();
+                }
             }
-            FaceToPlayer();
         }
+
+        public class MoveState : DivisionSlimeState
+        {
+            public override int GetWeight()
+            {
+                return (DivisionSlime.DistanceToPlayer > DivisionSlime.RangedAttackRange) ? 1 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                yield return new WaitForSeconds(DivisionSlime.patternDelay);
+                DivisionSlime.ChangeState();
+            }
+        }
+
+        public class MeleeAttackState : DivisionSlimeState
+        {
+            public override int GetWeight()
+            {
+                return (DivisionSlime.DistanceToPlayer < DivisionSlime.MeleeAttackRange) ? 1 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                DivisionSlime.isMove = false;
+                
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
+                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
+                
+                if (DivisionSlime.DistanceToPlayer < DivisionSlime.MeleeAttackRange) PlayerCharacter.Instance.TakeDamage(DivisionSlime.damage);
+                
+                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                
+                yield return new WaitForSeconds(DivisionSlime.animatorDelay);
+                DivisionSlime.isMove = true;
+
+                yield return new WaitForSeconds(DivisionSlime.patternDelay);
+                DivisionSlime.ChangeState();
+            }
+        }
+
+        public class RangedAttackState : DivisionSlimeState
+        {
+            public override int GetWeight()
+            {
+                return (DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange &&
+                DivisionSlime.DistanceToPlayer <= DivisionSlime.RangedAttackRange) ? 1 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                DivisionSlime.isMove = false;
+                
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
+                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
+                
+                GameObject attack = Instantiate(DivisionSlime.rangedAttack, DivisionSlime.transform.position, Quaternion.identity, DivisionSlime.transform);
+                attack.SetActive(true);
+                
+                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                yield return new WaitForSeconds(DivisionSlime.animatorDelay);
+                DivisionSlime.isMove = true;
+
+                yield return new WaitForSeconds(DivisionSlime.patternDelay);
+                DivisionSlime.ChangeState();
+            }
+        }
+
+        public class DashAttackState : DivisionSlimeState
+        {
+            public override int GetWeight()
+            {
+                return (DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange &&
+                DivisionSlime.DistanceToPlayer <= DivisionSlime.RangedAttackRange) ? 1 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                DivisionSlime.isMove = false;
+            
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
+                
+                float dashDistance = 1.5f;
+                Vector3 dashTargetPosition = PlayerCharacter.Instance.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
+                yield return new WaitForSeconds(DivisionSlime.dashAttackDelay);
+                
+                DivisionSlime.transform.DOMove(dashTargetPosition, 0.3f).SetEase(Ease.OutQuad);
+
+                yield return new WaitForSeconds(DivisionSlime.animatorDelay);
+                
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                yield return new WaitForSeconds(DivisionSlime.animatorDelay);
+                DivisionSlime.isMove = true; 
+
+                yield return new WaitForSeconds(DivisionSlime.patternDelay);
+                DivisionSlime.ChangeState();
+            }
+        }
+
 
         private void MoveTowardsTarget()
         {
             if (_slimeAnimator.CurrentAnimationType != SlimeAnimator.AnimationType.MELEE_ATTACK)
                 _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
             
-            Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * moveSpeed * Time.deltaTime;
+            transform.position += DirectionToPlayer * moveSpeed * Time.deltaTime;
         }
 
         public void FaceToPlayer()
         {
             float scale = Mathf.Abs(transform.localScale.x);
-            if (PlayerCharacter.Instance.transform.position.x < transform.position.x)
+            if (DirectionToPlayer.x < 0)
             {
                 transform.localScale = new Vector3(-scale, transform.localScale.y, transform.localScale.z);
             }
@@ -102,102 +196,12 @@ namespace Creature.Minion.Slime
             }
         }
 
-        private IEnumerator Patterns()
-        {
-            while (true)
-            {
-                if (target == null)
-                {
-                    yield return null;
-                    continue;
-                }
-
-                float distance = Vector3.Distance(transform.position, target.position);
-
-                if (distance <= MeleeAttackRange)
-                {
-                    curCoroutine = StartCoroutine(MeleeAttack());
-                }
-                else
-                {
-                    if (distance <= RangedAttackRange)
-                    {
-                        if (Random.value < 0.5f)
-                        {
-                            curCoroutine = StartCoroutine(RangedAttack());
-                        }
-                        else
-                        {
-                            curCoroutine = StartCoroutine(DashAttack());
-                        }
-                    }
-                }
-
-                yield return new WaitForSeconds(patternDelay);
-            }
-        }
-
-        private IEnumerator MeleeAttack()
-        {
-            if (curCoroutine != null) StopCoroutine(curCoroutine);
-            isMove = false;
-            
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
-            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
-            
-            float distance = Vector3.Distance(transform.position, target.position);
-            if (distance < MeleeAttackRange) PlayerCharacter.Instance.TakeDamage(damage);
-            
-            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
-            
-            yield return new WaitForSeconds(animatorDelay);
-            isMove = true;
-        }
-
-        private IEnumerator RangedAttack()
-        {
-            if (curCoroutine != null) StopCoroutine(curCoroutine);
-            isMove = false;
-            
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
-            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-            
-            GameObject attack = Instantiate(rangedAttack, transform.position, Quaternion.identity, transform);
-            attack.SetActive(true);
-            
-            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
-            yield return new WaitForSeconds(animatorDelay);
-            isMove = true;
-        }
-
-        private IEnumerator DashAttack()
-        {
-            if (curCoroutine != null) StopCoroutine(curCoroutine);
-            isMove = false;
-            
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
-
-            Vector3 direction = (target.position - transform.position).normalized;
-            float dashDistance = 1.5f;
-            Vector3 dashTargetPosition = target.position + direction * dashDistance;
-            yield return new WaitForSeconds(dashAttackDelay);
-            
-            transform.DOMove(dashTargetPosition, 0.3f).SetEase(Ease.OutQuad);
-
-            yield return new WaitForSeconds(animatorDelay);
-            
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
-            yield return new WaitForSeconds(animatorDelay);
-            isMove = true; 
-        }
-
         public override void OnAttacked(float damage)
         {
             base.OnAttacked(damage);
             if (currentHp <= 0)
             {
+                StopAllCoroutines();
                 StartCoroutine(Die());
             }
         }
@@ -205,7 +209,6 @@ namespace Creature.Minion.Slime
         private IEnumerator Die()
         {
             isMove = false;
-            StopCoroutine(startCoroutine);
 
             if (divisionLevel < maxDivisionLevel)
             {
@@ -226,7 +229,6 @@ namespace Creature.Minion.Slime
                 Vector3 spawnPosition = transform.position + Random.insideUnitSphere;
                 
                 GameObject newSlime = Instantiate(gameObject, spawnPosition, Quaternion.identity);
-                // Destroy(newSlime.GetComponent<DivisionSlime>());
                 
                 newSlime.transform.localScale = transform.localScale * divideRatio;
                 
