@@ -95,7 +95,7 @@ namespace Creature
             {
                 SetInitialState();
             }
-            if (currentState is BossState)
+            else if (currentState is BossState)
             {
                 ChangeStateForBoss();
             }
