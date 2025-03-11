@@ -51,7 +51,7 @@ namespace Creature.Boss.Spring.Elf
                     { typeof(BackStep), (Elf.DistanceToPlayer < Elf.RangedAttackRange / 2) ? 5 : 0 },
                     { typeof(RushAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
                     { typeof(RangedAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) && (Elf.CurrentPhase == 1)  ? 5 : 0 },
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2)  ? 5 : 0 },
                     { typeof(MeleeAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0},
                     { typeof(WhipAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 5 : 0 },
                     { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
@@ -106,7 +106,7 @@ namespace Creature.Boss.Spring.Elf
                 return new Dictionary<System.Type, int>
                 {
                     { typeof(RangedAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) && (Elf.CurrentPhase == 1)  ? 5 : 0},
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0},
                     { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
                 };
             }
