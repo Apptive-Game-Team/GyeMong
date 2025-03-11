@@ -105,7 +105,7 @@ namespace Creature.Boss.Spring.Elf
             {
                 return new Dictionary<System.Type, int>
                 {
-                    { typeof(RangedAttackState), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(RangedAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
                     { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) && (Elf.CurrentPhase == 1)  ? 5 : 0},
                     { typeof(TrunkAttack),  3}
                 };
