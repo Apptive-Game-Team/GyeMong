@@ -90,7 +90,7 @@ namespace Creature.Boss.Spring.Elf
             }
             else if (collision.CompareTag("Boss") && isReflected)
             {
-                collision.GetComponent<Boss>().StartCoroutine(collision.GetComponent<Boss>().Stun());
+                collision.GetComponent<Boss>().StartCoroutine(collision.GetComponent<Boss>().Stun(5f));
                 Destroy(gameObject);
             }
         }

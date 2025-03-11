@@ -35,7 +35,7 @@ namespace Creature
         public float MeleeAttackRange {get; protected set;}
         public float RangedAttackRange {get; protected set;}
 
-        private Coroutine _currentStateCoroutine;
+        protected Coroutine _currentStateCoroutine;
 
         protected Animator _animator;
         private MaterialController _materialController;
@@ -174,12 +174,12 @@ namespace Creature
             }
         }
     
-        public virtual IEnumerator Stun()
+        public virtual IEnumerator Stun(float stunTime)
         { 
             currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
          
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(stunTime);
             ChangeState();
         }
     
