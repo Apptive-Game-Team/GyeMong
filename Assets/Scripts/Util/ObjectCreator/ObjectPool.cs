@@ -19,7 +19,7 @@ namespace Util.ObjectCreator
 
         public T GetObject()
         {
-            T result = GetObjectNotMake();
+            T result = GetInactiveObject();
             if (result != null)
                 return result;
 
@@ -44,7 +44,7 @@ namespace Util.ObjectCreator
             return obj;
         }
         
-        public T GetObjectNotMake()
+        public T GetInactiveObject()
         {
             foreach (T obj in _pool)
             {
