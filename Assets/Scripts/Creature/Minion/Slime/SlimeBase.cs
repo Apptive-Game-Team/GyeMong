@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using playerCharacter;
@@ -18,7 +19,7 @@ namespace Creature.Minion.Slime
         protected  IPathFinder _pathFinder;
         protected  SlimeAnimator _slimeAnimator;
         [SerializeField] protected  SlimeSprites sprites;
-        protected  Coroutine _faceToPlayerCoroutine;
+        protected Coroutine _faceToPlayerCoroutine;
         
         public override void StartMob() { }
         
@@ -52,7 +53,7 @@ namespace Creature.Minion.Slime
                 yield return null;
             }
         }
-        
+
         protected virtual void Start()
         {
             Initialize();
@@ -94,6 +95,33 @@ namespace Creature.Minion.Slime
             protected SlimeBase Slime => creature as SlimeBase;
         }
 
+        public class IdleState : SlimeState
+        {
+            public IdleState() { }
+            public IdleState(Creature creature)
+            {
+                this.creature = creature;
+            }
+            public override int GetWeight()
+            {
+                return 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                while (true)
+                {
+                    Transform target = Slime._detector.DetectTarget()?.transform;
+                    if (target != null)
+                    {
+                        creature.ChangeState(new SlimeMoveState(Slime));
+                    }
+                    yield return new WaitForSeconds(1f);
+                }
+            }
+        }
+
         public abstract class RangedAttackState : SlimeState
         {
             public override int GetWeight()
@@ -125,7 +153,8 @@ namespace Creature.Minion.Slime
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
-                PlayerCharacter.Instance.TakeDamage(creature.damage);
+                if (creature.DistanceToPlayer <= creature.MeleeAttackRange)   
+                    PlayerCharacter.Instance.TakeDamage(creature.damage);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
                 yield return new WaitForSeconds(1);
@@ -135,6 +164,13 @@ namespace Creature.Minion.Slime
     
         public class SlimeMoveState : SlimeState
         {
+            public SlimeMoveState(SlimeBase slime)
+            {
+                creature = slime;
+                
+            }
+            protected SlimeMoveState() { }
+
             public override int GetWeight()
             {
                 return creature.DistanceToPlayer > creature.MeleeAttackRange ? 5 : 0;
@@ -150,7 +186,15 @@ namespace Creature.Minion.Slime
                 {
                     timer += Time.deltaTime;
                     yield return null;
-                    creature.TrackPath(Slime._pathFinder.FindPath(creature.transform.position, PlayerCharacter.Instance.transform.position));
+                    Transform target = Slime._detector.DetectTarget()?.transform;
+                    if (target)
+                    {
+                        Slime.TrackPath(Slime._pathFinder.FindPath(creature.transform.position, target.position));
+                    }
+                    else
+                    {
+                        creature.ChangeState(new IdleState(creature));
+                    }
                 }
             
                 Slime._slimeAnimator.Stop();
