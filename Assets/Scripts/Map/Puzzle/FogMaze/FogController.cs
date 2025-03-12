@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using playerCharacter;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -8,8 +10,35 @@ namespace Map.Puzzle.FogMaze
     public class FogController : MonoBehaviour, IEventTriggerable
     {
         [SerializeField] private VisualEffect vfxRenderer;
-    
+        private HashSet<Transform> _transformSet = new HashSet<Transform>();
+        [SerializeField] private List<Transform> _transforms;
+        
         private const float DELTA_TIME = 0.02f;
+        private int _numOfTransform = 0;
+        private int _transformIndex = 0;
+        
+        
+        private void Start()
+        {
+            _transformSet.Add(PlayerCharacter.Instance.transform);
+            _numOfTransform = _transforms.Count;
+            _transforms = new List<Transform>(_transformSet);
+        }
+        
+        public void AddTransform(Transform transform)
+        {
+            _transformSet.Add(transform);
+            _transforms = new List<Transform>(_transformSet);
+            _numOfTransform = _transformSet.Count;
+        }
+        
+        public void RemoveTransform(Transform transform)
+        {
+            _transformSet.Remove(transform);
+            _transforms.Remove(transform);
+            _numOfTransform = _transformSet.Count;
+        }
+        
         private IEnumerator ClearFog()
         {
             float timer = 0;
@@ -28,8 +57,14 @@ namespace Map.Puzzle.FogMaze
         private void Update()
         {
             // Update Player's Position to Fog
-            vfxRenderer.SetVector3("ColliderPos", PlayerCharacter.Instance.transform.position);
+            if (_transformIndex >= _numOfTransform)
+            {
+                _transformIndex = 0;
+            }
+            vfxRenderer.SetVector3("ColliderPos", _transforms[_transformIndex++].position-transform.position);
         }
+        
+        
 
         public void Trigger()
         {

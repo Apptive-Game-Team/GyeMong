@@ -10,6 +10,7 @@ namespace Creature.Minion.Slime
         private SpriteRenderer spriteRenderer;
         private SlimeSprites sprites;
         private Coroutine currentAnimation;
+        public AnimationType CurrentAnimationType { get; private set; }
         private bool stopCurrentAnimation = false;
     
         public static SlimeAnimator Create(GameObject parent, SlimeSprites sprites)
@@ -18,6 +19,11 @@ namespace Creature.Minion.Slime
             animator.spriteRenderer = parent.GetComponent<SpriteRenderer>();
             animator.sprites = sprites;
             return animator;
+        }
+        
+        public void SetSprites(SlimeSprites sprites)
+        {
+            this.sprites = sprites;
         }
 
         public enum AnimationType
@@ -30,6 +36,7 @@ namespace Creature.Minion.Slime
     
         public IEnumerator SyncPlay(AnimationType type, bool loop = false)
         {
+            CurrentAnimationType = type;
             do
             {
                 yield return PlayerAnimation(sprites.GetSprite(type));
@@ -40,16 +47,17 @@ namespace Creature.Minion.Slime
     
         public void AsyncPlay(AnimationType type, bool loop = false)
         {
-            if (currentAnimation != null)
-            {
-                Stop();
-            }
+            Stop();
             currentAnimation = StartCoroutine(SyncPlay(type, loop));
         }
     
         public void Stop()
         {
-            StopCoroutine(currentAnimation);
+            if (currentAnimation != null)
+            {
+                StopCoroutine(currentAnimation);
+            }
+
             currentAnimation = null;
         }
 

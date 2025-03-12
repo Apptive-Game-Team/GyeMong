@@ -18,7 +18,8 @@ public class PortalManager : SingletonObject<PortalManager>
         yield return EffectManager.Instance.FadeOut();
         PortalData portalData = portalDataList.GetPortalDataByID(portalID);
         SceneData sceneData = sceneDataList.GetSceneDataByID(portalData.sceneID);
-        SceneManager.LoadScene(sceneData.sceneName);
+        if (!sceneData.sceneName.Equals(SceneManager.GetActiveScene().name))
+            SceneManager.LoadScene(sceneData.sceneName);
         playerCharacter.PlayerCharacter.Instance.transform.position = portalData.destination;
         StartCoroutine(EffectManager.Instance.FadeIn());
     }

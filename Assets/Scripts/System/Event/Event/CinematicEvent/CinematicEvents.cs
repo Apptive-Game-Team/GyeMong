@@ -1,21 +1,35 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Event.Interface;
+using Map.Puzzle.Maze;
 using playerCharacter;
 using UnityEngine;
 
 public abstract class CinematicEvent : Event { }
 
+public class ChangeDarkness : CinematicEvent
+{
+    [SerializeField] private DarknessController _darknessController;
+    [SerializeField] private float _intensity;
+    [SerializeField] private float _duration;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        return _darknessController.ChangeIntensity(_intensity, _duration);
+    }
+}
+
 public class MoveCreatureEvent : CinematicEvent
 {
-    private enum CreatureType
+    public enum CreatureType
     {
         Player,
         Selectable,
     }
-    [SerializeField] private CreatureType creatureType;
-    [SerializeField] private MonoBehaviour iControllable;
-    [SerializeField] private Vector3 target;
-    [SerializeField] private float speed;
+    [SerializeField] public  CreatureType creatureType;
+    [SerializeField] public  MonoBehaviour iControllable;
+    [SerializeField] public  Vector3 target;
+    [SerializeField] public  float speed;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         bool isEnable = InputManager.Instance.GetKeyActive(ActionCode.MoveDown);
@@ -29,9 +43,39 @@ public class MoveCreatureEvent : CinematicEvent
         {
             iControllable = (IControllable) PlayerCharacter.Instance;
         }
+        else
+        {
+            throw new Exception("Invalid CreatureType");
+        }
         
         yield return iControllable.MoveTo(target, speed);
         InputManager.Instance.SetActionState(isEnable);
+    }
+}
+
+public class MoveCreatureByGameObjectEvent : CinematicEvent
+{
+    [SerializeField] private MoveCreatureEvent.CreatureType _creatureType;
+    [SerializeField] private MonoBehaviour _iControllable;
+    [SerializeField] private List<Target> _targets;
+    [Serializable]
+    public struct Target
+    {
+        public Transform transform;
+        public float speed;
+    }
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        MoveCreatureEvent moveCreatureEvent = new MoveCreatureEvent();
+        moveCreatureEvent.creatureType = _creatureType;
+        moveCreatureEvent.iControllable = _iControllable;
+        
+        foreach (var target in _targets)
+        {
+            moveCreatureEvent.target = target.transform.position;
+            moveCreatureEvent.speed = target.speed;
+            yield return moveCreatureEvent.Execute();
+        }
     }
 }
 

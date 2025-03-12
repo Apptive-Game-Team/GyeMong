@@ -8,7 +8,7 @@ namespace Map.Puzzle.Maze
 {
     public class DarknessController : MonoBehaviour
     {
-        private const float INTENSITY_CHANGE_SPEED = 0.05f;
+        private const float INTENSITY_CHANGE_DEFAULT_DURATION = 1;
         private const float INTENSITY_CHANGE_THRESHOLD = 0.01f;
         
         private Light2D _globalLight;
@@ -21,22 +21,28 @@ namespace Map.Puzzle.Maze
             _globalLight = GameObject.Find("GlobalLight2D").GetComponent<Light2D>();
             _playerLight = _player.transform.Find("PlayerLight").GetComponent<Light2D>().gameObject;
         }
-
-        public IEnumerator ChangeIntensity(bool isInMaze)
+        
+        public void SetPlayerLight(bool isInMaze)
         {
-            float targetIntensity = isInMaze ? 0f : 1f;
-            float ratio = 0f;
-
             _playerLight.SetActive(isInMaze);
-            while (Mathf.Abs(_globalLight.intensity - targetIntensity) > INTENSITY_CHANGE_THRESHOLD)
-            {
-                ratio += Time.deltaTime;
-                _globalLight.intensity = Mathf.Lerp(_globalLight.intensity, targetIntensity, ratio);
-                yield return new WaitForSeconds(INTENSITY_CHANGE_SPEED);
-            }
-            _globalLight.intensity = targetIntensity;
-
-            yield return null;
         }
+
+        public IEnumerator ChangeIntensity(float intensity, float duration = INTENSITY_CHANGE_DEFAULT_DURATION)
+        {
+            float targetIntensity = intensity;
+            float startIntensity = _globalLight.intensity;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float ratio = elapsedTime / duration;
+                _globalLight.intensity = Mathf.Lerp(startIntensity, targetIntensity, ratio);
+                yield return null;
+            }
+
+            _globalLight.intensity = targetIntensity;
+        }
+
     }
 }
