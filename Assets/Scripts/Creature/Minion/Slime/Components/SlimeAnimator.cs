@@ -15,7 +15,8 @@ namespace Creature.Minion.Slime
     
         public static SlimeAnimator Create(GameObject parent, SlimeSprites sprites)
         {
-            SlimeAnimator animator = parent.gameObject.AddComponent<SlimeAnimator>();
+            SlimeAnimator animator = parent.GetComponent<SlimeAnimator>() == null ?
+             parent.AddComponent<SlimeAnimator>() : parent.GetComponent<SlimeAnimator>();
             animator.spriteRenderer = parent.GetComponent<SpriteRenderer>();
             animator.sprites = sprites;
             return animator;
