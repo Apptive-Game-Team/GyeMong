@@ -185,14 +185,9 @@ namespace Creature.Minion.Slime
             }
         }
 
-        public class SlimeStandardDieState : SlimeDieState
-        {
-            public SlimeStandardDieState(Creature creature) : base(creature) { }
-        }
-
         protected virtual SlimeDieState CreateDieState()
         {
-            return new SlimeStandardDieState(this);
+            return new SlimeDieState(this);
         }
             
         private void RotateArrowTowardsPlayer(GameObject arrow)
