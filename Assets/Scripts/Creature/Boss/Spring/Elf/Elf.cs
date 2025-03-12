@@ -48,12 +48,12 @@ namespace Creature.Boss.Spring.Elf
             {
                 return new Dictionary<System.Type, int>
                 {
-                    { typeof(BackStep), (Elf.DistanceToPlayer < Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(RushAndAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(RangedAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2)  ? 5 : 0 },
-                    { typeof(MeleeAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0},
-                    { typeof(WhipAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 5 : 0 },
+                    { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 5 : 0 },
+                    { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0},
+                    { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 5 : 0 },
                     { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
                 };
             }
@@ -105,8 +105,8 @@ namespace Creature.Boss.Spring.Elf
             {
                 return new Dictionary<System.Type, int>
                 {
-                    { typeof(RangedAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0},
+                    { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0},
                     { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
                 };
             }
@@ -120,6 +120,11 @@ namespace Creature.Boss.Spring.Elf
 
             public override IEnumerator StateCoroutine()
             {
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 2);
+                yield return new WaitForSeconds(Elf.attackdelayTime * 2);
+                //사운드 삽입 필요
+                Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.RushAttack();
@@ -127,17 +132,19 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
                 Elf.SpawnAttackCollider();
-                yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("isAttack", false);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.ChangeState();
             }
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {
                 return new Dictionary<System.Type, int>
                 {
-                    { typeof(MeleeAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0 },
-                    { typeof(WhipAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 5 : 0},
-                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                    { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 5 : 0},
+                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
+                    { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 5 : 0 },
                 };
             }
         }
@@ -179,6 +186,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                //사운드 삽입 필요
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 1);
@@ -207,6 +215,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
+                //사운드 삽입 필요
                 Elf.SpawnAttackCollider();
                 yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -232,6 +241,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
+                //사운드 삽입 필요
                 GameObject vine = Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -255,7 +265,7 @@ namespace Creature.Boss.Spring.Elf
                 Vector3 direction = Elf.DirectionToPlayer;
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
-
+                //애니메이션, 사운드 삽입 필요
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
