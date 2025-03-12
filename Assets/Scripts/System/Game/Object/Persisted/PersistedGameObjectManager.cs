@@ -7,7 +7,7 @@ namespace System.Game.Object.Persisted
     public class PersistedGameObjectManager : SingletonObject<PersistedGameObjectManager>
     {
         private Dictionary<string, PersistedGameObjectData> _persistedGameObjects = new();
-        
+
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
             ScanPersistedGameObjects();
@@ -21,11 +21,8 @@ namespace System.Game.Object.Persisted
             {
                 if (_persistedGameObjects.ContainsKey(persistedGameObject.UniqueId))
                 { // this GameObject's Data is already saved
+                    print("Applying Data to PersistedGameObject: " + persistedGameObject.UniqueId);
                     ApplyDataToPersistedGameObject(persistedGameObject, SceneManager.GetActiveScene());
-                }
-                else
-                { // this GameObject is not saved yet
-                    SavePersistedGameObject(persistedGameObject);
                 }
             }
         }
@@ -48,6 +45,7 @@ namespace System.Game.Object.Persisted
 
                     GameObject go = Instantiate(data.prefab, data.position, Quaternion.identity);
                     PersistedGameObject persistedGameObject = go.GetComponent<PersistedGameObject>();
+                    print("Placing PersistedGameObject: " + persistedGameObject.UniqueId);
                     persistedGameObject.Load(data);
                 }
             }
@@ -58,10 +56,23 @@ namespace System.Game.Object.Persisted
             ScanPersistedGameObjects();
             PlacePersistedGameObjects();
             SceneManager.sceneLoaded += OnSceneLoaded;
+            PortalManager.sceneUnloading += OnSceneUnloading;
         }
+
+        private void OnSceneUnloading(Scene arg0)
+        {
+            // Save all PersistedGameObjects
+            foreach (var obj in FindObjectsByType<PersistedGameObject>(FindObjectsSortMode.None))
+            {
+                print("Saving PersistedGameObject: " + obj.UniqueId);
+                SavePersistedGameObject(obj);
+            }
+        }
+
         private void OnDestroy()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            PortalManager.sceneUnloading -= OnSceneUnloading;
         }
 
         private void ApplyDataToPersistedGameObject(PersistedGameObject persistedGameObject, Scene scene)
@@ -80,7 +91,7 @@ namespace System.Game.Object.Persisted
         private void SavePersistedGameObject(PersistedGameObject persistedGameObject)
         {
             var datas = persistedGameObject.Save();
-            _persistedGameObjects[datas.uniqueId] = datas;
+            _persistedGameObjects[persistedGameObject.UniqueId] = datas;
         }
        
     }
