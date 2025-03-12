@@ -8,11 +8,11 @@ namespace System.Game.Object.Persisted
     [Serializable]
     public class PersistedGameObjectDatas
     {
-        [SerializeField] private List<(string uniqueId, PersistedGameObjectData data)> _datas = new();
+        [SerializeField] private List<PersistedGameObjectData> _datas = new();
 
         public PersistedGameObjectDatas(Dictionary<string, PersistedGameObjectData> datas)
         {
-            _datas = datas.Select(kv => (kv.Key, kv.Value)).ToList();
+            _datas = datas.Values.ToList();
         }
 
         public PersistedGameObjectDatas()
@@ -22,7 +22,7 @@ namespace System.Game.Object.Persisted
 
         public static implicit operator Dictionary<string, PersistedGameObjectData>(PersistedGameObjectDatas datas)
         {
-            return datas._datas.ToDictionary(kv => kv.uniqueId, kv => kv.data);
+            return datas._datas.ToDictionary(kv => kv.uniqueId, kv => kv);
         }
     }
     
@@ -37,6 +37,8 @@ namespace System.Game.Object.Persisted
         public void SetPersistedGameObjects(PersistedGameObjectDatas persistedGameObjects)
         {
             _persistedGameObjects = persistedGameObjects;
+            ScanPersistedGameObjects();
+            PlacePersistedGameObjects();
         }
         
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
