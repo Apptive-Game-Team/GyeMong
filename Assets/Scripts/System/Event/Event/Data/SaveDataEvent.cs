@@ -31,6 +31,8 @@ public class SaveDataEvent : Event
         DataManager.Instance.SaveSection(runeData, "RuneData");
         
         ConditionManager.Instance.Save();
+        
+        PersistedGameObjectManager.Instance.Save();
 
         yield return null;
     }
