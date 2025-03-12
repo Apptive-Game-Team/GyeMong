@@ -1,13 +1,44 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace System.Game.Object.Persisted
 {
+    [Serializable]
+    public class PersistedGameObjectDatas
+    {
+        [SerializeField] private List<(string uniqueId, PersistedGameObjectData data)> _datas = new();
+
+        public PersistedGameObjectDatas(Dictionary<string, PersistedGameObjectData> datas)
+        {
+            _datas = datas.Select(kv => (kv.Key, kv.Value)).ToList();
+        }
+
+        public PersistedGameObjectDatas()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static implicit operator Dictionary<string, PersistedGameObjectData>(PersistedGameObjectDatas datas)
+        {
+            return datas._datas.ToDictionary(kv => kv.uniqueId, kv => kv.data);
+        }
+    }
+    
     public class PersistedGameObjectManager : SingletonObject<PersistedGameObjectManager>
     {
         private Dictionary<string, PersistedGameObjectData> _persistedGameObjects = new();
-
+        public static string PERSISTED_DATA_FILE = "persistedGameObjects";
+        public void Save()
+        {
+            DataManager.Instance.SaveSection(new PersistedGameObjectDatas(_persistedGameObjects), PERSISTED_DATA_FILE);
+        }
+        public void SetPersistedGameObjects(PersistedGameObjectDatas persistedGameObjects)
+        {
+            _persistedGameObjects = persistedGameObjects;
+        }
+        
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
             ScanPersistedGameObjects();
