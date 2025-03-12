@@ -16,7 +16,7 @@ namespace Creature.Boss.Spring.Elf
         [SerializeField] private GameObject meleeAttackPrefab;
         //[SerializeField] private GameObject BombPrefab;
         Vector3 meleeAttackPrefabPos;
-
+        float attackdelayTime = 1f;
         private FootSoundController footSoundController;
         [SerializeField] private SoundObject arrowSoundObject;
         [SerializeField] private SoundObject vineSoundObject;
@@ -49,7 +49,7 @@ namespace Creature.Boss.Spring.Elf
                 return new Dictionary<System.Type, int>
                 {
                     { typeof(BackStep), (Elf.DistanceToPlayer < Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(RushAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(RushAndAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
                     { typeof(RangedAttack), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0 },
                     { typeof(SeedRangedAttak), (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2)  ? 5 : 0 },
                     { typeof(MeleeAttack), (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0},
@@ -111,7 +111,7 @@ namespace Creature.Boss.Spring.Elf
                 };
             }
         }
-        public new class RushAttack : ElfState
+        public class RushAndAttack : ElfState
         {
             public override int GetWeight()
             {
@@ -123,8 +123,12 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.RushAttack();
-
                 Elf.Animator.SetBool("isMove", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 2);
+                Elf.SpawnAttackCollider();
+                yield return new WaitForSeconds(Elf.attackdelayTime/2);
+                Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState();
             }
             public override Dictionary<System.Type, int> GetNextStateWeights()
@@ -148,13 +152,13 @@ namespace Creature.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
                 yield return Elf.arrowSoundObject.Play();
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState();
             }
@@ -174,7 +178,7 @@ namespace Creature.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 1);
@@ -191,7 +195,6 @@ namespace Creature.Boss.Spring.Elf
         }
         public class MeleeAttack : ElfState
         {
-            float meleeAttackdelayTime = 0.5f;
             public override int GetWeight()
             {
                 return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
@@ -200,25 +203,14 @@ namespace Creature.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                yield return new WaitForSeconds(meleeAttackdelayTime);
+                yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                SpawnAttackCollider();
-                yield return new WaitForSeconds(meleeAttackdelayTime);
+                Elf.SpawnAttackCollider();
+                yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState();
-            }
-            private void SpawnAttackCollider()
-            {
-                Vector3 direction = Elf.DirectionToPlayer;
-                Vector2 spawnPosition = Elf.transform.position + direction * 1f;
-
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
-
-                GameObject attackCollider = Instantiate(Elf.meleeAttackPrefab, spawnPosition, spawnRotation, Elf.transform);
-                Destroy(attackCollider, meleeAttackdelayTime);
             }
         }
         
@@ -236,12 +228,12 @@ namespace Creature.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 3);
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(Elf.attackdelayTime / 3);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
                 GameObject vine = Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState();
             }
@@ -264,9 +256,9 @@ namespace Creature.Boss.Spring.Elf
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.ChangeState();
             }
             private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
@@ -322,6 +314,17 @@ namespace Creature.Boss.Spring.Elf
         {
             base.Die();
             Animator.SetBool("isDown", true);
+        }
+        private void SpawnAttackCollider()
+        {
+            Vector3 direction = DirectionToPlayer;
+            Vector2 spawnPosition = transform.position + direction * 1f;
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+
+            GameObject attackCollider = Instantiate(meleeAttackPrefab, spawnPosition, spawnRotation, transform);
+            Destroy(attackCollider, attackdelayTime/2);
         }
     }
 }
