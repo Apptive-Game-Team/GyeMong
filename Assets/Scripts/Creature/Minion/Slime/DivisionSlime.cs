@@ -38,11 +38,6 @@ namespace Creature.Minion.Slime
             ChangeState();
         }
 
-        public override void OnAttacked(float damage)
-        {
-            base.OnAttacked(damage);
-        }
-
         public class SlimeRangedAttackState : RangedAttackState { }
         public class SlimeMeleeAttackState : MeleeAttackState { }
         
