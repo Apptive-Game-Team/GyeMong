@@ -30,7 +30,7 @@ namespace Creature.Minion.Slime
                 if (currentHp <= 0)
                 {
                     print(currentState);
-                    ChangeState(new SlimeDieState(this));
+                    ChangeState(CreateDieState());
                 }
             }
         }
@@ -105,7 +105,8 @@ namespace Creature.Minion.Slime
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                GameObject arrow =  Instantiate(Slime.rangedAttack, creature.transform.position, Quaternion.identity);
+                GameObject arrow =  Instantiate(Slime.rangedAttack, creature.transform.position, Quaternion.identity, creature.transform);
+                arrow.SetActive(true);
                 Slime.RotateArrowTowardsPlayer(arrow);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
@@ -125,7 +126,7 @@ namespace Creature.Minion.Slime
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
-                PlayerCharacter.Instance.TakeDamage(creature.damage);
+                if (creature.DistanceToPlayer <= creature.MeleeAttackRange) PlayerCharacter.Instance.TakeDamage(creature.damage);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
                 yield return new WaitForSeconds(1);
@@ -183,7 +184,17 @@ namespace Creature.Minion.Slime
                 yield return null;
             }
         }
-    
+
+        public class SlimeStandardDieState : SlimeDieState
+        {
+            public SlimeStandardDieState(Creature creature) : base(creature) { }
+        }
+
+        protected virtual SlimeDieState CreateDieState()
+        {
+            return new SlimeStandardDieState(this);
+        }
+            
         private void RotateArrowTowardsPlayer(GameObject arrow)
         {
             Vector3 direction = DirectionToPlayer; 
