@@ -1,13 +1,27 @@
+using System;
 using System.Collections;
+using playerCharacter;
 
 namespace Creature.Minion.ShadowOfHero
 {
     public class ShadowOfHero : Creature
     {
         private int _attackCount = 0;
-        private const int MAX_ATTACK_COUNT = 3; 
+        private const int MAX_ATTACK_COUNT = 3;
         
-        private void Initialize()
+        
+
+        private void Start()
+        {
+            Initialize();
+        }
+
+        private IEnumerator MeleeAttack()
+        {
+            return null;
+        }
+
+        protected void Initialize()
         {
             maxHp = 100;
             currentHp = maxHp;
@@ -40,12 +54,14 @@ namespace Creature.Minion.ShadowOfHero
             public override IEnumerator StateCoroutine()
             {
                 creature.Animator.SetBool("isMove", true);
-                if (creature.DistanceToPlayer > creature.MeleeAttackRange)
+                while (creature.DistanceToPlayer < creature.MeleeAttackRange)
                 {
-                    // yield return creature.MoveTo(PlayerCharacter.Instance.transform.position, creature.speed);
+                     creature.TrackPlayer();
+                     ShadowOfHero.FaceToPlayer();
+                     return null;
                 }
                 creature.Animator.SetBool("isMove", false);
-                throw new System.NotImplementedException();
+                return null;
             }
         }
         
@@ -67,6 +83,21 @@ namespace Creature.Minion.ShadowOfHero
             }
         }
        
+        public class AttackState : ShadowState
+        {
+            public override int GetWeight()
+            {
+                if (creature.DistanceToPlayer < creature.MeleeAttackRange)
+                    return 5;
+                return 0;
+            }
+            
+            public override IEnumerator StateCoroutine()
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+        
         public class DashAttackState : ShadowState
         {
             public override int GetWeight()
