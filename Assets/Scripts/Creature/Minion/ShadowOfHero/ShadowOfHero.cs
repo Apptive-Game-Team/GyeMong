@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using playerCharacter;
+using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Creature.Minion.ShadowOfHero
 {
@@ -8,17 +10,25 @@ namespace Creature.Minion.ShadowOfHero
     {
         private int _attackCount = 0;
         private const int MAX_ATTACK_COUNT = 3;
+        [SerializeField] private GameObject attackPrefab;
         
-        
-
         private void Start()
         {
             Initialize();
+            
+            // for debug
+
+            ChangeState();
         }
 
         private IEnumerator MeleeAttack()
         {
-            return null;
+            FaceToPlayer();
+            _animator.SetTrigger("isAttacking");
+            StartCoroutine(SwordAura.Create(transform, DirectionToPlayer, attackPrefab));
+            yield return new WaitForSeconds(0.2f);
+            _animator.SetBool("isAttacking", false);
+            yield return new WaitForSeconds(0.2f);
         }
 
         protected void Initialize()
@@ -28,13 +38,13 @@ namespace Creature.Minion.ShadowOfHero
 
             currentShield = 0;
             damage = 10;
-            speed = 5;
+            speed = 3;
             detectionRange = 10;
-            MeleeAttackRange = 5;
+            MeleeAttackRange = 2;
             RangedAttackRange = 20;
         }
 
-        public void FaceToPlayer()
+        private void FaceToPlayer()
         {
             Animator.SetFloat("xDir", DirectionToPlayer.x);
             Animator.SetFloat("yDir", DirectionToPlayer.y);
@@ -54,14 +64,15 @@ namespace Creature.Minion.ShadowOfHero
             public override IEnumerator StateCoroutine()
             {
                 creature.Animator.SetBool("isMove", true);
-                while (creature.DistanceToPlayer < creature.MeleeAttackRange)
+                while (creature.DistanceToPlayer > creature.MeleeAttackRange)
                 {
                      creature.TrackPlayer();
                      ShadowOfHero.FaceToPlayer();
-                     return null;
+                     yield return null;
                 }
                 creature.Animator.SetBool("isMove", false);
-                return null;
+                yield return null;
+                creature.ChangeState();
             }
         }
         
@@ -79,7 +90,11 @@ namespace Creature.Minion.ShadowOfHero
 
             public override IEnumerator StateCoroutine()
             {
-                throw new System.NotImplementedException();
+                for (int i = 0; i < 10; i++)
+                {
+                    yield return ShadowOfHero.MeleeAttack();
+                }
+                creature.ChangeState();
             }
         }
        
@@ -94,7 +109,9 @@ namespace Creature.Minion.ShadowOfHero
             
             public override IEnumerator StateCoroutine()
             {
-                throw new System.NotImplementedException();
+                ShadowOfHero._attackCount += 1;
+                yield return ShadowOfHero.MeleeAttack();
+                creature.ChangeState();
             }
         }
         
@@ -112,7 +129,11 @@ namespace Creature.Minion.ShadowOfHero
             public override IEnumerator StateCoroutine()
             {
                 ShadowOfHero._attackCount += 1;
-                throw new System.NotImplementedException();
+                creature.Animator.SetBool("isDashing", true);
+                yield return creature.RushAttack();
+                creature.Animator.SetBool("isDashing", false);
+                yield return ShadowOfHero.MeleeAttack();
+                creature.ChangeState();
             }
         }
 
