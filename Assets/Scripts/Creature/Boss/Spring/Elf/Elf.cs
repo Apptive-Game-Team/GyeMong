@@ -39,10 +39,20 @@ namespace Creature.Boss.Spring.Elf
         public abstract class ElfState : BossState
         {
             public Elf Elf => creature as Elf;
+            protected float cooldownTime = 0f;
+            protected float lastUsedTime = -Mathf.Infinity;
+            public override bool CanEnterState()
+            {
+                return Time.time - lastUsedTime >= cooldownTime;
+            }
             public override void OnStateUpdate()
             {
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
+            }
+            public override void OnStateExit()
+            {
+                lastUsedTime = Time.time;
             }
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {
@@ -113,6 +123,10 @@ namespace Creature.Boss.Spring.Elf
         }
         public class RushAndAttack : ElfState
         {
+            public RushAndAttack() 
+            {
+                cooldownTime = 10f;
+            }
             public override int GetWeight()
             {
                 return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
@@ -127,7 +141,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
-                yield return Elf.RushAttack();
+                yield return Elf.RushAttack(); 
                 Elf.Animator.SetBool("isMove", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
@@ -172,6 +186,10 @@ namespace Creature.Boss.Spring.Elf
         }
         public class SeedRangedAttak : ElfState
         {
+            public SeedRangedAttak()
+            {
+                cooldownTime = 30f;
+            }
             public override int GetWeight()
             {
                 if (Elf.CurrentPhase == 1)
@@ -225,6 +243,10 @@ namespace Creature.Boss.Spring.Elf
         
         public class WhipAttack : ElfState
         {
+            public WhipAttack()
+            {
+                cooldownTime = 30f;
+            }
             public override int GetWeight()
             {
                 if (Elf.CurrentPhase == 1)
@@ -250,6 +272,10 @@ namespace Creature.Boss.Spring.Elf
         }
         public class TrunkAttack : ElfState
         {
+            public TrunkAttack()
+            {
+                cooldownTime = 10f;
+            }
             public override int GetWeight()
             {
                 return (Elf.CurrentPhase == 0) ? 5 : 0;
