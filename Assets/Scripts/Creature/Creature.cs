@@ -286,7 +286,10 @@ namespace Creature
                 public Creature creature;
                 public abstract int GetWeight();
                 public abstract IEnumerator StateCoroutine();
-                public abstract bool CanEnterState();
+                public virtual bool CanEnterState()
+                {
+                    return true;
+                }
                 public virtual void OnStateUpdate()
                 { 
                 }
