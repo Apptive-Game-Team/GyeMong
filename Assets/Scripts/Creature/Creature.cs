@@ -111,7 +111,7 @@ namespace Creature
 
             foreach (var state in States)
             {
-                if (nextStateWeights.TryGetValue(state.GetType(), out int weight))
+                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
                 {
                     weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
                 }

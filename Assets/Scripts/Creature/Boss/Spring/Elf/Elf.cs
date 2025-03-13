@@ -39,8 +39,8 @@ namespace Creature.Boss.Spring.Elf
         public abstract class ElfState : BossState
         {
             public Elf Elf => creature as Elf;
-            protected float cooldownTime = 0f;
-            protected float lastUsedTime = -Mathf.Infinity;
+            protected float cooldownTime = 0f;//쿨도 다 임시임..조정필요
+            protected float lastUsedTime = 0f;
             public override bool CanEnterState()
             {
                 return Time.time - lastUsedTime >= cooldownTime;
@@ -59,12 +59,12 @@ namespace Creature.Boss.Spring.Elf
                 return new Dictionary<System.Type, int>
                 {
                     { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                    { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0 },
                     { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 5 : 0 },
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 },
                     { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0},
-                    { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 5 : 0 },
-                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                    { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
+                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}//임시 가중치임...조정필요
                 };
             }
         }
@@ -116,7 +116,7 @@ namespace Creature.Boss.Spring.Elf
                 return new Dictionary<System.Type, int>
                 {
                     { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0},
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0},
                     { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
                 };
             }
@@ -155,10 +155,10 @@ namespace Creature.Boss.Spring.Elf
                 return new Dictionary<System.Type, int>
                 {
                     { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0 },
-                    { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 5 : 0},
+                    { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
                     { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
                     { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 5 : 0 },
+                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 },
                 };
             }
         }
