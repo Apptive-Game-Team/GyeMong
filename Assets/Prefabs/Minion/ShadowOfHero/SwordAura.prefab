@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 7114956092359233295}
   - component: {fileID: 7631596952559367871}
   - component: {fileID: 1964477354976896879}
-  - component: {fileID: 3347186725412448040}
   - component: {fileID: 4003980397565869687}
   - component: {fileID: 1625778925990460751}
+  - component: {fileID: 1542865810345171412}
   m_Layer: 0
   m_Name: SwordAura
-  m_TagString: PlayerAttack
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +122,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 13
-  m_Sprite: {fileID: 1300826070, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,30 +130,9 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!95 &3347186725412448040
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2979615913887474165}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ad66f909b4eda324d9d509365ae95351, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &4003980397565869687
 Rigidbody2D:
   serializedVersion: 4
@@ -193,3 +172,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4f488f706fe4d86a80eb2e6a2340cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1542865810345171412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2979615913887474165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8330687638190686208
+  references:
+    version: 2
+    RefIds:
+    - rid: 8330687638190686208
+      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
+      data:
+        frames:
+        - {fileID: -623232602, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
+        - {fileID: -1811532039, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
+        - {fileID: 1300826070, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
+        - {fileID: 709818659, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
+        - {fileID: -1136456208, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
+        - {fileID: 122291462, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
+        deltaTime: 0.05
+        _renderer: {fileID: 1964477354976896879}
