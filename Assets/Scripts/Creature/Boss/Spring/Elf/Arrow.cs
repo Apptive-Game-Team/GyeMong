@@ -18,8 +18,8 @@ namespace Creature.Boss.Spring.Elf
 
         protected override void Awake()
         {
-            base.Awake();
             damage = 20f;
+            base.Awake();
             _eventObject = GetComponent<EventObject>();
             _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
             rb = GetComponent<Rigidbody2D>();
