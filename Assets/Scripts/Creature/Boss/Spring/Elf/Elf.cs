@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Creature.Boss.Component.SkillIndicator;
 using Creature.Player.Component.Collider;
 using playerCharacter;
 using TMPro;
@@ -14,6 +15,7 @@ namespace Creature.Boss.Spring.Elf
         [SerializeField] private GameObject vinePrefab;
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
+        [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         //[SerializeField] private GameObject BombPrefab;
         float attackdelayTime = 1f;
         private FootSoundController footSoundController;

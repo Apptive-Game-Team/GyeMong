@@ -18342,24 +18342,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2579300035636191002, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
-        type: 3}
-      propertyPath: coneIndicatorPrefab
-      value: 
-      objectReference: {fileID: 7901156496931371466, guid: ed9a7be0b9245274ab6f400fb2430679,
-        type: 3}
-    - target: {fileID: 2579300035636191002, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
-        type: 3}
-      propertyPath: lineIndicatorPrefab
-      value: 
-      objectReference: {fileID: 7901156496931371466, guid: 52a4255bbece4c64d81d155877b148be,
-        type: 3}
-    - target: {fileID: 2579300035636191002, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
-        type: 3}
-      propertyPath: circleIndicatorPrefab
-      value: 
-      objectReference: {fileID: 7901156496931371466, guid: cc8a0be97e33905458522a50add8db3e,
-        type: 3}
     - target: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
       propertyPath: m_Name
