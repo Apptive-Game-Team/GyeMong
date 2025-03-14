@@ -15,8 +15,12 @@ namespace Map.Puzzle.Maze
         [SerializeField] Tile thornTile;
         [SerializeField] GameObject shadowCasterPrefab;
 
-        private int _width = 49;
-        private int _height = 49;
+        [SerializeField] private int _width;
+        [SerializeField] private int _height;
+        [SerializeField] private bool _top;
+        [SerializeField] private bool _bottom;
+        [SerializeField] private bool _left;
+        [SerializeField] private bool _right;
         private bool[,] _gridTile;
         private bool[,] _thornGridTile;
         private bool _isDeadEnd = true;
@@ -58,7 +62,7 @@ namespace Map.Puzzle.Maze
                 }
                 else
                 {
-                    if (!_isDeadEnd && !IsInCenter(new Vector2Int(current.x, current.y)))
+                    if (!_isDeadEnd)
                     {
                         _thornGridTile[current.x, current.y] = true;
                         _isDeadEnd = true;
@@ -67,10 +71,18 @@ namespace Map.Puzzle.Maze
                 }
             }
 
-            _gridTile[_width - 1, _height / 2 + 1] = true;
-            _gridTile[0, _height / 2 + 1] = true;
-            _thornGridTile[_width - 2, _height / 2 + 1] = false;
-            _thornGridTile[1, _height/ 2 + 1] = false;
+            if (_right) 
+                _gridTile[_width - 1, _height / 2 + 1] = true;
+                _thornGridTile[_width - 2, _height / 2 + 1] = false;
+            if (_left) 
+                _gridTile[0, _height / 2 + 1] = true;
+                _thornGridTile[1, _height / 2 + 1] = false;
+            if (_top) 
+                _gridTile[_width / 2 + 1, _height - 1] = true;
+                _thornGridTile[_width / 2 + 1, _height - 2] = false;
+            if (_bottom) 
+                _gridTile[_width / 2 + 1, 0] = true;
+                _thornGridTile[_width / 2 + 1, 1] = false;
         }
 
         private void InitializeWalls()
@@ -89,22 +101,22 @@ namespace Map.Puzzle.Maze
         {
             List<Vector2Int> neighbors = new();
 
-            if (cell.x - 2 >= 0 && !_gridTile[cell.x - 2, cell.y] && !IsInCenter(new Vector2Int(cell.x - 2, cell.y))) neighbors.Add(new Vector2Int(cell.x - 2, cell.y));
-            if (cell.x + 2 < _width && !_gridTile[cell.x + 2, cell.y] && !IsInCenter(new Vector2Int(cell.x + 2, cell.y))) neighbors.Add(new Vector2Int(cell.x + 2, cell.y));
-            if (cell.y - 2 >= 0 && !_gridTile[cell.x, cell.y - 2] && !IsInCenter(new Vector2Int(cell.x, cell.y - 2))) neighbors.Add(new Vector2Int(cell.x, cell.y - 2));
-            if (cell.y + 2 < _height && !_gridTile[cell.x, cell.y + 2] && !IsInCenter(new Vector2Int(cell.x, cell.y + 2))) neighbors.Add(new Vector2Int(cell.x, cell.y + 2));
+            if (cell.x - 2 >= 0 && !_gridTile[cell.x - 2, cell.y]) neighbors.Add(new Vector2Int(cell.x - 2, cell.y));
+            if (cell.x + 2 < _width && !_gridTile[cell.x + 2, cell.y]) neighbors.Add(new Vector2Int(cell.x + 2, cell.y));
+            if (cell.y - 2 >= 0 && !_gridTile[cell.x, cell.y - 2]) neighbors.Add(new Vector2Int(cell.x, cell.y - 2));
+            if (cell.y + 2 < _height && !_gridTile[cell.x, cell.y + 2]) neighbors.Add(new Vector2Int(cell.x, cell.y + 2));
 
             return neighbors;
         }
 
-        private bool IsInCenter(Vector2Int position)
-        {
-            int centerX = _width / 2;
-            int centerY = _height / 2;
-            int halfSize = 4;
+        // private bool IsInCenter(Vector2Int position)
+        // {
+        //     int centerX = _width / 2;
+        //     int centerY = _height / 2;
+        //     int halfSize = 4;
 
-            return position.x >= centerX - halfSize && position.x <= centerX + halfSize && position.y >= centerY - halfSize && position.y <= centerY + halfSize;
-        }
+        //     return position.x >= centerX - halfSize && position.x <= centerX + halfSize && position.y >= centerY - halfSize && position.y <= centerY + halfSize;
+        // }
 
         private void GenerateTile(bool[,] gridTile)
         {
@@ -117,7 +129,6 @@ namespace Map.Puzzle.Maze
                 for (int j = 0; j < gridTile.GetLength(1); j++)
                 {
                     Vector3Int tilePosition = new(i - _width / 2, j - _height / 2, 0);
-                    if (IsInCenter(new Vector2Int(i,j))) gridTile[i,j] = true;
 
                     if (gridTile[i, j])
                     {
