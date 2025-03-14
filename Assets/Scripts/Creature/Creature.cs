@@ -258,7 +258,8 @@ namespace Creature
                 Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
                 float chargeSpeed = 50f;
                 Vector3 direction = (playerPosition - transform.position).normalized;
-                float targetDistance = Vector3.Distance(transform.position, playerPosition) - TARGET_OFFSET;
+                Vector3 targetPosition = playerPosition - (direction * TARGET_OFFSET);
+                float targetDistance = Vector3.Distance(transform.position, targetPosition);
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();
                 LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
@@ -273,12 +274,11 @@ namespace Creature
                 yield return new WaitForSeconds(0.5f);
                 while (elapsedTime < duration)
                 {
-                    Vector3 newPosition = Vector3.Lerp(transform.position, playerPosition, elapsedTime / duration);
+                    Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
                     rb.MovePosition(newPosition);
                     elapsedTime += Time.fixedDeltaTime;
                     yield return new WaitForFixedUpdate();
                 }
-                rb.MovePosition(playerPosition - direction);
             }
 
             public abstract class BaseState
