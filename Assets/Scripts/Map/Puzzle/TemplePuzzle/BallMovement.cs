@@ -165,7 +165,6 @@ public class BallMovement : MonoBehaviour
         {
             return hit.GetComponent<TempleTile>();
         }
-
         return null;
     }
 }

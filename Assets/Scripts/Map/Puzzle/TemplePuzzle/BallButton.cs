@@ -3,34 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallButton : MonoBehaviour
+public class BallButton : InteractableObject
 {
-    private bool isAttached = false;
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void OnInteraction(Collider2D collision)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            isAttached = true;
-        }
-    }
-
-    private void Update()
-    {
-        if (isAttached)
-        {
-            if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
-            {
-                BallMovement ball = FindObjectOfType<BallMovement>();
-                ball.StartMoveBall();
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            isAttached = false;
+            BallMovement ball = FindObjectOfType<BallMovement>();
+            ball.StartMoveBall();
         }
     }
 }
