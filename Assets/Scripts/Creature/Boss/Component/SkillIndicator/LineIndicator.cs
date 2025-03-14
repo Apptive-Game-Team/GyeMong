@@ -16,8 +16,8 @@ namespace Creature.Boss.Component.SkillIndicator
             float elapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                float scaleX = Mathf.Lerp(0, range, elapsedTime / duration);
-                indicator.localScale = new Vector3(scaleX, 1, 1);
+                float scaleY = Mathf.Lerp(0, range, elapsedTime / duration);
+                indicator.localScale = new Vector3(1, scaleY, 1);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
