@@ -10,7 +10,6 @@ public class ObjectGridLayout : MonoBehaviour
     public int columns = 4;
     public float spacing = 2f;
     public string objectIndices;
-    public Vector3 startPosition = new Vector3(0f, 0f, 0f);
 
     void Start()
     {
@@ -20,6 +19,7 @@ public class ObjectGridLayout : MonoBehaviour
     void CreateGridLayout()
     {
         int listIndex = 0;
+        Vector3 startPosition = transform.position;
 
         for (int row = 0; row < rows; row++)
         {
