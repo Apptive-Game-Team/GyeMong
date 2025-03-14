@@ -5,9 +5,14 @@ using UnityEngine;
 public class TempleTile : MonoBehaviour
 {
     public TempleTileData templeTileData;
+
     private bool isAttached = false;
     private bool isRotating = false;
     public bool iswalked = false;
+
+    private float rotationAmount = -90f;
+    private float rotationSpeed = 2f;
+    
 
     public bool up;
     public bool down;
@@ -53,8 +58,6 @@ public class TempleTile : MonoBehaviour
     {
         isRotating = true;
 
-        float rotationAmount = -90f;
-        float rotationSpeed = 1f;
         float time = 0f;
         Quaternion startRotation = transform.rotation;
         Quaternion endRotation = Quaternion.Euler(0f, 0f, transform.rotation.eulerAngles.z + rotationAmount);
