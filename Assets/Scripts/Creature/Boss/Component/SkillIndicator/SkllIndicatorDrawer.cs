@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Creature.Boss.Component
+namespace Creature.Boss.Component.SkillIndicator
 {
     public class SkllIndicatorDrawer : MonoBehaviour
     {
