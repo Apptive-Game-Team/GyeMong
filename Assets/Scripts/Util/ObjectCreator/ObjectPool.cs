@@ -19,21 +19,17 @@ namespace Util.ObjectCreator
 
         public T GetObject()
         {
-            foreach (T obj in _pool)
-            {
-                if (!obj.gameObject.activeInHierarchy)
-                {
-                    return obj;
-                }
-            }
+            T result = GetInactiveObject();
+            if (result != null)
+                return result;
 
             GameObject newGameObject = Object.Instantiate(_prefab);
-            T newObj = newGameObject.GetComponent<T>();
+            result = newGameObject.GetComponent<T>();
             
-            _pool.Add(newObj);
-            return newObj;
+            _pool.Add(result);
+            return result;
         }
-
+        
         public T GetObject(Vector3 position)
         {
             T obj = GetObject();
@@ -46,6 +42,18 @@ namespace Util.ObjectCreator
             T obj = GetObject(transform.position);
             obj.transform.parent = transform;
             return obj;
+        }
+        
+        public T GetInactiveObject()
+        {
+            foreach (T obj in _pool)
+            {
+                if (!obj.gameObject.activeInHierarchy)
+                {
+                    return obj;
+                }
+            }
+            return null;
         }
         
         public void ReturnObject(T obj)

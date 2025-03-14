@@ -66,10 +66,6 @@ public class ConditionManager : SingletonObject<ConditionManager>
             return _conditions;
         }
     }
-    private void OnApplicationQuit()
-    {
-        DataManager.Instance.SaveSection(new Conditions(_conditions), CONDITION_FILE);
-    }
 
     public void Save()
     {

@@ -26,7 +26,9 @@ namespace Creature.Boss
                 }
             }
         }
-
+        public abstract class BossState : BaseState
+        {
+        }
         protected void Start()
         {
             Initialize();

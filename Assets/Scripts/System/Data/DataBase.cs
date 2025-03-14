@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Game.Quest.Quests;
 using UnityEngine;
 
 [System.Serializable]
@@ -15,6 +17,12 @@ public class RuneDatas
 {
     public List<RuneData> AcquiredRuneDatas = new();
     public List<RuneData> EquippedRuneDatas = new();
+}
+
+[Serializable]
+public class QuestData
+{
+    public List<Quest> quests = new();
 }
 
 [System.Serializable]

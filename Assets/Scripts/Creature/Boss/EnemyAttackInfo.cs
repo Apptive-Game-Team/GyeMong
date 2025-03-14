@@ -14,7 +14,7 @@ namespace Creature.Boss
         public bool isMultiHit;
         public float multiHitDelay;
 
-        public void Initialize(float damage, SoundObject soundObject, bool isDestroyOnHit, bool grazable,
+        public void Initialize(float damage = 0f, SoundObject soundObject = null, bool isDestroyOnHit = false, bool grazable = false,
             bool isMultiHit = false, float multiHitDelay = 0f, bool grazed = false, bool isAttacked = false)
         {
             this.damage = damage;

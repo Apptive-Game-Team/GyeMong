@@ -8,7 +8,6 @@ namespace System.Game.Rune.RuneUI
         {
             base.Awake();
             toggleKeyActionCode = ActionCode.RunePage;
-            DontDestroyOnLoad(transform.parent.gameObject);
         }
     }
 }
