@@ -153,6 +153,53 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e2f0d7b17aab4b8a802800c62d20884, type: 2}
   - {fileID: 11400000, guid: 9ebf8ea8ebf104c70bef6c353f9b4c35, type: 2}
   - {fileID: 11400000, guid: dfa710a021f634ebd95fcbbbe2f6c1fb, type: 2}
+--- !u!1 &4470989453084554802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6437808754312436988}
+  - component: {fileID: 2579300035636191002}
+  m_Layer: 0
+  m_Name: SkillIndicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6437808754312436988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470989453084554802}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 844737725874419187}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2579300035636191002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470989453084554802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f561c6e6f9d59d5469191a2c95c1e8b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineIndicatorPrefab: {fileID: 0}
+  coneIndicatorPrefab: {fileID: 0}
+  circleIndicatorPrefab: {fileID: 0}
 --- !u!1 &7607399698781265360
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +239,7 @@ Transform:
   - {fileID: 7688074528975113545}
   - {fileID: 799734533708190611}
   - {fileID: 1168519218985706024}
+  - {fileID: 6437808754312436988}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1241953916927290027
@@ -254,7 +302,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7607399698781265360}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -309,7 +357,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.92, y: 1.92}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -408,6 +456,9 @@ MonoBehaviour:
     type: 3}
   vinePrefab: {fileID: 1349092434517921609, guid: fb62a8a2deaf08d40a4dfed66f56462b,
     type: 3}
-  meleeAttackPrefab: {fileID: 0}
+  trunkPrefab: {fileID: 8583689789694271782, guid: 06ce720769f51a94ab1f98f468cc718c,
+    type: 3}
+  meleeAttackPrefab: {fileID: 1582423106245993158, guid: c36ee9d1cc715c342abb69e7151abce8,
+    type: 3}
   arrowSoundObject: {fileID: 5473089280011465190}
   vineSoundObject: {fileID: 1832858006457810338}
