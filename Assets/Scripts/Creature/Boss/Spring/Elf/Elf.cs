@@ -35,6 +35,7 @@ namespace Creature.Boss.Spring.Elf
             detectionRange = 10f;
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
+            SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
             footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
         }
         public abstract class ElfState : BossState
