@@ -15,7 +15,6 @@ namespace Creature.Boss.Spring.Elf
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
         //[SerializeField] private GameObject BombPrefab;
-        Vector3 meleeAttackPrefabPos;
         float attackdelayTime = 1f;
         private FootSoundController footSoundController;
         [SerializeField] private SoundObject arrowSoundObject;
