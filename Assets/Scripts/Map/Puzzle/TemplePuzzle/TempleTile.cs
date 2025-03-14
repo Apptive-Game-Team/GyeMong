@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TempleTile : MonoBehaviour
+public class TempleTile : InteractableObject
 {
     public TempleTileData templeTileData;
 
-    private bool isAttached = false;
     private bool isRotating = false;
     public bool iswalked = false;
 
@@ -26,30 +25,11 @@ public class TempleTile : MonoBehaviour
         right = templeTileData.right;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void OnInteraction(Collider2D collision)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !isRotating)
         {
-            isAttached = true;
-        }
-    }
-
-    private void Update()
-    {
-        if (isAttached && !isRotating)
-        {
-            if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
-            {
-                StartCoroutine(RotateTile());
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            isAttached = false;
+            StartCoroutine(RotateTile());
         }
     }
 
