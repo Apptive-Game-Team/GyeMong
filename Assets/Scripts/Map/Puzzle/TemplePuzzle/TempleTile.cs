@@ -11,9 +11,8 @@ public class TempleTile : MonoBehaviour
     public bool iswalked = false;
 
     private float rotationAmount = -90f;
-    private float rotationSpeed = 2f;
+    private float rotationSpeed = 0.5f;
     
-
     public bool up;
     public bool down;
     public bool left;
@@ -70,10 +69,10 @@ public class TempleTile : MonoBehaviour
         }
         transform.rotation = endRotation;
 
-        UpdateDirection();
+        Rotate();
     }
 
-    void UpdateDirection()
+    void Rotate()
     {
         bool temp;
 
