@@ -15,7 +15,7 @@ namespace Creature.Boss.Component.SkillIndicator
         [SerializeField] protected GameObject lineIndicatorPrefab;
         [SerializeField] protected GameObject coneIndicatorPrefab;
         [SerializeField] protected GameObject circleIndicatorPrefab;
-        public void CreateIndicator(IndicatorType type, Vector3 startPosition, Vector3 direction, float range, float duration)
+        public void DrawIndicator(IndicatorType type, Vector3 startPosition, Vector3 direction, float range, float duration)
         {
             GameObject prefab = GetIndicatorPrefab(type);
             IndicatorBase indicator = Instantiate(prefab, startPosition, Quaternion.identity).GetComponent<IndicatorBase>();
