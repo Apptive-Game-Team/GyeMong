@@ -11,7 +11,7 @@ namespace Creature.Boss.Component.SkillIndicator
         {
             indicator = Instantiate(circlePrefab, startPosition, Quaternion.identity).transform;
         }
-        public override IEnumerator GrowIndicator(float range, float duration)
+        public override IEnumerator GrowIndicator(Vector3 startPosition, Vector3 direction, float range, float duration)
         {
             float elapsedTime = 0f;
             while (elapsedTime < duration)

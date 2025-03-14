@@ -8,6 +8,6 @@ namespace Creature.Boss.Component.SkillIndicator
     {
         protected Transform indicator;
         public abstract void Initialize(Vector3 startPosition, Vector3 direction, float range, float duration);
-        public abstract IEnumerator GrowIndicator(float range, float duration);
+        public abstract IEnumerator GrowIndicator(Vector3 startPosition, Vector3 direction, float range, float duration);
     }
 }
