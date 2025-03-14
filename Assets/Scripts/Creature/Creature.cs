@@ -270,7 +270,7 @@ namespace Creature
 
                 float elapsedTime = 0f;
                 float duration = targetDistance / chargeSpeed;
-
+                yield return new WaitForSeconds(0.5f);
                 while (elapsedTime < duration)
                 {
                     Vector3 newPosition = Vector3.Lerp(transform.position, playerPosition, elapsedTime / duration);
