@@ -116,7 +116,8 @@ namespace playerCharacter
 
             if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge >= stat.SkillCost)
             {
-                StartCoroutine(SkillAttack());
+                StartCoroutine(ChargeSkillAttack());
+                // StartCoroutine(SkillAttack());
             }
         }
 
@@ -276,6 +277,24 @@ namespace playerCharacter
             isAttacking = false;
         }
 
+        private float _chargeThreshold = 1f;
+        private float _chargePowerCoef = 1f;
+        
+        public IEnumerator ChargeSkillAttack()
+        {
+            float curChargePower = 0f;
+            
+            soundController.Trigger(PlayerSoundType.SWORD_SWING);
+            while (InputManager.Instance.GetKey(ActionCode.Skill) == true && curChargePower < _chargeThreshold)
+            {
+                curChargePower += Time.deltaTime * _chargePowerCoef;
+                yield return null;
+            }
+            stat.SetStatValue(StatType.SKILL_COEF,StatValueType.FINAL_PERCENT_VALUE, curChargePower);
+            yield return SkillAttack();
+            stat.SetStatValue(StatType.SKILL_COEF,StatValueType.FINAL_PERCENT_VALUE, 0);
+        }
+        
         private IEnumerator SkillAttack()
         {
             soundController.Trigger(PlayerSoundType.SWORD_SKILL);

@@ -11,6 +11,7 @@ public class RuneData
     public string name;
     public int id;
     public string description;
+    public int cost;
     public Sprite runeImage;
     public List<RuneUpgrade> availableOptions;
     public bool isUnlocked;
