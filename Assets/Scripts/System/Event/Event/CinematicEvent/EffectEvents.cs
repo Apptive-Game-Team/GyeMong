@@ -94,3 +94,4 @@ public class FadeInFirstEvent : EffectEvent
         return EffectManager.Instance.FadeInFirst();
     }
 }
+
