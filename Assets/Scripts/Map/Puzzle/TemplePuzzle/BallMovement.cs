@@ -9,7 +9,7 @@ namespace Map.Puzzle.TemplePuzzle
         public float moveSpeed = 3f;
         private float delayTime = 1f;
         public TempleTile currentTile;
-        private bool isMoving = false;
+        public bool isMoving = false;
         private Vector3 startPosition;
         private List<TempleTile> visitedTiles = new List<TempleTile>();
 

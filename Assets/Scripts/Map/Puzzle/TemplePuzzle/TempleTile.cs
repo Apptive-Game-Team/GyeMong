@@ -32,7 +32,10 @@ namespace Map.Puzzle.TemplePuzzle
 
         protected override void OnInteraction(Collider2D collision)
         {
-            if (collision.CompareTag("Player") && !isRotating && isRotatable)
+            BallMovement ball = FindObjectOfType<BallMovement>();
+            bool isBallMove = ball.isMoving;
+
+            if (collision.CompareTag("Player") && !isRotating && isRotatable && !isBallMove)
             {
                 StartCoroutine(RotateTile());
             }
