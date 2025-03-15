@@ -8,6 +8,7 @@ namespace Map.Puzzle.TemplePuzzle
     {
         public TempleTileData templeTileData;
 
+        private bool isRotatable = false;
         private bool isRotating = false;
         public bool iswalked = false;
 
@@ -21,6 +22,8 @@ namespace Map.Puzzle.TemplePuzzle
 
         private void Start()
         {
+            isRotatable = templeTileData.isRotatable;
+
             up = templeTileData.up;
             down = templeTileData.down;
             left = templeTileData.left;
@@ -29,7 +32,7 @@ namespace Map.Puzzle.TemplePuzzle
 
         protected override void OnInteraction(Collider2D collision)
         {
-            if (collision.CompareTag("Player") && !isRotating)
+            if (collision.CompareTag("Player") && !isRotating && isRotatable)
             {
                 StartCoroutine(RotateTile());
             }
