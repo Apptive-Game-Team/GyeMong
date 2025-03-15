@@ -3,14 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallButton : InteractableObject
+namespace Map.Puzzle.TemplePuzzle
 {
-    protected override void OnInteraction(Collider2D collision)
+    public class BallButton : InteractableObject
     {
-        if (collision.CompareTag("Player"))
+        protected override void OnInteraction(Collider2D collision)
         {
-            BallMovement ball = FindObjectOfType<BallMovement>();
-            ball.StartMoveBall();
+            if (collision.CompareTag("Player"))
+            {
+                BallMovement ball = FindObjectOfType<BallMovement>();
+                ball.StartMoveBall();
+            }
         }
     }
 }

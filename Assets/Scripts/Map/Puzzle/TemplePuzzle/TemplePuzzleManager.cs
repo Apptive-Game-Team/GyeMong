@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TemplePuzzleManager : MonoBehaviour
+namespace Map.Puzzle.TemplePuzzle
 {
-    public static TemplePuzzleManager instance;
-
-    public GameObject Door;
-
-    public bool isCleared = false;
-
-    private void Start()
+    public class TemplePuzzleManager : MonoBehaviour
     {
-        if (instance == null)
+        public static TemplePuzzleManager instance;
+
+        public GameObject Door;
+
+        public bool isCleared = false;
+
+        private void Start()
         {
-            instance = this;
+            if (instance == null)
+            {
+                instance = this;
+            }
         }
     }
 }

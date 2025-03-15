@@ -2,55 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectGridLayout : MonoBehaviour
+namespace Map.Puzzle.TemplePuzzle
 {
-    public GameObject[] objectPrefabs;
-    public GameObject ballPrefab;
-    public int rows = 4;
-    public int columns = 4;
-    public float spacing = 2f;
-    public string objectIndices;
-
-    void Start()
+    public class ObjectGridLayout : MonoBehaviour
     {
-        CreateGridLayout();
-    }
+        public GameObject[] objectPrefabs;
+        public GameObject ballPrefab;
+        public int rows = 4;
+        public int columns = 4;
+        public float spacing = 2f;
+        public string objectIndices;
 
-    void CreateGridLayout()
-    {
-        int listIndex = 0;
-        Vector3 startPosition = transform.position;
-
-        for (int row = 0; row < rows; row++)
+        void Start()
         {
-            for (int col = 0; col < columns; col++)
+            CreateGridLayout();
+        }
+
+        void CreateGridLayout()
+        {
+            int listIndex = 0;
+            Vector3 startPosition = transform.position;
+
+            for (int row = 0; row < rows; row++)
             {
-                if (listIndex < objectIndices.Length)
+                for (int col = 0; col < columns; col++)
                 {
-                    char currentChar = objectIndices[listIndex];
-                    int objectIndex = int.Parse(currentChar.ToString());
-
-                    if (objectIndex >= 0 && objectIndex < objectPrefabs.Length)
+                    if (listIndex < objectIndices.Length)
                     {
-                        GameObject obj = Instantiate(objectPrefabs[objectIndex]);
+                        char currentChar = objectIndices[listIndex];
+                        int objectIndex = int.Parse(currentChar.ToString());
 
-                        float xPos = startPosition.x + (col * spacing);
-                        float yPos = startPosition.y + (row * spacing);
-
-                        obj.transform.position = new Vector3(xPos, yPos, 0f);
-
-                        if (objectIndex == 0)
+                        if (objectIndex >= 0 && objectIndex < objectPrefabs.Length)
                         {
-                            GameObject ball = Instantiate(ballPrefab);
+                            GameObject obj = Instantiate(objectPrefabs[objectIndex]);
 
-                            ball.transform.position = new Vector3(xPos, yPos, 0f);
-                            ball.transform.SetParent(transform);
+                            float xPos = startPosition.x + (col * spacing);
+                            float yPos = startPosition.y + (row * spacing);
+
+                            obj.transform.position = new Vector3(xPos, yPos, 0f);
+
+                            if (objectIndex == 0)
+                            {
+                                GameObject ball = Instantiate(ballPrefab);
+
+                                ball.transform.position = new Vector3(xPos, yPos, 0f);
+                                ball.transform.SetParent(transform);
+                            }
+
+                            obj.transform.SetParent(transform);
                         }
 
-                        obj.transform.SetParent(transform);
+                        listIndex++;
                     }
-
-                    listIndex++;
                 }
             }
         }

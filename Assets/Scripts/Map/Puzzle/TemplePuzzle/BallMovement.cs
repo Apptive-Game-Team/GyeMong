@@ -2,169 +2,172 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallMovement : MonoBehaviour
+namespace Map.Puzzle.TemplePuzzle
 {
-    public float moveSpeed = 3f;
-    private float delayTime = 1f;
-    public TempleTile currentTile;
-    private bool isMoving = false;
-    private Vector3 startPosition;
-    private List<TempleTile> visitedTiles = new List<TempleTile>();
-
-    void Start()
+    public class BallMovement : MonoBehaviour
     {
-        startPosition = transform.position;
-        currentTile = GetCurrentTile();
-    }
+        public float moveSpeed = 3f;
+        private float delayTime = 1f;
+        public TempleTile currentTile;
+        private bool isMoving = false;
+        private Vector3 startPosition;
+        private List<TempleTile> visitedTiles = new List<TempleTile>();
 
-    public void StartMoveBall()
-    {
-        if (!isMoving)
+        void Start()
         {
-            StartCoroutine(MoveBall());
+            startPosition = transform.position;
+            currentTile = GetCurrentTile();
         }
-    }
 
-    IEnumerator MoveBall()
-    {
-        if (currentTile != null)
+        public void StartMoveBall()
         {
-            isMoving = true;
-
-            Vector2 direction = GetMoveDirection();
-
-            while (direction != Vector2.zero)
+            if (!isMoving)
             {
-                Vector3 targetPosition = currentTile.transform.position + (Vector3)direction;
+                StartCoroutine(MoveBall());
+            }
+        }
 
-                while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
+        IEnumerator MoveBall()
+        {
+            if (currentTile != null)
+            {
+                isMoving = true;
+
+                Vector2 direction = GetMoveDirection();
+
+                while (direction != Vector2.zero)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-                    yield return null;
+                    Vector3 targetPosition = currentTile.transform.position + (Vector3)direction;
+
+                    while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                        yield return null;
+                    }
+
+                    transform.position = targetPosition;
+
+                    if (currentTile != null)
+                    {
+                        currentTile.iswalked = true;
+                        visitedTiles.Add(currentTile);
+                    }
+
+                    yield return new WaitForSeconds(delayTime);
+
+                    currentTile = GetCurrentTile();
+
+                    direction = GetMoveDirection();
                 }
 
-                transform.position = targetPosition;
+                isMoving = false;
 
-                if (currentTile != null)
+                if (GoalCheck())
                 {
-                    currentTile.iswalked = true;
-                    visitedTiles.Add(currentTile);
+                    Debug.Log("Success");
+                    TemplePuzzleManager.instance.isCleared = true;
+                    ConditionManager.Instance.Conditions["SpringTemplePuzzleIsCleared"] = true;
                 }
 
-                yield return new WaitForSeconds(delayTime);
-
-                currentTile = GetCurrentTile();
-
-                direction = GetMoveDirection();
-            }
-
-            isMoving = false;
-
-            if (GoalCheck())
-            {
-                Debug.Log("Success");
-                TemplePuzzleManager.instance.isCleared = true;
-                ConditionManager.Instance.Conditions["SpringTemplePuzzleIsCleared"] = true;
-            }
-
-            else
-            {
-                Debug.Log("Nope");
-                ReturnToStartPosition();
+                else
+                {
+                    Debug.Log("Nope");
+                    ReturnToStartPosition();
+                }
             }
         }
-    }
 
-    Vector2 GetMoveDirection()
-    {
-        if (CanMoveToTile(currentTile.transform.position, Vector2.up) && currentTile.up)
+        Vector2 GetMoveDirection()
         {
-            return Vector2.up;
-        }
-        else if (CanMoveToTile(currentTile.transform.position, Vector2.down) && currentTile.down)
-        {
-            return Vector2.down;
-        }
-        else if (CanMoveToTile(currentTile.transform.position, Vector2.left) && currentTile.left)
-        {
-            return Vector2.left;
-        }
-        else if (CanMoveToTile(currentTile.transform.position, Vector2.right) && currentTile.right)
-        {
-            return Vector2.right;
-        }
-
-        return Vector2.zero;
-    }
-
-    bool CanMoveToTile(Vector3 position, Vector2 direction)
-    {
-        Vector3 checkPosition = position + (Vector3)direction;
-
-        Collider2D hit = Physics2D.OverlapBox(checkPosition, new Vector2(0.1f, 0.1f), 0f);
-
-        if (hit != null && hit.CompareTag("Tile"))
-        {
-            TempleTile tile = hit.GetComponent<TempleTile>();
-            if (tile != null)
+            if (CanMoveToTile(currentTile.transform.position, Vector2.up) && currentTile.up)
             {
-                if (direction == Vector2.up && tile.down && !tile.iswalked)
+                return Vector2.up;
+            }
+            else if (CanMoveToTile(currentTile.transform.position, Vector2.down) && currentTile.down)
+            {
+                return Vector2.down;
+            }
+            else if (CanMoveToTile(currentTile.transform.position, Vector2.left) && currentTile.left)
+            {
+                return Vector2.left;
+            }
+            else if (CanMoveToTile(currentTile.transform.position, Vector2.right) && currentTile.right)
+            {
+                return Vector2.right;
+            }
+
+            return Vector2.zero;
+        }
+
+        bool CanMoveToTile(Vector3 position, Vector2 direction)
+        {
+            Vector3 checkPosition = position + (Vector3)direction;
+
+            Collider2D hit = Physics2D.OverlapBox(checkPosition, new Vector2(0.1f, 0.1f), 0f);
+
+            if (hit != null && hit.CompareTag("Tile"))
+            {
+                TempleTile tile = hit.GetComponent<TempleTile>();
+                if (tile != null)
+                {
+                    if (direction == Vector2.up && tile.down && !tile.iswalked)
+                    {
+                        return true;
+                    }
+                    if (direction == Vector2.down && tile.up && !tile.iswalked)
+                    {
+                        return true;
+                    }
+                    if (direction == Vector2.left && tile.right && !tile.iswalked)
+                    {
+                        return true;
+                    }
+                    if (direction == Vector2.right && tile.left && !tile.iswalked)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+        public bool GoalCheck()
+        {
+            Collider2D hit = Physics2D.OverlapBox(transform.position, new Vector2(0.1f, 0.1f), 0f);
+
+            if (hit != null && hit.CompareTag("Tile"))
+            {
+                if (hit.gameObject.name == "Goal(Clone)")
                 {
                     return true;
                 }
-                if (direction == Vector2.down && tile.up && !tile.iswalked)
-                {
-                    return true;
-                }
-                if (direction == Vector2.left && tile.right && !tile.iswalked)
-                {
-                    return true;
-                }
-                if (direction == Vector2.right && tile.left && !tile.iswalked)
-                {
-                    return true;
-                }
             }
+            return false;
         }
 
-        return false;
-    }
-    public bool GoalCheck()
-    {
-        Collider2D hit = Physics2D.OverlapBox(transform.position, new Vector2(0.1f, 0.1f), 0f);
-
-        if (hit != null && hit.CompareTag("Tile"))
+        void ReturnToStartPosition()
         {
-            if (hit.gameObject.name == "Goal(Clone)")
+            transform.position = startPosition;
+            currentTile = GetCurrentTile();
+
+            foreach (TempleTile tile in visitedTiles)
             {
-                return true;
+                tile.iswalked = false;
             }
+
+            visitedTiles.Clear();
         }
-        return false;
-    }
 
-    void ReturnToStartPosition()
-    {
-        transform.position = startPosition;
-        currentTile = GetCurrentTile();
-
-        foreach (TempleTile tile in visitedTiles)
+        TempleTile GetCurrentTile()
         {
-            tile.iswalked = false;
+            Vector3 currentPosition = transform.position;
+
+            Collider2D hit = Physics2D.OverlapBox(currentPosition, new Vector2(0.1f, 0.1f), 0f);
+            if (hit != null && hit.CompareTag("Tile"))
+            {
+                return hit.GetComponent<TempleTile>();
+            }
+            return null;
         }
-
-        visitedTiles.Clear();
-    }
-
-    TempleTile GetCurrentTile()
-    {
-        Vector3 currentPosition = transform.position;
-
-        Collider2D hit = Physics2D.OverlapBox(currentPosition, new Vector2(0.1f, 0.1f), 0f);
-        if (hit != null && hit.CompareTag("Tile"))
-        {
-            return hit.GetComponent<TempleTile>();
-        }
-        return null;
     }
 }
