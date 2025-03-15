@@ -28,6 +28,8 @@ namespace Map.Puzzle.TemplePuzzle
             down = templeTileData.down;
             left = templeTileData.left;
             right = templeTileData.right;
+
+            FirstRandomRotate();
         }
 
         protected override void OnInteraction(Collider2D collision)
@@ -58,6 +60,16 @@ namespace Map.Puzzle.TemplePuzzle
             transform.rotation = endRotation;
 
             Rotate();
+        }
+
+        private void FirstRandomRotate()
+        {
+            int randomRotation = Random.Range(0, 4) * 90;
+            for (int i = 0; i < randomRotation / 90; i++)
+            {
+                Rotate();
+            }
+            transform.rotation = Quaternion.Euler(0, 0, -randomRotation);
         }
 
         void Rotate()
