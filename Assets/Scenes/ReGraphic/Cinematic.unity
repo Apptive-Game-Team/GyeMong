@@ -3071,11 +3071,12 @@ MonoBehaviour:
   eventSequence:
   - rid: 4949244132887101442
   - rid: 4949244132887101446
-  - rid: 4949244132887101449
   - rid: 4949244132887101441
   - rid: 4949244132887101444
-  - rid: 4949244132887101448
-  - rid: 4949244132887101443
+  - rid: 4949244132887101450
+  - rid: 4949244132887101451
+  - rid: 4949244132887101452
+  - rid: 4949244132887101453
   references:
     version: 2
     RefIds:
@@ -3083,15 +3084,12 @@ MonoBehaviour:
       type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
       data:
         messages:
-          name: "\uC5D0\uD734"
+          name: '[System]'
           messages:
-          - "\uC774\uAC70"
-          - "\uC2E4\uD654\uB0D0"
+          - "\uC774 \uD3B8\uC9C0\uB294 \uC601\uAD6D\uC5D0\uC11C\uBD80\uD130 \uC2DC\uC791\uB418\uC5B4"
+          - "\uC0EC\uB77C\uC0EC\uB77C\uC0EC\uB77C"
     - rid: 4949244132887101442
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4949244132887101443
-      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
     - rid: 4949244132887101444
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
@@ -3105,13 +3103,32 @@ MonoBehaviour:
         endPosition: {x: 0, y: 200}
         moveTime: 0.5
         targetSize: {x: 800, y: 540}
-    - rid: 4949244132887101448
-      type: {class: ClearImageEvent, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4949244132887101449
+        imageDelayTime: 0.5
+    - rid: 4949244132887101450
+      type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
+      data:
+        sprite: {fileID: 21300000, guid: 5d8ed1c9f2ea84fc78b0784754790874, type: 3}
+        startPosition: {x: 0, y: 300}
+        endPosition: {x: 0, y: 200}
+        moveTime: 0.5
+        targetSize: {x: 800, y: 540}
+        imageDelayTime: 0.5
+    - rid: 4949244132887101451
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
-        delayTime: 1
+        delayTime: 0.5
+    - rid: 4949244132887101452
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: '[System]'
+          messages:
+          - "\uB3C4\uB808\uBBF8\uD30C\uC194\uB77C\uC2DC\uB3C4"
+          - "\uAC10\uC790\uAC10\uC790"
+    - rid: 4949244132887101453
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 3
 --- !u!4 &562705329
 Transform:
   m_ObjectHideFlags: 0
