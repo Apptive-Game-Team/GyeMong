@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Game;
 using UnityEngine;
 using Creature.Boss;
 
@@ -6,6 +7,8 @@ namespace Creature.Player.Component.Collider
 {
     public class HitCollider : MonoBehaviour
     {
+        [SerializeField] private AirborneController airborneController;
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("EnemyAttack"))
@@ -13,6 +16,7 @@ namespace Creature.Player.Component.Collider
                 EnemyAttackInfo enemyAttackInfo = other.GetComponent<EnemyAttackInfo>();
                 if (enemyAttackInfo == null) return;
 
+                ApplyAirborne(enemyAttackInfo);
                 enemyAttackInfo.isAttacked = true;
                 if (enemyAttackInfo.soundObject != null)
                 {
@@ -89,6 +93,16 @@ namespace Creature.Player.Component.Collider
         private IEnumerator Wait(float delay)
         {
             yield return new WaitForSeconds(delay);
+        }
+
+        private void ApplyAirborne(EnemyAttackInfo enemyAttackInfo)
+        {
+            if (enemyAttackInfo.knockbackAmount > 0)
+            {
+                Vector3 origin = enemyAttackInfo.gameObject.transform.position;
+                Vector3 direction = playerCharacter.PlayerCharacter.Instance.transform.position - origin;
+                StartCoroutine(airborneController.AirborneTo(direction * enemyAttackInfo.knockbackAmount + playerCharacter.PlayerCharacter.Instance.transform.position));
+            }
         }
     }
 }
