@@ -3072,11 +3072,8 @@ MonoBehaviour:
   - rid: 4949244132887101442
   - rid: 4949244132887101446
   - rid: 4949244132887101441
-  - rid: 4949244132887101444
   - rid: 4949244132887101450
-  - rid: 4949244132887101451
   - rid: 4949244132887101452
-  - rid: 4949244132887101453
   references:
     version: 2
     RefIds:
@@ -3088,13 +3085,10 @@ MonoBehaviour:
           messages:
           - "\uC774 \uD3B8\uC9C0\uB294 \uC601\uAD6D\uC5D0\uC11C\uBD80\uD130 \uC2DC\uC791\uB418\uC5B4"
           - "\uC0EC\uB77C\uC0EC\uB77C\uC0EC\uB77C"
+          chatDelay: 3
     - rid: 4949244132887101442
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 4949244132887101444
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 3
     - rid: 4949244132887101446
       type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -3113,10 +3107,6 @@ MonoBehaviour:
         moveTime: 0.5
         targetSize: {x: 800, y: 540}
         imageDelayTime: 0.5
-    - rid: 4949244132887101451
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 0.5
     - rid: 4949244132887101452
       type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -3125,10 +3115,7 @@ MonoBehaviour:
           messages:
           - "\uB3C4\uB808\uBBF8\uD30C\uC194\uB77C\uC2DC\uB3C4"
           - "\uAC10\uC790\uAC10\uC790"
-    - rid: 4949244132887101453
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 3
+          chatDelay: 3
 --- !u!4 &562705329
 Transform:
   m_ObjectHideFlags: 0
