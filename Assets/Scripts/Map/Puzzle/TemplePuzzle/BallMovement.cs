@@ -103,28 +103,22 @@ namespace Map.Puzzle.TemplePuzzle
         {
             Vector3 checkPosition = position + (Vector3)direction;
 
-            Collider2D hit = Physics2D.OverlapBox(checkPosition, new Vector2(0.1f, 0.1f), 0f);
+            Collider2D[] hits = Physics2D.OverlapBoxAll(checkPosition, new Vector2(0.1f, 0.1f), 0f);
 
-            if (hit != null && hit.CompareTag("Tile"))
+            foreach (Collider2D hit in hits)
             {
-                TempleTile tile = hit.GetComponent<TempleTile>();
-                if (tile != null)
+                if (hit.CompareTag("Tile"))
                 {
-                    if (direction == Vector2.up && tile.down && !tile.iswalked)
+                    TempleTile tile = hit.GetComponent<TempleTile>();
+                    if (tile != null && !tile.iswalked)
                     {
-                        return true;
-                    }
-                    if (direction == Vector2.down && tile.up && !tile.iswalked)
-                    {
-                        return true;
-                    }
-                    if (direction == Vector2.left && tile.right && !tile.iswalked)
-                    {
-                        return true;
-                    }
-                    if (direction == Vector2.right && tile.left && !tile.iswalked)
-                    {
-                        return true;
+                        if ((direction == Vector2.up && tile.down) ||
+                            (direction == Vector2.down && tile.up) ||
+                            (direction == Vector2.left && tile.right) ||
+                            (direction == Vector2.right && tile.left))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -162,11 +156,16 @@ namespace Map.Puzzle.TemplePuzzle
         {
             Vector3 currentPosition = transform.position;
 
-            Collider2D hit = Physics2D.OverlapBox(currentPosition, new Vector2(0.1f, 0.1f), 0f);
-            if (hit != null && hit.CompareTag("Tile"))
+            Collider2D[] hits = Physics2D.OverlapBoxAll(currentPosition, new Vector2(0.1f, 0.1f), 0f);
+
+            foreach (Collider2D hit in hits)
             {
-                return hit.GetComponent<TempleTile>();
+                if (hit.CompareTag("Tile"))
+                {
+                    return hit.GetComponent<TempleTile>();
+                }
             }
+
             return null;
         }
     }
