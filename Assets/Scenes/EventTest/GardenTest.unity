@@ -46962,7 +46962,6 @@ GameObject:
   - component: {fileID: 94952804}
   - component: {fileID: 94952807}
   - component: {fileID: 94952806}
-  - component: {fileID: 94952805}
   - component: {fileID: 94952809}
   m_Layer: 20
   m_Name: ThornTilemap
@@ -47009,18 +47008,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &94952805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94952803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47c1835776c7c04499250ac6a48a245c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!19719996 &94952806
 TilemapCollider2D:
   m_ObjectHideFlags: 0
