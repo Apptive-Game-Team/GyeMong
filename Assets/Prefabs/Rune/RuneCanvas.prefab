@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4758898948869038237}
   - component: {fileID: 3619983976858472615}
   - component: {fileID: 4889592972923524937}
+  - component: {fileID: 6475568963539191665}
   m_Layer: 5
   m_Name: MoneyDisplay
   m_TagString: Untagged
@@ -77,6 +78,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6475568963539191665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328166156373347531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a1759ff4e735941a6030feb3d8127b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldText: {fileID: 3011613084317179175}
 --- !u!1 &662183979445518144
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5558592881974755421
 RectTransform:
   m_ObjectHideFlags: 0
