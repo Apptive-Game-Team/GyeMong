@@ -167,11 +167,15 @@ namespace Creature
         {
             MaterialController.SetMaterial(MaterialController.MaterialType.HIT);
             MaterialController.SetFloat(1);
+            Color color = GetComponent<SpriteRenderer>().color;
+            GetComponent<SpriteRenderer>().color = Color.white;
             yield return new WaitForSeconds(BLINK_DELAY);
             if (MaterialController.GetCurrentMaterialType() == MaterialController.MaterialType.HIT)
             {
                 MaterialController.SetFloat(0);
             }
+
+            GetComponent<SpriteRenderer>().color = color;
         }
     
         public virtual IEnumerator Stun()
