@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Creature.Boss.Component.SkillIndicator;
 using Creature.Player.Component.Collider;
 using playerCharacter;
@@ -58,7 +59,7 @@ namespace Creature.Boss.Spring.Elf
             }
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {
-                return new Dictionary<System.Type, int>
+                var weights = new Dictionary<System.Type, int>
                 {
                     { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
                     { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0 },
@@ -68,6 +69,11 @@ namespace Creature.Boss.Spring.Elf
                     { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
                     { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}//임시 가중치임...조정필요
                 };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+                return weights;
             }
         }
 
@@ -115,12 +121,17 @@ namespace Creature.Boss.Spring.Elf
             }
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {
-                return new Dictionary<System.Type, int>
+                var weights = new Dictionary<System.Type, int>
                 {
                     { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
                     { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0},
                     { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
                 };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+                return weights;
             }
         }
         public class RushAndAttack : ElfState
@@ -155,7 +166,7 @@ namespace Creature.Boss.Spring.Elf
             }
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {
-                return new Dictionary<System.Type, int>
+                var weights = new Dictionary<System.Type, int>
                 {
                     { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0 },
                     { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
@@ -163,6 +174,11 @@ namespace Creature.Boss.Spring.Elf
                     { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
                     { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 },
                 };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+                return weights;
             }
         }
         public class RangedAttack : ElfState
