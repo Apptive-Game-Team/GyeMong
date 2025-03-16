@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using Creature.Boss;
 using UnityEngine;
 
-public class SwordAura : BossAttack
+public class SwordAura : MonoBehaviour
 {
     private static bool toggleYScale = false;
-    protected override void Awake()
-    {
-        damage = 10f;
-        base.Awake();
-    }
     
     public static IEnumerator Create(Transform transform, Vector3 direction, GameObject prefab)
     {
