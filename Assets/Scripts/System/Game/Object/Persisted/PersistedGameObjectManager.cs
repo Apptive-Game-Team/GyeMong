@@ -69,13 +69,8 @@ namespace System.Game.Object.Persisted
 
             foreach (var data in _persistedGameObjects.Values)
             {
-                if (SceneManager.GetActiveScene().name.Equals(data.sceneName))
+                if (SceneManager.GetActiveScene().name.Equals(data.sceneName) && !existingObjectIds.Contains(data.uniqueId))
                 {
-                    if (existingObjectIds.Contains(data.uniqueId))
-                    {
-                        continue;
-                    }
-
                     GameObject go = Instantiate(data.prefab, data.position, Quaternion.identity);
                     PersistedGameObject persistedGameObject = go.GetComponent<PersistedGameObject>();
                     print("Placing PersistedGameObject: " + persistedGameObject.UniqueId);
