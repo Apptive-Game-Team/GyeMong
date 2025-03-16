@@ -94,6 +94,8 @@ namespace Creature.Minion.ShadowOfHero
                 {
                     yield return ShadowOfHero.MeleeAttack();
                 }
+                
+                yield return new WaitForSeconds(5f);
                 creature.ChangeState();
             }
         }
