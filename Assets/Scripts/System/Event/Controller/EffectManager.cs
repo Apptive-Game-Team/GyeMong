@@ -84,6 +84,15 @@ public class EffectManager : SingletonObject<EffectManager>
         return Fade(black, 0);
     }
 
+    public IEnumerator BlackScreen()
+    {
+        Color color = black.color;
+        color.a = 1;
+        black.color = color;
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
     private IEnumerator Fade(RawImage image, float targetAlpha, float duration = 0.5f)
     {
         Color color = image.color;

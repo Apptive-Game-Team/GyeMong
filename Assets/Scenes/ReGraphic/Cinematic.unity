@@ -3069,6 +3069,7 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
+  - rid: 4949244152063721487
   - rid: 4949244132887101442
   - rid: 4949244132887101446
   - rid: 4949244132887101441
@@ -3088,6 +3089,8 @@ MonoBehaviour:
   - rid: 4949244152063721483
   - rid: 4949244152063721485
   - rid: 4949244152063721486
+  - rid: 4949244152063721493
+  - rid: 4949244152063721492
   references:
     version: 2
     RefIds:
@@ -3244,6 +3247,16 @@ MonoBehaviour:
     - rid: 4949244152063721486
       type: {class: ClearImageEvent, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 4949244152063721487
+      type: {class: BlackScreenEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4949244152063721492
+      type: {class: FadeInEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4949244152063721493
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 3
 --- !u!4 &562705329
 Transform:
   m_ObjectHideFlags: 0
