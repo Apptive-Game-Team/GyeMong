@@ -29,23 +29,6 @@ namespace System.Game.Rune
             throw new NotImplementedException();
         }
     }
-    
-    //Parameter : Coroutine(IEnumerator)
-    public class RunCoroutineRune : IRune
-    {
-        public void OnActivate(RuneContext context)
-        {
-            if (context is RunCoroutineContext runCoroutineContext)
-            {
-                RuneConditionChecker.Instance.AddRuneCondition(runCoroutineContext.runeCondition); 
-            }
-        }
-
-        public void OnDeactivate(RuneContext context)
-        {
-            throw new NotImplementedException();
-        }
-    }
 
     //Parameter : BuffObject, BuffComp
     public class AddBuffRune : IRune

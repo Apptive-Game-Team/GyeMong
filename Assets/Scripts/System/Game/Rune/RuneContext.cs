@@ -27,11 +27,7 @@ namespace System.Game.Rune
             Value = value;
         }
     }
-
-    public class RunCoroutineContext : RuneContext
-    {
-        public RuneCondition runeCondition;
-    }    
+    
     public class AddBuffContext : RuneContext
     {
         public BuffComponent BuffComp { get;}

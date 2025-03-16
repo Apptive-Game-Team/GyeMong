@@ -17,6 +17,7 @@ public interface IBuffable
 public class BuffManager : SingletonObject<BuffManager>
 {
     public BuffData breezeRuneData;
+    public BuffData stoneArmorRuneData;
     
     List<Buff> activeBuffList = new List<Buff>();
     private void Update()
@@ -65,4 +66,5 @@ public class BuffManager : SingletonObject<BuffManager>
         }
         BuffEvents.TriggerBuffExpired(dotBuff, target);
     }
+    
 }

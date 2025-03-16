@@ -7,11 +7,16 @@ public class DebugHelper : MonoBehaviour
 {
     void Start()
     {
-        BuffEvents.OnBuffApplied += ShowMessage;
+        BuffEvents.OnBuffApplied += CallApplyMessage;
+        BuffEvents.OnBuffExpired += CallExpireMessage;
     }
 
-    void ShowMessage(BuffData buff, IBuffable buffable)
+    void CallApplyMessage(BuffData buff, IBuffable buffable)
     {
-        Debug.Log($"{buffable} Recieved Buff {buff}");
+        Debug.Log($"{buffable} Apply Buff {buff}");
+    }
+    void CallExpireMessage(BuffData buff, IBuffable buffable)
+    {
+        Debug.Log($"{buffable} Expire Buff {buff}");
     }
 }

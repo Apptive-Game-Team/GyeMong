@@ -65,7 +65,7 @@ public class RuneUIObject : SelectableUI, IInteractionalUI, IMouseInputListener
     public override void OnLongInteract()
     {
         //해금 부분
-        if (!runeData.isUnlocked)
+        if (!runeData.isUnlocked && GoldManager.Instance.SpendGold(runeData.cost))
         {
             runeData.isUnlocked = true;
             Init(runeData);

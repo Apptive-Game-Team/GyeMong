@@ -2480,7 +2480,7 @@ Transform:
   m_GameObject: {fileID: 660994705}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 80.58864, y: -6.3630605, z: -0.057698533}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11490,6 +11490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breezeRuneData: {fileID: 11400000, guid: c2bb7ed3e0ab2f441a5c559e5fa9740d, type: 2}
+  stoneArmorRuneData: {fileID: 11400000, guid: b6339d50ce666344585d1a8f1d131754, type: 2}
 --- !u!1001 &1470059685
 PrefabInstance:
   m_ObjectHideFlags: 0

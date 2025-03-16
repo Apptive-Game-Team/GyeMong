@@ -50,6 +50,9 @@ public class RuneComponent : MonoBehaviour
                     
                     break;
                 case 6:
+                    new AddBuffRune().OnActivate(new AddBuffContext(PlayerCharacter.Instance.buffComponent,BuffManager.Instance.stoneArmorRuneData));
+                    break;
+                case 7:
                     
                     break;
                 

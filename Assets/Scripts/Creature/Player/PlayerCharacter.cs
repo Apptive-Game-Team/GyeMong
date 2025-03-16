@@ -17,7 +17,7 @@ namespace playerCharacter
         public BuffComponent buffComponent;
         [SerializeField] private StatData _statData;
         [SerializeField] private float curHealth;
-        [SerializeField] private float curShield;
+        [SerializeField] public float curShield;
         [SerializeField] private float curSkillGauge;
         public bool isControlled = false;
         private Vector2 movement;
