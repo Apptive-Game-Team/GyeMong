@@ -28,7 +28,7 @@ namespace Creature.Minion.ShadowOfHero
             StartCoroutine(SwordAura.Create(transform, DirectionToPlayer, attackPrefab));
             yield return new WaitForSeconds(0.2f);
             _animator.SetBool("isAttacking", false);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
 
         protected void Initialize()
