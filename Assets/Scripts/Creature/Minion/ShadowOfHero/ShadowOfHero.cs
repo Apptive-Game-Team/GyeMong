@@ -38,7 +38,7 @@ namespace Creature.Minion.ShadowOfHero
 
             currentShield = 0;
             damage = 10;
-            speed = 3;
+            speed = 1;
             detectionRange = 10;
             MeleeAttackRange = 2;
             RangedAttackRange = 20;
