@@ -3074,6 +3074,20 @@ MonoBehaviour:
   - rid: 4949244132887101441
   - rid: 4949244132887101450
   - rid: 4949244132887101452
+  - rid: 4949244152063721472
+  - rid: 4949244152063721478
+  - rid: 4949244152063721473
+  - rid: 4949244152063721479
+  - rid: 4949244152063721474
+  - rid: 4949244152063721480
+  - rid: 4949244152063721475
+  - rid: 4949244152063721481
+  - rid: 4949244152063721476
+  - rid: 4949244152063721484
+  - rid: 4949244152063721477
+  - rid: 4949244152063721483
+  - rid: 4949244152063721485
+  - rid: 4949244152063721486
   references:
     version: 2
     RefIds:
@@ -3116,6 +3130,120 @@ MonoBehaviour:
           - "\uB3C4\uB808\uBBF8\uD30C\uC194\uB77C\uC2DC\uB3C4"
           - "\uAC10\uC790\uAC10\uC790"
           chatDelay: 3
+    - rid: 4949244152063721472
+      type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
+      data:
+        sprite: {fileID: 21300000, guid: 139014d89e39443b6b2d3181bada4d79, type: 3}
+        startPosition: {x: 0, y: 300}
+        endPosition: {x: 0, y: 200}
+        moveTime: 0.5
+        targetSize: {x: 800, y: 540}
+        imageDelayTime: 0.5
+    - rid: 4949244152063721473
+      type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
+      data:
+        sprite: {fileID: 21300000, guid: ce58231c72fe649169d5bac25923fd62, type: 3}
+        startPosition: {x: 0, y: 300}
+        endPosition: {x: 0, y: 200}
+        moveTime: 0.5
+        targetSize: {x: 800, y: 540}
+        imageDelayTime: 0.5
+    - rid: 4949244152063721474
+      type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
+      data:
+        sprite: {fileID: 21300000, guid: 072228895c13f4e0fa63f7f136433e89, type: 3}
+        startPosition: {x: 0, y: 300}
+        endPosition: {x: 0, y: 200}
+        moveTime: 0.5
+        targetSize: {x: 800, y: 540}
+        imageDelayTime: 0.5
+    - rid: 4949244152063721475
+      type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
+      data:
+        sprite: {fileID: 21300000, guid: 397af6ee749774d9b9a23f8f6fb4916d, type: 3}
+        startPosition: {x: 0, y: 300}
+        endPosition: {x: 0, y: 200}
+        moveTime: 0.5
+        targetSize: {x: 800, y: 540}
+        imageDelayTime: 0.5
+    - rid: 4949244152063721476
+      type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
+      data:
+        sprite: {fileID: 21300000, guid: 8d4fb8d270bc5419f8564c2b3c4129ba, type: 3}
+        startPosition: {x: 0, y: 300}
+        endPosition: {x: 0, y: 200}
+        moveTime: 0.5
+        targetSize: {x: 800, y: 540}
+        imageDelayTime: 0.5
+    - rid: 4949244152063721477
+      type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
+      data:
+        sprite: {fileID: 21300000, guid: abefa7a1c670147539324ee184be2d1f, type: 3}
+        startPosition: {x: 0, y: 300}
+        endPosition: {x: 0, y: 200}
+        moveTime: 0.5
+        targetSize: {x: 800, y: 540}
+        imageDelayTime: 0.5
+    - rid: 4949244152063721478
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: '[System]'
+          messages:
+          - 1
+          - 1
+          chatDelay: 3
+    - rid: 4949244152063721479
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: '[System]'
+          messages:
+          - 1
+          - 1
+          chatDelay: 3
+    - rid: 4949244152063721480
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: '[System]'
+          messages:
+          - 1
+          - 1
+          chatDelay: 3
+    - rid: 4949244152063721481
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: '[System]'
+          messages:
+          - 1
+          - 1
+          chatDelay: 3
+    - rid: 4949244152063721483
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: '[System]'
+          messages:
+          - 1
+          - 1
+          chatDelay: 3
+    - rid: 4949244152063721484
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: '[System]'
+          messages:
+          - 1
+          - 1
+          chatDelay: 3
+    - rid: 4949244152063721485
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4949244152063721486
+      type: {class: ClearImageEvent, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!4 &562705329
 Transform:
   m_ObjectHideFlags: 0
