@@ -44,6 +44,10 @@ ex) feat(파일명)
         디자이너
       </a>
     </td>
+    <td align="center">
+        디자이너
+      </a>
+    </td>
   </tr>
   <tr>
     <td align="center" width="200px">
