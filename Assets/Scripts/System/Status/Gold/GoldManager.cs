@@ -10,11 +10,17 @@ public class GoldManager : SingletonObject<GoldManager>
     
     private int gold;
 
+    private void Start()
+    {
+        gold = 0;
+        OnGoldChanged?.Invoke(gold);
+    }
+
     public void AddGold(int amount)
     {
         gold += amount;
         Debug.Log("Gold: " + gold);
-        OnGoldChanged?.Invoke(amount);
+        OnGoldChanged?.Invoke(gold);
     }
 
     public bool SpendGold(int amount)
@@ -26,7 +32,7 @@ public class GoldManager : SingletonObject<GoldManager>
         }
 
         gold -= amount;
-        OnGoldChanged?.Invoke(amount);
+        OnGoldChanged?.Invoke(gold);
         return true;
     }
 

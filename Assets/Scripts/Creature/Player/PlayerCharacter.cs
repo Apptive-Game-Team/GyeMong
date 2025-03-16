@@ -17,6 +17,7 @@ namespace playerCharacter
         public BuffComponent buffComponent;
         [SerializeField] private StatData _statData;
         [SerializeField] private float curHealth;
+        [SerializeField] private float curShield;
         [SerializeField] private float curSkillGauge;
         public bool isControlled = false;
         private Vector2 movement;
@@ -151,6 +152,10 @@ namespace playerCharacter
             
             StartCoroutine(EffectManager.Instance.ShakeCamera());
 
+            if (damage > curShield && curShield > 0)
+            {
+                curShield -= damage;
+            }
             curHealth -= damage;
             changeListenerCaller.CallHpChangeListeners(curHealth);
             TakeGauge();
