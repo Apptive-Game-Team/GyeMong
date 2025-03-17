@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Creature.Boss
 {
+    [Obsolete("Use Creature.Attack.Component.EnemyAttackInfo instead")]
     public class EnemyAttackInfo : MonoBehaviour
     {
         public float damage;
