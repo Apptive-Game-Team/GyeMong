@@ -37,6 +37,7 @@ namespace Creature.Minion.Slime
             StartCoroutine(FaceToPlayer());
             ChangeState();
         }
+        public class SlimeIdleState : IdleState { }
 
         public class SlimeRangedAttackState : RangedAttackState { }
         public class SlimeMeleeAttackState : MeleeAttackState { }
@@ -100,14 +101,13 @@ namespace Creature.Minion.Slime
 
         private void Divide()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-                Vector3 spawnPosition = transform.position + Random.insideUnitSphere;
-                GameObject newSlime = Instantiate(gameObject, spawnPosition, Quaternion.identity);
+                Vector3 spawnPosition = transform.position + Random.insideUnitSphere * 3;
+                GameObject newSlime = Instantiate(gameObject, transform.position, Quaternion.identity);
                 newSlime.transform.localScale = transform.localScale * divideRatio;
                 
-                newSlime.transform.DOMoveY(spawnPosition.y + 1f, 0.3f).SetEase(Ease.OutQuad)
-                    .OnComplete(() => newSlime.transform.DOMoveY(spawnPosition.y, 0.3f).SetEase(Ease.InBounce));
+                newSlime.transform.DOJump(spawnPosition, 1f, 1, 0.5f).SetEase(Ease.OutQuad);
 
                 DivisionSlime slimeComponent = newSlime.GetComponent<DivisionSlime>();
                 

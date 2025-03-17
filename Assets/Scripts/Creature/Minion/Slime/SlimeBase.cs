@@ -31,7 +31,7 @@ namespace Creature.Minion.Slime
                 if (currentHp <= 0)
                 {
                     print(currentState);
-                    ChangeState(new SlimeDieState(this));
+                    ChangeState(CreateDieState());
                 }
             }
         }
@@ -133,7 +133,8 @@ namespace Creature.Minion.Slime
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                GameObject arrow =  Instantiate(Slime.rangedAttack, creature.transform.position, Quaternion.identity);
+                GameObject arrow =  Instantiate(Slime.rangedAttack, creature.transform.position, Quaternion.identity, creature.transform);
+                arrow.SetActive(true);
                 Slime.RotateArrowTowardsPlayer(arrow);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
@@ -226,6 +227,11 @@ namespace Creature.Minion.Slime
                 creature.gameObject.SetActive(false);
                 yield return null;
             }
+        }
+
+        protected virtual SlimeDieState CreateDieState()
+        {
+            return new SlimeDieState(this);
         }
     
         private void RotateArrowTowardsPlayer(GameObject arrow)
