@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using playerCharacter;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Creature.Minion.ShadowOfHero
 {
@@ -11,6 +8,7 @@ namespace Creature.Minion.ShadowOfHero
         private int _attackCount = 0;
         private const int MAX_ATTACK_COUNT = 3;
         [SerializeField] private GameObject attackPrefab;
+        [SerializeField] private GameObject skillPrefab;
         
         private void Start()
         {
@@ -26,6 +24,17 @@ namespace Creature.Minion.ShadowOfHero
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
             StartCoroutine(SwordAura.Create(transform, DirectionToPlayer, attackPrefab));
+            yield return new WaitForSeconds(0.2f);
+            _animator.SetBool("isAttacking", false);
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        private IEnumerator RangeAttack()
+        {
+            FaceToPlayer();
+            _animator.SetTrigger("isAttacking");
+            StartCoroutine(SwordAura.Create(transform, DirectionToPlayer, attackPrefab));
+            StartCoroutine(SkillSwordAura.Create(transform, DirectionToPlayer, skillPrefab));
             yield return new WaitForSeconds(0.2f);
             _animator.SetBool("isAttacking", false);
             yield return new WaitForSeconds(0.1f);
@@ -92,7 +101,7 @@ namespace Creature.Minion.ShadowOfHero
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    yield return ShadowOfHero.MeleeAttack();
+                    yield return ShadowOfHero.RangeAttack();
                 }
                 
                 yield return new WaitForSeconds(5f);
