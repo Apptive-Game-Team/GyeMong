@@ -11,7 +11,5 @@ namespace Creature.Attack.Component
         public bool isMultiHit = false;
         public float multiHitDelay = 0f;
         public float knockbackAmount = 0f;
-        public bool isGrazed = false;
-        public bool isAttacked = false;
     }
 }
