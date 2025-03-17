@@ -44,6 +44,10 @@ ex) feat(파일명)
         디자이너
       </a>
     </td>
+    <td align="center">
+        디자이너
+      </a>
+    </td>
   </tr>
   <tr>
     <td align="center" width="200px">
@@ -76,6 +80,11 @@ ex) feat(파일명)
         <img src="https://avatars.githubusercontent.com/u/181458108?v=4" alt="배시연 프로필" />
       </a>
     </td>
+    <td align="center" width="200px">
+      <a href="https://github.com/choiyangjin1" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/199458732?v=4" alt="최양진 프로필" />
+      </a>
+    </td>
   </tr>
   <tr>
     <td align="center">
@@ -104,8 +113,13 @@ ex) feat(파일명)
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/hwanginseop" target="_blank">
+      <a href="https://github.com/cheese1006" target="_blank">
         배시연
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/choiyangjin1" target="_blank">
+        최양진
       </a>
     </td>
   </tr>
