@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Event.Interface;
+using System.Game.Buff;
+using Creature.Player;
 using Creature.Player.Component;
 using Creature.Player.Component.Collider;
 using UnityEngine;
@@ -156,7 +158,13 @@ namespace playerCharacter
             {
                 curShield -= damage;
             }
+            else if (damage < curShield && curShield > 0)
+            {
+                curShield -= damage;
+                return ;
+            }
             curHealth -= damage;
+            PlayerEvent.TriggerOnTakeDamage(damage);
             changeListenerCaller.CallHpChangeListeners(curHealth);
             TakeGauge();
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/stat.HealthMax));

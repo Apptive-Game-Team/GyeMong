@@ -1,3 +1,4 @@
+using System.Game.Buff.Data;
 using UnityEngine;
 
 namespace System.Game.Buff

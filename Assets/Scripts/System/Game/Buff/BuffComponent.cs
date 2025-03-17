@@ -1,24 +1,29 @@
-using System;
 using System.Collections.Generic;
-using System.Game.Buff;
-using playerCharacter;
+using System.Game.Buff.Data;
 using UnityEngine;
 
-[Serializable]
-public class BuffComponent : MonoBehaviour
+namespace System.Game.Buff
 {
-    List<BuffData> buffList = new List<BuffData>();
-
-    public void AddBuff(BuffData newBuff)
+    [Serializable]
+    public class BuffComponent : MonoBehaviour
     {
-        buffList.Add(newBuff);
-        BuffManager.Instance.ApplyBuff(gameObject.GetComponent<IBuffable>(), newBuff);
-    }
+        List<BuffData> buffList = new List<BuffData>();
 
-    public void DeleteBuff(BuffData buff)
-    {
-        buffList.Remove(buff);
+        public void AddBuff(BuffData newBuff)
+        {
+            buffList.Add(newBuff);
+            BuffManager.Instance.ApplyBuff(gameObject.GetComponent<IBuffable>(), newBuff);
+        }
+
+        public void DeleteBuff(BuffData buff)
+        {
+            buffList.Remove(buff);
+        }
+
+        public bool HasBuff(BuffData buff)
+        {
+            return buffList.Contains(buff);
+        }
     }
-    
 }
 

@@ -1,4 +1,5 @@
-﻿using Util.ChangeListener;
+﻿using System.Game.Buff;
+using Util.ChangeListener;
 using Util.Interface;
 
 public interface IRuneEventListener : IChangeListener<BuffComponent>

@@ -1,4 +1,5 @@
 using System.Game.Buff;
+using System.Game.Buff.Data;
 using Creature.Player.Component;
 using UnityEngine;
 

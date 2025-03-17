@@ -1,70 +1,69 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Game.Buff;
-using System.Game.Buff.Component;
-using Creature.Player.Component;
+using System.Game.Buff.Data;
 using playerCharacter;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-//Something that can receive Buffs.
-public interface IBuffable
+namespace System.Game.Buff
 {
-    
-}
-
-public class BuffManager : SingletonObject<BuffManager>
-{
-    public BuffData breezeRuneData;
-    public BuffData stoneArmorRuneData;
-    
-    List<Buff> activeBuffList = new List<Buff>();
-    private void Update()
+    //Something that can receive Buffs.
+    public interface IBuffable
     {
-        float deltaTime = Time.deltaTime;
-        for (int i = 0; i < activeBuffList.Count; i++)
-        {
-            Buff buff = activeBuffList[i];
-            buff.UpdateBuff(deltaTime);
+    
+    }
 
-            if (buff.IsExpired())
+    public class BuffManager : SingletonObject<BuffManager>
+    {
+        public BuffData breezeRuneData;
+        public BuffData stoneArmorRuneData;
+    
+        List<Data.Buff> activeBuffList = new List<Data.Buff>();
+        private void Update()
+        {
+            float deltaTime = Time.deltaTime;
+            for (int i = 0; i < activeBuffList.Count; i++)
             {
-                RemoveBuff(buff);
+                Data.Buff buff = activeBuffList[i];
+                buff.UpdateBuff(deltaTime);
+
+                if (buff.IsExpired())
+                {
+                    RemoveBuff(buff);
+                }
             }
         }
-    }
     
-    public void ApplyBuff(IBuffable target, BuffData buffData)
-    {
-        Buff newBuff = new Buff(buffData);
-        newBuff.target = target;
-        activeBuffList.Add(newBuff);
-        buffData.ApplyEffect(target);
-    }
-
-    private void RemoveBuff(Buff buff)
-    {
-        buff.buffData.RemoveEffect(buff.target);
-        activeBuffList.Remove(buff);
-    }
-
-    public void ApplyDotEffect(IBuffable target, DotBuffData dotBuff)
-    {
-        StartCoroutine(ApplyDotCoroutine(target, dotBuff));
-    }
-
-    private IEnumerator ApplyDotCoroutine(IBuffable target, DotBuffData dotBuff)
-    {
-        float elapsedTime = 0;
-        while (dotBuff.isPermanent || elapsedTime < dotBuff.duration)
+        public void ApplyBuff(IBuffable target, BuffData buffData)
         {
-            BuffEvents.TriggerBuffApplied(dotBuff,target);
-            PlayerCharacter.Instance.Heal(-dotBuff.damagePerTick);
-            yield return new WaitForSeconds(dotBuff.tickInterval);
-            elapsedTime += dotBuff.tickInterval;
+            Data.Buff newBuff = new Data.Buff(buffData);
+            newBuff.target = target;
+            activeBuffList.Add(newBuff);
+            buffData.ApplyEffect(target);
         }
-        BuffEvents.TriggerBuffExpired(dotBuff, target);
-    }
+
+        private void RemoveBuff(Data.Buff buff)
+        {
+            buff.buffData.RemoveEffect(buff.target);
+            activeBuffList.Remove(buff);
+        }
+
+        public void ApplyDotEffect(IBuffable target, DotBuffData dotBuff)
+        {
+            StartCoroutine(ApplyDotCoroutine(target, dotBuff));
+        }
+
+        private IEnumerator ApplyDotCoroutine(IBuffable target, DotBuffData dotBuff)
+        {
+            float elapsedTime = 0;
+            while (dotBuff.isPermanent || elapsedTime < dotBuff.duration)
+            {
+                BuffEvents.TriggerBuffApplied(dotBuff,target);
+                PlayerCharacter.Instance.Heal(-dotBuff.damagePerTick);
+                yield return new WaitForSeconds(dotBuff.tickInterval);
+                elapsedTime += dotBuff.tickInterval;
+            }
+            BuffEvents.TriggerBuffExpired(dotBuff, target);
+        }
     
+    }
 }

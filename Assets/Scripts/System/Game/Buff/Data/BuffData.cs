@@ -2,7 +2,7 @@ using Creature.Player.Component;
 using playerCharacter;
 using UnityEngine;
 
-namespace System.Game.Buff
+namespace System.Game.Buff.Data
 {
 public abstract class BuffData : ScriptableObject
 {

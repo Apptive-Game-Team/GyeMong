@@ -2,11 +2,11 @@ using Creature.Player.Component;
 using playerCharacter;
 using UnityEngine;
 
-namespace System.Game.Buff
+namespace System.Game.Buff.Data
 {
 
 
-[CreateAssetMenu(fileName = "StatBuffData", menuName = "BuffData/StatBuff")]
+[CreateAssetMenu(fileName = "StatBuffData", menuName = "BuffData/StatBuff", order = 2)]
 public class StatBuffData : BuffData
 {
     public StatType StatType;
