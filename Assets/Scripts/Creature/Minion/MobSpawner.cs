@@ -27,8 +27,13 @@ namespace Creature.Minion
             while (true)
             {
                 yield return new WaitForSeconds(MOB_SPAWN_DELAY);
-                T mob = _mobPool.GetObject();
-                SpawnMob(mob);
+
+
+                T mob = _mobPool.GetInactiveObject();
+                if (mob != null)
+                {
+                    SpawnMob(mob);
+                }
             }
         }
 
