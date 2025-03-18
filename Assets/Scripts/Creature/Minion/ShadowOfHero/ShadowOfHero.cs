@@ -1,4 +1,6 @@
 using System.Collections;
+using Creature.Attack;
+using Creature.Attack.Component.Movement;
 using UnityEngine;
 
 namespace Creature.Minion.ShadowOfHero
@@ -23,7 +25,8 @@ namespace Creature.Minion.ShadowOfHero
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
-            StartCoroutine(SwordAura.Create(transform, DirectionToPlayer, attackPrefab));
+            AttackObjectController.Create(transform.position, DirectionToPlayer, attackPrefab, 0.6f).StartRoutine();
+            
             yield return new WaitForSeconds(0.2f);
             _animator.SetBool("isAttacking", false);
             yield return new WaitForSeconds(0.1f);
@@ -33,8 +36,9 @@ namespace Creature.Minion.ShadowOfHero
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
-            StartCoroutine(SwordAura.Create(transform, DirectionToPlayer, attackPrefab));
-            StartCoroutine(SkillSwordAura.Create(transform, DirectionToPlayer, skillPrefab));
+            AttackObjectController.Create(transform.position + DirectionToPlayer * 0.5f, DirectionToPlayer, attackPrefab, 0.6f).StartRoutine();
+            AttackObjectController skill = AttackObjectController.Create(transform.position + DirectionToPlayer * 0.8f, DirectionToPlayer, skillPrefab, new LinearMovement(transform.position, transform.position + DirectionToPlayer * 10, 10));
+            skill.StartRoutine();
             yield return new WaitForSeconds(0.2f);
             _animator.SetBool("isAttacking", false);
             yield return new WaitForSeconds(0.1f);
