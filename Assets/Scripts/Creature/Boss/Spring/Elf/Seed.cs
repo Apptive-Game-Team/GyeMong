@@ -1,6 +1,7 @@
 using System;
 using playerCharacter;
 using System.Collections;
+using System.Sound;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
