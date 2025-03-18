@@ -27,9 +27,7 @@ namespace Creature.Attack
         
         public static AttackObjectController Create(Vector3 position, Vector3 direction, GameObject prefab, float duration)
         {
-            AttackObjectController attackObjectController = Create(position, direction, prefab);
-            attackObjectController._movement = new StaticMovement(position, duration);
-            return attackObjectController;
+            return Create(position, direction, prefab, new StaticMovement(position, duration));
         }
         
         private static AttackObjectController Create(Vector3 position, Vector3 direction, GameObject prefab)
