@@ -14,6 +14,8 @@ namespace Creature.Attack
         private IAttackObjectMovement _movement;
         [SerializeField] private EnemyAttackInfo _attackInfo;
 
+        public EnemyAttackInfo AttackInfo => _attackInfo;
+        
         private static Dictionary<GameObject, ObjectPool<AttackObjectController>> _objectPools = new();
 
         public static AttackObjectController Create(Vector3 position, Vector3 direction, GameObject prefab, IAttackObjectMovement movement)
@@ -23,14 +25,23 @@ namespace Creature.Attack
             return attackObjectController;
         }
         
-        public static AttackObjectController Create(Vector3 position, Vector3 direction, GameObject prefab)
+        public static AttackObjectController Create(Vector3 position, Vector3 direction, GameObject prefab, float duration)
+        {
+            AttackObjectController attackObjectController = Create(position, direction, prefab);
+            attackObjectController._movement = new StaticMovement(position, duration);
+            return attackObjectController;
+        }
+        
+        private static AttackObjectController Create(Vector3 position, Vector3 direction, GameObject prefab)
         {
             ObjectPool<AttackObjectController> objectPool;
-            if (!_objectPools.TryGetValue(prefab, out  objectPool))
+            if (!_objectPools.TryGetValue(prefab, out objectPool))
             {
-                _objectPools[prefab] = new ObjectPool<AttackObjectController>(10, prefab);
+                _objectPools[prefab] = new ObjectPool<AttackObjectController>(1, prefab);
+                objectPool = _objectPools[prefab];
             }
             AttackObjectController attackObjectController = objectPool.GetObject();
+            attackObjectController.gameObject.SetActive(true);
             attackObjectController.Initialize(position, direction);
             return attackObjectController;
         }
@@ -51,8 +62,13 @@ namespace Creature.Attack
             float elapsedTime = 0;
             while (true)
             {
-                Vector3 position = _movement.GetPosition(elapsedTime);
-                transform.position = position;
+                Vector3? position = _movement.GetPosition(elapsedTime);
+                if (position == null)
+                {
+                    gameObject.SetActive(false);
+                    break;
+                }
+                transform.position = position.Value;
                 yield return null;
             }
         }
