@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Creature.Attack;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,27 +27,6 @@ public class GrazeController : MonoBehaviour
     {
         _playerSoundController = transform.parent.GetComponent<PlayerSoundController>();
     }
-
-/*    private void Update()
-    {
-        for (int i = activeColliders.Count - 1; i >= 0; i--)
-        {
-            Collider2D collider = activeColliders[i];
-
-            if (collider.gameObject == null)
-            {
-                if (!colliderAttackedMap[collider])
-                {
-                    Grazed(collider);
-                    RemoveCollider(collider);
-                }
-                else
-                {
-                    RemoveCollider(collider);
-                }
-            }
-        }
-    }*/
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
@@ -78,8 +58,8 @@ public class GrazeController : MonoBehaviour
     {
         if (collider.CompareTag("EnemyAttack"))
         {
-            if (activeColliders.Contains(collider) && !collider.GetComponent<EnemyAttackInfo>().isAttacked
-                && collider.GetComponent<EnemyAttackInfo>().grazable && !collider.GetComponent<EnemyAttackInfo>().grazed)
+            if (activeColliders.Contains(collider) && !collider.GetComponent<AttackObjectController>().isAttacked
+                && collider.GetComponent<AttackObjectController>().AttackInfo.grazable && !collider.GetComponent<AttackObjectController>().isGrazed)
             {
                 Grazed(collider);
                 RemoveCollider(collider);
@@ -98,7 +78,7 @@ public class GrazeController : MonoBehaviour
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
             Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.grazeGainOnGraze.GetValue() / distance} with ratio {distance}");
-            collider.GetComponent<EnemyAttackInfo>().grazed = true;
+            collider.GetComponent<AttackObjectController>().isGrazed = true;
             _playerSoundController.Trigger(PlayerSoundType.GRAZE);
             GetComponentInChildren<EventObject>().Trigger();
         }
