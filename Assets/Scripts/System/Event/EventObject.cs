@@ -79,6 +79,12 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
             triggerLimitCounter -= 1;
         }
     }
+    
+    private void OnDisable()
+    {
+        KillEvent();
+    }
+    
     private IEnumerator EventLoop()
     {
         do
