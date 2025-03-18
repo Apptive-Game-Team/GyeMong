@@ -16,7 +16,7 @@ namespace Creature.Player.Component.Collider
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            OnEnterWithLastSystem(other.gameObject);
+            if (OnEnterWithLastSystem(other.gameObject)) return;
             if (other.CompareTag("EnemyAttack"))
             {
                 EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>().AttackInfo;
@@ -44,7 +44,7 @@ namespace Creature.Player.Component.Collider
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            OnStayWithLastSystem(other.gameObject);
+            if (OnStayWithLastSystem(other.gameObject)) return;
             if (other.CompareTag("EnemyAttack"))
             {
                 EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>().AttackInfo;
@@ -60,7 +60,7 @@ namespace Creature.Player.Component.Collider
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            OnEnterWithLastSystem(other.gameObject);
+            if (OnEnterWithLastSystem(other.gameObject)) return;
             if (other.collider.CompareTag("EnemyAttack"))
             {
                 EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>().AttackInfo;
@@ -86,7 +86,7 @@ namespace Creature.Player.Component.Collider
 
         private void OnCollisionStay2D(Collision2D other)
         {
-            OnStayWithLastSystem(other.gameObject);
+            if (OnStayWithLastSystem(other.gameObject)) return;
             if (other.collider.CompareTag("EnemyAttack"))
             {
                 EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>().AttackInfo;
@@ -106,45 +106,64 @@ namespace Creature.Player.Component.Collider
         }
         
         [Obsolete("Don't use this method")]
-        private void OnEnterWithLastSystem(GameObject other)
+        private bool OnEnterWithLastSystem(GameObject other)
         {
-            if (other.collider.CompareTag("EnemyAttack"))
+            try
             {
-                LastEnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<LastEnemyAttackInfo>();
-                if (enemyAttackInfo == null) return;
+                if (other.collider.CompareTag("EnemyAttack"))
+                {
+                    LastEnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<LastEnemyAttackInfo>();
+                    if (enemyAttackInfo == null) return false;
 
-                enemyAttackInfo.isAttacked = true;
-                if (enemyAttackInfo.soundObject != null)
-                {
-                    enemyAttackInfo.soundObject.PlayAsync();
+                    enemyAttackInfo.isAttacked = true;
+                    if (enemyAttackInfo.soundObject != null)
+                    {
+                        enemyAttackInfo.soundObject.PlayAsync();
+                    }
+
+                    if (enemyAttackInfo.isDestroyOnHit)
+                    {
+                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                        other.collider.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    }
                 }
 
-                if (enemyAttackInfo.isDestroyOnHit)
-                {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                    other.collider.gameObject.SetActive(false);
-                }
-                else
-                {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                }
+                return true;
             }
+            catch (Exception e)
+            {
+                return false;
+            }
+            
         }
         
         [Obsolete("Don't use this method")]
-        private void OnStayWithLastSystem(GameObject other)
+        private bool OnStayWithLastSystem(GameObject other)
         {
-            if (other.collider.CompareTag("EnemyAttack"))
+            try
             {
-                LastEnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<LastEnemyAttackInfo>();
-                if (enemyAttackInfo == null) return;
-
-                if (enemyAttackInfo.isMultiHit)
+                if (other.collider.CompareTag("EnemyAttack"))
                 {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                    StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
+                    LastEnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<LastEnemyAttackInfo>();
+                    if (enemyAttackInfo == null) return false;
+
+                    if (enemyAttackInfo.isMultiHit)
+                    {
+                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                        StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
+                    }
                 }
+
+                return true;
+            } catch (Exception e)
+            {
+                return false;
             }
+            
         }
 
         private void ApplyAirborne(AttackObjectController controller)

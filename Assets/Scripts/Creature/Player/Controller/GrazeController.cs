@@ -56,7 +56,8 @@ public class GrazeController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        OnExitWithLast(collider);
+        if (OnExitWithLast(collider)) return;
+        
         if (collider.CompareTag("EnemyAttack"))
         {
             if (activeColliders.Contains(collider) && !collider.GetComponent<AttackObjectController>().isAttacked
@@ -73,20 +74,29 @@ public class GrazeController : MonoBehaviour
     }
 
     [Obsolete("Don't use this method")]
-    private void OnExitWithLast(Collider2D collider)
+    private bool OnExitWithLast(Collider2D collider)
     {
-        if (collider.CompareTag("EnemyAttack"))
+        try
         {
-            if (activeColliders.Contains(collider) && !collider.GetComponent<LastEnemyAttackInfo>().isAttacked
-                                                   && collider.GetComponent<LastEnemyAttackInfo>().grazable && !collider.GetComponent<LastEnemyAttackInfo>().grazed)
+            if (collider.CompareTag("EnemyAttack"))
             {
-                GrazedWithLast(collider);
-                RemoveCollider(collider);
+                if (activeColliders.Contains(collider) && !collider.GetComponent<LastEnemyAttackInfo>().isAttacked
+                                                       && collider.GetComponent<LastEnemyAttackInfo>().grazable &&
+                                                       !collider.GetComponent<LastEnemyAttackInfo>().grazed)
+                {
+                    GrazedWithLast(collider);
+                    RemoveCollider(collider);
+                }
+                else
+                {
+                    RemoveCollider(collider);
+                }
             }
-            else
-            {
-                RemoveCollider(collider);
-            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
         }
     }
 
