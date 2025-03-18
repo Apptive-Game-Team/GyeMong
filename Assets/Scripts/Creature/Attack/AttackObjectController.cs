@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Sound;
 using Creature.Attack.Component;
 using Creature.Attack.Component.Movement;
+using Creature.Attack.Component.Sound;
+using Unity.VisualScripting;
 using UnityEngine;
 using Util.ObjectCreator;
 
@@ -13,6 +17,7 @@ namespace Creature.Attack
         public bool isAttacked = false;
         private IAttackObjectMovement _movement;
         [SerializeField] private EnemyAttackInfo _attackInfo;
+        [SerializeField] private AttackObjectSounds _attackObjectSounds;
 
         public EnemyAttackInfo AttackInfo => _attackInfo;
         
@@ -55,9 +60,15 @@ namespace Creature.Attack
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
         }
 
+        private void OnDisable()
+        {
+            _attackObjectSounds?.hitSoundId?.ForEach(id => { Sound.Play(id);});
+        }
+
         private IEnumerator Routine()
         {
             float elapsedTime = 0;
+            _attackObjectSounds?.startSoundId?.ForEach(id => { Sound.Play(id);});
             while (true)
             {
                 elapsedTime += Time.deltaTime;
@@ -70,6 +81,8 @@ namespace Creature.Attack
                 transform.position = position.Value;
                 yield return null;
             }
+            
+            _attackObjectSounds?.endSoundId?.ForEach(id => { Sound.Play(id);});
         }
     }
 }
