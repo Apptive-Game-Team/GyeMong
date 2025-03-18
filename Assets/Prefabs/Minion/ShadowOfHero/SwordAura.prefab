@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 7631596952559367871}
   - component: {fileID: 1964477354976896879}
   - component: {fileID: 4003980397565869687}
-  - component: {fileID: 1625778925990460751}
   - component: {fileID: 1542865810345171412}
-  - component: {fileID: 8546540375319547157}
+  - component: {fileID: -5238639147842398410}
   m_Layer: 0
   m_Name: SwordAura
   m_TagString: EnemyAttack
@@ -161,18 +160,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &1625778925990460751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2979615913887474165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e4f488f706fe4d86a80eb2e6a2340cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1542865810345171412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +192,7 @@ MonoBehaviour:
         - {fileID: 122291462, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
         deltaTime: 0.05
         _renderer: {fileID: 1964477354976896879}
---- !u!114 &8546540375319547157
+--- !u!114 &-5238639147842398410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,15 +201,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2979615913887474165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8627024935a84eb4d880b880db4a838c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  soundObject: {fileID: 0}
-  isDestroyOnHit: 0
-  grazable: 0
-  grazed: 0
+  isGrazed: 0
   isAttacked: 0
-  isMultiHit: 0
-  multiHitDelay: 0
-  knockbackAmount: 5
+  _attackInfo: {fileID: 11400000, guid: af0fe7ad0ef304da8b24b4834106f5ae, type: 2}
