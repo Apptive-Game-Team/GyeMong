@@ -16,8 +16,12 @@ namespace Creature.Attack.Component.Movement
             _duration = distance / speed;
         }
 
-        public Vector3 GetPosition(float time)
+        public Vector3? GetPosition(float time)
         {
+            if (time > _duration)
+            {
+                return null;
+            }
             return Vector3.Lerp(_startPosition, _targetPosition, time / _duration);
         }
     }
