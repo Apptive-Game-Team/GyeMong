@@ -1,10 +1,9 @@
-using playerCharacter;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Creature.Boss.Spring.Golem
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class GuardianAttack : MonoBehaviour
     {
         private float damage = 30f;

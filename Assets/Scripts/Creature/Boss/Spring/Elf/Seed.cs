@@ -1,10 +1,12 @@
+using System;
 using playerCharacter;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Creature.Boss.Spring.Elf
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class Seed : BossAttack
     {
         private Vector3 direction;
