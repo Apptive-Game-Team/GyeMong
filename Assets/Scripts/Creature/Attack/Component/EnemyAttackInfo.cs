@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Creature.Attack.Component
 {
+    [CreateAssetMenu(fileName = "EnemyAttackInfo", menuName = "Creature/Attack/EnemyAttackInfo")]
     public class EnemyAttackInfo : ScriptableObject
     {
         public float damage = 0f;
