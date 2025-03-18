@@ -25,7 +25,7 @@ namespace Creature.Minion.ShadowOfHero
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
-            AttackObjectController.Create(transform.position, DirectionToPlayer, attackPrefab, 0.6f).StartRoutine();
+            AttackObjectController.Create(transform.position + DirectionToPlayer * 0.5f, DirectionToPlayer, attackPrefab, 0.3f).StartRoutine();
             
             yield return new WaitForSeconds(0.2f);
             _animator.SetBool("isAttacking", false);
@@ -36,7 +36,7 @@ namespace Creature.Minion.ShadowOfHero
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
-            AttackObjectController.Create(transform.position + DirectionToPlayer * 0.5f, DirectionToPlayer, attackPrefab, 0.6f).StartRoutine();
+            AttackObjectController.Create(transform.position + DirectionToPlayer * 0.5f, DirectionToPlayer, attackPrefab, 0.3f).StartRoutine();
             AttackObjectController skill = AttackObjectController.Create(transform.position + DirectionToPlayer * 0.8f, DirectionToPlayer, skillPrefab, new LinearMovement(transform.position, transform.position + DirectionToPlayer * 10, 10));
             skill.StartRoutine();
             yield return new WaitForSeconds(0.2f);
