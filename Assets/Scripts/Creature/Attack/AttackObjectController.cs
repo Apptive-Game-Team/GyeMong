@@ -62,8 +62,9 @@ namespace Creature.Attack
             float elapsedTime = 0;
             while (true)
             {
+                elapsedTime += Time.deltaTime;
                 Vector3? position = _movement.GetPosition(elapsedTime);
-                if (position == null)
+                if (!position.HasValue)
                 {
                     gameObject.SetActive(false);
                     break;
