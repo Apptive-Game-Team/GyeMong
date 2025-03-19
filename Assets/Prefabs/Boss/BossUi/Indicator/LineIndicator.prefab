@@ -44,5 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be59fb5bcc0294b4287a7a82fda44b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionToTarget: {x: 0, y: 0, z: 0}
   linePrefab: {fileID: 8158552430015946914, guid: c024f970145e4b846b37e9b9026f5321,
+    type: 3}
+  indicatorEffecterPrefab: {fileID: 8158552430015946914, guid: df0d8a1600da10445b28b77ed85817cf,
     type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1223218382048531676}
   - component: {fileID: 88527548349032163}
   m_Layer: 0
-  m_Name: Line
+  m_Name: LineEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9c092e23034e5974a853fdefadb56bb6, type: 3}
-  m_Color: {r: 0.9169811, g: 0.29428467, b: 0.2681736, a: 0.5882353}
+  m_Color: {r: 0.9169811, g: 0.29428467, b: 0.2681736, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
