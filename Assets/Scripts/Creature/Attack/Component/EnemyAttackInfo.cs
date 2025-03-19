@@ -1,5 +1,6 @@
 using System.Sound;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Creature.Attack.Component
 {
@@ -10,7 +11,7 @@ namespace Creature.Attack.Component
         public SoundObject soundObject = null;
         public bool isDestroyOnHit = false;
         public bool grazable = false;
-        public bool isMultiHit = false;
+        public bool canMultiHit = false;
         public float multiHitDelay = 0f;
         public float knockbackAmount = 0f;
     }

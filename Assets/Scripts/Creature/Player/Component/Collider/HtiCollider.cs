@@ -50,7 +50,7 @@ namespace Creature.Player.Component.Collider
                 EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>().AttackInfo;
                 if (enemyAttackInfo == null) return;
 
-                if (enemyAttackInfo.isMultiHit)
+                if (enemyAttackInfo.canMultiHit)
                 {
                     playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                     StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
@@ -92,7 +92,7 @@ namespace Creature.Player.Component.Collider
                 EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>().AttackInfo;
                 if (enemyAttackInfo == null) return;
 
-                if (enemyAttackInfo.isMultiHit)
+                if (enemyAttackInfo.canMultiHit)
                 {
                     playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                     StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
