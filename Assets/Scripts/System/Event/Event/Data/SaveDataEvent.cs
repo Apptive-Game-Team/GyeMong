@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Game.Object.Persisted;
 using System.Game.Quest.Component;
 using playerCharacter;
+using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 public class SaveDataEvent : Event
 {
@@ -29,6 +31,8 @@ public class SaveDataEvent : Event
         DataManager.Instance.SaveSection(runeData, "RuneData");
         
         ConditionManager.Instance.Save();
+        
+        PersistedGameObjectManager.Instance.Save();
 
         yield return null;
     }
@@ -64,6 +68,8 @@ public class LoadDataEvent : Event
 
         SceneManager.LoadScene(playerData.sceneName);
         DataManager.Instance.LoadPlayerData();
+        
+        PersistedGameObjectManager.Instance.SetPersistedGameObjects(DataManager.Instance.LoadSection<PersistedGameObjectDatas>(PersistedGameObjectManager.PERSISTED_DATA_FILE));
         yield return null;
     }
 }
