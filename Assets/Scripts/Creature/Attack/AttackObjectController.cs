@@ -51,7 +51,7 @@ namespace Creature.Attack
         
         public void StartRoutine()
         {
-            StartCoroutine(Routine());
+            StartCoroutine(ExecuteAttackSequence());
         }
         
         private void Initialize(Vector3 position, Vector3 direction)
@@ -65,7 +65,7 @@ namespace Creature.Attack
             _attackObjectSounds?.hitSoundId?.ForEach(id => { Sound.Play(id);});
         }
 
-        private IEnumerator Routine()
+        private IEnumerator ExecuteAttackSequence()
         {
             float elapsedTime = 0;
             _attackObjectSounds?.startSoundId?.ForEach(id => { Sound.Play(id);});
