@@ -1,10 +1,11 @@
-using playerCharacter;
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Sound;
 using UnityEngine;
 
 namespace Creature.Boss.Spring.Golem
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class Cube : MonoBehaviour
     {
         private GameObject player;

@@ -1,10 +1,12 @@
+using System;
 using playerCharacter;
 using System.Collections;
-using System.Collections.Generic;
+using System.Sound;
 using UnityEngine;
 
 namespace Creature.Boss.Spring.Elf
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class Bomb : MonoBehaviour
     {
         private float damage = 20f;

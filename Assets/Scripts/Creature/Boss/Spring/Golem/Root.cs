@@ -1,3 +1,4 @@
+using System;
 using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 namespace Creature.Boss.Spring.Golem
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class Root : MonoBehaviour
     {
         private float damage = 30f;

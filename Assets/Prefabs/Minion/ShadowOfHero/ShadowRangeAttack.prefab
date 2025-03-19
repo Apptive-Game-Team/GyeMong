@@ -4843,8 +4843,7 @@ GameObject:
   - component: {fileID: 794472633165643704}
   - component: {fileID: 6823126118444545158}
   - component: {fileID: 6696663437773738352}
-  - component: {fileID: 6258645669617239242}
-  - component: {fileID: 4181654797230287687}
+  - component: {fileID: 1506126821685530283}
   m_Layer: 0
   m_Name: ShadowRangeAttack
   m_TagString: EnemyAttack
@@ -5015,7 +5014,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6258645669617239242
+--- !u!114 &1506126821685530283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5024,27 +5023,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8480704386990181861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8627024935a84eb4d880b880db4a838c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 15
-  soundObject: {fileID: 0}
-  isDestroyOnHit: 1
-  grazable: 1
-  grazed: 0
+  isGrazed: 0
   isAttacked: 0
-  isMultiHit: 0
-  multiHitDelay: 0
-  knockbackAmount: 0
---- !u!114 &4181654797230287687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8480704386990181861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1b5097919234065b9629b1e29646f01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _attackInfo: {fileID: 11400000, guid: fb19de98fa2ff422b934bc35524676e6, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: e7171887666dc417fae0ffd60e07a1c9,
+    type: 2}

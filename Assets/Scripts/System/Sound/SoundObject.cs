@@ -1,107 +1,121 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-[Serializable]
-public class SoundObject : MonoBehaviour
+namespace System.Sound
 {
-    private SoundManager soundManager;
-
-    [SerializeField] private string sourceName = null;
-    private SoundType soundType;
-
-    private AudioClip clip;
-    private AudioSource audioSource;
-    private float volume;
-    private float masterVolume = 1f;
-    public bool IsPlaying {
-        get { return audioSource.isPlaying; }
-    }
-
-    private void Awake()
+    [Serializable]
+    public class SoundObject : MonoBehaviour
     {
-        masterVolume = DataManager.Instance.LoadSection<SoundData>("SoundData") == null ? 1f : DataManager.Instance.LoadSection<SoundData>("SoundData").masterVolume;
-    }
+        private SoundManager _soundManager;
 
-    private void Start()
-    {
-        soundManager = SoundManager.Instance;
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
+        [SerializeField] private string sourceName = null;
+        private SoundType _soundType;
+
+        private AudioClip _clip;
+        private AudioSource _audioSource;
+        private float _volume;
+        private float _masterVolume = 1f;
+
+        private bool _isInitialized = false;
+        public bool IsPlaying {
+            get { return _audioSource.isPlaying; }
         }
-        audioSource.playOnAwake = false;
-        audioSource.loop = false;
 
-        if (sourceName != null && sourceName.Length != 0)
+        private void Awake()
         {
-            SetSoundSourceByName(sourceName);
+            _masterVolume = DataManager.Instance.LoadSection<SoundData>("SoundData") == null ? 1f : DataManager.Instance.LoadSection<SoundData>("SoundData").masterVolume;
         }
-    }
 
-    public void SetLoop(bool isLoop)
-    {
-        audioSource.loop = isLoop;
-    }
-
-    public void SetSoundSourceByName(string soundSourceName)
-    {
-        SoundSource soundSource = SoundManager.Instance.soundSourceList.GetSoundSourceByName(soundSourceName);
-        soundType = soundSource.type;
-        volume = SoundManager.Instance.GetVolume(soundSource.type);
-        clip = soundSource.clip;
-    }
-
-    public void SetSoundSource(SoundSource soundSource)
-    {
-        soundType = soundSource.type;
-        volume = SoundManager.Instance.GetVolume(soundSource.type);
-        clip = soundSource.clip;
-    }
-
-    public void Stop()
-    {
-        audioSource.Stop();
-    }
-
-    public IEnumerator Play()
-    {
-        yield return new WaitUntil(()=>audioSource != null);
-        audioSource.volume = volume * masterVolume;
-        audioSource.clip = clip;
-        audioSource.Play();
-        yield return new WaitWhile(()=>audioSource.isPlaying);
-    }
-
-    public void PlayAsync()
-    {
-        StartCoroutine(Play());
-    }
-
-    public SoundType GetSoundType()
-    {
-        return soundType;
-    }
-
-    public void SetVolume(float volume)
-    {
-        this.volume = volume;
-        UpdateAudioSourceVolume();
-    }
-
-    public void SetMasterVolume(float masterVolume)
-    {
-        this.masterVolume = masterVolume;
-        UpdateAudioSourceVolume();
-    }
-
-    private void UpdateAudioSourceVolume()
-    {
-        if (audioSource != null)
+        private void Start()
         {
-            audioSource.volume = volume * masterVolume;
+            Initialize();
+        }
+
+        public void Initialize()
+        {
+            if (_isInitialized)
+            {
+                return;
+            }
+            _soundManager = SoundManager.Instance;
+            _audioSource = GetComponent<AudioSource>();
+            if (_audioSource == null)
+            {
+                _audioSource = gameObject.AddComponent<AudioSource>();
+            }
+            _audioSource.playOnAwake = false;
+            _audioSource.loop = false;
+
+            if (sourceName != null && sourceName.Length != 0)
+            {
+                SetSoundSourceByName(sourceName);
+            }
+
+            _isInitialized = true;
+        }
+
+        public void SetLoop(bool isLoop)
+        {
+            _audioSource.loop = isLoop;
+        }
+
+        public void SetSoundSourceByName(string soundSourceName)
+        {
+            SoundSource soundSource = SoundManager.Instance.soundSourceList.GetSoundSourceByName(soundSourceName);
+            _soundType = soundSource.type;
+            _volume = SoundManager.Instance.GetVolume(soundSource.type);
+            _clip = soundSource.clip;
+        }
+
+        public void SetSoundSource(SoundSource soundSource)
+        {
+            _soundType = soundSource.type;
+            _volume = SoundManager.Instance.GetVolume(soundSource.type);
+            _clip = soundSource.clip;
+        }
+
+        public void Stop()
+        {
+            _audioSource.Stop();
+        }
+
+        public IEnumerator Play()
+        {
+            yield return new WaitUntil(()=>_audioSource != null);
+            _audioSource.volume = _volume * _masterVolume;
+            _audioSource.clip = _clip;
+            _audioSource.Play();
+            yield return new WaitWhile(()=>_audioSource.isPlaying);
+        }
+
+        public void PlayAsync()
+        {
+            StartCoroutine(Play());
+        }
+
+        public SoundType GetSoundType()
+        {
+            return _soundType;
+        }
+
+        public void SetVolume(float volume)
+        {
+            this._volume = volume;
+            UpdateAudioSourceVolume();
+        }
+
+        public void SetMasterVolume(float masterVolume)
+        {
+            this._masterVolume = masterVolume;
+            UpdateAudioSourceVolume();
+        }
+
+        private void UpdateAudioSourceVolume()
+        {
+            if (_audioSource != null)
+            {
+                _audioSource.volume = _volume * _masterVolume;
+            }
         }
     }
 }

@@ -7,14 +7,14 @@ namespace Util.ObjectCreator
     {
         private List<T> _pool = new();
         private GameObject _prefab;
-        public ObjectPool(int numOfObjects, GameObject prefab)
+        public ObjectPool(int numOfObjects, GameObject prefab, Transform parent = null)
         {
             _prefab = prefab;
             if (_prefab.GetComponent<T>() == null)
             {
                 _prefab.AddComponent<T>();
             }
-            CreateObjects(numOfObjects);
+            CreateObjects(numOfObjects, parent);
         }
 
         public T GetObject()
@@ -61,11 +61,11 @@ namespace Util.ObjectCreator
             obj.gameObject.SetActive(false);
         }
         
-        private void CreateObjects(int numOfObjects)
+        private void CreateObjects(int numOfObjects, Transform parent = null)
         {
             for (int i = 0; i < numOfObjects; i++)
             {
-                GameObject @gameObject = Object.Instantiate(_prefab);
+                GameObject @gameObject = Object.Instantiate(_prefab, parent);
                 T obj = gameObject.GetComponent<T>();
                 @gameObject.SetActive(false);
                 _pool.Add(obj);
