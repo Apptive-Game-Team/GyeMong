@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1257309620379701712}
   - component: {fileID: 4938192110583175232}
   - component: {fileID: -79105282650514762}
+  - component: {fileID: 707639704724025618}
   m_Layer: 0
   m_Name: SlimeCore
   m_TagString: Untagged
@@ -157,4 +158,32 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.94
+  m_Radius: 1.24
+--- !u!114 &707639704724025618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3799310539447110097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 3
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 286138441505701889
+  references:
+    version: 2
+    RefIds:
+    - rid: 286138441505701889
+      type: {class: ReGenerateMaze, ns: , asm: Assembly-CSharp}
+      data:
+        maze: {fileID: 0}
+        up: 0
+        down: 1
+        left: 1
+        right: 0
