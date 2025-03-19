@@ -7,11 +7,11 @@ namespace Creature.Boss.Component.SkillIndicator
     public class ConeIndicator : IndicatorBase
     {
         [SerializeField] protected GameObject conePrefab;
-        public override void Initialize(Vector3 startPosition, Vector3 direction, float range, float duration)
+        public override void Initialize(Vector3 startPosition, Transform target, float range, float duration)
         {
-            indicator = Instantiate(conePrefab, startPosition, Quaternion.LookRotation(Vector3.forward, direction)).transform;
+            indicator = Instantiate(conePrefab, startPosition, Quaternion.LookRotation(Vector3.forward, directionToTarget)).transform;
         }
-        public override IEnumerator GrowIndicator(Vector3 startPosition, Vector3 direction, float range, float duration)
+        public override IEnumerator GrowIndicator(Vector3 startPosition, Transform target, float range, float duration)
         {
             float elapsedTime = 0f;
             while (elapsedTime < duration)

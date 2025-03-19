@@ -149,7 +149,7 @@ namespace Creature.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, Elf.DirectionToPlayer, Elf.DistanceToPlayer, Elf.attackdelayTime * 1.5f);
+                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Elf.DistanceToPlayer, Elf.attackdelayTime * 1.5f);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 1.5f);
                 //사운드 삽입 필요
                 Elf.Animator.SetBool("attackDelay", false);
