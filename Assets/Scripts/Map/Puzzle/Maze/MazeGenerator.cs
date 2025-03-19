@@ -13,7 +13,6 @@ namespace Map.Puzzle.Maze
         [SerializeField] Tile shortWallTile;
         [SerializeField] Tile floorTile;
         [SerializeField] Tile thornTile;
-        [SerializeField] GameObject shadowCasterPrefab;
 
         [SerializeField] private int _width;
         [SerializeField] private int _height;
@@ -109,15 +108,6 @@ namespace Map.Puzzle.Maze
             return neighbors;
         }
 
-        // private bool IsInCenter(Vector2Int position)
-        // {
-        //     int centerX = _width / 2;
-        //     int centerY = _height / 2;
-        //     int halfSize = 4;
-
-        //     return position.x >= centerX - halfSize && position.x <= centerX + halfSize && position.y >= centerY - halfSize && position.y <= centerY + halfSize;
-        // }
-
         private void GenerateTile(bool[,] gridTile)
         {
             wallTilemap.ClearAllTiles();
@@ -143,7 +133,6 @@ namespace Map.Puzzle.Maze
                         else
                         {
                             wallTilemap.SetTile(tilePosition, wallTile);
-                            CreateShadowCaster(tilePosition);
                         } 
                     }
                 }
@@ -158,14 +147,6 @@ namespace Map.Puzzle.Maze
                     if (_thornGridTile[i, j]) thornTilemap.SetTile(tilePosition, thornTile);
                 }
             }
-        }
-
-        private void CreateShadowCaster(Vector3Int tilePosition)
-        {
-            Vector3 worldPosition = wallTilemap.GetCellCenterWorld(tilePosition);
-            GameObject shadowCaster = Instantiate(shadowCasterPrefab, worldPosition, Quaternion.identity);
-            shadowCaster.transform.SetParent(wallTilemap.transform);
-            shadowCaster.transform.localScale = wallTilemap.cellSize;
         }
     }
 }
