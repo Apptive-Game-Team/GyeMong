@@ -144,7 +144,6 @@ namespace Creature.Boss.Spring.Elf
             {
                 return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
             }
-
             public override IEnumerator StateCoroutine()
             {
                 Elf.Animator.SetBool("attackDelay", true);
@@ -159,7 +158,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isMove", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                Elf.SpawnAttackCollider();
+                Elf.SpawnAttackCollider(Elf.lastRushDirection);
                 Elf.Animator.SetBool("isAttack", false);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.ChangeState();
@@ -253,7 +252,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
                 //사운드 삽입 필요
-                Elf.SpawnAttackCollider();
+                Elf.SpawnAttackCollider(Elf.DirectionToPlayer);
                 yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState();
@@ -370,9 +369,8 @@ namespace Creature.Boss.Spring.Elf
             base.Die();
             Animator.SetBool("isDown", true);
         }
-        private void SpawnAttackCollider()
+        private void SpawnAttackCollider(Vector3 direction)
         {
-            Vector3 direction = DirectionToPlayer;
             Vector2 spawnPosition = transform.position + direction * 1f;
 
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

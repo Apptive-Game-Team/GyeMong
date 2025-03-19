@@ -252,12 +252,14 @@ namespace Creature
                     yield return null;
                 }
             }
+            protected Vector3 lastRushDirection;//대쉬 방향 저장 변수...이 방법이 맞을까?
             public IEnumerator RushAttack()
             {
                 float TARGET_OFFSET = 1f;
                 Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
                 float chargeSpeed = 50f;
                 Vector3 direction = (playerPosition - transform.position).normalized;
+                lastRushDirection = direction;
                 Vector3 targetPosition = playerPosition - (direction * TARGET_OFFSET);
                 float targetDistance = Vector3.Distance(transform.position, targetPosition);
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();
