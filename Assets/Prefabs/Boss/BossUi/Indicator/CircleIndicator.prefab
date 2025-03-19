@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d6b5fef69094f44ab47c1ddb6bd56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circlePrefab: {fileID: 0}
+  directionToTarget: {x: 0, y: 0, z: 0}
+  circlePrefab: {fileID: 8158552430015946914, guid: b0050fbc5bc4f0249a27d1dda51108a3,
+    type: 3}
