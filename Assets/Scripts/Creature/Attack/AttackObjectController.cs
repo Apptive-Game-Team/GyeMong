@@ -30,11 +30,6 @@ namespace Creature.Attack
             return attackObjectController;
         }
         
-        public static AttackObjectController Create(Vector3 position, Vector3 direction, GameObject prefab, float duration)
-        {
-            return Create(position, direction, prefab, new StaticMovement(position, duration));
-        }
-        
         private static AttackObjectController Create(Vector3 position, Vector3 direction, GameObject prefab)
         {
             ObjectPool<AttackObjectController> objectPool;
