@@ -77,10 +77,10 @@ namespace Map.Puzzle.Maze
                 _gridTile[0, _height / 2 + 1] = true;
                 _thornGridTile[1, _height / 2 + 1] = false;
             if (_top) 
-                _gridTile[_width / 2 + 1, _height - 1] = true;
+                _gridTile[_width / 2, _height - 1] = true;
                 _thornGridTile[_width / 2 + 1, _height - 2] = false;
             if (_bottom) 
-                _gridTile[_width / 2 + 1, 0] = true;
+                _gridTile[_width / 2, 0] = true;
                 _thornGridTile[_width / 2 + 1, 1] = false;
         }
 
@@ -147,6 +147,18 @@ namespace Map.Puzzle.Maze
                     if (_thornGridTile[i, j]) thornTilemap.SetTile(tilePosition, thornTile);
                 }
             }
+        }
+
+        public void ReGenerateMaze(bool _top, bool _bottom, bool _left, bool _right)
+        {
+            this._top = _top;
+            this._bottom = _bottom;
+            this._left = _left;
+            this._right = _right;
+
+            InitializeWalls();
+            GenerateMap(_start);
+            GenerateTile(_gridTile);
         }
     }
 }
