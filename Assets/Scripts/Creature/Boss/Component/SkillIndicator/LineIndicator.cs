@@ -42,6 +42,7 @@ namespace Creature.Boss.Component.SkillIndicator
             lineSpriteRenderer.color = lineColor;
             yield return new WaitForSeconds(0.2f);
             Destroy(indicator.gameObject);
+            Destroy(gameObject);
         }
         private IEnumerator SpawnEffect(float scaleY, float range)
         {
