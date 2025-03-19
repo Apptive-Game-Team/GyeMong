@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using playerCharacter;
+using System.Game;
 
 namespace Creature.Minion.Slime
 {
@@ -12,6 +13,7 @@ namespace Creature.Minion.Slime
         private const float damageRatio = 0.5f;
         private int divisionLevel = 0;
         private int maxDivisionLevel = 2;
+        private float airborneRange = 3f;
 
         
         protected override void Start()
@@ -37,6 +39,17 @@ namespace Creature.Minion.Slime
             StartCoroutine(FaceToPlayer());
             ChangeState();
         }
+
+        public override void OnAttacked(float damage)
+        {
+            base.OnAttacked(damage);
+            if (currentState is not SlimeDieState)
+            {
+                ChangeState();
+                StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * airborneRange));
+            }
+        }
+
         public class SlimeIdleState : IdleState { }
 
         public class SlimeRangedAttackState : RangedAttackState { }
@@ -113,6 +126,7 @@ namespace Creature.Minion.Slime
                 
                 slimeComponent._slimeAnimator = SlimeAnimator.Create(slimeComponent.gameObject, sprites);
                 slimeComponent.damage *= damageRatio;
+                slimeComponent.airborneRange *= divideRatio;
                 slimeComponent.MeleeAttackRange *= divideRatio;
                 slimeComponent.RangedAttackRange *= divideRatio;
                 slimeComponent.divisionLevel = divisionLevel + 1;
