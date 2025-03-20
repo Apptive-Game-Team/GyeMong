@@ -15,7 +15,7 @@ namespace Creature.Boss.Component.SkillIndicator
         protected override void SetScale(float progress, float range)
         {
             float radius = Mathf.Lerp(0, range, progress);
-            indicator.localScale = new Vector3(radius, radius, 1);
+            indicator.localScale = new Vector3(2 * radius, 2 * radius, 1);
         }
     }
 }

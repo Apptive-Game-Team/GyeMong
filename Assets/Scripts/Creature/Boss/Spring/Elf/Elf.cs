@@ -149,7 +149,7 @@ namespace Creature.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Elf.DistanceToPlayer, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2);
+                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, Elf.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Elf.DistanceToPlayer, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 1.5f);
                 //���� ���� �ʿ�
                 Elf.Animator.SetBool("attackDelay", false);
