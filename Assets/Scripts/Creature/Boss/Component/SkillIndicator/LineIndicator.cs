@@ -37,7 +37,7 @@ namespace Creature.Boss.Component.SkillIndicator
             Color lineColor = lineSpriteRenderer.color;
             lineColor.a = 1f;
             lineSpriteRenderer.color = lineColor;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.4f);
             Destroy(indicator.gameObject);
             Destroy(gameObject);
         }
