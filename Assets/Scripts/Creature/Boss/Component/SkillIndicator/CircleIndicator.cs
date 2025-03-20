@@ -7,53 +7,20 @@ namespace Creature.Boss.Component.SkillIndicator
     public class CircleIndicator : IndicatorBase
     {
         [SerializeField] private GameObject circlePrefab;
-        SpriteRenderer circleSpriteRenderer;
         public override void Initialize(Vector3 startPosition, Transform target)
         {
             indicator = Instantiate(circlePrefab, startPosition, Quaternion.identity).transform;
-            circleSpriteRenderer = indicator.GetComponent<SpriteRenderer>();
+            spriteRenderer = indicator.GetComponent<SpriteRenderer>();
         }
-        public override IEnumerator GrowIndicator(Vector3 startPosition, Transform target, float range, float duration, float delay)
+        protected override void SetScale(float progress, float range)
         {
-            float elapsedTime = 0f;
-            float effectElapsedTime = 0f;
-            while (elapsedTime < duration)
-            {
-                float radius = Mathf.Lerp(0, range, elapsedTime / duration);
-                indicator.localScale = new Vector3(radius, radius, 1);
-                effectElapsedTime += Time.deltaTime;
-                if (effectElapsedTime >= effectSpawnInterval)
-                {
-                    StartCoroutine(SpawnEffect(radius, range));
-                    effectElapsedTime = 0f;
-                }
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            Color lineColor = circleSpriteRenderer.color;
-            lineColor.a = 1f;
-            circleSpriteRenderer.color = lineColor;
-            yield return new WaitForSeconds(delay);
-            Destroy(indicator.gameObject);
-            Destroy(gameObject);
+            float radius = Mathf.Lerp(0, range, progress);
+            indicator.localScale = new Vector3(radius, radius, 1);
         }
-        private IEnumerator SpawnEffect(float radius, float range)
+        protected override void AdjustEffectScale(Transform effectTransform, float progress, float range)
         {
-            GameObject effect = Instantiate(indicatorEffecterPrefab, indicator.position, indicator.rotation);
-            Transform effectTransform = effect.transform;
-            effectTransform.localScale = new Vector3(0, 0, 1);
-            float elapsedTime = 0f;
-            while (elapsedTime < effectSpawnInterval)
-            {
-                if (range <= radius + 1)
-                    radius = range - 1;
-                float effectScaleX = Mathf.Lerp(radius + 1, radius + 1, elapsedTime / effectSpawnInterval);
-                effectTransform.localScale = new Vector3(effectScaleX, effectScaleX, 1);
-                effectTransform.position = indicator.position;
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            Destroy(effect);
+            float radius = Mathf.Lerp(0, range, progress) + 1;
+            effectTransform.localScale = new Vector3(radius, radius, 1);
         }
     }
 }

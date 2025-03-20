@@ -20,7 +20,7 @@ namespace Creature.Boss.Component.SkillIndicator
             GameObject prefab = GetIndicatorPrefab(type);
             IndicatorBase indicator = Instantiate(prefab, startPosition, Quaternion.identity).GetComponent<IndicatorBase>();
             indicator.Initialize(startPosition, target);
-            StartCoroutine(indicator.GrowIndicator(startPosition, target, range, duration, delay - 0.1f));
+            StartCoroutine(indicator.GrowIndicator(target, range, duration, delay - 0.1f));
         }
         private GameObject GetIndicatorPrefab(IndicatorType type)
         {
