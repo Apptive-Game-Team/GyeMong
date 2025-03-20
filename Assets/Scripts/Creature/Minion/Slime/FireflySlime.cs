@@ -24,8 +24,13 @@ namespace Creature.Minion.Slime
             _light.SetActive(_isOn);
             base.Initialize();
         }
-        
-        
+
+        public override void StartMob()
+        {
+            _isOn = true;
+            _light.SetActive(_isOn);
+            _slimeAnimator.SetSprites(_spriteOnVersion);
+        }
 
         public override void OnAttacked(float damage)
         {
@@ -70,5 +75,6 @@ namespace Creature.Minion.Slime
         public class SlimeMeleeAttackState : MeleeAttackState {}
         public class DieState : SlimeDieState { }
         public class MoveState : SlimeMoveState { }
+        public class SlimeIdleState : IdleState { }
     }
 }

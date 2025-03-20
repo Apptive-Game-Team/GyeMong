@@ -11,6 +11,7 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
         OnAwake = 2,
         OnAttacked = 3,
         OnCalled = 4,
+        OnEnabled = 5,
     }
 
     [SerializeField]
@@ -70,6 +71,20 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
         }
     }
 
+    private void OnEnable()
+    {
+        if (trigger == EventTrigger.OnEnabled && triggerLimitCounter != 0)
+        {
+            TriggerEvent();
+            triggerLimitCounter -= 1;
+        }
+    }
+    
+    private void OnDisable()
+    {
+        KillEvent();
+    }
+    
     private IEnumerator EventLoop()
     {
         do

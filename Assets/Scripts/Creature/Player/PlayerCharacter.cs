@@ -247,7 +247,7 @@ namespace playerCharacter
                 yield return null;
             }
 
-            playerRb.velocity = Vector2.zero;
+            StopPlayer();
 
             canMove = true;
             animator.SetBool("isDashing", false);
@@ -267,7 +267,7 @@ namespace playerCharacter
             SpawnAttackCollider();
 
             movement = Vector2.zero;
-            playerRb.velocity = Vector2.zero;
+            StopPlayer();
 
             canMove = true;
             
@@ -292,7 +292,7 @@ namespace playerCharacter
             SpawnSkillCollider();
 
             movement = Vector2.zero;
-            playerRb.velocity = Vector2.zero;
+            StopPlayer();
 
             canMove = true;
 
@@ -407,7 +407,7 @@ namespace playerCharacter
         public IEnumerator MoveTo(Vector3 target, float speed)
         {
             isControlled = true;
-            playerRb.velocity = Vector2.zero;
+            StopPlayer();
             animator.SetBool("isMove", true);
             soundController.SetBool(PlayerSoundType.FOOT, true);
             
@@ -429,11 +429,16 @@ namespace playerCharacter
         
                 yield return null;
             }
-            playerRb.velocity = Vector2.zero;
+            StopPlayer();
             animator.SetFloat("speed", speed);
             
             animator.SetBool("isMove", false);
             soundController.SetBool(PlayerSoundType.FOOT, false);
+        }
+
+        public void StopPlayer()
+        {
+            playerRb.velocity = Vector2.zero;
         }
 
         public void Trigger()

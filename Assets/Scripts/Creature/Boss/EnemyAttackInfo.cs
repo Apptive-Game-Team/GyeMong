@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Sound;
 using UnityEngine;
 namespace Creature.Boss
 {
+    [Obsolete("Use Creature.Attack.Component.EnemyAttackInfo instead")]
     public class EnemyAttackInfo : MonoBehaviour
     {
         public float damage;
@@ -13,9 +16,10 @@ namespace Creature.Boss
         public bool isAttacked;
         public bool isMultiHit;
         public float multiHitDelay;
+        public float knockbackAmount;
 
         public void Initialize(float damage = 0f, SoundObject soundObject = null, bool isDestroyOnHit = false, bool grazable = false,
-            bool isMultiHit = false, float multiHitDelay = 0f, bool grazed = false, bool isAttacked = false)
+            bool isMultiHit = false, float multiHitDelay = 0f, bool grazed = false, bool isAttacked = false, float knockbackAmount = 0f)
         {
             this.damage = damage;
             this.soundObject = soundObject;

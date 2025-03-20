@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Creature.Boss.Component.SkillIndicator;
+using System.Sound;
 using Creature.Player.Component.Collider;
 using playerCharacter;
 using TMPro;
@@ -42,7 +43,7 @@ namespace Creature.Boss.Spring.Elf
         public abstract class ElfState : BossState
         {
             public Elf Elf => creature as Elf;
-            protected float cooldownTime = 0f;//Äðµµ ´Ù ÀÓ½ÃÀÓ..Á¶Á¤ÇÊ¿ä
+            protected float cooldownTime = 0f;//ï¿½ï¿½ ï¿½ï¿½ ï¿½Ó½ï¿½ï¿½ï¿½..ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½
             protected float lastUsedTime = 0f;
             public override bool CanEnterState()
             {
@@ -67,7 +68,7 @@ namespace Creature.Boss.Spring.Elf
                     { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 },
                     { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0},
                     { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
-                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}//ÀÓ½Ã °¡ÁßÄ¡ÀÓ...Á¶Á¤ÇÊ¿ä
+                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}//ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½...ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½
                 };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -150,7 +151,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetFloat("attackType", 2);
                 Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Elf.DistanceToPlayer, Elf.attackdelayTime * 1.5f);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 1.5f);
-                //»ç¿îµå »ðÀÔ ÇÊ¿ä
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
@@ -222,7 +223,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
-                //»ç¿îµå »ðÀÔ ÇÊ¿ä
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 1);
@@ -251,7 +252,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                //»ç¿îµå »ðÀÔ ÇÊ¿ä
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
                 Elf.SpawnAttackCollider(Elf.DirectionToPlayer);
                 yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -281,7 +282,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
-                //»ç¿îµå »ðÀÔ ÇÊ¿ä
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
                 GameObject vine = Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -309,7 +310,7 @@ namespace Creature.Boss.Spring.Elf
                 Vector3 direction = Elf.DirectionToPlayer;
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
-                //¾Ö´Ï¸ÞÀÌ¼Ç, »ç¿îµå »ðÀÔ ÇÊ¿ä
+                //ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);

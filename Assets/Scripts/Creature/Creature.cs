@@ -163,15 +163,21 @@ namespace Creature
             _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
         }
     
+        private Color? _originalColor = null;
         protected IEnumerator Blink()
         {
             MaterialController.SetMaterial(MaterialController.MaterialType.HIT);
             MaterialController.SetFloat(1);
+            if (!_originalColor.HasValue)
+                _originalColor = GetComponent<SpriteRenderer>().color;;
+            GetComponent<SpriteRenderer>().color = Color.white;
             yield return new WaitForSeconds(BLINK_DELAY);
             if (MaterialController.GetCurrentMaterialType() == MaterialController.MaterialType.HIT)
             {
                 MaterialController.SetFloat(0);
             }
+
+            GetComponent<SpriteRenderer>().color = _originalColor.Value;
         }
     
         public virtual IEnumerator Stun(float stunTime)
