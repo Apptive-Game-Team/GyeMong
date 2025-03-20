@@ -44,13 +44,8 @@ namespace Creature.Boss.Spring.Elf
         private IEnumerator FireArrow(float remainingDistance)
         {
             Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-            float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-            float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
-
-            float randomAngleRad = randomAngle * Mathf.Deg2Rad;
-            direction = new Vector3(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad), 0).normalized;
-
-            transform.rotation = Quaternion.Euler(0, 0, randomAngle);
+            direction = directionToPlayer;
+            RotateArrow();
             traveledDistance = 0f;
             rb.velocity = direction * speed;
             _soundObject.PlayAsync();
