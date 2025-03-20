@@ -12,6 +12,6 @@ namespace Creature.Boss.Component.SkillIndicator
         protected Transform indicator;
         protected Vector3 directionToTarget;
         public abstract void Initialize(Vector3 startPosition, Transform target);
-        public abstract IEnumerator GrowIndicator(Vector3 startPosition, Transform target, float range, float duration);
+        public abstract IEnumerator GrowIndicator(Vector3 startPosition, Transform target, float range, float duration, float delay);
     }
 }

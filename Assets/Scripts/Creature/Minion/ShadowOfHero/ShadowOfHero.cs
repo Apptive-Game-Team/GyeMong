@@ -168,7 +168,7 @@ namespace Creature.Minion.ShadowOfHero
             {
                 ShadowOfHero._attackCount += 1;
                 creature.Animator.SetBool("isDashing", true);
-                yield return creature.RushAttack();
+                yield return creature.RushAttack(0.5f);
                 creature.Animator.SetBool("isDashing", false);
                 yield return ShadowOfHero.MeleeAttack();
                 creature.ChangeState();

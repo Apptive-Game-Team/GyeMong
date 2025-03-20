@@ -13,7 +13,7 @@ namespace Creature.Boss.Component.SkillIndicator
             indicator = Instantiate(circlePrefab, startPosition, Quaternion.identity).transform;
             circleSpriteRenderer = indicator.GetComponent<SpriteRenderer>();
         }
-        public override IEnumerator GrowIndicator(Vector3 startPosition, Transform target, float range, float duration)
+        public override IEnumerator GrowIndicator(Vector3 startPosition, Transform target, float range, float duration, float delay)
         {
             float elapsedTime = 0f;
             float effectElapsedTime = 0f;
@@ -33,7 +33,7 @@ namespace Creature.Boss.Component.SkillIndicator
             Color lineColor = circleSpriteRenderer.color;
             lineColor.a = 1f;
             circleSpriteRenderer.color = lineColor;
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(delay);
             Destroy(indicator.gameObject);
             Destroy(gameObject);
         }
