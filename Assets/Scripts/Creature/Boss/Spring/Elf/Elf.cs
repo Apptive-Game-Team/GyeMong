@@ -297,7 +297,7 @@ namespace Creature.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.CurrentPhase == 0) ? 5 : 0;
+                return (Elf.CurrentPhase == 1) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
