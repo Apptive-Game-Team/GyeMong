@@ -11,7 +11,7 @@ namespace Creature.Boss.Component.SkillIndicator
         protected float effectSpawnInterval = 0.4f;
         protected Transform indicator;
         protected Vector3 directionToTarget;
-        public abstract void Initialize(Vector3 startPosition, Transform target, float range, float duration);
+        public abstract void Initialize(Vector3 startPosition, Transform target);
         public abstract IEnumerator GrowIndicator(Vector3 startPosition, Transform target, float range, float duration);
     }
 }

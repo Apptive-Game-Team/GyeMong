@@ -9,7 +9,7 @@ namespace Creature.Boss.Component.SkillIndicator
     {
         [SerializeField] private GameObject linePrefab;
         SpriteRenderer lineSpriteRenderer;
-        public override void Initialize(Vector3 startPosition, Transform target, float range, float duration)
+        public override void Initialize(Vector3 startPosition, Transform target)
         {
             directionToTarget = (target.position - startPosition).normalized;
             indicator = Instantiate(linePrefab, startPosition, Quaternion.LookRotation(Vector3.forward, directionToTarget)).transform;

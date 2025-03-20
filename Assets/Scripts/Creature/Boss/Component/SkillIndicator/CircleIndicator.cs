@@ -8,7 +8,7 @@ namespace Creature.Boss.Component.SkillIndicator
     {
         [SerializeField] private GameObject circlePrefab;
         SpriteRenderer circleSpriteRenderer;
-        public override void Initialize(Vector3 startPosition, Transform target, float range, float duration)
+        public override void Initialize(Vector3 startPosition, Transform target)
         {
             indicator = Instantiate(circlePrefab, startPosition, Quaternion.identity).transform;
             circleSpriteRenderer = indicator.GetComponent<SpriteRenderer>();
