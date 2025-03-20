@@ -77,14 +77,14 @@ namespace Creature.Boss
             ChangeState();
         }
 
-        public override IEnumerator Stun(float stunTime)
+        public override IEnumerator Stun(float duration)
         {
             currentShield = 0f;
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
             Animator.SetBool("isStun", true);
             currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
-            yield return new WaitForSeconds(stunTime);
+            yield return new WaitForSeconds(duration);
             Animator.SetBool("isStun", false);
             ChangeState();
         }
