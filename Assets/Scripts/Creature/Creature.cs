@@ -259,7 +259,7 @@ namespace Creature
                 }
             }
             protected Vector3 lastRushDirection;//대쉬 방향 저장 변수...이 방법이 맞을까?
-            public IEnumerator RushAttack()
+            public IEnumerator RushAttack(float delay)
             {
                 float TARGET_OFFSET = 1f;
                 Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
@@ -279,7 +279,7 @@ namespace Creature
 
                 float elapsedTime = 0f;
                 float duration = targetDistance / chargeSpeed;
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(delay);
                 while (elapsedTime < duration)
                 {
                     Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);

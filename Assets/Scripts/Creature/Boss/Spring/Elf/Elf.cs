@@ -155,7 +155,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
-                yield return Elf.RushAttack(); 
+                yield return Elf.RushAttack(Elf.attackdelayTime/2); 
                 Elf.Animator.SetBool("isMove", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
