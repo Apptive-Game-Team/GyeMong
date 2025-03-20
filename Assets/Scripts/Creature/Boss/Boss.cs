@@ -81,11 +81,9 @@ namespace Creature.Boss
         {
             currentShield = 0f;
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-            Animator.SetBool("isStun", true);
             currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
             yield return new WaitForSeconds(duration);
-            Animator.SetBool("isStun", false);
             ChangeState();
         }
 

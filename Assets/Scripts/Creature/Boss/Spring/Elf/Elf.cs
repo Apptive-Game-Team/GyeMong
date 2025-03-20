@@ -380,5 +380,16 @@ namespace Creature.Boss.Spring.Elf
             GameObject attackCollider = Instantiate(meleeAttackPrefab, spawnPosition, spawnRotation, transform);
             Destroy(attackCollider, attackdelayTime/2);
         }
+        public override IEnumerator Stun(float duration) //이후 Boss로 올리기
+        {
+            currentShield = 0f;
+            MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+            Animator.SetBool("isStun", true);
+            currentState.OnStateExit();
+            StopCoroutine(_currentStateCoroutine);
+            yield return new WaitForSeconds(duration);
+            Animator.SetBool("isStun", false);
+            ChangeState();
+        }
     }
 }
