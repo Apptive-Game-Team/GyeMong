@@ -10,15 +10,17 @@ namespace Creature.Boss.Component.SkillIndicator
         protected Transform indicator;
         protected SpriteRenderer spriteRenderer;
         protected Vector3 directionToTarget;
+        protected float distanceToTarget;
         public abstract void Initialize(Vector3 startPosition, Transform target);
         protected abstract void SetScale(float progress, float range);
-        public IEnumerator GrowIndicator(Transform target, float range, float duration, float delay)
+        public IEnumerator GrowIndicator(Transform target, float duration, float delay)
         {
             float elapsedTime = 0f;
             while (elapsedTime < duration)
             {
                 directionToTarget = (target.position - transform.position).normalized;
-                SetScale(elapsedTime / duration, range);
+                distanceToTarget = Vector3.Distance(transform.position, target.position);
+                SetScale(elapsedTime / duration, distanceToTarget);
                 indicator.rotation = Quaternion.LookRotation(Vector3.forward, directionToTarget);
                 elapsedTime += Time.deltaTime;
                 yield return null;
