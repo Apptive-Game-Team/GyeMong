@@ -8,10 +8,7 @@ namespace Creature.Boss.Component.SkillIndicator
     public class LineIndicator : IndicatorBase
     {
         [SerializeField] private GameObject linePrefab;
-        [SerializeField] private GameObject indicatorEffecterPrefab;
         SpriteRenderer lineSpriteRenderer;
-        private float effectSpawnInterval = 0.4f;
-
         public override void Initialize(Vector3 startPosition, Transform target, float range, float duration)
         {
             directionToTarget = (target.position - startPosition).normalized;
