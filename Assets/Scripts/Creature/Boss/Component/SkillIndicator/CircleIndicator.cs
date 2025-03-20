@@ -19,12 +19,12 @@ namespace Creature.Boss.Component.SkillIndicator
             float effectElapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                float scaleX = Mathf.Lerp(0, range, elapsedTime / duration);
-                indicator.localScale = new Vector3(scaleX, scaleX, 1);
+                float radius = Mathf.Lerp(0, range, elapsedTime / duration);
+                indicator.localScale = new Vector3(radius, radius, 1);
                 effectElapsedTime += Time.deltaTime;
                 if (effectElapsedTime >= effectSpawnInterval)
                 {
-                    StartCoroutine(SpawnEffect(scaleX, range));
+                    StartCoroutine(SpawnEffect(radius, range));
                     effectElapsedTime = 0f;
                 }
                 elapsedTime += Time.deltaTime;
@@ -37,7 +37,7 @@ namespace Creature.Boss.Component.SkillIndicator
             Destroy(indicator.gameObject);
             Destroy(gameObject);
         }
-        private IEnumerator SpawnEffect(float scaleX, float range)
+        private IEnumerator SpawnEffect(float radius, float range)
         {
             GameObject effect = Instantiate(indicatorEffecterPrefab, indicator.position, indicator.rotation);
             Transform effectTransform = effect.transform;
@@ -45,9 +45,9 @@ namespace Creature.Boss.Component.SkillIndicator
             float elapsedTime = 0f;
             while (elapsedTime < effectSpawnInterval)
             {
-                if (range <= scaleX + 1)
-                    scaleX = range - 1;
-                float effectScaleX = Mathf.Lerp(scaleX + 1, scaleX + 1, elapsedTime / effectSpawnInterval);
+                if (range <= radius + 1)
+                    radius = range - 1;
+                float effectScaleX = Mathf.Lerp(radius + 1, radius + 1, elapsedTime / effectSpawnInterval);
                 effectTransform.localScale = new Vector3(effectScaleX, effectScaleX, 1);
                 effectTransform.position = indicator.position;
                 elapsedTime += Time.deltaTime;
