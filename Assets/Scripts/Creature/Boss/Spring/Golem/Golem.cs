@@ -12,7 +12,6 @@ namespace Creature.Boss.Spring.Golem
     public class Golem : Boss
     {
         [SerializeField] public GameObject cubePrefab;
-        [SerializeField] public GameObject cubeShadowPrefab;
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
         private Shield shieldComponenet;
@@ -112,18 +111,11 @@ namespace Creature.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("Toss", true);
-
                 creature.StartCoroutine(Golem.TossSoundObject.Play());
                 yield return new WaitForSeconds(2f);
                 GameObject cube = Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
-                Cube cubeComponent = cube.GetComponent<Cube>();
-                GameObject shadow = Instantiate(Golem.cubeShadowPrefab, PlayerCharacter.Instance.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
-                cubeComponent.DetectShadow(shadow);
-
                 Golem.Animator.SetBool("Toss", false);
-
                 yield return new WaitUntil(() => cube.IsDestroyed());
-
                 creature.ChangeState();
             }
         }
