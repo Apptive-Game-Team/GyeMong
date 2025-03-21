@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using Visual.Camera;
 
 public abstract class CameraEvent : Event
 {
@@ -57,5 +59,14 @@ public class CameraMoveEvent : CameraEvent
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         return CameraController.MoveTo(target, duration, size);
+    }
+}
+
+public class CameraSet : CameraEvent
+{
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        CameraManager.Instance.ChangeCamera(eventObject.GetComponentInChildren<CinemachineVirtualCamera>());
+        yield return null;
     }
 }
