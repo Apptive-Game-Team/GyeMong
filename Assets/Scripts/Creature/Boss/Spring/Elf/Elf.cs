@@ -18,9 +18,7 @@ namespace Creature.Boss.Spring.Elf
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
-        //[SerializeField] private GameObject BombPrefab;
         float attackdelayTime = 1f;
-        private FootSoundController footSoundController;
         [SerializeField] private SoundObject arrowSoundObject;
         [SerializeField] private SoundObject vineSoundObject;
 
@@ -38,7 +36,6 @@ namespace Creature.Boss.Spring.Elf
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
-            footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
         }
         public abstract class ElfState : BossState
         {
@@ -89,7 +86,6 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.BackStep(Elf.RangedAttackRange);
-
                 Elf.Animator.SetBool("isMove", false);
                 Elf.ChangeState();
             }
@@ -313,10 +309,8 @@ namespace Creature.Boss.Spring.Elf
         private void SpawnAttackCollider(Vector3 direction)
         {
             Vector2 spawnPosition = transform.position + direction * 1f;
-
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
-
             GameObject attackCollider = Instantiate(meleeAttackPrefab, spawnPosition, spawnRotation, transform);
             Destroy(attackCollider, attackdelayTime/2);
         }

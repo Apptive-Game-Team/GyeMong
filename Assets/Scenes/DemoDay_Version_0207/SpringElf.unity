@@ -18375,7 +18375,8 @@ PrefabInstance:
       value: MidBoss
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1816522763214820845, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
