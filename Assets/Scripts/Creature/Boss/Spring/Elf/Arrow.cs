@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 namespace Creature.Boss.Spring.Elf
 {
     [Obsolete("Use AttackObjectController instead")]
-    public class Arrow : BossAttack
+    public class Arrow : MonoBehaviour
     {
         private Vector3 direction;
         private float speed = 15f;
@@ -16,12 +16,11 @@ namespace Creature.Boss.Spring.Elf
         private float targetDistance = 10f;
         private float traveledDistance = 0f;
         private bool isReflected = false;
+        private GameObject player;
 
-        protected override void Awake()
+        private void Awake()
         {
-            damage = 20f;
-            base.Awake();
-            _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
+            player = GameObject.FindGameObjectWithTag("Player");
             rb = GetComponent<Rigidbody2D>();
         }
 
@@ -44,7 +43,6 @@ namespace Creature.Boss.Spring.Elf
             RotateArrow();
             traveledDistance = 0f;
             rb.velocity = direction * speed;
-            _soundObject.PlayAsync();
             while (traveledDistance < remainingDistance)
             {
                 traveledDistance += speed * Time.deltaTime;
@@ -54,7 +52,6 @@ namespace Creature.Boss.Spring.Elf
             yield return new WaitForSeconds(1f);
             Destroy(gameObject);
         }
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("PlayerAttack") && !isReflected)
