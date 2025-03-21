@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1813008252662639558}
   - component: {fileID: 6526184810629786778}
   - component: {fileID: 2608428945595376751}
+  - component: {fileID: 1515025265303950281}
   m_Layer: 0
   m_Name: MidBossVine
   m_TagString: EnemyAttack
@@ -204,3 +205,20 @@ MonoBehaviour:
         - {fileID: 21300000, guid: c7558db62a9e14b79b1ccfff09670269, type: 3}
         deltaTime: 0.1
         _renderer: {fileID: 0}
+--- !u!114 &1515025265303950281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: d33007b1fe3f4f64ca6c0f072cd3b30e, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: 8776415d6483aa043957031af9658e2a,
+    type: 2}
