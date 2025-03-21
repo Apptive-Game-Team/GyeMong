@@ -77,33 +77,6 @@ namespace Creature.Boss.Spring.Elf
                 return weights;
             }
         }
-
-        /*public class MoveState : ElfState
-        {
-            public override int GetWeight()
-            {
-                return (Elf.DistanceToPlayer > Elf.MeleeAttackRange) ? 5 : 0;
-            }
-
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("isMove", true);
-                Elf.Animator.SetFloat("moveType", 0);
-                float duration = 2f;
-                float timer = 0f;
-
-                while (duration > timer && Elf.DistanceToPlayer > Elf.MeleeAttackRange)
-                {
-                    timer += Time.deltaTime;
-                    yield return null;
-                    Elf.TrackPlayer();
-                }
-
-                Elf.Animator.SetBool("isMove", false);
-                Elf.ChangeState();
-            }
-        }*/
-
         public new class BackStep : ElfState
         {
             public override int GetWeight()
@@ -196,7 +169,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
-                GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+                Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
                 yield return Elf.arrowSoundObject.Play();
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
