@@ -10,10 +10,9 @@ namespace Creature.Minion.Slime
     public class DivisionSlime : SlimeBase
     {
         private const float divideRatio = 0.6f;
-        private const float damageRatio = 0.5f;
         private int divisionLevel = 0;
         private int maxDivisionLevel = 2;
-        private float airborneRange = 3f;
+        private float airborneRange;
 
         
         protected override void Start()
@@ -28,8 +27,9 @@ namespace Creature.Minion.Slime
             maxHp = 10f;
             currentHp = maxHp;
             
-            MeleeAttackRange = 4f;
+            MeleeAttackRange = 3f;
             RangedAttackRange = 10f;
+            airborneRange = 4f;
 
             damage = 10f;
         }
@@ -45,12 +45,13 @@ namespace Creature.Minion.Slime
             base.OnAttacked(damage);
             if (currentState is not SlimeDieState)
             {
+                StopCoroutine(_currentStateCoroutine);
+                StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
                 ChangeState();
-                StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * airborneRange));
             }
         }
 
-        public class SlimeIdleState : IdleState { }
+        //public class SlimeIdleState : IdleState { }
 
         public class SlimeRangedAttackState : RangedAttackState { }
         public class SlimeMeleeAttackState : MeleeAttackState { }
@@ -69,7 +70,7 @@ namespace Creature.Minion.Slime
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
                 float dashDistance = 1.5f;
                 Vector3 dashTargetPosition = PlayerCharacter.Instance.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
+                yield return new WaitForSeconds(2 * SlimeAnimator.ANIMATION_DELTA_TIME);
                 DivisionSlime.transform.DOMove(dashTargetPosition, 0.3f).SetEase(Ease.OutQuad);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
@@ -125,10 +126,10 @@ namespace Creature.Minion.Slime
                 DivisionSlime slimeComponent = newSlime.GetComponent<DivisionSlime>();
                 
                 slimeComponent._slimeAnimator = SlimeAnimator.Create(slimeComponent.gameObject, sprites);
-                slimeComponent.damage *= damageRatio;
-                slimeComponent.airborneRange *= divideRatio;
+                slimeComponent.damage *= divideRatio;
                 slimeComponent.MeleeAttackRange *= divideRatio;
                 slimeComponent.RangedAttackRange *= divideRatio;
+                slimeComponent.airborneRange *= divideRatio;
                 slimeComponent.divisionLevel = divisionLevel + 1;
                 slimeComponent.StartMob();
             }
