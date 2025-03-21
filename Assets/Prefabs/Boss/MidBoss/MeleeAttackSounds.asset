@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c3534975a4e472e89828f5b8fb4e990, type: 3}
-  m_Name: MidBossArrow
+  m_Script: {fileID: 11500000, guid: 6f5a3522308545f7bbf7411094915862, type: 3}
+  m_Name: MeleeAttackSounds
   m_EditorClassIdentifier: 
-  damage: 20
-  soundObject: {fileID: 0}
-  isDestroyOnHit: 1
-  grazable: 1
-  canMultiHit: 0
-  multiHitDelay: 0
-  knockbackAmount: 0
+  startSoundId: []
+  endSoundId: []
+  hitSoundId: []
