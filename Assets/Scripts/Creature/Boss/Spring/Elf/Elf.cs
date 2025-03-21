@@ -40,20 +40,10 @@ namespace Creature.Boss.Spring.Elf
         public abstract class ElfState : BossState
         {
             public Elf Elf => creature as Elf;
-            protected float cooldownTime = 0f;//�� �� �ӽ���..�����ʿ�
-            protected float lastUsedTime = 0f;
-            public override bool CanEnterState()
-            {
-                return Time.time - lastUsedTime >= cooldownTime;
-            }
             public override void OnStateUpdate()
             {
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
-            }
-            public override void OnStateExit()
-            {
-                lastUsedTime = Time.time;
             }
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {

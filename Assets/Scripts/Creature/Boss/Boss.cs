@@ -28,6 +28,16 @@ namespace Creature.Boss
         }
         public abstract class BossState : BaseState
         {
+            protected float cooldownTime = 0f;
+            protected float lastUsedTime = 0f;
+            public override bool CanEnterState()
+            {
+                return Time.time - lastUsedTime >= cooldownTime;
+            }
+            public override void OnStateExit()
+            {
+                lastUsedTime = Time.time;
+            }
         }
         protected void Start()
         {
