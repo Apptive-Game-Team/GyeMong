@@ -9,14 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1718034405884253646}
-  - component: {fileID: 6903973534843988526}
+  - component: {fileID: -2846430557153995475}
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
-  - component: {fileID: 7136526515895070149}
   - component: {fileID: 1862771403402579794}
-  - component: {fileID: 8282123524516236359}
+  - component: {fileID: 7183257790069292148}
   m_Layer: 0
-  m_Name: MidBossSeed
+  m_Name: MidBossSeedExplode
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +36,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6903973534843988526
+--- !u!212 &-2846430557153995475
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,13 +76,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 0acfd596f5d11ef42bf588db1dc95b35, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -1968753551, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.25, y: 0.25}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -148,31 +147,19 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01774722, y: -0.0037362725}
+  m_Offset: {x: -0.0037432313, y: -0.026652023}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.25}
-    newSize: {x: 0.25, y: 0.25}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21868137, y: 0.10098913}
+  m_Size: {x: 0.5522325, y: 0.51856446}
   m_EdgeRadius: 0
---- !u!114 &7136526515895070149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349092434517921609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e07d49a98aa7f4a982b722a751286a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1862771403402579794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 0
-  trigger: 4
+  trigger: 2
   triggerLimitCounter: -1
   eventSequence:
   - rid: 521773891873669120
@@ -205,11 +192,11 @@ MonoBehaviour:
         - {fileID: -1457230939, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
         - {fileID: -1870672501, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
         deltaTime: 0.1
-        _renderer: {fileID: 6903973534843988526}
+        _renderer: {fileID: 0}
     - rid: 521773891873669121
       type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
       data: 
---- !u!114 &8282123524516236359
+--- !u!114 &7183257790069292148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +205,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349092434517921609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8df41e182033742d8a743905e984913f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceName: ENEMY_Seed_Explosion
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 0fb739348104c3c4da0da9879c7b15c7, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: f34047139b4a8a34a892dce7159cfbc1,
+    type: 2}

@@ -8,26 +8,23 @@ using Random = UnityEngine.Random;
 namespace Creature.Boss.Spring.Elf
 {
     [Obsolete("Use AttackObjectController instead")]
-    public class Seed : BossAttack
+    public class Seed : MonoBehaviour
     {
+        private GameObject player;
         private Vector3 direction;
         private float speed = 15f;
         private SoundObject _explosionSoundObject;
-        private EventObject _eventObject;
         private Rigidbody2D rb;
         private float targetDistance = 10f;
         private float traveledDistance = 0f;
         private bool isReflected = false;
         private float angleRange = 20f;
-        private float explosionRadius = 2f;
-         
-        protected override void Awake()
+        [SerializeField] private GameObject explodePrefab;
+
+        private void Awake()
         {
-            damage = 20f;
-            base.Awake();
-            _eventObject = GetComponent<EventObject>();
-            _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
             _explosionSoundObject = GetComponent<SoundObject>();
+            player = GameObject.FindGameObjectWithTag("Player");
             rb = GetComponent<Rigidbody2D>();
         }
 
@@ -55,7 +52,6 @@ namespace Creature.Boss.Spring.Elf
             transform.rotation = Quaternion.Euler(0, 0, randomAngle);
             traveledDistance = 0f;
             rb.velocity = direction * speed;
-            _soundObject.PlayAsync();
             while (traveledDistance < remainingDistance)
             {
                 traveledDistance += speed * Time.deltaTime;
@@ -69,15 +65,8 @@ namespace Creature.Boss.Spring.Elf
         private void Explode()
         {
             _explosionSoundObject.PlayAsync();
-            _eventObject.Trigger();
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                if (enemy.CompareTag("Player"))
-                {
-                    PlayerCharacter.Instance.TakeDamage(damage / 2);
-                }
-            }
+            Instantiate(explodePrefab,transform.position,Quaternion.identity);
+            Destroy(gameObject);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

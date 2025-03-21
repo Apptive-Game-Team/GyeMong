@@ -49,7 +49,7 @@ namespace Creature.Boss.Spring.Elf
                 yield return null;
             }
             rb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
         }
         private void OnTriggerEnter2D(Collider2D collision)
