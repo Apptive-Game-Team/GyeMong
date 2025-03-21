@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Sound;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Creature.Boss.Spring.Elf.Elf;
 
 namespace Creature.Boss.Spring.Golem
 {
@@ -66,6 +68,22 @@ namespace Creature.Boss.Spring.Golem
         public abstract class GolemState : BaseState
         {
             public Golem Golem => creature as Golem;
+            public override Dictionary<System.Type, int> GetNextStateWeights()
+            {
+                var weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(MeleeAttack), (creature.DistanceToPlayer < creature.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 5 },
+                    { typeof(UpStoneAttack), (Golem.CurrentPhase == 0)  ? 5 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0}
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+                return weights;
+            }
         }
 
         public class MeleeAttack : GolemState
@@ -78,10 +96,8 @@ namespace Creature.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-
                 yield return new WaitForSeconds(1f);
                 yield return Golem.MakeShockwave(4);
-
                 Golem.Animator.SetBool("TwoHand", false);
                 creature.ChangeState();
             }
@@ -93,7 +109,6 @@ namespace Creature.Boss.Spring.Golem
             {
                 return 5;
             }
-
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("Toss", true);
