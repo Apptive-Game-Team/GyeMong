@@ -11,10 +11,12 @@ namespace Visual.Camera
     {
         private List<CinemachineVirtualCamera> virtualCams;
         private CinemachineVirtualCamera currentCam;
+        private float cameraSize;
 
         protected override void Awake() 
         {
             GetCameras();
+            cameraSize = 4f;
         }
 
         private void GetCameras()
@@ -39,12 +41,12 @@ namespace Visual.Camera
             currentCam = newCam;
         }
 
-        public IEnumerator CameraMove(Vector3 destination)
+        public IEnumerator CameraMove(Vector3 destination, float speed)
         {
             currentCam.Follow = null;
 
             yield return currentCam.transform
-                .DOMove(destination, 3f)
+                .DOMove(destination, speed)
                 .SetEase(Ease.OutQuad)
                 .WaitForCompletion();
         }
@@ -52,6 +54,18 @@ namespace Visual.Camera
         public void CameraFollow(Transform transform)
         {
             currentCam.Follow = transform;
+        }
+
+        public IEnumerator CameraZoomInOut(float size, float duration)
+        {
+            yield return DOTween.To(() => currentCam.m_Lens.OrthographicSize,
+                x => currentCam.m_Lens.OrthographicSize = x, size, duration)
+                .WaitForCompletion();
+        }
+
+        public void CameraZoomReset()
+        {
+            currentCam.m_Lens.OrthographicSize = cameraSize;
         }
     }
 }

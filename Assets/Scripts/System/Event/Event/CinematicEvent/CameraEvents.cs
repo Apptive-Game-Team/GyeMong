@@ -74,9 +74,10 @@ public class CameraSet : CameraEvent
 public class CameraMove : CameraEvent
 {
     [SerializeField] private Vector3 destination;
+    [SerializeField] private float speed;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        return CameraManager.Instance.CameraMove(destination);
+        return CameraManager.Instance.CameraMove(destination, speed);
     }
 }
 
@@ -86,6 +87,25 @@ public class CameraFollow : CameraEvent
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         CameraManager.Instance.CameraFollow(followObject.transform);
+        return null;
+    }
+}
+
+public class CameraZoomInOut : CameraEvent
+{
+    [SerializeField] private float size;
+    [SerializeField] private float duration;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        return CameraManager.Instance.CameraZoomInOut(size, duration);
+    }
+}
+
+public class CameraZoomReset : CameraEvent
+{
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        CameraManager.Instance.CameraZoomReset();
         return null;
     }
 }
