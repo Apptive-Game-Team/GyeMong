@@ -35,7 +35,7 @@ namespace Creature
         public float MeleeAttackRange {get; protected set;}
         public float RangedAttackRange {get; protected set;}
 
-        private Coroutine _currentStateCoroutine;
+        protected Coroutine _currentStateCoroutine;
 
         protected Animator _animator;
         private MaterialController _materialController;
