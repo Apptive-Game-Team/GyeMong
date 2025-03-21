@@ -67,6 +67,15 @@ public class CameraSet : CameraEvent
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         CameraManager.Instance.ChangeCamera(eventObject.GetComponentInChildren<CinemachineVirtualCamera>());
-        yield return null;
+        return null;
+    }
+}
+
+public class CameraMove : CameraEvent
+{
+    [SerializeField] private Vector3 destination;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        return CameraManager.Instance.CameraMove(destination);
     }
 }

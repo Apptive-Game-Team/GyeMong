@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using playerCharacter;
+using DG.Tweening;
 
 namespace Visual.Camera
 {
@@ -36,6 +37,16 @@ namespace Visual.Camera
             }
             newCam.Priority = 10;
             currentCam = newCam;
+        }
+
+        public IEnumerator CameraMove(Vector3 destination)
+        {
+            currentCam.Follow = null;
+
+            yield return currentCam.transform
+                .DOMove(destination, 3f)
+                .SetEase(Ease.OutQuad)
+                .WaitForCompletion();
         }
     }
 }
