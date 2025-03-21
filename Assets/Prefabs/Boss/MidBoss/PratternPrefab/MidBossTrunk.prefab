@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 394299540722857273}
   - component: {fileID: 7820030691431913668}
   - component: {fileID: 8299100922816227590}
+  - component: {fileID: -2823114513895917972}
   m_Layer: 0
   m_Name: MidBossTrunk
   m_TagString: EnemyAttack
@@ -211,3 +212,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4976551f00d7c914b8859436b2111ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2823114513895917972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583689789694271782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 9e2858c64eaf40243835994bffa5774b, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: 31063988b03e3a84baf3574ab3f54061,
+    type: 2}
