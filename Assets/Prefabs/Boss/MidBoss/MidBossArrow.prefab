@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 613066186455057783}
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
+  - component: {fileID: -8444384107883641834}
   m_Layer: 0
   m_Name: MidBossArrow
   m_TagString: EnemyAttack
@@ -171,3 +172,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.21790479, y: 0.08564034}
   m_EdgeRadius: 0
+--- !u!114 &-8444384107883641834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: ac948a5f780bb724189974a93a614ae9, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: edc8cfefe5868fa4f9fdee7dc873268a,
+    type: 2}

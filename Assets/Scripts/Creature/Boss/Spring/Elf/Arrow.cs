@@ -12,19 +12,15 @@ namespace Creature.Boss.Spring.Elf
     {
         private Vector3 direction;
         private float speed = 15f;
-        private EventObject _eventObject;
         private Rigidbody2D rb;
         private float targetDistance = 10f;
         private float traveledDistance = 0f;
         private bool isReflected = false;
-        private float angleRange = 20f;
-        private float explosionRadius = 2f;
 
         protected override void Awake()
         {
             damage = 20f;
             base.Awake();
-            _eventObject = GetComponent<EventObject>();
             _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
             rb = GetComponent<Rigidbody2D>();
         }
