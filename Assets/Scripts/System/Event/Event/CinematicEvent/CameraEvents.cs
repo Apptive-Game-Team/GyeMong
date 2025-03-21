@@ -109,3 +109,13 @@ public class CameraZoomReset : CameraEvent
         return null;
     }
 }
+
+public class CameraShake : CameraEvent
+{
+    [SerializeField] private float force;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        CameraManager.Instance.CameraShake(force);
+        return null;
+    }
+}
