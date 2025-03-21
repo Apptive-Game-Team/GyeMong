@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using playerCharacter;
 using UnityEngine;
+using UnityEngine.XR;
 
 namespace Creature.Minion.Slime
 {
@@ -31,7 +32,7 @@ namespace Creature.Minion.Slime
                 if (currentHp <= 0)
                 {
                     print(currentState);
-                    ChangeState(CreateDieState());
+                    OnDead();
                 }
             }
         }
@@ -228,10 +229,10 @@ namespace Creature.Minion.Slime
                 yield return null;
             }
         }
-
-        protected virtual SlimeDieState CreateDieState()
+        
+        protected override void OnDead()
         {
-            return new SlimeDieState(this);
+            ChangeState(new SlimeDieState(this));
         }
     
         private void RotateArrowTowardsPlayer(GameObject arrow)

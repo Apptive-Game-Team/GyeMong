@@ -343,6 +343,9 @@ namespace Creature
              }
         }
 
+        protected virtual void OnDead()
+        { }
+
         public virtual void StartMob()
         {
             currentHp = maxHp;

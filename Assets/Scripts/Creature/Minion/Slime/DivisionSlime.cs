@@ -105,9 +105,9 @@ namespace Creature.Minion.Slime
             }
         }
 
-        protected override SlimeDieState CreateDieState()
+        protected override void OnDead()
         {
-            return new DieState(this);
+            ChangeState(new DieState(this));
         }
 
         public class MoveState : SlimeMoveState { }
