@@ -79,3 +79,13 @@ public class CameraMove : CameraEvent
         return CameraManager.Instance.CameraMove(destination);
     }
 }
+
+public class CameraFollow : CameraEvent
+{
+    [SerializeField] private GameObject followObject;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        CameraManager.Instance.CameraFollow(followObject.transform);
+        return null;
+    }
+}

@@ -48,5 +48,10 @@ namespace Visual.Camera
                 .SetEase(Ease.OutQuad)
                 .WaitForCompletion();
         }
+
+        public void CameraFollow(Transform transform)
+        {
+            currentCam.Follow = transform;
+        }
     }
 }
