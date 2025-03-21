@@ -19,7 +19,7 @@ namespace Creature.Player.Component.Collider
             if (OnEnterWithLastSystem(other.gameObject)) return;
             if (other.CompareTag("EnemyAttack"))
             {
-                EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>().AttackInfo;
+                EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>()?.AttackInfo;
                 AttackObjectController attackObjectController = other.GetComponent<AttackObjectController>();
                 if (enemyAttackInfo == null) return;
 
@@ -47,7 +47,7 @@ namespace Creature.Player.Component.Collider
             if (OnStayWithLastSystem(other.gameObject)) return;
             if (other.CompareTag("EnemyAttack"))
             {
-                EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>().AttackInfo;
+                EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>()?.AttackInfo;
                 if (enemyAttackInfo == null) return;
 
                 if (enemyAttackInfo.canMultiHit)
@@ -63,7 +63,7 @@ namespace Creature.Player.Component.Collider
             if (OnEnterWithLastSystem(other.gameObject)) return;
             if (other.collider.CompareTag("EnemyAttack"))
             {
-                EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>().AttackInfo;
+                EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>()?.AttackInfo;
                 if (enemyAttackInfo == null) return;
 
                 other.collider.GetComponent<AttackObjectController>().isAttacked = true;
@@ -89,7 +89,7 @@ namespace Creature.Player.Component.Collider
             if (OnStayWithLastSystem(other.gameObject)) return;
             if (other.collider.CompareTag("EnemyAttack"))
             {
-                EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>().AttackInfo;
+                EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>()?.AttackInfo;
                 if (enemyAttackInfo == null) return;
 
                 if (enemyAttackInfo.canMultiHit)

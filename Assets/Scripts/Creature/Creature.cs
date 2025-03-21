@@ -35,7 +35,7 @@ namespace Creature
         public float MeleeAttackRange {get; protected set;}
         public float RangedAttackRange {get; protected set;}
 
-        private Coroutine _currentStateCoroutine;
+        protected Coroutine _currentStateCoroutine;
 
         protected Animator _animator;
         private MaterialController _materialController;
@@ -95,7 +95,7 @@ namespace Creature
             {
                 SetInitialState();
             }
-            if (currentState is BossState)
+            else if (currentState is BossState)
             {
                 ChangeStateForBoss();
             }
@@ -111,7 +111,7 @@ namespace Creature
 
             foreach (var state in States)
             {
-                if (nextStateWeights.TryGetValue(state.GetType(), out int weight))
+                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
                 {
                     weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
                 }
@@ -180,12 +180,12 @@ namespace Creature
             GetComponent<SpriteRenderer>().color = _originalColor.Value;
         }
     
-        public virtual IEnumerator Stun()
+        public virtual IEnumerator Stun(float stunTime)
         { 
             currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
          
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(stunTime);
             ChangeState();
         }
     
@@ -258,13 +258,16 @@ namespace Creature
                     yield return null;
                 }
             }
-            public IEnumerator RushAttack()
+            protected Vector3 lastRushDirection;//대쉬 방향 저장 변수...이 방법이 맞을까?
+            public IEnumerator RushAttack(float delay)
             {
                 float TARGET_OFFSET = 1f;
                 Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
                 float chargeSpeed = 50f;
                 Vector3 direction = (playerPosition - transform.position).normalized;
-                float targetDistance = Vector3.Distance(transform.position, playerPosition) - TARGET_OFFSET;
+                lastRushDirection = direction;
+                Vector3 targetPosition = playerPosition - (direction * TARGET_OFFSET);
+                float targetDistance = Vector3.Distance(transform.position, targetPosition);
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();
                 LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
@@ -276,15 +279,14 @@ namespace Creature
 
                 float elapsedTime = 0f;
                 float duration = targetDistance / chargeSpeed;
-
+                yield return new WaitForSeconds(delay);
                 while (elapsedTime < duration)
                 {
-                    Vector3 newPosition = Vector3.Lerp(transform.position, playerPosition, elapsedTime / duration);
+                    Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
                     rb.MovePosition(newPosition);
                     elapsedTime += Time.fixedDeltaTime;
                     yield return new WaitForFixedUpdate();
                 }
-                rb.MovePosition(playerPosition - direction);
             }
 
             public abstract class BaseState
@@ -292,6 +294,10 @@ namespace Creature
                 public Creature creature;
                 public abstract int GetWeight();
                 public abstract IEnumerator StateCoroutine();
+                public virtual bool CanEnterState()
+                {
+                    return true;
+                }
                 public virtual void OnStateUpdate()
                 { 
                 }
