@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 5083188182615057341}
   - component: {fileID: 4047033506906318720}
   - component: {fileID: 3862622192896607297}
-  - component: {fileID: 8464625720961678176}
   - component: {fileID: 3579436764185913057}
   - component: {fileID: 8884589751490043246}
   - component: {fileID: 5207820199311480366}
@@ -266,76 +265,161 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    healthMax:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    skillUsageGauge:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    attackPower:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    grazeMax:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    grazeGainOnGraze:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    grazeGainOnAttack:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    moveSpeed:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    dashSpeed:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    skillSpeed:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    dashDuration:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    dashDistance:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    dashCooldown:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    attackDelay:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    invincibilityDuration:
-      defaultValue: 0
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
+    statEntries:
+    - statType: 1
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 2
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 3
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 4
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 5
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 6
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 7
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 8
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 9
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 10
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 11
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 13
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 14
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 15
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
   _statData: {fileID: 11400000, guid: 70df7f5775b4eb54994283a5875ac117, type: 2}
   curHealth: 0
   curSkillGauge: 0
@@ -378,19 +462,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equippedRuneList: []
   acquiredRuneList: []
---- !u!114 &8464625720961678176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49194295218117097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23fb3c5c7c9095419fc1fc01c7b6460, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buffList: []
 --- !u!114 &3579436764185913057
 MonoBehaviour:
   m_ObjectHideFlags: 0
