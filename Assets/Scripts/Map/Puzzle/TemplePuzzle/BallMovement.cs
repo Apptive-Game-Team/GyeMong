@@ -12,10 +12,13 @@ namespace Map.Puzzle.TemplePuzzle
         private Vector3 startPosition;
         private List<TempleTile> visitedTiles = new List<TempleTile>();
 
+        public Animator animator;
+
         void Start()
         {
             startPosition = transform.position;
             currentTile = GetCurrentTile();
+            animator = GetComponent<Animator>();
         }
 
         public void StartMoveBall()
@@ -31,11 +34,14 @@ namespace Map.Puzzle.TemplePuzzle
             if (currentTile != null)
             {
                 isMoving = true;
+                animator.SetBool("ismove", true);
 
                 Vector2 direction = GetMoveDirection();
 
                 while (direction != Vector2.zero)
                 {
+                    animator.SetFloat("xDir", direction.x);
+                    animator.SetFloat("yDir", direction.y);
                     Vector3 targetPosition = currentTile.transform.position + (Vector3)direction;
 
                     while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
@@ -58,6 +64,9 @@ namespace Map.Puzzle.TemplePuzzle
                 }
 
                 isMoving = false;
+                animator.SetBool("ismove", false);
+                animator.SetFloat("xDir", 0);
+                animator.SetFloat("yDir", 0);
 
                 if (GoalCheck())
                 {

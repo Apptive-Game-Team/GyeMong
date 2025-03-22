@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3028108235450473927}
   - component: {fileID: 774163426141221788}
   - component: {fileID: 4694278149353758320}
+  - component: {fileID: -2725490008614936132}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -100,3 +101,25 @@ MonoBehaviour:
   moveSpeed: 3
   currentTile: {fileID: 0}
   isMoving: 0
+  animator: {fileID: -2725490008614936132}
+--- !u!95 &-2725490008614936132
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680068072331589062}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a7261e9165680644c9eaceb91ef93352, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
