@@ -130,8 +130,9 @@ namespace Creature.Minion.ShadowOfHero
                 {
                     yield return ShadowOfHero.RangeAttack();
                 }
-                
+                creature.Animator.SetBool("isHuck", true);
                 yield return new WaitForSeconds(5f);
+                creature.Animator.SetBool("isHuck", false);
                 creature.ChangeState();
             }
         }
