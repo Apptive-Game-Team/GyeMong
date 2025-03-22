@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Sound;
-using Creature.Boss.Spring.Golem;
-using playerCharacter;
+using Creature.Mob.StateMachineMob.Boss.Component.Material;
+using Creature.Player;
 using Unity.VisualScripting;
 using UnityEngine;
+using Visual.Shader;
 
 namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {

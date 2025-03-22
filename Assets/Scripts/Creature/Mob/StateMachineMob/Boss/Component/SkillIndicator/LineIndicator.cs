@@ -1,9 +1,6 @@
-using Creature.Boss.Component;
-using playerCharacter;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-namespace Creature.Boss.Component.SkillIndicator
+
+namespace Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator
 {
     public class LineIndicator : IndicatorBase
     {

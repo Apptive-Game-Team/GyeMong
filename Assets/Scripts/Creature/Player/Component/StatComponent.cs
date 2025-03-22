@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
-[Serializable]
+namespace Creature.Player.Component
+{
+    [Serializable]
     public class Stat
     {
         [SerializeField] private float defaultValue;
@@ -36,3 +35,4 @@ using UnityEngine;
         public Stat attackDelay;
         public Stat invincibilityDuration;
     }
+}

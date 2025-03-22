@@ -1,37 +1,41 @@
+using System.Event;
 using UnityEngine;
 
-public class RuneObject : MonoBehaviour
+namespace System.Game.Rune
 {
-    [SerializeField] RuneData runeData;
-    SpriteRenderer spriteRenderer;
-    EventObject eventObject;
-
-    public void TryInit(RuneData runeData)
+    public class RuneObject : MonoBehaviour
     {
-        if (runeData == null)
+        [SerializeField] RuneData runeData;
+        SpriteRenderer spriteRenderer;
+        EventObject eventObject;
+
+        public void TryInit(RuneData runeData)
         {
-            Debug.LogError("This RuneObject try to init, but it's runeData doesn't exist, so it destroyed itself.");
-            Destroy(this);
+            if (runeData == null)
+            {
+                Debug.LogError("This RuneObject try to init, but it's runeData doesn't exist, so it destroyed itself.");
+                Destroy(this);
+            }
+
+            Init(runeData);
         }
 
-        Init(runeData);
-    }
-
-    private void Init(RuneData rune)
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        private void Init(RuneData rune)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
         
-        SetRuneData(rune);
-        SetSprite(runeData.runeImage);
-    }
+            SetRuneData(rune);
+            SetSprite(runeData.runeImage);
+        }
 
-    private void SetRuneData(RuneData newData)
-    {
-        runeData = newData;
-    }
+        private void SetRuneData(RuneData newData)
+        {
+            runeData = newData;
+        }
 
-    private void SetSprite(Sprite sprite)
-    {
-        spriteRenderer.sprite = sprite;
+        private void SetSprite(Sprite sprite)
+        {
+            spriteRenderer.sprite = sprite;
+        }
     }
 }

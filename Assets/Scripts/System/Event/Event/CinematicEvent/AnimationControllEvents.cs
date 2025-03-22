@@ -1,38 +1,41 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class AnimationControllEvent : CinematicEvent
+namespace System.Event.Event.CinematicEvent
 {
-    [SerializeField] protected Animator _animator;
-}
-
-public class StopAnimatorEvent : AnimationControllEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public abstract class AnimationControllEvent : CinematicEvent
     {
-        _animator.enabled = false;
-        return null;
+        [SerializeField] protected Animator _animator;
     }
-}
 
-public class StartAnimatorEvent : AnimationControllEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class StopAnimatorEvent : AnimationControllEvent
     {
-        _animator.enabled = true;
-        return null;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            _animator.enabled = false;
+            return null;
+        }
     }
-}
 
-public class SetAnimatorParameter : AnimationControllEvent
-{
-    [SerializeField]
-    private string _name;
-    [SerializeField]
-    private float _value;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class StartAnimatorEvent : AnimationControllEvent
     {
-        _animator.SetFloat(_name, _value);
-        return null;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            _animator.enabled = true;
+            return null;
+        }
+    }
+
+    public class SetAnimatorParameter : AnimationControllEvent
+    {
+        [SerializeField]
+        private string _name;
+        [SerializeField]
+        private float _value;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            _animator.SetFloat(_name, _value);
+            return null;
+        }
     }
 }

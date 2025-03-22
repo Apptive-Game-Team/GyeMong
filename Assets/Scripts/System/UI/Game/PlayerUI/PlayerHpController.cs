@@ -1,5 +1,5 @@
+using Creature.Player;
 using Creature.Player.Interface.Listener;
-using playerCharacter;
 
 namespace System.UI.Game.PlayerUI
 {

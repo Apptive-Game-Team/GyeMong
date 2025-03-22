@@ -1,6 +1,10 @@
 using System;
+using System.Event;
+using System.Event.Event.CinematicEvent;
+using System.Event.Event.Status;
 using System.Linq;
 using UnityEngine;
+using Event = System.Event.Event.Event;
 
 namespace Map.Puzzle.FogMaze
 {

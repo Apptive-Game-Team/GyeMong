@@ -1,11 +1,14 @@
-using System.UI.Option;
+using System.UI.Option.SoundControl;
 using UnityEngine;
 
-public class SoundControlButton : MonoBehaviour
+namespace System.UI.Option.OptionButtons
 {
-    public void OnClickButton()
+    public class SoundControlButton : MonoBehaviour
     {
-        OptionUI.Instance.isOptionUITop = false;
-        SoundControlUI.Instance.OpenSoundControlImage();
+        public void OnClickButton()
+        {
+            OptionUI.Instance.isOptionUITop = false;
+            SoundControlUI.Instance.OpenSoundControlImage();
+        }
     }
 }

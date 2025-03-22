@@ -1,11 +1,9 @@
 using System;
-using playerCharacter;
 using System.Collections;
-using System.Sound;
+using Creature.Player;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace Creature.Boss.Spring.Elf
+namespace Creature.Mob.StateMachineMob.Boss.Spring.Elf
 {
     [Obsolete("Use AttackObjectController instead")]
     public class Arrow : MonoBehaviour
@@ -65,7 +63,7 @@ namespace Creature.Boss.Spring.Elf
             }
             else if (collision.CompareTag("Boss") && isReflected)
             {
-                collision.GetComponent<Mob.StateMachineMob.Boss.Boss>().OnAttacked(20f);
+                collision.GetComponent<global::Creature.Mob.StateMachineMob.Boss.Boss>().OnAttacked(20f);
                 Destroy(gameObject);
             }
         }

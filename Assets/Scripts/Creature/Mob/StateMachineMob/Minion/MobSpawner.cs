@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Util.ObjectCreator;
 
-namespace Creature.Mob.Minion
+namespace Creature.Mob.StateMachineMob.Minion
 {
     public class MobSpawner<T> : MonoBehaviour where T : Mob
     {

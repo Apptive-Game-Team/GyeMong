@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
+using Util;
 
-public class SoundControlUI : SingletonObject<SoundControlUI>
+namespace System.UI.Option.SoundControl
 {
-    private void Start()
+    public class SoundControlUI : SingletonObject<SoundControlUI>
     {
-        gameObject.SetActive(false);
-    }
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
 
-    public void OpenSoundControlImage()
-    {
-        gameObject.SetActive(true);
+        public void OpenSoundControlImage()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

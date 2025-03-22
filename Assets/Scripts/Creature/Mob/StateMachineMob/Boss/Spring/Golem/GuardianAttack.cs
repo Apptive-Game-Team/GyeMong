@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Creature.Boss.Spring.Golem
+namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     [Obsolete("Use AttackObjectController instead")]
     public class GuardianAttack : MonoBehaviour

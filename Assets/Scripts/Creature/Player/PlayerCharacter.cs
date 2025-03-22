@@ -1,12 +1,15 @@
-
-using System;
 using System.Collections;
+using System.Event;
+using System.Event.Controller;
 using System.Event.Interface;
+using System.Input;
 using Creature.Player.Component;
 using Creature.Player.Component.Collider;
+using Creature.Player.Controller;
 using UnityEngine;
+using Util;
 
-namespace playerCharacter
+namespace Creature.Player
 {
     public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
     {

@@ -1,83 +1,88 @@
-using playerCharacter;
-using UI.mouse_input;
+using System.Input;
+using System.Input.Interface;
+using Creature.Player;
+using Creature.Player.Component;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IDescriptionalUI
+namespace System.Game.Rune.RuneUI
 {
-    public DescriptionSet BuildDescriptionSet();
-    public void SetDescription(IDescriptionUI descriptionUI);
-}
+    public interface IDescriptionalUI
+    {
+        public DescriptionSet BuildDescriptionSet();
+        public void SetDescription(IDescriptionUI descriptionUI);
+    }
 
-public interface IInteractionalUI
-{
-    public void OnInteract();
-}
+    public interface IInteractionalUI
+    {
+        public void OnInteract();
+    }
 
-public enum RuneUIState
-{
-    UNEQUIPPED,
-    EQUIPPED,
-}
+    public enum RuneUIState
+    {
+        UNEQUIPPED,
+        EQUIPPED,
+    }
 
-public class RuneUIObject : SelectableUI, IInteractionalUI, IMouseInputListener
-{
-    [SerializeField] RuneData runeData;
-    [SerializeField] public RuneUIState uiState;
+    public class RuneUIObject : SelectableUI, IInteractionalUI, IMouseInputListener
+    {
+        [SerializeField] RuneData runeData;
+        [SerializeField] public RuneUIState uiState;
 
-    [SerializeField] Image uiImage;
+        [SerializeField] Image uiImage;
     
-    public int ID => runeData.id;
-    public int ParentID => runeData.parentID;
+        public int ID => runeData.id;
+        public int ParentID => runeData.parentID;
 
-    public RuneData RuneData => runeData;
+        public RuneData RuneData => runeData;
     
-    public void Init(RuneData newData)
-    {
-        runeData = newData;
-        uiImage.sprite = runeData.runeImage;
-        if (!runeData.isUnlocked)
+        public void Init(RuneData newData)
         {
-            uiImage.color = Color.gray;
-        }
-        else
-        {
-            uiImage.color = Color.white;
-        }
-    }
-
-    public override void OnInteract()
-    {
-        if(runeData.isUnlocked && uiState == RuneUIState.UNEQUIPPED) 
-        {
-            PlayerCharacter.Instance.GetComponent<RuneComponent>().EquipRune(runeData);
-            uiState = RuneUIState.EQUIPPED;
-        }
-        else if (runeData.isUnlocked && uiState == RuneUIState.EQUIPPED)
-        {
-            PlayerCharacter.Instance.GetComponent<RuneComponent>().UnequipRune(runeData);
-            uiState = RuneUIState.UNEQUIPPED;
+            runeData = newData;
+            uiImage.sprite = runeData.runeImage;
+            if (!runeData.isUnlocked)
+            {
+                uiImage.color = Color.gray;
+            }
+            else
+            {
+                uiImage.color = Color.white;
+            }
         }
 
-        // RuneWindow.Instance.Init();
-    }
-
-    public override void OnLongInteract()
-    {
-        //해금 부분
-        if (!runeData.isUnlocked)
+        public override void OnInteract()
         {
-            runeData.isUnlocked = true;
-            Init(runeData);
+            if(runeData.isUnlocked && uiState == RuneUIState.UNEQUIPPED) 
+            {
+                PlayerCharacter.Instance.GetComponent<RuneComponent>().EquipRune(runeData);
+                uiState = RuneUIState.EQUIPPED;
+            }
+            else if (runeData.isUnlocked && uiState == RuneUIState.EQUIPPED)
+            {
+                PlayerCharacter.Instance.GetComponent<RuneComponent>().UnequipRune(runeData);
+                uiState = RuneUIState.UNEQUIPPED;
+            }
+
+            // RuneWindow.Instance.Init();
         }
-    }
 
-    public void OnMouseInput(MouseInputState state, ISelectableUI ui)
-    {
-        if (state.Equals(MouseInputState.LONG_CLICKED))
+        public override void OnLongInteract()
         {
-            ui.OnLongInteract();
-            Init(runeData);
+            //해금 부분
+            if (!runeData.isUnlocked)
+            {
+                runeData.isUnlocked = true;
+                Init(runeData);
+            }
+        }
+
+        public void OnMouseInput(MouseInputState state, ISelectableUI ui)
+        {
+            if (state.Equals(MouseInputState.LONG_CLICKED))
+            {
+                ui.OnLongInteract();
+                Init(runeData);
+            }
         }
     }
 }

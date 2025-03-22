@@ -1,11 +1,9 @@
 using System.Collections;
-using Creature.Boss;
-using Creature.Minion.Slime;
-using Creature.Mob.StateMachineMob.Minion.Slime;
-using playerCharacter;
+using Creature.Mob.StateMachineMob.Boss;
+using Creature.Player;
 using UnityEngine;
 
-namespace Creature.Mob.Minion.Slime
+namespace Creature.Mob.StateMachineMob.Minion.Slime
 {
     public class RangedAttack : MonoBehaviour
     {

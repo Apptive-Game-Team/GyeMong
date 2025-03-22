@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace runeSystem.RuneTreeSystem
+namespace System.Game.Rune.RuneUI.RuneTreeSystem
 {
     public class CursorTargetSelector
     {

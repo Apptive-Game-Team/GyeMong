@@ -1,31 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
-public class GoldManager : SingletonObject<GoldManager>
+namespace System.Status.Gold
 {
-    private int gold;
-
-    public void AddGold(int amount)
+    public class GoldManager : SingletonObject<GoldManager>
     {
-        gold += amount;
-        Debug.Log("Gold: " + gold);
-    }
+        private int gold;
 
-    public bool SpendGold(int amount)
-    {
-        if (gold - amount < 0)
+        public void AddGold(int amount)
         {
-            Debug.Log("Not Enough Money");
-            return false;
+            gold += amount;
+            Debug.Log("Gold: " + gold);
         }
 
-        gold -= amount;
-        return true;
-    }
+        public bool SpendGold(int amount)
+        {
+            if (gold - amount < 0)
+            {
+                Debug.Log("Not Enough Money");
+                return false;
+            }
 
-    public int GetGold()
-    {
-        return gold;
+            gold -= amount;
+            return true;
+        }
+
+        public int GetGold()
+        {
+            return gold;
+        }
     }
 }

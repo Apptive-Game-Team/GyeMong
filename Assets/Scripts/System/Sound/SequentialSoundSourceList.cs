@@ -1,60 +1,61 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SoundSourceList", menuName = "ScriptableObject/New SequentialSoundSourceList")]
-public class SequentialSoundSourceList : ScriptableObject
+namespace System.Sound
 {
-    [SerializeField]
-    private List<AudioClip> audioClips = new List<AudioClip>();
-    [SerializeField]
-    private SoundSource template;
-
-    private bool isInit = false;
-    private List<SoundSource> soundSources = null;
-
-    public List<SoundSource> GetSoundSources()
+    [CreateAssetMenu(fileName = "SoundSourceList", menuName = "ScriptableObject/New SequentialSoundSourceList")]
+    public class SequentialSoundSourceList : ScriptableObject
     {
+        [SerializeField]
+        private List<AudioClip> audioClips = new List<AudioClip>();
+        [SerializeField]
+        private SoundSource template;
+
+        private bool isInit = false;
+        private List<SoundSource> soundSources = null;
+
+        public List<SoundSource> GetSoundSources()
+        {
         
-        if (!isInit)
-        {
-            Initialize();
+            if (!isInit)
+            {
+                Initialize();
+            }
+            return soundSources;
         }
-        return soundSources;
-    }
 
-    private void Initialize()
-    {
-        soundSources = new List<SoundSource>();
-        int id = 0;
-        foreach (AudioClip audioClip in audioClips)
+        private void Initialize()
         {
-            SoundSource soundSource = new SoundSource();
-            soundSource.name = template.name + id;
-            soundSource.type = template.type;
-            soundSource.clip = audioClip;
-            soundSources.Add(soundSource);
-            id++;
+            soundSources = new List<SoundSource>();
+            int id = 0;
+            foreach (AudioClip audioClip in audioClips)
+            {
+                SoundSource soundSource = new SoundSource();
+                soundSource.name = template.name + id;
+                soundSource.type = template.type;
+                soundSource.clip = audioClip;
+                soundSources.Add(soundSource);
+                id++;
+            }
+            isInit = true;
         }
-        isInit = true;
-    }
 
-    public SoundSource GetSoundSource(int index)
-    {
-        if (!isInit)
+        public SoundSource GetSoundSource(int index)
         {
-            Initialize();
+            if (!isInit)
+            {
+                Initialize();
+            }
+            return soundSources[index];
         }
-        return soundSources[index];
-    }
 
-    public int GetLength()
-    {
-        if (!isInit)
+        public int GetLength()
         {
-            Initialize();
+            if (!isInit)
+            {
+                Initialize();
+            }
+            return soundSources.Count;
         }
-        return soundSources.Count;
     }
 }

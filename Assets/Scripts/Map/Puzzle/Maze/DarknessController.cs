@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using playerCharacter;
+using Creature.Player;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 

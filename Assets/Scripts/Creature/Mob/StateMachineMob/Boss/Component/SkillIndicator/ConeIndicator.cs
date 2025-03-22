@@ -1,10 +1,6 @@
-using Creature.Boss.Component;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-namespace Creature.Boss.Component.SkillIndicator
+namespace Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator
 {
     public class ConeIndicator : IndicatorBase
     {

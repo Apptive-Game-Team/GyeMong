@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Input;
 using UnityEngine;
 
 namespace Map.Puzzle.ImagePuzzle

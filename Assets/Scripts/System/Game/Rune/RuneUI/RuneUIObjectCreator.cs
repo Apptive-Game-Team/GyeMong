@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Rune.RuneUI.Rework
+namespace System.Game.Rune.RuneUI
 {
     public class RuneUIObjectCreator : MonoBehaviour
     {

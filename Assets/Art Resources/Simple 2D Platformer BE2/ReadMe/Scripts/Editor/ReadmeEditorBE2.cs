@@ -5,6 +5,7 @@ using UnityEditor;
 using System;
 using System.IO;
 using System.Reflection;
+using Art_Resources.Simple_2D_Platformer_BE2.ReadMe.Scripts;
 
 [CustomEditor(typeof(ReadmeBE2))]
 [InitializeOnLoad]

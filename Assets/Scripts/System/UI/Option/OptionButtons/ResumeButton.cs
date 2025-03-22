@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.UI.Option;
 using UnityEngine;
 
-public class ResumeButton : MonoBehaviour
+namespace System.UI.Option.OptionButtons
 {
-    public void OnclickButton()
+    public class ResumeButton : MonoBehaviour
     {
-        OptionUIToggler.Instance.ToggleOption();
+        public void OnclickButton()
+        {
+            OptionUIToggler.Instance.ToggleOption();
+        }
     }
 }

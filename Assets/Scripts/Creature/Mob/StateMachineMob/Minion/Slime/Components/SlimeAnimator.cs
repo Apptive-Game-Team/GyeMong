@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Creature.Minion.Slime
+namespace Creature.Mob.StateMachineMob.Minion.Slime.Components
 {
     public class SlimeAnimator : MonoBehaviour
     {

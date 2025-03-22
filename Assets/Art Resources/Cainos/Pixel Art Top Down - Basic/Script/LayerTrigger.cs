@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Cainos.PixelArtTopDown_Basic
+namespace Art_Resources.Cainos.Pixel_Art_Top_Down___Basic.Script
 {
     //when object exit the trigger, put it to the assigned layer and sorting layers
     //used in the stair objects for player to travel between layers

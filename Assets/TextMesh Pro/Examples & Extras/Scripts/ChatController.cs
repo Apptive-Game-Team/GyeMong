@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-namespace TMPro.Examples
+
+namespace TextMesh_Pro.Examples___Extras.Scripts
 {
     public class ChatController : MonoBehaviour
     {

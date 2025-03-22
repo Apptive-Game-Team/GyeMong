@@ -1,63 +1,66 @@
 using System.Collections;
-using System;
+using System.Event.Controller;
 using UnityEngine;
 
-public abstract class ChatEvent : Event
+namespace System.Event.Event.Chat
 {
-}
-
-public class OpenChatEvent : ChatEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public abstract class ChatEvent : Event
     {
-        return EffectManager.Instance.GetChatController().Open();
     }
-}
 
-public class CloseChatEvent : ChatEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class OpenChatEvent : ChatEvent
     {
-        EffectManager.Instance.GetChatController().Close();
-        yield return null;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            return EffectManager.Instance.GetChatController().Open();
+        }
     }
-}
 
-[Serializable]
-public class ShowChatEvent : ChatEvent
-{
-    [SerializeField]
-    ChatMessage message;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class CloseChatEvent : ChatEvent
     {
-        return EffectManager.Instance.GetChatController().Chat(message);
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            EffectManager.Instance.GetChatController().Close();
+            yield return null;
+        }
     }
-}
 
-[Serializable]
-public class MultipleShowChatEvent : ChatEvent
-{
-    [SerializeField]
-    MultiChatMessage messages;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
+    [Serializable]
+    public class ShowChatEvent : ChatEvent
     {
-        return EffectManager.Instance.GetChatController().MultipleChat(messages);
+        [SerializeField]
+        ChatMessage message;
+
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            return EffectManager.Instance.GetChatController().Chat(message);
+        }
     }
-}
 
-[Serializable]
-public class SpeechBubbleChatEvent : ChatEvent
-{
-    [SerializeField] 
-    GameObject NPC;
-    [SerializeField]
-    string message;
-    [SerializeField]
-    float destroyDelay;
-    public override IEnumerator Execute(EventObject eventObject)
+    [Serializable]
+    public class MultipleShowChatEvent : ChatEvent
     {
-        return EffectManager.Instance.GetChatController().ShowSpeechBubbleChat(NPC, message, destroyDelay);
+        [SerializeField]
+        MultiChatMessage messages;
+
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            return EffectManager.Instance.GetChatController().MultipleChat(messages);
+        }
+    }
+
+    [Serializable]
+    public class SpeechBubbleChatEvent : ChatEvent
+    {
+        [SerializeField] 
+        GameObject NPC;
+        [SerializeField]
+        string message;
+        [SerializeField]
+        float destroyDelay;
+        public override IEnumerator Execute(EventObject eventObject)
+        {
+            return EffectManager.Instance.GetChatController().ShowSpeechBubbleChat(NPC, message, destroyDelay);
+        }
     }
 }

@@ -1,61 +1,63 @@
 using UnityEngine;
-using System;
 
-[Serializable]
-public abstract class Condition
+namespace System.Event.Controller.Condition
 {
-    public abstract bool Check();
-}
-
-[Serializable]
-public class BoolCondition : Condition
-{
-    [SerializeReference]
-    private bool condition = true;
-
-    public override bool Check()
+    [Serializable]
+    public abstract class Condition
     {
-        return condition;
+        public abstract bool Check();
     }
-}
 
-[Serializable]
-public class NotCondition : Condition
-{
-    [SerializeReference]
-    private Condition condition;
-
-    public override bool Check()
+    [Serializable]
+    public class BoolCondition : Condition
     {
-        return !condition.Check();
-    }
-}
+        [SerializeReference]
+        private bool condition = true;
 
-[Serializable]
-public class ToggeableCondition : Condition
-{
-    [SerializeField]
-    private string tag;
-    
-    [SerializeField]
-    private bool condition = false;
-
-    public override bool Check()
-    {
-        if (ConditionManager.Instance.Conditions.ContainsKey(tag))
+        public override bool Check()
         {
-            condition = ConditionManager.Instance.Conditions[tag];
+            return condition;
         }
-        else 
-            ConditionManager.Instance.Conditions[tag] = condition;
-        return condition;
     }
-    public string GetTag()
+
+    [Serializable]
+    public class NotCondition : Condition
     {
-        return tag;
+        [SerializeReference]
+        private Condition condition;
+
+        public override bool Check()
+        {
+            return !condition.Check();
+        }
     }
-    public void SetCondition(bool condition)
+
+    [Serializable]
+    public class ToggeableCondition : Condition
     {
-        this.condition = condition;
+        [SerializeField]
+        private string tag;
+    
+        [SerializeField]
+        private bool condition = false;
+
+        public override bool Check()
+        {
+            if (ConditionManager.Instance.Conditions.ContainsKey(tag))
+            {
+                condition = ConditionManager.Instance.Conditions[tag];
+            }
+            else 
+                ConditionManager.Instance.Conditions[tag] = condition;
+            return condition;
+        }
+        public string GetTag()
+        {
+            return tag;
+        }
+        public void SetCondition(bool condition)
+        {
+            this.condition = condition;
+        }
     }
 }

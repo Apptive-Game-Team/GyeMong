@@ -1,30 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.UI.Option;
+using System.Data;
+using System.UI.Option.Controller;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundControlExitButton : MonoBehaviour
+namespace System.UI.Option.SoundControl
 {
-    private Image SoundControlImage;
-    private SoundData soundData = new();
-
-    private void Start()
+    public class SoundControlExitButton : MonoBehaviour
     {
-        Transform SoundControlImageTransform = transform.parent;
-        SoundControlImage = SoundControlImageTransform.GetComponent<Image>();
-    }
+        private Image SoundControlImage;
+        private SoundData soundData = new();
 
-    public void OnClickButton()
-    {
-        OptionUI.Instance.isOptionUITop = true;
-        SoundControlImage.gameObject.SetActive(false);
+        private void Start()
+        {
+            Transform SoundControlImageTransform = transform.parent;
+            SoundControlImage = SoundControlImageTransform.GetComponent<Image>();
+        }
 
-        soundData.masterVolume = SoundController.Instance.masterVolumeSlider.value;
-        soundData.UIVolume = SoundController.Instance.uiVolumeSlider.value;
-        soundData.bgmVolume = SoundController.Instance.bgmVolumeSlider.value;
-        soundData.sfxVolume = SoundController.Instance.effectVolumeSlider.value;
+        public void OnClickButton()
+        {
+            OptionUI.Instance.isOptionUITop = true;
+            SoundControlImage.gameObject.SetActive(false);
 
-        DataManager.Instance.SaveSection<SoundData>(soundData, "SoundData");
+            soundData.masterVolume = SoundController.Instance.masterVolumeSlider.value;
+            soundData.UIVolume = SoundController.Instance.uiVolumeSlider.value;
+            soundData.bgmVolume = SoundController.Instance.bgmVolumeSlider.value;
+            soundData.sfxVolume = SoundController.Instance.effectVolumeSlider.value;
+
+            DataManager.Instance.SaveSection<SoundData>(soundData, "SoundData");
+        }
     }
 }

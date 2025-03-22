@@ -1,7 +1,5 @@
-using Creature.Mob.Minion;
-
-namespace Creature.Minion.Slime
+namespace Creature.Mob.StateMachineMob.Minion.Spawner
 {
-    public class SlimeSpawner : MobSpawner<Slime> { }
+    public class SlimeSpawner : MobSpawner<Slime.Slime> { }
 }
 

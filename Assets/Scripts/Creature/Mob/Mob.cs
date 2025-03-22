@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using playerCharacter;
+using Creature.Player;
 using UnityEngine;
 using static Creature.Mob.StateMachineMob.Boss.Boss;
 using Random = UnityEngine.Random;

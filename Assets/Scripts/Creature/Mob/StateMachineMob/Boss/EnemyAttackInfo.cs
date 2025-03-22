@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Sound;
 using UnityEngine;
-namespace Creature.Boss
+
+namespace Creature.Mob.StateMachineMob.Boss
 {
     [Obsolete("Use Creature.Attack.Component.EnemyAttackInfo instead")]
     public class EnemyAttackInfo : MonoBehaviour
