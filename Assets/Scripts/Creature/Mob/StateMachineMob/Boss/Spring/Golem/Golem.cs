@@ -74,7 +74,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 var weights = new Dictionary<System.Type, int>
                 {
                     { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
-                    { typeof(FallingCubeAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(FallingCubeAttack), 5},
                     { typeof(ChargeShield), 3 },
                     { typeof(UpStoneAttack), 5 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0}
@@ -98,7 +98,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-                Golem.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, Golem.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Golem.attackdelayTime/2, Golem.attackdelayTime / 2);
                 yield return new WaitForSeconds(Golem.attackdelayTime/2);
                 yield return Golem.MakeShockwave(4);
                 Golem.Animator.SetBool("TwoHand", false);
