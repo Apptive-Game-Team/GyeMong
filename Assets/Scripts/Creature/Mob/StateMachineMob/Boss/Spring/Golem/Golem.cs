@@ -22,7 +22,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
         [SerializeField] private SoundObject _tossSoundObject;
         public SoundObject TossSoundObject => _tossSoundObject;
-        [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         protected override void Initialize()
         {
             maxPhase = 2;
@@ -35,7 +34,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             currentShield = 0f;
             detectionRange = 10f;
             MeleeAttackRange = 4f;
-            SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
 
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
