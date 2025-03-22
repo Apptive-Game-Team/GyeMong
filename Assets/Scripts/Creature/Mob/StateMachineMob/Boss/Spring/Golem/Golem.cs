@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Sound;
+using Creature.Attack.Component.Movement;
+using Creature.Attack;
 using Creature.Boss.Component.SkillIndicator;
 using Creature.Boss.Spring.Golem;
 using Creature.Mob.Boss.Spring.Elf;
@@ -16,6 +18,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         [SerializeField] public GameObject cubePrefab;
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
+        [SerializeField] private GameObject pushOutAttackPrefab;
         private Shield shieldComponenet;
         float attackdelayTime = 1f;
         [SerializeField] private SoundObject _shockwavesoundObject;
@@ -75,7 +78,8 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     { typeof(FallingCubeAttack), 5},
                     { typeof(ChargeShield), 3 },
                     { typeof(UpStoneAttack), 5 },
-                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0}
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0},
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -99,6 +103,22 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return new WaitForSeconds(Golem.attackdelayTime/2);
                 yield return Golem.MakeShockwave(4);
                 Golem.Animator.SetBool("TwoHand", false);
+                mob.ChangeState();
+            }
+        }
+        public class PushOutAttack : GolemState
+        {
+            public override int GetWeight()
+            {
+                return (mob.DistanceToPlayer < mob.MeleeAttackRange) ? 5 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                Golem.Animator.SetBool("Toss", true);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position, Quaternion.identity);
+                Golem.Animator.SetBool("Toss", false);
                 mob.ChangeState();
             }
         }

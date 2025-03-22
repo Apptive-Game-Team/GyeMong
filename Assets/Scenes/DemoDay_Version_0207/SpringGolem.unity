@@ -4186,37 +4186,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1252863800
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1252863801}
-  m_Layer: 0
-  m_Name: 4fpoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1252863801
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1252863800}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: 38.02, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1474724845
 GameObject:
   m_ObjectHideFlags: 0
@@ -15835,6 +15804,12 @@ PrefabInstance:
       propertyPath: SkillIndicator
       value: 
       objectReference: {fileID: 262455480}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: pushOutAttackPrefab
+      value: 
+      objectReference: {fileID: 8583689789694271782, guid: 70fe889e043367146adc040e950e3b04,
+        type: 3}
     - target: {fileID: 2462093118315421597, guid: 541b7061a84e84331a9394f8687c118f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15899,7 +15874,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1252863801}
   - {fileID: 1474724848}
   - {fileID: 376880516}
   - {fileID: 1761631954}
