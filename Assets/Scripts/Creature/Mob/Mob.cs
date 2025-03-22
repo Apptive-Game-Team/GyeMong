@@ -4,149 +4,119 @@ using System.Collections.Generic;
 using System.Linq;
 using playerCharacter;
 using UnityEngine;
-using static Creature.Mob.Boss.Boss;
+using static Creature.Mob.StateMachineMob.Boss.Boss;
 using Random = UnityEngine.Random;
 
 
 namespace Creature.Mob
 {
-    public class Mob : Creature
+    public abstract class Mob : Creature
     {
-        
-        protected BaseState currentState;
-        public void ChangeState()
+
+        protected float detectionRange;
+
+        public float DetectionRange
         {
-            if (_currentStateCoroutine != null)
+            get { return detectionRange; }
+        }
+
+        public float MeleeAttackRange { get; protected set; }
+        public float RangedAttackRange { get; protected set; }
+        
+        public float DistanceToPlayer =>
+            Vector3.Distance(transform.position, PlayerCharacter.Instance.transform.position);
+
+        public Vector3 DirectionToPlayer =>
+            (PlayerCharacter.Instance.transform.position - transform.position).normalized;
+        
+        
+        public IEnumerator BackStep(float targetDistance)
+        {
+            Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
+            float backStepSpeed = 50f;
+            Vector3 direction = (transform.position - playerPosition).normalized;
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+
+            int count = 0;
+            while (hit.collider != null && count < 36)
             {
-                currentState.OnStateExit();
-                StopCoroutine(_currentStateCoroutine);
+                float angle = 10f;
+                direction = Quaternion.Euler(0, 0, angle) * direction;
+                hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+                count++;
             }
-            if (currentState == null)
+
+            if (hit.collider == null)
             {
-                SetInitialState();
-            }
-            else if (currentState is BossState)
-            {
-                ChangeStateForBoss();
+                Vector3 targetPosition = transform.position + (direction * targetDistance);
+                float elapsedTime = 0f;
+                float duration = targetDistance / backStepSpeed;
+
+                while (elapsedTime < duration)
+                {
+                    Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
+                    rb.MovePosition(newPosition);
+                    elapsedTime += Time.fixedDeltaTime;
+                    yield return new WaitForFixedUpdate();
+                }
+
+                rb.MovePosition(targetPosition);
             }
             else
             {
-                ChangeStateForNormal();
+                yield return null;
             }
         }
-        private void ChangeStateForBoss()
-        {
-            List<Type> weightedStates = new();
-            Dictionary<Type, int> nextStateWeights = ((BossState)currentState).GetNextStateWeights();
 
-            foreach (var state in States)
-            {
-                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
-                {
-                    weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
-                }
-            }
-            System.Type nextStateType = weightedStates[Random.Range(0, weightedStates.Count)];
-            currentState = States.First(s => s.GetType() == nextStateType);
-            _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
-        }
-        private void ChangeStateForNormal()
-        {
-            List<int> weights = new();
-            int index = 0;
-            BaseState[] states = States;
+        protected Vector3 lastRushDirection; //�뽬 ���� ���� ����...�� ����� ������?
 
-            foreach (BaseState state in states)
+        public IEnumerator RushAttack(float delay)
+        {
+            float TARGET_OFFSET = 1f;
+            Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
+            float chargeSpeed = 50f;
+            Vector3 direction = (playerPosition - transform.position).normalized;
+            lastRushDirection = direction;
+            Vector3 targetPosition = playerPosition - (direction * TARGET_OFFSET);
+            float targetDistance = Vector3.Distance(transform.position, targetPosition);
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+
+            if (hit.collider != null)
             {
-                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
+                yield break;
             }
 
-            int randomIndex = Random.Range(0, weights.Count);
-            currentState = states[weights[randomIndex]];
-            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
-        }
-        
-        public virtual IEnumerator Stun(float stunTime)
-        { 
-            currentState.OnStateExit();
-            StopCoroutine(_currentStateCoroutine);
-         
-            yield return new WaitForSeconds(stunTime);
-            ChangeState();
-        }
-        private void SetInitialState()
-        {
-            BaseState[] states = States;
-            List<int> weights = new();
-            int index = 0;
-
-            foreach (BaseState state in states)
+            float elapsedTime = 0f;
+            float duration = targetDistance / chargeSpeed;
+            yield return new WaitForSeconds(delay);
+            while (elapsedTime < duration)
             {
-                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
-            }
-
-            int randomIndex = Random.Range(0, weights.Count);
-            currentState = states[weights[randomIndex]];
-            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
-        }
-        public void ChangeState(BaseState state)
-        {
-            if (_currentStateCoroutine != null)
-            {
-                currentState.OnStateExit();
-                StopCoroutine(_currentStateCoroutine);
-            }
-           
-            currentState = state;
-        
-            _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
-        }
-        
-        public abstract class BaseState
-        {
-            public Mob mob;
-            public abstract int GetWeight();
-            public abstract IEnumerator StateCoroutine();
-            public virtual bool CanEnterState()
-            {
-                return true;
-            }
-            public virtual void OnStateUpdate()
-            { 
-            }
-            public virtual void OnStateExit()
-            {
-            }
-        }
-        private BaseState[] _states;
-        public BaseState[] States
-        {
-            get
-            {
-                if (_states == null)
-                {
-                    List<BaseState> states = new List<BaseState>();
-                    Type parentType = GetType();
-                    Type[] stateTypes = parentType.GetNestedTypes();
-                    foreach (Type type in stateTypes)
-                    {
-                        if (!type.IsAbstract)
-                        {
-                            states.Add(Activator.CreateInstance(type) as BaseState);
-                            states[states.Count - 1].mob = this;
-                        }
-                    }
-                    _states = states.ToArray();
-                }
-                return _states;
+                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
+                rb.MovePosition(newPosition);
+                elapsedTime += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
             }
         }
         
-        public virtual void StartMob()
+        
+        public void TrackPlayer()
         {
-            currentHp = maxHp;
-            currentShield = 0;
-            ChangeState();
+            float step = speed * Time.deltaTime;
+            Vector3 targetPosition = PlayerCharacter.Instance.transform.position;
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, step);
+            transform.position = newPosition;
         }
+
+
+        public abstract IEnumerator Stun(float stunTime);
+
+
+        public abstract void StartMob();
+
     }
 }

@@ -1,9 +1,8 @@
 using System.Collections;
-using Creature.Mob.Minion.Slime;
 using Map.Puzzle.FogMaze;
 using UnityEngine;
 
-namespace Creature.Minion.Slime
+namespace Creature.Mob.StateMachineMob.Minion.Slime
 {
     public class FireflySlime : SlimeBase
     {

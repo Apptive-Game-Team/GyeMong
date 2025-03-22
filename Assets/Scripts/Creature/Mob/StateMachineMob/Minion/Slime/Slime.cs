@@ -1,5 +1,6 @@
 using System.Collections;
 using Creature.Mob.Minion.Slime;
+using Creature.Mob.StateMachineMob.Minion.Slime;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;

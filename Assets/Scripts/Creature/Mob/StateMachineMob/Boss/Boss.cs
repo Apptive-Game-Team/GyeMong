@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Creature.Mob.Boss
+namespace Creature.Mob.StateMachineMob.Boss
 {
-    public abstract class Boss : Mob
+    public abstract class Boss : StateMachineMob
     {
         protected int currentPhase = 0;
         protected int maxPhase;

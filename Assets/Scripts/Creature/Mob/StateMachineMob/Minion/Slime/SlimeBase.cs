@@ -1,12 +1,12 @@
 using System.Collections;
 using Creature.Minion.Slime;
+using Creature.Mob.Minion.Component.detector;
 using playerCharacter;
 using UnityEngine;
-using UnityEngine.XR;
 
-namespace Creature.Mob.Minion.Slime
+namespace Creature.Mob.StateMachineMob.Minion.Slime
 {
-    public abstract class SlimeBase : Mob
+    public abstract class SlimeBase : StateMachineMob
     {
         private const int GOLD_REWARD = 10;
         
@@ -98,7 +98,7 @@ namespace Creature.Mob.Minion.Slime
         public class IdleState : SlimeState
         {
             public IdleState() { }
-            public IdleState(Mob mob)
+            public IdleState(StateMachineMob mob)
             {
                 this.mob = mob;
             }
@@ -206,7 +206,7 @@ namespace Creature.Mob.Minion.Slime
         public class SlimeDieState : SlimeState
         {
             public SlimeDieState() { }
-            public SlimeDieState(Mob mob)
+            public SlimeDieState(StateMachineMob mob)
             {
                 this.mob = mob;
             }

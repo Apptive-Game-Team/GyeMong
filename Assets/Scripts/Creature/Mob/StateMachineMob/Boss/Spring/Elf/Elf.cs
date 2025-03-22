@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Creature.Mob.Boss.Spring.Elf
 {
-    public class Elf : Boss
+    public class Elf : StateMachineMob.Boss.Boss
     {
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject seedPrefab;

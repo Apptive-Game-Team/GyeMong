@@ -3,9 +3,9 @@ using Creature.Attack;
 using Creature.Attack.Component.Movement;
 using UnityEngine;
 
-namespace Creature.Mob.Minion.ShadowOfHero
+namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 {
-    public class ShadowOfHero : Mob
+    public class ShadowOfHero : StateMachineMob
     {
         private int _attackCount = 0;
         private const int MAX_ATTACK_COUNT = 3;

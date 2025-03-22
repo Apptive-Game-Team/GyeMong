@@ -5,6 +5,7 @@ using UnityEngine;
 using Visual.Effect;
 using Creature.Boss;
 using Creature.Mob.Boss;
+using Creature.Mob.StateMachineMob.Boss;
 
 //Super-Crazy Primal Class...
 public class BuffHitman : MonoBehaviour

@@ -6,7 +6,7 @@ using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Creature.Mob.Boss.Spring.Golem
+namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class Golem : Boss
     {

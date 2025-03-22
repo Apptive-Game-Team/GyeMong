@@ -78,7 +78,7 @@ namespace Creature.Boss.Spring.Golem
         {
             if (isFalled && other.CompareTag("Boss"))
             {
-                other.GetComponent<Mob.Boss.Boss>().StartCoroutine(other.GetComponent<Mob.Boss.Boss>().Stun(5f));
+                other.GetComponent<Mob.StateMachineMob.Boss.Boss>().StartCoroutine(other.GetComponent<Mob.StateMachineMob.Boss.Boss>().Stun(5f));
                 Destroy(gameObject);
                 Destroy(shadow);
             }

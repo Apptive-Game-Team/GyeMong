@@ -1,13 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Event.Interface;
 using playerCharacter;
 using UnityEngine;
 
-namespace Creature.Mob.Npc
+namespace Creature.Mob.StateMachineMob.Npc
 {
-    public class NpcMovementController : Mob, IControllable, IEventTriggerable
+    public class NpcMovementController : StateMachineMob, IControllable, IEventTriggerable
     {
         private IPathFinder _pathFinder = new SimplePathFinder();
         private const int MAX_DISTANCE_TO_PLAYER = 2;

@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Game;
+using Creature.Minion.Slime;
 using DG.Tweening;
 using playerCharacter;
-using System.Game;
+using UnityEngine;
 
-namespace Creature.Minion.Slime
+namespace Creature.Mob.StateMachineMob.Minion.Slime
 {
     public class DivisionSlime : SlimeBase
     {
@@ -56,11 +56,11 @@ namespace Creature.Minion.Slime
         
         public class DashAttackState : SlimeState
         {
-            private DivisionSlime DivisionSlime => creature as DivisionSlime;
+            private DivisionSlime DivisionSlime => mob as DivisionSlime;
             public override int GetWeight()
             {
-                return (Slime.DistanceToPlayer > Slime.MeleeAttackRange &&
-                Slime.DistanceToPlayer < Slime.RangedAttackRange) ? 5 : 0;
+                return (DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange &&
+                        DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -79,11 +79,11 @@ namespace Creature.Minion.Slime
 
         public class DieState : SlimeDieState
         {
-            private DivisionSlime DivisionSlime => creature as DivisionSlime;
+            private DivisionSlime DivisionSlime => mob as DivisionSlime;
             public DieState() { }
-            public DieState(Creature creature)
+            public DieState(StateMachineMob mob)
             {
-                this.creature = creature;
+                this.mob = mob;
             }
             public override int GetWeight()
             {
