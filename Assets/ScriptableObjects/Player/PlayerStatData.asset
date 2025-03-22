@@ -12,74 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20479f5b2b4d488f967b5b7a744ce2d5, type: 3}
   m_Name: PlayerStatData
   m_EditorClassIdentifier: 
-  stat:
-    healthMax:
-      defaultValue: 150
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    skillUsageGauge:
-      defaultValue: 30
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    attackPower:
-      defaultValue: 1
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    grazeMax:
-      defaultValue: 100
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    grazeGainOnGraze:
-      defaultValue: 10
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    grazeGainOnAttack:
-      defaultValue: 2
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    moveSpeed:
-      defaultValue: 4
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    dashSpeed:
-      defaultValue: 10
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    skillSpeed:
-      defaultValue: 10
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    dashDuration:
-      defaultValue: 0.1
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    dashDistance:
-      defaultValue: 5
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    dashCooldown:
-      defaultValue: 1
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    attackDelay:
-      defaultValue: 0.2
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
-    invincibilityDuration:
-      defaultValue: 1
-      flatValue: 0
-      percentValue: 0
-      finalPercentValue: 0
+  statDataList:
+  - statType: 1
+    value: 150
+  - statType: 2
+    value: 30
+  - statType: 3
+    value: 1
+  - statType: 4
+    value: 1
+  - statType: 5
+    value: 100
+  - statType: 6
+    value: 10
+  - statType: 7
+    value: 2
+  - statType: 8
+    value: 4
+  - statType: 9
+    value: 10
+  - statType: 10
+    value: 10
+  - statType: 11
+    value: 0.1
+  - statType: 12
+    value: 2
+  - statType: 13
+    value: 1
+  - statType: 14
+    value: 0.2
+  - statType: 15
+    value: 1

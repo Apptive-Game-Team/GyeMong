@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using Creature.Boss;
+using Creature.Mob.Boss;
+using Creature.Mob.StateMachineMob.Boss;
+
 public abstract class BossEvent : Event
 {
   [SerializeField] protected Boss _boss;

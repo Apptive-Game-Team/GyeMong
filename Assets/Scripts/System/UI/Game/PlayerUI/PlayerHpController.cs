@@ -1,3 +1,4 @@
+using Creature.Player.Component;
 using Creature.Player.Interface.Listener;
 using playerCharacter;
 
@@ -10,7 +11,7 @@ namespace System.UI.Game.PlayerUI
         private void Start()
         {
             PlayerCharacter.Instance.changeListenerCaller.AddHpChangeListener(this);
-            _maxHp = PlayerCharacter.Instance.stat.healthMax.GetValue();
+            _maxHp = PlayerCharacter.Instance.stat.HealthMax;
         }
 
         protected override float GetCurrentGauge()
