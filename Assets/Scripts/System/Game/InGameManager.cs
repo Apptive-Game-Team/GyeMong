@@ -1,26 +1,22 @@
 using UnityEngine.SceneManagement;
-using Util;
 
-namespace System.Game
+public class InGameManager : SingletonObject<InGameManager>
 {
-    public class InGameManager : SingletonObject<InGameManager>
+    private void OnEnable()
     {
-        private void OnEnable()
-        {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "TitleScene")
         {
-            if (scene.name == "TitleScene")
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
+    }
 
-        private void OnDisable()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

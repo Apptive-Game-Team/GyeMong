@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Event.Controller.Condition;
-using System.Event.Interface;
-using Creature.Player;
+using playerCharacter;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 

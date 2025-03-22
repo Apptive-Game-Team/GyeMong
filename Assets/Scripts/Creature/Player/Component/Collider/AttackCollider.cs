@@ -1,6 +1,4 @@
-using System.Event;
-using System.Game.Interface;
-using Creature.Player.Controller;
+using playerCharacter;
 using Unity.Mathematics;
 using UnityEngine;
 

@@ -1,6 +1,7 @@
+using Creature.Mob.Minion;
 using Creature.Mob.StateMachineMob.Minion.Slime;
 
-namespace Creature.Mob.StateMachineMob.Minion.Spawner
+namespace Creature.Minion.Slime
 {
     public class FireflySlimeSpawner : MobSpawner<FireflySlime>
     {

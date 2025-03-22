@@ -1,63 +1,61 @@
-using System.Input;
-using System.Input.Interface;
+using playerCharacter;
+using UI.mouse_input;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace System.Game.Rune.RuneUI
+public enum RuneUpgradeState
 {
-    public enum RuneUpgradeState
+    NONE,
+    LOCKED,
+    UNLOCKED,
+    ACTIVATED,
+}
+public class RuneUpgradeUI : SelectableUI, IInteractionalUI, IMouseInputListener
+{ 
+    [SerializeField] RuneUpgrade upgradeData;
+    [SerializeField] public RuneUpgradeState upgradeState;
+
+    [SerializeField] Image uiImage;
+    
+    public int ID => upgradeData.id;
+
+    public RuneUpgrade UpgradeData => upgradeData;
+    
+    public void Init(RuneUpgrade newData)
     {
-        NONE,
-        LOCKED,
-        UNLOCKED,
-        ACTIVATED,
+        upgradeData = newData;
+        uiImage.sprite = upgradeData.upgradeImage;
+        if (!upgradeData.isUnlocked)
+        {
+            uiImage.color = Color.gray;
+        }
+        else
+        {
+            uiImage.color = Color.white;
+        }
     }
-    public class RuneUpgradeUI : SelectableUI, IInteractionalUI, IMouseInputListener
-    { 
-        [SerializeField] RuneUpgrade upgradeData;
-        [SerializeField] public RuneUpgradeState upgradeState;
 
-        [SerializeField] Image uiImage;
-    
-        public int ID => upgradeData.id;
+    public override void OnInteract()
+    {
+    }
 
-        public RuneUpgrade UpgradeData => upgradeData;
-    
-        public void Init(RuneUpgrade newData)
+    public override void OnLongInteract()
+    {
+        //해금 부분
+        if (!upgradeData.isUnlocked)
         {
-            upgradeData = newData;
-            uiImage.sprite = upgradeData.upgradeImage;
-            if (!upgradeData.isUnlocked)
-            {
-                uiImage.color = Color.gray;
-            }
-            else
-            {
-                uiImage.color = Color.white;
-            }
+            upgradeData.isUnlocked = true;
+            Init(upgradeData);
         }
+    }
 
-        public override void OnInteract()
+    public void OnMouseInput(MouseInputState state, ISelectableUI ui)
+    {
+        if (state.Equals(MouseInputState.LONG_CLICKED))
         {
-        }
-
-        public override void OnLongInteract()
-        {
-            //해금 부분
-            if (!upgradeData.isUnlocked)
-            {
-                upgradeData.isUnlocked = true;
-                Init(upgradeData);
-            }
-        }
-
-        public void OnMouseInput(MouseInputState state, ISelectableUI ui)
-        {
-            if (state.Equals(MouseInputState.LONG_CLICKED))
-            {
-                ui.OnLongInteract();
-                Init(upgradeData);
-            }
+            ui.OnLongInteract();
+            Init(upgradeData);
         }
     }
 }

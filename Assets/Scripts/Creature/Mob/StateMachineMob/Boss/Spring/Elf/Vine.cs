@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Creature.Mob.StateMachineMob.Boss.Spring.Elf
+namespace Creature.Boss.Spring.Elf
 {
     [Obsolete("Use AttackObjectController instead")]
     public class Vine : MonoBehaviour

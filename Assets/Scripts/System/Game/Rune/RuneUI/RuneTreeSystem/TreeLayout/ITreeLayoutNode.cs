@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace System.Game.Rune.RuneUI.RuneTreeSystem.TreeLayout
+namespace runeSystem.RuneTreeSystem
 {
     public interface ITreeLayoutNode
     {

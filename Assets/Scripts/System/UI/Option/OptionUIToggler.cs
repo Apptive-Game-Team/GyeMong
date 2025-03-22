@@ -1,5 +1,3 @@
-using System.Input;
-
 namespace System.UI.Option
 {
     public class OptionUIToggler : UIWindowToggler<OptionUIToggler>

@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Sound;
-using Creature.Player.Controller;
 using UnityEngine;
-
-namespace Creature.Mob.StateMachineMob.Boss.Component
+namespace playerCharacter
 {
     public class FootSoundController : MonoBehaviour
     {

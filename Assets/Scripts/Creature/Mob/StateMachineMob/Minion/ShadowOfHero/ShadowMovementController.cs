@@ -1,8 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Event.Interface;
 using UnityEngine;
 
-namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
+namespace Creature.Minion.ShadowOfHero
 {
     public class ShadowMovementController : MonoBehaviour, IControllable
     {

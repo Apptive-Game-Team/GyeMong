@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
+namespace Creature.Boss.Spring.Golem
 {
     [Obsolete("Use AttackObjectController instead")]
     public class Floor : MonoBehaviour

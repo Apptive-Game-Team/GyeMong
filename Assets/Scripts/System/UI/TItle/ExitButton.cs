@@ -1,16 +1,13 @@
 using UnityEngine;
 
-namespace System.UI.TItle
+public class ExitButton : MonoBehaviour
 {
-    public class ExitButton : MonoBehaviour
+    public void ExitGame()
     {
-        public void ExitGame()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+    #else
         Application.Quit();
-#endif
-        }
+    #endif
     }
 }

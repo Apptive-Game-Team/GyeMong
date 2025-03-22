@@ -1,164 +1,157 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Event.Controller.Condition;
-using System.Event.Interface;
-using System.Game.Interface;
-using System.Game.Object;
 using UnityEngine;
 
-namespace System.Event
+public class EventObject : InteractableObject, IAttackable, IEventTriggerable
 {
-    public class EventObject : InteractableObject, IAttackable, IEventTriggerable
+    private enum EventTrigger
     {
-        private enum EventTrigger
-        {
-            OnCollisionEnter = 0,
-            OnInteraction = 1,
-            OnAwake = 2,
-            OnAttacked = 3,
-            OnCalled = 4,
-            OnEnabled = 5,
-        }
+        OnCollisionEnter = 0,
+        OnInteraction = 1,
+        OnAwake = 2,
+        OnAttacked = 3,
+        OnCalled = 4,
+        OnEnabled = 5,
+    }
 
-        [SerializeField]
-        private bool isLoop = false;
+    [SerializeField]
+    private bool isLoop = false;
 
-        [SerializeField]
-        private EventTrigger trigger;
+    [SerializeField]
+    private EventTrigger trigger;
 
-        [SerializeField]
-        private int triggerLimitCounter = -1;
+    [SerializeField]
+    private int triggerLimitCounter = -1;
 
-        [SerializeReference]
-        private List<Event.Event> eventSequence = new List<Event.Event>();
+    [SerializeReference]
+    private List<Event> eventSequence = new List<Event>();
 
-        private Coroutine eventLoop = null;
+    private Coroutine eventLoop = null;
 
-        public Event.Event[] EventSequence => eventSequence.ToArray(); 
+    public Event[] EventSequence => eventSequence.ToArray(); 
     
-        public void SetTriggerLimitCounter(int counter)
+    public void SetTriggerLimitCounter(int counter)
+    {
+        triggerLimitCounter = counter;
+    }
+    private List<ToggeableCondition> FindToggleableConditions()
+    {
+        List<ToggeableCondition> result = new List<ToggeableCondition>();
+        foreach (Event @event in eventSequence)
         {
-            triggerLimitCounter = counter;
-        }
-        private List<ToggeableCondition> FindToggleableConditions()
-        {
-            List<ToggeableCondition> result = new List<ToggeableCondition>();
-            foreach (Event.Event @event in eventSequence)
+            if (@event == null)
             {
-                if (@event == null)
-                {
-                    continue;
-                }
-                List<ToggeableCondition> temp = @event.FindToggleableConditions();
-                if (temp != null)
-                {
-                    result.AddRange(temp);
-                }
+                continue;
             }
-            return result;
+            List<ToggeableCondition> temp = @event.FindToggleableConditions();
+            if (temp != null)
+            {
+                result.AddRange(temp);
+            }
         }
+        return result;
+    }
 
-        private void InitializeToggleableConditions()
+    private void InitializeToggleableConditions()
+    {
+        List<ToggeableCondition> conditions = FindToggleableConditions();
+        foreach (ToggeableCondition condition in conditions)
         {
-            List<ToggeableCondition> conditions = FindToggleableConditions();
-            foreach (ToggeableCondition condition in conditions)
-            {
-                condition.Check();
-            }
+            condition.Check();
         }
+    }
 
-        private void Start()
+    private void Start()
+    {
+        InitializeToggleableConditions();
+        if (trigger == EventTrigger.OnAwake && triggerLimitCounter != 0)
         {
-            InitializeToggleableConditions();
-            if (trigger == EventTrigger.OnAwake && triggerLimitCounter != 0)
-            {
-                TriggerEvent();
-                triggerLimitCounter -= 1;
-            }
+            TriggerEvent();
+            triggerLimitCounter -= 1;
         }
+    }
 
-        private void OnEnable()
+    private void OnEnable()
+    {
+        if (trigger == EventTrigger.OnEnabled && triggerLimitCounter != 0)
         {
-            if (trigger == EventTrigger.OnEnabled && triggerLimitCounter != 0)
-            {
-                TriggerEvent();
-                triggerLimitCounter -= 1;
-            }
+            TriggerEvent();
+            triggerLimitCounter -= 1;
         }
+    }
     
-        private void OnDisable()
-        {
-            KillEvent();
-        }
+    private void OnDisable()
+    {
+        KillEvent();
+    }
     
-        private IEnumerator EventLoop()
+    private IEnumerator EventLoop()
+    {
+        do
         {
-            do
+            foreach (Event eventObject in eventSequence)
             {
-                foreach (Event.Event eventObject in eventSequence)
-                {
-                    yield return eventObject.Execute(this);
-                }
-            } while (isLoop);
-            eventLoop = null;
-        }
-
-        public void Trigger()
-        {
-            if (triggerLimitCounter != 0)
-            {
-                TriggerEvent();
-                triggerLimitCounter -= 1;
+                yield return eventObject.Execute(this);
             }
+        } while (isLoop);
+        eventLoop = null;
+    }
+
+    public void Trigger()
+    {
+        if (triggerLimitCounter != 0)
+        {
+            TriggerEvent();
+            triggerLimitCounter -= 1;
         }
+    }
     
-        private void TriggerEvent()
+    private void TriggerEvent()
+    {
+        if (eventLoop != null)
         {
-            if (eventLoop != null)
-            {
-                return;
-            }
-            eventLoop = StartCoroutine(EventLoop());
+            return;
         }
+        eventLoop = StartCoroutine(EventLoop());
+    }
 
-        public void KillEvent()
+    public void KillEvent()
+    {
+        if (eventLoop != null)
+            StopCoroutine(eventLoop);
+        eventLoop = null;
+    }
+
+    protected override void OnInteraction(Collider2D collision)
+    {
+        if (trigger == EventTrigger.OnInteraction && triggerLimitCounter != 0)
         {
-            if (eventLoop != null)
-                StopCoroutine(eventLoop);
-            eventLoop = null;
+            TriggerEvent();
+            triggerLimitCounter -= 1;
         }
-
-        protected override void OnInteraction(Collider2D collision)
-        {
-            if (trigger == EventTrigger.OnInteraction && triggerLimitCounter != 0)
-            {
-                TriggerEvent();
-                triggerLimitCounter -= 1;
-            }
             
-        }
+    }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (trigger == EventTrigger.OnCollisionEnter && collision.CompareTag("Player") && triggerLimitCounter != 0)
         {
-            if (trigger == EventTrigger.OnCollisionEnter && collision.CompareTag("Player") && triggerLimitCounter != 0)
-            {
-                TriggerEvent();
-                triggerLimitCounter -= 1;
-            }
+            TriggerEvent();
+            triggerLimitCounter -= 1;
         }
+    }
 
-        public void OnAttacked(float damage = 0)
+    public void OnAttacked(float damage = 0)
+    {
+        if (trigger == EventTrigger.OnAttacked && triggerLimitCounter != 0)
         {
-            if (trigger == EventTrigger.OnAttacked && triggerLimitCounter != 0)
-            {
-                TriggerEvent();
-                triggerLimitCounter -= 1;
-            }
+            TriggerEvent();
+            triggerLimitCounter -= 1;
         }
+    }
 
-        public void DestroySelf()
-        {
-            Destroy(gameObject);
-        }
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }

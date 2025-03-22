@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Status.Gold;
-using Creature.Mob.StateMachineMob.Minion.Component.detector;
-using Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
-using Creature.Mob.StateMachineMob.Minion.Slime.Components;
-using Creature.Player;
+using Creature.Minion.Slime;
+using Creature.Mob.Minion.Component.detector;
+using playerCharacter;
 using UnityEngine;
 
 namespace Creature.Mob.StateMachineMob.Minion.Slime

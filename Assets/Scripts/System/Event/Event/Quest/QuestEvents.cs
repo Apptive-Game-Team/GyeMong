@@ -4,7 +4,7 @@ using System.Game.Quest.Quests;
 using UnityEngine;
 namespace System.Event.Event.Quest
 {
-    public abstract class QuestEvent : global::System.Event.Event.Event
+    public abstract class QuestEvent : global::Event
     { }
     
     public class AddQuestEvent : QuestEvent

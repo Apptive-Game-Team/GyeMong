@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Sound;
 using UnityEngine;
-
-namespace Creature.Player.Controller
+namespace playerCharacter
 {
     public enum PlayerSoundType
     {

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Event.Interface;
-using Creature.Player;
+using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;

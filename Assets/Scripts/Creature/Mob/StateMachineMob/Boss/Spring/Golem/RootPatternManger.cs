@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Event.Controller.Condition;
 using System.Sound;
 using UnityEngine;
-using Util;
 
-namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
+namespace Creature.Boss.Spring.Golem
 {
     public class RootPatternManger : SingletonObject<RootPatternManger>
     {

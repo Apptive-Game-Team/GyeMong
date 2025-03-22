@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Creature.Player;
+using playerCharacter;
 using UnityEngine;
 
-namespace Creature.Mob.StateMachineMob.Minion.Component.detector
+namespace Creature.Mob.Minion.Component.detector
 {
     public class SimplePlayerDistanceDetector : MonoBehaviour, IDetector<PlayerCharacter>
     {

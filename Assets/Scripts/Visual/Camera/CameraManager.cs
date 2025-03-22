@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using Creature.Player;
 using UnityEngine;
+using playerCharacter;
 using DG.Tweening;
-using Util;
 
 namespace Visual.Camera
 {

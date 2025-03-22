@@ -1,42 +1,40 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-namespace System.Event
+[Serializable]
+public class EventData
 {
-    [Serializable]
-    public class EventData
+    public string name;
+    public int id;
+    public EventObject eventObj;
+}
+
+[CreateAssetMenu(fileName = "EventDataList",menuName = "ScriptableObject/EventDataList")]
+public class EventDataList : ScriptableObject
+{
+    public List<EventData> eventDataList;
+
+    public EventObject GetEvent(int id)
     {
-        public string name;
-        public int id;
-        public EventObject eventObj;
+        EventObject @event = eventDataList.Find(x => x.id == id).eventObj;
+        if (@event == null)
+        {
+            Debug.LogError("There's No Event that has this id!");
+            return null;
+        }
+
+        return @event;
     }
-
-    [CreateAssetMenu(fileName = "EventDataList",menuName = "ScriptableObject/EventDataList")]
-    public class EventDataList : ScriptableObject
+    public EventObject GetEvent(string name)
     {
-        public List<EventData> eventDataList;
-
-        public EventObject GetEvent(int id)
+        EventObject @event = eventDataList.Find(x => x.name == name).eventObj;
+        if (@event == null)
         {
-            EventObject @event = eventDataList.Find(x => x.id == id).eventObj;
-            if (@event == null)
-            {
-                Debug.LogError("There's No Event that has this id!");
-                return null;
-            }
-
-            return @event;
+            Debug.LogError("There's No Event that has this name!");
+            return null;
         }
-        public EventObject GetEvent(string name)
-        {
-            EventObject @event = eventDataList.Find(x => x.name == name).eventObj;
-            if (@event == null)
-            {
-                Debug.LogError("There's No Event that has this name!");
-                return null;
-            }
 
-            return @event;
-        }
+        return @event;
     }
 }

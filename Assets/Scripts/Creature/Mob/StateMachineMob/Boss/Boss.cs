@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Event;
-using Creature.Mob.StateMachineMob.Boss.Component.Material;
 using UnityEngine;
 
 namespace Creature.Mob.StateMachineMob.Boss

@@ -1,8 +1,8 @@
-using System.UI.Drawer;
+using UI.LineDrawer;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
-namespace System.Game.Rune.RuneUI.RuneTreeSystem.LineDrawer
+namespace runeSystem.RuneTreeSystem
 {
     public class CurveTreeLineDrawer : CurvesDrawer, ITreeLineDrawer
     {
