@@ -15,7 +15,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
         private Shield shieldComponenet;
-
+        float attackdelayTime = 1f;
         [SerializeField] private SoundObject _shockwavesoundObject;
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
         [SerializeField] private SoundObject _tossSoundObject;
@@ -48,7 +48,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             return points;
         }
 
-        public IEnumerator MakeShockwave(int targetRadius = 14)
+        public IEnumerator MakeShockwave(float targetRadius = 14)
         {
             int startRadius = 4;
             for (int i = startRadius; i <= targetRadius; i++)
@@ -58,9 +58,9 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 StartCoroutine(ShockwaveSoundObject.Play());
                 for (int j = 0; j < points.Length; j++)
                 {
-                    GameObject shockWave = Instantiate(shockwavePrefab, points[j], Quaternion.identity);
+                    Instantiate(shockwavePrefab, points[j], Quaternion.identity);
                 }
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(attackdelayTime/3);
             }
         }
 
@@ -70,10 +70,10 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 var weights = new Dictionary<System.Type, int>
                 {
-                    { typeof(MeleeAttack), (Golem.DistanceToPlayer < Golem.MeleeAttackRange) ? 5 : 0 },
-                    { typeof(FallingCubeAttack), 5 },
-                    { typeof(ChargeShield), 5 },
-                    { typeof(UpStoneAttack), (Golem.CurrentPhase == 0)  ? 5 : 0 },
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(FallingCubeAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(ChargeShield), 3 },
+                    { typeof(UpStoneAttack), 5 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0}
                 };
                 if (weights.Values.All(w => w == 0))
@@ -95,7 +95,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(Golem.attackdelayTime/2);
                 yield return Golem.MakeShockwave(4);
                 Golem.Animator.SetBool("TwoHand", false);
                 mob.ChangeState();
@@ -112,7 +112,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("Toss", true);
                 mob.StartCoroutine(Golem.TossSoundObject.Play());
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(Golem.attackdelayTime*2);
                 GameObject cube = Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 Golem.Animator.SetBool("Toss", false);
                 yield return new WaitUntil(() => cube.IsDestroyed());
@@ -148,7 +148,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("OneHand", true);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(Golem.attackdelayTime);
 
                 int numberOfObjects = 5;
                 float interval = 0.2f;
@@ -164,7 +164,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 Golem.Animator.SetBool("OneHand", false);
 
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(Golem.attackdelayTime*2);
 
                 mob.ChangeState();
             }
@@ -195,7 +195,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("TwoHand", true);
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(Golem.attackdelayTime);
                 yield return Golem.MakeShockwave(14);
 
                 Golem.Animator.SetBool("TwoHand", false);
