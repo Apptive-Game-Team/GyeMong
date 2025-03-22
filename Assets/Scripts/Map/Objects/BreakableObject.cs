@@ -1,3 +1,4 @@
+using System.Game.Interface;
 using UnityEngine;
 
 namespace Map.Objects

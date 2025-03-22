@@ -1,4 +1,6 @@
-namespace UI.mouse_input
+using System.Game.Rune.RuneUI;
+
+namespace System.Input.Interface
 {
     public interface IMouseInputListener
     {

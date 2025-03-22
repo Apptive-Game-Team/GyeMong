@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using runeSystem.RuneTreeSystem;
 using UnityEditor;
 using UnityEngine;
 
-namespace UI.LineDrawer
+namespace System.UI.Drawer
 {
     [Serializable]
     public struct Line

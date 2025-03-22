@@ -1,235 +1,241 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
+using System.Event.Controller.Condition;
+using System.Event.Interface;
+using System.Game.Portal;
+using System.Input;
 using System.Sound;
+using Creature.Player;
 using Creature.Player.Component;
 using Unity.VisualScripting;
-using playerCharacter;
+using UnityEngine;
 
-[Serializable]
-public abstract class Event
+namespace System.Event.Event
 {
-    public abstract IEnumerator Execute(EventObject eventObject = null);
-
-    public virtual Event[] GetChildren()
+    [Serializable]
+    public abstract class Event
     {
-        return null;
-    }
+        public abstract IEnumerator Execute(EventObject eventObject = null);
 
-    public Event Find(Type type)
-    {
-        Event[] children = GetChildren();
-        if (children != null)
+        public virtual Event[] GetChildren()
         {
-            foreach (Event child in children)
+            return null;
+        }
+
+        public Event Find(Type type)
+        {
+            Event[] children = GetChildren();
+            if (children != null)
             {
-                if (child.GetType() == type)
+                foreach (Event child in children)
                 {
-                    return child;
+                    if (child.GetType() == type)
+                    {
+                        return child;
+                    }
                 }
             }
+
+            return null;
+        }
+        public virtual List<ToggeableCondition> FindToggleableConditions()
+        {
+            return null;
+        }
+    }
+
+    public class HealEvent : Event
+    {
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            PlayerCharacter.Instance.Heal(1000);
+            yield return null;
+        }
+    }
+
+    [Serializable]
+    public class WarpPortalEvent : Event
+    {
+        public PortalID portalID;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            return PortalManager.Instance.TransitScene(portalID);
+        }
+    }
+
+    [Serializable]
+
+    public class TransformPortalEvent : Event
+    {
+        public Vector3 destination;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            PlayerCharacter.Instance.transform.position = destination;
+            return null;
+        }
+    }
+
+
+    [Serializable]
+    public class DelayEvent : Event
+    {
+        public float delayTime;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            yield return new WaitForSeconds(delayTime);
+        }
+    }
+
+    [Serializable]
+    public class SkippableDelayEvent : Event
+    {
+        public float delayTime = 10;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            float timer = Time.time;
+            yield return new WaitUntil(() =>
+            {
+                return (timer + delayTime < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction);
+            });
+        }
+    }
+
+    [Serializable]
+    public class SoundEvent : Event
+    {
+        [SerializeField]
+        private SoundObject soundObject;
+
+        private enum PlayOrStop
+        {
+            PLAY,
+            STOP
         }
 
-        return null;
-    }
-    public virtual List<ToggeableCondition> FindToggleableConditions()
-    {
-        return null;
-    }
-}
+        [SerializeField]
+        private PlayOrStop playOrStop = PlayOrStop.PLAY;
 
-public class HealEvent : Event
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        PlayerCharacter.Instance.Heal(1000);
-        yield return null;
-    }
-}
+        [SerializeField]
+        private string soundName = null;
 
-[Serializable]
-public class WarpPortalEvent : Event
-{
-    public PortalID portalID;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return PortalManager.Instance.TransitScene(portalID);
-    }
-}
+        [SerializeField]
+        private bool sync = true;
 
-[Serializable]
-
-public class TransformPortalEvent : Event
-{
-    public Vector3 destination;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        PlayerCharacter.Instance.transform.position = destination;
-        return null;
-    }
-}
-
-
-[Serializable]
-public class DelayEvent : Event
-{
-    public float delayTime;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        yield return new WaitForSeconds(delayTime);
-    }
-}
-
-[Serializable]
-public class SkippableDelayEvent : Event
-{
-    public float delayTime = 10;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        float timer = Time.time;
-        yield return new WaitUntil(() =>
+        // ReSharper disable Unity.PerformanceAnalysis
+        public override IEnumerator Execute(EventObject eventObject = null)
         {
-            return (timer + delayTime < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction);
-        });
-    }
-}
-
-[Serializable]
-public class SoundEvent : Event
-{
-    [SerializeField]
-    private SoundObject soundObject;
-
-    private enum PlayOrStop
-    {
-        PLAY,
-        STOP
-    }
-
-    [SerializeField]
-    private PlayOrStop playOrStop = PlayOrStop.PLAY;
-
-    [SerializeField]
-    private string soundName = null;
-
-    [SerializeField]
-    private bool sync = true;
-
-    // ReSharper disable Unity.PerformanceAnalysis
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        try
-        {
-            if (soundObject == null)
+            try
             {
+                if (soundObject == null)
+                {
 
-                soundObject = eventObject.GetComponent<SoundObject>();
+                    soundObject = eventObject.GetComponent<SoundObject>();
 
-            }
+                }
 
-            if (playOrStop == PlayOrStop.STOP)
-            {
-                soundObject.Stop();
-                return null;
-            }
-            else
-            {
-                if (soundName != null)
-                    soundObject.SetSoundSourceByName(soundName);
-                if (sync)
-                    return soundObject.Play();
+                if (playOrStop == PlayOrStop.STOP)
+                {
+                    soundObject.Stop();
+                    return null;
+                }
                 else
-                    soundObject.StartCoroutine(soundObject.Play());
-                return null;
+                {
+                    if (soundName != null)
+                        soundObject.SetSoundSourceByName(soundName);
+                    if (sync)
+                        return soundObject.Play();
+                    else
+                        soundObject.StartCoroutine(soundObject.Play());
+                    return null;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                soundObject = eventObject.AddComponent<SoundObject>();
+                return Execute(eventObject);
             }
         }
-        catch (NullReferenceException)
+    }
+
+    [Serializable]
+    public class BGMEvent : Event
+    {
+        [SerializeField]
+        private string bgmName;
+        public override IEnumerator Execute(EventObject eventObject = null)
         {
-            soundObject = eventObject.AddComponent<SoundObject>();
-            return Execute(eventObject);
+            SoundObject soundObject = SoundManager.Instance.GetBgmObject();
+            SoundManager.Instance.soundObjects.Add(soundObject);
+            soundObject.SetSoundSourceByName(bgmName);
+            return soundObject.Play();
         }
     }
-}
 
-[Serializable]
-public class BGMEvent : Event
-{
-    [SerializeField]
-    private string bgmName;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    [Serializable]
+    public class StopEvent : Event
     {
-        SoundObject soundObject = SoundManager.Instance.GetBgmObject();
-        SoundManager.Instance.soundObjects.Add(soundObject);
-        soundObject.SetSoundSourceByName(bgmName);
-        return soundObject.Play();
-    }
-}
-
-[Serializable]
-public class StopEvent : Event
-{
-    [SerializeField]
-    private EventObject targetObject;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        targetObject.KillEvent();
-        yield return null;
-    }
-}
-
-[Serializable]
-public class MovePositionEvent : Event
-{
-    [SerializeField]
-    private GameObject @gameObject;
-    [SerializeField]
-    private Vector3 targetPosition;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        @gameObject.transform.position = targetPosition;
-        yield return null;
-    }
-}
-
-[Serializable]
-public class DestroySelfEvent : Event
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        eventObject.DestroySelf();
-        return null;
-    }
-}
-
-[Serializable]
-public class TriggerEvent : Event
-{
-    [SerializeField]
-    private MonoBehaviour triggerable;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        try
+        [SerializeField]
+        private EventObject targetObject;
+        public override IEnumerator Execute(EventObject eventObject = null)
         {
-            IEventTriggerable triggerable = this.triggerable as IEventTriggerable;
-            triggerable.Trigger();
-        } catch (NullReferenceException)
-        {
-            Debug.LogError("Triggerable is not set");
+            targetObject.KillEvent();
+            yield return null;
         }
+    }
+
+    [Serializable]
+    public class MovePositionEvent : Event
+    {
+        [SerializeField]
+        private GameObject @gameObject;
+        [SerializeField]
+        private Vector3 targetPosition;
+
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            @gameObject.transform.position = targetPosition;
+            yield return null;
+        }
+    }
+
+    [Serializable]
+    public class DestroySelfEvent : Event
+    {
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            eventObject.DestroySelf();
+            return null;
+        }
+    }
+
+    [Serializable]
+    public class TriggerEvent : Event
+    {
+        [SerializeField]
+        private MonoBehaviour triggerable;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            try
+            {
+                IEventTriggerable triggerable = this.triggerable as IEventTriggerable;
+                triggerable.Trigger();
+            } catch (NullReferenceException)
+            {
+                Debug.LogError("Triggerable is not set");
+            }
         
-        return null;
+            return null;
+        }
     }
-}
 
-public class EnqueueEvent : Event
-{
-    [SerializeReference]
-    private Event e;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class EnqueueEvent : Event
     {
-        EventQueue.Instance.AddEvent(e);
-        yield return null;
+        [SerializeReference]
+        private Event e;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            EventQueue.Instance.AddEvent(e);
+            yield return null;
+        }
     }
 }

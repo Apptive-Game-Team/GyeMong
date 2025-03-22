@@ -1,45 +1,45 @@
-using UnityEngine;
-using Creature.Boss;
-using Creature.Boss.Spring.Elf;
-using Creature.Boss.Spring.Golem;
-using Creature.Mob.Boss;
-using Creature.Mob.Boss.Spring.Elf;
-using Creature.Mob.StateMachineMob.Boss;
+using System.Event.Controller.Condition;
+using System.Event.Interface;
+using Creature.Mob.StateMachineMob.Boss.Spring.Elf;
 using Creature.Mob.StateMachineMob.Boss.Spring.Golem;
+using UnityEngine;
 
-public class BossRoomEntrance : MonoBehaviour, IEventTriggerable
+namespace Map.Boss
 {
-    [SerializeField] private Boss boss;
-    private string bossConditionKey;
-
-    protected void Awake()
+    public class BossRoomEntrance : MonoBehaviour, IEventTriggerable
     {
-        if (bossConditionKey == null)
+        [SerializeField] private Creature.Mob.StateMachineMob.Boss.Boss boss;
+        private string bossConditionKey;
+
+        protected void Awake()
         {
-            bossConditionKey = GetConditionKeyByBoss(boss);
+            if (bossConditionKey == null)
+            {
+                bossConditionKey = GetConditionKeyByBoss(boss);
+            }
         }
-    }
 
-    protected void Start()
-    {
-        if (ConditionManager.Instance.Conditions.TryGetValue(bossConditionKey, out bool down) && down)
+        protected void Start()
         {
-            Destroy(gameObject);
+            if (ConditionManager.Instance.Conditions.TryGetValue(bossConditionKey, out bool down) && down)
+            {
+                Destroy(gameObject);
+            }
         }
-    }
 
-    public void Trigger()
-    {
-        if (boss is Boss bossInstance)
+        public void Trigger()
         {
-            bossInstance.ChangeState();
+            if (boss is Creature.Mob.StateMachineMob.Boss.Boss bossInstance)
+            {
+                bossInstance.ChangeState();
+            }
         }
-    }
 
-    private string GetConditionKeyByBoss(Boss boss)
-    {
-        if (boss is Elf) return "spring_midboss_down";
-        if (boss is Golem) return "spring_guardian_down";
-        return string.Empty;
+        private string GetConditionKeyByBoss(Creature.Mob.StateMachineMob.Boss.Boss boss)
+        {
+            if (boss is Elf) return "spring_midboss_down";
+            if (boss is Golem) return "spring_guardian_down";
+            return string.Empty;
+        }
     }
 }

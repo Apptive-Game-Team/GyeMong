@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Creature.Minion.ShadowOfHero
+namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 {
     public class SkillSwordAura : MonoBehaviour
     {

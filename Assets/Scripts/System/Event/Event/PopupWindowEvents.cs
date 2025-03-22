@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Input;
 using System.UI;
 using UnityEngine;
 
 namespace System.Event.Event
 {
-    public abstract class PopupWindowEvent : global::Event
+    public abstract class PopupWindowEvent : global::System.Event.Event.Event
     {
     }
 

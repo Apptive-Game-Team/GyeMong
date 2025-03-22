@@ -1,10 +1,8 @@
 using System;
-using playerCharacter;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Creature.Boss.Spring.Golem
+namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     [Obsolete("Use AttackObjectController instead")]
     public class Root : MonoBehaviour

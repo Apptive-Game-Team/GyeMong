@@ -1,15 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
-public class Portal : MonoBehaviour
+namespace System.Game.Portal
 {
-    [SerializeField] PortalID portalID;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class Portal : MonoBehaviour
     {
-        StartCoroutine(PortalManager.Instance.TransitScene(portalID));
+        [SerializeField] PortalID portalID;
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            StartCoroutine(PortalManager.Instance.TransitScene(portalID));
+        }
     }
 }

@@ -1,26 +1,28 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Event.Controller;
 using UnityEngine;
 
-public class BoundarySetter : MonoBehaviour
+namespace Map
 {
-    [SerializeField] private List<Vector2> boundaryPoints;
-    [SerializeField] private List<Vector2> colliderPoints;
-    private EdgeCollider2D edgeCollider;
-
-    public void Start()
+    public class BoundarySetter : MonoBehaviour
     {
-        CameraController.BoundaryPoints = boundaryPoints;
+        [SerializeField] private List<Vector2> boundaryPoints;
+        [SerializeField] private List<Vector2> colliderPoints;
+        private EdgeCollider2D edgeCollider;
 
-        edgeCollider = GetComponent<EdgeCollider2D>();
-        SetBoundaryCollider();
-    }
+        public void Start()
+        {
+            CameraController.BoundaryPoints = boundaryPoints;
 
-    void SetBoundaryCollider()
-    {
-        if (colliderPoints.Count < 2) return;
+            edgeCollider = GetComponent<EdgeCollider2D>();
+            SetBoundaryCollider();
+        }
 
-        edgeCollider.points = colliderPoints.ToArray();
+        void SetBoundaryCollider()
+        {
+            if (colliderPoints.Count < 2) return;
+
+            edgeCollider.points = colliderPoints.ToArray();
+        }
     }
 }

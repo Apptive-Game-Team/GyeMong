@@ -1,121 +1,122 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Event.Controller;
 using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using Visual.Camera;
 
-public abstract class CameraEvent : Event
+namespace System.Event.Event.CinematicEvent
 {
-    private static CameraController _cameraController;
-    protected static CameraController CameraController
+    public abstract class CameraEvent : Event
     {
-        get
+        private static CameraController _cameraController;
+        protected static CameraController CameraController
         {
-            if (_cameraController == null)
+            get
             {
-                _cameraController = EffectManager.Instance.GetCameraController();
+                if (_cameraController == null)
+                {
+                    _cameraController = EffectManager.Instance.GetCameraController();
+                }
+                return _cameraController;
             }
-            return _cameraController;
         }
     }
-}
 
-[Serializable]
-public class ShakeCameraEvent : CameraEvent
-{
-    public float time;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    [Serializable]
+    public class ShakeCameraEvent : CameraEvent
     {
-        return EffectManager.Instance.ShakeCamera(time);
+        public float time;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            return EffectManager.Instance.ShakeCamera(time);
+        }
     }
-}
 
-public class StopFollowCameraEvent : CameraEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class StopFollowCameraEvent : CameraEvent
     {
-        CameraController.IsFollowing = false;
-        return null;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            CameraController.IsFollowing = false;
+            return null;
+        }
     }
-}
 
-public class StartFollowCameraEvent : CameraEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class StartFollowCameraEvent : CameraEvent
     {
-        CameraController.GetComponent<Camera>().orthographicSize = 5;
-        CameraController.IsFollowing = true;
-        return null;
-    }  
-}
-
-public class CameraMoveEvent : CameraEvent
-{
-    [SerializeField] private Vector3 target;
-    [SerializeField] private float size = 5;
-    [SerializeField] private float duration;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return CameraController.MoveTo(target, duration, size);
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            CameraController.GetComponent<Camera>().orthographicSize = 5;
+            CameraController.IsFollowing = true;
+            return null;
+        }  
     }
-}
 
-public class CameraSet : CameraEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class CameraMoveEvent : CameraEvent
     {
-        CameraManager.Instance.ChangeCamera(eventObject.GetComponentInChildren<CinemachineVirtualCamera>());
-        return null;
+        [SerializeField] private Vector3 target;
+        [SerializeField] private float size = 5;
+        [SerializeField] private float duration;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            return CameraController.MoveTo(target, duration, size);
+        }
     }
-}
 
-public class CameraMove : CameraEvent
-{
-    [SerializeField] private Vector3 destination;
-    [SerializeField] private float speed;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class CameraSet : CameraEvent
     {
-        return CameraManager.Instance.CameraMove(destination, speed);
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            CameraManager.Instance.ChangeCamera(eventObject.GetComponentInChildren<CinemachineVirtualCamera>());
+            return null;
+        }
     }
-}
 
-public class CameraFollow : CameraEvent
-{
-    [SerializeField] private GameObject followObject;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class CameraMove : CameraEvent
     {
-        CameraManager.Instance.CameraFollow(followObject.transform);
-        return null;
+        [SerializeField] private Vector3 destination;
+        [SerializeField] private float speed;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            return CameraManager.Instance.CameraMove(destination, speed);
+        }
     }
-}
 
-public class CameraZoomInOut : CameraEvent
-{
-    [SerializeField] private float size;
-    [SerializeField] private float duration;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class CameraFollow : CameraEvent
     {
-        return CameraManager.Instance.CameraZoomInOut(size, duration);
+        [SerializeField] private GameObject followObject;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            CameraManager.Instance.CameraFollow(followObject.transform);
+            return null;
+        }
     }
-}
 
-public class CameraZoomReset : CameraEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class CameraZoomInOut : CameraEvent
     {
-        CameraManager.Instance.CameraZoomReset();
-        return null;
+        [SerializeField] private float size;
+        [SerializeField] private float duration;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            return CameraManager.Instance.CameraZoomInOut(size, duration);
+        }
     }
-}
 
-public class CameraShake : CameraEvent
-{
-    [SerializeField] private float force;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class CameraZoomReset : CameraEvent
     {
-        CameraManager.Instance.CameraShake(force);
-        return null;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            CameraManager.Instance.CameraZoomReset();
+            return null;
+        }
+    }
+
+    public class CameraShake : CameraEvent
+    {
+        [SerializeField] private float force;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            CameraManager.Instance.CameraShake(force);
+            return null;
+        }
     }
 }

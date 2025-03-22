@@ -1,27 +1,29 @@
-using Creature.Minion.Slime;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SlimeSprites", menuName = "ScriptableObject/SlimeSprites")]
-public class SlimeSprites : ScriptableObject
+namespace Creature.Mob.StateMachineMob.Minion.Slime.Components
 {
-    public Sprite[] idleSprites;
-    public Sprite[] rangedAttackSprites;
-    public Sprite[] meleeAttackSprites;
-    public Sprite[] dieSprites;
-    
-    public Sprite[] GetSprite(SlimeAnimator.AnimationType type)
+    [CreateAssetMenu(fileName = "SlimeSprites", menuName = "ScriptableObject/SlimeSprites")]
+    public class SlimeSprites : ScriptableObject
     {
-        switch (type)
+        public Sprite[] idleSprites;
+        public Sprite[] rangedAttackSprites;
+        public Sprite[] meleeAttackSprites;
+        public Sprite[] dieSprites;
+    
+        public Sprite[] GetSprite(SlimeAnimator.AnimationType type)
         {
-            case SlimeAnimator.AnimationType.IDLE:
-                return idleSprites;
-            case SlimeAnimator.AnimationType.MELEE_ATTACK:
-                return meleeAttackSprites;
-            case SlimeAnimator.AnimationType.RANGED_ATTACK:
-                return rangedAttackSprites;
-            case SlimeAnimator.AnimationType.DIE:
-                return dieSprites;
+            switch (type)
+            {
+                case SlimeAnimator.AnimationType.IDLE:
+                    return idleSprites;
+                case SlimeAnimator.AnimationType.MELEE_ATTACK:
+                    return meleeAttackSprites;
+                case SlimeAnimator.AnimationType.RANGED_ATTACK:
+                    return rangedAttackSprites;
+                case SlimeAnimator.AnimationType.DIE:
+                    return dieSprites;
+            }
+            return null;
         }
-        return null;
     }
 }

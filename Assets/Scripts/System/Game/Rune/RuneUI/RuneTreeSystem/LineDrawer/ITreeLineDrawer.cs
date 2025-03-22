@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace runeSystem.RuneTreeSystem
+namespace System.Game.Rune.RuneUI.RuneTreeSystem.LineDrawer
 {
     public interface ITreeLineDrawer
     {

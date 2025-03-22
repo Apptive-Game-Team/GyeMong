@@ -1,27 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StatusEvent : Event { }
-
-public class BoolStatusEvent : StatusEvent
+namespace System.Event.Event.Status
 {
-    [SerializeField] private EventStatus<bool> status;
-    [SerializeField] private bool value;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public abstract class StatusEvent : Event { }
+
+    public class BoolStatusEvent : StatusEvent
     {
-        status.SetStatus(value);
-        yield return null;
+        [SerializeField] private EventStatus<bool> status;
+        [SerializeField] private bool value;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            status.SetStatus(value);
+            yield return null;
+        }
     }
-}
 
-public class IntStatusEvent : StatusEvent
-{
-    [SerializeField] private EventStatus<int> status;
-    [SerializeField] private int value;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public class IntStatusEvent : StatusEvent
     {
-        status.SetStatus(value);
-        yield return null;
+        [SerializeField] private EventStatus<int> status;
+        [SerializeField] private int value;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            status.SetStatus(value);
+            yield return null;
+        }
     }
 }

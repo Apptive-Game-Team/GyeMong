@@ -1,40 +1,43 @@
-using playerCharacter;
+using System.Data;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ContinueButton : MonoBehaviour
+namespace System.UI.TItle
 {
-    private PlayerData playerData;
-    private GameObject optionExitButton;
-    private void Start() 
+    public class ContinueButton : MonoBehaviour
     {
-        playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
-        if (playerData.isFirst) gameObject.SetActive(!playerData.isFirst);
-        optionExitButton = GameObject.Find("OptionController").transform.GetChild(0).GetChild(0).Find("OptionExitButton").gameObject;
-    }
-
-    public async void ContinueGame()
-    {
-        string sceneName = playerData.sceneName;
-
-        if (string.IsNullOrEmpty(sceneName))
+        private PlayerData playerData;
+        private GameObject optionExitButton;
+        private void Start() 
         {
-            Debug.LogError("Scene name is invalid.");
-            return;
+            playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
+            if (playerData.isFirst) gameObject.SetActive(!playerData.isFirst);
+            optionExitButton = GameObject.Find("OptionController").transform.GetChild(0).GetChild(0).Find("OptionExitButton").gameObject;
         }
 
-        // �񵿱������� ��� �ε�
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-
-        // ����� ������ �ε�� ������ ���
-        while (!asyncOperation.isDone)
+        public async void ContinueGame()
         {
-            await Task.Yield();
-        }
+            string sceneName = playerData.sceneName;
 
-        optionExitButton.SetActive(true);
-        // ��� �ε尡 �Ϸ�� �� �÷��̾� ������ �ε�
-        DataManager.Instance.LoadPlayerData();
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                Debug.LogError("Scene name is invalid.");
+                return;
+            }
+
+            // �񵿱������� ��� �ε�
+            AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+
+            // ����� ������ �ε�� ������ ���
+            while (!asyncOperation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            optionExitButton.SetActive(true);
+            // ��� �ε尡 �Ϸ�� �� �÷��̾� ������ �ε�
+            DataManager.Instance.LoadPlayerData();
+        }
     }
 }

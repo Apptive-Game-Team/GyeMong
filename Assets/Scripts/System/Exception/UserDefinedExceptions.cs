@@ -1,6 +1,9 @@
-using System;
+using ExceptionBase = System.Exception;
 
-public class NotFoundException : Exception
+namespace Systems.Exceptions
 {
-    public NotFoundException(string message) : base(message) { }
+    public class NotFoundException : ExceptionBase
+    {
+        public NotFoundException(string message) : base(message) { }
+    }
 }

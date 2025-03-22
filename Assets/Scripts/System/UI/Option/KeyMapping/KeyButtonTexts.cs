@@ -1,36 +1,40 @@
 using System.Collections.Generic;
+using System.Input;
 using TMPro;
 using UnityEngine;
-using System;
+using Util;
 
-public class KeyButtonTexts : SingletonObject<KeyButtonTexts>
+namespace System.UI.Option.KeyMapping
 {
-    private List<Transform> keys = new();
-    private List<TextMeshProUGUI> keyTexts = new();
-
-    protected override void Awake()
+    public class KeyButtonTexts : SingletonObject<KeyButtonTexts>
     {
-        base.Awake();
+        private List<Transform> keys = new();
+        private List<TextMeshProUGUI> keyTexts = new();
+
+        protected override void Awake()
+        {
+            base.Awake();
         
-        for (int i = 0;i < transform.childCount;i++)
-        {
-            keys.Add(transform.GetChild(i));
+            for (int i = 0;i < transform.childCount;i++)
+            {
+                keys.Add(transform.GetChild(i));
+            }
+
+            for (int i = 0;i < keys.Count;i++) 
+            {
+                keyTexts.Add(keys[i].GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
+            }
         }
 
-        for (int i = 0;i < keys.Count;i++) 
-        {
-            keyTexts.Add(keys[i].GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
-        }
-    }
 
-
-    public void UpdateKeyText()
-    {
-        Dictionary<ActionCode, KeyCode> keyMappings = InputManager.Instance.GetKeyActions();
-        for (int i = 0;i < keyTexts.Count;i++) 
+        public void UpdateKeyText()
         {
-            string keyCodeName = keys[i].name;
-            keyTexts[i].text = keyMappings[(ActionCode)Enum.Parse(typeof(ActionCode), keyCodeName)].ToString();
+            Dictionary<ActionCode, KeyCode> keyMappings = InputManager.Instance.GetKeyActions();
+            for (int i = 0;i < keyTexts.Count;i++) 
+            {
+                string keyCodeName = keys[i].name;
+                keyTexts[i].text = keyMappings[(ActionCode)Enum.Parse(typeof(ActionCode), keyCodeName)].ToString();
+            }
         }
     }
 }

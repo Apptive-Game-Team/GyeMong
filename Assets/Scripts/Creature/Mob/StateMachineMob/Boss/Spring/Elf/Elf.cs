@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Sound;
-using Creature.Boss.Component.SkillIndicator;
-using playerCharacter;
+using Creature.Mob.StateMachineMob.Boss.Component.Material;
+using Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
+using Creature.Player;
 using UnityEngine;
 
-namespace Creature.Mob.Boss.Spring.Elf
+namespace Creature.Mob.StateMachineMob.Boss.Spring.Elf
 {
-    public class Elf : StateMachineMob.Boss.Boss
+    public class Elf : Boss
     {
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject seedPrefab;

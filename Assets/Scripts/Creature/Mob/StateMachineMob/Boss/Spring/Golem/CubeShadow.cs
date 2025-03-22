@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Creature.Boss.Spring.Golem
+namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class CubeShadow : MonoBehaviour
     {

@@ -1,11 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Input;
+using System.Game.Rune.RuneUI;
+using System.Input.Interface;
 using UnityEngine;
 using UnityEngine.UI;
+using Util;
 
-namespace UI.mouse_input
+namespace System.Input
 {
     public enum MouseInputState
     {
@@ -67,7 +68,7 @@ namespace UI.mouse_input
         
         private void CheckClick()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (UnityEngine.Input.GetMouseButtonDown(0))
             {
                 ISelectableUI _clickedUI = GetClickedUI();
                 if (_clickedUI != null)
@@ -79,14 +80,14 @@ namespace UI.mouse_input
         
         private void CheckLongClick()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (UnityEngine.Input.GetMouseButtonDown(0))
             {
                 if (_hoveredUI != null)
                 {
                     _longClickCoroutine = StartCoroutine(LongClickCoroutine());
                 }
             }
-            else if (Input.GetMouseButtonUp(0))
+            else if (UnityEngine.Input.GetMouseButtonUp(0))
             {
                 if (_longClickCoroutine != null)
                 {
@@ -121,7 +122,7 @@ namespace UI.mouse_input
         
         private ISelectableUI GetClickedUI()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (UnityEngine.Input.GetMouseButtonDown(0))
             {
                 return _hoverDetector.GetHoveredUI();
             }

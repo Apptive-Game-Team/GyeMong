@@ -1,31 +1,34 @@
-using System.Collections.Generic;
-using System.UI.Option;
+using System.Data;
+using System.Input;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class KeyMappingExitButton : MonoBehaviour
+namespace System.UI.Option.KeyMapping
 {
-    private Image keyMappingUI;
-    private KeyMappingData keyMappingData = new();
-
-    private void Start()
+    public class KeyMappingExitButton : MonoBehaviour
     {
-        Transform keyMappingUITransform = transform.parent;
-        keyMappingUI = keyMappingUITransform.GetComponent<Image>();
-    }
+        private Image keyMappingUI;
+        private KeyMappingData keyMappingData = new();
 
-    public void OnClickButton()
-    {
-        OptionUI.Instance.isOptionUITop = true;
-        keyMappingUI.gameObject.SetActive(false);
-
-        keyMappingData.keyBindings.Clear();
-        foreach (var pair in InputManager.Instance.GetKeyActions())
+        private void Start()
         {
-            keyMappingData.keyBindings.Add(new KeyMappingEntry(pair.Key, pair.Value));
+            Transform keyMappingUITransform = transform.parent;
+            keyMappingUI = keyMappingUITransform.GetComponent<Image>();
         }
 
-        DataManager.Instance.SaveSection(keyMappingData, "KeyMappingData");
-    }
+        public void OnClickButton()
+        {
+            OptionUI.Instance.isOptionUITop = true;
+            keyMappingUI.gameObject.SetActive(false);
 
+            keyMappingData.keyBindings.Clear();
+            foreach (var pair in InputManager.Instance.GetKeyActions())
+            {
+                keyMappingData.keyBindings.Add(new KeyMappingEntry(pair.Key, pair.Value));
+            }
+
+            DataManager.Instance.SaveSection(keyMappingData, "KeyMappingData");
+        }
+
+    }
 }

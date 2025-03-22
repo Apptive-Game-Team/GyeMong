@@ -1,94 +1,97 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Event.Controller.Condition;
 using UnityEngine;
-using System;
 
-public abstract class ConditionalEvent : Event
+namespace System.Event.Event.Condition
 {
-    [SerializeReference]
-    protected Condition _condition;
-    public override List<ToggeableCondition> FindToggleableConditions()
+    public abstract class ConditionalEvent : Event
     {
-        List<ToggeableCondition> result = new List<ToggeableCondition>();
-        Event[] children = GetChildren();
-        if (children != null)
+        [SerializeReference]
+        protected Controller.Condition.Condition _condition;
+        public override List<ToggeableCondition> FindToggleableConditions()
         {
-            foreach (Event @event in children)
+            List<ToggeableCondition> result = new List<ToggeableCondition>();
+            Event[] children = GetChildren();
+            if (children != null)
             {
-                List<ToggeableCondition> temp;
-                temp = @event?.FindToggleableConditions();
-                if (temp != null)
+                foreach (Event @event in children)
                 {
-                    result.AddRange(temp);
+                    List<ToggeableCondition> temp;
+                    temp = @event?.FindToggleableConditions();
+                    if (temp != null)
+                    {
+                        result.AddRange(temp);
+                    }
                 }
             }
-        }
         
-        if (_condition is ToggeableCondition)
-        {
-            result.Add((ToggeableCondition) _condition);
-        }
-        return result;
-    }
-}
-
-[Serializable]
-public class ConditionalBranchEvent : ConditionalEvent
-{
-    [SerializeReference]
-    private Event eventInTrue;
-
-    [SerializeReference]
-    private Event eventInFalse;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        if (_condition.Check())
-        {
-            return eventInTrue?.Execute(eventObject);
-        } else
-        {
-            return eventInFalse?.Execute(eventObject);
+            if (_condition is ToggeableCondition)
+            {
+                result.Add((ToggeableCondition) _condition);
+            }
+            return result;
         }
     }
 
-    public override Event[] GetChildren()
+    [Serializable]
+    public class ConditionalBranchEvent : ConditionalEvent
     {
-        return new Event[] { eventInTrue, eventInFalse };
-    }
-}
+        [SerializeReference]
+        private Event eventInTrue;
 
-[Serializable]
-public class ConditionalLoopEvent : ConditionalEvent
-{
-    [SerializeReference]
-    private Event loopBodyevent;
+        [SerializeReference]
+        private Event eventInFalse;
 
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        while (_condition.Check())
+        public override IEnumerator Execute(EventObject eventObject = null)
         {
-            yield return loopBodyevent?.Execute(eventObject);
+            if (_condition.Check())
+            {
+                return eventInTrue?.Execute(eventObject);
+            } else
+            {
+                return eventInFalse?.Execute(eventObject);
+            }
+        }
+
+        public override Event[] GetChildren()
+        {
+            return new Event[] { eventInTrue, eventInFalse };
         }
     }
 
-    public override Event[] GetChildren()
+    [Serializable]
+    public class ConditionalLoopEvent : ConditionalEvent
     {
-        return new Event[] { loopBodyevent };
+        [SerializeReference]
+        private Event loopBodyevent;
+
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            while (_condition.Check())
+            {
+                yield return loopBodyevent?.Execute(eventObject);
+            }
+        }
+
+        public override Event[] GetChildren()
+        {
+            return new Event[] { loopBodyevent };
+        }
     }
-}
 
-[Serializable]
-public class ToggleConditionEvent : Event
-{
-    [SerializeReference]
-    private string tag;
-    [SerializeReference]
-    private bool condition;
-
-    public override IEnumerator Execute(EventObject eventObject = null)
+    [Serializable]
+    public class ToggleConditionEvent : Event
     {
-        ConditionManager.Instance.Conditions[tag] = this.condition;
-        return null;
+        [SerializeReference]
+        private string tag;
+        [SerializeReference]
+        private bool condition;
+
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            ConditionManager.Instance.Conditions[tag] = this.condition;
+            return null;
+        }
     }
 }

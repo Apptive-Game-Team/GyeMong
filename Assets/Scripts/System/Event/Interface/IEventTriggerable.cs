@@ -1,4 +1,7 @@
-public interface IEventTriggerable
+namespace System.Event.Interface
 {
-    public void Trigger();
+    public interface IEventTriggerable
+    {
+        public void Trigger();
+    }
 }

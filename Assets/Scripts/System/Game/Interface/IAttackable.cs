@@ -1,4 +1,7 @@
-public interface IAttackable
+namespace System.Game.Interface
 {
-    public void OnAttacked(float damage = 0);
+    public interface IAttackable
+    {
+        public void OnAttacked(float damage = 0);
+    }
 }
