@@ -16,7 +16,7 @@ namespace Map.Puzzle.TemplePuzzle
 
         void Start()
         {
-            if (ConditionManager.Instance.Conditions.GetValueOrDefault("SpringTemplePuzzleIsCleared", false))
+            if (!ConditionManager.Instance.Conditions.GetValueOrDefault("SpringTemplePuzzleIsCleared", false))
                 CreateGridLayout();
             else
                 defaultObject.SetActive(true);
