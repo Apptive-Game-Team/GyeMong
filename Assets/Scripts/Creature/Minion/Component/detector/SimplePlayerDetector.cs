@@ -21,12 +21,6 @@ public class SimplePlayerDetector : MonoBehaviour, IDetector<PlayerCharacter>
 
     public PlayerCharacter DetectTarget()
     {
-        PlayerCharacter player = PlayerCharacter.Instance;
-        
-        if (Vector3.Distance(player.transform.position, transform.position) < creature.DetectionRange)
-        {
-            return player;
-        }
-        return null;
+        return PlayerCharacter.Instance;
     }
 }

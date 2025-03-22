@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using playerCharacter;
 using UnityEngine;
+using UnityEngine.XR;
 
 namespace Creature.Minion.Slime
 {
@@ -31,7 +32,7 @@ namespace Creature.Minion.Slime
                 if (currentHp <= 0)
                 {
                     print(currentState);
-                    ChangeState(new SlimeDieState(this));
+                    OnDead();
                 }
             }
         }
@@ -79,11 +80,11 @@ namespace Creature.Minion.Slime
             currentShield = 0;
             damage = 10;
             speed = 2;
-            detectionRange = 10;
+            detectionRange = 20;
             MeleeAttackRange = 1;
             RangedAttackRange = 5;
 
-            _detector = SimplePlayerDetector.Create(this);
+            _detector = SimplePlayerDistanceDetector.Create(this);
             _pathFinder = new SimplePathFinder();
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
@@ -133,7 +134,8 @@ namespace Creature.Minion.Slime
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                GameObject arrow =  Instantiate(Slime.rangedAttack, creature.transform.position, Quaternion.identity);
+                GameObject arrow =  Instantiate(Slime.rangedAttack, creature.transform.position, Quaternion.identity, creature.transform);
+                arrow.SetActive(true);
                 Slime.RotateArrowTowardsPlayer(arrow);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
@@ -226,6 +228,11 @@ namespace Creature.Minion.Slime
                 creature.gameObject.SetActive(false);
                 yield return null;
             }
+        }
+        
+        protected override void OnDead()
+        {
+            ChangeState(new SlimeDieState(this));
         }
     
         private void RotateArrowTowardsPlayer(GameObject arrow)

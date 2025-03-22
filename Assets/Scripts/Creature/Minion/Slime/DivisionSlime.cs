@@ -1,241 +1,130 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using playerCharacter;
-using Creature.Boss;
-using Unity.VisualScripting;
+using System.Game;
 
 namespace Creature.Minion.Slime
 {
-    public class DivisionSlime : Creature
+    public class DivisionSlime : SlimeBase
     {
         private const float divideRatio = 0.6f;
-        private const float damageRatio = 0.5f;
-        private int divisionLevel;
-        private int maxDivisionLevel;
-        private float moveSpeed;
-        private Transform target;
-        private GameObject rangedAttack;
-        private float patternDelay;
-        private float meleeAttackDelay;
-        private float dashAttackDelay;
-        private float rangedAttackDelay;
-        private float animatorDelay;
-        private Animator animator;
-        private Coroutine startCoroutine;
-        private Coroutine curCoroutine;
-        private bool isMove = true;
-        private SlimeAnimator _slimeAnimator;
-        [SerializeField] private SlimeSprites sprites;
-
-        private bool _isStart = false;
+        private int divisionLevel = 0;
+        private int maxDivisionLevel = 2;
         
-        private void Awake()
+        protected override void Start()
         {
             Initialize();
         }
 
-        private void Initialize()
+        protected override void Initialize()
         {
-            _slimeAnimator = GetComponent<SlimeAnimator>();
+            maxHp = 10f;
+            currentHp = maxHp;
+            speed = 2f;
             
-            currentHp = 10f;
-
-            _isStart = false;
+            _detector = SimplePlayerDetector.Create(this);
+            _pathFinder = new SimplePathFinder();
+            _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
-            divisionLevel = 0;
-            maxDivisionLevel = 2;
-            MeleeAttackRange = 4f;
+            MeleeAttackRange = 3f;
             RangedAttackRange = 10f;
-            moveSpeed = Random.Range(2.5f, 3.5f);
-
-            rangedAttack = transform.GetChild(0).gameObject;
-
-            patternDelay = 2f;
-            meleeAttackDelay = 0.3f;
-            rangedAttackDelay = 1f;
-            dashAttackDelay = 1f;
-            animatorDelay= 0.5f;
 
             damage = 10f;
         }
 
-        public void StartMob()
+        public override void StartMob()
         {
-            target = PlayerCharacter.Instance.gameObject.transform;
-            startCoroutine = StartCoroutine(Patterns());
-            _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
-            _isStart = true;
-        }
-
-        private void Update()
-        {
-            if (!_isStart) return;
-            
-            if (target == null) return;
-            if (isMove)
-            {
-                MoveTowardsTarget();
-            }
-            FaceToPlayer();
-        }
-
-        private void MoveTowardsTarget()
-        {
-            if (_slimeAnimator.CurrentAnimationType != SlimeAnimator.AnimationType.MELEE_ATTACK)
-                _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
-            
-            Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * moveSpeed * Time.deltaTime;
-        }
-
-        public void FaceToPlayer()
-        {
-            float scale = Mathf.Abs(transform.localScale.x);
-            if (PlayerCharacter.Instance.transform.position.x < transform.position.x)
-            {
-                transform.localScale = new Vector3(-scale, transform.localScale.y, transform.localScale.z);
-            }
-            else
-            {
-                transform.localScale = new Vector3(scale, transform.localScale.y, transform.localScale.z);
-            }
-        }
-
-        private IEnumerator Patterns()
-        {
-            while (true)
-            {
-                if (target == null)
-                {
-                    yield return null;
-                    continue;
-                }
-
-                float distance = Vector3.Distance(transform.position, target.position);
-
-                if (distance <= MeleeAttackRange)
-                {
-                    curCoroutine = StartCoroutine(MeleeAttack());
-                }
-                else
-                {
-                    if (distance <= RangedAttackRange)
-                    {
-                        if (Random.value < 0.5f)
-                        {
-                            curCoroutine = StartCoroutine(RangedAttack());
-                        }
-                        else
-                        {
-                            curCoroutine = StartCoroutine(DashAttack());
-                        }
-                    }
-                }
-
-                yield return new WaitForSeconds(patternDelay);
-            }
-        }
-
-        private IEnumerator MeleeAttack()
-        {
-            if (curCoroutine != null) StopCoroutine(curCoroutine);
-            isMove = false;
-            
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
-            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
-            
-            float distance = Vector3.Distance(transform.position, target.position);
-            if (distance < MeleeAttackRange) PlayerCharacter.Instance.TakeDamage(damage);
-            
-            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
-            
-            yield return new WaitForSeconds(animatorDelay);
-            isMove = true;
-        }
-
-        private IEnumerator RangedAttack()
-        {
-            if (curCoroutine != null) StopCoroutine(curCoroutine);
-            isMove = false;
-            
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
-            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-            
-            GameObject attack = Instantiate(rangedAttack, transform.position, Quaternion.identity, transform);
-            attack.SetActive(true);
-            
-            yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
-            yield return new WaitForSeconds(animatorDelay);
-            isMove = true;
-        }
-
-        private IEnumerator DashAttack()
-        {
-            if (curCoroutine != null) StopCoroutine(curCoroutine);
-            isMove = false;
-            
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
-
-            Vector3 direction = (target.position - transform.position).normalized;
-            float dashDistance = 1.5f;
-            Vector3 dashTargetPosition = target.position + direction * dashDistance;
-            yield return new WaitForSeconds(dashAttackDelay);
-            
-            transform.DOMove(dashTargetPosition, 0.3f).SetEase(Ease.OutQuad);
-
-            yield return new WaitForSeconds(animatorDelay);
-            
-            _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
-            yield return new WaitForSeconds(animatorDelay);
-            isMove = true; 
+            StartCoroutine(FaceToPlayer());
+            ChangeState();
         }
 
         public override void OnAttacked(float damage)
         {
             base.OnAttacked(damage);
-            if (currentHp <= 0)
+            if (currentState is not SlimeDieState)
             {
-                StartCoroutine(Die());
+                StopCoroutine(_currentStateCoroutine);
+                StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
+                ChangeState();
             }
         }
 
-        private IEnumerator Die()
+        public class SlimeRangedAttackState : RangedAttackState { }
+        public class SlimeMeleeAttackState : MeleeAttackState { }
+        
+        public class DashAttackState : SlimeState
         {
-            isMove = false;
-            StopCoroutine(startCoroutine);
+            private DivisionSlime DivisionSlime => creature as DivisionSlime;
+            public override int GetWeight()
+            {
+                return (Slime.DistanceToPlayer > Slime.MeleeAttackRange &&
+                Slime.DistanceToPlayer < Slime.RangedAttackRange) ? 5 : 0;
+            }
 
-            if (divisionLevel < maxDivisionLevel)
+            public override IEnumerator StateCoroutine()
             {
-                Divide();
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
+                float dashDistance = 1.5f;
+                Vector3 dashTargetPosition = PlayerCharacter.Instance.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
+                yield return new WaitForSeconds(2 * SlimeAnimator.ANIMATION_DELTA_TIME);
+                DivisionSlime.transform.DOMove(dashTargetPosition, 0.3f).SetEase(Ease.OutQuad);
+                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                yield return new WaitForSeconds(1);
+                DivisionSlime.ChangeState();
             }
-            else
-            {
-                _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DIE);
-                yield return new WaitForSeconds(0.3f);
-            }
-            Destroy(gameObject);
         }
+
+        public class DieState : SlimeDieState
+        {
+            private DivisionSlime DivisionSlime => creature as DivisionSlime;
+            public DieState() { }
+            public DieState(Creature creature)
+            {
+                this.creature = creature;
+            }
+            public override int GetWeight()
+            {
+                return 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                if (DivisionSlime.divisionLevel < DivisionSlime.maxDivisionLevel)
+                {
+                    DivisionSlime.Divide();
+                }
+                else
+                {
+                    DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DIE);
+                    yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
+                }
+                Destroy(DivisionSlime.gameObject);
+            }
+        }
+
+        protected override void OnDead()
+        {
+            ChangeState(new DieState(this));
+        }
+
+        public class MoveState : SlimeMoveState { }
 
         private void Divide()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-                Vector3 spawnPosition = transform.position + Random.insideUnitSphere;
-                
-                GameObject newSlime = Instantiate(gameObject, spawnPosition, Quaternion.identity);
-                // Destroy(newSlime.GetComponent<DivisionSlime>());
-                
+                Vector3 spawnPosition = transform.position + Random.insideUnitSphere * 3;
+                GameObject newSlime = Instantiate(gameObject, transform.position, Quaternion.identity);
                 newSlime.transform.localScale = transform.localScale * divideRatio;
                 
-                newSlime.transform.DOMoveY(spawnPosition.y + 1f, 0.3f).SetEase(Ease.OutQuad)
-                    .OnComplete(() => newSlime.transform.DOMoveY(spawnPosition.y, 0.3f).SetEase(Ease.InBounce));
+                newSlime.transform.DOJump(spawnPosition, 1f, 1, 0.5f).SetEase(Ease.OutQuad);
 
                 DivisionSlime slimeComponent = newSlime.GetComponent<DivisionSlime>();
                 
-                slimeComponent.damage *= damageRatio;
+                slimeComponent._slimeAnimator = SlimeAnimator.Create(slimeComponent.gameObject, sprites);
+                slimeComponent.damage *= divideRatio;
                 slimeComponent.MeleeAttackRange *= divideRatio;
                 slimeComponent.RangedAttackRange *= divideRatio;
                 slimeComponent.divisionLevel = divisionLevel + 1;
