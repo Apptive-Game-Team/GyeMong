@@ -67,5 +67,16 @@ namespace Visual.Camera
         {
             currentCam.m_Lens.OrthographicSize = cameraSize;
         }
+
+        public void CameraShake(float force)
+        {
+            CinemachineImpulseSource impulseSource = currentCam.GetComponent<CinemachineImpulseSource>();
+    
+            for (int i = 0; i < 5; i++)
+            {
+                Vector3 randomShake = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
+                impulseSource.GenerateImpulse(randomShake * force);
+            }
+        }
     }
 }
