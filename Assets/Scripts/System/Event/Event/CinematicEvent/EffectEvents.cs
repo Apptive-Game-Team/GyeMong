@@ -95,11 +95,11 @@ public class FadeInFirstEvent : EffectEvent
     }
 }
 
-public class BlackScreenEvent : EffectEvent
+public class ChangeToBlackScreenEvent : EffectEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        return EffectManager.Instance.BlackScreen();
+        return EffectManager.Instance.ChangeToBlackScreen();
     }
 }
 

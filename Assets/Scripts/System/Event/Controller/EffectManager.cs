@@ -84,7 +84,7 @@ public class EffectManager : SingletonObject<EffectManager>
         return Fade(black, 0);
     }
 
-    public IEnumerator BlackScreen()
+    public IEnumerator ChangeToBlackScreen()
     {
         Color color = black.color;
         color.a = 1;

@@ -3096,7 +3096,7 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 4949244152063721487
+  - rid: 4949244289175519232
   - rid: 4949244132887101446
   - rid: 4949244132887101450
   - rid: 4949244152063721472
@@ -3306,9 +3306,6 @@ MonoBehaviour:
     - rid: 4949244152063721486
       type: {class: ClearImageEvent, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 4949244152063721487
-      type: {class: BlackScreenEvent, ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 4949244152063721492
       type: {class: FadeInEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -3344,6 +3341,9 @@ MonoBehaviour:
       type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
       data:
         triggerable: {fileID: 178672175}
+    - rid: 4949244289175519232
+      type: {class: ChangeToBlackScreenEvent, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!4 &562705329
 Transform:
   m_ObjectHideFlags: 0
