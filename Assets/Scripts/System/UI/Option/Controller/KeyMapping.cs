@@ -1,55 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Input;
-using System.UI.Option.KeyMapping;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace System.UI.Option.Controller
+public class KeyMapping : MonoBehaviour
 {
-    public class KeyMapping : MonoBehaviour
+    [SerializeField] private ActionCode actionCode;
+
+    private void BindKey(KeyCode newKey)
     {
-        [SerializeField] private ActionCode actionCode;
-
-        private void BindKey(KeyCode newKey)
-        {
-            CheckDuplication(newKey);
-            InputManager.Instance.SetKey(actionCode, newKey);
-        }
+        CheckDuplication(newKey);
+        InputManager.Instance.SetKey(actionCode, newKey);
+    }
     
-        public void OnClickButton()
-        {
-            StartCoroutine(WaitForKeyInput());
-        }
+    public void OnClickButton()
+    {
+        StartCoroutine(WaitForKeyInput());
+    }
     
-        private IEnumerator WaitForKeyInput()
-        {
-            yield return new WaitUntil(() => UnityEngine.Input.anyKeyDown);
+    private IEnumerator WaitForKeyInput()
+    {
+        yield return new WaitUntil(() => Input.anyKeyDown);
         
-            KeyCode pressedKey = GetPressedKey();
-            BindKey(pressedKey);
-            KeyButtonTexts.Instance.UpdateKeyText();
-        }
+        KeyCode pressedKey = GetPressedKey();
+        BindKey(pressedKey);
+        KeyButtonTexts.Instance.UpdateKeyText();
+    }
 
-        private KeyCode GetPressedKey()
+    private KeyCode GetPressedKey()
+    {
+        foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
         {
-            foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
-            {
-                if (UnityEngine.Input.GetKeyDown(key)) return key;
-            }
-            return KeyCode.None;
+            if (Input.GetKeyDown(key)) return key;
         }
+        return KeyCode.None;
+    }
     
-        private void CheckDuplication(KeyCode keyCode)
-        {
-            Dictionary<ActionCode, KeyCode> keyMappings = InputManager.Instance.GetKeyActions();
-            List<ActionCode> keysToCheck = new(keyMappings.Keys);
+    private void CheckDuplication(KeyCode keyCode)
+    {
+        Dictionary<ActionCode, KeyCode> keyMappings = InputManager.Instance.GetKeyActions();
+        List<ActionCode> keysToCheck = new(keyMappings.Keys);
 
-            foreach (ActionCode actionCode in keysToCheck)
+        foreach (ActionCode actionCode in keysToCheck)
+        {
+            if (keyMappings[actionCode] == keyCode)
             {
-                if (keyMappings[actionCode] == keyCode)
-                {
-                    InputManager.Instance.SetKey(actionCode, KeyCode.None);
-                }
+                InputManager.Instance.SetKey(actionCode, KeyCode.None);
             }
         }
     }

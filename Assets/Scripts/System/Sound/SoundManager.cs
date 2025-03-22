@@ -1,109 +1,109 @@
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using Util;
+using System;
+using System.Sound;
 
-namespace System.Sound
+public enum SoundType
 {
-    public enum SoundType
+    UI,
+    EFFECT,
+    FRIENDLY,
+    ENEMY,
+    BGM
+}
+
+public class SoundManager : SingletonObject<SoundManager>
+{
+    private const float DEFAULT_VOLUME = 1;
+
+    private SoundObject bgmSoundObject;
+
+    public SoundSourceList soundSourceList;
+    private Dictionary<SoundType, float> volumes = new Dictionary<SoundType, float>();
+    public List<SoundObject> soundObjects;
+    
+    private void InitializeVolumes()
     {
-        UI,
-        EFFECT,
-        FRIENDLY,
-        ENEMY,
-        BGM
+        foreach (SoundType type in Enum.GetValues(typeof(SoundType))){
+            volumes[type] = DEFAULT_VOLUME;
+        }
     }
 
-    public class SoundManager : SingletonObject<SoundManager>
+    public SoundObject GetBgmObject()
     {
-        private const float DEFAULT_VOLUME = 1;
-
-        private SoundObject bgmSoundObject;
-
-        public SoundSourceList soundSourceList;
-        private Dictionary<SoundType, float> volumes = new Dictionary<SoundType, float>();
-        public List<SoundObject> soundObjects;
-    
-        private void InitializeVolumes()
+        if (bgmSoundObject == null)
         {
-            foreach (SoundType type in Enum.GetValues(typeof(SoundType))){
-                volumes[type] = DEFAULT_VOLUME;
-            }
+            bgmSoundObject = gameObject.AddComponent<SoundObject>();
         }
-
-        public SoundObject GetBgmObject()
-        {
-            if (bgmSoundObject == null)
-            {
-                bgmSoundObject = gameObject.AddComponent<SoundObject>();
-            }
         
-            return bgmSoundObject;
-        }
+        return bgmSoundObject;
+    }
 
-        protected override void Awake()
+    protected override void Awake()
+    {
+        base.Awake();
+        InitializeVolumes();
+    }
+
+    private void Start()
+    {
+        GetSoundObjects();
+    }
+
+    private void GetSoundObjects()
+    {
+        soundObjects = new List<SoundObject>(FindObjectsOfType<SoundObject>());
+    }
+
+    public void SetVolume(SoundType type, float volume)
+    {
+        volumes[type] = volume;
+
+        foreach (SoundObject soundObject in soundObjects)
         {
-            base.Awake();
+            if (soundObject.GetSoundType() == type)
+            {
+                soundObject.SetVolume(volume);
+            }
+        }
+    }
+
+    public void SetMasterVolume(float masterVolume)
+    {
+        foreach (SoundObject soundObject in soundObjects)
+        {
+            soundObject.SetMasterVolume(masterVolume);
+        } 
+    }
+
+    public float GetVolume(SoundType type)
+    {
+        try
+        {
+            return volumes[type];
+        }
+        catch (KeyNotFoundException)
+        {
             InitializeVolumes();
+            return volumes[type];
         }
-
-        private void Start()
-        {
-            GetSoundObjects();
-        }
-
-        private void GetSoundObjects()
-        {
-            soundObjects = new List<SoundObject>(FindObjectsOfType<SoundObject>());
-        }
-
-        public void SetVolume(SoundType type, float volume)
-        {
-            volumes[type] = volume;
-
-            foreach (SoundObject soundObject in soundObjects)
-            {
-                if (soundObject.GetSoundType() == type)
-                {
-                    soundObject.SetVolume(volume);
-                }
-            }
-        }
-
-        public void SetMasterVolume(float masterVolume)
-        {
-            foreach (SoundObject soundObject in soundObjects)
-            {
-                soundObject.SetMasterVolume(masterVolume);
-            } 
-        }
-
-        public float GetVolume(SoundType type)
-        {
-            try
-            {
-                return volumes[type];
-            }
-            catch (KeyNotFoundException)
-            {
-                InitializeVolumes();
-                return volumes[type];
-            }
         
-        }
+    }
 
-        private void OnEnable()
-        {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            GetSoundObjects();
-        }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GetSoundObjects();
+    }
 
-        private void OnDisable()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

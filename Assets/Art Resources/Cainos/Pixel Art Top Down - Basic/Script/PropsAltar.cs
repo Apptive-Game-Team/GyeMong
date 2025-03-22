@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 //when something get into the alta, make the runes glow
-namespace Art_Resources.Cainos.Pixel_Art_Top_Down___Basic.Script
+namespace Cainos.PixelArtTopDown_Basic
 {
 
     public class PropsAltar : MonoBehaviour

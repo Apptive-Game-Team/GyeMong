@@ -1,4 +1,3 @@
-using System.Input;
 using System.UI;
 
 namespace System.Game.Rune.RuneUI

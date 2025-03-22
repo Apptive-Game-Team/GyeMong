@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Event;
-using System.Event.Event.Status;
-using System.Event.Interface;
 using System.Linq;
-using Creature.Player;
+using playerCharacter;
 using UnityEngine;
 using UnityEngine.VFX;
 

@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Game.Interface;
-using Creature.Mob.StateMachineMob.Boss.Component.Material;
 using UnityEngine;
 
 namespace Creature

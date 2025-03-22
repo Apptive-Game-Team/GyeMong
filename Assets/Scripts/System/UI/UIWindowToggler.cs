@@ -1,9 +1,8 @@
-using System.Input;
 using System.Input.Interface;
-using Creature.Player;
+using playerCharacter;
+using UI.mouse_input;
 using UnityEngine;
 using UnityEngine.UI;
-using Util;
 
 namespace System.UI
 {

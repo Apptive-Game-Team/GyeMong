@@ -1,17 +1,16 @@
-using Util;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace System.UI.Option.KeyMapping
+public class KeyMappingUI : SingletonObject<KeyMappingUI>
 {
-    public class KeyMappingUI : SingletonObject<KeyMappingUI>
+    private void Start()
     {
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
+        gameObject.SetActive(false);
+    }
 
-        public void OpenKeyMappingUI()
-        {
-            gameObject.SetActive(true);
-        }
+    public void OpenKeyMappingUI()
+    {
+        gameObject.SetActive(true);
     }
 }

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Game.Rune.RuneUI.RuneTreeSystem.TreeLayout;
 using UnityEngine;
 
-namespace System.Game.Rune.RuneUI.RuneTreeSystem
+namespace runeSystem.RuneTreeSystem
 {
     public class RuneTreeNode : RuneUIObject, ITreeLayoutNode
     {

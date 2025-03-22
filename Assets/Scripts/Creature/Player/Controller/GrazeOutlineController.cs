@@ -1,49 +1,47 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Creature.Player.Controller
+public class GrazeOutlineController : MonoBehaviour
 {
-    public class GrazeOutlineController : MonoBehaviour
+    private const float fadeDelay = 0.06f;
+    private Coroutine curCoroutine;
+
+
+    private void Awake()
     {
-        private const float fadeDelay = 0.06f;
-        private Coroutine curCoroutine;
+        SetAlpha(0f); // Disappear Default
+    }
 
+    private void SetAlpha(float alpha)
+    {
+        Material material = GetComponent<Renderer>().material;
+        material.SetFloat("_OutlineAlpha", alpha);
+    }
 
-        private void Awake()
+    public void AppearAndFadeOut()
+    {
+        if (curCoroutine != null)
         {
-            SetAlpha(0f); // Disappear Default
+            StopCoroutine(curCoroutine);
         }
 
-        private void SetAlpha(float alpha)
+        curCoroutine = StartCoroutine(AppearAndFadeOutCoroutine());
+    }
+
+    private IEnumerator AppearAndFadeOutCoroutine()
+    {
+        SetAlpha(1f);
+
+        float curAlpha = 1f;
+
+        while (curAlpha > 0)
         {
-            Material material = GetComponent<Renderer>().material;
-            material.SetFloat("_OutlineAlpha", alpha);
+            curAlpha -= fadeDelay;
+            yield return new WaitForSeconds(fadeDelay);
+            SetAlpha(curAlpha);
         }
 
-        public void AppearAndFadeOut()
-        {
-            if (curCoroutine != null)
-            {
-                StopCoroutine(curCoroutine);
-            }
-
-            curCoroutine = StartCoroutine(AppearAndFadeOutCoroutine());
-        }
-
-        private IEnumerator AppearAndFadeOutCoroutine()
-        {
-            SetAlpha(1f);
-
-            float curAlpha = 1f;
-
-            while (curAlpha > 0)
-            {
-                curAlpha -= fadeDelay;
-                yield return new WaitForSeconds(fadeDelay);
-                SetAlpha(curAlpha);
-            }
-
-            SetAlpha(0f);
-        }
+        SetAlpha(0f);
     }
 }

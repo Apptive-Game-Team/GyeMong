@@ -1,76 +1,74 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
-using Util;
 
-namespace System.Event.Controller.Condition
+[Serializable]
+internal class Conditions
 {
-    [Serializable]
-    internal class Conditions
+    [Serializable] 
+    class Condition
     {
-        [Serializable] 
-        class Condition
+        public string tag;
+        public bool condition;
+    }
+    [SerializeReference] private List<Condition> _conditions;
+
+    public void Add(string tag, string condition)
+    {
+        _conditions.Add(new Condition { tag = tag, condition = bool.Parse(condition) });
+    }
+
+    public Conditions()
+    {
+        _conditions = new List<Condition>();
+    }
+
+    public Conditions(Dictionary<string, bool> conditions)
+    {
+        this._conditions = new List<Condition>();
+        if (conditions == null)
         {
-            public string tag;
-            public bool condition;
+            return;
         }
-        [SerializeReference] private List<Condition> _conditions;
-
-        public void Add(string tag, string condition)
+        foreach (KeyValuePair<string, bool> condition in conditions)
         {
-            _conditions.Add(new Condition { tag = tag, condition = bool.Parse(condition) });
-        }
-
-        public Conditions()
-        {
-            _conditions = new List<Condition>();
-        }
-
-        public Conditions(Dictionary<string, bool> conditions)
-        {
-            this._conditions = new List<Condition>();
-            if (conditions == null)
-            {
-                return;
-            }
-            foreach (KeyValuePair<string, bool> condition in conditions)
-            {
-                this._conditions.Add(new Condition{ tag = condition.Key, condition = condition.Value});
-            }
-        }
-
-        public Dictionary<string, bool> GetConditions()
-        {
-            Dictionary<string, bool> result = new Dictionary<string, bool>();
-            foreach (Condition condition in _conditions)
-            {
-                result.Add(condition.tag, condition.condition);
-            }
-
-            return result;
+            this._conditions.Add(new Condition{ tag = condition.Key, condition = condition.Value});
         }
     }
 
-    public class ConditionManager : SingletonObject<ConditionManager>
+    public Dictionary<string, bool> GetConditions()
     {
-        private const string CONDITION_FILE = "conditions";
-        private Dictionary<string, bool> _conditions;
-        public Dictionary<string, bool> Conditions
+        Dictionary<string, bool> result = new Dictionary<string, bool>();
+        foreach (Condition condition in _conditions)
         {
-            get
+            result.Add(condition.tag, condition.condition);
+        }
+
+        return result;
+    }
+}
+
+public class ConditionManager : SingletonObject<ConditionManager>
+{
+    private const string CONDITION_FILE = "conditions";
+    private Dictionary<string, bool> _conditions;
+    public Dictionary<string, bool> Conditions
+    {
+        get
+        {
+            if (_conditions == null)
             {
-                if (_conditions == null)
-                {
-                    _conditions = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE).GetConditions();
-                }
-
-                return _conditions;
+                _conditions = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE).GetConditions();
             }
-        }
 
-        public void Save()
-        {
-            DataManager.Instance.SaveSection(new Conditions(_conditions), CONDITION_FILE);
+            return _conditions;
         }
+    }
+
+    public void Save()
+    {
+        DataManager.Instance.SaveSection(new Conditions(_conditions), CONDITION_FILE);
     }
 }

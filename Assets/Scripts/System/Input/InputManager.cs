@@ -1,355 +1,353 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Input.Interface;
 using UnityEngine;
-using Util;
+using System;
+using System.Input.Interface;
+using KeyNotFoundException = System.Collections.Generic.KeyNotFoundException;
 
-namespace System.Input
+public enum ActionCode
 {
-    public enum ActionCode
+    Attack,
+    Skill,
+    Dash,
+    Interaction,
+    MoveUp,
+    MoveDown,
+    MoveRight,
+    MoveLeft,
+    RunePage,
+    Option,
+    SelectClick,
+}
+
+public class InputManager : SingletonObject<InputManager>
+{
+    private const float KEY_LISTENER_DELAY = 0.05f;
+    private const float KET_DOWN_DELAY = 1f;
+
+
+    private Dictionary<ActionCode, bool> keyDownBools = new Dictionary<ActionCode, bool>();
+    private Dictionary<ActionCode, bool> keyDownBoolsForListener = new Dictionary<ActionCode, bool>();
+    private Dictionary<ActionCode, Coroutine> keyDownCounterCoroutine = new Dictionary<ActionCode, Coroutine>();
+    private Dictionary<ActionCode, bool> keyActiveFlags = new Dictionary<ActionCode, bool>();
+    private Dictionary<ActionCode, KeyCode> keyMappings = new Dictionary<ActionCode, KeyCode>();
+
+    public void SetDefaultKey()
     {
-        Attack,
-        Skill,
-        Dash,
-        Interaction,
-        MoveUp,
-        MoveDown,
-        MoveRight,
-        MoveLeft,
-        RunePage,
-        Option,
-        SelectClick,
+        keyMappings = new Dictionary<ActionCode, KeyCode>()
+        {
+            { ActionCode.Attack, KeyCode.Mouse0 },
+            { ActionCode.Skill, KeyCode.Mouse1 },
+            { ActionCode.Dash, KeyCode.LeftShift },
+            { ActionCode.Interaction, KeyCode.Space },
+            { ActionCode.MoveUp, KeyCode.W },
+            { ActionCode.MoveDown, KeyCode.S },
+            { ActionCode.MoveRight, KeyCode.D },
+            { ActionCode.MoveLeft, KeyCode.A },
+            { ActionCode.RunePage, KeyCode.I },
+            { ActionCode.Option, KeyCode.Escape},
+            { ActionCode.SelectClick, KeyCode.Mouse0 },
+        };
     }
 
-    public class InputManager : SingletonObject<InputManager>
+    Vector3 moveVector = new Vector3();
+    private List<Vector2> directionList = new List<Vector2>();
+
+    private List<IInputListener> inputListeners = new List<IInputListener>();
+
+    /// <summary>
+    /// Checks if the specified action code represents a movement action.
+    /// </summary>
+    /// <param name="action">Action code to check</param>
+    /// <returns>True if action is movement-related, otherwise false</returns>
+    public bool isMoveActioncode(ActionCode action)
     {
-        private const float KEY_LISTENER_DELAY = 0.05f;
-        private const float KET_DOWN_DELAY = 1f;
+        return (int)action >= (int)ActionCode.MoveUp && (int)action <= (int)ActionCode.MoveLeft;
+    }
+
+    /// <summary>
+    /// Sets the active state of a specific action key.
+    /// </summary>
+    /// <param name="action">Action code to set</param>
+    /// <param name="active">True to activate, false to deactivate</param>
+    public void SetKeyActive(ActionCode action, bool active)
+    {
+        keyActiveFlags[action] = active;
+    }
 
 
-        private Dictionary<ActionCode, bool> keyDownBools = new Dictionary<ActionCode, bool>();
-        private Dictionary<ActionCode, bool> keyDownBoolsForListener = new Dictionary<ActionCode, bool>();
-        private Dictionary<ActionCode, Coroutine> keyDownCounterCoroutine = new Dictionary<ActionCode, Coroutine>();
-        private Dictionary<ActionCode, bool> keyActiveFlags = new Dictionary<ActionCode, bool>();
-        private Dictionary<ActionCode, KeyCode> keyMappings = new Dictionary<ActionCode, KeyCode>();
-
-        public void SetDefaultKey()
+    /// <summary>
+    /// Activates or deactivates all actions.
+    /// </summary>
+    /// <param name="active">True to activate movement actions, false to deactivate</param>
+    public void SetActionState(bool active)
+    {
+        foreach (ActionCode actionCode in keyMappings.Keys)
         {
-            keyMappings = new Dictionary<ActionCode, KeyCode>()
+            SetKeyActive(actionCode, active);
+        }
+    }
+
+    /// <summary>
+    /// Gets the active state of a specified action key.
+    /// </summary>
+    /// <param name="action">Action code to check</param>
+    /// <returns>True if active, false otherwise</returns>
+    public bool GetKeyActive(ActionCode action)
+    {
+        return keyActiveFlags[action];
+    }
+
+    /// <summary>
+    /// Gets the keyMappings.
+    /// </summary>
+    public Dictionary<ActionCode,KeyCode> GetKeyActions()
+    {
+        return keyMappings;
+    }
+
+    /// <summary>
+    /// Sets a new key mapping for a specified action.
+    /// </summary>
+    /// <param name="actionCode">Action code to map</param>
+    /// <param name="newKey">New KeyCode to assign</param>
+    public void SetKey(ActionCode actionCode, KeyCode newKey)
+    {
+        if (keyMappings.ContainsKey(actionCode))
+        {
+            keyMappings[actionCode] = newKey;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the specified key was pressed down in this frame.
+    /// </summary>
+    /// <param name="action">Action code to check</param>
+    /// <returns>True if key was pressed down, false otherwise</returns>
+    public bool GetKeyDown(ActionCode action)
+    {
+        try
+        {
+            if (keyActiveFlags[action] && keyDownBools[action])
             {
-                { ActionCode.Attack, KeyCode.Mouse0 },
-                { ActionCode.Skill, KeyCode.Mouse1 },
-                { ActionCode.Dash, KeyCode.LeftShift },
-                { ActionCode.Interaction, KeyCode.Space },
-                { ActionCode.MoveUp, KeyCode.W },
-                { ActionCode.MoveDown, KeyCode.S },
-                { ActionCode.MoveRight, KeyCode.D },
-                { ActionCode.MoveLeft, KeyCode.A },
-                { ActionCode.RunePage, KeyCode.I },
-                { ActionCode.Option, KeyCode.Escape},
-                { ActionCode.SelectClick, KeyCode.Mouse0 },
-            };
-        }
-
-        Vector3 moveVector = new Vector3();
-        private List<Vector2> directionList = new List<Vector2>();
-
-        private List<IInputListener> inputListeners = new List<IInputListener>();
-
-        /// <summary>
-        /// Checks if the specified action code represents a movement action.
-        /// </summary>
-        /// <param name="action">Action code to check</param>
-        /// <returns>True if action is movement-related, otherwise false</returns>
-        public bool isMoveActioncode(ActionCode action)
-        {
-            return (int)action >= (int)ActionCode.MoveUp && (int)action <= (int)ActionCode.MoveLeft;
-        }
-
-        /// <summary>
-        /// Sets the active state of a specific action key.
-        /// </summary>
-        /// <param name="action">Action code to set</param>
-        /// <param name="active">True to activate, false to deactivate</param>
-        public void SetKeyActive(ActionCode action, bool active)
-        {
-            keyActiveFlags[action] = active;
-        }
-
-
-        /// <summary>
-        /// Activates or deactivates all actions.
-        /// </summary>
-        /// <param name="active">True to activate movement actions, false to deactivate</param>
-        public void SetActionState(bool active)
-        {
-            foreach (ActionCode actionCode in keyMappings.Keys)
-            {
-                SetKeyActive(actionCode, active);
-            }
-        }
-
-        /// <summary>
-        /// Gets the active state of a specified action key.
-        /// </summary>
-        /// <param name="action">Action code to check</param>
-        /// <returns>True if active, false otherwise</returns>
-        public bool GetKeyActive(ActionCode action)
-        {
-            return keyActiveFlags[action];
-        }
-
-        /// <summary>
-        /// Gets the keyMappings.
-        /// </summary>
-        public Dictionary<ActionCode,KeyCode> GetKeyActions()
-        {
-            return keyMappings;
-        }
-
-        /// <summary>
-        /// Sets a new key mapping for a specified action.
-        /// </summary>
-        /// <param name="actionCode">Action code to map</param>
-        /// <param name="newKey">New KeyCode to assign</param>
-        public void SetKey(ActionCode actionCode, KeyCode newKey)
-        {
-            if (keyMappings.ContainsKey(actionCode))
-            {
-                keyMappings[actionCode] = newKey;
-            }
-        }
-
-        /// <summary>
-        /// Returns true if the specified key was pressed down in this frame.
-        /// </summary>
-        /// <param name="action">Action code to check</param>
-        /// <returns>True if key was pressed down, false otherwise</returns>
-        public bool GetKeyDown(ActionCode action)
-        {
-            try
-            {
-                if (keyActiveFlags[action] && keyDownBools[action])
-                {
-                    keyDownBools[action] = false;
-                    return true;
-                }
-
-            }
-            catch (KeyNotFoundException e)
-            {
-                keyActiveFlags[action] = true;
                 keyDownBools[action] = false;
+                return true;
             }
+
+        }
+        catch (KeyNotFoundException e)
+        {
+            keyActiveFlags[action] = true;
+            keyDownBools[action] = false;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Returns a Vector3 representing the current movement direction based on input.
+    /// </summary>
+    /// <returns>Movement direction as Vector3</returns>
+    public Vector3 GetMoveVector()
+    {
+        if (GetKey(ActionCode.MoveUp))
+        {
+            if (!directionList.Contains(Vector2.up))
+            {
+                directionList.Add(Vector2.up);
+            }
+        }
+        else
+        {
+            directionList.Remove(Vector2.up);
+        }
+
+        if (GetKey(ActionCode.MoveDown))
+        {
+            if (!directionList.Contains(Vector2.down))
+            {
+                directionList.Add(Vector2.down);
+            }
+        }
+        else
+        {
+            directionList.Remove(Vector2.down);
+        }
+        if (GetKey(ActionCode.MoveLeft))
+        {
+            if (!directionList.Contains(Vector2.left))
+            {
+                directionList.Add(Vector2.left);
+            }
+        }
+        else
+        {
+            directionList.Remove(Vector2.left);
+        }
+
+        if (GetKey(ActionCode.MoveRight))
+        {
+            if (!directionList.Contains(Vector2.right))
+            {
+                directionList.Add(Vector2.right);
+            }
+        }
+        else
+        {
+            directionList.Remove(Vector2.right);
+        }
+
+        if (directionList.Count > 0)
+        {
+            moveVector.x = directionList[^1].x;
+            moveVector.y = directionList[^1].y;
+        }
+        else
+        {
+            moveVector.x = 0;
+            moveVector.y = 0;
+        }
+
+        return moveVector;
+    }
+
+    /// <summary>
+    /// Returns true if the specified key is currently being held down.
+    /// </summary>
+    /// <param name="action">Action code to check</param>
+    /// <returns>True if key is held down, otherwise false</returns>
+    public bool GetKey(ActionCode action)
+    {
+        try
+        {
+            return (Input.GetKey(keyMappings[action]) && keyActiveFlags[action]);
+        }
+        catch (KeyNotFoundException e)
+        {
+            SetDefaultKey();
             return false;
         }
+    }
 
-        /// <summary>
-        /// Returns a Vector3 representing the current movement direction based on input.
-        /// </summary>
-        /// <returns>Movement direction as Vector3</returns>
-        public Vector3 GetMoveVector()
-        {
-            if (GetKey(ActionCode.MoveUp))
-            {
-                if (!directionList.Contains(Vector2.up))
-                {
-                    directionList.Add(Vector2.up);
-                }
-            }
-            else
-            {
-                directionList.Remove(Vector2.up);
-            }
+    /// <summary>
+    /// Registers a listener to receive input events.
+    /// </summary>
+    /// <param name="listener">Listener to add</param>
+    public void SetInputListener(IInputListener listener)
+    {
+        inputListeners.Add(listener);
+    }
 
-            if (GetKey(ActionCode.MoveDown))
-            {
-                if (!directionList.Contains(Vector2.down))
-                {
-                    directionList.Add(Vector2.down);
-                }
-            }
-            else
-            {
-                directionList.Remove(Vector2.down);
-            }
-            if (GetKey(ActionCode.MoveLeft))
-            {
-                if (!directionList.Contains(Vector2.left))
-                {
-                    directionList.Add(Vector2.left);
-                }
-            }
-            else
-            {
-                directionList.Remove(Vector2.left);
-            }
+    private IEnumerator KeyDownCounter(ActionCode action)
+    {
+        yield return new WaitForSeconds(KET_DOWN_DELAY);
+        keyDownBools[action] = false;
+        keyDownCounterCoroutine[action] = null;
+    }
 
-            if (GetKey(ActionCode.MoveRight))
-            {
-                if (!directionList.Contains(Vector2.right))
-                {
-                    directionList.Add(Vector2.right);
-                }
-            }
-            else
-            {
-                directionList.Remove(Vector2.right);
-            }
-
-            if (directionList.Count > 0)
-            {
-                moveVector.x = directionList[^1].x;
-                moveVector.y = directionList[^1].y;
-            }
-            else
-            {
-                moveVector.x = 0;
-                moveVector.y = 0;
-            }
-
-            return moveVector;
-        }
-
-        /// <summary>
-        /// Returns true if the specified key is currently being held down.
-        /// </summary>
-        /// <param name="action">Action code to check</param>
-        /// <returns>True if key is held down, otherwise false</returns>
-        public bool GetKey(ActionCode action)
+    private void Update()
+    {
+        foreach (ActionCode action in keyMappings.Keys)
         {
             try
             {
-                return (UnityEngine.Input.GetKey(keyMappings[action]) && keyActiveFlags[action]);
+                if (keyActiveFlags[action])
+                {
+                    if (Input.GetKeyDown(keyMappings[action]))//
+                    {
+                        keyDownBools[action] = true;
+                        keyDownBoolsForListener[action] = true;
+                        Coroutine tempCoroutine = keyDownCounterCoroutine[action];
+                        if (tempCoroutine != null)
+                        {
+                            StopCoroutine(tempCoroutine);
+                        }
+
+                        keyDownCounterCoroutine[action] = StartCoroutine(KeyDownCounter(action));
+                    }
+                }
             }
             catch (KeyNotFoundException e)
             {
                 SetDefaultKey();
-                return false;
+                keyDownCounterCoroutine[action] = null;
+                keyDownBools[action] = false;
+                keyActiveFlags[action] = true;
             }
+            
         }
 
-        /// <summary>
-        /// Registers a listener to receive input events.
-        /// </summary>
-        /// <param name="listener">Listener to add</param>
-        public void SetInputListener(IInputListener listener)
-        {
-            inputListeners.Add(listener);
-        }
+    }
 
-        private IEnumerator KeyDownCounter(ActionCode action)
+    private void InitKeyDownDictionarys()
+    {
+        foreach (ActionCode action in Enum.GetValues(typeof(ActionCode)))
         {
-            yield return new WaitForSeconds(KET_DOWN_DELAY);
-            keyDownBools[action] = false;
-            keyDownCounterCoroutine[action] = null;
+            keyDownBools.Add(action, false);
+            keyDownCounterCoroutine.Add(action, null);
+            keyActiveFlags.Add(action, true);
+            keyDownBoolsForListener.Add(action, false);
         }
+    }
 
-        private void Update()
+    private IEnumerator CallListenersCoroutine()
+    {
+        while (true)
         {
+            yield return new WaitForSecondsRealtime(KEY_LISTENER_DELAY);
             foreach (ActionCode action in keyMappings.Keys)
             {
-                try
+                if (keyActiveFlags[action])
                 {
-                    if (keyActiveFlags[action])
+                    if (keyDownBoolsForListener[action])
                     {
-                        if (UnityEngine.Input.GetKeyDown(keyMappings[action]))//
-                        {
-                            keyDownBools[action] = true;
-                            keyDownBoolsForListener[action] = true;
-                            Coroutine tempCoroutine = keyDownCounterCoroutine[action];
-                            if (tempCoroutine != null)
-                            {
-                                StopCoroutine(tempCoroutine);
-                            }
-
-                            keyDownCounterCoroutine[action] = StartCoroutine(KeyDownCounter(action));
-                        }
+                        keyDownBoolsForListener[action] = false;
+                        CallOnKeyDownListeners(action);
+                    }
+                    else if (Input.GetKey(keyMappings[action]))
+                    {
+                        CallOnKeyListeners(action);
+                    }
+                    else if (Input.GetKeyUp(keyMappings[action]))
+                    {
+                        CallOnKeyUpListeners(action);
                     }
                 }
-                catch (KeyNotFoundException e)
-                {
-                    SetDefaultKey();
-                    keyDownCounterCoroutine[action] = null;
-                    keyDownBools[action] = false;
-                    keyActiveFlags[action] = true;
-                }
-            
-            }
-
-        }
-
-        private void InitKeyDownDictionarys()
-        {
-            foreach (ActionCode action in Enum.GetValues(typeof(ActionCode)))
-            {
-                keyDownBools.Add(action, false);
-                keyDownCounterCoroutine.Add(action, null);
-                keyActiveFlags.Add(action, true);
-                keyDownBoolsForListener.Add(action, false);
-            }
-        }
-
-        private IEnumerator CallListenersCoroutine()
-        {
-            while (true)
-            {
-                yield return new WaitForSecondsRealtime(KEY_LISTENER_DELAY);
-                foreach (ActionCode action in keyMappings.Keys)
-                {
-                    if (keyActiveFlags[action])
-                    {
-                        if (keyDownBoolsForListener[action])
-                        {
-                            keyDownBoolsForListener[action] = false;
-                            CallOnKeyDownListeners(action);
-                        }
-                        else if (UnityEngine.Input.GetKey(keyMappings[action]))
-                        {
-                            CallOnKeyListeners(action);
-                        }
-                        else if (UnityEngine.Input.GetKeyUp(keyMappings[action]))
-                        {
-                            CallOnKeyUpListeners(action);
-                        }
-                    }
-
-                }
-            }
-        }
-
-        private void Start()
-        {
-            SetDefaultKey();
-            InitKeyDownDictionarys();
-            StartCoroutine(CallListenersCoroutine());
-        }
-
-        private void CallOnKeyListeners(ActionCode action)
-        {
-            foreach (IInputListener listener in inputListeners)
-            {
-                listener.OnKey(action, InputType.Press);
 
             }
         }
+    }
 
-        private void CallOnKeyDownListeners(ActionCode action)
+    private void Start()
+    {
+        SetDefaultKey();
+        InitKeyDownDictionarys();
+        StartCoroutine(CallListenersCoroutine());
+    }
+
+    private void CallOnKeyListeners(ActionCode action)
+    {
+        foreach (IInputListener listener in inputListeners)
         {
-            foreach (IInputListener listener in inputListeners)
-            {
-                listener.OnKey(action, InputType.Down);
+            listener.OnKey(action, InputType.Press);
 
-            }
         }
+    }
 
-        private void CallOnKeyUpListeners(ActionCode action)
+    private void CallOnKeyDownListeners(ActionCode action)
+    {
+        foreach (IInputListener listener in inputListeners)
         {
-            foreach (IInputListener listener in inputListeners)
-            {
-                listener.OnKey(action, InputType.Up);
+            listener.OnKey(action, InputType.Down);
 
-            }
+        }
+    }
+
+    private void CallOnKeyUpListeners(ActionCode action)
+    {
+        foreach (IInputListener listener in inputListeners)
+        {
+            listener.OnKey(action, InputType.Up);
+
         }
     }
 }

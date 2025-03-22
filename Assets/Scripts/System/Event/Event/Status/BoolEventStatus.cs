@@ -1,6 +1,7 @@
-namespace System.Event.Event.Status
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BoolEventStatus : EventStatus<bool>
 {
-    public class BoolEventStatus : EventStatus<bool>
-    {
-    }
 }

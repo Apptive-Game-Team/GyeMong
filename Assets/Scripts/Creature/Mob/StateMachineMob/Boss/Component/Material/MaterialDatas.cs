@@ -1,31 +1,28 @@
 using System;
 using UnityEngine;
 
-namespace Creature.Mob.StateMachineMob.Boss.Component.Material
+[Serializable]
+public class MaterialData
 {
-    [Serializable]
-    public class MaterialData
-    {
-        public UnityEngine.Material material;
-        public MaterialController.MaterialType materialType;
-        public string triggerName;
-    }
+    public Material material;
+    public MaterialController.MaterialType materialType;
+    public string triggerName;
+}
 
-    [CreateAssetMenu(fileName = "MaterialsData", menuName = "ScriptableObjects/MaterialsData")]
-    public class MaterialDatas : ScriptableObject
-    {
-        public MaterialData[] materialDatas;
+[CreateAssetMenu(fileName = "MaterialsData", menuName = "ScriptableObjects/MaterialsData")]
+public class MaterialDatas : ScriptableObject
+{
+    public MaterialData[] materialDatas;
 
-        public MaterialData Get(MaterialController.MaterialType type)
+    public MaterialData Get(MaterialController.MaterialType type)
+    {
+        foreach (MaterialData materialData in materialDatas)
         {
-            foreach (MaterialData materialData in materialDatas)
+            if (materialData.materialType == type)
             {
-                if (materialData.materialType == type)
-                {
-                    return materialData;
-                }
+                return materialData;
             }
-            return null;
         }
+        return null;
     }
 }

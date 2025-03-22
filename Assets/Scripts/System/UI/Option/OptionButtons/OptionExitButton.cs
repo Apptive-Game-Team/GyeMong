@@ -1,25 +1,23 @@
-using Creature.Player;
+using System.UI.Option;
+using playerCharacter;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace System.UI.Option.OptionButtons
+public class OptionExitButton : MonoBehaviour
 {
-    public class OptionExitButton : MonoBehaviour
+    private void Start()
     {
-        private void Start()
-        {
-            if (SceneManager.GetActiveScene().name == "TitleScene")
-            {
-                gameObject.SetActive(false);
-            }
-        }
-
-        public void ExitButton()
+        if (SceneManager.GetActiveScene().name == "TitleScene")
         {
             gameObject.SetActive(false);
-            OptionUIToggler.Instance.ToggleOption();
-            Destroy(PlayerCharacter.Instance.gameObject);
-            SceneManager.LoadScene("TitleScene");
         }
+    }
+
+    public void ExitButton()
+    {
+        gameObject.SetActive(false);
+        OptionUIToggler.Instance.ToggleOption();
+        Destroy(PlayerCharacter.Instance.gameObject);
+        SceneManager.LoadScene("TitleScene");
     }
 }

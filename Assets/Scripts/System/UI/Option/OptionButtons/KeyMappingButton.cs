@@ -1,15 +1,12 @@
-using System.UI.Option.KeyMapping;
+using System.UI.Option;
 using UnityEngine;
 
-namespace System.UI.Option.OptionButtons
+public class KeyMappingButton : MonoBehaviour
 {
-    public class KeyMappingButton : MonoBehaviour
+    public void OnClickButton()
     {
-        public void OnClickButton()
-        {
-            OptionUI.Instance.isOptionUITop = false;
-            KeyButtonTexts.Instance.UpdateKeyText();
-            KeyMappingUI.Instance.OpenKeyMappingUI();
-        }
+        OptionUI.Instance.isOptionUITop = false;
+        KeyButtonTexts.Instance.UpdateKeyText();
+        KeyMappingUI.Instance.OpenKeyMappingUI();
     }
 }

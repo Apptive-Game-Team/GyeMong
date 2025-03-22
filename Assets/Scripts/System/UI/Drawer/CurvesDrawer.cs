@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace System.UI.Drawer
+namespace UI.LineDrawer
 {
     public class CurvesDrawer : Image
     {

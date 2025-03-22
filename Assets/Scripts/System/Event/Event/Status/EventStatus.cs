@@ -1,18 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace System.Event.Event.Status
+public class EventStatus<T> : MonoBehaviour
 {
-    public class EventStatus<T> : MonoBehaviour
-    {
-        [SerializeField] private T status;
+    [SerializeField] private T status;
 
-        public void SetStatus(T status)
-        {
-            this.status = status;
-        }
-        public T GetStatus()
-        {
-            return status;
-        }
+    public void SetStatus(T status)
+    {
+        this.status = status;
+    }
+    public T GetStatus()
+    {
+        return status;
     }
 }

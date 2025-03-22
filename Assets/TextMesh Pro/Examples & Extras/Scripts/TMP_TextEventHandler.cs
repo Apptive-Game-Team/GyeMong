@@ -1,10 +1,10 @@
-﻿using System;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using System;
 
-namespace TextMesh_Pro.Examples___Extras.Scripts
+
+namespace TMPro
 {
 
     public class TMP_TextEventHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler

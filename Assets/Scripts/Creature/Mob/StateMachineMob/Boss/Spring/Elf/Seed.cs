@@ -1,11 +1,11 @@
 using System;
+using playerCharacter;
 using System.Collections;
 using System.Sound;
-using Creature.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Creature.Mob.StateMachineMob.Boss.Spring.Elf
+namespace Creature.Boss.Spring.Elf
 {
     [Obsolete("Use AttackObjectController instead")]
     public class Seed : MonoBehaviour
@@ -82,7 +82,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             else if (collision.CompareTag("Boss") && isReflected)
             {
-                collision.GetComponent<global::Creature.Mob.StateMachineMob.Boss.Spring.Elf.Elf>().StartCoroutine(collision.GetComponent<global::Creature.Mob.StateMachineMob.Boss.Spring.Elf.Elf>().Stun(5f));
+                collision.GetComponent<Mob.Boss.Spring.Elf.Elf>().StartCoroutine(collision.GetComponent<Mob.Boss.Spring.Elf.Elf>().Stun(5f));
                 Destroy(gameObject);
             }
         }

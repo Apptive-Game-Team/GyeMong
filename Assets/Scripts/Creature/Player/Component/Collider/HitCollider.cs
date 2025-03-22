@@ -5,7 +5,7 @@ using Creature.Attack;
 using Creature.Attack.Component;
 using UnityEngine;
 
-using LastEnemyAttackInfo = Creature.Mob.StateMachineMob.Boss.EnemyAttackInfo; 
+using LastEnemyAttackInfo = Creature.Boss.EnemyAttackInfo; 
 
 
 namespace Creature.Player.Component.Collider
@@ -32,12 +32,12 @@ namespace Creature.Player.Component.Collider
 
                 if (enemyAttackInfo.isDestroyOnHit)
                 {
-                    PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                     other.gameObject.SetActive(false);
                 }
                 else
                 {
-                    PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace Creature.Player.Component.Collider
 
                 if (enemyAttackInfo.canMultiHit)
                 {
-                    PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                     StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
                 }
             }
@@ -74,12 +74,12 @@ namespace Creature.Player.Component.Collider
 
                 if (enemyAttackInfo.isDestroyOnHit)
                 {
-                    PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                     other.collider.gameObject.SetActive(false);
                 }
                 else
                 {
-                    PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace Creature.Player.Component.Collider
 
                 if (enemyAttackInfo.canMultiHit)
                 {
-                    PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                     StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
                 }
             }
@@ -123,12 +123,12 @@ namespace Creature.Player.Component.Collider
 
                     if (enemyAttackInfo.isDestroyOnHit)
                     {
-                        PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                         other.collider.gameObject.SetActive(false);
                     }
                     else
                     {
-                        PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                     }
                 }
 
@@ -153,7 +153,7 @@ namespace Creature.Player.Component.Collider
 
                     if (enemyAttackInfo.isMultiHit)
                     {
-                        PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
                         StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
                     }
                 }
@@ -171,8 +171,8 @@ namespace Creature.Player.Component.Collider
             if (controller.AttackInfo.knockbackAmount > 0)
             {
                 Vector3 origin = controller.gameObject.transform.position;
-                Vector3 direction = PlayerCharacter.Instance.transform.position - origin;
-                StartCoroutine(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + PlayerCharacter.Instance.transform.position));
+                Vector3 direction = playerCharacter.PlayerCharacter.Instance.transform.position - origin;
+                StartCoroutine(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + playerCharacter.PlayerCharacter.Instance.transform.position));
             }
         }
     }

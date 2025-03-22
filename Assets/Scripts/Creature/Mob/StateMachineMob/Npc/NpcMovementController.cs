@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Event.Interface;
-using Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
-using Creature.Player;
+using playerCharacter;
 using UnityEngine;
 
 namespace Creature.Mob.StateMachineMob.Npc

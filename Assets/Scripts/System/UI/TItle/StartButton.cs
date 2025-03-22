@@ -1,21 +1,19 @@
+using playerCharacter;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace System.UI.TItle
+public class StartButton : MonoBehaviour
 {
-    public class StartButton : MonoBehaviour
+    private GameObject optionExitButton;
+
+    private void Start()
     {
-        private GameObject optionExitButton;
+        optionExitButton = GameObject.Find("OptionController").transform.GetChild(0).GetChild(0).Find("OptionExitButton").gameObject;
+    }
 
-        private void Start()
-        {
-            optionExitButton = GameObject.Find("OptionController").transform.GetChild(0).GetChild(0).Find("OptionExitButton").gameObject;
-        }
-
-        public void StartGame()
-        {
-            optionExitButton.SetActive(true);
-            SceneManager.LoadScene("SpringTutorialScene");
-        }
+    public void StartGame()
+    {
+        optionExitButton.SetActive(true);
+        SceneManager.LoadScene("SpringTutorialScene");
     }
 }

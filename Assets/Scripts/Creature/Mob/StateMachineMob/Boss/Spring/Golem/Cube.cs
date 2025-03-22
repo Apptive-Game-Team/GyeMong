@@ -3,7 +3,7 @@ using System.Collections;
 using System.Sound;
 using UnityEngine;
 
-namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
+namespace Creature.Boss.Spring.Golem
 {
     [Obsolete("Use AttackObjectController instead")]
     public class Cube : MonoBehaviour
@@ -78,7 +78,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             if (isFalled && other.CompareTag("Boss"))
             {
-                other.GetComponent<global::Creature.Mob.StateMachineMob.Boss.Boss>().StartCoroutine(other.GetComponent<global::Creature.Mob.StateMachineMob.Boss.Boss>().Stun(5f));
+                other.GetComponent<Mob.StateMachineMob.Boss.Boss>().StartCoroutine(other.GetComponent<Mob.StateMachineMob.Boss.Boss>().Stun(5f));
                 Destroy(gameObject);
                 Destroy(shadow);
             }

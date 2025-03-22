@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Art_Resources.Cainos.Pixel_Art_Top_Down___Basic.Script
+namespace Cainos.PixelArtTopDown_Basic
 {
     //animate the sprite color base on the gradient and time
     public class SpriteColorAnimation : MonoBehaviour

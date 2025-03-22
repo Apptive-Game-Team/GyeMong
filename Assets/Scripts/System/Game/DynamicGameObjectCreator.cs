@@ -1,4 +1,3 @@
-using System.Event.Controller.Condition;
 using UnityEngine;
 
 namespace System.Game

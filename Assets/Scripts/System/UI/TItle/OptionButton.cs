@@ -1,13 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.UI.Option;
 using UnityEngine;
 
-namespace System.UI.TItle
+public class OptionButton : MonoBehaviour
 {
-    public class OptionButton : MonoBehaviour
+    public void Option()
     {
-        public void Option()
-        {
-            OptionUIToggler.Instance.ToggleOption();
-        }
+        OptionUIToggler.Instance.ToggleOption();
     }
 }
