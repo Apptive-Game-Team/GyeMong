@@ -6,8 +6,7 @@ namespace Map.Puzzle.TemplePuzzle
 {
     public class BallMovement : MonoBehaviour
     {
-        public float moveSpeed = 3f;
-        private float delayTime = 1f;
+        public float moveSpeed = 2f;
         public TempleTile currentTile;
         public bool isMoving = false;
         private Vector3 startPosition;
@@ -52,8 +51,6 @@ namespace Map.Puzzle.TemplePuzzle
                         currentTile.iswalked = true;
                         visitedTiles.Add(currentTile);
                     }
-
-                    yield return new WaitForSeconds(delayTime);
 
                     currentTile = GetCurrentTile();
 
