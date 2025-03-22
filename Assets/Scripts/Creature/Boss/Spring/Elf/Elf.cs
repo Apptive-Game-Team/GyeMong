@@ -18,9 +18,7 @@ namespace Creature.Boss.Spring.Elf
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
-        //[SerializeField] private GameObject BombPrefab;
         float attackdelayTime = 1f;
-        private FootSoundController footSoundController;
         [SerializeField] private SoundObject arrowSoundObject;
         [SerializeField] private SoundObject vineSoundObject;
 
@@ -38,7 +36,6 @@ namespace Creature.Boss.Spring.Elf
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
-            footSoundController = transform.Find("FootSoundObject").GetComponent<FootSoundController>();
         }
         public abstract class ElfState : BossState
         {
@@ -77,33 +74,6 @@ namespace Creature.Boss.Spring.Elf
                 return weights;
             }
         }
-
-        /*public class MoveState : ElfState
-        {
-            public override int GetWeight()
-            {
-                return (Elf.DistanceToPlayer > Elf.MeleeAttackRange) ? 5 : 0;
-            }
-
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("isMove", true);
-                Elf.Animator.SetFloat("moveType", 0);
-                float duration = 2f;
-                float timer = 0f;
-
-                while (duration > timer && Elf.DistanceToPlayer > Elf.MeleeAttackRange)
-                {
-                    timer += Time.deltaTime;
-                    yield return null;
-                    Elf.TrackPlayer();
-                }
-
-                Elf.Animator.SetBool("isMove", false);
-                Elf.ChangeState();
-            }
-        }*/
-
         public new class BackStep : ElfState
         {
             public override int GetWeight()
@@ -116,7 +86,6 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.BackStep(Elf.RangedAttackRange);
-
                 Elf.Animator.SetBool("isMove", false);
                 Elf.ChangeState();
             }
@@ -196,7 +165,7 @@ namespace Creature.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
-                GameObject arrow = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+                Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
                 yield return Elf.arrowSoundObject.Play();
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -328,39 +297,6 @@ namespace Creature.Boss.Spring.Elf
                 yield return spawnedObjects;
             }
         }
-        /*public class TransPhasePattern : ElfState
-        {
-            public float warningDuration = 2f;
-            public int numWarnings = 8;
-            public float range = 10f;
-            public override int GetWeight()
-            {
-                return 0;
-            }
-            public override IEnumerator StateCoroutine()
-            {
-                List<Vector2> warningPositions = GenerateWarning(numWarnings, range);
-                foreach (var position in warningPositions)
-                {
-                    Instantiate(Elf.BombPrefab, position, Quaternion.identity);
-                }
-                yield return new WaitForSeconds(warningDuration);
-                Elf.ChangeState();
-            }
-            private List<Vector2> GenerateWarning(int count, float range)
-            {
-                List<Vector2> positions = new List<Vector2>();
-
-                for (int i = 0; i < count; i++)
-                {
-                    float x = Elf.transform.position.x + Random.Range(-range, range);
-                    float y = Elf.transform.position.y + Random.Range(-range, range);
-                    Vector2 randomPosition = new Vector2(x, y);
-                    positions.Add(randomPosition);
-                }
-                return positions;
-            }
-        }*/
         protected override void TransPhase()
         {
             base.TransPhase(); 
@@ -373,10 +309,8 @@ namespace Creature.Boss.Spring.Elf
         private void SpawnAttackCollider(Vector3 direction)
         {
             Vector2 spawnPosition = transform.position + direction * 1f;
-
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
-
             GameObject attackCollider = Instantiate(meleeAttackPrefab, spawnPosition, spawnRotation, transform);
             Destroy(attackCollider, attackdelayTime/2);
         }
