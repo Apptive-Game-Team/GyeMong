@@ -516,10 +516,25 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4929745152392417421, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4929745152392417421, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8028616040389388578, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9074789377683919269, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
@@ -3122,6 +3137,7 @@ MonoBehaviour:
   - rid: 4949244152063721493
   - rid: 4949244152063721492
   - rid: 4949244154642169860
+  - rid: 4949244154642169860
   - rid: 4949244154642169861
   references:
     version: 2
@@ -3184,7 +3200,7 @@ MonoBehaviour:
         endPosition: {x: 0, y: 200}
         moveTime: 0.5
         targetSize: {x: 800, y: 540}
-        imageDelayTime: 0.5
+        imageDelayTime: 1
     - rid: 4949244152063721474
       type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -3193,7 +3209,7 @@ MonoBehaviour:
         endPosition: {x: 0, y: 200}
         moveTime: 0.5
         targetSize: {x: 800, y: 540}
-        imageDelayTime: 0.5
+        imageDelayTime: 1
     - rid: 4949244152063721475
       type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -3202,7 +3218,7 @@ MonoBehaviour:
         endPosition: {x: 0, y: 200}
         moveTime: 0.5
         targetSize: {x: 800, y: 540}
-        imageDelayTime: 0.5
+        imageDelayTime: 1
     - rid: 4949244152063721476
       type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -3211,7 +3227,7 @@ MonoBehaviour:
         endPosition: {x: 0, y: 200}
         moveTime: 0.5
         targetSize: {x: 800, y: 540}
-        imageDelayTime: 0.5
+        imageDelayTime: 1
     - rid: 4949244152063721477
       type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -3220,7 +3236,7 @@ MonoBehaviour:
         endPosition: {x: 0, y: 200}
         moveTime: 0.5
         targetSize: {x: 800, y: 540}
-        imageDelayTime: 0.5
+        imageDelayTime: 1
     - rid: 4949244152063721478
       type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -5499,6 +5515,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuneCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260879668609468630, guid: a8c638ca210ca99478b7eae65070be1d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7618350676042751725, guid: a8c638ca210ca99478b7eae65070be1d,
         type: 3}
