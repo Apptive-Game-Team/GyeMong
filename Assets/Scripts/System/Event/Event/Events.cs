@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Sound;
 using Creature.Player.Component;
 using Unity.VisualScripting;
 using playerCharacter;

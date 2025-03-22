@@ -1,9 +1,10 @@
-using playerCharacter;
+using System;
 using System.Collections;
 using UnityEngine;
 
 namespace Creature.Boss.Spring.Elf
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class Vine : MonoBehaviour
     {
         private float damage = 20f;

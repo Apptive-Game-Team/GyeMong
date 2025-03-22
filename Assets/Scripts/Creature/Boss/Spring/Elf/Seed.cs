@@ -1,10 +1,13 @@
+using System;
 using playerCharacter;
 using System.Collections;
-using System.Collections.Generic;
+using System.Sound;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Creature.Boss.Spring.Elf
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class Seed : BossAttack
     {
         private Vector3 direction;
@@ -20,8 +23,8 @@ namespace Creature.Boss.Spring.Elf
          
         protected override void Awake()
         {
-            base.Awake();
             damage = 20f;
+            base.Awake();
             _eventObject = GetComponent<EventObject>();
             _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
             _explosionSoundObject = GetComponent<SoundObject>();
@@ -90,7 +93,7 @@ namespace Creature.Boss.Spring.Elf
             }
             else if (collision.CompareTag("Boss") && isReflected)
             {
-                collision.GetComponent<Boss>().StartCoroutine(collision.GetComponent<Boss>().Stun());
+                collision.GetComponent<Elf>().StartCoroutine(collision.GetComponent<Elf>().Stun(5f));
                 Destroy(gameObject);
             }
         }

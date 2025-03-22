@@ -1,9 +1,13 @@
+using System;
 using playerCharacter;
 using System.Collections;
+using System.Sound;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Creature.Boss.Spring.Elf
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class Arrow : BossAttack
     {
         private Vector3 direction;
@@ -18,8 +22,8 @@ namespace Creature.Boss.Spring.Elf
 
         protected override void Awake()
         {
-            base.Awake();
             damage = 20f;
+            base.Awake();
             _eventObject = GetComponent<EventObject>();
             _soundObject = GameObject.Find("ArrowHitSoundObject").GetComponent<SoundObject>();
             rb = GetComponent<Rigidbody2D>();
@@ -40,13 +44,8 @@ namespace Creature.Boss.Spring.Elf
         private IEnumerator FireArrow(float remainingDistance)
         {
             Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-            float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-            float randomAngle = Random.Range(baseAngle - angleRange, baseAngle + angleRange);
-
-            float randomAngleRad = randomAngle * Mathf.Deg2Rad;
-            direction = new Vector3(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad), 0).normalized;
-
-            transform.rotation = Quaternion.Euler(0, 0, randomAngle);
+            direction = directionToPlayer;
+            RotateArrow();
             traveledDistance = 0f;
             rb.velocity = direction * speed;
             _soundObject.PlayAsync();

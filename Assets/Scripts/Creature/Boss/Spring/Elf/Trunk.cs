@@ -1,10 +1,10 @@
+using System;
 using playerCharacter;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Creature.Boss.Spring.Elf
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class Trunk : MonoBehaviour
     {
         private float damage = 10f;

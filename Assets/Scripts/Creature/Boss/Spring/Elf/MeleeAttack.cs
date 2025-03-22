@@ -1,10 +1,9 @@
-using playerCharacter;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Creature.Boss.Spring.Elf
 {
+    [Obsolete("Use AttackObjectController instead")]
     public class MeleeAttack : MonoBehaviour
     {
         private float damage = 30f;
