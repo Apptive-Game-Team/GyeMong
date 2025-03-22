@@ -34,12 +34,12 @@ namespace Map.Puzzle.TemplePuzzle
             if (currentTile != null)
             {
                 isMoving = true;
-                animator.SetBool("ismove", true);
 
                 Vector2 direction = GetMoveDirection();
 
                 while (direction != Vector2.zero)
                 {
+                    animator.SetBool("isMove", true);
                     animator.SetFloat("xDir", direction.x);
                     animator.SetFloat("yDir", direction.y);
                     Vector3 targetPosition = currentTile.transform.position + (Vector3)direction;
@@ -64,7 +64,7 @@ namespace Map.Puzzle.TemplePuzzle
                 }
 
                 isMoving = false;
-                animator.SetBool("ismove", false);
+                animator.SetBool("isMove", false);
                 animator.SetFloat("xDir", 0);
                 animator.SetFloat("yDir", 0);
 
