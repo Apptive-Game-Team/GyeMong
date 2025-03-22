@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Creature.Minion.Slime;
+using Creature.Mob.Minion.Slime;
+using Creature.Mob.StateMachineMob.Minion.Slime;
 using Map.Puzzle.Maze;
 using UnityEngine;
 
