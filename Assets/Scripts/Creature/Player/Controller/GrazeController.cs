@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using Creature.Attack;
 using playerCharacter;
-using Unity.VisualScripting;
 using UnityEngine;
-using Creature.Boss;
-using Creature.Player.Component;
+
+using LastEnemyAttackInfo = Creature.Boss.EnemyAttackInfo; 
 
 public class GrazeController : MonoBehaviour
 {
@@ -28,27 +27,6 @@ public class GrazeController : MonoBehaviour
     {
         _playerSoundController = transform.parent.GetComponent<PlayerSoundController>();
     }
-
-/*    private void Update()
-    {
-        for (int i = activeColliders.Count - 1; i >= 0; i--)
-        {
-            Collider2D collider = activeColliders[i];
-
-            if (collider.gameObject == null)
-            {
-                if (!colliderAttackedMap[collider])
-                {
-                    Grazed(collider);
-                    RemoveCollider(collider);
-                }
-                else
-                {
-                    RemoveCollider(collider);
-                }
-            }
-        }
-    }*/
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
@@ -78,10 +56,12 @@ public class GrazeController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collider)
     {
+        if (OnExitWithLast(collider)) return;
+        
         if (collider.CompareTag("EnemyAttack"))
         {
-            if (activeColliders.Contains(collider) && !collider.GetComponent<EnemyAttackInfo>().isAttacked
-                && collider.GetComponent<EnemyAttackInfo>().grazable && !collider.GetComponent<EnemyAttackInfo>().grazed)
+            if (activeColliders.Contains(collider) && !collider.GetComponent<AttackObjectController>().isAttacked
+                && collider.GetComponent<AttackObjectController>().AttackInfo.grazable && !collider.GetComponent<AttackObjectController>().isGrazed)
             {
                 Grazed(collider);
                 RemoveCollider(collider);
@@ -93,14 +73,55 @@ public class GrazeController : MonoBehaviour
         }
     }
 
+    [Obsolete("Don't use this method")]
+    private bool OnExitWithLast(Collider2D collider)
+    {
+        try
+        {
+            if (collider.CompareTag("EnemyAttack"))
+            {
+                if (activeColliders.Contains(collider) && !collider.GetComponent<LastEnemyAttackInfo>().isAttacked
+                                                       && collider.GetComponent<LastEnemyAttackInfo>().grazable &&
+                                                       !collider.GetComponent<LastEnemyAttackInfo>().grazed)
+                {
+                    GrazedWithLast(collider);
+                    RemoveCollider(collider);
+                }
+                else
+                {
+                    RemoveCollider(collider);
+                }
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    [Obsolete("Don't use this method")]
+    private void GrazedWithLast(Collider2D collider)
+    {
+        if (colliderDistanceMap.TryGetValue(collider, out float distance))
+        {
+            PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
+            GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.grazeGainOnGraze.GetValue() / distance} with ratio {distance}");
+            collider.GetComponent<LastEnemyAttackInfo>().grazed = true;
+            _playerSoundController.Trigger(PlayerSoundType.GRAZE);
+            GetComponentInChildren<EventObject>().Trigger();
+        }
+    }
+    
     private void Grazed(Collider2D collider)
     {
         if (colliderDistanceMap.TryGetValue(collider, out float distance))
         {
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
-            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.GrazeGainOnGraze / distance} with ratio {distance}");
-            collider.GetComponent<EnemyAttackInfo>().grazed = true;
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.grazeGainOnGraze.GetValue() / distance} with ratio {distance}");
+            collider.GetComponent<AttackObjectController>().isGrazed = true;
             _playerSoundController.Trigger(PlayerSoundType.GRAZE);
             GetComponentInChildren<EventObject>().Trigger();
         }

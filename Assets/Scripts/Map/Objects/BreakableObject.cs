@@ -4,15 +4,20 @@ namespace Map.Objects
 {
     public class BreakableObject : MonoBehaviour, IAttackable
     {
-        [SerializeField] private float hp;
+        [SerializeField] protected float hp;
         public void OnAttacked(float damage = 0)
         {
             print("BreakableObject Attacked");
             hp -= damage;
             if (hp <= 0)
             {
-                Destroy(gameObject);
+                DestroyEvent();
             }
+        }
+
+        public virtual void DestroyEvent()
+        {
+            Destroy(gameObject);   
         }
     }
 }

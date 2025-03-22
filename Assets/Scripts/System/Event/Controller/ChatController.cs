@@ -17,12 +17,14 @@ public struct MultiChatMessage
 {
     public string name;
     public List<string> messages;
+    public Nullable<float> chatDelay;
 }
 
 public class ChatController : MonoBehaviour
 {
 
     private Image chatWindow;
+    [SerializeField] private GameObject speechBubble;
     private const float CHAT_WINDOW_ALPHA = 0.7f;
     private const float SHOW_CHAT_DELAY = 0.1f;
     private TMP_Text nameText;
@@ -80,6 +82,8 @@ public class ChatController : MonoBehaviour
             yield return ShowMultipleChat(line);
             messageText.text += "\n";
         }
+
+        yield return new WaitForSeconds(multiChatMessage.chatDelay.GetValueOrDefault(0));
     }
 
     private IEnumerator ShowChat(string message)
@@ -98,5 +102,20 @@ public class ChatController : MonoBehaviour
             messageText.text += c;
             yield return new WaitForSeconds(SHOW_CHAT_DELAY);
         }
+    }
+
+    public IEnumerator ShowSpeechBubbleChat(GameObject NPC, string message, float destroyDelay)
+    {
+        GameObject speechBubbles = Instantiate(speechBubble, NPC.transform.position + new Vector3(0.51f,1.43f,0), Quaternion.identity, NPC.transform);
+        TextMeshPro messageText = speechBubbles.transform.Find("Message").GetComponent<TextMeshPro>();
+        messageText.text = message;
+
+        int order = NPC.GetComponent<SpriteRenderer>().sortingOrder;
+        speechBubbles.GetComponent<SpriteRenderer>().sortingOrder = order + 1;
+        messageText.GetComponent<MeshRenderer>().sortingOrder = order + 2;
+        
+        speechBubbles.SetActive(true);
+        yield return new WaitForSeconds(destroyDelay);
+        Destroy(speechBubbles);
     }
 }

@@ -26,7 +26,9 @@ namespace Creature.Boss
                 }
             }
         }
-
+        public abstract class BossState : BaseState
+        {
+        }
         protected void Start()
         {
             Initialize();
@@ -75,11 +77,14 @@ namespace Creature.Boss
             ChangeState();
         }
 
-        public override IEnumerator Stun()
+        public override IEnumerator Stun(float duration)
         {
             currentShield = 0f;
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-            yield return base.Stun();
+            currentState.OnStateExit();
+            StopCoroutine(_currentStateCoroutine);
+            yield return new WaitForSeconds(duration);
+            ChangeState();
         }
 
         protected virtual void Die()

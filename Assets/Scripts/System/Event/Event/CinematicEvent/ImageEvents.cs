@@ -58,10 +58,11 @@ public class ClearImageEvent : ImageEvent
 public class MoveImageEvent : ImageEvent
 {
     [SerializeField] private Sprite sprite;
-    [SerializeField] private Vector2 startPosition = new Vector2(0, 500);
-    [SerializeField] private Vector2 endPosition = new Vector2(0, 0);
-    [SerializeField] private float moveTime = 1f;
-    [SerializeField] private Vector2 targetSize = new Vector2(100, 100);
+    [SerializeField] private Vector2 startPosition = new Vector2(0, 300);
+    [SerializeField] private Vector2 endPosition = new Vector2(0, 200);
+    [SerializeField] private float moveTime = 0.5f;
+    [SerializeField] private Vector2 targetSize = new Vector2(800, 540);
+    [SerializeField] private float imageDelayTime = 0.5f;
     private const float DELTA_TIME = 0.02f;
 
     public override IEnumerator Execute(EventObject eventObject = null)
@@ -92,5 +93,7 @@ public class MoveImageEvent : ImageEvent
         rectTransform.anchoredPosition = endPosition;
         color.a = 1f;
         Image.color = color;
+
+        yield return new WaitForSeconds(imageDelayTime);
     }
 }
