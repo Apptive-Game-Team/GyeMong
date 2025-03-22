@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Game.Buff;
 using System.Game.Buff.Data;
 using Creature.Player.Component;
@@ -19,6 +20,8 @@ namespace System.Game.Rune
         public StatType StatType { get; } 
         public StatValueType ValueType { get; } 
         public float Value { get; }
+        
+        public List<StatSet> StatSetList { get; }
 
         //Too Many Parameters. Struct. Need.
         public ModifyStatContext(StatComponent statComp, StatType statType, StatValueType statValueType , float value)
@@ -27,6 +30,11 @@ namespace System.Game.Rune
             StatType = statType;
             ValueType = statValueType;
             Value = value;
+        }
+
+        public ModifyStatContext(StatComponent statComp, List<StatSet> statSetList)
+        {
+            StatSetList = statSetList;
         }
     }
     

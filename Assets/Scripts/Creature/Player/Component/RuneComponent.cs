@@ -37,24 +37,25 @@ public class RuneComponent : MonoBehaviour
                     new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, StatType.SKILL_COEF, StatValueType.PERCENT_VALUE, 0.3f));
                     break;
                 case 2:
-                    new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, StatType.ATTACK_DELAY, StatValueType.PERCENT_VALUE, -0.2f));
-                    new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, StatType.MOVE_SPEED, StatValueType.PERCENT_VALUE, 0.2f));
-                    new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, StatType.DASH_COOLDOWN, StatValueType.PERCENT_VALUE, -0.2f));
+                    List<StatSet> statSetList = new ()
+                    {
+                        new StatSet(StatType.ATTACK_DELAY, StatValueType.PERCENT_VALUE, -0.2f),
+                        new StatSet(StatType.MOVE_SPEED, StatValueType.PERCENT_VALUE, 0.2f),
+                        new StatSet(StatType.DASH_COOLDOWN, StatValueType.PERCENT_VALUE, -0.2f),
+                    };
+                    new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, statSetList));
                     break;
                 case 3:
-                    // new AddBuffRune().OnActivate(new AddBuffContext(PlayerCharacter.Instance.buffComponent,new BuffObject()));
                     break;
                 case 4:
                     new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, StatType.GRAZE_GAIN_ON_GRAZE, StatValueType.PERCENT_VALUE, 0.3f));
                     break;
                 case 5:
-                    
                     break;
                 case 6:
                     new AddBuffRune().OnActivate(new AddBuffContext(PlayerCharacter.Instance.buffComponent,BuffManager.Instance.stoneArmorRuneData));
                     break;
                 case 7:
-                    
                     break;
                 
             }
@@ -84,6 +85,7 @@ public class RuneComponent : MonoBehaviour
     public void UpgradeRune(RuneData runeData, int upgradeNum)
     {
         runeData.SelectedOption = runeData.availableOptions[upgradeNum];
+        PlayerCharacter.Instance.stat.SetStatValues(runeData.SelectedOption.statList);
     }
 }
 

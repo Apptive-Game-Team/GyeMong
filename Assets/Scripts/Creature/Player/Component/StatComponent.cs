@@ -39,6 +39,13 @@ namespace Creature.Player.Component
         public StatType statType;
         public StatValueType valueType;
         public float value;
+
+        public StatSet(StatType statType, StatValueType valueType, float value)
+        {
+            this.statType = statType;
+            this.valueType = valueType;
+            this.value = value;
+        }
     }
     
     [Serializable]
@@ -168,6 +175,14 @@ namespace Creature.Player.Component
                 statEntries.Add(statEntry);
             }
             statEntry.stat.SetValue(statValueType, value);
+        }
+
+        public void SetStatValues(List<StatSet> statSets)
+        {
+            foreach (var stat in statSets)
+            {
+                SetStatValue(stat.statType, stat.valueType, stat.value);
+            }
         }
     }
 }
