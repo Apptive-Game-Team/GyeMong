@@ -6,7 +6,6 @@ using Creature.Boss.Spring.Golem;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
-using static Creature.Boss.Spring.Elf.Elf;
 
 namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
@@ -65,13 +64,13 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             }
         }
 
-        public abstract class GolemState : BaseState
+        public abstract class GolemState : BossState
         {
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {
                 var weights = new Dictionary<System.Type, int>
                 {
-                    { typeof(MeleeAttack), (creature.DistanceToPlayer < creature.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer < Golem.MeleeAttackRange) ? 5 : 0 },
                     { typeof(FallingCubeAttack), 5 },
                     { typeof(ChargeShield), 5 },
                     { typeof(UpStoneAttack), (Golem.CurrentPhase == 0)  ? 5 : 0 },

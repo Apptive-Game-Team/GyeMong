@@ -11,7 +11,13 @@ namespace Creature.Mob.StateMachineMob
     {
         protected Coroutine _currentStateCoroutine;
         protected BaseState currentState;
-        
+        private void Update()
+        {
+            if (currentState != null)
+            {
+                currentState.OnStateUpdate();
+            }
+        }
         public override void StartMob()
         {
             currentHp = maxHp;

@@ -37,7 +37,7 @@ namespace Creature.Mob.Boss.Spring.Elf
         }
         public abstract class ElfState : BossState
         {
-            public Elf Elf => creature as Elf;
+            public Elf Elf => mob as Elf;
             public override void OnStateUpdate()
             {
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
