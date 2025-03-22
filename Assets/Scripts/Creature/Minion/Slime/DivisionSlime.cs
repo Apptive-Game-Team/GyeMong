@@ -12,8 +12,6 @@ namespace Creature.Minion.Slime
         private const float divideRatio = 0.6f;
         private int divisionLevel = 0;
         private int maxDivisionLevel = 2;
-        private float airborneRange;
-
         
         protected override void Start()
         {
@@ -22,14 +20,16 @@ namespace Creature.Minion.Slime
 
         protected override void Initialize()
         {
-            base.Initialize();
-            
             maxHp = 10f;
             currentHp = maxHp;
+            speed = 2f;
+            
+            _detector = SimplePlayerDetector.Create(this);
+            _pathFinder = new SimplePathFinder();
+            _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
             MeleeAttackRange = 3f;
             RangedAttackRange = 10f;
-            airborneRange = 4f;
 
             damage = 10f;
         }
@@ -50,8 +50,6 @@ namespace Creature.Minion.Slime
                 ChangeState();
             }
         }
-
-        //public class SlimeIdleState : IdleState { }
 
         public class SlimeRangedAttackState : RangedAttackState { }
         public class SlimeMeleeAttackState : MeleeAttackState { }
@@ -129,7 +127,6 @@ namespace Creature.Minion.Slime
                 slimeComponent.damage *= divideRatio;
                 slimeComponent.MeleeAttackRange *= divideRatio;
                 slimeComponent.RangedAttackRange *= divideRatio;
-                slimeComponent.airborneRange *= divideRatio;
                 slimeComponent.divisionLevel = divisionLevel + 1;
                 slimeComponent.StartMob();
             }

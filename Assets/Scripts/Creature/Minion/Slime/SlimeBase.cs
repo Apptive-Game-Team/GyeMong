@@ -80,11 +80,11 @@ namespace Creature.Minion.Slime
             currentShield = 0;
             damage = 10;
             speed = 2;
-            detectionRange = 10;
+            detectionRange = 20;
             MeleeAttackRange = 1;
             RangedAttackRange = 5;
 
-            _detector = SimplePlayerDetector.Create(this);
+            _detector = SimplePlayerDistanceDetector.Create(this);
             _pathFinder = new SimplePathFinder();
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
