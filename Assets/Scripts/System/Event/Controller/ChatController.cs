@@ -106,7 +106,7 @@ public class ChatController : MonoBehaviour
 
     public IEnumerator ShowSpeechBubbleChat(GameObject NPC, string message, float destroyDelay)
     {
-        GameObject speechBubbles = Instantiate(speechBubble, NPC.transform.position + new Vector3(0.51f,1.43f,0), Quaternion.identity, NPC.transform);
+        GameObject speechBubbles = Instantiate(speechBubble, NPC.transform.position + new Vector3(0.51f,1.43f,0), Quaternion.identity);
         TextMeshPro messageText = speechBubbles.transform.Find("Message").GetComponent<TextMeshPro>();
         messageText.text = message;
 
