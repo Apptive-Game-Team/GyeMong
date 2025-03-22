@@ -33,7 +33,14 @@ namespace Creature.Player.Component
         PERCENT_VALUE,
         FINAL_PERCENT_VALUE,
     }
-
+    [Serializable]
+    public class StatSet
+    {
+        public StatType statType;
+        public StatValueType valueType;
+        public float value;
+    }
+    
     [Serializable]
     public class StatEntry
     {

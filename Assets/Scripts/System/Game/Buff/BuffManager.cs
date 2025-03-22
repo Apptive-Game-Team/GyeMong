@@ -17,15 +17,15 @@ namespace System.Game.Buff
         public BuffData breezeRuneData;
         public BuffData stoneArmorRuneData;
     
-        List<Data.Buff> activeBuffList = new List<Data.Buff>();
+        List<Data.Buff> _activeBuffList = new();
         private void Update()
         {
             float deltaTime = Time.deltaTime;
-            for (int i = 0; i < activeBuffList.Count; i++)
+            for (int i = 0; i < _activeBuffList.Count; i++)
             {
-                Data.Buff buff = activeBuffList[i];
+                Data.Buff buff = _activeBuffList[i];
                 buff.UpdateBuff(deltaTime);
-
+                
                 if (buff.IsExpired())
                 {
                     RemoveBuff(buff);
@@ -37,14 +37,14 @@ namespace System.Game.Buff
         {
             Data.Buff newBuff = new Data.Buff(buffData);
             newBuff.target = target;
-            activeBuffList.Add(newBuff);
+            _activeBuffList.Add(newBuff);
             buffData.ApplyEffect(target);
         }
 
         private void RemoveBuff(Data.Buff buff)
         {
             buff.buffData.RemoveEffect(buff.target);
-            activeBuffList.Remove(buff);
+            _activeBuffList.Remove(buff);
         }
 
         public void ApplyDotEffect(IBuffable target, DotBuffData dotBuff)

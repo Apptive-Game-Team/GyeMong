@@ -60,6 +60,9 @@ namespace playerCharacter
 
             Renderer renderer = gameObject.GetComponent<Renderer>();
             renderer.material = materials[0];
+            
+            changeListenerCaller.CallShieldChangeListeners(curShield);
+            changeListenerCaller.CallHpChangeListeners(curHealth);
         }
 
         private void Update()
@@ -154,14 +157,16 @@ namespace playerCharacter
             
             StartCoroutine(EffectManager.Instance.ShakeCamera());
 
-            if (damage > curShield && curShield > 0)
+            if (damage >= curShield && curShield > 0)
             {
-                curShield -= damage;
+                damage -= curShield;
+                curShield = 0;
+                changeListenerCaller.CallShieldChangeListeners(curShield);
             }
             else if (damage < curShield && curShield > 0)
             {
                 curShield -= damage;
-                return ;
+                changeListenerCaller.CallShieldChangeListeners(curShield);
             }
             curHealth -= damage;
             PlayerEvent.TriggerOnTakeDamage(damage);

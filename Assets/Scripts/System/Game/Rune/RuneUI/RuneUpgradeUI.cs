@@ -38,6 +38,7 @@ public class RuneUpgradeUI : SelectableUI, IInteractionalUI, IMouseInputListener
 
     public override void OnInteract()
     {
+        // PlayerCharacter.Instance.GetComponent<RuneComponent>().UpgradeRune();
     }
 
     public override void OnLongInteract()

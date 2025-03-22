@@ -12,6 +12,7 @@ namespace System.Game.Rune
         
     }
     
+    [Serializable]
     public class ModifyStatContext : RuneContext
     {
         public StatComponent StatComp { get;}

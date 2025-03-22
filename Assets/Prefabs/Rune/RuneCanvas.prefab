@@ -3163,7 +3163,7 @@ PrefabInstance:
     - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}
       propertyPath: nodes.Array.size
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}
@@ -3177,14 +3177,19 @@ PrefabInstance:
       objectReference: {fileID: 3246955593258593515}
     - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}
-      propertyPath: nodes.Array.data[4].endNode
+      propertyPath: nodes.Array.data[3].endNode
       value: 
       objectReference: {fileID: 732196628318950259}
     - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}
-      propertyPath: nodes.Array.data[5].endNode
+      propertyPath: nodes.Array.data[4].endNode
       value: 
       objectReference: {fileID: 6699920205430288442}
+    - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
+        type: 3}
+      propertyPath: nodes.Array.data[5].endNode
+      value: 
+      objectReference: {fileID: 6217543125605268966}
     - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}
       propertyPath: nodes.Array.data[6].endNode
@@ -3209,17 +3214,17 @@ PrefabInstance:
         type: 3}
       propertyPath: nodes.Array.data[3].startNode
       value: 
-      objectReference: {fileID: 6993186464879754806}
+      objectReference: {fileID: 3753674703472233922}
     - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}
       propertyPath: nodes.Array.data[4].startNode
       value: 
-      objectReference: {fileID: 3753674703472233922}
+      objectReference: {fileID: 3246955593258593515}
     - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}
       propertyPath: nodes.Array.data[5].startNode
       value: 
-      objectReference: {fileID: 3246955593258593515}
+      objectReference: {fileID: 6699920205430288442}
     - target: {fileID: 1480624883788685288, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}
       propertyPath: nodes.Array.data[6].startNode
@@ -3408,6 +3413,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 835120813598443120, guid: 9aded55a54371495f8ab11b486780ea3, type: 3}
+    - {fileID: 8042628881374447072, guid: 9aded55a54371495f8ab11b486780ea3, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5966617576434156028, guid: 9aded55a54371495f8ab11b486780ea3,
         type: 3}

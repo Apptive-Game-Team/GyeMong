@@ -45,7 +45,7 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListe
         textTitle.text = runeData.name + " <" + runeData.cost + ">"; 
         textDescription.text = runeData.description;
         runeImageUI.sprite = runeData.runeImage;
-        SetRuneUpgradeUI(runeData);
+        if(runeData.availableOptions.Count > 0) SetRuneUpgradeUI(runeData);
     }    
     public void SetDescription(RuneUpgrade upgradeData)
     {
