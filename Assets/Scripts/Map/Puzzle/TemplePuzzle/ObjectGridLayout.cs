@@ -12,10 +12,14 @@ namespace Map.Puzzle.TemplePuzzle
         public int columns = 4;
         public float spacing = 2f;
         public string objectIndices;
+        public GameObject defaultObject;
 
         void Start()
         {
-            CreateGridLayout();
+            if (ConditionManager.Instance.Conditions.GetValueOrDefault("SpringTemplePuzzleIsCleared", false))
+                CreateGridLayout();
+            else
+                defaultObject.SetActive(true);
         }
 
         void CreateGridLayout()

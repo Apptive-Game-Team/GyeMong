@@ -65,7 +65,6 @@ namespace Map.Puzzle.TemplePuzzle
                 if (GoalCheck())
                 {
                     Debug.Log("Success");
-                    TemplePuzzleManager.instance.isCleared = true;
                     ConditionManager.Instance.Conditions["SpringTemplePuzzleIsCleared"] = true;
                 }
 
