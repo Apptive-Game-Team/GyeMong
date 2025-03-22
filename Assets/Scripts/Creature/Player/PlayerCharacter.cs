@@ -142,7 +142,7 @@ namespace playerCharacter
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
 
-            if (!isDashing && isMoving)
+            if (canMove && isMoving)
             {
                 lastMovementDirection = movement;
             }
