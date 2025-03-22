@@ -11,7 +11,27 @@ namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         private const int MAX_ATTACK_COUNT = 3;
         [SerializeField] private GameObject attackPrefab;
         [SerializeField] private GameObject skillPrefab;
-        
+
+        [SerializeField] private EventObject _eventObject;
+
+        public override void OnAttacked(float damage)
+        {
+            currentHp -= damage;
+            if (currentHp <= 0)
+            {
+                OnDead();
+            }
+            else
+            {
+                StartCoroutine(Blink());
+            }
+        }
+
+        protected override void OnDead()
+        {
+            _eventObject.Trigger();
+        }
+
         private void Start()
         {
             Initialize();
