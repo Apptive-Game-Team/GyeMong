@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Sound;
+using Creature.Boss.Component.SkillIndicator;
 using Creature.Boss.Spring.Golem;
+using Creature.Mob.Boss.Spring.Elf;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,7 +22,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
         [SerializeField] private SoundObject _tossSoundObject;
         public SoundObject TossSoundObject => _tossSoundObject;
-
+        [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         protected override void Initialize()
         {
             maxPhase = 2;
@@ -33,6 +35,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             currentShield = 0f;
             detectionRange = 10f;
             MeleeAttackRange = 4f;
+            SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
 
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
@@ -95,6 +98,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
+                Golem.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, Golem.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Golem.attackdelayTime/2, Golem.attackdelayTime / 2);
                 yield return new WaitForSeconds(Golem.attackdelayTime/2);
                 yield return Golem.MakeShockwave(4);
                 Golem.Animator.SetBool("TwoHand", false);
