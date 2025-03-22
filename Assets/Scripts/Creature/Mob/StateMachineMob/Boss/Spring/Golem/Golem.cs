@@ -102,6 +102,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("TwoHand", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime/2);
                 yield return Golem.MakeShockwave(4);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("TwoHand", false);
                 mob.ChangeState();
             }
@@ -118,6 +119,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("Toss", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("Toss", false);
                 mob.ChangeState();
             }
@@ -218,7 +220,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 yield return new WaitForSeconds(Golem.attackdelayTime);
                 yield return Golem.MakeShockwave(14);
-
+                yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 Golem.Animator.SetBool("TwoHand", false);
                 mob.ChangeState();
             }
