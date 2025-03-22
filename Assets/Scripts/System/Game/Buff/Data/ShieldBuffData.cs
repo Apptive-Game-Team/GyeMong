@@ -12,7 +12,9 @@ namespace System.Game.Buff.Data
 
         public override void ApplyEffect(IBuffable target)
         {
-            ((PlayerCharacter)target).curShield = amount;
+            PlayerCharacter player = (PlayerCharacter)target;
+            player.curShield = amount;
+            player.changeListenerCaller.CallShieldChangeListeners(amount);
             BuffEvents.TriggerBuffApplied(this, target); 
         }
 
@@ -21,6 +23,7 @@ namespace System.Game.Buff.Data
             PlayerCharacter player = (PlayerCharacter)target;
             if (player.curShield <= amount) player.curShield = 0;  
             else player.curShield -= amount;
+            player.changeListenerCaller.CallShieldChangeListeners(player.curShield);
             BuffEvents.TriggerBuffExpired(this, target); 
         }
     }

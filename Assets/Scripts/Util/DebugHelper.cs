@@ -10,6 +10,7 @@ public class DebugHelper : MonoBehaviour
         BuffEvents.OnBuffApplied += CallApplyMessage;
         BuffEvents.OnBuffExpired += CallExpireMessage;
         PlayerEvent.OnTakeDamage += CallDamageMessage;
+        SetGoldForDebug();
     }
 
     void CallApplyMessage(BuffData buff, IBuffable buffable)
@@ -24,5 +25,10 @@ public class DebugHelper : MonoBehaviour
     void CallDamageMessage(float amount)
     {
         Debug.Log($"Player Recieved {amount} Damage!");
+    }
+
+    void SetGoldForDebug()
+    {
+        GoldManager.Instance.AddGold(100000);
     }
 }
