@@ -6,6 +6,7 @@ using System.Sound;
 using Creature.Player.Component;
 using Unity.VisualScripting;
 using playerCharacter;
+using UnityEditor.ShaderKeywordFilter;
 
 [Serializable]
 public abstract class Event
@@ -231,5 +232,17 @@ public class EnqueueEvent : Event
     {
         EventQueue.Instance.AddEvent(e);
         yield return null;
+    }
+}
+
+public class SetActiveObject : Event
+{
+    [SerializeField] private GameObject _gameObject;
+    [SerializeField] private bool isActive;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        _gameObject.SetActive(isActive);
+        return null;
     }
 }

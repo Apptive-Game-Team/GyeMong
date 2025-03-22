@@ -9,6 +9,7 @@ namespace Map.Quest
         [SerializeField] private string _conditionString;
         [SerializeField] private bool _conditionValue;
         [SerializeField] private string _sceneName;
+        [SerializeField] private EventObject _eventObject;
 
         private void Start()
         {
@@ -24,6 +25,7 @@ namespace Map.Quest
         {
             if (scene.name.Equals(_sceneName))
             {
+                _eventObject?.Trigger();
                 ConditionManager.Instance.Conditions[_conditionString] = _conditionValue;
             }
         }

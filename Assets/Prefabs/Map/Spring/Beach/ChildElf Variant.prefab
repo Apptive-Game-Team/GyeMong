@@ -1,5 +1,62 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6096244399972081548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5810546628280808750}
+  - component: {fileID: 348085900960624918}
+  m_Layer: 9
+  m_Name: KillEvent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5810546628280808750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096244399972081548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4003107261100600892}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &348085900960624918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096244399972081548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 286138513274437655
+  references:
+    version: 2
+    RefIds:
+    - rid: 286138513274437655
+      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 8934444904914948015}
+        isActive: 0
 --- !u!1 &8304293120243652650
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +542,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4220342921350297961}
+    - targetCorrespondingSourceObject: {fileID: 3241778783063639090, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5810546628280808750}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6957355767428621729, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -573,6 +634,7 @@ MonoBehaviour:
   _conditionString: SpringChildArriveTown
   _conditionValue: 1
   _sceneName: SpringTown
+  _eventObject: {fileID: 348085900960624918}
 --- !u!95 &5427826209564971453
 Animator:
   serializedVersion: 5
