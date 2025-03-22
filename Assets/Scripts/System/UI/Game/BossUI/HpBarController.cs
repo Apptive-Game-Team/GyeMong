@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Creature.Boss;
+using Creature.Mob.Boss;
 
 public class HpBarController : MonoBehaviour
 {

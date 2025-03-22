@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using playerCharacter;
 using UnityEngine;
-using static Creature.Boss.Boss;
+using static Creature.Mob.Boss.Boss;
 using Random = UnityEngine.Random;
 
 public enum DirectionType
@@ -39,13 +39,6 @@ namespace Creature
 
         protected Animator _animator;
         private MaterialController _materialController;
-        private void Update()
-        {
-            if (currentState != null)
-            {
-                currentState.OnStateUpdate();
-            }
-        }
         public MaterialController MaterialController
         {
             get
@@ -83,85 +76,7 @@ namespace Creature
                 return directionToPlayer.y > 0 ? DirectionType.FRONT : DirectionType.BACK;
             }
         }
-        protected BaseState currentState;
-        public void ChangeState()
-        {
-            if (_currentStateCoroutine != null)
-            {
-                currentState.OnStateExit();
-                StopCoroutine(_currentStateCoroutine);
-            }
-            if (currentState == null)
-            {
-                SetInitialState();
-            }
-            else if (currentState is BossState)
-            {
-                ChangeStateForBoss();
-            }
-            else
-            {
-                ChangeStateForNormal();
-            }
-        }
-        private void ChangeStateForBoss()
-        {
-            List<System.Type> weightedStates = new();
-            Dictionary<System.Type, int> nextStateWeights = currentState.GetNextStateWeights();
-
-            foreach (var state in States)
-            {
-                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
-                {
-                    weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
-                }
-            }
-            System.Type nextStateType = weightedStates[Random.Range(0, weightedStates.Count)];
-            currentState = States.First(s => s.GetType() == nextStateType);
-            _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
-        }
-        private void ChangeStateForNormal()
-        {
-            List<int> weights = new();
-            int index = 0;
-            BaseState[] states = States;
-
-            foreach (BaseState state in states)
-            {
-                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
-            }
-
-            int randomIndex = Random.Range(0, weights.Count);
-            currentState = states[weights[randomIndex]];
-            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
-        }
-        private void SetInitialState()
-        {
-            BaseState[] states = States;
-            List<int> weights = new();
-            int index = 0;
-
-            foreach (BaseState state in states)
-            {
-                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
-            }
-
-            int randomIndex = Random.Range(0, weights.Count);
-            currentState = states[weights[randomIndex]];
-            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
-        }
-        public void ChangeState(BaseState state)
-        {
-            if (_currentStateCoroutine != null)
-            {
-                currentState.OnStateExit();
-                StopCoroutine(_currentStateCoroutine);
-            }
-           
-            currentState = state;
         
-            _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
-        }
     
         private Color? _originalColor = null;
         protected IEnumerator Blink()
@@ -180,14 +95,7 @@ namespace Creature
             GetComponent<SpriteRenderer>().color = _originalColor.Value;
         }
     
-        public virtual IEnumerator Stun(float stunTime)
-        { 
-            currentState.OnStateExit();
-            StopCoroutine(_currentStateCoroutine);
-         
-            yield return new WaitForSeconds(stunTime);
-            ChangeState();
-        }
+        
     
         public void TrackPlayer()
         {
@@ -258,7 +166,7 @@ namespace Creature
                     yield return null;
                 }
             }
-            protected Vector3 lastRushDirection;//´ë½¬ ¹æÇâ ÀúÀå º¯¼ö...ÀÌ ¹æ¹ýÀÌ ¸ÂÀ»±î?
+            protected Vector3 lastRushDirection;//ï¿½ë½¬ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½...ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
             public IEnumerator RushAttack(float delay)
             {
                 float TARGET_OFFSET = 1f;
@@ -289,49 +197,7 @@ namespace Creature
                 }
             }
 
-            public abstract class BaseState
-            {
-                public Creature creature;
-                public abstract int GetWeight();
-                public abstract IEnumerator StateCoroutine();
-                public virtual bool CanEnterState()
-                {
-                    return true;
-                }
-                public virtual void OnStateUpdate()
-                { 
-                }
-                public virtual void OnStateExit()
-                {
-                }
-                public virtual Dictionary<Type, int> GetNextStateWeights()
-                {
-                    return new Dictionary<Type, int>();
-                }
-            }
-        private BaseState[] _states;
-        public BaseState[] States
-        {
-            get
-            {
-                if (_states == null)
-                {
-                    List<BaseState> states = new List<BaseState>();
-                    Type parentType = GetType();
-                    Type[] stateTypes = parentType.GetNestedTypes();
-                    foreach (Type type in stateTypes)
-                    {
-                        if (!type.IsAbstract)
-                        {
-                            states.Add(Activator.CreateInstance(type) as BaseState);
-                            states[states.Count - 1].creature = this;
-                        }
-                    }
-                    _states = states.ToArray();
-                }
-                return _states;
-            }
-        }
+            
 
         public virtual void OnAttacked(float damage)
         {
@@ -349,13 +215,8 @@ namespace Creature
              }
         }
 
-        public virtual void StartMob()
-        {
-            currentHp = maxHp;
-            currentShield = 0;
-            ChangeState();
-        }
-        }
+        
+    }
 }
 
 
