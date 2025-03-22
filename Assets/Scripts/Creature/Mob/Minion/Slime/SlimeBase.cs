@@ -2,6 +2,7 @@ using System.Collections;
 using Creature.Minion.Slime;
 using playerCharacter;
 using UnityEngine;
+using UnityEngine.XR;
 
 namespace Creature.Mob.Minion.Slime
 {
@@ -30,7 +31,7 @@ namespace Creature.Mob.Minion.Slime
                 if (currentHp <= 0)
                 {
                     print(currentState);
-                    ChangeState(new SlimeDieState(this));
+                    OnDead();
                 }
             }
         }
@@ -78,11 +79,11 @@ namespace Creature.Mob.Minion.Slime
             currentShield = 0;
             damage = 10;
             speed = 2;
-            detectionRange = 10;
+            detectionRange = 20;
             MeleeAttackRange = 1;
             RangedAttackRange = 5;
 
-            _detector = SimplePlayerDetector.Create(this);
+            _detector = SimplePlayerDistanceDetector.Create(this);
             _pathFinder = new SimplePathFinder();
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
@@ -133,6 +134,8 @@ namespace Creature.Mob.Minion.Slime
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 GameObject arrow =  Instantiate(Slime.rangedAttack, mob.transform.position, Quaternion.identity);
+                arrow.SetActive(true);
+
                 Slime.RotateArrowTowardsPlayer(arrow);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
@@ -224,6 +227,11 @@ namespace Creature.Mob.Minion.Slime
                 mob.gameObject.SetActive(false);
                 yield return null;
             }
+        }
+        
+        protected override void OnDead()
+        {
+            ChangeState(new SlimeDieState(this));
         }
     
         private void RotateArrowTowardsPlayer(GameObject arrow)

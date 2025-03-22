@@ -1,8 +1,9 @@
 using System;
+using Creature.Boss;
 using playerCharacter;
 using UnityEngine;
 
-namespace Creature.Boss.Spring.Elf
+namespace Creature.Mob.Boss.Spring.Elf
 {
     [Obsolete("Use AttackObjectController instead")]
     public class Trunk : MonoBehaviour

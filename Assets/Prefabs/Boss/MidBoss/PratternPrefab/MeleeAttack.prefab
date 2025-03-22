@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 154684577958717596}
   - component: {fileID: 2802086363990592031}
   - component: {fileID: 923193815038248493}
-  - component: {fileID: 6701947890532353557}
   - component: {fileID: 5548116728692763530}
   - component: {fileID: 1148166418742293544}
+  - component: {fileID: -5186848303038559776}
   m_Layer: 0
   m_Name: MeleeAttack
   m_TagString: EnemyAttack
@@ -108,18 +108,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &6701947890532353557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582423106245993158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0894aea616086be4a8f50b0f2b5ce715, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &5548116728692763530
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -193,3 +181,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-5186848303038559776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582423106245993158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 3add27a75317357439439f20f4a87963, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: 3512753acefe52445b99b9a1ce49b14a,
+    type: 2}
