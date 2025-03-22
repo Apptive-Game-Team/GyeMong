@@ -90,7 +90,7 @@ public class EffectManager : SingletonObject<EffectManager>
         color.a = 1;
         black.color = color;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return null;
     }
 
     private IEnumerator Fade(RawImage image, float targetAlpha, float duration = 0.5f)
