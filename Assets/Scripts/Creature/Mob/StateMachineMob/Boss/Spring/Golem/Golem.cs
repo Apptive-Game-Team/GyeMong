@@ -97,7 +97,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
                     { typeof(FallingCubeAttack), 5},
                     { typeof(ChargeShield), 50 },
-                    { typeof(UpStoneAttack), 5 },
+                    { typeof(UpStoneAttack),(Golem.DistanceToPlayer >= Golem.MeleeAttackRange)? 5 : 0 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0},
                     { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
                 };
