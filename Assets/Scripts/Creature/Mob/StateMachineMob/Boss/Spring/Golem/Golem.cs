@@ -10,6 +10,7 @@ using Creature.Mob.Boss.Spring.Elf;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Drawing;
 
 namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
@@ -55,15 +56,34 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         public IEnumerator MakeShockwave(float targetRadius = 14)
         {
             int startRadius = 4;
+            float excludeAngle = Random.Range(-30f, -150f);
+            float excludeMin = excludeAngle - 10f;
+            float excludeMax = excludeAngle + 10f;
+
             for (int i = startRadius; i <= targetRadius; i++)
             {
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
-                for (int j = 0; j < points.Length; j++)
+                if(targetRadius!=4)
                 {
-                    Instantiate(shockwavePrefab, points[j], Quaternion.identity);
+                    foreach (Vector3 point in points)
+                    {
+                        Vector3 dir = (point - transform.position).normalized;
+                        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                        if (angle >= excludeMin && angle <= excludeMax)
+                            continue;
+                        Instantiate(shockwavePrefab, point, Quaternion.identity);
+                    }
                 }
+                else
+                {
+                    foreach (Vector3 point in points)
+                    {
+                        Instantiate(shockwavePrefab, point, Quaternion.identity);
+                    }
+                }
+
                 yield return new WaitForSeconds(attackdelayTime/3);
             }
         }
