@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.Serialization;
+using Creature.Player.Component;
 
 [Serializable]
 public class RuneData
@@ -11,21 +10,23 @@ public class RuneData
     public string name;
     public int id;
     public string description;
+    public int cost;
     public Sprite runeImage;
-    public BuffData runeBuff;
     public List<RuneUpgrade> availableOptions;
+    public RuneUpgrade SelectedOption;
     public bool isUnlocked;
 }
+
 [Serializable]
 public class RuneUpgrade
 {
     public string name;
     public int id;
-    public int parentRuneID;
     public string description;
     public Sprite upgradeImage;
-    public BuffData optionBuff;
     public bool isUnlocked;
+    public bool isEquipped;
+    public List<StatSet> statList;
 }
 
 [CreateAssetMenu(fileName = "RuneDataList",menuName ="ScriptableObject/RuneDataList")]

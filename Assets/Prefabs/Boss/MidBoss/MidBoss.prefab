@@ -413,7 +413,7 @@ MonoBehaviour:
     type: 3}
   meleeAttackPrefab: {fileID: 1582423106245993158, guid: c36ee9d1cc715c342abb69e7151abce8,
     type: 3}
-  SkillIndicator: {fileID: 4470989453084554802}
+  SkillIndicator: {fileID: 2579300035636191002}
   arrowSoundObject: {fileID: 5473089280011465190}
   vineSoundObject: {fileID: 1832858006457810338}
 --- !u!1001 &2224777554200822745
@@ -484,12 +484,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f41e5b1c48af2e04c8bf8b3509ac534f, type: 3}
---- !u!1 &4470989453084554802 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2365474325755622891, guid: f41e5b1c48af2e04c8bf8b3509ac534f,
+--- !u!114 &2579300035636191002 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4401279979771944131, guid: f41e5b1c48af2e04c8bf8b3509ac534f,
     type: 3}
   m_PrefabInstance: {fileID: 2224777554200822745}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f561c6e6f9d59d5469191a2c95c1e8b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6437808754312436988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5154457279505260325, guid: f41e5b1c48af2e04c8bf8b3509ac534f,

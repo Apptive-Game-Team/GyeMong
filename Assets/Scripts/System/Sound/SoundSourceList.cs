@@ -24,7 +24,7 @@ public class SoundSourceList : ScriptableObject
                 return source;
         }
 
-        throw new NotFoundException("SoundSource is not found");
+        throw new Exception("SoundSource is not found");
     }
 
     public List<SoundSource> GetSoundSourcesByNameComtains(string subString)

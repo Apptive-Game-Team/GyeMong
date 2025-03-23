@@ -17,6 +17,7 @@ public struct MultiChatMessage
 {
     public string name;
     public List<string> messages;
+    public Nullable<float> chatDelay;
 }
 
 public class ChatController : MonoBehaviour
@@ -81,6 +82,8 @@ public class ChatController : MonoBehaviour
             yield return ShowMultipleChat(line);
             messageText.text += "\n";
         }
+
+        yield return new WaitForSeconds(multiChatMessage.chatDelay.GetValueOrDefault(0));
     }
 
     private IEnumerator ShowChat(string message)

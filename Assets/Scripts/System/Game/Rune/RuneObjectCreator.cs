@@ -36,11 +36,11 @@ public class RuneObjectCreator : SingletonObject<RuneObjectCreator>
     public GameObject DrawRuneObject(int _runeID, Vector3 pos)
     {
         GameObject runeObj = Instantiate(runeGameObject, pos, Quaternion.identity);
-        RuneObject rune = runeObj.GetComponent<RuneObject>();
+        RuneGameObject runeGameObj = runeObj.GetComponent<RuneGameObject>();
         EventObject eventObj = runeObj.GetComponent<EventObject>();
         AcquireRuneEvent acquireRuneEvent = eventObj.EventSequence[0] as AcquireRuneEvent;
         acquireRuneEvent.runeID = _runeID;
-        rune.TryInit(runeDataList.GetRuneData(_runeID));
+        runeGameObj.TryInit(runeDataList.GetRuneData(_runeID));
         return runeObj;
     }
     

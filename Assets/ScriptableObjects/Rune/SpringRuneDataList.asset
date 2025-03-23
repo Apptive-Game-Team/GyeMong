@@ -18,295 +18,178 @@ MonoBehaviour:
     id: 0
     description: "\uC804\uD22C\uC911 \uCCB4\uB825\uC774 \uB9E4 3 \uCD08\uB9C8\uB2E4
       1%\uC529 \uD68C\uBCF5\uC774 \uB41C\uB2E4."
+    cost: 100
     runeImage: {fileID: 21300000, guid: 04b1651caca82f942bdee99982eef848, type: 3}
-    runeBuff:
-      buffType: 101
-      disposeMode: 2
-      buffActiveMode: 1
-      duration: 1
-      amount1: 1
-      amount2: 0
     availableOptions:
-    - name: "\uC7AC\uC0DD\uC758 \uBC14\uB78C"
+    - name: "\uC751\uAE09 \uCC98\uCE58"
       id: 0
-      parentRuneID: 0
       description: "\uCCB4\uB825\uC774 30% \uC774\uD558\uAC00 \uB418\uBA74, \uCCB4\uB825\uC744
         20% \uD68C\uBCF5\uD55C\uB2E4. (\uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04
-        120\uCD08)"
+        120\uCD08) (\uBBF8\uAD6C\uD604)"
       upgradeImage: {fileID: 21300000, guid: 315667caaad7d8c448fac64531e21c70, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
-    - name: "\uCE58\uC720\uC758 \uBC14\uB78C"
+      isEquipped: 0
+      statList: []
+    - name: "\uC8FC\uAE30 \uB2E8\uCD95"
       id: 1
-      parentRuneID: 0
       description: "\uCCB4\uB825 \uD68C\uBCF5 \uC8FC\uAE30\uAC00 1\uCD08 \uAC10\uC18C\uD55C\uB2E4."
       upgradeImage: {fileID: 21300000, guid: 8b2e172a1a776b6489a01f45d97e7fec, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
+    SelectedOption:
+      name: 
+      id: 0
+      description: 
+      upgradeImage: {fileID: 0}
+      isUnlocked: 0
+      isEquipped: 0
+      statList: []
     isUnlocked: 1
   - parentID: -1
     name: "\uAC80\uAE30 \uC218\uB828"
     id: 1
     description: "\uAC80\uAE30\uAC00 \uB354 \uCEE4\uC9C0\uACE0 \uB370\uBBF8\uC9C0\uAC00
       \uAC15\uD574\uC9C4\uB2E4."
+    cost: 100
     runeImage: {fileID: 21300000, guid: d1878b400dc258446824ab51e57009da, type: 3}
-    runeBuff:
-      buffType: 102
-      disposeMode: 2
-      buffActiveMode: 1
-      duration: 10
-      amount1: 6
-      amount2: 1
     availableOptions:
     - name: "\uD6A8\uC728\uC801\uC778 \uC0AC\uC6A9"
       id: 0
-      parentRuneID: 0
       description: "\uAC80\uAE30\uB97C \uC0AC\uC6A9\uD560 \uB54C 90%\uC758 \uAC8C\uC774\uC9C0\uB9CC
         \uC0AC\uC6A9\uD55C\uB2E4."
       upgradeImage: {fileID: 21300000, guid: 92ed69e9a0374bc47a80b9d476c3ec69, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
     - name: "\uD55C\uACC4 \uB3CC\uD30C"
       id: 1
-      parentRuneID: 0
       description: "\uAC80\uAE30\uB97C \uC0AC\uC6A9\uD560 \uB54C \uB0A8\uC740 \uAC8C\uC774\uC9C0\uB97C
         \uBAA8\uB450 \uC0AC\uC6A9\uD55C\uB2E4. \uC0AC\uC6A9\uD55C \uAC8C\uC774\uC9C0\uC5D0
         \uBE44\uB840\uD574 \uB370\uBBF8\uC9C0\uAC00 \uC99D\uAC00\uD55C\uB2E4."
       upgradeImage: {fileID: 21300000, guid: c83a50c27139ac1439c63d089398e6f4, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
+    SelectedOption:
+      name: 
+      id: 0
+      description: 
+      upgradeImage: {fileID: 0}
+      isUnlocked: 0
+      isEquipped: 0
+      statList: []
     isUnlocked: 0
   - parentID: 0
     name: "\uC11C\uD48D"
     id: 2
     description: "\uACF5\uACA9 \uC18D\uB3C4\uC640 \uC774\uB3D9 \uC18D\uB3C4\uAC00
       10% \uC99D\uAC00\uD558\uACE0, \uB300\uC26C \uCFE8\uD0C0\uC784\uC774 10% \uAC10\uC18C\uD55C\uB2E4."
+    cost: 200
     runeImage: {fileID: 21300000, guid: b310bdb73ddb19843b5bf4d911873567, type: 3}
-    runeBuff:
-      buffType: 103
-      disposeMode: 2
-      buffActiveMode: 2
-      duration: 0
-      amount1: 0.2
-      amount2: 0
-    availableOptions:
-    - name: "\uAC00\uBCBC\uC6C0"
+    availableOptions: []
+    SelectedOption:
+      name: 
       id: 0
-      parentRuneID: 0
-      description: "\uBBF8\uAD6C\uD604"
+      description: 
       upgradeImage: {fileID: 0}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
-    - name: "\uB0A0\uCE74\uB85C\uC6C0"
-      id: 1
-      parentRuneID: 0
-      description: "\uBBF8\uAD6C\uD604"
-      upgradeImage: {fileID: 0}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
-      isUnlocked: 0
-    isUnlocked: 0
-  - parentID: 0
-    name: "\uAC00\uC18D\uB825"
-    id: 3
-    description: "\uD604\uC7AC \uC18D\uB3C4\uC5D0 \uBE44\uB840\uD574\uC11C \uACF5\uACA9\uB825\uC774
-      \uAC15\uD574\uC9C4\uB2E4."
-    runeImage: {fileID: 21300000, guid: 2a54084294fe5404095b7b42a945605f, type: 3}
-    runeBuff:
-      buffType: 104
-      disposeMode: 2
-      buffActiveMode: 0
-      duration: 0
-      amount1: 1
-      amount2: 0
-    availableOptions:
-    - name: "\uAC00\uC18D"
-      id: 0
-      parentRuneID: 0
-      description: "\uBBF8\uAD6C\uD604"
-      upgradeImage: {fileID: 0}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
-      isUnlocked: 0
-    - name: "\uAC00\uC18D2"
-      id: 1
-      parentRuneID: 0
-      description: "\uBBF8\uAD6C\uD604"
-      upgradeImage: {fileID: 0}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
-      isUnlocked: 0
-    isUnlocked: 0
+      isEquipped: 0
+      statList: []
+    isUnlocked: 1
   - parentID: 1
     name: "\uCCB4\uC220 \uC218\uB828"
     id: 4
     description: "\uC2A4\uCE58\uAE30\uB97C \uD588\uC744 \uB54C \uAC8C\uC774\uC9C0\uAC00
       \uB354 \uB9CE\uC774 \uC0C1\uC2B9\uD55C\uB2E4."
+    cost: 200
     runeImage: {fileID: 21300000, guid: 0cdcdd905fe5ee740bd336bd5a906db4, type: 3}
-    runeBuff:
-      buffType: 104
-      disposeMode: 2
-      buffActiveMode: 0
-      duration: 0
-      amount1: 1
-      amount2: 0
     availableOptions:
     - name: "\uC800\uB3CC\uC801\uC778 \uC6C0\uC9C1\uC784"
       id: 0
-      parentRuneID: 0
       description: "\uACF5\uACA9 \uC2DC \uAC8C\uC774\uC9C0\uAC00 \uC18C\uB7C9 \uD68C\uBCF5\uB41C\uB2E4."
       upgradeImage: {fileID: 21300000, guid: 4416cfd4023bdc64abfda907957811ca, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
     - name: "\uC218\uBE44\uC801\uC778 \uC6C0\uC9C1\uC784"
       id: 1
-      parentRuneID: 0
       description: "\uD53C\uACA9 \uC2DC \uAC8C\uC774\uC9C0\uAC00 \uC18C\uB7C9 \uD68C\uBCF5\uB41C\uB2E4."
       upgradeImage: {fileID: 21300000, guid: 652abc7a5ab2f3445b3c74033f4a2efa, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
+    SelectedOption:
+      name: 
+      id: 0
+      description: 
+      upgradeImage: {fileID: 0}
+      isUnlocked: 0
+      isEquipped: 0
+      statList: []
     isUnlocked: 0
   - parentID: 2
     name: "\uAF43\uC78E \uBCA0\uAE30"
     id: 5
     description: "\uB300\uC26C\uB97C \uD558\uBA74\uC11C \uCDA9\uB3CC\uD558\uB294
-      \uC801\uC744 \uBCA0\uC5B4 \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
+      \uC801\uC744 \uBCA0\uC5B4 \uD53C\uD574\uB97C \uC785\uD78C\uB2E4. (\uBBF8\uAD6C\uD604)"
+    cost: 300
     runeImage: {fileID: 21300000, guid: ba8d85e2e4bb1e34b8cd435e312c1dc4, type: 3}
-    runeBuff:
-      buffType: 104
-      disposeMode: 2
-      buffActiveMode: 0
-      duration: 0
-      amount1: 1
-      amount2: 0
     availableOptions:
-    - name: "\uB5A8\uC5B4\uC9C0\uB294 \uAF43\uC78E"
+    - name: "\uD769\uB0A0\uB9AC\uB294 \uAF43\uC78E"
       id: 0
-      parentRuneID: 0
-      description: "\uB300\uC26C \uACBD\uB85C\uC5D0 \uAF43\uC78E\uC744 \uB0A8\uACA8
-        \uBD80\uB52A\uD788\uB294 \uC801\uC5D0\uAC8C \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
+      description: "(\uBBF8\uAD6C\uD604)"
       upgradeImage: {fileID: 21300000, guid: b2d84b64079c3c948931be2d760442ba, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
     - name: "\uB0A0\uCE74\uB85C\uC6B4 \uAF43\uC78E"
-      id: 1
-      parentRuneID: 0
-      description: "\uB300\uC26C \uC18D\uB3C4\uAC00 \uC99D\uAC00\uD558\uACE0, \uD53C\uD574\uAC00
-        \uC18C\uD3ED \uC99D\uAC00\uD55C\uB2E4."
+      id: 0
+      description: "(\uBBF8\uAD6C\uD604)"
       upgradeImage: {fileID: 21300000, guid: 08554b89ee202f749a9f96418a74d321, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
+    SelectedOption:
+      name: 
+      id: 0
+      description: 
+      upgradeImage: {fileID: 0}
+      isUnlocked: 0
+      isEquipped: 0
+      statList: []
     isUnlocked: 0
   - parentID: -1
     name: "\uB3CC \uAC11\uC637"
     id: 6
     description: "\uCD5C\uB300 \uCCB4\uB825\uC758 10%\uB9CC\uD07C \uBCF4\uD638\uB9C9\uC744
       \uC0DD\uC131\uD55C\uB2E4."
+    cost: 300
     runeImage: {fileID: 21300000, guid: cee0fbaac5439984eaeb5517610e5011, type: 3}
-    runeBuff:
-      buffType: 104
-      disposeMode: 2
-      buffActiveMode: 0
-      duration: 0
-      amount1: 1
-      amount2: 0
     availableOptions:
     - name: "\uB354 \uB9CE\uC740 \uB3CC!"
       id: 0
-      parentRuneID: 0
       description: "\uBCF4\uD638\uB9C9 \uC591\uC774 2\uBC30 \uC99D\uAC00\uD55C\uB2E4."
       upgradeImage: {fileID: 21300000, guid: 9f1e61792e4d58d4eac8af48b9e961c2, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
     - name: "\uAE68\uD2B8\uB9AC\uAE30"
       id: 1
-      parentRuneID: 0
       description: "\uBCF4\uD638\uB9C9\uC774 \uC0AC\uB77C\uC9C8 \uB54C \uC8FC\uC704\uC5D0
         \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4."
       upgradeImage: {fileID: 21300000, guid: 4a257abf7be2dc04181d523ff7e6e563, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
+    SelectedOption:
+      name: 
+      id: 0
+      description: 
+      upgradeImage: {fileID: 0}
+      isUnlocked: 0
+      isEquipped: 0
+      statList: []
     isUnlocked: 0
   - parentID: 4
     name: "\uAC80\uAE30 \uCDA9\uC804"
@@ -315,41 +198,30 @@ MonoBehaviour:
       \uCDA9\uC804\uC744 \uC2DC\uC791\uD55C\uB2E4. \uD0A4\uB97C \uB5BC\uBA74 \uBCF4\uC870
       \uACF5\uACA9 \uAE30\uC220\uC744 \uBC1C\uB3D9\uD55C\uB2E4. \uCDA9\uC804\uC744
       \uD55C \uC2DC\uAC04\uC5D0 \uBE44\uB840\uD574\uC11C \uAC15\uD574\uC9C4\uB2E4."
+    cost: 300
     runeImage: {fileID: 21300000, guid: c498d738e9f42014687b1a39239b4165, type: 3}
-    runeBuff:
-      buffType: 104
-      disposeMode: 2
-      buffActiveMode: 0
-      duration: 0
-      amount1: 1
-      amount2: 0
     availableOptions:
     - name: "\uBE60\uB978 \uCDA9\uC804"
       id: 0
-      parentRuneID: 0
-      description: "\uCD5C\uB300 \uCDA9\uC804\uAE4C\uC9C0 \uAC78\uB9AC\uB294 \uC2DC\uAC04\uC774
-        \uAC10\uC18C\uD55C\uB2E4."
+      description: "\uAC80\uAE30 \uCD5C\uB300 \uCDA9\uC804\uAE4C\uC9C0 \uD544\uC694\uD55C
+        \uC2DC\uAC04\uC774 \uAC10\uC18C\uD55C\uB2E4."
       upgradeImage: {fileID: 21300000, guid: 05e3e878b147c654ab1dd9bae60821a3, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
     - name: "\uACFC\uCDA9\uC804"
       id: 1
-      parentRuneID: 0
-      description: "\uCD5C\uB300 \uCDA9\uC804 \uC774\uD6C4 \uACFC\uCDA9\uC804 \uB2E8\uACC4\uAC00
-        \uC0DD\uAE34\uB2E4. \uACFC\uCDA9\uC804\uC2DC \uD53C\uD574\uAC00 \uC99D\uAC00\uD55C\uB2E4."
+      description: "\uAC80\uAE30 \uCD5C\uB300 \uCDA9\uC804\uB7C9\uC774 \uC99D\uAC00\uD55C\uB2E4."
       upgradeImage: {fileID: 21300000, guid: b02db23c0f53d034e864192c23287c44, type: 3}
-      optionBuff:
-        buffType: 0
-        disposeMode: 0
-        buffActiveMode: 0
-        duration: 0
-        amount1: 0
-        amount2: 0
       isUnlocked: 0
+      isEquipped: 0
+      statList: []
+    SelectedOption:
+      name: 
+      id: 0
+      description: 
+      upgradeImage: {fileID: 0}
+      isUnlocked: 0
+      isEquipped: 0
+      statList: []
     isUnlocked: 0

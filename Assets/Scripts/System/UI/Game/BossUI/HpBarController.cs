@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Creature.Boss;
+using Creature.Mob.Boss;
+using Creature.Mob.StateMachineMob.Boss;
 
 public class HpBarController : MonoBehaviour
 {
