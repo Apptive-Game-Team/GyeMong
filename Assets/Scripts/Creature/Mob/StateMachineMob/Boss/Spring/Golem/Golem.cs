@@ -76,10 +76,10 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 {
                     { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
                     { typeof(FallingCubeAttack), 5},
-                    { typeof(ChargeShield), 3 },
+                    { typeof(ChargeShield), 50 },
                     { typeof(UpStoneAttack), 5 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0},
-                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 50 : 0 }
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -145,6 +145,10 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         public class ChargeShield : GolemState
         {
+            public ChargeShield()
+            {
+                cooldownTime = 30f;
+            }
             public override int GetWeight()
             {
                 return 5;
