@@ -14,6 +14,6 @@ public class StartButton : MonoBehaviour
     public void StartGame()
     {
         optionExitButton.SetActive(true);
-        SceneManager.LoadScene("SpringBeachScene");
+        SceneManager.LoadScene("Cinematic_");
     }
 }
