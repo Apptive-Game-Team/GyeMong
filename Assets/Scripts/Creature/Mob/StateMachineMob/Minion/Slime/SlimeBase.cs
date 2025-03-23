@@ -1,4 +1,6 @@
 using System.Collections;
+using Creature.Attack;
+using Creature.Attack.Component.Movement;
 using Creature.Minion.Slime;
 using Creature.Mob.Minion.Component.detector;
 using playerCharacter;
@@ -133,10 +135,16 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                GameObject arrow =  Instantiate(Slime.rangedAttack, mob.transform.position, Quaternion.identity);
-                arrow.SetActive(true);
-
-                Slime.RotateArrowTowardsPlayer(arrow);
+                AttackObjectController.Create(
+                    mob.transform.position, 
+                    mob.DirectionToPlayer, 
+                    Slime.rangedAttack,
+                    new LinearMovement(
+                        mob.transform.position, 
+                        mob.transform.position + mob.DirectionToPlayer * mob.RangedAttackRange, 
+                        10f)
+                ).StartRoutine();
+                
                 yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
                 yield return new WaitForSeconds(1);
