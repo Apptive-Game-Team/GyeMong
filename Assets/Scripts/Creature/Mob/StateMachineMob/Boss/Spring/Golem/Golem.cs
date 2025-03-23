@@ -79,7 +79,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     { typeof(ChargeShield), 3 },
                     { typeof(UpStoneAttack), 5 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0},
-                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 50 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -118,7 +118,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("Toss", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
-                Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position, Quaternion.identity);
+                Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("Toss", false);
                 mob.ChangeState();
