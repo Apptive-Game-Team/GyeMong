@@ -11,6 +11,7 @@ public enum SceneID
     SPRING_TOWN = 3,
     SPRING_NORTH_FOREST = 4,
     SPRING_SHADOW_FOREST = 5,
+    SPRING_CINEMATIC = 6,
     // SPRING_MAIN = 1,
     // SPRING_BOSS = 2,
     // SPRING_PUZZLE2 = 3,

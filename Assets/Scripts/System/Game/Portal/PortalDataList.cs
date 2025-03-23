@@ -7,6 +7,7 @@ public enum PortalID
 {
     NONE = 0,
     // Beach
+    SPRING_CINEMATIC_TO_BEACH = 13,
     SPRING_BEACH_TO_LOAD = 1,
     SPRING_LOAD_TO_BEACH = 2,
     
