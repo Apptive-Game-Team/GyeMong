@@ -9,7 +9,7 @@ namespace Map.Puzzle.TemplePuzzle
     {
         protected override void OnInteraction(Collider2D collision)
         {
-            if (collision.CompareTag("Player"))
+            if (collision.CompareTag("Player") && !ConditionManager.Instance.Conditions.GetValueOrDefault("SpringTemplePuzzleIsCleared", false))
             {
                 BallMovement ball = FindObjectOfType<BallMovement>();
                 ball.StartMoveBall();
