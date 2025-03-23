@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DemoDay_Version_0207/TitleScene.unity
     guid: 25fbc63b9bcd7184b9864fc062c91db3
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: 5d31495c27cab4050a8d1ca51007a7b1
   - enabled: 1
     path: Assets/Scenes/SpringRemaster/SpringBeachScene.unity
     guid: a1db53d927b124fcd97eeca647cc4305
