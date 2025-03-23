@@ -42,10 +42,10 @@ public class RuneDescriptionUI : MonoBehaviour, IDescriptionUI, IMouseInputListe
 
     public void SetDescription(RuneData runeData)
     {
-        textTitle.text = runeData.name; 
+        textTitle.text = runeData.name + " <" + runeData.cost + ">"; 
         textDescription.text = runeData.description;
         runeImageUI.sprite = runeData.runeImage;
-        SetRuneUpgradeUI(runeData);
+        if(runeData.availableOptions.Count > 0) SetRuneUpgradeUI(runeData);
     }    
     public void SetDescription(RuneUpgrade upgradeData)
     {

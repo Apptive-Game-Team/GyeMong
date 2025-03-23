@@ -1,32 +1,29 @@
-using System;
 using System.Collections.Generic;
+using System.Game.Buff.Data;
 using UnityEngine;
 
-[Serializable]
-public class BuffComponent : MonoBehaviour ,IBuffSlave
+namespace System.Game.Buff
 {
-    [SerializeField] List<BuffData> buffList = new List<BuffData>();
-
-    public void AddBuff(BuffData newBuff)
+    [Serializable]
+    public class BuffComponent : MonoBehaviour
     {
-        switch(newBuff.disposeMode)
+        List<BuffData> buffList = new List<BuffData>();
+
+        public void AddBuff(BuffData newBuff)
         {
-            case BuffDisposeMode.TEMPORARY:
-                buffList.Add(newBuff);
-                BuffManager.Instance.StartCoroutine(BuffManager.Instance.AddTemporaryBuff(newBuff, this));
-                break;
-            case BuffDisposeMode.PERMANENT:
-                buffList.Add(newBuff);
-                BuffManager.Instance.AddRuneEvent(newBuff, this);
-                break;
+            buffList.Add(newBuff);
+            BuffManager.Instance.ApplyBuff(gameObject.GetComponent<IBuffable>(), newBuff);
+        }
+
+        public void DeleteBuff(BuffData buff)
+        {
+            buffList.Remove(buff);
+        }
+
+        public bool HasBuff(BuffData buff)
+        {
+            return buffList.Contains(buff);
         }
     }
-
-    public void DeleteBuff(BuffData buff)
-    {
-        buffList.Remove(buff);
-    }
-    
-    
 }
 

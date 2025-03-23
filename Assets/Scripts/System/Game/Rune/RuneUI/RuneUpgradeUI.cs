@@ -38,6 +38,7 @@ public class RuneUpgradeUI : SelectableUI, IInteractionalUI, IMouseInputListener
 
     public override void OnInteract()
     {
+        
     }
 
     public override void OnLongInteract()
