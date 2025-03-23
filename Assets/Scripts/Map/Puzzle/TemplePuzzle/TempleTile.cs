@@ -29,7 +29,10 @@ namespace Map.Puzzle.TemplePuzzle
             left = templeTileData.left;
             right = templeTileData.right;
 
-            FirstRandomRotate();
+            if (isRotatable)
+            {
+                FirstRandomRotate();
+            }
         }
 
         protected override void OnInteraction(Collider2D collision)
