@@ -2836,6 +2836,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 545334271}
+  - component: {fileID: 545334272}
   - component: {fileID: 545334270}
   m_Layer: 0
   m_Name: TutorialEvent
@@ -2857,11 +2858,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 0
-  trigger: 2
+  trigger: 4
   triggerLimitCounter: -1
   eventSequence:
   - rid: 8330687392900710404
   - rid: 8330687392900710406
+  - rid: 8330687867583725571
   references:
     version: 2
     RefIds:
@@ -2888,6 +2890,11 @@ MonoBehaviour:
         _title: "[\uD29C\uD1A0\uB9AC\uC5BC] \uC774\uB3D9"
         _message: "\"W, A, S, D\"\uB85C \uC774\uB3D9"
         _duration: 999
+    - rid: 8330687867583725571
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: tutorial-1-cleared
+        condition: 1
 --- !u!4 &545334271
 Transform:
   m_ObjectHideFlags: 0
@@ -2903,6 +2910,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &545334272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545334269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8330687867583725568
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8330687867583725568
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 8330687867583725569
+        eventInTrue:
+          rid: -2
+        eventInFalse:
+          rid: 8330687867583725570
+    - rid: 8330687867583725569
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: tutorial-1-cleared
+        condition: 0
+    - rid: 8330687867583725570
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 545334270}
 --- !u!1001 &545971425
 PrefabInstance:
   m_ObjectHideFlags: 0
