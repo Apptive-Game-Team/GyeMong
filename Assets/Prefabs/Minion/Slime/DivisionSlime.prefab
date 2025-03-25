@@ -79,9 +79,9 @@ GameObject:
   - component: {fileID: 8620803811093990874}
   - component: {fileID: 12177543809506495}
   - component: {fileID: 3690366075533505093}
-  - component: {fileID: -5296203552307042005}
   - component: {fileID: 3512257973603151227}
   - component: {fileID: 268931492293261944}
+  - component: {fileID: 6957462979725571552}
   m_Layer: 0
   m_Name: DivisionSlime
   m_TagString: EnemyAttack
@@ -99,7 +99,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.37, y: 0.17, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: -0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6862603327095116449}
@@ -224,27 +224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _materialDatas: {fileID: 11400000, guid: b83ab9d50893f408cbb45301ce80bf11, type: 2}
---- !u!114 &-5296203552307042005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7314021124766925139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8627024935a84eb4d880b880db4a838c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  soundObject: {fileID: 0}
-  isDestroyOnHit: 0
-  grazable: 0
-  grazed: 0
-  isAttacked: 0
-  isMultiHit: 1
-  multiHitDelay: 0.3
-  knockbackAmount: 0
 --- !u!114 &3512257973603151227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +254,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadow: {fileID: 1486485983934109463}
+--- !u!114 &6957462979725571552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7314021124766925139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: f68d3a386f8ce8845af01bb0d3208865, type: 2}
+  _attackObjectSounds: {fileID: 0}
 --- !u!1 &8632254398384193936
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,6 +283,7 @@ GameObject:
   - component: {fileID: 2987390531711840040}
   - component: {fileID: 8188047481963976980}
   - component: {fileID: 4928022150674378460}
+  - component: {fileID: 9167264938285374878}
   m_Layer: 0
   m_Name: RangedAttack
   m_TagString: EnemyAttack
@@ -430,6 +426,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b565f922e951c94380562816381abfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9167264938285374878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632254398384193936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 9a97e1d513ad54e43b74ac81c16124f2, type: 2}
+  _attackObjectSounds: {fileID: 0}
 --- !u!1001 &3205393953129646034
 PrefabInstance:
   m_ObjectHideFlags: 0
