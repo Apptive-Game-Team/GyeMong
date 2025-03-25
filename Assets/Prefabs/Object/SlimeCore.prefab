@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4938192110583175232}
   - component: {fileID: -79105282650514762}
   - component: {fileID: 707639704724025618}
+  - component: {fileID: 863343489527294543}
   m_Layer: 0
   m_Name: SlimeCore
   m_TagString: Untagged
@@ -56,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 40ac6f0cd04e4b14cb38a521126ba3d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -187,3 +188,16 @@ MonoBehaviour:
         down: 1
         left: 1
         right: 0
+--- !u!114 &863343489527294543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3799310539447110097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d66079f6584a2b8638783f028adf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materialDatas: {fileID: 11400000, guid: b83ab9d50893f408cbb45301ce80bf11, type: 2}
