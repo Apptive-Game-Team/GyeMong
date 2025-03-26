@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e1f95a82b864350bce68fa57018247, type: 3}
+  m_Name: AlphaSceneDataList
+  m_EditorClassIdentifier: 
+  sceneDatas:
+  - sceneID: 1
+    sceneName: SpringBeach
+  - sceneID: 2
+    sceneName: SpringTown
+  - sceneID: 3
+    sceneName: SpringNorthForest
+  - sceneID: 4
+    sceneName: SpringSouthRoad
+  - sceneID: 5
+    sceneName: SpringGarden
+  - sceneID: 6
+    sceneName: SpringShadowIsland
+  - sceneID: 7
+    sceneName: SpringGolemTemple
