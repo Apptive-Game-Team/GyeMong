@@ -46,7 +46,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             }
-            protected virtual Dictionary<System.Type, int> GetNextStateWeights
+            protected virtual Dictionary<System.Type, int> nextStateWeights
             {
                 get => weights;
                 set
@@ -81,9 +81,9 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.BackStep(Elf.RangedAttackRange);
                 Elf.Animator.SetBool("isMove", false);
-                Elf.ChangeState(GetNextStateWeights);
+                Elf.ChangeState(nextStateWeights);
             }
-            protected override Dictionary<System.Type, int> GetNextStateWeights
+            protected override Dictionary<System.Type, int> nextStateWeights
             {
                 get => weights;
                 set
@@ -128,9 +128,9 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.SpawnAttackCollider(Elf.lastRushDirection);
                 Elf.Animator.SetBool("isAttack", false);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
-                Elf.ChangeState(GetNextStateWeights);
+                Elf.ChangeState(nextStateWeights);
             }
-            protected override Dictionary<System.Type, int> GetNextStateWeights
+            protected override Dictionary<System.Type, int> nextStateWeights
             {
                 get => weights;
                 set
@@ -169,7 +169,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 yield return Elf.arrowSoundObject.Play();
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.ChangeState(GetNextStateWeights);
+                Elf.ChangeState(nextStateWeights);
             }
         }
         public class SeedRangedAttak : ElfState
@@ -203,7 +203,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                     count++;
                 }
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.ChangeState(GetNextStateWeights);
+                Elf.ChangeState(nextStateWeights);
             }
         }
         public class MeleeAttack : ElfState
@@ -224,7 +224,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.SpawnAttackCollider(Elf.DirectionToPlayer);
                 yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.ChangeState(GetNextStateWeights);
+                Elf.ChangeState(nextStateWeights);
             }
         }
         
@@ -254,7 +254,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 GameObject vine = Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.ChangeState(GetNextStateWeights);
+                Elf.ChangeState(nextStateWeights);
             }
         }
         public class TrunkAttack : ElfState
@@ -282,7 +282,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
-                Elf.ChangeState(GetNextStateWeights);
+                Elf.ChangeState(nextStateWeights);
             }
             private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
             {

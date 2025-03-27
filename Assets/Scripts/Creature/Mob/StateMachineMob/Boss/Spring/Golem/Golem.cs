@@ -92,7 +92,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             public Golem Golem => mob as Golem;
             protected Dictionary<System.Type, int> weights = new Dictionary<System.Type, int>();
-            protected virtual Dictionary<System.Type, int> GetNextStateWeights
+            protected virtual Dictionary<System.Type, int> nextStateWeights
             {
                 get => weights;
                 set
@@ -128,7 +128,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return Golem.MakeShockwave(4);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("TwoHand", false);
-                mob.ChangeState(GetNextStateWeights);
+                mob.ChangeState(nextStateWeights);
             }
         }
         public class PushOutAttack : GolemState
@@ -145,7 +145,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("Toss", false);
-                mob.ChangeState(GetNextStateWeights);
+                mob.ChangeState(nextStateWeights);
             }
         }
 
@@ -163,7 +163,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 GameObject cube = Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 Golem.Animator.SetBool("Toss", false);
                 yield return new WaitUntil(() => cube.IsDestroyed());
-                mob.ChangeState(GetNextStateWeights);
+                mob.ChangeState(nextStateWeights);
             }
         }
 
@@ -185,7 +185,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
                 Golem.MaterialController.SetFloat(1);
 
-                mob.ChangeState(GetNextStateWeights);
+                mob.ChangeState(nextStateWeights);
             }
         }
 
@@ -217,7 +217,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 yield return new WaitForSeconds(Golem.attackdelayTime*2);
 
-                mob.ChangeState(GetNextStateWeights);
+                mob.ChangeState(nextStateWeights);
             }
 
             private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
@@ -250,7 +250,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return Golem.MakeShockwave(14);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 Golem.Animator.SetBool("TwoHand", false);
-                mob.ChangeState(GetNextStateWeights);
+                mob.ChangeState(nextStateWeights);
             }
         }
         protected override void Die()
