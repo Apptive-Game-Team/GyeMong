@@ -92,24 +92,28 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             public Golem Golem => mob as Golem;
             protected Dictionary<System.Type, int> weights;
+            protected virtual void CalculateWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 50 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }
             protected virtual Dictionary<System.Type, int> NextStateWeights
             {
-                get => weights;
-                set
+                get
                 {
-                    weights = new Dictionary<System.Type, int>
-                    {
-                        { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(FallingCubeAttack), 5},
-                        { typeof(ChargeShield), 50 },
-                        { typeof(UpStoneAttack),(Golem.DistanceToPlayer >= Golem.MeleeAttackRange)? 5 : 0 },
-                        { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0},
-                        { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
-                    };
-                    if (weights.Values.All(w => w == 0))
-                    {
-                        weights[typeof(MeleeAttack)] = 1;
-                    }
+                    CalculateWeights();
+                    return weights;
                 }
             }
         }
