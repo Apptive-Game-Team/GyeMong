@@ -90,6 +90,27 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         public abstract class GolemState : CoolDownState
         {
+            private Dictionary<System.Type, int> weights = new Dictionary<System.Type, int>();
+            public Dictionary<System.Type, int> GetNextStateWeights
+            {
+                get => weights;
+                private set
+                {
+                    var weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(FallingCubeAttack), 5},
+                        { typeof(ChargeShield), 50 },
+                        { typeof(UpStoneAttack),(Golem.DistanceToPlayer >= Golem.MeleeAttackRange)? 5 : 0 },
+                        { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0},
+                        { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
+                    };
+                    if (weights.Values.All(w => w == 0))
+                    {
+                        weights[typeof(MeleeAttack)] = 1;
+                    }
+                }
+            }
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {
                 var weights = new Dictionary<System.Type, int>
