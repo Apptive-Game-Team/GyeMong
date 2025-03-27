@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Sound;
 using Creature.Boss.Component.SkillIndicator;
+using Creature.Mob.StateMachineMob.Boss.Spring.Golem;
 using playerCharacter;
 using UnityEngine;
+using static Creature.Mob.StateMachineMob.Boss.Spring.Golem.Golem;
 
 namespace Creature.Mob.Boss.Spring.Elf
 {
@@ -38,28 +40,32 @@ namespace Creature.Mob.Boss.Spring.Elf
         public abstract class ElfState : CoolDownState
         {
             public Elf Elf => mob as Elf;
+            protected Dictionary<System.Type, int> weights = new Dictionary<System.Type, int>();
             public override void OnStateUpdate()
             {
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             }
-            public override Dictionary<System.Type, int> GetNextStateWeights()
+            protected virtual Dictionary<System.Type, int> GetNextStateWeights
             {
-                var weights = new Dictionary<System.Type, int>
+                get => weights;
+                set
                 {
-                    { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0 },
-                    { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 },
-                    { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0},
-                    { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
-                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}//�ӽ� ����ġ��...�����ʿ�
-                };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
+                    weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                        { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 },
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0},
+                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                    };
+                    if (weights.Values.All(w => w == 0))
+                    {
+                        weights[typeof(MeleeAttack)] = 1;
+                    }
                 }
-                return weights;
             }
         }
         public new class BackStep : ElfState
@@ -75,21 +81,24 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.BackStep(Elf.RangedAttackRange);
                 Elf.Animator.SetBool("isMove", false);
-                Elf.ChangeState();
+                Elf.ChangeState(GetNextStateWeights);
             }
-            public override Dictionary<System.Type, int> GetNextStateWeights()
+            protected override Dictionary<System.Type, int> GetNextStateWeights
             {
-                var weights = new Dictionary<System.Type, int>
+                get => weights;
+                set
                 {
-                    { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0},
-                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
-                };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
+                    weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0},
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                    };
+                    if (weights.Values.All(w => w == 0))
+                    {
+                        weights[typeof(MeleeAttack)] = 1;
+                    }
                 }
-                return weights;
             }
         }
         public class RushAndAttack : ElfState
@@ -119,23 +128,26 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.SpawnAttackCollider(Elf.lastRushDirection);
                 Elf.Animator.SetBool("isAttack", false);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
-                Elf.ChangeState();
+                Elf.ChangeState(GetNextStateWeights);
             }
-            public override Dictionary<System.Type, int> GetNextStateWeights()
+            protected override Dictionary<System.Type, int> GetNextStateWeights
             {
-                var weights = new Dictionary<System.Type, int>
+                get => weights;
+                set
                 {
-                    { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0 },
-                    { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
-                    { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                    { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                    { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 },
-                };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
+                    weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 }
+                    };
+                    if (weights.Values.All(w => w == 0))
+                    {
+                        weights[typeof(MeleeAttack)] = 1;
+                    }
                 }
-                return weights;
             }
         }
         public class RangedAttack : ElfState
@@ -157,7 +169,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 yield return Elf.arrowSoundObject.Play();
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.ChangeState();
+                Elf.ChangeState(GetNextStateWeights);
             }
         }
         public class SeedRangedAttak : ElfState
@@ -174,7 +186,6 @@ namespace Creature.Mob.Boss.Spring.Elf
                 }
                 return 0;
             }
-
             public override IEnumerator StateCoroutine()
             {
                 Elf.Animator.SetBool("attackDelay", true);
@@ -192,7 +203,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                     count++;
                 }
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.ChangeState();
+                Elf.ChangeState(GetNextStateWeights);
             }
         }
         public class MeleeAttack : ElfState
@@ -213,7 +224,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.SpawnAttackCollider(Elf.DirectionToPlayer);
                 yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.ChangeState();
+                Elf.ChangeState(GetNextStateWeights);
             }
         }
         
@@ -243,7 +254,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 GameObject vine = Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.ChangeState();
+                Elf.ChangeState(GetNextStateWeights);
             }
         }
         public class TrunkAttack : ElfState
@@ -271,7 +282,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
-                Elf.ChangeState();
+                Elf.ChangeState(GetNextStateWeights);
             }
             private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
             {
