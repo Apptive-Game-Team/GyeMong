@@ -53,8 +53,9 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             return points;
         }
 
-        public IEnumerator MakeShockwave(float targetRadius = 14)
+        public IEnumerator MakeShockwave()
         {
+            float targetRadius = 14;
             int startRadius = 4;
             float excludeAngle = Random.Range(-30f, -150f);
             float excludeMin = excludeAngle - 10f;
@@ -65,29 +66,29 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
-                if (targetRadius != 4)
+                foreach (Vector3 point in points)
                 {
-                    foreach (Vector3 point in points)
-                    {
-                        Vector3 dir = (point - transform.position).normalized;
-                        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                        if (angle >= excludeMin && angle <= excludeMax)
-                            continue;
-                        Instantiate(shockwavePrefab, point, Quaternion.identity);
-                    }
+                    Vector3 dir = (point - transform.position).normalized;
+                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    if (angle >= excludeMin && angle <= excludeMax)
+                        continue;
+                    Instantiate(shockwavePrefab, point, Quaternion.identity);
                 }
-                else
-                {
-                    foreach (Vector3 point in points)
-                    {
-                        Instantiate(shockwavePrefab, point, Quaternion.identity);
-                    }
-                }
-
                 yield return new WaitForSeconds(attackdelayTime / 3);
             }
         }
-
+        public IEnumerator MakeShock()
+        {
+            int targetRadius = 4;
+            Vector3[] points = GetCirclePoints(transform.position, targetRadius, targetRadius * 3 + 10);
+            ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
+            StartCoroutine(ShockwaveSoundObject.Play());
+            foreach (Vector3 point in points)
+            {
+                Instantiate(shockwavePrefab, point, Quaternion.identity);
+            }
+            yield return new WaitForSeconds(attackdelayTime / 3);
+        }
         public abstract class GolemState : CoolDownState
         {
             public Golem Golem => mob as Golem;
@@ -96,11 +97,11 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 weights = new Dictionary<System.Type, int>
                 {
-                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 500 : 0 },
                     { typeof(FallingCubeAttack), 5 },
                     { typeof(ChargeShield), 50 },
                     { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
-                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 500 : 0 },
                     { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
@@ -129,7 +130,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("TwoHand", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
-                yield return Golem.MakeShockwave(4);
+                yield return Golem.MakeShock();
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("TwoHand", false);
                 Golem.ChangeState(NextStateWeights);
@@ -251,7 +252,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("TwoHand", true);
 
                 yield return new WaitForSeconds(Golem.attackdelayTime);
-                yield return Golem.MakeShockwave(14);
+                yield return Golem.MakeShockwave();
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 Golem.Animator.SetBool("TwoHand", false);
                 Golem.ChangeState(NextStateWeights);
