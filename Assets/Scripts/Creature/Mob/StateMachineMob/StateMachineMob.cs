@@ -113,6 +113,20 @@ namespace Creature.Mob.StateMachineMob
         
             _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
         }
+        public void ChangeState(Dictionary<Type, int> nextStateWeights)
+        {
+            List<Type> weightedStates = new();
+            foreach (var state in States)
+            {
+                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
+                {
+                    weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
+                }
+            }
+            System.Type nextStateType = weightedStates[Random.Range(0, weightedStates.Count)];
+            currentState = States.First(s => s.GetType() == nextStateType);
+            _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
+        }
         
         public abstract class BaseState
         {
