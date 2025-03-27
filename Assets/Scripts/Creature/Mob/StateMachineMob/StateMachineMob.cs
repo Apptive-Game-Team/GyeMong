@@ -40,57 +40,9 @@ namespace Creature.Mob.StateMachineMob
                 currentState.OnStateExit();
                 StopCoroutine(_currentStateCoroutine);
             }
-            if (currentState == null)
-            {
-                SetInitialState();
-            }
-            else if (currentState is Boss.Boss.CoolDownState)
-            {
-                ChangeStateForBoss();
-            }
-            else
-            {
-                ChangeStateForNormal();
-            }
-        }
-        private void ChangeStateForBoss()
-        {
-            List<Type> weightedStates = new();
-            Dictionary<Type, int> nextStateWeights = ((Boss.Boss.CoolDownState)currentState).GetNextStateWeights();
-
-            foreach (var state in States)
-            {
-                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
-                {
-                    weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
-                }
-            }
-            System.Type nextStateType = weightedStates[Random.Range(0, weightedStates.Count)];
-            currentState = States.First(s => s.GetType() == nextStateType);
-            _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
-        }
-        private void ChangeStateForNormal()
-        {
             List<int> weights = new();
             int index = 0;
             BaseState[] states = States;
-
-            foreach (BaseState state in states)
-            {
-                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
-            }
-
-            int randomIndex = Random.Range(0, weights.Count);
-            currentState = states[weights[randomIndex]];
-            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
-        }
-        
-        
-        private void SetInitialState()
-        {
-            BaseState[] states = States;
-            List<int> weights = new();
-            int index = 0;
 
             foreach (BaseState state in states)
             {
