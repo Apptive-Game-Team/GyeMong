@@ -97,11 +97,11 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 weights = new Dictionary<System.Type, int>
                 {
-                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 500 : 0 },
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
                     { typeof(FallingCubeAttack), 5 },
                     { typeof(ChargeShield), 50 },
                     { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
-                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 500 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
                     { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
