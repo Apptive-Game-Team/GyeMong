@@ -88,7 +88,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             }
         }
 
-        public abstract class GolemState : BossState
+        public abstract class GolemState : CoolDownState
         {
             public override Dictionary<System.Type, int> GetNextStateWeights()
             {

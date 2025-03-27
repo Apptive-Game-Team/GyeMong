@@ -35,7 +35,7 @@ namespace Creature.Mob.Boss.Spring.Elf
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
-        public abstract class ElfState : BossState
+        public abstract class ElfState : CoolDownState
         {
             public Elf Elf => mob as Elf;
             public override void OnStateUpdate()

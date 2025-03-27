@@ -26,7 +26,7 @@ namespace Creature.Mob.StateMachineMob.Boss
                 }
             }
         }
-        public abstract class BossState : BaseState
+        public abstract class CoolDownState : BaseState
         {
             protected float cooldownTime = 0f;
             protected float lastUsedTime = 0f;

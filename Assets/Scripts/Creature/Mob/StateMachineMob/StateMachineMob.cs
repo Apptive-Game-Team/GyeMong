@@ -44,7 +44,7 @@ namespace Creature.Mob.StateMachineMob
             {
                 SetInitialState();
             }
-            else if (currentState is Boss.Boss.BossState)
+            else if (currentState is Boss.Boss.CoolDownState)
             {
                 ChangeStateForBoss();
             }
@@ -56,7 +56,7 @@ namespace Creature.Mob.StateMachineMob
         private void ChangeStateForBoss()
         {
             List<Type> weightedStates = new();
-            Dictionary<Type, int> nextStateWeights = ((Boss.Boss.BossState)currentState).GetNextStateWeights();
+            Dictionary<Type, int> nextStateWeights = ((Boss.Boss.CoolDownState)currentState).GetNextStateWeights();
 
             foreach (var state in States)
             {
