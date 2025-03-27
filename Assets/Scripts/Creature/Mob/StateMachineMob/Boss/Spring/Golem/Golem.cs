@@ -92,7 +92,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             public Golem Golem => mob as Golem;
             protected Dictionary<System.Type, int> weights;
-            protected virtual void CalculateWeights()
+            protected virtual void SetWeights()
             {
                 weights = new Dictionary<System.Type, int>
                 {
@@ -112,7 +112,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 get
                 {
-                    CalculateWeights();
+                    SetWeights();
                     return weights;
                 }
             }
