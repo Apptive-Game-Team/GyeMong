@@ -90,8 +90,9 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         public abstract class GolemState : CoolDownState
         {
-            private Dictionary<System.Type, int> weights = new Dictionary<System.Type, int>();
-            public Dictionary<System.Type, int> GetNextStateWeights
+            public Golem Golem => mob as Golem;
+            protected Dictionary<System.Type, int> weights = new Dictionary<System.Type, int>();
+            protected virtual Dictionary<System.Type, int> GetNextStateWeights
             {
                 get => weights;
                 private set
@@ -111,24 +112,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     }
                 }
             }
-            public override Dictionary<System.Type, int> GetNextStateWeights()
-            {
-                var weights = new Dictionary<System.Type, int>
-                {
-                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
-                    { typeof(FallingCubeAttack), 5},
-                    { typeof(ChargeShield), 50 },
-                    { typeof(UpStoneAttack),(Golem.DistanceToPlayer >= Golem.MeleeAttackRange)? 5 : 0 },
-                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0},
-                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
-                };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
-                }
-                return weights;
-            }
-            public Golem Golem => mob as Golem;
         }
 
         public class MeleeAttack : GolemState
@@ -145,7 +128,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return Golem.MakeShockwave(4);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("TwoHand", false);
-                mob.ChangeState();
+                mob.ChangeState(weights);
             }
         }
         public class PushOutAttack : GolemState
@@ -162,7 +145,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("Toss", false);
-                mob.ChangeState();
+                mob.ChangeState(weights);
             }
         }
 
@@ -180,7 +163,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 GameObject cube = Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 Golem.Animator.SetBool("Toss", false);
                 yield return new WaitUntil(() => cube.IsDestroyed());
-                mob.ChangeState();
+                mob.ChangeState(weights);
             }
         }
 
@@ -202,7 +185,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
                 Golem.MaterialController.SetFloat(1);
 
-                mob.ChangeState();
+                mob.ChangeState(weights);
             }
         }
 
@@ -234,7 +217,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 yield return new WaitForSeconds(Golem.attackdelayTime*2);
 
-                mob.ChangeState();
+                mob.ChangeState(weights);
             }
 
             private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
@@ -267,7 +250,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return Golem.MakeShockwave(14);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 Golem.Animator.SetBool("TwoHand", false);
-                mob.ChangeState();
+                mob.ChangeState(weights);
             }
         }
         protected override void Die()

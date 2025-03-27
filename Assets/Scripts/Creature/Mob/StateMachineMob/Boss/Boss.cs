@@ -38,10 +38,6 @@ namespace Creature.Mob.StateMachineMob.Boss
             {
                 lastUsedTime = Time.time;
             }
-            public virtual Dictionary<Type, int> GetNextStateWeights()
-            {
-                return new Dictionary<Type, int>();
-            }
         }
         protected void Start()
         {
