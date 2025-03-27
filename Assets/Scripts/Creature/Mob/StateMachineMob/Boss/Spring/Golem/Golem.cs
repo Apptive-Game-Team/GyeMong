@@ -30,8 +30,8 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             maxPhase = 2;
             maxHps.Clear();
+            maxHps.Add(100f);
             maxHps.Add(200f);
-            maxHps.Add(300f);
             currentHp = maxHps[currentPhase];
             currentShield = 0f;
             damage = 30f;
