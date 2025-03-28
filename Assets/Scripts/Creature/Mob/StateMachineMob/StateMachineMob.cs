@@ -67,6 +67,10 @@ namespace Creature.Mob.StateMachineMob
         }
         public void ChangeState(Dictionary<Type, int> nextStateWeights)
         {
+            if (currentState != null)
+            {
+                currentState.OnStateExit();
+            }
             List<Type> weightedStates = new();
             foreach (var state in States)
             {
