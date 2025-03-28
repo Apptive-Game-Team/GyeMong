@@ -8,7 +8,7 @@ namespace Creature.Boss.Spring.Golem
     {
         private GameObject player;
         private SpriteRenderer spriteRenderer;
-        private void OnEnable()
+        private void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
             spriteRenderer = GetComponent<SpriteRenderer>();
