@@ -52475,6 +52475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8001571092702873126}
   - component: {fileID: 8998940670687606628}
+  - component: {fileID: 4426595711407515147}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -52547,6 +52548,29 @@ PolygonCollider2D:
       - {x: -23, y: -19}
       - {x: 29, y: -19}
   m_UseDelaunayMesh: 0
+--- !u!114 &4426595711407515147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7349107088144162427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 0
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 4178448292530094086
+  references:
+    version: 2
+    RefIds:
+    - rid: 4178448292530094086
+      type: {class: CameraSet, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!1 &8470104015836126088
 GameObject:
   m_ObjectHideFlags: 0
