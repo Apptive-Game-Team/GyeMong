@@ -19,7 +19,6 @@ namespace Creature.Boss.Spring.Golem
         {
             float followDuration = 1f;
             float elapsedTime = 0f;
-            float maxAlpha = 1f;
             Color initialColor = spriteRenderer.color;
             spriteRenderer.color = initialColor;
 
@@ -30,7 +29,7 @@ namespace Creature.Boss.Spring.Golem
                     transform.position = player.transform.position - new Vector3(0, 0.6f, 0);
                     float t = elapsedTime / followDuration;
                     Color newColor = spriteRenderer.color;
-                    newColor.a = Mathf.Lerp(initialColor.a, maxAlpha, t);
+                    newColor.a = Mathf.Lerp(initialColor.a, 1f, t);
                     spriteRenderer.color = newColor;
                 }
                 elapsedTime += Time.deltaTime;
