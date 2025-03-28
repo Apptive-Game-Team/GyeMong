@@ -43,8 +43,6 @@ namespace Creature.Boss.Spring.Golem
             float speed = 70f;
             float currentSpeed = speed;
             Vector3 targetPosition = player.transform.position;
-            Vector3 startPosition = transform.position;
-
             while (transform.position.y > targetPosition.y)
             {
                 currentSpeed += accele * Time.deltaTime;

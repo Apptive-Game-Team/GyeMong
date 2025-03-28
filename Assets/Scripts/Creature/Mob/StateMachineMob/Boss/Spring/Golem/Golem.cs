@@ -113,7 +113,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 get
                 {
-                    if (NextStateWeights == null)
+                    if (weights == null)
                     {
                         SetWeights();
                     }
