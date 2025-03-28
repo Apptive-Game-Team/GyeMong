@@ -115,7 +115,18 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
         {
             for (int i = 0; i < 4; i++)
             {
-                Vector3 spawnPosition = transform.position + Random.insideUnitSphere * 3;
+                Vector3 spawnPosition = transform.position;
+                int attempts = 10;
+                do
+                {
+                    Vector3 candidatePosition = transform.position + Random.insideUnitSphere * 3;
+                    if (!Physics.Raycast(transform.position, candidatePosition - transform.position, Vector3.Distance(transform.position, candidatePosition), LayerMask.GetMask("Wall")))
+                    {
+                        spawnPosition = candidatePosition;
+                        break;
+                    }
+                } while (attempts-- > 0);
+                
                 GameObject newSlime = Instantiate(gameObject, transform.position, Quaternion.identity);
                 newSlime.transform.localScale = transform.localScale * divideRatio;
                 
