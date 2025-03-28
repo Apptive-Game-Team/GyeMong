@@ -200,7 +200,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             public override int GetWeight()
             {
-                return (Golem.CurrentPhase == 0) ? 5 : 0;
+                return 5;
             }
 
             public override IEnumerator StateCoroutine()

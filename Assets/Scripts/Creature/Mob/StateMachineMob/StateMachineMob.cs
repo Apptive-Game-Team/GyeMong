@@ -40,18 +40,22 @@ namespace Creature.Mob.StateMachineMob
                 currentState.OnStateExit();
                 StopCoroutine(_currentStateCoroutine);
             }
-            List<int> weights = new();
-            int index = 0;
+            List<BaseState> weightedStates = new();
             BaseState[] states = States;
-
             foreach (BaseState state in states)
             {
-                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
+                int weight = state.GetWeight();
+                for (int i = 0; i < weight; i++)
+                {
+                    weightedStates.Add(state);
+                }
             }
-
-            int randomIndex = Random.Range(0, weights.Count);
-            currentState = states[weights[randomIndex]];
-            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
+            if (weightedStates.Count > 0)
+            {
+                int randomIndex = Random.Range(0, weightedStates.Count);
+                currentState = weightedStates[randomIndex];
+                _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
+            }
         }
         public void ChangeState(BaseState state)
         {
@@ -67,21 +71,26 @@ namespace Creature.Mob.StateMachineMob
         }
         public void ChangeState(Dictionary<Type, int> nextStateWeights)
         {
-            if (currentState != null)
+            if (_currentStateCoroutine != null)
             {
                 currentState.OnStateExit();
+                StopCoroutine(_currentStateCoroutine);
             }
-            List<Type> weightedStates = new();
-            foreach (var state in States)
+            List<BaseState> weightedStates = new();
+            for (int i = 0; i < States.Length; i++)
             {
+                var state = States[i];
                 if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
                 {
-                    weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
+                    weightedStates.AddRange(Enumerable.Repeat(state, weight));
                 }
             }
-            System.Type nextStateType = weightedStates[Random.Range(0, weightedStates.Count)];
-            currentState = States.First(s => s.GetType() == nextStateType);
-            _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
+            if (weightedStates.Count > 0)
+            {
+                int randomIndex = Random.Range(0, weightedStates.Count);
+                currentState = weightedStates[randomIndex];
+                _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
+            }
         }
         
         public abstract class BaseState
