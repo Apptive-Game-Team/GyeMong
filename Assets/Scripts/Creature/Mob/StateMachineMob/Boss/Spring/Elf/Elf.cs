@@ -66,8 +66,10 @@ namespace Creature.Mob.Boss.Spring.Elf
             protected Dictionary<System.Type, int> NextStateWeights
             {
                 get
-                {
-                    SetWeights();
+                {   if(NextStateWeights == null)
+                    {
+                        SetWeights();
+                    }
                     return weights;
                 }
             }
