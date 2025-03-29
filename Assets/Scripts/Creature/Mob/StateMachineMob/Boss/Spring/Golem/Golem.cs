@@ -1,32 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Sound;
+using Creature.Attack.Component.Movement;
+using Creature.Attack;
+using Creature.Boss.Component.SkillIndicator;
 using Creature.Boss.Spring.Golem;
+using Creature.Mob.Boss.Spring.Elf;
 using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Drawing;
 
 namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class Golem : Boss
     {
         [SerializeField] public GameObject cubePrefab;
-        [SerializeField] public GameObject cubeShadowPrefab;
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
+        [SerializeField] private GameObject pushOutAttackPrefab;
         private Shield shieldComponenet;
-
+        float attackdelayTime = 1f;
         [SerializeField] private SoundObject _shockwavesoundObject;
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
         [SerializeField] private SoundObject _tossSoundObject;
         public SoundObject TossSoundObject => _tossSoundObject;
-
         protected override void Initialize()
         {
             maxPhase = 2;
             maxHps.Clear();
+            maxHps.Add(100f);
             maxHps.Add(200f);
-            maxHps.Add(300f);
             currentHp = maxHps[currentPhase];
             currentShield = 0f;
             damage = 30f;
@@ -48,43 +53,104 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             return points;
         }
 
-        public IEnumerator MakeShockwave(int targetRadius = 14)
+        public IEnumerator MakeShockwave()
         {
+            float targetRadius = 14;
             int startRadius = 4;
+            float excludeAngle = Random.Range(-30f, -150f);
+            float excludeMin = excludeAngle - 10f;
+            float excludeMax = excludeAngle + 10f;
+
             for (int i = startRadius; i <= targetRadius; i++)
             {
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
-                for (int j = 0; j < points.Length; j++)
+                foreach (Vector3 point in points)
                 {
-                    GameObject shockWave = Instantiate(shockwavePrefab, points[j], Quaternion.identity);
+                    Vector3 dir = (point - transform.position).normalized;
+                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    if (angle >= excludeMin && angle <= excludeMax)
+                        continue;
+                    Instantiate(shockwavePrefab, point, Quaternion.identity);
                 }
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(attackdelayTime / 3);
             }
         }
-
-        public abstract class GolemState : BaseState
+        public IEnumerator MakeShock()
+        {
+            int targetRadius = 4;
+            Vector3[] points = GetCirclePoints(transform.position, targetRadius, targetRadius * 3 + 10);
+            ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
+            StartCoroutine(ShockwaveSoundObject.Play());
+            foreach (Vector3 point in points)
+            {
+                Instantiate(shockwavePrefab, point, Quaternion.identity);
+            }
+            yield return new WaitForSeconds(attackdelayTime / 3);
+        }
+        public abstract class GolemState : CoolDownState
         {
             public Golem Golem => mob as Golem;
+            protected Dictionary<System.Type, int> weights;
+            protected virtual void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 50 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }
+            protected Dictionary<System.Type, int> NextStateWeights
+            {
+                get
+                {
+                    SetWeights();
+                    return weights;
+                }
+            }
         }
 
         public class MeleeAttack : GolemState
         {
             public override int GetWeight()
             {
-                return (mob.DistanceToPlayer < mob.MeleeAttackRange) ? 5 : 0;
+                return (Golem.DistanceToPlayer < Golem.MeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-
-                yield return new WaitForSeconds(1f);
-                yield return Golem.MakeShockwave(4);
-
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                yield return Golem.MakeShock();
                 Golem.Animator.SetBool("TwoHand", false);
-                mob.ChangeState();
+                yield return new WaitForSeconds(Golem.attackdelayTime / 3);
+                Golem.ChangeState(NextStateWeights);
+            }
+        }
+        public class PushOutAttack : GolemState
+        {
+            public override int GetWeight()
+            {
+                return (Golem.DistanceToPlayer < Golem.MeleeAttackRange) ? 5 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                Golem.Animator.SetBool("Toss", true);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                Golem.Animator.SetBool("Toss", false);
+                Golem.ChangeState(NextStateWeights);
             }
         }
 
@@ -94,28 +160,24 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 return 5;
             }
-
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("Toss", true);
-
-                mob.StartCoroutine(Golem.TossSoundObject.Play());
-                yield return new WaitForSeconds(2f);
+                Golem.StartCoroutine(Golem.TossSoundObject.Play());
+                yield return new WaitForSeconds(Golem.attackdelayTime * 2);
                 GameObject cube = Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
-                Cube cubeComponent = cube.GetComponent<Cube>();
-                GameObject shadow = Instantiate(Golem.cubeShadowPrefab, PlayerCharacter.Instance.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
-                cubeComponent.DetectShadow(shadow);
-
                 Golem.Animator.SetBool("Toss", false);
-
                 yield return new WaitUntil(() => cube.IsDestroyed());
-
-                mob.ChangeState();
+                Golem.ChangeState(NextStateWeights);
             }
         }
 
         public class ChargeShield : GolemState
         {
+            public ChargeShield()
+            {
+                cooldownTime = 30f;
+            }
             public override int GetWeight()
             {
                 return 5;
@@ -128,7 +190,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
                 Golem.MaterialController.SetFloat(1);
 
-                mob.ChangeState();
+                Golem.ChangeState(NextStateWeights);
             }
         }
 
@@ -136,13 +198,13 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             public override int GetWeight()
             {
-                return (Golem.CurrentPhase == 0) ? 5 : 0;
+                return 5;
             }
 
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("OneHand", true);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(Golem.attackdelayTime);
 
                 int numberOfObjects = 5;
                 float interval = 0.2f;
@@ -158,9 +220,9 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 Golem.Animator.SetBool("OneHand", false);
 
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(Golem.attackdelayTime * 2);
 
-                mob.ChangeState();
+                Golem.ChangeState(NextStateWeights);
             }
 
             private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
@@ -188,12 +250,12 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-
-                yield return new WaitForSeconds(1f);
-                yield return Golem.MakeShockwave(14);
-
+                yield return new WaitForSeconds(Golem.attackdelayTime);
+                Debug.Log("tlqkf!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                yield return Golem.MakeShockwave();
                 Golem.Animator.SetBool("TwoHand", false);
-                mob.ChangeState();
+                yield return new WaitForSeconds(Golem.attackdelayTime / 3);
+                Golem.ChangeState(NextStateWeights);
             }
         }
         protected override void Die()

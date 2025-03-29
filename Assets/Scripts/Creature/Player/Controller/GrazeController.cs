@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Creature.Attack;
 using playerCharacter;
 using UnityEngine;
-
 using LastEnemyAttackInfo = Creature.Boss.EnemyAttackInfo; 
 
 public class GrazeController : MonoBehaviour
