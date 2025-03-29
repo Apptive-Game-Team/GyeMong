@@ -1609,6 +1609,21 @@ PrefabInstance:
       propertyPath: m_ChunkCullingBounds.y
       value: 1.3165227
       objectReference: {fileID: 0}
+    - target: {fileID: 1275104839471303315, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+        type: 3}
+      propertyPath: m_Points.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275104839471303315, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+        type: 3}
+      propertyPath: m_Points.Array.data[8].x
+      value: 2.8055823
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275104839471303315, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+        type: 3}
+      propertyPath: m_Points.Array.data[8].y
+      value: 0.8087673
+      objectReference: {fileID: 0}
     - target: {fileID: 1813464454651665490, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.size
@@ -77511,6 +77526,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604217998165342718, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+        type: 3}
+      propertyPath: m_Points.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604217998165342718, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+        type: 3}
+      propertyPath: m_Points.Array.data[7].x
+      value: 0.39996788
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604217998165342718, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+        type: 3}
+      propertyPath: m_Points.Array.data[7].y
+      value: 0.96002156
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604217998165342718, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+        type: 3}
+      propertyPath: m_Points.Array.data[8].x
+      value: 2.8486395
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604217998165342718, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+        type: 3}
+      propertyPath: m_Points.Array.data[8].y
+      value: 0.8147743
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
