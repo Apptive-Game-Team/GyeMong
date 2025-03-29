@@ -1,4 +1,3 @@
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Creature.Attack.Component.Movement

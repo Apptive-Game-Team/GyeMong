@@ -801,6 +801,7 @@ GameObject:
   - component: {fileID: 1949057745670997371}
   - component: {fileID: 2925716727880741511}
   - component: {fileID: 5637367357296733810}
+  - component: {fileID: 589692611653248908}
   m_Layer: 5
   m_Name: InGameManager
   m_TagString: Untagged
@@ -1079,6 +1080,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4db60e91229de1b45aa93b6143d03112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &589692611653248908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010824913889302522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a996ea4f5902a419583690e6dac381c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3330940684710594360
@@ -1852,6 +1865,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSizeBase
       value: 108
+      objectReference: {fileID: 0}
+    - target: {fileID: 4389575764265434315, guid: 8a1bd8cde73ea4bf8a4950aece18e22c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5285915482178294126, guid: 8a1bd8cde73ea4bf8a4950aece18e22c,
         type: 3}
