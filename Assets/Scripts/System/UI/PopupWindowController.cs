@@ -18,17 +18,22 @@ namespace System.UI
         {
             base.Awake();
             _rectTransform = _popupWindow.GetComponent<RectTransform>();
+            _popupWindow.SetActive(false);
         }
 
         public IEnumerator OpenPopupWindow(String title = "", String content = "")
         {
             _titleText.text = title;
             _contentText.text = content;
-            return MoveWindow(-TARGET_X);
+            _popupWindow.SetActive(true);
+            Time.timeScale = 0.0f;
+            return null;
         }
         public IEnumerator ClosePopupWindow()
         {
-            return MoveWindow(TARGET_X);
+            _popupWindow.SetActive(false);
+            Time.timeScale = 1f;
+            return null;
         }
 
         private IEnumerator MoveWindow(float targetX)
@@ -39,5 +44,6 @@ namespace System.UI
                 yield return null;
             }
         }
+        
     }
 }
