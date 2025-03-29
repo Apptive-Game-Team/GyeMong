@@ -265,6 +265,12 @@ namespace Creature.Mob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 4);
+                yield return new WaitForSeconds(Elf.attackdelayTime / 3);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 4);
                 int numberOfObjects = 5;
                 float interval = 0.2f;
                 float fixedDistance = 7f;
@@ -278,6 +284,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
+                Elf.Animator.SetBool("isAttack", false);
                 Elf.ChangeState(NextStateWeights);
             }
             private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
