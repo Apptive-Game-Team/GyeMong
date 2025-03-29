@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 
 [Serializable]
 public abstract class Condition
@@ -28,6 +30,40 @@ public class NotCondition : Condition
     public override bool Check()
     {
         return !condition.Check();
+    }
+}
+
+[Serializable]
+public class AndConditions : Condition
+{
+    [SerializeField] 
+    private List<string> tags;
+
+    public override bool Check()
+    {
+        foreach (var tag in tags)
+        {
+            if (!ConditionManager.Instance.Conditions.ContainsKey(tag)) return false;
+            if (!ConditionManager.Instance.Conditions[tag]) return false;
+        }
+        return true;
+    }
+}
+
+[Serializable]
+public class OrConditions : Condition
+{
+    [SerializeField] 
+    private List<string> tags;
+
+    public override bool Check()
+    {
+        foreach (var tag in tags)
+        {
+            if (!ConditionManager.Instance.Conditions.ContainsKey(tag)) return false;
+            if (!ConditionManager.Instance.Conditions[tag]) return true;
+        }
+        return false;
     }
 }
 

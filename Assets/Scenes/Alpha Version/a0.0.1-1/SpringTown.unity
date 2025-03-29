@@ -8010,6 +8010,12 @@ MonoBehaviour:
       type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
       data:
         triggerable: {fileID: 2019377903}
+    - rid: 286138671396552709
+      type: {class: AndConditions, ns: , asm: Assembly-CSharp}
+      data:
+        tags:
+        - GardenQuestIsCleared
+        - ShadowForestQuestIsCleared
     - rid: 2715780017853038639
       type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -8032,16 +8038,11 @@ MonoBehaviour:
       type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
       data:
         _condition:
-          rid: 2715780017853038651
+          rid: 286138671396552709
         eventInTrue:
           rid: 286138211694542855
         eventInFalse:
           rid: 286138211694542848
-    - rid: 2715780017853038651
-      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
-      data:
-        tag: spring_quest_clear
-        condition: 0
 --- !u!212 &1702330172
 SpriteRenderer:
   m_ObjectHideFlags: 0
