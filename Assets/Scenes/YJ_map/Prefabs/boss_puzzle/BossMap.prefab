@@ -233,8 +233,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6129864711093444854}
-  - component: {fileID: 5639315973785378594}
   - component: {fileID: 2980147215863620375}
+  - component: {fileID: 5392584240462050151}
   m_Layer: 0
   m_Name: Room 3
   m_TagString: Untagged
@@ -258,29 +258,6 @@ Transform:
   - {fileID: 7002896161882422493}
   m_Father: {fileID: 2211075823653013317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5639315973785378594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1107324611101068760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 0
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 4178448292530094081
-  references:
-    version: 2
-    RefIds:
-    - rid: 4178448292530094081
-      type: {class: CameraSet, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!60 &2980147215863620375
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -330,6 +307,18 @@ PolygonCollider2D:
       - {x: 45, y: -23}
       - {x: 79, y: -23}
   m_UseDelaunayMesh: 0
+--- !u!114 &5392584240462050151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107324611101068760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9bde3efdf330b499e078d36cfbafef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1545180393420600209
 GameObject:
   m_ObjectHideFlags: 0
@@ -36543,8 +36532,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2000597105342997208}
-  - component: {fileID: 1992203795952609032}
   - component: {fileID: 2186269425386693445}
+  - component: {fileID: 7259994182545887774}
   m_Layer: 0
   m_Name: Room 2
   m_TagString: Untagged
@@ -36568,29 +36557,6 @@ Transform:
   - {fileID: 1052270785491534505}
   m_Father: {fileID: 2211075823653013317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1992203795952609032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7609138537767407977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 0
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 4178448292530094081
-  references:
-    version: 2
-    RefIds:
-    - rid: 4178448292530094081
-      type: {class: CameraSet, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!60 &2186269425386693445
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -36640,6 +36606,18 @@ PolygonCollider2D:
       - {x: 21, y: -14}
       - {x: 39, y: -14}
   m_UseDelaunayMesh: 0
+--- !u!114 &7259994182545887774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609138537767407977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9bde3efdf330b499e078d36cfbafef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8759829098947658661
 GameObject:
   m_ObjectHideFlags: 0
@@ -36833,8 +36811,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 342729305875747150}
-  - component: {fileID: 9060697866219723296}
   - component: {fileID: 3283355609769442074}
+  - component: {fileID: 3954671078824676920}
   m_Layer: 0
   m_Name: Room 1
   m_TagString: Untagged
@@ -36858,29 +36836,6 @@ Transform:
   - {fileID: 2343260534121664299}
   m_Father: {fileID: 2211075823653013317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9060697866219723296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8821622906426956138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 0
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 4178448292530094081
-  references:
-    version: 2
-    RefIds:
-    - rid: 4178448292530094081
-      type: {class: CameraSet, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!60 &3283355609769442074
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -36930,6 +36885,18 @@ PolygonCollider2D:
       - {x: -14, y: -22}
       - {x: 14, y: -22}
   m_UseDelaunayMesh: 0
+--- !u!114 &3954671078824676920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821622906426956138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9bde3efdf330b499e078d36cfbafef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8920288157111092431
 GameObject:
   m_ObjectHideFlags: 0
