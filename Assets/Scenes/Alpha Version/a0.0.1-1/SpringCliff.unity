@@ -169,6 +169,93 @@ Transform:
   - {fileID: 2072770450}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &141204431
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2107788143}
+    m_Modifications:
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.05468855
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581359416817432458, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      propertyPath: m_Name
+      value: EventElf
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1610789005593594130, guid: 56c793e61c42d4b919e832ce6c53a241, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 56c793e61c42d4b919e832ce6c53a241, type: 3}
+--- !u!4 &141204432 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3544645115551477654, guid: 56c793e61c42d4b919e832ce6c53a241,
+    type: 3}
+  m_PrefabInstance: {fileID: 141204431}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &141204433 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4250317024222530258, guid: 56c793e61c42d4b919e832ce6c53a241,
+    type: 3}
+  m_PrefabInstance: {fileID: 141204431}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c50b92080c074c4fb265d6f0a459542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &256268420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -258,7 +345,7 @@ PrefabInstance:
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.01
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
@@ -952,6 +1039,95 @@ Transform:
   m_Children: []
   m_Father: {fileID: 97094469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1123217198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1123217199}
+  - component: {fileID: 1123217200}
+  m_Layer: 0
+  m_Name: ElfMove
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1123217199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123217198}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2107788143}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1123217200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123217198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8330688008202485772
+  - rid: 8330688008202485767
+  - rid: 8330688008202485768
+  - rid: 8330688008202485773
+  - rid: 8330688008202485770
+  - rid: 8330688008202485771
+  references:
+    version: 2
+    RefIds:
+    - rid: 8330688008202485767
+      type: {class: MoveCreatureEvent, ns: , asm: Assembly-CSharp}
+      data:
+        creatureType: 1
+        iControllable: {fileID: 141204433}
+        target: {x: 2, y: -3, z: 0}
+        speed: 2
+    - rid: 8330688008202485768
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8330688008202485770
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8330688008202485771
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 8330688008202485772
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 8330688008202485773
+      type: {class: ShowChatSequence, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC5EC\uAE30\uAE4C\uC9C0 \uB3C4\uB2EC\uD588\uAD6C\uB9CC, \uC790\uB124"
+          - "\uC6B0\uB9AC \uB9C8\uC744\uC744 \uAD6C\uD574\uC918\uC11C \uACE0\uB9D9\uB2E4\uB124"
+          - "\uB2E4\uC74C \uBAA9\uC801\uC9C0\uB294 \uC5EC\uB984 \uC0AC\uB9C9 \uAD81\uC804\uC774\uACA0\uC9C0?"
+          - "\uB0B4\uB824\uAC00\uB294 \uAE38\uC744 \uB9CC\uB4E4\uC5B4\uC8FC\uC9C0"
+          - "\uAC74\uD22C\uB97C \uBE44\uB124"
 --- !u!1001 &1219609009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2109,6 +2285,91 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2107788142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2107788143}
+  - component: {fileID: 2107788144}
+  m_Layer: 0
+  m_Name: Event
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2107788143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107788142}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1123217199}
+  - {fileID: 141204432}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2107788144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107788142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8330688008202485761
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8330688008202485761
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 8330688008202485762
+        eventInTrue:
+          rid: -2
+        eventInFalse:
+          rid: 8330688008202485763
+    - rid: 8330688008202485762
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: CliffEventIsCleared
+        condition: 0
+    - rid: 8330688008202485763
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 8330688008202485764
+        - rid: 8330688008202485765
+    - rid: 8330688008202485764
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: CliffEventIsCleared
+        condition: 1
+    - rid: 8330688008202485765
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 1123217200}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2125,3 +2386,4 @@ SceneRoots:
   - {fileID: 1755057879}
   - {fileID: 453112128}
   - {fileID: 97094469}
+  - {fileID: 2107788143}

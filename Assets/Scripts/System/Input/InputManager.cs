@@ -84,7 +84,8 @@ public class InputManager : SingletonObject<InputManager>
     {
         foreach (ActionCode actionCode in keyMappings.Keys)
         {
-            SetKeyActive(actionCode, active);
+            if (actionCode != ActionCode.Interaction)
+                SetKeyActive(actionCode, active);
         }
     }
 

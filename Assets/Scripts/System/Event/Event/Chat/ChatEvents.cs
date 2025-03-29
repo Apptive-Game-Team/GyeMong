@@ -36,6 +36,22 @@ public class ShowChatEvent : ChatEvent
 }
 
 [Serializable]
+public class ShowChatSequence : ChatEvent
+{
+    [SerializeField]
+    MultiChatMessage messages;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        foreach (string message in messages.messages)
+        {
+            yield return EffectManager.Instance.GetChatController().Chat(new ChatMessage(messages.name, message));
+            yield return new SkippableDelayEvent(){delayTime=999}.Execute(eventObject);
+        }
+    }
+}
+
+[Serializable]
 public class MultipleShowChatEvent : ChatEvent
 {
     [SerializeField]

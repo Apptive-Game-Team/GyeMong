@@ -10,6 +10,12 @@ public struct ChatMessage
 {
     public string name;
     public string message;
+
+    public ChatMessage(string messagesName, string messagesMessage)
+    {
+        name = messagesName;
+        message = messagesMessage;
+    }
 }
 
 [Serializable]
