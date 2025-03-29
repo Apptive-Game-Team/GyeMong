@@ -6,21 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Visual.Camera;
 
-public abstract class CameraEvent : Event
-{
-    private static CameraController _cameraController;
-    protected static CameraController CameraController
-    {
-        get
-        {
-            if (_cameraController == null)
-            {
-                _cameraController = EffectManager.Instance.GetCameraController();
-            }
-            return _cameraController;
-        }
-    }
-}
+public abstract class CameraEvent : Event { }
 
 public class CameraMove : CameraEvent
 {
