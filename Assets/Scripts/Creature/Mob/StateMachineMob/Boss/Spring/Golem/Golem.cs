@@ -132,6 +132,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 yield return Golem.MakeShock();
                 Golem.Animator.SetBool("TwoHand", false);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -249,10 +250,11 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-
                 yield return new WaitForSeconds(Golem.attackdelayTime);
+                Debug.Log("tlqkf!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 yield return Golem.MakeShockwave();
                 Golem.Animator.SetBool("TwoHand", false);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 Golem.ChangeState(NextStateWeights);
             }
         }
