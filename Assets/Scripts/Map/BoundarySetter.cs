@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Obsolete("Use Cinemachine instead")]
 public class BoundarySetter : MonoBehaviour
 {
     [SerializeField] private List<Vector2> boundaryPoints;

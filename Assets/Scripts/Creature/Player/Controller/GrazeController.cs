@@ -107,7 +107,7 @@ public class GrazeController : MonoBehaviour
         {
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
-            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.grazeGainOnGraze.GetValue() / distance} with ratio {distance}");
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.GrazeGainOnGraze / distance} with ratio {distance}");
             collider.GetComponent<LastEnemyAttackInfo>().grazed = true;
             _playerSoundController.Trigger(PlayerSoundType.GRAZE);
             GetComponentInChildren<EventObject>().Trigger();
@@ -120,7 +120,7 @@ public class GrazeController : MonoBehaviour
         {
             PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
             GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
-            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.grazeGainOnGraze.GetValue() / distance} with ratio {distance}");
+            Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.GrazeGainOnGraze / distance} with ratio {distance}");
             collider.GetComponent<AttackObjectController>().isGrazed = true;
             _playerSoundController.Trigger(PlayerSoundType.GRAZE);
             GetComponentInChildren<EventObject>().Trigger();
