@@ -1535,16 +1535,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2706223787955244828, guid: f79cf1be3a37447669edd05f233eeeec,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.16312663
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706223787955244828, guid: f79cf1be3a37447669edd05f233eeeec,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 0.08312662
-      objectReference: {fileID: 0}
     - target: {fileID: 2492515186825879711, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
       propertyPath: m_Name
@@ -1639,6 +1629,16 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
       value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706223787955244828, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.16312663
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706223787955244828, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.08312662
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15808,7 +15808,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pushOutAttackPrefab
       value: 
-      objectReference: {fileID: 8583689789694271782, guid: 70fe889e043367146adc040e950e3b04,
+      objectReference: {fileID: 8583689789694271782, guid: decf5d83744ed8a449c92a1d788cf170,
         type: 3}
     - target: {fileID: 2462093118315421597, guid: 541b7061a84e84331a9394f8687c118f,
         type: 3}

@@ -260,7 +260,21 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         protected override void Die()
         {
             base.Die();
+            Animator.SetBool("isDown", true);
             RootPatternManger.Instance.DeActivateRootObjects();
+        }
+        public override IEnumerator Stun(float duration)
+        {
+            Debug.Log("Check1");
+            currentShield = 0f;
+            MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+            Debug.Log("Check2");
+            Animator.SetBool("isStun", true);
+            currentState.OnStateExit();
+            StopCoroutine(_currentStateCoroutine);
+            yield return new WaitForSeconds(duration);
+            Animator.SetBool("isStun", false);
+            ChangeState();
         }
     }
 }
