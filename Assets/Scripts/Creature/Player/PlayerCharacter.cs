@@ -8,6 +8,7 @@ using Creature.Player.Component;
 using Creature.Player.Component.Collider;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Visual.Camera;
 
 namespace playerCharacter
 {
@@ -157,8 +158,8 @@ namespace playerCharacter
         public void TakeDamage(float damage, bool isUnblockable = false)
         {
             if (isInvincible) return;
-            
-            StartCoroutine(EffectManager.Instance.ShakeCamera());
+
+            CameraManager.Instance.CameraShake(0.01f);
 
             if (damage >= curShield && curShield > 0)
             {

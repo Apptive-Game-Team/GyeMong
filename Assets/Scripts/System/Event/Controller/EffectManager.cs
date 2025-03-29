@@ -49,15 +49,7 @@ public class EffectManager : SingletonObject<EffectManager>
     {
         return Fade(hurtEffect, amount);
     }
-
-    /// <summary>
-    /// vibrate camera
-    /// </summary>
-    public IEnumerator ShakeCamera(float time=0.25f)
-    {
-        return cameraController.ShakeCamera(time);
-    }
-
+    
     /// <summary>
     /// The screen is getting Ligther
     /// </summary>
