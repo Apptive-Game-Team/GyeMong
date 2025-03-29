@@ -801,6 +801,7 @@ GameObject:
   - component: {fileID: 7892075988172800473}
   - component: {fileID: 1949057745670997371}
   - component: {fileID: 2925716727880741511}
+  - component: {fileID: 242830830859291676}
   m_Layer: 5
   m_Name: InGameManager
   m_TagString: Untagged
@@ -933,8 +934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e78a4dac7244d60a08931098236c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneDataList: {fileID: 11400000, guid: d486c62b65b494739bc6149e0e88dd09, type: 2}
-  portalDataList: {fileID: 11400000, guid: 286d4a76c56054ec8b306a108b6442d0, type: 2}
+  sceneDataList: {fileID: 11400000, guid: 3c43119c412264d5b8ef92f44c6abfce, type: 2}
+  portalDataList: {fileID: 11400000, guid: 00257a94ae7e94b528bf13160fe91d66, type: 2}
 --- !u!82 &5769650171787535164
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1055,6 +1056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9b577c188be4ff5b97a022defcd53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speechBubble: {fileID: 0}
 --- !u!114 &1949057745670997371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,6 +1079,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4986372d9bc447e7b7995902c6f14ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &242830830859291676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010824913889302522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db60e91229de1b45aa93b6143d03112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3330940684710594360

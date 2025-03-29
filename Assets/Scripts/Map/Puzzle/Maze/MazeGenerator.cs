@@ -9,8 +9,7 @@ namespace Map.Puzzle.Maze
         [SerializeField] Tilemap wallTilemap;
         [SerializeField] Tilemap floorTilemap;
         [SerializeField] Tilemap thornTilemap;
-        [SerializeField] Tile wallTile;
-        [SerializeField] Tile shortWallTile;
+        [SerializeField] RuleTile wallTile;
         [SerializeField] Tile floorTile;
         [SerializeField] Tile thornTile;
 
@@ -78,9 +77,11 @@ namespace Map.Puzzle.Maze
                 _thornGridTile[1, _height / 2 + 1] = false;
             if (_top) 
                 _gridTile[_width / 2, _height - 1] = true;
+                _gridTile[_width / 2 - 1, _height - 1] = true;
                 _thornGridTile[_width / 2 + 1, _height - 2] = false;
             if (_bottom) 
                 _gridTile[_width / 2, 0] = true;
+                _gridTile[_width / 2 - 1, 0] = true;
                 _thornGridTile[_width / 2 + 1, 1] = false;
         }
 
@@ -126,14 +127,7 @@ namespace Map.Puzzle.Maze
                     }
                     else
                     {
-                        if (ConditionManager.Instance.Conditions.ContainsKey("spring_puzzle1_clear"))
-                        {
-                            wallTilemap.SetTile(tilePosition, shortWallTile);
-                        }
-                        else
-                        {
-                            wallTilemap.SetTile(tilePosition, wallTile);
-                        } 
+                        wallTilemap.SetTile(tilePosition, wallTile);
                     }
                 }
             }
