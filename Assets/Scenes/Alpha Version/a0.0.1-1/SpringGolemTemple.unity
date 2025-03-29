@@ -804,7 +804,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 0.3
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -905,7 +905,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 23.546036
+  orthographic size: 3.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -930,7 +930,7 @@ Transform:
   m_GameObject: {fileID: 219050272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.4196033, y: 0.34039545, z: -57.206287}
+  m_LocalPosition: {x: -32.7, y: 6.8999996, z: -10.001161}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
