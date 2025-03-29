@@ -15,8 +15,8 @@ namespace Visual.Camera
 
         protected override void Awake() 
         {
-            GetCameras();
             cameraSize = 4f;
+            GetCameras();
         }
 
         private void GetCameras()
@@ -27,6 +27,7 @@ namespace Visual.Camera
                 Collider2D roomCollider = virtualCam.GetComponentInParent<Collider2D>();
                 virtualCam.gameObject.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = roomCollider;
                 virtualCam.Follow = PlayerCharacter.Instance.gameObject.transform;
+                virtualCam.m_Lens.OrthographicSize = cameraSize;
                 virtualCam.Priority = 0;
             }
         }

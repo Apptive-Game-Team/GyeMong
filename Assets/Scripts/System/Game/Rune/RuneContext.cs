@@ -34,6 +34,7 @@ namespace System.Game.Rune
 
         public ModifyStatContext(StatComponent statComp, List<StatSet> statSetList)
         {
+            StatComp = statComp;
             StatSetList = statSetList;
         }
     }

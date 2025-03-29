@@ -20,7 +20,7 @@ namespace System.Game.Rune
                 //How to Find Specific Stats in StatComp?
                 //Implement in StatComp, And I call the method.
                 //statComp.ChangeValueMethod();
-                changeValueContext.StatComp.SetStatValue(changeValueContext.StatType, changeValueContext.ValueType, changeValueContext.Value);
+                changeValueContext.StatComp.SetStatValues(changeValueContext.StatSetList);
             }
         }
 
