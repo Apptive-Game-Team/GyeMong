@@ -251,7 +251,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("TwoHand", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime);
-                Debug.Log("tlqkf!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 yield return Golem.MakeShockwave();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
