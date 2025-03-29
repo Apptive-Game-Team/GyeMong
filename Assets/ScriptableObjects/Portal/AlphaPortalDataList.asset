@@ -80,8 +80,11 @@ MonoBehaviour:
     sceneID: 7
     destination: {x: 2.5, y: 8, z: 0}
   - portalID: 23
-    sceneID: 7
-    destination: {x: 0, y: 0, z: 0}
+    sceneID: 9
+    destination: {x: 0, y: -3.57, z: 0}
   - portalID: 24
     sceneID: 1
     destination: {x: -0.1, y: 1.24, z: 0}
+  - portalID: 25
+    sceneID: 7
+    destination: {x: 29, y: 10, z: 0}
