@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[Obsolete("Use Cinemachine instead")]
 public class CameraController : MonoBehaviour
 {
     private GameObject player;
