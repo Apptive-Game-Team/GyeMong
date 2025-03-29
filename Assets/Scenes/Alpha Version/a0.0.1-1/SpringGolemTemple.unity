@@ -48717,10 +48717,10 @@ Transform:
   - {fileID: 234538654}
   - {fileID: 1637330595}
   - {fileID: 579447270}
+  - {fileID: 520865295}
+  - {fileID: 1881313932}
   - {fileID: 2104101707}
   - {fileID: 141803511}
-  - {fileID: 1881313932}
-  - {fileID: 520865295}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!213 &1144075604
@@ -49848,6 +49848,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1490979422 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 49194295218117097, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+    type: 3}
+  m_PrefabInstance: {fileID: 92901065}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1511052780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51340,13 +51346,11 @@ MonoBehaviour:
   - rid: 7405124598596370439
   - rid: 7405124598596370436
   - rid: 7405124598596370438
-  - rid: -2
+  - rid: 4949244452169580553
   - rid: 2578170190929068034
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 521773836373327900
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -51370,6 +51374,10 @@ MonoBehaviour:
       data:
         _spriteRenderer: {fileID: 1637330593}
         _sprite: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808, type: 3}
+    - rid: 4949244452169580553
+      type: {class: CameraFollow, ns: , asm: Assembly-CSharp}
+      data:
+        followObject: {fileID: 1490979422}
     - rid: 7405124598596370432
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
