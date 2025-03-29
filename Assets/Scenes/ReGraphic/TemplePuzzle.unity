@@ -1954,7 +1954,10 @@ MonoBehaviour:
   triggerLimitCounter: -1
   eventSequence:
   - rid: 4949243949170819073
+  - rid: 4949244447536971779
   - rid: 4949243949170819075
+  - rid: 4949244447536971777
+  - rid: 4949244447536971780
   - rid: 4949243949170819074
   references:
     version: 2
@@ -1971,6 +1974,18 @@ MonoBehaviour:
         message:
           name: '[System]'
           message: "\uBB38\uC774 \uC7A0\uACA8\uC788\uC2B5\uB2C8\uB2E4."
+    - rid: 4949244447536971777
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 4949244447536971779
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 4949244447536971780
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
 --- !u!212 &497318182
 SpriteRenderer:
   m_ObjectHideFlags: 0
