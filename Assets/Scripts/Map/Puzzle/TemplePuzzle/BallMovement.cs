@@ -199,18 +199,43 @@ namespace Map.Puzzle.TemplePuzzle
 
             yield return new WaitForSeconds(delayTime);
 
-            transform.position = startPosition;
             spriteRenderer.color = new Color(initialColor.r, initialColor.g, initialColor.b, 1f);
+            transform.position = startPosition + new Vector3(0, 5f, 0);
 
-
-            currentTile = GetCurrentTile();
+            StartCoroutine(DownBall());
 
             foreach (TempleTile tile in visitedTiles)
             {
                 tile.iswalked = false;
             }
+        }
+
+        IEnumerator DownBall()
+        {
+            float downDuration = 1f;
+            float elapsedTime = 0f;
+
+            Vector3 startPos = transform.position;
+            Vector3 endPos = startPosition;
+
+            while (elapsedTime < downDuration)
+            {
+                float t = elapsedTime / downDuration;
+                t = Mathf.Sin(t * Mathf.PI * 0.5f);
+
+                transform.position = Vector3.Lerp(startPos, endPos, t);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = endPos;
 
             visitedTiles.Clear();
+
+            currentTile = GetCurrentTile();
+
+            yield return null;
         }
 
         TempleTile GetCurrentTile()
