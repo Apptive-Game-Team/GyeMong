@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2740949399424765801}
   - component: {fileID: 394299540722857273}
   - component: {fileID: 7820030691431913668}
-  - component: {fileID: 776172321717845938}
+  - component: {fileID: -8692751306265056136}
   m_Layer: 0
-  m_Name: Floor
+  m_Name: PushOutAttack
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.7599998, y: 5.7599998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -125,7 +125,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 5.7599998, y: 5.7599998}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 5.7599998, y: 5.7599998}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -141,7 +141,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8583689789694271782}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -177,7 +177,6 @@ MonoBehaviour:
   triggerLimitCounter: 1
   eventSequence:
   - rid: 521773882682900480
-  - rid: 3294223817106784258
   - rid: 3294223817106784259
   references:
     version: 2
@@ -192,14 +191,10 @@ MonoBehaviour:
         - {fileID: 66825293, guid: 2194793274e0340e0affae6b0972e724, type: 3}
         deltaTime: 0.1
         _renderer: {fileID: 0}
-    - rid: 3294223817106784258
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 2
     - rid: 3294223817106784259
       type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
       data: 
---- !u!114 &776172321717845938
+--- !u!114 &-8692751306265056136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,6 +203,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8583689789694271782}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dd34e37f0b42aa43aaf9e1e0175c11b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 095d509d626cd8342a713ecd3df03bd8, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: 0dcb8c465b28ddf479ab341b4e2a11b1,
+    type: 2}

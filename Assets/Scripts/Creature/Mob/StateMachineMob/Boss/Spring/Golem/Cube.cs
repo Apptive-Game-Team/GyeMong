@@ -1,3 +1,4 @@
+using playerCharacter;
 using System;
 using System.Collections;
 using System.Sound;
@@ -9,23 +10,14 @@ namespace Creature.Boss.Spring.Golem
     public class Cube : MonoBehaviour
     {
         private GameObject player;
-        private float damage = 30f;
-        private EnemyAttackInfo enemyAttackInfo;
-
+        [SerializeField] private GameObject cubeShadowPrefab;
+        private GameObject cubeShadow;
         private bool isFalled = false;
-
-        [SerializeField] private SoundObject _soundObject;
-
-        private void Awake()
-        {
-            enemyAttackInfo = gameObject.AddComponent<EnemyAttackInfo>();
-            enemyAttackInfo.Initialize(damage, _soundObject, false, true);
-        }
-
         private void OnEnable()
         {
             player = GameObject.FindGameObjectWithTag("Player");
             StartCoroutine(FollowAndFall());
+            cubeShadow = Instantiate(cubeShadowPrefab, PlayerCharacter.Instance.transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
         }
 
         private IEnumerator FollowAndFall()
@@ -51,8 +43,6 @@ namespace Creature.Boss.Spring.Golem
             float speed = 70f;
             float currentSpeed = speed;
             Vector3 targetPosition = player.transform.position;
-            Vector3 startPosition = transform.position;
-
             while (transform.position.y > targetPosition.y)
             {
                 currentSpeed += accele * Time.deltaTime;
@@ -63,7 +53,6 @@ namespace Creature.Boss.Spring.Golem
             }
             Collider2D collider = GetComponent<Collider2D>();
             isFalled = true;
-            StartCoroutine(_soundObject.Play());
             if (collider != null)
             {
                 collider.isTrigger = false;
@@ -71,7 +60,7 @@ namespace Creature.Boss.Spring.Golem
             yield return new WaitForSeconds(1f);
 
             Destroy(gameObject);
-            Destroy(shadow);
+            Destroy(cubeShadow);
         }
 
         private void OnTriggerStay2D(Collider2D other)
@@ -80,13 +69,8 @@ namespace Creature.Boss.Spring.Golem
             {
                 other.GetComponent<Mob.StateMachineMob.Boss.Boss>().StartCoroutine(other.GetComponent<Mob.StateMachineMob.Boss.Boss>().Stun(5f));
                 Destroy(gameObject);
-                Destroy(shadow);
+                Destroy(cubeShadow);
             }
-        }
-        GameObject shadow;
-        public void DetectShadow(GameObject shadow)
-        {
-            this.shadow = shadow;
         }
     }
 }

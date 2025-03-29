@@ -26,13 +26,6 @@ namespace Creature.Mob.StateMachineMob.Boss
                 }
             }
         }
-        public abstract class BossState : BaseState
-        {
-            public virtual Dictionary<Type, int> GetNextStateWeights()
-            {
-                return new Dictionary<Type, int>();
-            }
-        }
         protected void Start()
         {
             Initialize();
