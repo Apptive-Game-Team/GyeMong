@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1747003227393433049}
   - component: {fileID: 2451053735121749258}
-  - component: {fileID: 193956378235211196}
   - component: {fileID: -5994979513331093526}
   - component: {fileID: 4487911095696371639}
   - component: {fileID: -7846687914530909712}
   - component: {fileID: 1817077504787049418}
+  - component: {fileID: 1899852462201825694}
+  - component: {fileID: 189844426082776311}
   m_Layer: 0
   m_Name: Cube
   m_TagString: EnemyAttack
@@ -89,19 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &193956378235211196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6652684582878580984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 032272ad7ec68ff4fba2565078916eb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _soundObject: {fileID: -7846687914530909712}
 --- !u!50 &-5994979513331093526
 Rigidbody2D:
   serializedVersion: 4
@@ -161,7 +149,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.022212684, y: 0.023902059}
+  m_Offset: {x: 0.14748538, y: -1.2718606}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -172,7 +160,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8160845, y: 1.7562654}
+  m_Size: {x: 2.8185742, y: 1.0705794}
   m_EdgeRadius: 0
 --- !u!114 &-7846687914530909712
 MonoBehaviour:
@@ -283,3 +271,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1899852462201825694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652684582878580984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 740b12977d1e882498bb087feb9f27b7, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: a5333d0197b019c4e9c4033aadaf11db,
+    type: 2}
+--- !u!114 &189844426082776311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652684582878580984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 032272ad7ec68ff4fba2565078916eb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeShadowPrefab: {fileID: 6652684582878580984, guid: 24aa209d7a5bd6e44b1344ba2f62e25b,
+    type: 3}

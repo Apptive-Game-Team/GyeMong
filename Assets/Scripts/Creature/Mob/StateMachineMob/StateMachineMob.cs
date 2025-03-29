@@ -11,7 +11,13 @@ namespace Creature.Mob.StateMachineMob
     {
         protected Coroutine _currentStateCoroutine;
         protected BaseState currentState;
-        
+        private void Update()
+        {
+            if (currentState != null)
+            {
+                currentState.OnStateUpdate();
+            }
+        }
         public override void StartMob()
         {
             currentHp = maxHp;
@@ -34,66 +40,22 @@ namespace Creature.Mob.StateMachineMob
                 currentState.OnStateExit();
                 StopCoroutine(_currentStateCoroutine);
             }
-            if (currentState == null)
+            List<BaseState> weightedStates = new();
+            BaseState[] states = States;
+            foreach (BaseState state in states)
             {
-                SetInitialState();
-            }
-            else if (currentState is Boss.Boss.BossState)
-            {
-                ChangeStateForBoss();
-            }
-            else
-            {
-                ChangeStateForNormal();
-            }
-        }
-        private void ChangeStateForBoss()
-        {
-            List<Type> weightedStates = new();
-            Dictionary<Type, int> nextStateWeights = ((Boss.Boss.BossState)currentState).GetNextStateWeights();
-
-            foreach (var state in States)
-            {
-                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
+                int weight = state.GetWeight();
+                for (int i = 0; i < weight; i++)
                 {
-                    weightedStates.AddRange(Enumerable.Repeat(state.GetType(), weight));
+                    weightedStates.Add(state);
                 }
             }
-            System.Type nextStateType = weightedStates[Random.Range(0, weightedStates.Count)];
-            currentState = States.First(s => s.GetType() == nextStateType);
-            _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
-        }
-        private void ChangeStateForNormal()
-        {
-            List<int> weights = new();
-            int index = 0;
-            BaseState[] states = States;
-
-            foreach (BaseState state in states)
+            if (weightedStates.Count > 0)
             {
-                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
+                int randomIndex = Random.Range(0, weightedStates.Count);
+                currentState = weightedStates[randomIndex];
+                _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
             }
-
-            int randomIndex = Random.Range(0, weights.Count);
-            currentState = states[weights[randomIndex]];
-            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
-        }
-        
-        
-        private void SetInitialState()
-        {
-            BaseState[] states = States;
-            List<int> weights = new();
-            int index = 0;
-
-            foreach (BaseState state in states)
-            {
-                weights.AddRange(Enumerable.Repeat(index++, state.GetWeight()));
-            }
-
-            int randomIndex = Random.Range(0, weights.Count);
-            currentState = states[weights[randomIndex]];
-            _currentStateCoroutine = StartCoroutine(states[weights[randomIndex]].StateCoroutine());
         }
         public void ChangeState(BaseState state)
         {
@@ -106,6 +68,29 @@ namespace Creature.Mob.StateMachineMob
             currentState = state;
         
             _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
+        }
+        public void ChangeState(Dictionary<Type, int> nextStateWeights)
+        {
+            if (_currentStateCoroutine != null)
+            {
+                currentState.OnStateExit();
+                StopCoroutine(_currentStateCoroutine);
+            }
+            List<BaseState> weightedStates = new();
+            for (int i = 0; i < States.Length; i++)
+            {
+                var state = States[i];
+                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
+                {
+                    weightedStates.AddRange(Enumerable.Repeat(state, weight));
+                }
+            }
+            if (weightedStates.Count > 0)
+            {
+                int randomIndex = Random.Range(0, weightedStates.Count);
+                currentState = weightedStates[randomIndex];
+                _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
+            }
         }
         
         public abstract class BaseState
@@ -122,6 +107,19 @@ namespace Creature.Mob.StateMachineMob
             }
             public virtual void OnStateExit()
             {
+            }
+        }
+        public abstract class CoolDownState : BaseState
+        {
+            protected float cooldownTime = 0f;
+            protected float lastUsedTime = 0f;
+            public override bool CanEnterState()
+            {
+                return Time.time - lastUsedTime >= cooldownTime;
+            }
+            public override void OnStateExit()
+            {
+                lastUsedTime = Time.time;
             }
         }
         private BaseState[] _states;

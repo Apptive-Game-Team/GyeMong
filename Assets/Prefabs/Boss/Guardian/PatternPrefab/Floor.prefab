@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2903112264547902694}
   - component: {fileID: 3118012797175491201}
-  - component: {fileID: 9035347438135343472}
   - component: {fileID: 2740949399424765801}
   - component: {fileID: 394299540722857273}
+  - component: {fileID: 7820030691431913668}
+  - component: {fileID: -8692751306265056136}
   m_Layer: 0
-  m_Name: Root
+  m_Name: Floor
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.21, y: 1.35, z: -1.8107556}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,30 +76,18 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 2fbcd11df1be140eea5a4d73a3b3a3f2, type: 3}
+  m_SortingOrder: 12
+  m_Sprite: {fileID: 66825293, guid: 2194793274e0340e0affae6b0972e724, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.375, y: 0.3125}
+  m_Size: {x: 5.7599998, y: 5.7599998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9035347438135343472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8583689789694271782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c86a969b2cdc81049964afb844a6b989, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &2740949399424765801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -128,21 +117,21 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1.5}
+  m_Offset: {x: 0.02531898, y: -0.4648564}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.76, y: 5.76}
-    newSize: {x: 0.375, y: 0.3125}
+    oldSize: {x: 5.7599998, y: 5.7599998}
+    newSize: {x: 5.7599998, y: 5.7599998}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.5466793, y: 2.96481}
   m_EdgeRadius: 0
 --- !u!50 &394299540722857273
 Rigidbody2D:
@@ -171,3 +160,59 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &7820030691431913668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583689789694271782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 521773882682900480
+  - rid: 3294223817106784258
+  - rid: 3294223817106784259
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773882682900480
+      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
+      data:
+        frames:
+        - {fileID: 929469871, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        - {fileID: -1576842532, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        - {fileID: 1924862839, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        - {fileID: 66825293, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        deltaTime: 0.1
+        _renderer: {fileID: 0}
+    - rid: 3294223817106784258
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 2
+    - rid: 3294223817106784259
+      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
+      data: 
+--- !u!114 &-8692751306265056136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583689789694271782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: ecb7414cc2949d74fbc918922de94895, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: 0341e1fdde2169144b636cd0aadab0b6,
+    type: 2}
