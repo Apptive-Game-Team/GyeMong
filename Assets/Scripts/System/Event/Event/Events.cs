@@ -6,6 +6,7 @@ using System.Sound;
 using Creature.Player.Component;
 using Unity.VisualScripting;
 using playerCharacter;
+using DG.Tweening;
 using UnityEditor.ShaderKeywordFilter;
 
 [Serializable]
@@ -244,5 +245,18 @@ public class SetActiveObject : Event
     {
         _gameObject.SetActive(isActive);
         return null;
+    }
+}
+
+public class DropObjectEvent : Event
+{
+    [SerializeField] private GameObject _gameObject;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        GameObject.Instantiate(_gameObject, eventObject.transform.position, _gameObject.transform.rotation);
+        _gameObject.transform.DOMoveY(_gameObject.transform.position.y + 1f, 0.3f).SetEase(Ease.OutQuad)
+            .OnComplete(() => _gameObject.transform.DOMoveY(_gameObject.transform.position.y, 0.3f).SetEase(Ease.InBounce));
+        yield return null;
     }
 }
