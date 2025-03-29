@@ -11282,7 +11282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4665829384842059092}
   - component: {fileID: 5069605589948683374}
-  - component: {fileID: 5137857332512305119}
+  - component: {fileID: 1949003186413620334}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -11355,7 +11355,7 @@ PolygonCollider2D:
       - {x: -18, y: -14}
       - {x: 24, y: -14}
   m_UseDelaunayMesh: 0
---- !u!114 &5137857332512305119
+--- !u!114 &1949003186413620334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11364,20 +11364,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5147014395113050717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Script: {fileID: 11500000, guid: af9bde3efdf330b499e078d36cfbafef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 0
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 4178448292530094082
-  references:
-    version: 2
-    RefIds:
-    - rid: 4178448292530094082
-      type: {class: CameraSet, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!1 &5716876379802379019
 GameObject:
   m_ObjectHideFlags: 0
