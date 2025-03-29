@@ -1,6 +1,10 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+--- !u!1 &8583689789694271782
+========
 --- !u!1 &6364753609242309733
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,6 +12,17 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+  - component: {fileID: 2903112264547902694}
+  - component: {fileID: 3118012797175491201}
+  - component: {fileID: 2740949399424765801}
+  - component: {fileID: 394299540722857273}
+  - component: {fileID: 7820030691431913668}
+  - component: {fileID: -8692751306265056136}
+  m_Layer: 0
+  m_Name: PushOutAttack
+  m_TagString: EnemyAttack
+========
   - component: {fileID: 5533039912543190288}
   - component: {fileID: 5382328789532507243}
   - component: {fileID: 1762043884621747497}
@@ -15,32 +30,53 @@ GameObject:
   m_Layer: 0
   m_Name: Shadowbottle
   m_TagString: Untagged
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+--- !u!4 &2903112264547902694
+========
 --- !u!4 &5533039912543190288
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+  m_GameObject: {fileID: 8583689789694271782}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.21, y: 1.35, z: -1.8107556}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+========
   m_GameObject: {fileID: 6364753609242309733}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.3, y: -0.3, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+--- !u!212 &3118012797175491201
+========
 --- !u!212 &5382328789532507243
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+  m_GameObject: {fileID: 8583689789694271782}
+========
   m_GameObject: {fileID: 6364753609242309733}
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -74,18 +110,31 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+  m_SortingOrder: 12
+  m_Sprite: {fileID: 0}
+========
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 262ff31db2c1f4a48b1d7657631b1670, type: 3}
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+  m_Size: {x: 5.7599998, y: 5.7599998}
+========
   m_Size: {x: 1.92, y: 1.92}
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+--- !u!61 &2740949399424765801
+BoxCollider2D:
+========
 --- !u!114 &1762043884621747497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,11 +166,16 @@ MonoBehaviour:
         _goalIndex: 1
 --- !u!58 &3944143797781095555
 CircleCollider2D:
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+  m_GameObject: {fileID: 8583689789694271782}
+========
   m_GameObject: {fileID: 6364753609242309733}
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -147,6 +201,100 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Guardian/PatternPrefab/PushOutAttack.prefab
+  m_Offset: {x: -0.21210802, y: 0.21949124}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.7599998, y: 5.7599998}
+    newSize: {x: 5.7599998, y: 5.7599998}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.524319, y: 4.333505}
+  m_EdgeRadius: 0
+--- !u!50 &394299540722857273
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583689789694271782}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &7820030691431913668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583689789694271782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 521773882682900480
+  - rid: 3294223817106784259
+  references:
+    version: 2
+    RefIds:
+    - rid: 521773882682900480
+      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
+      data:
+        frames:
+        - {fileID: 929469871, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        - {fileID: -1576842532, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        - {fileID: 1924862839, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        - {fileID: 66825293, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+        deltaTime: 0.1
+        _renderer: {fileID: 0}
+    - rid: 3294223817106784259
+      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
+      data: 
+--- !u!114 &-8692751306265056136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583689789694271782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 095d509d626cd8342a713ecd3df03bd8, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: 0dcb8c465b28ddf479ab341b4e2a11b1,
+    type: 2}
+========
   m_Offset: {x: 0, y: -0.1}
   serializedVersion: 2
   m_Radius: 0.77
+>>>>>>>> main:Assets/Prefabs/Object/Shadowbottle.prefab

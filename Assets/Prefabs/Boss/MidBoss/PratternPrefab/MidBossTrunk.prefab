@@ -77,16 +77,16 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 12
-  m_Sprite: {fileID: -772426026, guid: 486592b725286054a827bad22f44d8fa, type: 3}
-  m_Color: {r: 0.89433956, g: 0.05231038, b: 0.05231038, a: 1}
+  m_SortingOrder: 11
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 5.7599998, y: 5.7599998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &2740949399424765801
@@ -187,10 +187,11 @@ MonoBehaviour:
       type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
       data:
         frames:
-        - {fileID: -260354713, guid: 486592b725286054a827bad22f44d8fa, type: 3}
-        - {fileID: -1621672695, guid: 486592b725286054a827bad22f44d8fa, type: 3}
-        - {fileID: 914368034, guid: 486592b725286054a827bad22f44d8fa, type: 3}
-        - {fileID: -772426026, guid: 486592b725286054a827bad22f44d8fa, type: 3}
+        - {fileID: 128569786, guid: e1ae1bfb4f31f43808469e8aa823259b, type: 3}
+        - {fileID: -1415578493, guid: e1ae1bfb4f31f43808469e8aa823259b, type: 3}
+        - {fileID: 1480143456, guid: e1ae1bfb4f31f43808469e8aa823259b, type: 3}
+        - {fileID: 1652455432, guid: e1ae1bfb4f31f43808469e8aa823259b, type: 3}
+        - {fileID: 207155324, guid: e1ae1bfb4f31f43808469e8aa823259b, type: 3}
         deltaTime: 0.1
         _renderer: {fileID: 0}
     - rid: 3294223817106784258

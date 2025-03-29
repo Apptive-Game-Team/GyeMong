@@ -102,7 +102,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     { typeof(ChargeShield), 50 },
                     { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
-                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 500 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -145,11 +145,11 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
-                Golem.Animator.SetBool("Toss", true);
+                Golem.Animator.SetBool("Push", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
-                Golem.Animator.SetBool("Toss", false);
+                Golem.Animator.SetBool("Push", false);
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -251,7 +251,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("TwoHand", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime);
-                Debug.Log("tlqkf!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 yield return Golem.MakeShockwave();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
@@ -261,7 +260,21 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         protected override void Die()
         {
             base.Die();
+            Animator.SetBool("isDown", true);
             RootPatternManger.Instance.DeActivateRootObjects();
+        }
+        public override IEnumerator Stun(float duration)
+        {
+            Debug.Log("Check1");
+            currentShield = 0f;
+            MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+            Debug.Log("Check2");
+            Animator.SetBool("isStun", true);
+            currentState.OnStateExit();
+            StopCoroutine(_currentStateCoroutine);
+            yield return new WaitForSeconds(duration);
+            Animator.SetBool("isStun", false);
+            ChangeState();
         }
     }
 }
