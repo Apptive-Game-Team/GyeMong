@@ -272,3 +272,14 @@ public class LoadScene : Event
         yield return null;
     }
 }
+
+public class ChangeObjectColor : Event
+{
+    [SerializeField] private GameObject _gameObject;
+    [SerializeField] private Color _color;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        _gameObject.transform.GetComponent<SpriteRenderer>().color = _color;
+        yield return null;
+    }
+}
