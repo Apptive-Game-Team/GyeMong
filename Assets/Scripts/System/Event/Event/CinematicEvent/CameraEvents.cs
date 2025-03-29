@@ -22,55 +22,6 @@ public abstract class CameraEvent : Event
     }
 }
 
-[Serializable]
-public class ShakeCameraEvent : CameraEvent
-{
-    public float time;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return EffectManager.Instance.ShakeCamera(time);
-    }
-}
-
-public class StopFollowCameraEvent : CameraEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        CameraController.IsFollowing = false;
-        return null;
-    }
-}
-
-public class StartFollowCameraEvent : CameraEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        CameraController.GetComponent<Camera>().orthographicSize = 5;
-        CameraController.IsFollowing = true;
-        return null;
-    }  
-}
-
-public class CameraMoveEvent : CameraEvent
-{
-    [SerializeField] private Vector3 target;
-    [SerializeField] private float size = 5;
-    [SerializeField] private float duration;
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        return CameraController.MoveTo(target, duration, size);
-    }
-}
-
-public class CameraSet : CameraEvent
-{
-    public override IEnumerator Execute(EventObject eventObject = null)
-    {
-        CameraManager.Instance.ChangeCamera(eventObject.GetComponentInChildren<CinemachineVirtualCamera>());
-        return null;
-    }
-}
-
 public class CameraMove : CameraEvent
 {
     [SerializeField] private Vector3 destination;
