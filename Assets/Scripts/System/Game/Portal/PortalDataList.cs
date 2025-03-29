@@ -46,6 +46,9 @@ public enum PortalID
 
     //Cinimatic
     Cinematic = 24,
+    
+    // Cliff
+    SPRING_CLIFF1 = 25,
 }
 
 [Serializable]
