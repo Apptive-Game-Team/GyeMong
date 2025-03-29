@@ -105,8 +105,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
+      propertyPath: managedReferences[286138676683997184]
+      value: Assembly-CSharp ChangeObjectColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[286138676683997185]
+      value: Assembly-CSharp SetActiveObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
       propertyPath: managedReferences[286138671396552738].tag
       value: Garden_Door_Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[286138676683997184]._color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[286138676683997184]._color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[286138676683997184]._color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[286138676683997184]._color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[286138676683997185].isActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
@@ -150,6 +185,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
+      propertyPath: managedReferences[286138676683997184]._gameObject
+      value: 
+      objectReference: {fileID: 5512828482883384445}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[286138676683997185]._gameObject
+      value: 
+      objectReference: {fileID: 5512828482883384445}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
       propertyPath: managedReferences[286138671396552737].eventInFalse
       value: 286138671396552749
       objectReference: {fileID: 0}
@@ -181,7 +226,7 @@ PrefabInstance:
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
       propertyPath: managedReferences[286138671396552739].events.Array.data[2]
-      value: -2
+      value: 286138676683997184
       objectReference: {fileID: 0}
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
@@ -201,7 +246,7 @@ PrefabInstance:
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
       propertyPath: managedReferences[286138671396552739].events.Array.data[6]
-      value: 286138671396552747
+      value: 286138676683997185
       objectReference: {fileID: 0}
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}

@@ -111,7 +111,7 @@ MonoBehaviour:
     - rid: 286138576501211136
       type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
       data:
-        tag: 'Garden_Door_Open '
+        tag: Garden_Door_Open
         condition: 1
     - rid: 286138576501211137
       type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
