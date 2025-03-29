@@ -12,6 +12,7 @@ namespace Map.Puzzle.TemplePuzzle
         private Vector3 startPosition;
         private List<TempleTile> visitedTiles = new List<TempleTile>();
 
+        private float delayTime = 0.5f;
         private float goalDelay = 1f;
 
         public Animator animator;
@@ -82,7 +83,7 @@ namespace Map.Puzzle.TemplePuzzle
                 else
                 {
                     Debug.Log("Nope");
-                    ReturnToStartPosition();
+                    StartCoroutine(ReturnToStartPosition());
                 }
             }
         }
@@ -171,9 +172,37 @@ namespace Map.Puzzle.TemplePuzzle
             yield return new WaitForSeconds(goalDelay);
         }
 
-        void ReturnToStartPosition()
+        private IEnumerator ReturnToStartPosition()
         {
+            yield return new WaitForSeconds(delayTime);
+
+            float fadeDuration = 1f;
+            float elapsedTime = 0f;
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            Color initialColor = spriteRenderer.color;
+
+            Vector3 originalPosition = transform.position;
+
+            while (elapsedTime < fadeDuration)
+            {
+                float shakeAmount = Mathf.Sin(Time.time * 20f) * 0.1f;
+                transform.position = originalPosition + new Vector3(shakeAmount, 0, 0);
+
+                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+                spriteRenderer.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            spriteRenderer.color = new Color(initialColor.r, initialColor.g, initialColor.b, 0f);
+
+            yield return new WaitForSeconds(delayTime);
+
             transform.position = startPosition;
+            spriteRenderer.color = new Color(initialColor.r, initialColor.g, initialColor.b, 1f);
+
+
             currentTile = GetCurrentTile();
 
             foreach (TempleTile tile in visitedTiles)
