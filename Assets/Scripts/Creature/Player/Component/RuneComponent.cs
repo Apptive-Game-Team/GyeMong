@@ -27,6 +27,7 @@ public class RuneComponent : MonoBehaviour
         if(equippedRuneList.Count < maxRuneEquipNum) 
         {
             equippedRuneList.Add(runeData);
+            List<StatSet> statSetList = new();
             //효과 발동
             switch (runeData.id)
             {
@@ -34,10 +35,14 @@ public class RuneComponent : MonoBehaviour
                     new AddBuffRune().OnActivate(new AddBuffContext(PlayerCharacter.Instance.buffComponent,BuffManager.Instance.breezeRuneData));
                     break;
                 case 1:
-                    new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, StatType.SKILL_COEF, StatValueType.PERCENT_VALUE, 0.3f));
+                    statSetList = new()
+                    {
+                        new StatSet(StatType.SKILL_COEF, StatValueType.PERCENT_VALUE, 0.3f),
+                    };
+                    new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, statSetList));
                     break;
                 case 2:
-                    List<StatSet> statSetList = new ()
+                    statSetList = new ()
                     {
                         new StatSet(StatType.ATTACK_DELAY, StatValueType.PERCENT_VALUE, -0.2f),
                         new StatSet(StatType.MOVE_SPEED, StatValueType.PERCENT_VALUE, 0.2f),
@@ -48,7 +53,11 @@ public class RuneComponent : MonoBehaviour
                 case 3:
                     break;
                 case 4:
-                    new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, StatType.GRAZE_GAIN_ON_GRAZE, StatValueType.PERCENT_VALUE, 0.3f));
+                    statSetList = new()
+                    {
+                        new StatSet(StatType.GRAZE_GAIN_ON_GRAZE, StatValueType.PERCENT_VALUE, 0.3f),
+                    };
+                    new ModifyStatRune().OnActivate(new ModifyStatContext(PlayerCharacter.Instance.stat, statSetList));
                     break;
                 case 5:
                     break;
