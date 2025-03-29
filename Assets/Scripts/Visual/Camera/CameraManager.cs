@@ -15,7 +15,7 @@ namespace Visual.Camera
 
         protected override void Awake() 
         {
-            cameraSize = 4f;
+            cameraSize = 3.5f;
             GetCameras();
         }
 
