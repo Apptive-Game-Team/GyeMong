@@ -12,6 +12,8 @@ namespace Map.Puzzle.TemplePuzzle
         private Vector3 startPosition;
         private List<TempleTile> visitedTiles = new List<TempleTile>();
 
+        private float goalDelay = 1f;
+
         public Animator animator;
 
         void Start()
@@ -71,6 +73,9 @@ namespace Map.Puzzle.TemplePuzzle
                 if (GoalCheck())
                 {
                     Debug.Log("Success");
+
+                    StartCoroutine(GoalAnimation());
+
                     ConditionManager.Instance.Conditions["SpringTemplePuzzleIsCleared"] = true;
                 }
 
@@ -142,6 +147,28 @@ namespace Map.Puzzle.TemplePuzzle
                 }
             }
             return false;
+        }
+
+        private IEnumerator GoalAnimation()
+        {
+            yield return new WaitForSeconds(goalDelay);
+
+            float shrinkDuration = 1f;
+            float elapsedTime = 0f;
+            Vector3 initialScale = transform.localScale;
+            Vector3 targetScale = Vector3.zero;
+
+            while (elapsedTime < shrinkDuration)
+            {
+                transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / shrinkDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localScale = targetScale;
+            gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(goalDelay);
         }
 
         void ReturnToStartPosition()
