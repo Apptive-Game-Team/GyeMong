@@ -1093,6 +1093,7 @@ MonoBehaviour:
   - rid: 8330688008202485773
   - rid: 8330688008202485770
   - rid: 8330688008202485771
+  - rid: 8330688008202485781
   references:
     version: 2
     RefIds:
@@ -1128,6 +1129,10 @@ MonoBehaviour:
           - "\uB2E4\uC74C \uBAA9\uC801\uC9C0\uB294 \uC5EC\uB984 \uC0AC\uB9C9 \uAD81\uC804\uC774\uACA0\uC9C0?"
           - "\uB0B4\uB824\uAC00\uB294 \uAE38\uC744 \uB9CC\uB4E4\uC5B4\uC8FC\uC9C0"
           - "\uAC74\uD22C\uB97C \uBE44\uB124"
+    - rid: 8330688008202485781
+      type: {class: LoadScene, ns: , asm: Assembly-CSharp}
+      data:
+        _sceneName: EndingCredit
 --- !u!1001 &1219609009
 PrefabInstance:
   m_ObjectHideFlags: 0

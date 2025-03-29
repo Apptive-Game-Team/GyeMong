@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using playerCharacter;
 using DG.Tweening;
 using UnityEditor.ShaderKeywordFilter;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public abstract class Event
@@ -257,6 +258,17 @@ public class DropObjectEvent : Event
         GameObject.Instantiate(_gameObject, eventObject.transform.position, _gameObject.transform.rotation);
         _gameObject.transform.DOMoveY(_gameObject.transform.position.y + 1f, 0.3f).SetEase(Ease.OutQuad)
             .OnComplete(() => _gameObject.transform.DOMoveY(_gameObject.transform.position.y, 0.3f).SetEase(Ease.InBounce));
+        yield return null;
+    }
+}
+
+public class LoadScene : Event
+{
+    [SerializeField] private string _sceneName;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        SceneManager.LoadScene(_sceneName);
         yield return null;
     }
 }
