@@ -282,6 +282,11 @@ PrefabInstance:
       propertyPath: managedReferences[286138693674860575].down
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5749579012260431403, guid: 3fc07b68c141a004c8778b7a7cc4ef70,
+        type: 3}
+      propertyPath: managedReferences[286138693674860575].maze
+      value: 
+      objectReference: {fileID: 1110758553}
     - target: {fileID: 6337408370996217040, guid: 3fc07b68c141a004c8778b7a7cc4ef70,
         type: 3}
       propertyPath: m_Name
@@ -1157,6 +1162,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5749579012260431403, guid: 3fc07b68c141a004c8778b7a7cc4ef70,
         type: 3}
+      propertyPath: managedReferences[286138693674860575].maze
+      value: 
+      objectReference: {fileID: 1110758553}
+    - target: {fileID: 5749579012260431403, guid: 3fc07b68c141a004c8778b7a7cc4ef70,
+        type: 3}
       propertyPath: managedReferences[286138693674860575].right
       value: 1
       objectReference: {fileID: 0}
@@ -1559,6 +1569,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09295628661f449cf89b07dfe6981e2c, type: 3}
+--- !u!1 &1110758553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8679520269314570651, guid: 09295628661f449cf89b07dfe6981e2c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1110758552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1144070764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2201,6 +2217,11 @@ PrefabInstance:
       propertyPath: managedReferences[286138693674860575].left
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5749579012260431403, guid: 3fc07b68c141a004c8778b7a7cc4ef70,
+        type: 3}
+      propertyPath: managedReferences[286138693674860575].maze
+      value: 
+      objectReference: {fileID: 1110758553}
     - target: {fileID: 6337408370996217040, guid: 3fc07b68c141a004c8778b7a7cc4ef70,
         type: 3}
       propertyPath: m_Name
@@ -2797,7 +2818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1887163315
 Transform:
   m_ObjectHideFlags: 0
@@ -3226,8 +3247,6 @@ GameObject:
   - component: {fileID: 2146000243}
   - component: {fileID: 2146000242}
   - component: {fileID: 2146000241}
-  - component: {fileID: 2146000245}
-  - component: {fileID: 2146000244}
   m_Layer: 0
   m_Name: DivisionSlimeManager
   m_TagString: Untagged
@@ -3288,88 +3307,6 @@ Transform:
   - {fileID: 1887163315}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!68 &2146000244
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146000240}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -1.98, y: 34.56}
-  - {x: 1.99, y: 34.56}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!68 &2146000245
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146000240}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -12.1, y: 43}
-  - {x: -12.1, y: 42}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!1001 &9032684841692089790
 PrefabInstance:
   m_ObjectHideFlags: 0
