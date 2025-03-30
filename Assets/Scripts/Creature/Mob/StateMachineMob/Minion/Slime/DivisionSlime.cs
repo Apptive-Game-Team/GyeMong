@@ -16,6 +16,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
         protected override void Start()
         {
             Initialize();
+            DivisionSlimeManager.Instance.RegisterSlime(this);
         }
 
         protected override void Initialize()
@@ -107,6 +108,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
         protected override void OnDead()
         {
             ChangeState(new DieState(this));
+            DivisionSlimeManager.Instance.UnregisterSlime(this);
         }
 
         public class MoveState : SlimeMoveState { }
@@ -140,6 +142,8 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
                 slimeComponent.RangedAttackRange *= divideRatio;
                 slimeComponent.divisionLevel = divisionLevel + 1;
                 slimeComponent.StartMob();
+                
+                DivisionSlimeManager.Instance.RegisterSlime(slimeComponent);
             }
         }
     }
