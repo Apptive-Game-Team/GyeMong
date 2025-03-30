@@ -225,6 +225,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1147824308, guid: 99e782f8d15e145318d1338dcaecd933,
         type: 3}
+    - target: {fileID: 473919713543990013, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: managedReferences[-2]
