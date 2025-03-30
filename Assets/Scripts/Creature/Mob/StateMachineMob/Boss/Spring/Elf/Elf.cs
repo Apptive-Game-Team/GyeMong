@@ -300,14 +300,27 @@ namespace Creature.Mob.Boss.Spring.Elf
                 yield return spawnedObjects;
             }
         }
-        protected override void TransPhase()
-        {
-            base.TransPhase();
-        }
         protected override void Die()
         {
             base.Die();
             Animator.SetBool("isDown", true);
+        }
+        protected override void TransPhase()
+        {
+            if (currentPhase < maxHps.Count - 1)
+            {
+                currentPhase++;
+                StopAllCoroutines();
+                Animator.SetBool("isDown", true);
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                StartCoroutine(ChangingPhase());
+                Animator.SetBool("isDown", false);
+            }
+            else
+            {
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                Die();
+            }
         }
         private void SpawnAttackCollider(Vector3 direction)
         {
