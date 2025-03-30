@@ -69,7 +69,9 @@ namespace Creature.Mob.StateMachineMob.Boss
         public IEnumerator ChangingPhase()
         {
             currentHp = CurrentMaxHp;
+            Animator.SetBool("isDown", true);
             GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
+            Animator.SetBool("isDown", false);
             yield return new WaitForSeconds(2f);
             ChangeState();
         }

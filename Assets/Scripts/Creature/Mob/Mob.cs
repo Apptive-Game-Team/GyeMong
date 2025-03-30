@@ -71,7 +71,7 @@ namespace Creature.Mob
             }
         }
 
-        protected Vector3 lastRushDirection; //�뽬 ���� ���� ����...�� ����� ������?
+        protected Vector3 lastRushDirection;
 
         public IEnumerator RushAttack(float delay)
         {

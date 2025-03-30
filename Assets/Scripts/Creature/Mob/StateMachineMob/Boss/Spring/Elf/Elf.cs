@@ -117,14 +117,13 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetFloat("attackType", 2);
                 Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 1.5f);
-                //���� ���� �ʿ�
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.RushAttack(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("isMove", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
+                Elf.Animator.SetBool("isMove", false);
                 Elf.SpawnAttackCollider(Elf.lastRushDirection);
                 Elf.Animator.SetBool("isAttack", false);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
