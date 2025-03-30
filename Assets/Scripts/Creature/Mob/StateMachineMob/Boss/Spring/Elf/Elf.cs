@@ -309,9 +309,9 @@ namespace Creature.Mob.Boss.Spring.Elf
         {
             if (currentPhase < maxHps.Count - 1)
             {
+                Animator.SetBool("isDown", true);
                 currentPhase++;
                 StopAllCoroutines();
-                Animator.SetBool("isDown", true);
                 MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(ChangingPhase());
                 Animator.SetBool("isDown", false);
