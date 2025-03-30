@@ -51,9 +51,9 @@ namespace Creature.Mob.Boss.Spring.Elf
                 weights = new Dictionary<System.Type, int>
                     {
                         { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                        { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0 },
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 },
+                        { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 },
                         { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0},
                         { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
@@ -67,7 +67,6 @@ namespace Creature.Mob.Boss.Spring.Elf
             {
                 get
                 {   
-                    SetWeights();
                     return weights;
                 }
             }
@@ -76,7 +75,7 @@ namespace Creature.Mob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer < Elf.RangedAttackRange / 2) ? 5 : 0;
+                return (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -85,14 +84,15 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.BackStep(Elf.RangedAttackRange);
                 Elf.Animator.SetBool("isMove", false);
+                SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
             protected override void SetWeights()
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 50 : 0},
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
                     };
                 if (weights.Values.All(w => w == 0))
@@ -109,7 +109,7 @@ namespace Creature.Mob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -117,17 +117,17 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetFloat("attackType", 2);
                 Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 1.5f);
-                //���� ���� �ʿ�
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
                 yield return Elf.RushAttack(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("isMove", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
+                Elf.Animator.SetBool("isMove", false);
                 Elf.SpawnAttackCollider(Elf.lastRushDirection);
                 Elf.Animator.SetBool("isAttack", false);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
             protected override void SetWeights()
@@ -137,8 +137,8 @@ namespace Creature.Mob.Boss.Spring.Elf
                         { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0 },
                         { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.RangedAttackRange / 2)  ? 50 : 0 }
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -150,7 +150,7 @@ namespace Creature.Mob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -165,6 +165,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 yield return Elf.arrowSoundObject.Play();
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
         }
@@ -176,11 +177,7 @@ namespace Creature.Mob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                if (Elf.CurrentPhase == 1)
-                {
-                    return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
-                }
-                return 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -199,6 +196,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                     count++;
                 }
                 Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
         }
@@ -206,7 +204,7 @@ namespace Creature.Mob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -220,6 +218,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.SpawnAttackCollider(Elf.DirectionToPlayer);
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
         }
@@ -250,6 +249,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 GameObject vine = Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
         }
@@ -285,6 +285,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
             private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)

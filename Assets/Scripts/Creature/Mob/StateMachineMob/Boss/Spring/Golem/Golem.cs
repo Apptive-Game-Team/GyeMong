@@ -113,7 +113,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 get
                 {
-                    SetWeights();
                     return weights;
                 }
             }
@@ -133,6 +132,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return Golem.MakeShock();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -150,6 +150,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("Push", false);
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -168,6 +169,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 GameObject cube = Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 Golem.Animator.SetBool("Toss", false);
                 yield return new WaitUntil(() => cube.IsDestroyed());
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -189,7 +191,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.currentShield = 30f;
                 Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
                 Golem.MaterialController.SetFloat(1);
-
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -221,7 +223,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("OneHand", false);
 
                 yield return new WaitForSeconds(Golem.attackdelayTime * 2);
-
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
 
@@ -254,6 +256,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return Golem.MakeShockwave();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
         }
