@@ -9379,6 +9379,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 286138693674860544
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: SpringQuestCleared
+        condition: 1
     - rid: 2715780017853038655
       type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -9405,6 +9410,7 @@ MonoBehaviour:
         - rid: 2715780017853038664
         - rid: 2715780017853038665
         - rid: 2715780017853038666
+        - rid: 286138693674860544
         - rid: 2715780017853038680
         - rid: 2715780017853038677
     - rid: 2715780017853038661
