@@ -75,7 +75,7 @@ namespace Creature.Mob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer < Elf.RangedAttackRange / 2) ? 5 : 0;
+                return (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -109,7 +109,7 @@ namespace Creature.Mob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -150,7 +150,7 @@ namespace Creature.Mob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -177,11 +177,7 @@ namespace Creature.Mob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                if (Elf.CurrentPhase == 1)
-                {
-                    return (Elf.DistanceToPlayer > Elf.RangedAttackRange / 2) ? 5 : 0;
-                }
-                return 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -208,7 +204,7 @@ namespace Creature.Mob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
