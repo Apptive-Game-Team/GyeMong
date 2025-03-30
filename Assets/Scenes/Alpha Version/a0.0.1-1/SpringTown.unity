@@ -489,7 +489,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 26.3
+  m_Radius: 6.6
 --- !u!114 &209267270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4029,19 +4029,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 106251967483160157, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
+      propertyPath: m_Radius
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 106251967483160157, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
       propertyPath: m_Offset.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 106251967483160157, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: m_Offset.y
-      value: -4
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: 473919713543990013, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -916885130, guid: 93ff214ae6d32492ea1bb927c9337fc0,
+      objectReference: {fileID: -1448776438, guid: 3988ec1ec750b4c76acd42ec70c5d1e8,
         type: 3}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -5140,6 +5145,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3241778783063639090, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241778783063639090, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241778783063639090, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.39
       objectReference: {fileID: 0}
@@ -5195,8 +5210,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
+      propertyPath: m_Radius
+      value: 1.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
       propertyPath: m_Offset.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5397,10 +5422,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 224672959}
     m_Modifications:
+    - target: {fileID: 202616737918706889, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 202616737918706889, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 202616737918706889, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 370735768222328937, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -448912770, guid: 3988ec1ec750b4c76acd42ec70c5d1e8,
+        type: 3}
     - target: {fileID: 2287428393988404518, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
         type: 3}
       propertyPath: trigger
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3408013122414069414, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3408013122414069414, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3408013122414069414, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
         type: 3}
@@ -5451,6 +5507,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6948290060711470477, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6948290060711470477, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.22
       objectReference: {fileID: 0}
     - target: {fileID: 7150541333083285301, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
         type: 3}
@@ -5904,7 +5970,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 26.3
+  m_Radius: 6
 --- !u!114 &832257030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6246,7 +6312,7 @@ PrefabInstance:
     - target: {fileID: 106251967483160157, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: m_Radius
-      value: 2.6025424
+      value: 0.61
       objectReference: {fileID: 0}
     - target: {fileID: 106251967483160157, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -6256,7 +6322,7 @@ PrefabInstance:
     - target: {fileID: 106251967483160157, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: m_Offset.y
-      value: -4
+      value: -0.46
       objectReference: {fileID: 0}
     - target: {fileID: 106251967483160157, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -6272,7 +6338,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1691219738, guid: 52be0f9cac45e444e9816620b6683a51,
+      objectReference: {fileID: 1905214872, guid: 3988ec1ec750b4c76acd42ec70c5d1e8,
         type: 3}
     - target: {fileID: 473919713543990013, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -7098,12 +7164,12 @@ PrefabInstance:
     - target: {fileID: 3241778783063639090, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.13
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3241778783063639090, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.13
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3241778783063639090, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -7172,8 +7238,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
+      propertyPath: m_Radius
+      value: 1.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
       propertyPath: m_Offset.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7688,7 +7764,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 26.3
+  m_Radius: 6.26
 --- !u!114 &1568715667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7909,6 +7985,7 @@ GameObject:
   - component: {fileID: 1702330171}
   - component: {fileID: 1702330170}
   - component: {fileID: 1702330169}
+  - component: {fileID: 1702330173}
   m_Layer: 9
   m_Name: elf
   m_TagString: Untagged
@@ -7925,7 +8002,7 @@ Transform:
   m_GameObject: {fileID: 1702330167}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.76, y: -0.11, z: 0}
+  m_LocalPosition: {x: 6.85, y: -1.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7965,9 +8042,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010810852, y: -0.5037186}
+  m_Offset: {x: 0, y: -0.22}
   serializedVersion: 2
-  m_Radius: 0.40216827
+  m_Radius: 0.27
 --- !u!114 &1702330170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8006,7 +8083,7 @@ MonoBehaviour:
       type: {class: MovePositionEvent, ns: , asm: Assembly-CSharp}
       data:
         gameObject: {fileID: 1702330167}
-        targetPosition: {x: 179.9, y: -6, z: 0}
+        targetPosition: {x: 6.85, y: -1.15, z: 0}
     - rid: 2715780017853038608
       type: {class: MovePositionEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -8158,6 +8235,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1702330173
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702330167}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.22}
+  serializedVersion: 2
+  m_Radius: 0.68
 --- !u!1 &1759401382
 GameObject:
   m_ObjectHideFlags: 0
@@ -9186,7 +9298,7 @@ PrefabInstance:
     - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: m_Radius
-      value: 0.8
+      value: 0.67
       objectReference: {fileID: 0}
     - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
@@ -9196,7 +9308,7 @@ PrefabInstance:
     - target: {fileID: 7195597439676573465, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
       propertyPath: m_Offset.y
-      value: 0
+      value: -0.22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
