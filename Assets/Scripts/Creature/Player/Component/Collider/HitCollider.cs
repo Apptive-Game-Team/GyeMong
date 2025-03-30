@@ -110,9 +110,9 @@ namespace Creature.Player.Component.Collider
         {
             try
             {
-                if (other.collider.CompareTag("EnemyAttack"))
+                if (other.CompareTag("EnemyAttack"))
                 {
-                    LastEnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<LastEnemyAttackInfo>();
+                    LastEnemyAttackInfo enemyAttackInfo = other.GetComponent<LastEnemyAttackInfo>();
                     if (enemyAttackInfo == null) return false;
 
                     enemyAttackInfo.isAttacked = true;
@@ -124,7 +124,7 @@ namespace Creature.Player.Component.Collider
                     if (enemyAttackInfo.isDestroyOnHit)
                     {
                         playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                        other.collider.gameObject.SetActive(false);
+                        other.gameObject.SetActive(false);
                     }
                     else
                     {
@@ -146,9 +146,9 @@ namespace Creature.Player.Component.Collider
         {
             try
             {
-                if (other.collider.CompareTag("EnemyAttack"))
+                if (other.CompareTag("EnemyAttack"))
                 {
-                    LastEnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<LastEnemyAttackInfo>();
+                    LastEnemyAttackInfo enemyAttackInfo = other.GetComponent<LastEnemyAttackInfo>();
                     if (enemyAttackInfo == null) return false;
 
                     if (enemyAttackInfo.isMultiHit)

@@ -9,7 +9,10 @@ namespace Visual.Camera
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
-            CameraManager.Instance.ChangeCamera(transform.GetComponentInChildren<CinemachineVirtualCamera>());
+            if (other.CompareTag("Player"))
+            {
+                CameraManager.Instance.ChangeCamera(transform.GetComponentInChildren<CinemachineVirtualCamera>());
+            }
         }
     }
 }
