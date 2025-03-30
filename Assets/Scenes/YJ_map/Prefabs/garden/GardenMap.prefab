@@ -8196,8 +8196,8 @@ MonoBehaviour:
   thornTile: {fileID: 11400000, guid: 24c467eb7ca7fda499cead8db316b5b2, type: 2}
   _width: 25
   _height: 21
-  _top: 0
-  _bottom: 0
+  _top: 1
+  _bottom: 1
   _left: 0
   _right: 1
 --- !u!1 &3984035460028763190
@@ -32162,7 +32162,6 @@ GameObject:
   - component: {fileID: 2275091002289952685}
   - component: {fileID: 2352120061402677703}
   - component: {fileID: 5952490840773855328}
-  - component: {fileID: 5653636877937870073}
   m_Layer: 10
   m_Name: WallTilemap
   m_TagString: Untagged
@@ -32316,7 +32315,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6072624383353040367}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -32380,19 +32379,6 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 6072624383353040367}
---- !u!114 &5653636877937870073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6072624383353040367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f48a8d66b2adc46887f23a3a88ac01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
 --- !u!1 &6284724305119665973
 GameObject:
   m_ObjectHideFlags: 0

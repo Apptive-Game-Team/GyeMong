@@ -1338,17 +1338,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2853811102026222104, guid: 09295628661f449cf89b07dfe6981e2c,
-        type: 3}
-      propertyPath: _bottom
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2853811102026222104, guid: 09295628661f449cf89b07dfe6981e2c,
-        type: 3}
-      propertyPath: wallTile
-      value: 
-      objectReference: {fileID: 11400000, guid: e5e9de70ad41c4944b59f4076141ad1a,
-        type: 2}
     - target: {fileID: 3933778490068017219, guid: 09295628661f449cf89b07dfe6981e2c,
         type: 3}
       propertyPath: m_LocalPosition.x
