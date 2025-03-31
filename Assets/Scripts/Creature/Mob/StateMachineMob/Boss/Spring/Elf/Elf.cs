@@ -187,7 +187,6 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
-                //���� ���� �ʿ�
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 1);
@@ -217,7 +216,6 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                //���� ���� �ʿ�
                 Elf.SpawnAttackCollider(Elf.DirectionToPlayer);
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -248,8 +246,15 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
-                //���� ���� �ʿ�
-                GameObject vine = Instantiate(Elf.vinePrefab, Elf.transform.position, Quaternion.identity);
+                AttackObjectController.Create(
+                    Elf.transform.position,
+                    Vector3.zero,
+                    Elf.vinePrefab,
+                    new StaticMovement(
+                        Elf.transform.position,
+                        Elf.attackdelayTime * 2)
+                )
+                .StartRoutine();
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
