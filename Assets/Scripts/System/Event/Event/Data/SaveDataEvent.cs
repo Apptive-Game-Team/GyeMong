@@ -3,6 +3,7 @@ using System.Game.Object.Persisted;
 using System.Game.Quest.Component;
 using playerCharacter;
 using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SaveDataEvent : Event
 {
@@ -24,7 +25,7 @@ public class SaveDataEvent : Event
         runeData.AcquiredRuneDatas = runeComponent.AcquiredRuneList;
         runeData.EquippedRuneDatas = runeComponent.EquippedRuneList;
 
-        questData.quests = questComponent.GetQuests();
+        questData.quests = questComponent.GetQuestInfos();
         
         DataManager.Instance.SaveSection(questData, "QuestData");
         DataManager.Instance.SaveSection(playerData, "PlayerData");

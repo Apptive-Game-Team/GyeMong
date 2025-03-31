@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Game.Quest.Quests;
+using System.Linq;
 using UnityEngine;
 
 namespace System.Game.Quest.Component
@@ -28,14 +30,14 @@ namespace System.Game.Quest.Component
             quest.StartQuest();
         }
 
-        public void SetQuests(List<Quests.Quest> quests)
+        public void SetQuests(List<SerializableQuestInfo> quests)
         {
-            _quests = quests;
+            _quests = quests.Select(questInfo => new Quests.Quest(questInfo)).ToList();
         }
 
-        public List<Quests.Quest> GetQuests()
+        public List<SerializableQuestInfo> GetQuestInfos()
         {
-            return _quests;
+            return _quests.Select(quest => (SerializableQuestInfo) quest.GetQuestInfo).ToList();
         }
     }
 }

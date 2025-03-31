@@ -22,7 +22,7 @@ public class RuneDatas
 [Serializable]
 public class QuestData
 {
-    public List<Quest> quests = new();
+    public List<SerializableQuestInfo> quests = new();
 }
 
 [System.Serializable]

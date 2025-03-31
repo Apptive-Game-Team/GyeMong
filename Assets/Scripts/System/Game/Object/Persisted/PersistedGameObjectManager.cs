@@ -17,7 +17,6 @@ namespace System.Game.Object.Persisted
 
         public PersistedGameObjectDatas()
         {
-            throw new NotImplementedException();
         }
 
         public static implicit operator Dictionary<string, PersistedGameObjectData>(PersistedGameObjectDatas datas)
