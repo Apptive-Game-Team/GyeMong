@@ -55,6 +55,12 @@ namespace Creature.Attack
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
         }
 
+        private void OnEnable()
+        {
+            isGrazed = false;
+            isAttacked = false;
+        }
+
         private void OnDisable()
         {
             _attackObjectSounds?.hitSoundId?.ForEach(id => { Sound.Play(id);});
