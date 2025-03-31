@@ -48667,7 +48667,7 @@ PrefabInstance:
     - target: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.7
+      value: 7.96
       objectReference: {fileID: 0}
     - target: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
@@ -48709,6 +48709,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[3636844143720267776].portalID
+      value: 23
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -48717,6 +48722,12 @@ PrefabInstance:
 --- !u!4 &553544594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 553544593}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &553544595 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2492515186825879711, guid: 90d037379245ab44695ee4686df899ab,
     type: 3}
   m_PrefabInstance: {fileID: 553544593}
   m_PrefabAsset: {fileID: 0}
@@ -53168,6 +53179,7 @@ MonoBehaviour:
   - rid: 7405124598596370438
   - rid: 4949244452169580553
   - rid: 2578170190929068034
+  - rid: 8155690880284491776
   references:
     version: 2
     RefIds:
@@ -53222,6 +53234,11 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 1
+    - rid: 8155690880284491776
+      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1637330591}
+        bossRoomBoundary: {fileID: 553544595}
 --- !u!1 &1933332375
 GameObject:
   m_ObjectHideFlags: 0
