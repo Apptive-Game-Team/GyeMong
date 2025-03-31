@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Sound;
+using Creature.Attack.Component.Movement;
+using Creature.Attack;
 using Creature.Boss.Component.SkillIndicator;
 using Creature.Mob.StateMachineMob.Boss.Spring.Golem;
 using playerCharacter;
 using UnityEngine;
 using static Creature.Mob.StateMachineMob.Boss.Spring.Golem.Golem;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace Creature.Mob.Boss.Spring.Elf
 {
@@ -327,8 +330,15 @@ namespace Creature.Mob.Boss.Spring.Elf
             Vector2 spawnPosition = transform.position + direction * 1f;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
-            GameObject attackCollider = Instantiate(meleeAttackPrefab, spawnPosition, spawnRotation, transform);
-            Destroy(attackCollider, attackdelayTime / 2);
+            AttackObjectController.Create(
+                    spawnPosition,
+                    direction,
+                    meleeAttackPrefab,
+                    new StaticMovement(
+                        spawnPosition,
+                        attackdelayTime / 2)
+                )
+                .StartRoutine();
         }
         public override IEnumerator Stun(float duration) //이후 Boss로 올리기
         {
