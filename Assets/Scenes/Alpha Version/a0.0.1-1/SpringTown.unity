@@ -253,7 +253,7 @@ MonoBehaviour:
     - rid: 286138513274437649
       type: {class: AddQuestEvent, ns: System.Event.Event.Quest, asm: Assembly-CSharp}
       data:
-        _questInfo: {fileID: 0}
+        _questInfo: {fileID: 11400000, guid: 0cd4fee0003e92c47975a1c2a025ebb0, type: 2}
     - rid: 8330687489211367426
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
