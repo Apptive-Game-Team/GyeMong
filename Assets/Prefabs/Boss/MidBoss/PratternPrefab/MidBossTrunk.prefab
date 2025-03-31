@@ -178,8 +178,6 @@ MonoBehaviour:
   triggerLimitCounter: 1
   eventSequence:
   - rid: 521773882682900480
-  - rid: 3294223817106784258
-  - rid: 3294223817106784259
   references:
     version: 2
     RefIds:
@@ -194,13 +192,6 @@ MonoBehaviour:
         - {fileID: 207155324, guid: e1ae1bfb4f31f43808469e8aa823259b, type: 3}
         deltaTime: 0.1
         _renderer: {fileID: 0}
-    - rid: 3294223817106784258
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 2
-    - rid: 3294223817106784259
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!114 &8299100922816227590
 MonoBehaviour:
   m_ObjectHideFlags: 0

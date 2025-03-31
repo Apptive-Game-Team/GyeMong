@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLoop: 0
   trigger: 5
-  triggerLimitCounter: 2147483647
+  triggerLimitCounter: -1
   eventSequence:
   - rid: 521773882682900480
   - rid: 3294223817106784258
