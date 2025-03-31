@@ -7,12 +7,10 @@ public class ContinueButton : MonoBehaviour
 {
     private PlayerData playerData;
     private GameObject optionExitButton;
-    private EventObject eventObject;
     private void Start() 
     {
         playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
         if (playerData.isFirst) gameObject.SetActive(!playerData.isFirst);
-        eventObject = GetComponent<EventObject>();
         optionExitButton = GameObject.Find("OptionController").transform.GetChild(0).GetChild(0).Find("OptionExitButton").gameObject;
     }
 
@@ -37,6 +35,6 @@ public class ContinueButton : MonoBehaviour
 
         optionExitButton.SetActive(true);
         // ��� �ε尡 �Ϸ�� �� �÷��̾� ������ �ε�
-        eventObject.Trigger();
+        DataManager.Instance.StartCoroutine(new LoadDataEvent().Execute());
     }
 }
