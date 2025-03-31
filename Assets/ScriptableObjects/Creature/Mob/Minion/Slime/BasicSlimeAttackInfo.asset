@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   soundObject: {fileID: 0}
-  isDestroyOnHit: 0
-  grazable: 0
+  isDestroyOnHit: 1
+  grazable: 1
   canMultiHit: 0
   multiHitDelay: 0
   knockbackAmount: 0
