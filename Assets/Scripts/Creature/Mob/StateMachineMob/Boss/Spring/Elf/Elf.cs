@@ -283,29 +283,32 @@ namespace Creature.Mob.Boss.Spring.Elf
                 float interval = 0.2f;
                 float fixedDistance = 7f;
 
-                List<GameObject> spawnedObjects = new List<GameObject>();
-
                 Vector3 direction = Elf.DirectionToPlayer;
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
-                //�ִϸ��̼�, ���� ���� �ʿ�
                 yield return new WaitForSeconds(Elf.attackdelayTime);
-                Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
+                Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval));
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
-            private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
+            private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval)
             {
                 for (int i = 0; i <= numberOfObjects; i++)
                 {
                     Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
-                    GameObject floor = Instantiate(Elf.trunkPrefab, spawnPosition, Quaternion.identity);
-                    spawnedObjects.Add(floor);
+                    AttackObjectController.Create(
+                    spawnPosition,
+                    Vector3.zero,
+                    Elf.trunkPrefab,
+                    new StaticMovement(
+                        spawnPosition,
+                        Elf.attackdelayTime * 2)
+                    )
+                    .StartRoutine();
                     yield return new WaitForSeconds(interval);
                 }
-                yield return spawnedObjects;
             }
         }
         protected override void Die()
