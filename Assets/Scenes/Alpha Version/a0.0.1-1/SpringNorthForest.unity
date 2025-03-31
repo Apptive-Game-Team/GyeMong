@@ -1521,6 +1521,11 @@ PrefabInstance:
       propertyPath: SkillIndicator
       value: 
       objectReference: {fileID: 1459062336}
+    - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
+      propertyPath: drowSoundObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6437808754312436988, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1531,6 +1536,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.485
       objectReference: {fileID: 0}
+    - target: {fileID: 6831017530260938187, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
+      propertyPath: sourceName
+      value: ENEMY_Arrow_Drow
+      objectReference: {fileID: 0}
     - target: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
       propertyPath: m_Name
@@ -1539,6 +1549,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1816522763214820845, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
+    - {fileID: 4331037996407810154, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}

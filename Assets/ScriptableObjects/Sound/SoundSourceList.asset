@@ -79,6 +79,9 @@ MonoBehaviour:
   - name: ENEMY_Root
     type: 3
     clip: {fileID: 8300000, guid: d1afc9db5130a40a4813ba0202c7d267, type: 3}
+  - name: ENEMY_Arrow_Drow
+    type: 3
+    clip: {fileID: 8300000, guid: f1bf8c342050e214eb722f60293fddea, type: 3}
   - name: ENEMY_Arrow_Shot
     type: 3
     clip: {fileID: 8300000, guid: 0a9df97cdb71e4e0e8eef3cd10076b3c, type: 3}
