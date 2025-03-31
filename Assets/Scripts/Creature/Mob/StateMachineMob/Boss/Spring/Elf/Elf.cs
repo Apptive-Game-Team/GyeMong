@@ -348,7 +348,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 )
                 .StartRoutine();
         }
-        public override IEnumerator Stun(float duration) //이후 Boss로 올리기
+        public override IEnumerator Stun(float duration)
         {
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
             Animator.SetBool("isStun", true);
