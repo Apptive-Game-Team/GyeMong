@@ -20,7 +20,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
         [SerializeField] private GameObject pushOutAttackPrefab;
-        private Shield shieldComponenet;
         float attackdelayTime = 1f;
         [SerializeField] private SoundObject _shockwavesoundObject;
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
@@ -72,7 +71,15 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     if (angle >= excludeMin && angle <= excludeMax)
                         continue;
-                    Instantiate(shockwavePrefab, point, Quaternion.identity);
+                    AttackObjectController.Create(
+                    point,
+                    Vector3.zero,
+                    shockwavePrefab,
+                    new StaticMovement(
+                        point,
+                        attackdelayTime / 2)
+                    )
+                    .StartRoutine();
                 }
                 yield return new WaitForSeconds(attackdelayTime / 3);
             }
@@ -85,7 +92,15 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             StartCoroutine(ShockwaveSoundObject.Play());
             foreach (Vector3 point in points)
             {
-                Instantiate(shockwavePrefab, point, Quaternion.identity);
+                AttackObjectController.Create(
+                    point,
+                    Vector3.zero,
+                    shockwavePrefab,
+                    new StaticMovement(
+                        point,
+                        attackdelayTime / 2)
+                    )
+                    .StartRoutine();
             }
             yield return new WaitForSeconds(attackdelayTime / 3);
         }
