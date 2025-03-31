@@ -23,6 +23,7 @@ namespace Creature.Mob.Boss.Spring.Elf
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         float attackdelayTime = 1f;
         [SerializeField] private SoundObject arrowSoundObject;
+        [SerializeField] private SoundObject drowSoundObject;
         [SerializeField] private SoundObject vineSoundObject;
 
         protected override void Initialize()
@@ -160,6 +161,7 @@ namespace Creature.Mob.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
+                Elf.drowSoundObject.Play();
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
@@ -186,6 +188,7 @@ namespace Creature.Mob.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
+                Elf.drowSoundObject.Play();
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
