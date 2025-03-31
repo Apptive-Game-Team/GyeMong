@@ -48465,11 +48465,13 @@ MonoBehaviour:
   trigger: 4
   triggerLimitCounter: 1
   eventSequence:
+  - rid: 8155690880284491781
   - rid: 7405124568204705794
   - rid: 7405124568204705796
   - rid: 7405124568204705797
   - rid: 7405124568204705800
   - rid: 7405124568204705799
+  - rid: 8155690880284491782
   - rid: 7405124568204705795
   - rid: 7405124568204705793
   - rid: 7405124568204705792
@@ -48483,7 +48485,7 @@ MonoBehaviour:
     - rid: 7405124568204705793
       type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
-        _boss: {fileID: 0}
+        _boss: {fileID: 1637330591}
     - rid: 7405124568204705794
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -48508,6 +48510,20 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 1
+    - rid: 8155690880284491781
+      type: {class: SetAnimatorParameterBool, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1637330592}
+        _creatureType: 0
+        _name: isDown
+        _value: 1
+    - rid: 8155690880284491782
+      type: {class: SetAnimatorParameterBool, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1637330592}
+        _creatureType: 0
+        _name: isDown
+        _value: 0
 --- !u!1 &536700953
 GameObject:
   m_ObjectHideFlags: 0
