@@ -250,13 +250,11 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 float interval = 0.2f;
                 float fixedDistance = 7f;
 
-                List<GameObject> spawnedObjects = new List<GameObject>();
-
                 Vector3 direction = Golem.DirectionToPlayer;
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Golem.transform.position + spawnStoneRadius;
 
-                Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
+                Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval));
 
                 Golem.Animator.SetBool("OneHand", false);
 
@@ -265,18 +263,24 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.ChangeState(NextStateWeights);
             }
 
-            private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
+            private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval)
             {
                 for (int i = 0; i <= numberOfObjects; i++)
                 {
                     Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
-                    GameObject floor = Instantiate(Golem.floorPrefab, spawnPosition, Quaternion.identity);
-                    spawnedObjects.Add(floor);
+                    AttackObjectController.Create(
+                    spawnPosition,
+                    Vector3.zero,
+                    Golem.floorPrefab,
+                    new StaticMovement(
+                        spawnPosition,
+                        Golem.attackdelayTime)
+                    )
+                    .StartRoutine();
                     Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                     Golem.StartCoroutine(Golem._shockwavesoundObject.Play());
                     yield return new WaitForSeconds(interval);
                 }
-                yield return spawnedObjects;
             }
         }
 
