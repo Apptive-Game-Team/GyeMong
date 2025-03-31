@@ -77,7 +77,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     shockwavePrefab,
                     new StaticMovement(
                         point,
-                        attackdelayTime / 2)
+                        attackdelayTime)
                     )
                     .StartRoutine();
                 }
@@ -98,7 +98,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     shockwavePrefab,
                     new StaticMovement(
                         point,
-                        attackdelayTime / 2)
+                        attackdelayTime)
                     )
                     .StartRoutine();
             }
@@ -150,6 +150,21 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 50 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 }
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }
         }
         public class PushOutAttack : GolemState
         {
@@ -162,7 +177,15 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("Push", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
-                Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity);
+                AttackObjectController.Create(
+                    PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f,
+                    Vector3.zero,
+                    Golem.pushOutAttackPrefab,
+                    new StaticMovement(
+                        PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f,
+                        Golem.attackdelayTime)
+                    )
+                    .StartRoutine();
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("Push", false);
                 SetWeights();
@@ -273,6 +296,21 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
+            }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 },
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 50 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 }
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
             }
         }
         protected override void Die()
