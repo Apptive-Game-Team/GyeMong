@@ -45,3 +45,25 @@ public class SetAnimatorParameter : AnimationControllEvent
         return null;
     }
 }
+public class SetAnimatorParameterBool : AnimationControllEvent
+{
+    public enum CreatureType
+    {
+        NonPlayableCharacter,
+        Player,
+    }
+
+    [SerializeField] private CreatureType _creatureType;
+    [SerializeField] private string _name;
+    [SerializeField] private bool _value;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        if (_creatureType == CreatureType.NonPlayableCharacter)
+            _animator.SetBool(_name, _value);
+        else
+            PlayerCharacter.Instance.GetComponent<Animator>().SetBool(_name, _value);
+
+        return null;
+    }
+}

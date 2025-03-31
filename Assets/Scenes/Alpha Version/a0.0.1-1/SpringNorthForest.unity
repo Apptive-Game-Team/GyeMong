@@ -2217,11 +2217,13 @@ MonoBehaviour:
   trigger: 4
   triggerLimitCounter: 1
   eventSequence:
+  - rid: 8155690880284491777
   - rid: 7405124568204705794
   - rid: 7405124568204705796
   - rid: 7405124568204705797
   - rid: 7405124568204705800
   - rid: 7405124568204705799
+  - rid: 8155690880284491778
   - rid: 7405124568204705795
   - rid: 7405124568204705793
   - rid: 7405124568204705792
@@ -2260,6 +2262,20 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 1
+    - rid: 8155690880284491777
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1459062337}
+        _creatureType: 0
+        _name: isDown
+        _value: 1
+    - rid: 8155690880284491778
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1459062337}
+        _creatureType: 0
+        _name: isDown
+        _value: 0
 --- !u!4 &1858088964
 Transform:
   m_ObjectHideFlags: 0
