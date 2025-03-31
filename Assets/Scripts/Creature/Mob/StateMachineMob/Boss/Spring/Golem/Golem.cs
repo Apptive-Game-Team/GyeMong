@@ -77,7 +77,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     shockwavePrefab,
                     new StaticMovement(
                         point,
-                        attackdelayTime)
+                        attackdelayTime / 2)
                     )
                     .StartRoutine();
                 }
@@ -98,7 +98,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     shockwavePrefab,
                     new StaticMovement(
                         point,
-                        attackdelayTime)
+                        attackdelayTime / 2)
                     )
                     .StartRoutine();
             }
@@ -183,7 +183,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     Golem.pushOutAttackPrefab,
                     new StaticMovement(
                         PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f,
-                        Golem.attackdelayTime)
+                        Golem.attackdelayTime/2)
                     )
                     .StartRoutine();
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
@@ -274,7 +274,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     Golem.floorPrefab,
                     new StaticMovement(
                         spawnPosition,
-                        Golem.attackdelayTime)
+                        Golem.attackdelayTime * 2)
                     )
                     .StartRoutine();
                     Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");

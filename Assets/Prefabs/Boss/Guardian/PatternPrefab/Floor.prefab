@@ -173,12 +173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 0
-  trigger: 2
-  triggerLimitCounter: 1
+  trigger: 5
+  triggerLimitCounter: 2147483647
   eventSequence:
   - rid: 521773882682900480
   - rid: 3294223817106784258
-  - rid: 3294223817106784259
   references:
     version: 2
     RefIds:
@@ -196,9 +195,6 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 2
-    - rid: 3294223817106784259
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!114 &-8692751306265056136
 MonoBehaviour:
   m_ObjectHideFlags: 0
