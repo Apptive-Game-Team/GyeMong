@@ -256,7 +256,6 @@ namespace playerCharacter
 
             RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance, LayerMask.GetMask("Wall"));
             Vector2 targetPosition = hit.collider == null ? startPosition + dashDirection * stat.DashDistance : hit.point + hit.normal * 0.1f;
-            Debug.Log($"{startPosition} , {targetPosition} , {hit.collider}");
 
             float elapsedTime = 0f;
 

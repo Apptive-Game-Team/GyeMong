@@ -148,7 +148,6 @@ public class DataManager : SingletonObject<DataManager>
         PlayerData playerData = LoadSection<PlayerData>("PlayerData");
         if (!playerData.isFirst)
         {
-            print("qwd");
             PlayerCharacter.Instance.transform.position = playerData.playerPosition;
             StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
         }
