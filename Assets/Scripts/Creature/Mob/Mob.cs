@@ -36,7 +36,7 @@ namespace Creature.Mob
             float backStepSpeed = 50f;
             Vector3 direction = (transform.position - playerPosition).normalized;
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            LayerMask obstacleLayer = LayerMask.GetMask("Wall");
+            LayerMask obstacleLayer = LayerMask.GetMask("Wall", "Player");
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
 
