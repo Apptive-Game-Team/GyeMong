@@ -1,13 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Creature.Mob.StateMachineMob.Minion.Slime
 {
-    public class DivisionSlimeManager : SingletonObject<DivisionSlimeManager>
+    public class DivisionSlimeManager : MonoBehaviour
     {
+        public static DivisionSlimeManager Instance;
         private HashSet<DivisionSlime> _activeSlimes = new HashSet<DivisionSlime>();
         private EventObject _eventObject;
+
+        private void Awake()
+        {
+            if (Instance != null) Destroy(this);
+            else Instance = this;
+        }
 
         private void Start()
         {
