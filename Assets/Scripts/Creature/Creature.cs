@@ -83,6 +83,8 @@ namespace Creature
             Vector3 currentPosition = transform.position;
             Vector3 targetPosition = new Vector3(currentTarget.x, currentTarget.y, currentPosition.z);
 
+            if (Physics2D.Linecast(currentPosition, currentTarget, LayerMask.GetMask("Wall"))) return;
+
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(currentPosition, targetPosition, step);
 
