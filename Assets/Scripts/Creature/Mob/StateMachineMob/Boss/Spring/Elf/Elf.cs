@@ -119,7 +119,9 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 2);
                 Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2);
-                yield return new WaitForSeconds(Elf.attackdelayTime * 1.5f);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Sound.Play("EFFECT_Charge_Complete");
+                yield return new WaitForSeconds(Elf.attackdelayTime * 0.5f);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isMove", true);
                 Elf.Animator.SetFloat("moveType", 1);
