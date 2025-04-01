@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3998500003980005651}
   - component: {fileID: 1702070895054600104}
   - component: {fileID: 1472500462685751787}
+  - component: {fileID: 8718725927253374644}
   m_Layer: 0
   m_Name: GardenDoor
   m_TagString: Untagged
@@ -214,6 +215,7 @@ MonoBehaviour:
   - rid: 286138671396552734
   - rid: 286138671396552732
   - rid: 286138671396552733
+  - rid: 7445868584460353558
   - rid: 286138671396552735
   references:
     version: 2
@@ -244,3 +246,51 @@ MonoBehaviour:
       data:
         _gameObject: {fileID: 983018022320137561}
         _color: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 7445868584460353558
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: Garden_Door_Opened
+        condition: 1
+--- !u!114 &8718725927253374644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983018022320137561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 7445868584460353559
+  references:
+    version: 2
+    RefIds:
+    - rid: 7445868584460353559
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 7445868584460353560
+        eventInTrue:
+          rid: 7445868584460353561
+        eventInFalse:
+          rid: 7445868584460353562
+    - rid: 7445868584460353560
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: Garden_Door_Opened
+        condition: 0
+    - rid: 7445868584460353561
+      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 983018022320137561}
+        isActive: 0
+    - rid: 7445868584460353562
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0

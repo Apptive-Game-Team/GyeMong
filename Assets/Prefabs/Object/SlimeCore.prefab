@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4938192110583175232}
   - component: {fileID: -79105282650514762}
   - component: {fileID: 863343489527294543}
+  - component: {fileID: 5954136288319353604}
   m_Layer: 0
   m_Name: SlimeCore
   m_TagString: Untagged
@@ -172,3 +173,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _materialDatas: {fileID: 11400000, guid: b83ab9d50893f408cbb45301ce80bf11, type: 2}
+--- !u!114 &5954136288319353604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3799310539447110097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 7445868584460353554
+  references:
+    version: 2
+    RefIds:
+    - rid: 7445868584460353554
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 7445868584460353555
+        eventInTrue:
+          rid: 7445868584460353556
+        eventInFalse:
+          rid: 7445868584460353557
+    - rid: 7445868584460353555
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: GardenQuestIsCleared
+        condition: 0
+    - rid: 7445868584460353556
+      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 3799310539447110097}
+        isActive: 0
+    - rid: 7445868584460353557
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0

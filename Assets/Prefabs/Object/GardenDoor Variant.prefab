@@ -116,7 +116,7 @@ PrefabInstance:
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
       propertyPath: managedReferences[286138671396552738].tag
-      value: Garden_Door_Open
+      value: Garden_Maze_Door_Opened
       objectReference: {fileID: 0}
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
@@ -332,6 +332,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[7445868584460353560].tag
+      value: Garden_Maze_Door_Opened
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
