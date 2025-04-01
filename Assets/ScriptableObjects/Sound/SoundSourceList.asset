@@ -94,6 +94,9 @@ MonoBehaviour:
   - name: ENEMY_Vine
     type: 3
     clip: {fileID: 8300000, guid: 662dc2c91d272408890e7ac1ab267dae, type: 3}
+  - name: ENEMY_Human_Grunt
+    type: 3
+    clip: {fileID: 8300000, guid: 5e9ca4641529acb4d8331dc4ef6579e0, type: 3}
   - name: EFFECT_Sword_Defend_Hit
     type: 1
     clip: {fileID: 8300000, guid: 6948407687f944b1684dd3a488fc074e, type: 3}
@@ -106,3 +109,6 @@ MonoBehaviour:
   - name: EFFECT_Sword_Skill
     type: 1
     clip: {fileID: 8300000, guid: 8af085ccb57bb48d8a4cb2a20c1fb065, type: 3}
+  - name: EFFECT_Plant_Grow
+    type: 1
+    clip: {fileID: 8300000, guid: 0af14c3e56cd5c048a308c9a3063fe7b, type: 3}
