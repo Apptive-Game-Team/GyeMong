@@ -7754,7 +7754,7 @@ GameObject:
   - component: {fileID: 3198361259467730614}
   - component: {fileID: 1124155422564506556}
   - component: {fileID: 2339024376106794145}
-  - component: {fileID: 4854936888183886859}
+  - component: {fileID: 5201073427821672874}
   m_Layer: 20
   m_Name: ThornTilemap
   m_TagString: EnemyAttack
@@ -7900,7 +7900,7 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!114 &4854936888183886859
+--- !u!114 &5201073427821672874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7909,18 +7909,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1874183509379792145}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8627024935a84eb4d880b880db4a838c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  soundObject: {fileID: 0}
-  isDestroyOnHit: 0
-  grazable: 0
-  grazed: 0
+  isGrazed: 0
   isAttacked: 0
-  isMultiHit: 1
-  multiHitDelay: 0.5
-  knockbackAmount: 0
+  _attackInfo: {fileID: 11400000, guid: 3b76a99b597dd6b46a701f611cc0437d, type: 2}
+  _attackObjectSounds: {fileID: 0}
 --- !u!1 &2581871875232209396
 GameObject:
   m_ObjectHideFlags: 0
