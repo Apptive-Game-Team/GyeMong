@@ -90,7 +90,8 @@ namespace Map.Puzzle.Maze
             {
                 _gridTile[_width / 2, 0] = true;
                 _gridTile[_width / 2 - 1, 0] = true;
-                _thornGridTile[_width / 2 + 1, 1] = false;
+                _thornGridTile[_width / 2, 1] = false;
+                _thornGridTile[_width / 2 - 1, 1] = false;
             }
         }
 
