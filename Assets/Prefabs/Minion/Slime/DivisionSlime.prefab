@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 3512257973603151227}
   - component: {fileID: 268931492293261944}
   - component: {fileID: 6957462979725571552}
+  - component: {fileID: 5214546229750011516}
   m_Layer: 0
   m_Name: DivisionSlime
   m_TagString: EnemyAttack
@@ -270,6 +271,49 @@ MonoBehaviour:
   isAttacked: 0
   _attackInfo: {fileID: 11400000, guid: f68d3a386f8ce8845af01bb0d3208865, type: 2}
   _attackObjectSounds: {fileID: 0}
+--- !u!114 &5214546229750011516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7314021124766925139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 7445868584460353550
+  references:
+    version: 2
+    RefIds:
+    - rid: 7445868584460353550
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 7445868584460353551
+        eventInTrue:
+          rid: 7445868584460353552
+        eventInFalse:
+          rid: 7445868584460353553
+    - rid: 7445868584460353551
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: GardenQuestIsCleared
+        condition: 0
+    - rid: 7445868584460353552
+      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 7314021124766925139}
+        isActive: 0
+    - rid: 7445868584460353553
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0
 --- !u!1001 &3205393953129646034
 PrefabInstance:
   m_ObjectHideFlags: 0
