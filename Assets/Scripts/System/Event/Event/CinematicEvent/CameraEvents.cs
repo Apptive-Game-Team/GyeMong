@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using Visual.Camera;
+using playerCharacter;
 
 public abstract class CameraEvent : Event { }
 
@@ -20,10 +17,9 @@ public class CameraMove : CameraEvent
 
 public class CameraFollow : CameraEvent
 {
-    [SerializeField] private GameObject followObject;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        CameraManager.Instance.CameraFollow(followObject.transform);
+        CameraManager.Instance.CameraFollow(PlayerCharacter.Instance.gameObject.transform);
         return null;
     }
 }
