@@ -1837,6 +1837,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GardenMazeDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 6249617034902709900, guid: 55e717aa8c654e645817cb197559f00e,
+        type: 3}
+      propertyPath: _uniqueId
+      value: GardenMazeDoor
+      objectReference: {fileID: 0}
     - target: {fileID: 6606685417299177259, guid: 55e717aa8c654e645817cb197559f00e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3014,8 +3019,7 @@ MonoBehaviour:
         speed: 3
     - rid: 286138627636068353
       type: {class: CameraFollow, ns: , asm: Assembly-CSharp}
-      data:
-        followObject: {fileID: 0}
+      data: 
     - rid: 286138693674860578
       type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
       data:
