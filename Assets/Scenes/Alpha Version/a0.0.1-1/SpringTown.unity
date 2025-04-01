@@ -190,6 +190,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64f1ae9c03ebe9d4c9496b6f4942f313, type: 3}
+--- !u!95 &92901066 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 192519716517853443, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+    type: 3}
+  m_PrefabInstance: {fileID: 92901065}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &183408159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5248,6 +5254,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 3
       addedObject: {fileID: 582906588}
+    - targetCorrespondingSourceObject: {fileID: 6957355767428621729, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 582906589}
   m_SourcePrefab: {fileID: 100100000, guid: 0c5675348f02d4990bd547afbd9aa5e9, type: 3}
 --- !u!4 &582906586 stripped
 Transform:
@@ -5303,6 +5313,49 @@ MonoBehaviour:
       type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
       data:
         triggerable: {fileID: 183408161}
+--- !u!114 &582906589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582906587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 7445868584460353537
+  references:
+    version: 2
+    RefIds:
+    - rid: 7445868584460353537
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 7445868584460353538
+        eventInTrue:
+          rid: 7445868584460353541
+        eventInFalse:
+          rid: 7445868584460353539
+    - rid: 7445868584460353538
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: is_main_event_cleared
+        condition: 0
+    - rid: 7445868584460353539
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0
+    - rid: 7445868584460353541
+      type: {class: MovePositionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        gameObject: {fileID: 582906587}
+        targetPosition: {x: -7, y: 8, z: 0}
 --- !u!1001 &600708371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5545,6 +5598,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 2
       addedObject: {fileID: 810723368}
+    - targetCorrespondingSourceObject: {fileID: 7150541333083285301, guid: cd344e8a1f86044eaa15a41eb30ed2c0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 810723369}
   m_SourcePrefab: {fileID: 100100000, guid: cd344e8a1f86044eaa15a41eb30ed2c0, type: 3}
 --- !u!4 &810723365 stripped
 Transform:
@@ -5632,6 +5689,49 @@ MonoBehaviour:
     - rid: 286138513274437642
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
+--- !u!114 &810723369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810723366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 7445868584460353537
+  references:
+    version: 2
+    RefIds:
+    - rid: 7445868584460353537
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 7445868584460353538
+        eventInTrue:
+          rid: 7445868584460353541
+        eventInFalse:
+          rid: 7445868584460353539
+    - rid: 7445868584460353538
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: is_main_event_cleared
+        condition: 0
+    - rid: 7445868584460353539
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0
+    - rid: 7445868584460353541
+      type: {class: MovePositionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        gameObject: {fileID: 810723366}
+        targetPosition: {x: 10, y: 1, z: 0}
 --- !u!1 &823301449
 GameObject:
   m_ObjectHideFlags: 0
@@ -6122,6 +6222,49 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3688218759157965106}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &922759551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922759543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 7445868584460353537
+  references:
+    version: 2
+    RefIds:
+    - rid: 7445868584460353537
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 7445868584460353538
+        eventInTrue:
+          rid: 7445868584460353541
+        eventInFalse:
+          rid: 7445868584460353539
+    - rid: 7445868584460353538
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: is_main_event_cleared
+        condition: 0
+    - rid: 7445868584460353539
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0
+    - rid: 7445868584460353541
+      type: {class: MovePositionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        gameObject: {fileID: 922759543}
+        targetPosition: {x: 100, y: 100, z: 0}
 --- !u!1 &1085130643
 GameObject:
   m_ObjectHideFlags: 0
@@ -7268,7 +7411,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 832257028}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6957355767428621729, guid: 0c5675348f02d4990bd547afbd9aa5e9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1189044250}
   m_SourcePrefab: {fileID: 100100000, guid: 0c5675348f02d4990bd547afbd9aa5e9, type: 3}
 --- !u!4 &1189044248 stripped
 Transform:
@@ -7282,6 +7429,49 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1189044247}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1189044250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189044249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 7445868584460353537
+  references:
+    version: 2
+    RefIds:
+    - rid: 7445868584460353537
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 7445868584460353538
+        eventInTrue:
+          rid: 7445868584460353541
+        eventInFalse:
+          rid: 7445868584460353539
+    - rid: 7445868584460353538
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: is_main_event_cleared
+        condition: 0
+    - rid: 7445868584460353539
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0
+    - rid: 7445868584460353541
+      type: {class: MovePositionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        gameObject: {fileID: 1189044249}
+        targetPosition: {x: -10, y: -8.67, z: 0}
 --- !u!1001 &1299154351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8172,7 +8362,7 @@ MonoBehaviour:
         _condition:
           rid: 2715780017853038640
         eventInTrue:
-          rid: 2715780017853038648
+          rid: 7445868584460353542
         eventInFalse:
           rid: 2715780017853038650
     - rid: 2715780017853038640
@@ -8180,10 +8370,6 @@ MonoBehaviour:
       data:
         tag: elf_npc_first_interaction
         condition: 1
-    - rid: 2715780017853038648
-      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
-      data:
-        triggerable: {fileID: 538538567}
     - rid: 2715780017853038650
       type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -8193,6 +8379,21 @@ MonoBehaviour:
           rid: 286138211694542855
         eventInFalse:
           rid: 286138211694542848
+    - rid: 7445868584460353542
+      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
+      data:
+        events:
+        - rid: 7445868584460353543
+        - rid: 7445868584460353544
+    - rid: 7445868584460353543
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 538538567}
+    - rid: 7445868584460353544
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: elf_npc_first_interaction
+        condition: 0
 --- !u!212 &1702330172
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8383,7 +8584,7 @@ MonoBehaviour:
     - rid: 2715780017853038623
       type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
       data:
-        _animator: {fileID: 0}
+        _animator: {fileID: 92901066}
         _creatureType: 1
         _name: speed
         _value: 10
@@ -9577,7 +9778,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5581359416817432458, guid: 56c793e61c42d4b919e832ce6c53a241,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 922759551}
   m_SourcePrefab: {fileID: 100100000, guid: 56c793e61c42d4b919e832ce6c53a241, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
