@@ -19,8 +19,7 @@ namespace System.Sound
                 return _objectPool;
             }
         } 
-        
-        public static void Play(string soundId, bool loop = false)
+        public static SoundObject Play(string soundId, bool loop = false)
         {
             SoundObject soundObject = ObjectPool.GetObject();
             soundObject.gameObject.SetActive(true);
@@ -28,8 +27,13 @@ namespace System.Sound
             soundObject.SetSoundSourceByName(soundId);
             soundObject.SetLoop(loop);
             soundObject.StartCoroutine(Play(soundObject, new SoundPlayCallback(soundObject)));
+            return soundObject;
         }
-
+        public static void Stop(SoundObject soundObject)
+        {
+            soundObject?.Stop();
+            soundObject?.gameObject.SetActive(false);
+        }
         private class SoundPlayCallback : ICallback
         {
             private SoundObject _soundObject;

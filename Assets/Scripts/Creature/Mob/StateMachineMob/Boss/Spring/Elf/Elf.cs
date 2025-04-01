@@ -247,6 +247,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
+                SoundObject _soundObject = Sound.Play("ENEMY_Whip",true);
                 AttackObjectController.Create(
                     Elf.transform.position,
                     Vector3.zero,
@@ -257,6 +258,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 )
                 .StartRoutine();
                 yield return new WaitForSeconds(Elf.attackdelayTime * 2);
+                Sound.Stop(_soundObject);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
@@ -280,7 +282,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 4);
-                Sound.Play("ENEMY_Human_Grunt");
+                Sound.Play("ENEMY_Whip");
                 int numberOfObjects = 5;
                 float interval = 0.2f;
                 float fixedDistance = 7f;
