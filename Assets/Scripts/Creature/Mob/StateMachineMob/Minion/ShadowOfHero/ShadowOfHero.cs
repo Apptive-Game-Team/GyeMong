@@ -30,6 +30,7 @@ namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         protected override void OnDead()
         {
             _eventObject.Trigger();
+            Destroy(gameObject);
         }
 
         private void Start()
