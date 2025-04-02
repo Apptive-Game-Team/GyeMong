@@ -1573,7 +1573,11 @@ PrefabInstance:
     - {fileID: 1816522763214820845, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
     - {fileID: 4331037996407810154, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1459062340}
   m_SourcePrefab: {fileID: 100100000, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
 --- !u!114 &1459062335 stripped
 MonoBehaviour:
@@ -1581,7 +1585,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1459062334}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1459062339}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19cbe0d89f0c4ce6a638ff23b8c6743d, type: 3}
@@ -1611,6 +1615,51 @@ SpriteRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1459062334}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1459062339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1459062334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1459062340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459062339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8709460353337262109
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8709460353337262109
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 8709460353337262110
+        eventInTrue:
+          rid: 8709460353337262111
+        eventInFalse:
+          rid: -2
+    - rid: 8709460353337262110
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: spring_midboss_down
+        condition: 0
+    - rid: 8709460353337262111
+      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!1 &1460456594 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,

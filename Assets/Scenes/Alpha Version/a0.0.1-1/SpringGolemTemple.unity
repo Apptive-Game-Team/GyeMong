@@ -52742,6 +52742,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262112]
+      value: Assembly-CSharp AnimationEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262113]
+      value: Assembly-CSharp SetAnimatorParameterBool
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262113]._name
+      value: isDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262113]._value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262112]._renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262112].deltaTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262113]._animator
+      value: 
+      objectReference: {fileID: 1637330592}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262113]._creatureType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[521773909587787778].events.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[8709460353337262112].frames.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[521773909587787778].events.Array.data[0]
+      value: 521773909587787779
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698537365717467408, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: managedReferences[521773909587787778].events.Array.data[1]
+      value: 8709460353337262113
+      objectReference: {fileID: 0}
     - target: {fileID: 4866844568941268327, guid: 541b7061a84e84331a9394f8687c118f,
         type: 3}
       propertyPath: m_Name
