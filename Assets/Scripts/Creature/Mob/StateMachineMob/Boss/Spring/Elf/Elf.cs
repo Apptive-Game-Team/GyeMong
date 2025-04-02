@@ -249,7 +249,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
-                SoundObject _soundObject = Sound.Play("ENEMY_Whip",true);
+                SoundObject _soundObject = Sound.Play("EFFECT_Sword_Swing", true);
                 AttackObjectController.Create(
                     Elf.transform.position,
                     Vector3.zero,
