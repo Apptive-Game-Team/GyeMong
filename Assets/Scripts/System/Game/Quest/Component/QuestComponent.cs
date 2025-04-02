@@ -2,23 +2,13 @@ using System.Collections.Generic;
 using System.Game.Quest.Quests;
 using System.Linq;
 using UnityEngine;
-
 namespace System.Game.Quest.Component
 {
-    [Serializable]
-    public class QuestComponent : SingletonObject<QuestComponent>
+    
+    public class QuestComponent : MonoBehaviour
     {
-        [SerializeField] private List<Quests.Quest> _quests = new();
-
-        protected override void Awake() // for debug
-        {
-            base.Awake();
-            foreach (var quest in _quests)
-            {
-                quest.StartQuest();
-            }
-        }
-
+        private List<Quests.Quest> _quests = new();
+        
         public Quests.Quest GetQuest(int id)
         {
             return _quests.Find(quest => quest.GetQuestInfo.questID == id);
