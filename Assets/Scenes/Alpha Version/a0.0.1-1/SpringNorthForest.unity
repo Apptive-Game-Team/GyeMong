@@ -1029,7 +1029,7 @@ MonoBehaviour:
       type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 1459062335}
-        bossRoomBoundary: {fileID: 1275491493}
+        bossRoomObject: {fileID: 1275491493}
 --- !u!4 &889852596
 Transform:
   m_ObjectHideFlags: 0
@@ -1745,7 +1745,7 @@ MonoBehaviour:
       type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 1459062335}
-        bossRoomBoundary: {fileID: 1275491493}
+        bossRoomObject: {fileID: 1275491493}
     - rid: 8709460353337262083
       type: {class: CameraMove, ns: , asm: Assembly-CSharp}
       data:

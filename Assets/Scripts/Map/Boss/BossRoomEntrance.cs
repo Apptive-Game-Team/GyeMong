@@ -6,6 +6,7 @@ using Creature.Mob.Boss;
 using Creature.Mob.Boss.Spring.Elf;
 using Creature.Mob.StateMachineMob.Boss;
 using Creature.Mob.StateMachineMob.Boss.Spring.Golem;
+using System.Sound;
 
 public class BossRoomEntrance : MonoBehaviour, IEventTriggerable
 {
