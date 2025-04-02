@@ -284,7 +284,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 4);
-                Sound.Play("ENEMY_Whip");
+                Sound.Play("EFFECT_Sword_Swing");
                 int numberOfObjects = 5;
                 float interval = 0.2f;
                 float fixedDistance = 7f;
