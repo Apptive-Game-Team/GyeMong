@@ -725,6 +725,7 @@ MonoBehaviour:
   _prefab: {fileID: 1535860397863299029, guid: 546ca58cc5a5a494b87fdf8cf3273be7, type: 3}
   _conditionKey1: ShadowForestQuestIsStarted
   _conditionKey2: ShadowForestQuestIsCleared
+  useParentPosition: 0
 --- !u!4 &459142666
 Transform:
   m_ObjectHideFlags: 0
@@ -885,9 +886,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510ca1b6b5b1c4a48a574c4af0c414fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 668407685317662477, guid: 51932e3350fc449dca7f726be1aceb0c, type: 3}
+  _prefab: {fileID: 5343940587875943571, guid: fa21317341901492384360bcb29f8fea, type: 3}
   _conditionKey1: ShadowForestQuestIsStarted
   _conditionKey2: ShadowForestQuestIsCleared
+  useParentPosition: 1
 --- !u!1001 &600708371
 PrefabInstance:
   m_ObjectHideFlags: 0
