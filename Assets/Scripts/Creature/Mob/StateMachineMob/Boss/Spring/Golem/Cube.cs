@@ -47,6 +47,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 currentSpeed += accele * Time.deltaTime;
                 float newY = transform.position.y - currentSpeed * Time.deltaTime;
+                newY = Mathf.Max(newY, targetPosition.y);
                 transform.position = new Vector3(transform.position.x, newY, transform.position.z);
 
                 yield return null;
