@@ -10,15 +10,18 @@ public class DataManager : SingletonObject<DataManager>
 #if UNITY_EDITOR
     private readonly string savePath = Application.dataPath + "/Database";
 #else
-    private readonly string savePath = Application.persistentDataPath + "/Database";
+    private string savePath;
 #endif
     private readonly string encryptionKey = "GyemongFighting!"; // 16, 24, 32 글자로 key 설정
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+#if UNITY_EDITOR
+#else
+        savePath = Path.Combine(Application.persistentDataPath, "Database");
+#endif
     }
-
+    
     private void Start()
     {
         LoadKeyMappings();
