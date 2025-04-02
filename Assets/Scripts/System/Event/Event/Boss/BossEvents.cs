@@ -12,19 +12,19 @@ public abstract class BossEvent : Event
 }
 public class ActivateBossRoomEvent : BossEvent
 {
-    [SerializeField] protected GameObject bossRoomBoundary;
+    [SerializeField] protected GameObject bossRoomObject;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        bossRoomBoundary.SetActive(true);
+        bossRoomObject.SetActive(true);
         return null;
     }
 }
 public class DeActivateBossRoomEvent : BossEvent
 {
-    [SerializeField] protected GameObject bossRoomBoundary;
+    [SerializeField] protected GameObject bossRoomObject;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        bossRoomBoundary.SetActive(false);
+        bossRoomObject.SetActive(false);
         return null;
     }
 }

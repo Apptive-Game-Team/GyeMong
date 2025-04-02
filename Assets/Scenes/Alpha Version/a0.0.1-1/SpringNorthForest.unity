@@ -975,6 +975,8 @@ MonoBehaviour:
   - rid: 521773745628250166
   - rid: 521773745628250167
   - rid: 521773745628250161
+  - rid: 8709460353337262104
+  - rid: 8709460353337262103
   - rid: 521773745628250170
   - rid: 3558735529444638722
   references:
@@ -1029,7 +1031,17 @@ MonoBehaviour:
       type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 1459062335}
-        bossRoomBoundary: {fileID: 1275491493}
+        bossRoomObject: {fileID: 1275491493}
+    - rid: 8709460353337262103
+      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1460456594}
+    - rid: 8709460353337262104
+      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1592182054}
 --- !u!4 &889852596
 Transform:
   m_ObjectHideFlags: 0
@@ -1107,6 +1119,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BGMObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
+        type: 3}
+      propertyPath: trigger
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1551,7 +1573,11 @@ PrefabInstance:
     - {fileID: 1816522763214820845, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
     - {fileID: 4331037996407810154, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1459062340}
   m_SourcePrefab: {fileID: 100100000, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
 --- !u!114 &1459062335 stripped
 MonoBehaviour:
@@ -1559,7 +1585,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1459062334}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1459062339}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19cbe0d89f0c4ce6a638ff23b8c6743d, type: 3}
@@ -1588,6 +1614,57 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 1241953916927290027, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
     type: 3}
   m_PrefabInstance: {fileID: 1459062334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1459062339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1459062334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1459062340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459062339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8709460353337262109
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8709460353337262109
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 8709460353337262110
+        eventInTrue:
+          rid: 8709460353337262111
+        eventInFalse:
+          rid: -2
+    - rid: 8709460353337262110
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: spring_midboss_down
+        condition: 0
+    - rid: 8709460353337262111
+      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
+      data: 
+--- !u!1 &1460456594 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
+    type: 3}
+  m_PrefabInstance: {fileID: 962346216}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1542271252
 GameObject:
@@ -1645,6 +1722,9 @@ MonoBehaviour:
   - rid: 521773835193679874
   - rid: 521773745628250139
   - rid: 521773745628250132
+  - rid: 8709460353337262083
+  - rid: 8709460353337262102
+  - rid: 8709460353337262101
   - rid: 521773745628250133
   - rid: 521773745628250134
   - rid: 521773745628250135
@@ -1658,6 +1738,7 @@ MonoBehaviour:
   - rid: 521773835193679872
   - rid: 521773745628250158
   - rid: 521773835193679878
+  - rid: 8709460353337262084
   - rid: 521773745628250140
   references:
     version: 2
@@ -1743,7 +1824,25 @@ MonoBehaviour:
       type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 1459062335}
-        bossRoomBoundary: {fileID: 1275491493}
+        bossRoomObject: {fileID: 1275491493}
+    - rid: 8709460353337262083
+      type: {class: CameraMove, ns: , asm: Assembly-CSharp}
+      data:
+        destination: {x: 2.97, y: 4.17, z: -10}
+        speed: 3
+    - rid: 8709460353337262084
+      type: {class: CameraFollow, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8709460353337262101
+      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1592182054}
+    - rid: 8709460353337262102
+      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1460456594}
 --- !u!114 &1542271255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2056,7 +2155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 1
-  trigger: 2
+  trigger: 5
   triggerLimitCounter: -1
   eventSequence:
   - rid: 142013365307834368
