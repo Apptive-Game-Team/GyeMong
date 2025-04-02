@@ -51379,6 +51379,7 @@ MonoBehaviour:
   - rid: 521773836373327896
   - rid: 521773836373327897
   - rid: 4949244452169580546
+  - rid: 8709460353337262120
   - rid: 4949244452169580548
   - rid: 8709460353337262099
   - rid: 8709460353337262093
@@ -51474,7 +51475,7 @@ MonoBehaviour:
     - rid: 4949244452169580546
       type: {class: CameraMove, ns: , asm: Assembly-CSharp}
       data:
-        destination: {x: 28.8, y: 8, z: -10}
+        destination: {x: 28.8, y: 6, z: -10}
         speed: 3
     - rid: 4949244452169580548
       type: {class: CameraZoomInOut, ns: , asm: Assembly-CSharp}
@@ -51491,6 +51492,11 @@ MonoBehaviour:
       data:
         _boss: {fileID: 1637330591}
         bossRoomObject: {fileID: 1592182054}
+    - rid: 8709460353337262120
+      type: {class: CameraMove, ns: , asm: Assembly-CSharp}
+      data:
+        destination: {x: 28.8, y: 4, z: -10}
+        speed: 1
 --- !u!114 &1379380690
 MonoBehaviour:
   m_ObjectHideFlags: 0
