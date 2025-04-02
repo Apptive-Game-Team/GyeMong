@@ -50198,12 +50198,6 @@ Transform:
   - {fileID: 365486857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &940631938 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5884899923316334453, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
-    type: 3}
-  m_PrefabInstance: {fileID: 516904773}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &987070943
 GameObject:
   m_ObjectHideFlags: 0
@@ -51471,7 +51465,7 @@ MonoBehaviour:
       type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 1637330591}
-        bossRoomObject: {fileID: 940631938}
+        bossRoomObject: {fileID: 2142563700}
     - rid: 3558735881443737600
       type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -53414,7 +53408,7 @@ MonoBehaviour:
       type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
         _boss: {fileID: 1637330591}
-        bossRoomObject: {fileID: 940631938}
+        bossRoomObject: {fileID: 2142563700}
     - rid: 3294223817106784261
       type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
       data:
