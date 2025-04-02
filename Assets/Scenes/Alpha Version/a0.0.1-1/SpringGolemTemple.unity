@@ -53274,6 +53274,7 @@ MonoBehaviour:
   - rid: 4949244452169580553
   - rid: 8709460353337262095
   - rid: 8709460353337262100
+  - rid: 8709460353337262105
   - rid: 2578170190929068034
   - rid: 8709460353337262089
   - rid: 8155690880284491776
@@ -53350,6 +53351,11 @@ MonoBehaviour:
       data:
         _boss: {fileID: 1637330591}
         bossRoomObject: {fileID: 1592182054}
+    - rid: 8709460353337262105
+      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1637330591}
+        bossRoomObject: {fileID: 1918853045}
 --- !u!1 &1918853045 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,

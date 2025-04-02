@@ -975,6 +975,8 @@ MonoBehaviour:
   - rid: 521773745628250166
   - rid: 521773745628250167
   - rid: 521773745628250161
+  - rid: 8709460353337262104
+  - rid: 8709460353337262103
   - rid: 521773745628250170
   - rid: 3558735529444638722
   references:
@@ -1030,6 +1032,16 @@ MonoBehaviour:
       data:
         _boss: {fileID: 1459062335}
         bossRoomObject: {fileID: 1275491493}
+    - rid: 8709460353337262103
+      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1460456594}
+    - rid: 8709460353337262104
+      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1592182054}
 --- !u!4 &889852596
 Transform:
   m_ObjectHideFlags: 0
@@ -1107,6 +1119,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BGMObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
+        type: 3}
+      propertyPath: trigger
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1589,6 +1611,12 @@ SpriteRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1459062334}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1460456594 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
+    type: 3}
+  m_PrefabInstance: {fileID: 962346216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1542271252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,6 +1674,8 @@ MonoBehaviour:
   - rid: 521773745628250139
   - rid: 521773745628250132
   - rid: 8709460353337262083
+  - rid: 8709460353337262102
+  - rid: 8709460353337262101
   - rid: 521773745628250133
   - rid: 521773745628250134
   - rid: 521773745628250135
@@ -1754,6 +1784,16 @@ MonoBehaviour:
     - rid: 8709460353337262084
       type: {class: CameraFollow, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 8709460353337262101
+      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1592182054}
+    - rid: 8709460353337262102
+      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1460456594}
 --- !u!114 &1542271255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2066,7 +2106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 1
-  trigger: 2
+  trigger: 5
   triggerLimitCounter: -1
   eventSequence:
   - rid: 142013365307834368
