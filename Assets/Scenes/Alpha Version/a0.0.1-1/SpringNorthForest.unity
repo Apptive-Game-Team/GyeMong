@@ -1645,6 +1645,7 @@ MonoBehaviour:
   - rid: 521773835193679874
   - rid: 521773745628250139
   - rid: 521773745628250132
+  - rid: 8709460353337262083
   - rid: 521773745628250133
   - rid: 521773745628250134
   - rid: 521773745628250135
@@ -1658,6 +1659,7 @@ MonoBehaviour:
   - rid: 521773835193679872
   - rid: 521773745628250158
   - rid: 521773835193679878
+  - rid: 8709460353337262084
   - rid: 521773745628250140
   references:
     version: 2
@@ -1744,6 +1746,14 @@ MonoBehaviour:
       data:
         _boss: {fileID: 1459062335}
         bossRoomBoundary: {fileID: 1275491493}
+    - rid: 8709460353337262083
+      type: {class: CameraMove, ns: , asm: Assembly-CSharp}
+      data:
+        destination: {x: 2.97, y: 4.17, z: -10}
+        speed: 3
+    - rid: 8709460353337262084
+      type: {class: CameraFollow, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!114 &1542271255
 MonoBehaviour:
   m_ObjectHideFlags: 0
