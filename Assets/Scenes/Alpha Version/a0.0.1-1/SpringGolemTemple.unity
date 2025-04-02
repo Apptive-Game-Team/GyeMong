@@ -48788,13 +48788,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: eventSequence.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: eventSequence.Array.data[2]
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
       value: 23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2492515186825879711, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 553544599}
   m_SourcePrefab: {fileID: 100100000, guid: 90d037379245ab44695ee4686df899ab, type: 3}
 --- !u!4 &553544594 stripped
 Transform:
@@ -48808,6 +48827,47 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 553544593}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &553544599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553544595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 2
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 8709460353337262117
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8709460353337262117
+      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _condition:
+          rid: 8709460353337262118
+        eventInTrue:
+          rid: 8709460353337262119
+        eventInFalse:
+          rid: -2
+    - rid: 8709460353337262118
+      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+      data:
+        tag: spring_guardian_down
+        condition: 0
+    - rid: 8709460353337262119
+      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 553544595}
+        isActive: 1
 --- !u!1001 &579447269
 PrefabInstance:
   m_ObjectHideFlags: 0
