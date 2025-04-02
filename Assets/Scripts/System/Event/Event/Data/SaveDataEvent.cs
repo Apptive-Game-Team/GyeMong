@@ -2,8 +2,6 @@ using System.Collections;
 using System.Game.Object.Persisted;
 using System.Game.Quest.Component;
 using playerCharacter;
-using Unity.VisualScripting;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SaveDataEvent : Event
 {
