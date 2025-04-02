@@ -76,6 +76,9 @@ MonoBehaviour:
   - name: ENEMY_Rock_Explosion
     type: 3
     clip: {fileID: 8300000, guid: 93d0515e7e04c41bd9bbd3722d40204f, type: 3}
+  - name: ENEMY_Rock_Falled
+    type: 3
+    clip: {fileID: 8300000, guid: de8a568b4cfe5495f9cf57345e611c0c, type: 3}
   - name: ENEMY_Root
     type: 3
     clip: {fileID: 8300000, guid: d1afc9db5130a40a4813ba0202c7d267, type: 3}

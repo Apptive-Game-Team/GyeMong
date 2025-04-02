@@ -33,7 +33,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-
+            Sound.Play("ENEMY_Toss");
             StartCoroutine(StartFalling());
         }
 
@@ -52,6 +52,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 yield return null;
             }
+            Sound.Play("ENEMY_Rock_Falled");
             Collider2D collider = GetComponent<Collider2D>();
             isFalled = true;
             if (collider != null)
