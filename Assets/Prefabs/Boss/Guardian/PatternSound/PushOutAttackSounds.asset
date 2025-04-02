@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5a3522308545f7bbf7411094915862, type: 3}
   m_Name: PushOutAttackSounds
   m_EditorClassIdentifier: 
-  startSoundId: []
+  startSoundId:
+  - ENEMY_Rock_Explosion
   endSoundId: []
   hitSoundId: []
