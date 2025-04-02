@@ -29,14 +29,23 @@ namespace System.Game.Quest.Quests
     public class SerializableQuestInfo
     {
         [SerializeField] private string _boolString;
-        [SerializeReference] private QuestInfo _questInfo;
+        [SerializeField] private int _questID;
+        [SerializeField] private string _questName;
+        [SerializeField] private string _questDescription;
+        [SerializeField] private QuestType _questType;
+        [SerializeField] private List<Goal> _goals;
         
         public SerializableQuestInfo(QuestInfo questInfo)
         {
-            _questInfo = questInfo;
+            _questID = questInfo.questID;
+            _questName = questInfo.questName;
+            _questDescription = questInfo.questDescription;
+            _questType = questInfo.questType;
             _boolString = "";
+            _goals = new List<Goal>();
             foreach (Goal goal in questInfo.goals)
             {
+                _goals.Add(new Goal() {goalName = goal.goalName, goalDescription = goal.goalDescription});
                 _boolString += goal.isCompleted ? "1" : "0";
             }
         }
@@ -44,14 +53,14 @@ namespace System.Game.Quest.Quests
         public static implicit operator QuestInfo(SerializableQuestInfo serializableQuestInfo)
         {
             QuestInfo questInfo = ScriptableObject.CreateInstance<QuestInfo>();
-            questInfo.questID = serializableQuestInfo._questInfo.questID;
-            questInfo.questName = serializableQuestInfo._questInfo.questName;
-            questInfo.questDescription = serializableQuestInfo._questInfo.questDescription;
-            questInfo.questType = serializableQuestInfo._questInfo.questType;
+            questInfo.questID = serializableQuestInfo._questID;
+            questInfo.questName = serializableQuestInfo._questName;
+            questInfo.questDescription = serializableQuestInfo._questDescription;
+            questInfo.questType = serializableQuestInfo._questType;
 
             int index = 0;
             questInfo.goals = new List<Goal>();
-            foreach (Goal goal in serializableQuestInfo._questInfo.goals)
+            foreach (Goal goal in serializableQuestInfo._goals)
             {
                 questInfo.goals.Add(
                     new Goal()
