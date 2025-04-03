@@ -189,9 +189,7 @@ namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             public override IEnumerator StateCoroutine()
             {
                 ShadowOfHero._attackCount += 1;
-                mob.Animator.SetBool("isDashing", true);
                 yield return mob.RushAttack(0.5f);
-                mob.Animator.SetBool("isDashing", false);
                 yield return ShadowOfHero.MeleeAttack();
                 mob.ChangeState();
             }
