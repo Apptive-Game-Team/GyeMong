@@ -12,7 +12,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
     {
         private const int GOLD_REWARD = 10;
         
-        private bool _isInitialized = false;
+        protected bool isInitialized = false;
         
         [SerializeField] private GameObject rangedAttack;
 
@@ -32,7 +32,6 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
                 base.OnAttacked(damage);
                 if (currentHp <= 0)
                 {
-                    print(currentState);
                     OnDead();
                 }
             }
@@ -65,7 +64,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
         private void OnEnable()
         {
-            if (_isInitialized)
+            if (isInitialized)
             {
                 currentHp = maxHp;
                 ChangeState();
@@ -89,7 +88,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             _pathFinder = new SimplePathFinder();
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
-            _isInitialized = true;
+            isInitialized = true;
         }
         
         public abstract class SlimeState : BaseState

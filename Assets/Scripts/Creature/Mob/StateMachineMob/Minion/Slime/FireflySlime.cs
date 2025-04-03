@@ -27,6 +27,8 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
         public override void StartMob()
         {
+            if (!isInitialized) Initialize();
+            
             _isOn = true;
             _light.SetActive(_isOn);
             _slimeAnimator.SetSprites(_spriteOnVersion);
