@@ -14,6 +14,7 @@ public class StartButton : MonoBehaviour
     public void StartGame()
     {
         optionExitButton.SetActive(true);
+        DataManager.Instance.DeleteAllData();
         SceneManager.LoadScene("Cinematic");
     }
 }

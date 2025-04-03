@@ -155,4 +155,35 @@ public class DataManager : SingletonObject<DataManager>
             StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
         }
     }
+
+    public void DeleteAllData()
+    {
+        try
+        {
+            if (Directory.Exists(savePath))
+            {
+                DirectoryInfo directory = new(savePath);
+
+                // 모든 파일 삭제
+                foreach (FileInfo file in directory.GetFiles())
+                {
+                    file.IsReadOnly = false;
+                    file.Delete();
+                }
+
+                // 모든 폴더 삭제
+                foreach (DirectoryInfo subDirectory in directory.GetDirectories())
+                {
+                    subDirectory.Delete(true);
+                }
+
+                Debug.Log("All saved data has been deleted.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to delete data: {ex.Message}");
+        }
+    }
+
 }
