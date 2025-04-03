@@ -35,27 +35,27 @@ public class CloseChatEvent : ChatEvent
 [Serializable]
 public class ShowChatEvent : ChatEvent
 {
-    [SerializeField]
-    ChatMessage message;
+    [SerializeField] ChatMessage message;
+    [SerializeField] float autoSkipTime = 3f;
 
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        return EffectManager.Instance.GetChatController().Chat(message);
+        yield return EffectManager.Instance.GetChatController().Chat(message, autoSkipTime);
     }
 }
 
 [Serializable]
 public class ShowChatSequence : ChatEvent
 {
-    [SerializeField]
-    MultiChatMessage messages;
+    [SerializeField] MultiChatMessage messages;
+    [SerializeField] float autoSkipTime = 3f;
 
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         foreach (string message in messages.messages)
         {
-            yield return EffectManager.Instance.GetChatController().Chat(new ChatMessage(messages.name, message));
-            yield return new SkippableDelayEvent(){delayTime=999}.Execute(eventObject);
+            yield return EffectManager.Instance.GetChatController().Chat(new ChatMessage(messages.name, message), autoSkipTime);
+            yield return new SkippableDelayEvent() { delayTime = 999 }.Execute(eventObject);
         }
     }
 }
@@ -63,19 +63,19 @@ public class ShowChatSequence : ChatEvent
 [Serializable]
 public class MultipleShowChatEvent : ChatEvent
 {
-    [SerializeField]
-    MultiChatMessage messages;
+    [SerializeField] MultiChatMessage messages;
+    [SerializeField] float autoSkipTime = 3f;
 
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        return EffectManager.Instance.GetChatController().MultipleChat(messages);
+        return EffectManager.Instance.GetChatController().MultipleChat(messages, autoSkipTime);
     }
 }
 
 [Serializable]
 public class SpeechBubbleChatEvent : ChatEvent
 {
-    [SerializeField] 
+    [SerializeField]
     GameObject NPC;
     [SerializeField]
     string message;

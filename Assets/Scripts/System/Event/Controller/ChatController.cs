@@ -71,14 +71,18 @@ public class ChatController : MonoBehaviour
         isWorking = false;
     }
 
-    public IEnumerator Chat(ChatMessage chatMessage)
+    public IEnumerator Chat(ChatMessage chatMessage, float autoSkipTime)
     {
         nameText.text = chatMessage.name;
         messageText.text = "";
         yield return ShowChat(chatMessage.message);
+
+        float timer = Time.time;
+        yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
+                                         InputManager.Instance.GetKeyDown(ActionCode.Interaction));
     }
 
-    public IEnumerator MultipleChat(MultiChatMessage multiChatMessage)
+    public IEnumerator MultipleChat(MultiChatMessage multiChatMessage, float autoSkipTime)
     {
         nameText.text = multiChatMessage.name;
         messageText.text = "";
@@ -87,9 +91,11 @@ public class ChatController : MonoBehaviour
         {
             yield return ShowMultipleChat(line);
             messageText.text += "\n";
-        }
 
-        yield return new WaitForSeconds(multiChatMessage.chatDelay.GetValueOrDefault(0));
+            float timer = Time.time;
+            yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
+                                             InputManager.Instance.GetKeyDown(ActionCode.Interaction));
+        }
     }
 
     private IEnumerator ShowChat(string message)
@@ -112,14 +118,14 @@ public class ChatController : MonoBehaviour
 
     public IEnumerator ShowSpeechBubbleChat(GameObject NPC, string message, float destroyDelay)
     {
-        GameObject speechBubbles = Instantiate(speechBubble, NPC.transform.position + new Vector3(0.51f,1.43f,0), Quaternion.identity);
+        GameObject speechBubbles = Instantiate(speechBubble, NPC.transform.position + new Vector3(0.51f, 1.43f, 0), Quaternion.identity);
         TextMeshPro messageText = speechBubbles.transform.Find("Message").GetComponent<TextMeshPro>();
         messageText.text = message;
 
         int order = NPC.GetComponent<SpriteRenderer>().sortingOrder;
         speechBubbles.GetComponent<SpriteRenderer>().sortingOrder = order + 1;
         messageText.GetComponent<MeshRenderer>().sortingOrder = order + 2;
-        
+
         speechBubbles.SetActive(true);
         yield return new WaitForSeconds(destroyDelay);
         Destroy(speechBubbles);
