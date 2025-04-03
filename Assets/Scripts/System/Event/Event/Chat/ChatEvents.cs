@@ -1,6 +1,7 @@
 using System.Collections;
 using System;
 using UnityEngine;
+using playerCharacter;
 
 public abstract class ChatEvent : Event
 {
@@ -10,6 +11,10 @@ public class OpenChatEvent : ChatEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
+        InputManager.Instance.SetActionState(false);
+        PlayerCharacter.Instance.isControlled = true;
+        PlayerCharacter.Instance.StopPlayer();
+
         return EffectManager.Instance.GetChatController().Open();
     }
 }
@@ -18,6 +23,10 @@ public class CloseChatEvent : ChatEvent
 {
     public override IEnumerator Execute(EventObject eventObject = null)
     {
+        InputManager.Instance.SetActionState(true);
+        PlayerCharacter.Instance.isControlled = false;
+        PlayerCharacter.Instance.StopPlayer();
+
         EffectManager.Instance.GetChatController().Close();
         yield return null;
     }
