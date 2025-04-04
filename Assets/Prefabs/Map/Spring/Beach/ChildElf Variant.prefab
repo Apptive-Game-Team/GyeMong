@@ -131,6 +131,7 @@ MonoBehaviour:
         message:
           name: "\uAF2C\uB9C8"
           message: ".. \uB3C4\uC640\uC904 \uC218 \uC788\uB098\uC694..? \uBB34\uC11C\uC6CC\uC694.."
+        autoSkipTime: 3
     - rid: 8330687368954118159
       type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -141,12 +142,14 @@ MonoBehaviour:
         message:
           name: ...
           message: "(\uB044\uB355\uB044\uB355)"
+        autoSkipTime: 3
     - rid: 8330687368954118162
       type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
       data:
         message:
           name: "\uAF2C\uB9C8"
           message: "\uB9C8\uC744\uAE4C\uC9C0 \uAC19\uC774 \uAC00\uC8FC\uC138\uC694!"
+        autoSkipTime: 3
     - rid: 8330687368954118163
       type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -259,31 +262,6 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[2875236736649920513]
       value: Assembly-CSharp ToggeableCondition
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
-        type: 3}
-      propertyPath: managedReferences[2875236736649920514]
-      value: Assembly-CSharp System.Event.Event.Quest.StartQuestEvent
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
-        type: 3}
-      propertyPath: managedReferences[2875236736649920515]
-      value: Assembly-CSharp System.Game.Quest.Quests.Spring.Tutorial.ChildElfEscortQuest
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
-        type: 3}
-      propertyPath: managedReferences[2875236736649920516]
-      value: Assembly-CSharp System.Game.Quest.Quests.Spring.Tutorial.ChildElfEscortQuest
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
-        type: 3}
-      propertyPath: managedReferences[2875236736649920517]
-      value: Assembly-CSharp System.Game.Quest.Quests.Spring.Tutorial.ChildElfEscortQuest
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
-        type: 3}
-      propertyPath: managedReferences[2875236736649920518]
-      value: Assembly-CSharp System.Game.Quest.Quests.Spring.Tutorial.ChildElfEscortQuest
       objectReference: {fileID: 0}
     - target: {fileID: 2019927385073678258, guid: 0c5675348f02d4990bd547afbd9aa5e9,
         type: 3}
