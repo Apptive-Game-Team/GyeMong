@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Game.Quest.Quests;
+using System.Game.QuestSystem.Quests;
 using UnityEngine;
 
 [System.Serializable]

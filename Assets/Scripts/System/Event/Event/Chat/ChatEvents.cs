@@ -2,7 +2,6 @@ using System.Collections;
 using System;
 using UnityEngine;
 using playerCharacter;
-using UnityEditor.VersionControl;
 using System.Collections.Generic;
 
 public abstract class ChatEvent : Event
