@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 [Serializable]
-public struct ChatMessage
+public class ChatMessage
 {
     public string name;
     public string message;
@@ -19,7 +19,7 @@ public struct ChatMessage
 }
 
 [Serializable]
-public struct MultiChatMessage
+public class MultiChatMessage
 {
     public string name;
     public List<string> messages;
