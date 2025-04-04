@@ -1090,13 +1090,30 @@ MonoBehaviour:
   - rid: 8330688008202485772
   - rid: 8330688008202485767
   - rid: 8330688008202485768
-  - rid: 8330688008202485773
+  - rid: 2388724293505646606
   - rid: 8330688008202485770
   - rid: 8330688008202485771
   - rid: 8330688008202485781
   references:
     version: 2
     RefIds:
+    - rid: 2388724293505646606
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC5EC\uAE30\uAE4C\uC9C0 \uB3C4\uB2EC\uD588\uAD6C\uB9CC, \uC790\uB124"
+        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC6B0\uB9AC \uB9C8\uC744\uC744 \uAD6C\uD574\uC918\uC11C \uACE0\uB9D9\uB2E4\uB124"
+        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uB2E4\uC74C \uBAA9\uC801\uC9C0\uB294 \uC5EC\uB984 \uC0AC\uB9C9 \uAD81\uC804\uC774\uACA0\uC9C0?"
+        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uAC74\uD22C\uB97C \uBE44\uB124"
+        autoSkipTime: 3
     - rid: 8330688008202485767
       type: {class: MoveCreatureEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -1118,17 +1135,6 @@ MonoBehaviour:
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
         _isEnable: 0
-    - rid: 8330688008202485773
-      type: {class: ShowChatSequence, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          messages:
-          - "\uC5EC\uAE30\uAE4C\uC9C0 \uB3C4\uB2EC\uD588\uAD6C\uB9CC, \uC790\uB124"
-          - "\uC6B0\uB9AC \uB9C8\uC744\uC744 \uAD6C\uD574\uC918\uC11C \uACE0\uB9D9\uB2E4\uB124"
-          - "\uB2E4\uC74C \uBAA9\uC801\uC9C0\uB294 \uC5EC\uB984 \uC0AC\uB9C9 \uAD81\uC804\uC774\uACA0\uC9C0?"
-          - "\uB0B4\uB824\uAC00\uB294 \uAE38\uC744 \uB9CC\uB4E4\uC5B4\uC8FC\uC9C0"
-          - "\uAC74\uD22C\uB97C \uBE44\uB124"
     - rid: 8330688008202485781
       type: {class: LoadScene, ns: , asm: Assembly-CSharp}
       data:
