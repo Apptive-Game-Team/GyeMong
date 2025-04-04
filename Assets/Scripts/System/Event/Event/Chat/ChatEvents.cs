@@ -2,6 +2,8 @@ using System.Collections;
 using System;
 using UnityEngine;
 using playerCharacter;
+using UnityEditor.VersionControl;
+using System.Collections.Generic;
 
 public abstract class ChatEvent : Event
 {
@@ -29,6 +31,21 @@ public class CloseChatEvent : ChatEvent
 
         EffectManager.Instance.GetChatController().Close();
         yield return null;
+    }
+}
+
+[Serializable]
+public class ShowMessages : ChatEvent
+{
+    [SerializeField] List<MultiChatMessage> multiMessages;
+    [SerializeField] float autoSkipTime = 3f;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        foreach (MultiChatMessage chat in multiMessages)
+        {
+            yield return EffectManager.Instance.GetChatController().MultipleChat(chat, autoSkipTime);
+        }
     }
 }
 
