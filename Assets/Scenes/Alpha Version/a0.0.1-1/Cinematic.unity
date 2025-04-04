@@ -651,21 +651,17 @@ MonoBehaviour:
   - rid: 4949244132887101450
   - rid: 4949244152063721472
   - rid: 4949244132887101442
-  - rid: 4949244132887101441
+  - rid: 2388724293505646608
   - rid: 4949244152063721473
-  - rid: 4949244132887101452
+  - rid: 2388724293505646609
   - rid: 4949244152063721474
-  - rid: 4949244152063721478
+  - rid: 2388724293505646610
   - rid: 4949244152063721475
-  - rid: 4949244152063721479
-  - rid: 4949244152063721480
+  - rid: 2388724293505646611
   - rid: 4949244152063721476
-  - rid: 4949244152063721481
-  - rid: 4949244152063721484
+  - rid: 2388724293505646612
   - rid: 4949244152063721477
-  - rid: 4949244152063721483
-  - rid: 4949244154642169857
-  - rid: 4949244154642169858
+  - rid: 2388724293505646613
   - rid: 4949244152063721485
   - rid: 4949244152063721486
   - rid: 4949244152063721493
@@ -673,11 +669,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4949244132887101441
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+    - rid: 2388724293505646608
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
       data:
-        messages:
-          name: '[Letter]'
+        multiMessages:
+        - name: Letter
           messages:
           - "\uC800\uB294 00 \uB300\uB959\uC5D0 \uC0B4\uACE0 \uC788\uB294 \uB300\uB9C8\uBC95\uC0AC
             \uC785\uB2C8\uB2E4."
@@ -685,6 +681,94 @@ MonoBehaviour:
             \uB9C8\uBC95\uC0AC\uC774\uC790 \uAC80\uC0AC\uB77C\uB294 \uC18C\uBB38\uC744
             \uB4E3\uACE0 \uC774\uB807\uAC8C \uD3B8\uC9C0\uB97C \uC4F0\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4."
           - "\uBD80\uB514 \uC800\uD76C \uB300\uB959\uC744 \uB3C4\uC640\uC8FC\uC2ED\uC2DC\uC624"
+        autoSkipTime: 3
+    - rid: 2388724293505646609
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: Letter
+          messages:
+          - "\uC624\uB798 \uC804, \uC6B0\uB9AC \uB300\uB959\uC740 \uC6D0\uB798 \uC0AC\uACC4\uC808\uC774
+            \uC21C\uD658\uD558\uB294 \uD558\uB098\uC758 \uB300\uB959\uC774\uC5C8\uC2B5\uB2C8\uB2E4."
+        autoSkipTime: 3
+    - rid: 2388724293505646610
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: Letter
+          messages:
+          - "\uACC4\uC808\uC774 \uBCC0\uD654\uD558\uB294 \uAD6C\uAC04\uB9C8\uB2E4
+            \uC790\uC5F0\uC7AC\uD574\uAC00 \uC885\uC885 \uC77C\uC5B4\uB098\uACE4
+            \uD588\uC2B5\uB2C8\uB2E4."
+          - "\uADF8\uB7EC\uB098 \uC790\uC5F0\uC7AC\uD574\uB294 \uB0A0\uC774 \uAC08\uC218\uB85D
+            \uC2EC\uD574\uC84C\uC2B5\uB2C8\uB2E4."
+          - "\uC790\uC5F0\uC7AC\uD574\uB97C \uB9C9\uAE30\uC704\uD574 \uC800\uB294
+            '\uACC4\uC808 \uBD84\uB9AC' \uB9C8\uBC95\uC744 \uC0AC\uC6A9\uD558\uC5EC
+            \uACC4\uC808\uC758 \uC21C\uD658\uC744 \uB04A\uC5C8\uC2B5\uB2C8\uB2E4."
+        autoSkipTime: 3
+    - rid: 2388724293505646611
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: Letter
+          messages:
+          - "\uB300\uB959\uC744 4\uAC1C\uB85C \uB098\uB208 \uD6C4 \uBD04, \uC5EC\uB984,
+            \uAC00\uC744, \uACA8\uC6B8\uC758 \uD798\uC744 \uACB0\uC815\uC5D0 \uBD09\uC778\uC2DC\uCF1C
+            \uAC01 \uB300\uB959\uC5D0 \uBC30\uCE58\uC2DC\uCF30\uC2B5\uB2C8\uB2E4."
+          - "\uACB0\uC815\uC758 \uD798\uC5D0 \uC758\uD574 \uBD04\uC758 \uB300\uB959,
+            \uC5EC\uB984\uC758 \uB300\uB959, \uAC00\uC744\uC758 \uB300\uB959, \uACA8\uC6B8\uC758
+            \uB300\uB959\uC774 \uD0C4\uC0DD\uD588\uC2B5\uB2C8\uB2E4."
+          - "\uC774 \uB9C8\uBC95\uC758 \uD6A8\uACFC\uB294 \uD655\uC2E4\uD588\uACE0,
+            \uC790\uC5F0\uC7AC\uD574\uB294 \uB9C8\uBC95\uCC98\uB7FC \uC0AC\uB77C\uC84C\uC2B5\uB2C8\uB2E4."
+        - name: Letter
+          messages:
+          - "\uC800\uB294 \uC774 \uC0C1\uD0DC\uB97C \uC720\uC9C0\uD558\uAE30 \uC704\uD574
+            \uAC01 \uACB0\uC815\uC744 \uBCF4\uD638\uD558\uB294 \uC218\uD638\uC790\uB97C
+            \uB9CC\uB4E4\uC5C8\uC8E0."
+          - "\uC800\uB294 \uC800\uC758 \uB9C8\uBC95\uC774 \uC131\uACF5\uC801\uC778\uC904
+            \uC54C\uC558\uC2B5\uB2C8\uB2E4 .. \uADF8\uB54C\uAE4C\uC9C0\uB294.."
+        autoSkipTime: 3
+    - rid: 2388724293505646612
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: Letter
+          messages:
+          - "\uADF8\uB7EC\uB098.. \uC5B8\uC81C\uBD80\uD134\uAC00 \uC774\uAC83\uC774
+            \uB354 \uD070 \uC7AC\uC559\uC744 \uAC00\uC838\uC654\uC2B5\uB2C8\uB2E4."
+          - "\uD558\uB098\uC600\uB358 \uBBFC\uC871\uC740 \uD55C\uC21C\uAC04\uC5D0
+            \uBD84\uC5F4\uB418\uC5C8\uACE0, \uC11C\uB85C\uB97C \uBC30\uCC99\uD558\uAE30
+            \uC2DC\uC791\uD588\uC2B5\uB2C8\uB2E4"
+        - name: Letter
+          messages:
+          - "\uB300\uB959 \uAC04\uC758 \uAD50\uB958\uB294 \uC810\uCC28 \uC0AC\uB77C\uC84C\uACE0,"
+          - "\uC2DC\uAC04\uC774 \uD750\uB97C\uC218\uB85D \uACC4\uC808\uC758 \uD798\uC740
+            \uAC10\uB2F9\uD560 \uC218 \uC5C6\uC744 \uC815\uB3C4\uB85C \uAC15\uB825\uD574\uC84C\uC2B5\uB2C8\uB2E4."
+        autoSkipTime: 3
+    - rid: 2388724293505646613
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: Letter
+          messages:
+          - "\uC800\uB294 \uC774 \uC7AC\uC559\uC744 \uC9C0\uCF1C\uBCFC \uC218 \uBC16\uC5D0
+            \uC5C6\uB294 \uBB34\uB825\uD55C \uC874\uC7AC\uC785\uB2C8\uB2E4."
+          - "\"\uBCF8\uC778 \uC774\uC678\uC758 \uD0C0\uC778\uB9CC\uC774 \uB9C8\uBC95\uC744
+            \uD574\uC9C0\uC2DC\uD0AC \uC218 \uC788\uC74C\"\uC774\uB77C\uB294 \uC774
+            \uB9C8\uBC95\uC758 \uC870\uAC74\uB54C\uBB38\uC774\uC8E0."
+          - "\uC774 \uB9C8\uBC95\uC744 \uD574\uC9C0\uC2DC\uD0A4\uB824\uACE0 \uC2DC\uB3C4\uD574\uC654\uC9C0\uB9CC
+            \uC544\uBB34\uB3C4 \uC131\uACF5\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4."
+        - name: Letter
+          messages:
+          - "\uC774\uC81C \uB0A8\uC740 \uC120\uD0DD\uC9C0\uB294 \uD558\uB098, \uC678\uBD80\uC5D0
+            \uB3C4\uC6C0\uC744 \uC694\uCCAD\uD558\uB294 \uAC83 \uBFD0\uC774\uC5C8\uC2B5\uB2C8\uB2E4."
+          - "\uACC4\uC808\uC758 \uACB0\uC815\uC744 \uBAA8\uB450 \uD30C\uAD34\uD55C
+            \uD6C4 \uB300\uB959\uC758 \uAC00\uC6B4\uB370\uB85C \uC800\uB97C \uCC3E\uC544\uC624\uC2ED\uC2DC\uC624."
+        - name: Letter
+          messages:
+          - "\uB2F9\uC2E0\uC774\uB77C\uBA74, \uC6B0\uB9AC \uB300\uB959\uC744 \uAD6C\uD560
+            \uC218 \uC788\uC73C\uB9AC\uB77C \uBBFF\uC2B5\uB2C8\uB2E4."
+        autoSkipTime: 3
     - rid: 4949244132887101442
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -706,14 +790,6 @@ MonoBehaviour:
         moveTime: 0.0001
         targetSize: {x: 800, y: 540}
         imageDelayTime: 2
-    - rid: 4949244132887101452
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uC624\uB798 \uC804, \uC6B0\uB9AC \uB300\uB959\uC740 \uC6D0\uB798 \uC0AC\uACC4\uC808\uC774
-            \uC21C\uD658\uD558\uB294 \uD558\uB098\uC758 \uB300\uB959\uC774\uC5C8\uC2B5\uB2C8\uB2E4."
     - rid: 4949244152063721472
       type: {class: MoveImageEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -768,78 +844,6 @@ MonoBehaviour:
         moveTime: 0.5
         targetSize: {x: 800, y: 540}
         imageDelayTime: 1
-    - rid: 4949244152063721478
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uACC4\uC808\uC774 \uBCC0\uD654\uD558\uB294 \uAD6C\uAC04\uB9C8\uB2E4
-            \uC790\uC5F0\uC7AC\uD574\uAC00 \uC885\uC885 \uC77C\uC5B4\uB098\uACE4
-            \uD588\uC2B5\uB2C8\uB2E4."
-          - "\uADF8\uB7EC\uB098 \uC790\uC5F0\uC7AC\uD574\uB294 \uB0A0\uC774 \uAC08\uC218\uB85D
-            \uC2EC\uD574\uC84C\uC2B5\uB2C8\uB2E4."
-          - "\uC790\uC5F0\uC7AC\uD574\uB97C \uB9C9\uAE30\uC704\uD574 \uC800\uB294
-            \u2018\uACC4\uC808 \uBD84\uB9AC' \uB9C8\uBC95\uC744 \uC0AC\uC6A9\uD558\uC5EC
-            \uACC4\uC808\uC758 \uC21C\uD658\uC744 \uB04A\uC5C8\uC2B5\uB2C8\uB2E4. "
-    - rid: 4949244152063721479
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uB300\uB959\uC744 4\uAC1C\uB85C \uB098\uB208 \uD6C4 \uBD04, \uC5EC\uB984,
-            \uAC00\uC744, \uACA8\uC6B8\uC758 \uD798\uC744 \uACB0\uC815\uC5D0 \uBD09\uC778\uC2DC\uCF1C
-            \uAC01 \uB300\uB959\uC5D0 \uBC30\uCE58\uC2DC\uCF30\uC2B5\uB2C8\uB2E4."
-          - "\uACB0\uC815\uC758 \uD798\uC5D0 \uC758\uD574 \uBD04\uC758 \uB300\uB959,
-            \uC5EC\uB984\uC758 \uB300\uB959, \uAC00\uC744\uC758 \uB300\uB959, \uACA8\uC6B8\uC758
-            \uB300\uB959\uC774 \uD0C4\uC0DD\uD588\uC2B5\uB2C8\uB2E4 ."
-          - "\uC774 \uB9C8\uBC95\uC758 \uD6A8\uACFC\uB294 \uD655\uC2E4\uD588\uACE0,
-            \uC790\uC5F0\uC7AC\uD574\uB294 \uB9C8\uBC95\uCC98\uB7FC \uC0AC\uB77C\uC84C\uC2B5\uB2C8\uB2E4."
-    - rid: 4949244152063721480
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uC800\uB294 \uC774 \uC0C1\uD0DC\uB97C \uC720\uC9C0\uD558\uAE30 \uC704\uD574
-            \uAC01 \uACB0\uC815\uC744 \uBCF4\uD638\uD558\uB294 \uC218\uD638\uC790\uB97C
-            \uB9CC\uB4E4\uC5C8\uC8E0."
-          - "\uC800\uB294 \uC800\uC758 \uB9C8\uBC95\uC774 \uC131\uACF5\uC801\uC778\uC904
-            \uC54C\uC558\uC2B5\uB2C8\uB2E4.. \uADF8\uB54C\uAE4C\uC9C0\uB294... "
-    - rid: 4949244152063721481
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uADF8\uB7EC\uB098.. \uC5B8\uC81C\uBD80\uD134\uAC00 \uC774\uAC83\uC774
-            \uB354 \uD070 \uC7AC\uC559\uC744 \uAC00\uC838\uC654\uC2B5\uB2C8\uB2E4."
-          - "\uD558\uB098\uC600\uB358 \uBBFC\uC871\uC740 \uD55C\uC21C\uAC04\uC5D0
-            \uBD84\uC5F4\uB418\uC5C8\uACE0, \uC11C\uB85C\uB97C \uBC30\uCC99\uD558\uAE30
-            \uC2DC\uC791\uD588\uC2B5\uB2C8\uB2E4."
-    - rid: 4949244152063721483
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uC800\uB294 \uC774 \uC7AC\uC559\uC744 \uC9C0\uCF1C\uBCFC \uC218 \uBC16\uC5D0
-            \uC5C6\uB294 \uBB34\uB825\uD55C \uC874\uC7AC\uC785\uB2C8\uB2E4."
-          - "\u201C\uBCF8\uC778 \uC774\uC678\uC758 \uD0C0\uC778\uB9CC\uC774 \uB9C8\uBC95\uC744
-            \uD574\uC9C0\uC2DC\uD0AC \uC218 \uC788\uC74C\" \uC774\uB77C\uB294 \uC774
-            \uB9C8\uBC95\uC758 \uC870\uAC74\uB54C\uBB38\uC774\uC8E0."
-          - "\uC774 \uB9C8\uBC95\uC744 \uD574\uC9C0\uC2DC\uD0A4\uB824\uACE0 \uC2DC\uB3C4\uD574\uC654\uC9C0\uB9CC
-            \uC544\uBB34\uB3C4 \uC131\uACF5\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4."
-    - rid: 4949244152063721484
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uB300\uB959 \uAC04\uC758 \uAD50\uB958\uB294 \uC810\uCC28 \uC0AC\uB77C\uC84C\uACE0,"
-          - "\uC2DC\uAC04\uC774 \uD750\uB97C\uC218\uB85D \uACC4\uC808\uC758 \uD798\uC740
-            \uAC10\uB2F9\uD560 \uC218 \uC5C6\uC744 \uC815\uB3C4\uB85C \uAC15\uB825\uD574\uC84C\uC2B5\uB2C8\uB2E4. "
     - rid: 4949244152063721485
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -850,24 +854,6 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 3
-    - rid: 4949244154642169857
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uC774\uC81C \uB0A8\uC740 \uC120\uD0DD\uC9C0\uB294 \uD558\uB098, \uC678\uBD80\uC5D0
-            \uB3C4\uC6C0\uC744 \uC694\uCCAD\uD558\uB294 \uAC83 \uBFD0\uC774\uC5C8\uC2B5\uB2C8\uB2E4. "
-          - "\uACC4\uC808\uC758 \uACB0\uC815\uC744 \uBAA8\uB450 \uD30C\uAD34\uD55C
-            \uD6C4 \uB300\uB959\uC758 \uAC00\uC6B4\uB370\uB85C \uC800 \uCC3E\uC544\uC624\uC2ED\uC2DC\uC624. "
-    - rid: 4949244154642169858
-      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: '[Letter]'
-          messages:
-          - "\uB2F9\uC2E0\uC774\uB77C\uBA74, \uC6B0\uB9AC \uB300\uB959\uC744 \uAD6C\uD560
-            \uC218 \uC788\uC73C\uB9AC\uB77C \uBBFF\uC2B5\uB2C8\uB2E4."
     - rid: 4949244289175519232
       type: {class: ChangeToBlackScreenEvent, ns: , asm: Assembly-CSharp}
       data: 
