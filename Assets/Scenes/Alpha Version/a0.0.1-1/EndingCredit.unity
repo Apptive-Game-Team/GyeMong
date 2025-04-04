@@ -249,28 +249,35 @@ MonoBehaviour:
   eventSequence:
   - rid: 8330688008202485780
   - rid: 8330688008202485776
-  - rid: 8330688008202485777
+  - rid: 2388724293505646607
   - rid: 8330688008202485778
   - rid: 8330688008202485779
   references:
     version: 2
     RefIds:
+    - rid: 2388724293505646607
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: "\uBB38\uC131\uD544"
+          messages:
+          - "\uAC8C\uC784\uC740 \uC798 \uC990\uAE30\uC168\uB098\uC694?"
+        - name: "\uBB38\uC131\uD544"
+          messages:
+          - "\uC800 \uBB38\uC131\uD544\uC744 \uD544\uB450\uB85C\uD55C \uC571\uD2F0\uBE0C
+            \uAC8C\uC784\uD300\uC5D0\uC11C \uC5F4\uC2EC\uD788 \uB9CC\uB4E4\uC5C8\uC2B5\uB2C8\uB2E4."
+        - name: "\uBB38\uC131\uD544"
+          messages:
+          - "\uAC8C\uC784\uC5D0 \uB300\uD55C \uD53C\uB4DC\uBC31\uC744 \uB0A8\uACA8\uC8FC\uC2DC\uBA74
+            \uAC10\uC0AC\uD558\uACA0\uC2B5\uB2C8\uB2E4."
+        - name: "\uBB38\uC131\uD544"
+          messages:
+          - "QR\uC758 \uAD6C\uAE00\uD3FC\uC744 \uC791\uC131\uD574\uC11C \uBB38\uC131\uD544\uACFC
+            \uC544\uC774\uB4E4\uC744 \uB3C4\uC640\uC8FC\uC138\uC694."
+        autoSkipTime: 3
     - rid: 8330688008202485776
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 8330688008202485777
-      type: {class: ShowChatSequence, ns: , asm: Assembly-CSharp}
-      data:
-        messages:
-          name: "\uBB38\uC131\uD544"
-          messages:
-          - "\uAC8C\uC784\uC740 \uC798 \uC990\uAE30\uC168\uB098\uC694?"
-          - "\uC800 \uBB38\uC131\uD544\uC744 \uD544\uB450\uB85C\uD55C \uC571\uD2F0\uBE0C
-            \uAC8C\uC784\uD300\uC5D0\uC11C \uC5F4\uC2EC\uD788 \uB9CC\uB4E4\uC5C8\uC2B5\uB2C8\uB2E4."
-          - "\uAC8C\uC784\uC5D0 \uB300\uD55C \uD53C\uB4DC\uBC31\uC744 \uB0A8\uACA8\uC8FC\uC2DC\uBA74
-            \uAC10\uC0AC\uD558\uACA0\uC2B5\uB2C8\uB2E4."
-          - "QR\uC758 \uAD6C\uAE00\uD3FC\uC744 \uC791\uC131\uD574\uC11C \uBB38\uC131\uD544\uACFC
-            \uC544\uC774\uB4E4\uC744 \uB3C4\uC640\uC8FC\uC138\uC694"
     - rid: 8330688008202485778
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
