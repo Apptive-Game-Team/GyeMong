@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Game.Object.Persisted;
-using System.Game.Quest.Component;
+using System.Game.QuestSystem.Component;
 using playerCharacter;
 using UnityEngine.SceneManagement;
 public class SaveDataEvent : Event
