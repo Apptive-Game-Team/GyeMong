@@ -48468,8 +48468,7 @@ MonoBehaviour:
   - rid: 8155690880284491781
   - rid: 7405124568204705794
   - rid: 7405124568204705796
-  - rid: 7405124568204705797
-  - rid: 7405124568204705800
+  - rid: 2388724293505646602
   - rid: 7405124568204705799
   - rid: 8155690880284491782
   - rid: 7405124568204705795
@@ -48478,6 +48477,14 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2388724293505646602
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: "\uACE8\uB818"
+          messages:
+          - ...
+        autoSkipTime: 3
     - rid: 7405124568204705792
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -48497,19 +48504,9 @@ MonoBehaviour:
     - rid: 7405124568204705796
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 7405124568204705797
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uACE8\uB818"
-          message: ...
     - rid: 7405124568204705799
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 7405124568204705800
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 1
     - rid: 8155690880284491781
       type: {class: SetAnimatorParameterBool, ns: , asm: Assembly-CSharp}
       data:
@@ -52561,29 +52558,26 @@ MonoBehaviour:
   eventSequence:
   - rid: 4949243949170819073
   - rid: 4949244447536971779
-  - rid: 4949243949170819075
-  - rid: 4949244447536971777
+  - rid: 2388724293505646604
   - rid: 4949244447536971780
   - rid: 4949243949170819074
   references:
     version: 2
     RefIds:
+    - rid: 2388724293505646604
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: System
+          messages:
+          - "\uBB38\uC774 \uC7A0\uACA8\uC788\uC2B5\uB2C8\uB2E4."
+        autoSkipTime: 3
     - rid: 4949243949170819073
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
     - rid: 4949243949170819074
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 4949243949170819075
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: '[System]'
-          message: "\uBB38\uC774 \uC7A0\uACA8\uC788\uC2B5\uB2C8\uB2E4."
-    - rid: 4949244447536971777
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 1
     - rid: 4949244447536971779
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -53387,8 +53381,7 @@ MonoBehaviour:
   - rid: 521773836373327901
   - rid: 7405124598596370437
   - rid: 7405124598596370432
-  - rid: 7405124598596370435
-  - rid: 7405124598596370439
+  - rid: 2388724293505646603
   - rid: 7405124598596370436
   - rid: 7405124598596370438
   - rid: 4949244452169580553
@@ -53410,6 +53403,14 @@ MonoBehaviour:
       data:
         tag: spring_guardian_down
         condition: 1
+    - rid: 2388724293505646603
+      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: "\uACE8\uB818"
+          messages:
+          - "...\uC544...\uACE0\uB9D9\uB2E4..."
+        autoSkipTime: 3
     - rid: 2578170190929068034
       type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -53430,12 +53431,6 @@ MonoBehaviour:
     - rid: 7405124598596370432
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 7405124598596370435
-      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
-      data:
-        message:
-          name: "\uACE8\uB818"
-          message: "...\uC544...\uACE0\uB9D9\uB2E4..."
     - rid: 7405124598596370436
       type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -53447,10 +53442,6 @@ MonoBehaviour:
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
         _isEnable: 1
-    - rid: 7405124598596370439
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 1
     - rid: 8155690880284491776
       type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
