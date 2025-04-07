@@ -107,7 +107,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: eventSequence.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -133,6 +133,11 @@ PrefabInstance:
         type: 3}
       propertyPath: eventSequence.Array.data[4]
       value: 521773911791632385
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: eventSequence.Array.data[5]
+      value: 7497613932140953605
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -163,6 +168,16 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[2388724293505646605]
       value: Assembly-CSharp ShowMessages
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[7497613932140953605]
+      value: Assembly-CSharp HurtEffectEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[7497613932140953605].amount
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -254,7 +269,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.2}
+    pivot: {x: 0.5, y: 0.18}
     oldSize: {x: 1.92, y: 3.84}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
