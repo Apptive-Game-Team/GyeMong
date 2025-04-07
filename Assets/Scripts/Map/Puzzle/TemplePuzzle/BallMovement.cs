@@ -82,7 +82,6 @@ namespace Map.Puzzle.TemplePuzzle
 
                     ConditionManager.Instance.Conditions["SpringTemplePuzzleIsCleared"] = true;
                 }
-
                 else
                 {
                     Debug.Log("Nope");
@@ -141,13 +140,16 @@ namespace Map.Puzzle.TemplePuzzle
         }
         public bool GoalCheck()
         {
-            Collider2D hit = Physics2D.OverlapBox(transform.position, new Vector2(0.1f, 0.1f), 0f);
+            Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(0.1f, 0.1f), 0f);
 
-            if (hit != null && hit.CompareTag("Tile"))
+            foreach (Collider2D hit in hits)
             {
-                if (hit.gameObject.name == "Goal(Clone)")
+                if (hit != null && hit.CompareTag("Tile"))
                 {
-                    return true;
+                    if (hit.gameObject.name == "Goal(Clone)")
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
