@@ -51383,6 +51383,7 @@ MonoBehaviour:
   - rid: 521773906431836160
   - rid: 521773836373327899
   - rid: 521773906431836162
+  - rid: 7497613932140953604
   - rid: 521773836373327898
   - rid: 521773836373327895
   - rid: 2578170190929068032
@@ -51479,6 +51480,13 @@ MonoBehaviour:
       data:
         size: 10
         duration: 3
+    - rid: 7497613932140953604
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 0}
+        _creatureType: 1
+        _name: speed
+        _value: 10
     - rid: 8709460353337262093
       type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -51550,7 +51558,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.835503, y: 1.0378036}
+  m_Size: {x: 33.92933, y: 1.0378036}
   m_EdgeRadius: 0
 --- !u!483693784 &1379380692
 TilemapRenderer:

@@ -1713,6 +1713,7 @@ MonoBehaviour:
   - rid: 3558735529444638721
   - rid: 521773835193679872
   - rid: 521773745628250158
+  - rid: 7497613932140953603
   - rid: 521773835193679878
   - rid: 8709460353337262084
   - rid: 521773745628250140
@@ -1794,6 +1795,13 @@ MonoBehaviour:
       data:
         _boss: {fileID: 1459062335}
         bossRoomObject: {fileID: 1275491493}
+    - rid: 7497613932140953603
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 0}
+        _creatureType: 1
+        _name: speed
+        _value: 10
     - rid: 8709460353337262083
       type: {class: CameraMove, ns: , asm: Assembly-CSharp}
       data:
