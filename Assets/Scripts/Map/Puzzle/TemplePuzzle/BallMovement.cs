@@ -16,7 +16,7 @@ namespace Map.Puzzle.TemplePuzzle
         private float goalDelay = 1f;
 
         public Animator animator;
-
+        [SerializeField] private Sprite buttonImage;
         void Start()
         {
             startPosition = transform.position;
@@ -70,6 +70,9 @@ namespace Map.Puzzle.TemplePuzzle
                 animator.SetBool("isMove", false);
                 animator.SetFloat("xDir", 0);
                 animator.SetFloat("yDir", 0);
+                
+                var button = FindObjectOfType<BallButton>().gameObject;
+                button.GetComponent<SpriteRenderer>().sprite = buttonImage;
 
                 if (GoalCheck())
                 {
