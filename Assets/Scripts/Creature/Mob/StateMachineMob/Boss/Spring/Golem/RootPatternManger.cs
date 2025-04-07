@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Creature.Boss.Spring.Golem
 {
-    public class RootPatternManger : SingletonObject<RootPatternManger>
+    public class RootPatternManger : MonoBehaviour
     {
         [SerializeField] private GameObject rootPrefab;
         private GameObject[] rootObjects;

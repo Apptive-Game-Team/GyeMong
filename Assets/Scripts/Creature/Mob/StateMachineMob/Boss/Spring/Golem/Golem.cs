@@ -16,7 +16,8 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class Golem : Boss
     {
-        [SerializeField] public GameObject cubePrefab;
+        [SerializeField] private RootPatternManger mapPattern;
+        [SerializeField] private GameObject cubePrefab;
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
         [SerializeField] private GameObject pushOutAttackPrefab;
@@ -321,7 +322,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             base.Die();
             Animator.SetBool("isDown", true);
-            RootPatternManger.Instance.DeActivateRootObjects();
+            mapPattern.DeActivateRootObjects();
         }
         public override IEnumerator Stun(float duration)
         {
