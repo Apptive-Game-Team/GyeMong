@@ -645,6 +645,7 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
+  - rid: 3120289928566276096
   - rid: 4949244289175519232
   - rid: 4949244289175519233
   - rid: 4949244132887101446
@@ -769,6 +770,10 @@ MonoBehaviour:
           - "\uB2F9\uC2E0\uC774\uB77C\uBA74, \uC6B0\uB9AC \uB300\uB959\uC744 \uAD6C\uD560
             \uC218 \uC788\uC73C\uB9AC\uB77C \uBBFF\uC2B5\uB2C8\uB2E4."
         autoSkipTime: 3
+    - rid: 3120289928566276096
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
     - rid: 4949244132887101442
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
