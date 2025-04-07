@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Game.QuestSystem.Quests;
 using UnityEngine;
+using Util.QuestSystem.Quests;
 
 [System.Serializable]
 public class PlayerData

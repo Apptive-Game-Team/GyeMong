@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-namespace System.Game.QuestSystem.Quests
+namespace Util.QuestSystem.Quests
 {
     [Serializable]
     public class Quest

@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace System.Game.QuestSystem.Quests
+namespace Util.QuestSystem.Quests
 {
     public enum QuestType
     {
@@ -76,6 +77,7 @@ namespace System.Game.QuestSystem.Quests
         }
     } 
     
+    [Serializable]
     public class Goal // Quest's Goal
     {
         public string goalName;

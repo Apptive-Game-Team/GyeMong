@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using System.Game.QuestSystem.Quests;
 using System.Linq;
 using UnityEngine;
+using Util.QuestSystem.Quests;
 
-namespace System.Game.QuestSystem.Component
+namespace Util.QuestSystem.Component
 {
     
     public class QuestComponent : MonoBehaviour

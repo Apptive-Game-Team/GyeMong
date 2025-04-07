@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Game.Object.Persisted;
-using System.Game.QuestSystem.Component;
 using playerCharacter;
 using UnityEngine.SceneManagement;
+using Util.QuestSystem.Component;
+
 public class SaveDataEvent : Event
 {
     private PlayerData playerData = new();
