@@ -50,21 +50,18 @@ namespace playerCharacter
         protected override void Awake()
         {
             base.Awake();
-            
             stat = _statData.GetStatComp();
             curHealth = stat.HealthMax;
             curSkillGauge = 0f;
+            playerRb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+            soundController = GetComponent<PlayerSoundController>();
         }
 
         private void Start()
         {
-            playerRb = GetComponent<Rigidbody2D>();
-            animator = GetComponent<Animator>();
-            soundController = GetComponent<PlayerSoundController>();
-
             Renderer renderer = gameObject.GetComponent<Renderer>();
             renderer.material = materials[0];
-            
             changeListenerCaller.CallShieldChangeListeners(curShield);
             changeListenerCaller.CallHpChangeListeners(curHealth);
         }

@@ -870,6 +870,7 @@ MonoBehaviour:
       type: {class: WarpPortalEvent, ns: , asm: Assembly-CSharp}
       data:
         portalID: 24
+        delay: 0
 --- !u!4 &562705329
 Transform:
   m_ObjectHideFlags: 0
@@ -1434,10 +1435,10 @@ SceneRoots:
   - {fileID: 1591745913}
   - {fileID: 1846702561}
   - {fileID: 318481213}
+  - {fileID: 1423850739}
   - {fileID: 562705329}
   - {fileID: 1704661436}
   - {fileID: 523984363}
-  - {fileID: 1423850739}
   - {fileID: 2104343159}
   - {fileID: 228371540}
   - {fileID: 2108794374}
