@@ -2,6 +2,7 @@ using System.Input.Interface;
 using playerCharacter;
 using UI.mouse_input;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace System.UI
@@ -16,7 +17,10 @@ namespace System.UI
         {
             _isOptionOpened = !_isOptionOpened;
             _window.SetActive(_isOptionOpened);
-            PlayerCharacter.Instance.SetPlayerMove(!_isOptionOpened);
+            if (SceneManager.GetActiveScene().name != "TitleScene")
+            {
+                PlayerCharacter.Instance.SetPlayerMove(!_isOptionOpened);
+            }
         }
     
         protected override void Awake()
