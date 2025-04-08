@@ -2266,6 +2266,7 @@ MonoBehaviour:
   - rid: 7405124568204705799
   - rid: 7405124568204705795
   - rid: 8155690880284491780
+  - rid: 3120289950044782595
   - rid: 7405124568204705793
   - rid: 7405124568204705792
   references:
@@ -2279,6 +2280,10 @@ MonoBehaviour:
           messages:
           - "\uB9CC\uB9CC\uD55C \uC0C1\uB300\uB294 \uC544\uB2C8\uAD70.."
         autoSkipTime: 3
+    - rid: 3120289950044782595
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 1459062335}
     - rid: 7405124568204705792
       type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
       data:

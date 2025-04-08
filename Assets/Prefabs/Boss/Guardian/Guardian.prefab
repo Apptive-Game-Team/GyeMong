@@ -295,12 +295,12 @@ GameObject:
   - component: {fileID: 2462093118315421597}
   - component: {fileID: 7964644178919621293}
   - component: {fileID: 2937423808068081688}
+  - component: {fileID: 294747914705953580}
   - component: {fileID: 6873251832098809791}
   - component: {fileID: 2802353968276510282}
   - component: {fileID: 7223301118056849855}
   - component: {fileID: 7995023902525698719}
   - component: {fileID: 4698537365717467408}
-  - component: {fileID: 294747914705953580}
   - component: {fileID: 8049876469865353739}
   m_Layer: 0
   m_Name: Guardian
@@ -400,6 +400,31 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &294747914705953580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4866844568941268327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10de140f082f4f7ca309adbc8ac74248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHp: 0
+  currentShield: 0
+  damage: 10
+  mapPattern: {fileID: 0}
+  cubePrefab: {fileID: 6652684582878580984, guid: b6cc82c53b6c35e4aa9323338bbcf981,
+    type: 3}
+  floorPrefab: {fileID: 8583689789694271782, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
+    type: 3}
+  shockwavePrefab: {fileID: 6910081737103628750, guid: 5adf3bbc763a2487f9bf149d7740baa5,
+    type: 3}
+  pushOutAttackPrefab: {fileID: 0}
+  _shockwavesoundObject: {fileID: 8712382308670165956}
+  _tossSoundObject: {fileID: 5499017597752326933}
 --- !u!114 &6873251832098809791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,30 +650,6 @@ MonoBehaviour:
       type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
       data:
         _animator: {fileID: 2937423808068081688}
---- !u!114 &294747914705953580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4866844568941268327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10de140f082f4f7ca309adbc8ac74248, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHp: 0
-  currentShield: 0
-  damage: 10
-  cubePrefab: {fileID: 6652684582878580984, guid: b6cc82c53b6c35e4aa9323338bbcf981,
-    type: 3}
-  floorPrefab: {fileID: 8583689789694271782, guid: 33f6d4ebaae116b4fa5fcdbd21aa79c0,
-    type: 3}
-  shockwavePrefab: {fileID: 6910081737103628750, guid: 5adf3bbc763a2487f9bf149d7740baa5,
-    type: 3}
-  _shockwavesoundObject: {fileID: 8712382308670165956}
-  _tossSoundObject: {fileID: 5499017597752326933}
-  SkillIndicator: {fileID: 0}
 --- !u!114 &8049876469865353739
 MonoBehaviour:
   m_ObjectHideFlags: 0
