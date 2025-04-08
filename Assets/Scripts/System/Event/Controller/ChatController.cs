@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.VersionControl;
 
 [Serializable]
 public class ChatMessage
@@ -36,6 +37,7 @@ public class ChatController : MonoBehaviour
     private TMP_Text nameText;
     private TMP_Text messageText;
     private bool isWorking = false;
+    private bool isSkipping = false;
 
     private void Awake()
     {
@@ -102,6 +104,16 @@ public class ChatController : MonoBehaviour
     {
         foreach (char c in message)
         {
+            if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
+            {
+                isSkipping = true;
+            }
+            if (isSkipping)
+            {
+                messageText.text = message;
+                isSkipping = false;
+                break;
+            }
             messageText.text += c;
             yield return new WaitForSeconds(SHOW_CHAT_DELAY);
         }
@@ -111,6 +123,16 @@ public class ChatController : MonoBehaviour
     {
         foreach (char c in messages)
         {
+            if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
+            {
+                isSkipping = true;
+            }
+            if (isSkipping)
+            {
+                messageText.text = messages;
+                isSkipping = false;
+                break;
+            }
             messageText.text += c;
             yield return new WaitForSeconds(SHOW_CHAT_DELAY);
         }
