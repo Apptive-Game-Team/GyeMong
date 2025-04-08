@@ -627,9 +627,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: eventSequence.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: eventSequence.Array.data[1]
+      value: 7445868742344441860
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: eventSequence.Array.data[2]
+      value: 3636844143720267776
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[7445868742344441860]
+      value: Assembly-CSharp ChangeDarkness
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[7445868742344441860]._duration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[7445868742344441860]._intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[7445868742344441860]._darknessController
+      value: 
+      objectReference: {fileID: 467602469}
     m_RemovedComponents:
     - {fileID: 2139093655015063499, guid: 90d037379245ab44695ee4686df899ab, type: 3}
     m_RemovedGameObjects: []
@@ -741,6 +781,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &467602469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5858137262956387410, guid: 871fd300f434817478d214e7159c525c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1581621003}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47db825c83824219867d9b886424a7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &521473707
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1798,12 +1850,12 @@ PrefabInstance:
     - target: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.13
+      value: -2.68
       objectReference: {fileID: 0}
     - target: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.23
+      value: -4.79
       objectReference: {fileID: 0}
     - target: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
@@ -1852,9 +1904,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: eventSequence.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: eventSequence.Array.data[1]
+      value: 7445868742344441859
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: eventSequence.Array.data[2]
+      value: 3636844143720267776
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[7445868742344441859]
+      value: Assembly-CSharp ChangeDarkness
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[3636844143720267776].delay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[7445868742344441859]._duration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[7445868742344441859]._intensity
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
+      propertyPath: managedReferences[7445868742344441859]._darknessController
+      value: 
+      objectReference: {fileID: 467602469}
     m_RemovedComponents:
     - {fileID: 2139093655015063499, guid: 90d037379245ab44695ee4686df899ab, type: 3}
     m_RemovedGameObjects: []
@@ -1911,7 +2008,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!1 &1248402844 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 722650408117553891, guid: 3da75c5d25dd4c548b8998a4377811a2,

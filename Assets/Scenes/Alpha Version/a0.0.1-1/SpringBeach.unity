@@ -711,6 +711,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
+      propertyPath: managedReferences[3636844143720267776].delay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
       value: 1
       objectReference: {fileID: 0}
@@ -6181,6 +6186,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
+      propertyPath: managedReferences[3636844143720267776].delay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
       value: 3
       objectReference: {fileID: 0}
@@ -6527,6 +6537,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
+      propertyPath: managedReferences[3636844143720267776].delay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
       value: 2
       objectReference: {fileID: 0}
@@ -6777,6 +6792,7 @@ MonoBehaviour:
   _prefab: {fileID: 8934444904914948015, guid: 845dcf3fceef847748adb1c4078ac491, type: 3}
   _conditionKey1: 
   _conditionKey2: SpringChildEscortIsStarted
+  useParentPosition: 1
 --- !u!4 &1953436844
 Transform:
   m_ObjectHideFlags: 0
