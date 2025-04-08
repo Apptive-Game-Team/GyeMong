@@ -37,7 +37,6 @@ public class ChatController : MonoBehaviour
     private TMP_Text nameText;
     private TMP_Text messageText;
     private bool isWorking = false;
-    private bool isSkipping = false;
 
     private void Awake()
     {
@@ -106,12 +105,8 @@ public class ChatController : MonoBehaviour
         {
             if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
             {
-                isSkipping = true;
-            }
-            if (isSkipping)
-            {
                 messageText.text = message;
-                isSkipping = false;
+                yield return new WaitForSeconds(SHOW_CHAT_DELAY);
                 break;
             }
             messageText.text += c;
@@ -125,12 +120,8 @@ public class ChatController : MonoBehaviour
         {
             if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
             {
-                isSkipping = true;
-            }
-            if (isSkipping)
-            {
                 messageText.text = messages;
-                isSkipping = false;
+                yield return new WaitForSeconds(SHOW_CHAT_DELAY);
                 break;
             }
             messageText.text += c;

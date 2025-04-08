@@ -115,8 +115,8 @@ public class HideBossHealthBarEvent : BossHpBarEvent
 {
   public override IEnumerator Execute(EventObject eventObject = null)
   {
-    HpBarController.ClearBoss();
-    HpBarController.gameObject.SetActive(false);
+    HpBarController?.ClearBoss();
+    HpBarController?.gameObject.SetActive(false);
     return null;
   }
 }
