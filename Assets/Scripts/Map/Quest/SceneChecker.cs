@@ -25,7 +25,10 @@ namespace Map.Quest
         {
             if (scene.name.Equals(_sceneName))
             {
-                _eventObject?.Trigger();
+                if (_eventObject.gameObject.activeInHierarchy)
+                {
+                    _eventObject.Trigger();
+                }
                 ConditionManager.Instance.Conditions[_conditionString] = _conditionValue;
             }
         }
