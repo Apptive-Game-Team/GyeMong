@@ -11,7 +11,7 @@ namespace Creature.Mob.StateMachineMob.Npc
         private IPathFinder _pathFinder = new SimplePathFinder();
         private const int MAX_DISTANCE_TO_PLAYER = 2;
         private const int PATH_FINDING_INTERVAL = 1;
-        [SerializeField] private Animator _animator;
+        [SerializeField] private new Animator _animator;
 
         private void Start()
         {
