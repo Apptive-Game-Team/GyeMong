@@ -476,6 +476,7 @@ namespace playerCharacter
         public void StopPlayer()
         {
             playerRb.velocity = Vector2.zero;
+            animator.SetBool("isMove", false);
         }
 
         public void Trigger()
