@@ -54,7 +54,7 @@ namespace Creature.Player.Component.Collider
             if (controller.AttackInfo.knockbackAmount > 0)
             {
                 Vector3 origin = controller.gameObject.transform.position;
-                Vector3 direction = playerCharacter.PlayerCharacter.Instance.transform.position - origin;
+                Vector3 direction = (playerCharacter.PlayerCharacter.Instance.transform.position - origin).normalized;
                 StartCoroutine(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + playerCharacter.PlayerCharacter.Instance.transform.position));
             }
         }
