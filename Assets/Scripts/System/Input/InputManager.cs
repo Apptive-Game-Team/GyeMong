@@ -52,8 +52,7 @@ public class InputManager : SingletonObject<InputManager>
 
     Vector3 moveVector = new Vector3();
     private List<Vector2> directionList = new List<Vector2>();
-
-    private List<IInputListener> inputListeners = new List<IInputListener>();
+    public static event Action<ActionCode, InputType> OnKeyEvent;
 
     /// <summary>
     /// Checks if the specified action code represents a movement action.
@@ -229,15 +228,6 @@ public class InputManager : SingletonObject<InputManager>
         }
     }
 
-    /// <summary>
-    /// Registers a listener to receive input events.
-    /// </summary>
-    /// <param name="listener">Listener to add</param>
-    public void SetInputListener(IInputListener listener)
-    {
-        inputListeners.Add(listener);
-    }
-
     private IEnumerator KeyDownCounter(ActionCode action)
     {
         yield return new WaitForSeconds(KET_DOWN_DELAY);
@@ -327,28 +317,16 @@ public class InputManager : SingletonObject<InputManager>
 
     private void CallOnKeyListeners(ActionCode action)
     {
-        foreach (IInputListener listener in inputListeners)
-        {
-            listener.OnKey(action, InputType.Press);
-
-        }
+        OnKeyEvent?.Invoke(action, InputType.Press);
     }
 
     private void CallOnKeyDownListeners(ActionCode action)
     {
-        foreach (IInputListener listener in inputListeners)
-        {
-            listener.OnKey(action, InputType.Down);
-
-        }
+        OnKeyEvent?.Invoke(action, InputType.Down);
     }
 
     private void CallOnKeyUpListeners(ActionCode action)
     {
-        foreach (IInputListener listener in inputListeners)
-        {
-            listener.OnKey(action, InputType.Up);
-
-        }
+        OnKeyEvent?.Invoke(action, InputType.Up);
     }
 }

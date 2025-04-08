@@ -1798,12 +1798,12 @@ PrefabInstance:
     - target: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.13
+      value: -2.68
       objectReference: {fileID: 0}
     - target: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.23
+      value: -4.79
       objectReference: {fileID: 0}
     - target: {fileID: 3989650450243143236, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
@@ -1911,7 +1911,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!1 &1248402844 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 722650408117553891, guid: 3da75c5d25dd4c548b8998a4377811a2,

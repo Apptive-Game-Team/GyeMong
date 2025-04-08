@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace System.UI
 {
-    public class UIWindowToggler<T> : SingletonObject<T>, IInputListener where T : MonoBehaviour
+    public class UIWindowToggler<T> : SingletonObject<T> where T : MonoBehaviour
     {
         protected ActionCode toggleKeyActionCode;
         private bool _isOptionOpened = false;
@@ -26,7 +26,12 @@ namespace System.UI
         protected override void Awake()
         {
             base.Awake();
-            InputManager.Instance.SetInputListener(this);
+            InputManager.OnKeyEvent += OnKey;
+        }
+        
+        private void OnDestroy()
+        {
+            InputManager.OnKeyEvent -= OnKey;
         }
 
         private void OnEnable()
@@ -37,6 +42,7 @@ namespace System.UI
 
         public void OnKey(ActionCode action, InputType type)
         {
+            print(gameObject.name);
             if (action == toggleKeyActionCode && type == InputType.Down)
             {
                 OpenOrCloseOption();
