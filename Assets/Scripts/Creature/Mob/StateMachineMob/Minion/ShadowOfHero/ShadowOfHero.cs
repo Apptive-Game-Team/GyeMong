@@ -90,7 +90,7 @@ namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
         protected void Initialize()
         {
-            maxHp = 100;
+            maxHp = 30;
             currentHp = maxHp;
 
             currentShield = 0;
