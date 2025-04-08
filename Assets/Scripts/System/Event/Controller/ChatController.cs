@@ -4,7 +4,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.VersionControl;
 
 [Serializable]
 public class ChatMessage
