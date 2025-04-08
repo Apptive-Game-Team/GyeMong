@@ -101,6 +101,7 @@ public class SoundManager : SingletonObject<SoundManager>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         GetSoundObjects();
+        SetMasterVolume(DataManager.Instance.LoadSection<SoundData>("SoundData").masterVolume);
     }
 
     private void OnDisable()
