@@ -54,9 +54,10 @@ public class HealEvent : Event
 public class WarpPortalEvent : Event
 {
     public PortalID portalID;
+    [SerializeField] private float delay;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        return PortalManager.Instance.TransitScene(portalID);
+        return PortalManager.Instance.TransitScene(portalID, delay);
     }
 }
 

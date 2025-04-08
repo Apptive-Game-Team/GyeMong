@@ -16,7 +16,7 @@ public class PortalManager : SingletonObject<PortalManager>
         DontDestroyOnLoad(this);
     }
 
-    public IEnumerator TransitScene(PortalID portalID)
+    public IEnumerator TransitScene(PortalID portalID, float delay = 0f)
     {
         yield return EffectManager.Instance.FadeOut();
         PortalData portalData = portalDataList.GetPortalDataByID(portalID);
@@ -27,6 +27,7 @@ public class PortalManager : SingletonObject<PortalManager>
             SceneManager.LoadScene(sceneData.sceneName);
         }
         playerCharacter.PlayerCharacter.Instance.transform.position = portalData.destination;
+        yield return new WaitForSeconds(delay);
         StartCoroutine(EffectManager.Instance.FadeIn());
     }
     
