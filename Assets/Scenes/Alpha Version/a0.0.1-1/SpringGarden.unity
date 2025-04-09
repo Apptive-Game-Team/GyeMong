@@ -1832,6 +1832,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4168858722379327376, guid: 55e717aa8c654e645817cb197559f00e,
+        type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168858722379327376, guid: 55e717aa8c654e645817cb197559f00e,
+        type: 3}
+      propertyPath: eventSequence.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168858722379327376, guid: 55e717aa8c654e645817cb197559f00e,
+        type: 3}
+      propertyPath: eventSequence.Array.data[0]
+      value: 8709460512485146637
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168858722379327376, guid: 55e717aa8c654e645817cb197559f00e,
+        type: 3}
+      propertyPath: eventSequence.Array.data[1]
+      value: 7445868584460353559
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168858722379327376, guid: 55e717aa8c654e645817cb197559f00e,
+        type: 3}
+      propertyPath: managedReferences[8709460512485146637]
+      value: Assembly-CSharp ToggleConditionEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168858722379327376, guid: 55e717aa8c654e645817cb197559f00e,
+        type: 3}
+      propertyPath: managedReferences[8709460512485146637].tag
+      value: Garden_Maze_Door_Opened
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168858722379327376, guid: 55e717aa8c654e645817cb197559f00e,
+        type: 3}
+      propertyPath: managedReferences[8709460512485146637].condition
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5512828482883384445, guid: 55e717aa8c654e645817cb197559f00e,
         type: 3}
       propertyPath: m_Name
@@ -2793,6 +2828,41 @@ PrefabInstance:
     - target: {fileID: 1912420710543228431, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: eventSequence.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: eventSequence.Array.data[0]
+      value: 8709460512485146636
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: eventSequence.Array.data[1]
+      value: 7445868584460353559
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[8709460512485146636]
+      value: Assembly-CSharp ToggleConditionEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[8709460512485146636].tag
+      value: Garden_Door_Opened
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[8709460512485146636].condition
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
