@@ -769,7 +769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1535860397863299029, guid: 546ca58cc5a5a494b87fdf8cf3273be7, type: 3}
   _conditionKey1: ShadowForestQuestIsStarted
-  _conditionKey2: ShadowForestQuestIsCleared
+  _conditionKey2: ShadowForestQuestIsContinuing
   useParentPosition: 0
 --- !u!4 &459142666
 Transform:

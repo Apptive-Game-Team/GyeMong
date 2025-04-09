@@ -241,6 +241,7 @@ MonoBehaviour:
   trigger: 0
   triggerLimitCounter: 1
   eventSequence:
+  - rid: 8709460512485146635
   - rid: 8330687525730910208
   - rid: 8330687525730910211
   - rid: 8330687525730910209
@@ -274,6 +275,11 @@ MonoBehaviour:
         _targets:
         - transform: {fileID: 1547250610349787232}
           speed: 3
+    - rid: 8709460512485146635
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: ShadowForestQuestIsContinuing
+        condition: 1
 --- !u!61 &508502452910666282
 BoxCollider2D:
   m_ObjectHideFlags: 0
