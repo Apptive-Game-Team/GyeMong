@@ -40,9 +40,8 @@ namespace System.UI
             MouseInputManager.Instance.SetRaycaster(_window.GetComponentInChildren<GraphicRaycaster>());
         }
 
-        public void OnKey(ActionCode action, InputType type)
+        private void OnKey(ActionCode action, InputType type)
         {
-            print(gameObject.name);
             if (action == toggleKeyActionCode && type == InputType.Down)
             {
                 OpenOrCloseOption();
