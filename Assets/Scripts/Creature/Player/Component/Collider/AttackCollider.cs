@@ -8,14 +8,12 @@ namespace Creature.Player.Component.Collider
     {
         public float attackDamage;
         private PlayerSoundController _soundController;
-        private EventObject _eventObject;
         private ParticleSystem _particleSystem;
         private ParticleSystem.ShapeModule _shape;
         private void Start()
         {
             _particleSystem = GetComponentInChildren<ParticleSystem>();
             _shape = _particleSystem.shape;//.GetComponent<ParticleSystem.ShapeModule>();
-            _eventObject = GetComponent<EventObject>();
             var player = PlayerCharacter.Instance;
             attackDamage = player.stat.AttackPower;
         }
@@ -37,27 +35,39 @@ namespace Creature.Player.Component.Collider
             var creature = collision.GetComponent<Creature>();
             if (creature != null)
             {
-                SetParticleSystemTexture(collision);
-
-                _eventObject.Trigger();
-                _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
-                creature.OnAttacked(attackDamage);
-                PlayerCharacter.Instance.AttackIncreaseGauge();
-            } else
+                EventObject[] eventObjects = collision.GetComponents<EventObject>();
+                if (eventObjects.Length == 0 || CheckAttackableEventObjects(eventObjects))
+                {
+                    _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
+                    creature.OnAttacked(attackDamage);
+                    PlayerCharacter.Instance.AttackIncreaseGauge();
+                }
+            } 
+            else
             {
                 IAttackable[] attackableObjects = collision.GetComponents<IAttackable>();
+                EventObject[] eventObjects = collision.GetComponents<EventObject>();
                 if (attackableObjects.Length != 0)
                 {
-                    SetParticleSystemTexture(collision);
-                    _eventObject.Trigger();
-                    _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
-                    foreach (IAttackable @object in attackableObjects)
+                    if (eventObjects.Length == 0 || CheckAttackableEventObjects(eventObjects))
                     {
-                        @object.OnAttacked(attackDamage);
+                        _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
+                        foreach (IAttackable @object in attackableObjects)
+                        {
+                            @object.OnAttacked(attackDamage);
+                        }
                     }
                 }
             }
-        
+        }
+
+        private bool CheckAttackableEventObjects(EventObject[] eventObjects)
+        {
+            foreach (var eventObject in eventObjects)
+            {
+                if (eventObject.trigger == EventObject.EventTrigger.OnAttacked) return true;
+            }
+            return false;
         }
 
         private void SetParticleSystemTexture(Collider2D collision)

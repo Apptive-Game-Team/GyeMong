@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EventObject : InteractableObject, IAttackable, IEventTriggerable
 {
-    private enum EventTrigger
+    public enum EventTrigger
     {
         OnCollisionEnter = 0,
         OnInteraction = 1,
@@ -18,7 +18,7 @@ public class EventObject : InteractableObject, IAttackable, IEventTriggerable
     private bool isLoop = false;
 
     [SerializeField]
-    private EventTrigger trigger;
+    public EventTrigger trigger;
 
     [SerializeField]
     private int triggerLimitCounter = -1;
