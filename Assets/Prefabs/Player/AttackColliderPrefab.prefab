@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7263895070854556163}
   - component: {fileID: -101421307163761881}
   - component: {fileID: -3350436086995963345}
-  - component: {fileID: 6099312340670356930}
   - component: {fileID: 7813404654519479442}
   - component: {fileID: 8338244952094976262}
   m_Layer: 0
@@ -96,8 +95,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 0
-  flowerObj: {fileID: 6008280722342465732, guid: d5c5aef1ed484c949bf9e8acb70210a2,
-    type: 3}
 --- !u!212 &-3350436086995963345
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -150,29 +147,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &6099312340670356930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2848122850891802944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 4
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 142013584090857472
-  references:
-    version: 2
-    RefIds:
-    - rid: 142013584090857472
-      type: {class: ParticleEvent, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!95 &7813404654519479442
 Animator:
   serializedVersion: 5
