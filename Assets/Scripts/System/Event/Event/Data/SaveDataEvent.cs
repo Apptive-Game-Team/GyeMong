@@ -69,6 +69,7 @@ public class LoadDataEvent : Event
         SceneManager.LoadScene(playerData.sceneName);
         DataManager.Instance.LoadPlayerData();
         
+        ConditionManager.Instance.Load();
         PersistedGameObjectManager.Instance.SetPersistedGameObjects(DataManager.Instance.LoadSection<PersistedGameObjectDatas>(PersistedGameObjectManager.PERSISTED_DATA_FILE));
         yield return null;
     }

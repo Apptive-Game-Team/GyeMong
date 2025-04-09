@@ -71,4 +71,9 @@ public class ConditionManager : SingletonObject<ConditionManager>
     {
         DataManager.Instance.SaveSection(new Conditions(_conditions), CONDITION_FILE);
     }
+    
+    public void Load()
+    {
+        _conditions = DataManager.Instance.LoadSection<Conditions>(CONDITION_FILE).GetConditions();
+    }
 }
