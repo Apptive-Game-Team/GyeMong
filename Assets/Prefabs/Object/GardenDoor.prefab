@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6269249894273508868}
   - component: {fileID: -1074753927519940584}
   - component: {fileID: 3998500003980005651}
-  - component: {fileID: 1702070895054600104}
   - component: {fileID: 1472500462685751787}
   - component: {fileID: 8718725927253374644}
   m_Layer: 0
@@ -179,20 +178,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 1.3616359}
   m_EdgeRadius: 0
---- !u!114 &1702070895054600104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983018022320137561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b33149c4b5e98414b90370dbc851b8c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 983018022320137561}
-  _uniqueId: GardenDoor
 --- !u!114 &1472500462685751787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,30 +252,28 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 7445868584460353559
+  - rid: 7497613985432731650
   references:
     version: 2
     RefIds:
-    - rid: 7445868584460353559
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 7497613985432731650
       type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
       data:
         _condition:
-          rid: 7445868584460353560
+          rid: 7497613985432731651
         eventInTrue:
-          rid: 7445868584460353561
+          rid: 7497613985432731652
         eventInFalse:
-          rid: 7445868584460353562
-    - rid: 7445868584460353560
+          rid: -2
+    - rid: 7497613985432731651
       type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
       data:
         tag: Garden_Door_Opened
         condition: 0
-    - rid: 7445868584460353561
+    - rid: 7497613985432731652
       type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
       data:
         _gameObject: {fileID: 983018022320137561}
         isActive: 0
-    - rid: 7445868584460353562
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 0

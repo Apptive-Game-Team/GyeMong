@@ -200,6 +200,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
+      propertyPath: managedReferences[286138671396552754].autoSkipTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
       propertyPath: managedReferences[286138671396552754].messages.name
       value: 
       objectReference: {fileID: 0}
@@ -283,6 +288,11 @@ PrefabInstance:
       propertyPath: managedReferences[286138671396552754].messages.messages.Array.data[0]
       value: ...
       objectReference: {fileID: 0}
+    - target: {fileID: 1702070895054600104, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: _uniqueId
+      value: GardenMazeDoor
+      objectReference: {fileID: 0}
     - target: {fileID: 1912420710543228431, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -338,14 +348,20 @@ PrefabInstance:
       propertyPath: managedReferences[7445868584460353560].tag
       value: Garden_Maze_Door_Opened
       objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[7497613985432731651].tag
+      value: Garden_Maze_Door_Opened
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718725927253374644, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[7497613985432731652]._gameObject
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 983018022320137561, guid: 1da46fdd64a39b94e9db5a2f25466401,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7431131054490242016}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da46fdd64a39b94e9db5a2f25466401, type: 3}
 --- !u!1 &5512828482883384445 stripped
 GameObject:
@@ -353,44 +369,3 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4694406551037382948}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7431131054490242016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5512828482883384445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 2
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 286138671396552758
-  references:
-    version: 2
-    RefIds:
-    - rid: 286138671396552758
-      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _condition:
-          rid: 286138671396552759
-        eventInTrue:
-          rid: 286138671396552760
-        eventInFalse:
-          rid: 286138671396552761
-    - rid: 286138671396552759
-      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
-      data:
-        tag: Garden_Door_Open
-        condition: 0
-    - rid: 286138671396552760
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 286138671396552761
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 0

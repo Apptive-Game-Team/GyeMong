@@ -104,7 +104,7 @@ MonoBehaviour:
   triggerLimitCounter: 1
   eventSequence:
   - rid: 286138576501211136
-  - rid: 286138576501211137
+  - rid: 7497613985432731654
   references:
     version: 2
     RefIds:
@@ -113,9 +113,11 @@ MonoBehaviour:
       data:
         tag: Garden_Maze_Door_Opened
         condition: 1
-    - rid: 286138576501211137
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
+    - rid: 7497613985432731654
+      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 4814796725110161025}
+        isActive: 0
 --- !u!114 &3232832413338149968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +144,7 @@ MonoBehaviour:
         _condition:
           rid: 286138671396552763
         eventInTrue:
-          rid: 286138671396552764
+          rid: 7497613985432731653
         eventInFalse:
           rid: 286138671396552765
     - rid: 286138671396552763
@@ -150,13 +152,15 @@ MonoBehaviour:
       data:
         tag: Garden_Maze_Door_Opened
         condition: 0
-    - rid: 286138671396552764
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 286138671396552765
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 0
+    - rid: 7497613985432731653
+      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 4814796725110161025}
+        isActive: 0
 --- !u!58 &-8050813542674744381
 CircleCollider2D:
   m_ObjectHideFlags: 0
