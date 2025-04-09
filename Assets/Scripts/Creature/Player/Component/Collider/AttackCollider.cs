@@ -35,13 +35,9 @@ namespace Creature.Player.Component.Collider
             var creature = collision.GetComponent<Creature>();
             if (creature != null)
             {
-                EventObject[] eventObjects = collision.GetComponents<EventObject>();
-                if (eventObjects.Length == 0 || CheckAttackableEventObjects(eventObjects))
-                {
-                    _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
-                    creature.OnAttacked(attackDamage);
-                    PlayerCharacter.Instance.AttackIncreaseGauge();
-                }
+                _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
+                creature.OnAttacked(attackDamage);
+                PlayerCharacter.Instance.AttackIncreaseGauge();
             } 
             else
             {
