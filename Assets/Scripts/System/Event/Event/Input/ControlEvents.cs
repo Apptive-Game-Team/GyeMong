@@ -15,7 +15,7 @@ public class SetKeyInputEvent : ControlEvent
     {
         InputManager.Instance.SetActionState(_isEnable);
         PlayerCharacter.Instance.isControlled = !_isEnable;
-        PlayerCharacter.Instance.StopPlayer();
+        PlayerCharacter.Instance.StopPlayer(_isEnable);
         yield return null;
     }
 }
