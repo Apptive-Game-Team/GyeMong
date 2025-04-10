@@ -144,7 +144,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                yield return new WaitForSeconds(Golem.attackdelayTime);
                 yield return Golem.MakeShock();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
