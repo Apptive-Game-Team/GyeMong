@@ -8,7 +8,9 @@ namespace System.Game
         [SerializeField] private GameObject shadow;
         
         private bool isAirborned = false;
-        
+        private float originShadowLocalY;
+
+
         public IEnumerator AirborneTo(Vector3 destination, float airborneHeight = 1f, float speed = 10f)
         {
             
@@ -16,7 +18,12 @@ namespace System.Game
                 yield break;
             isAirborned = true;
             Vector3 origin = transform.position;
-            float originShadowLocalY = shadow.transform.localPosition.y;
+            if(shadow!=null)
+            {
+                originShadowLocalY = shadow.transform.localPosition.y;
+            }
+            else
+                yield break;
             float currentAirborneHeight = 0f;
             
             Vector3 originalScale = transform.localScale;
