@@ -115,7 +115,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
         private void Divide()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Vector3 spawnPosition = transform.position;
                 int attempts = 10;
