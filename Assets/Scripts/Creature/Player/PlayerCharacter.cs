@@ -475,7 +475,7 @@ namespace playerCharacter
 
         public void StopPlayer(bool isEnable = false)
         {
-            isMoving = isEnable;
+            if (!isEnable) soundController.SetBool(PlayerSoundType.FOOT, isEnable);
             playerRb.velocity = Vector2.zero;
             animator.SetBool("isMove", false);
         }

@@ -15,7 +15,6 @@ public class OpenChatEvent : ChatEvent
         InputManager.Instance.SetActionState(false);
         PlayerCharacter.Instance.isControlled = true;
         PlayerCharacter.Instance.StopPlayer();
-
         return EffectManager.Instance.GetChatController().Open();
     }
 }
@@ -26,8 +25,7 @@ public class CloseChatEvent : ChatEvent
     {
         InputManager.Instance.SetActionState(true);
         PlayerCharacter.Instance.isControlled = false;
-        PlayerCharacter.Instance.StopPlayer();
-
+        PlayerCharacter.Instance.StopPlayer(true);
         EffectManager.Instance.GetChatController().Close();
         yield return null;
     }
