@@ -1,3 +1,4 @@
+using Map.Objects;
 using playerCharacter;
 using Unity.Mathematics;
 using UnityEngine;
@@ -42,10 +43,11 @@ namespace Creature.Player.Component.Collider
             else
             {
                 IAttackable[] attackableObjects = collision.GetComponents<IAttackable>();
+                BreakableObject[] breakableObjects = collision.GetComponents<BreakableObject>();
                 EventObject[] eventObjects = collision.GetComponents<EventObject>();
                 if (attackableObjects.Length != 0)
                 {
-                    if (eventObjects.Length == 0 || CheckAttackableEventObjects(eventObjects))
+                    if (breakableObjects.Length != 0 || eventObjects.Length == 0 || CheckAttackableEventObjects(eventObjects))
                     {
                         _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                         foreach (IAttackable @object in attackableObjects)
