@@ -483,6 +483,9 @@ namespace playerCharacter
         public void Trigger()
         {
             curHealth = stat.HealthMax;
+            changeListenerCaller.CallHpChangeListeners(curHealth);
+            changeListenerCaller.CallShieldChangeListeners(curShield);
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
             curSkillGauge = 0f;
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / stat.HealthMax));
         }
