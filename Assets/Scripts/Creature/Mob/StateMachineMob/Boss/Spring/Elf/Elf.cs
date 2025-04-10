@@ -229,6 +229,7 @@ namespace Creature.Mob.Boss.Spring.Elf
 
         public class WhipAttack : ElfState
         {
+            private SoundObject _soundObject;
             public WhipAttack()
             {
                 cooldownTime = 30f;
@@ -249,7 +250,7 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
-                SoundObject _soundObject = Sound.Play("EFFECT_Sword_Swing", true);
+                _soundObject = Sound.Play("EFFECT_Sword_Swing", true);
                 AttackObjectController.Create(
                     Elf.transform.position,
                     Vector3.zero,
@@ -264,6 +265,11 @@ namespace Creature.Mob.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
+            }
+            public override void OnStateExit()
+            {
+                base.OnStateExit();
+                Sound.Stop(_soundObject);
             }
         }
         public class TrunkAttack : ElfState

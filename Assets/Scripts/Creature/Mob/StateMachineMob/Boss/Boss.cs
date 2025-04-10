@@ -87,6 +87,7 @@ namespace Creature.Mob.StateMachineMob.Boss
         {
             try
             {
+                currentState.OnStateExit();
                 StopAllCoroutines();
                 GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
             }
