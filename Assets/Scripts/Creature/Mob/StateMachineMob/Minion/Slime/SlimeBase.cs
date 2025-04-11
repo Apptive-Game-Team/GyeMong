@@ -79,8 +79,8 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             
             currentShield = 0;
             damage = 10;
-            speed = 2;
-            detectionRange = 20;
+            speed = 1.5f;
+            detectionRange = 7;
             MeleeAttackRange = 1;
             RangedAttackRange = 5;
 
@@ -105,7 +105,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             }
             public override int GetWeight()
             {
-                return 0;
+                return 1;
             }
 
             public override IEnumerator StateCoroutine()
@@ -181,7 +181,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
             public override int GetWeight()
             {
-                return mob.DistanceToPlayer > mob.MeleeAttackRange ? 5 : 0;
+                return mob.DistanceToPlayer > mob.MeleeAttackRange && mob.DistanceToPlayer < mob.DetectionRange ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
