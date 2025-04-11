@@ -1,6 +1,9 @@
 using System.Collections;
 using Creature.Attack;
 using Creature.Attack.Component.Movement;
+using Creature.Mob.Minion.Component.detector;
+using Creature.Mob.StateMachineMob.Minion.Slime;
+using playerCharacter;
 using UnityEngine;
 
 namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
@@ -9,6 +12,7 @@ namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
     {
         private int _attackCount = 0;
         private const int MAX_ATTACK_COUNT = 3;
+        protected IDetector<PlayerCharacter> _detector;
         [SerializeField] private GameObject attackPrefab;
         [SerializeField] private GameObject skillPrefab;
 
@@ -39,7 +43,7 @@ namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             
             // for debug
 
-            ChangeState();
+            ChangeState(new DetectingPlayer() {mob= this});
         }
 
         private IEnumerator MeleeAttack()
@@ -99,12 +103,37 @@ namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             detectionRange = 10;
             MeleeAttackRange = 2;
             RangedAttackRange = 20;
+
+            _detector = SimplePlayerDistanceDetector.Create(this);
         }
 
         private void FaceToPlayer()
         {
             Animator.SetFloat("xDir", DirectionToPlayer.x);
             Animator.SetFloat("yDir", DirectionToPlayer.y);
+        }
+
+        public class DetectingPlayer : ShadowState
+        {
+            public override int GetWeight()
+            {
+                return 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                mob.Animator.SetBool("isMove", false);
+                while (true)
+                {
+                    Transform target = (mob as ShadowOfHero)._detector.DetectTarget()?.transform;
+                    if (target != null)
+                    {
+                        mob.ChangeState();
+                        yield break;
+                    }
+                    yield return new WaitForSeconds(1f);
+                }
+            }
         }
         
         public class WalkState : ShadowState
@@ -123,7 +152,7 @@ namespace Creature.Mob.StateMachineMob.Minion.ShadowOfHero
                 mob.Animator.SetBool("isMove", true);
                 while (mob.DistanceToPlayer > mob.MeleeAttackRange)
                 {
-                    mob.TrackPlayer();
+                     mob.TrackPlayer();
                      ShadowOfHero.FaceToPlayer();
                      yield return null;
                 }
