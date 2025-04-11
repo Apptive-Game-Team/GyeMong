@@ -121,8 +121,9 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
                 int attempts = 10;
                 do
                 {
-                    Vector3 candidatePosition = transform.position + Random.insideUnitSphere * 3;
-                    if (!Physics.Raycast(transform.position, candidatePosition - transform.position, Vector3.Distance(transform.position, candidatePosition), LayerMask.GetMask("Wall")))
+                    Vector3 candidatePosition = transform.position + Random.insideUnitSphere * 2;
+                    var hit = Physics2D.Raycast(transform.position, candidatePosition - transform.position, Vector3.Distance(transform.position, candidatePosition), LayerMask.GetMask("Wall"));
+                    if (hit.collider == null)
                     {
                         spawnPosition = candidatePosition;
                         break;
