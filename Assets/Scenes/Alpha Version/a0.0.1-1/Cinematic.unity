@@ -645,8 +645,8 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 3120289928566276096
   - rid: 4949244289175519232
+  - rid: 3120289928566276096
   - rid: 4949244289175519233
   - rid: 4949244132887101446
   - rid: 4949244132887101450
@@ -870,7 +870,7 @@ MonoBehaviour:
       type: {class: WarpPortalEvent, ns: , asm: Assembly-CSharp}
       data:
         portalID: 24
-        delay: 0
+        delay: 0.5
 --- !u!4 &562705329
 Transform:
   m_ObjectHideFlags: 0

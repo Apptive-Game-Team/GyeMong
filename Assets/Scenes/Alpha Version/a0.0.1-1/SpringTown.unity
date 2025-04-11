@@ -7914,6 +7914,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
         type: 3}
+      propertyPath: managedReferences[3636844143720267776].delay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179140320273774770, guid: 90d037379245ab44695ee4686df899ab,
+        type: 3}
       propertyPath: managedReferences[3636844143720267776].portalID
       value: 5
       objectReference: {fileID: 0}
