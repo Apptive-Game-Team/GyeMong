@@ -223,7 +223,7 @@ MonoBehaviour:
         - rid: 7445868810240524297
         - rid: 7445868810240524298
         - rid: 7445868810240524299
-        - rid: 7445868810240524300
+        - rid: 7445868810240524304
     - rid: 7445868810240524292
       type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -259,9 +259,6 @@ MonoBehaviour:
       data:
         tag: Garden_Door_Opened
         condition: 1
-    - rid: 7445868810240524300
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 7445868810240524301
       type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
       data: 
@@ -276,6 +273,11 @@ MonoBehaviour:
           messages:
           - ...
         autoSkipTime: 0
+    - rid: 7445868810240524304
+      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 983018022320137561}
+        isActive: 0
 --- !u!114 &8718725927253374644
 MonoBehaviour:
   m_ObjectHideFlags: 0

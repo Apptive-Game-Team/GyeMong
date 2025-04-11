@@ -575,7 +575,7 @@ Transform:
   m_GameObject: {fileID: 219050272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.30000025, y: -0.10000024, z: -10.001161}
+  m_LocalPosition: {x: 0.3, y: 37.6, z: -10.001161}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2752,6 +2752,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: GardenDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[7445868810240524304]
+      value: Assembly-CSharp SetActiveObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[7445868810240524304].isActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[7445868810240524304]._gameObject
+      value: 
+      objectReference: {fileID: 1879592068}
+    - target: {fileID: 1472500462685751787, guid: 1da46fdd64a39b94e9db5a2f25466401,
+        type: 3}
+      propertyPath: managedReferences[7445868810240524291].events.Array.data[7]
+      value: 7445868810240524304
+      objectReference: {fileID: 0}
     - target: {fileID: 1912420710543228431, guid: 1da46fdd64a39b94e9db5a2f25466401,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2807,6 +2827,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da46fdd64a39b94e9db5a2f25466401, type: 3}
+--- !u!1 &1879592068 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 983018022320137561, guid: 1da46fdd64a39b94e9db5a2f25466401,
+    type: 3}
+  m_PrefabInstance: {fileID: 1879592067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1887163314
 GameObject:
   m_ObjectHideFlags: 0
