@@ -870,7 +870,7 @@ MonoBehaviour:
       type: {class: WarpPortalEvent, ns: , asm: Assembly-CSharp}
       data:
         portalID: 24
-        delay: 0
+        delay: 0.5
 --- !u!4 &562705329
 Transform:
   m_ObjectHideFlags: 0
