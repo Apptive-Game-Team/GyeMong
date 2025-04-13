@@ -31,6 +31,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             
             MeleeAttackRange = 3f;
             RangedAttackRange = 10f;
+            detectionRange = 20f;
 
             damage = 10f;
         }
@@ -121,7 +122,8 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
                 int attempts = 10;
                 do
                 {
-                    Vector3 candidatePosition = transform.position + Random.insideUnitSphere * 2;
+                    Vector3 candidatePosition = transform.position + Random.insideUnitSphere;
+                    candidatePosition.z = 0f;
                     var hit = Physics2D.Raycast(transform.position, candidatePosition - transform.position, Vector3.Distance(transform.position, candidatePosition), LayerMask.GetMask("Wall"));
                     if (hit.collider == null)
                     {
@@ -142,7 +144,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
                 slimeComponent.MeleeAttackRange *= divideRatio;
                 slimeComponent.RangedAttackRange *= divideRatio;
                 slimeComponent.divisionLevel = divisionLevel + 1;
-                slimeComponent.StartMob();
+                slimeComponent.ChangeState(new SlimeMoveState(slimeComponent));
                 
                 DivisionSlimeManager.Instance.RegisterSlime(slimeComponent);
             }
