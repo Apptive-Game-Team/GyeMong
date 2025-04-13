@@ -379,6 +379,7 @@ namespace playerCharacter
         private void Die()
         {
             //GameOver Event Triggered.
+            changeListenerCaller.CallPlayerDied();
             try
             {
                 GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
@@ -417,8 +418,6 @@ namespace playerCharacter
         {
             return lastMovementDirection;
         }
-
-
 
         public IEnumerator LoadPlayerEffect()
         {
@@ -488,6 +487,7 @@ namespace playerCharacter
             changeListenerCaller.CallShieldChangeListeners(curShield);
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / stat.HealthMax));
+            changeListenerCaller.CallPlayerSpawned();
         }
         
         public float CurrentHp { get { return curHealth; } }
