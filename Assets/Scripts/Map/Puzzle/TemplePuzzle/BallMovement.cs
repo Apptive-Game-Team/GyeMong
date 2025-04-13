@@ -232,7 +232,7 @@ namespace Map.Puzzle.TemplePuzzle
             while (elapsedTime < downDuration)
             {
                 float t = elapsedTime / downDuration;
-                t = Mathf.Sin(t * Mathf.PI * 0.5f);
+                t = Mathf.Pow(t, 3f);
 
                 transform.position = Vector3.Lerp(startPos, endPos, t);
 
