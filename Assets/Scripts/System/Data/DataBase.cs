@@ -29,10 +29,10 @@ public class QuestData
 [System.Serializable]
 public class SoundData
 {
-    public float masterVolume = 1f;
-    public float UIVolume = 1f;
-    public float bgmVolume = 1f;
-    public float sfxVolume = 1f;
+    public float masterVolume = 0.5f;
+    public float UIVolume = 0.5f;
+    public float bgmVolume = 0.5f;
+    public float sfxVolume = 0.5f;
 }
 
 [System.Serializable]
