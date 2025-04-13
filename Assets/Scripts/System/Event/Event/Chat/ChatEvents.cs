@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using playerCharacter;
 using System.Collections.Generic;
+using System.Input;
 
 public abstract class ChatEvent : Event
 {

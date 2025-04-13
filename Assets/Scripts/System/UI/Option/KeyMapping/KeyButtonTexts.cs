@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System;
+using System.Input;
 
 public class KeyButtonTexts : SingletonObject<KeyButtonTexts>
 {

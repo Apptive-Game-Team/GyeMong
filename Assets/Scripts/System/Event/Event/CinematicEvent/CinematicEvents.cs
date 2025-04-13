@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Event.Interface;
+using System.Input;
 using Map.Puzzle.Maze;
 using playerCharacter;
 using UnityEngine;

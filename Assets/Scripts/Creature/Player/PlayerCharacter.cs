@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Event.Interface;
 using System.Game.Buff;
+using System.Input;
 using Creature.Player;
 using Creature.Player.Component;
 using Creature.Player.Component.Collider;
