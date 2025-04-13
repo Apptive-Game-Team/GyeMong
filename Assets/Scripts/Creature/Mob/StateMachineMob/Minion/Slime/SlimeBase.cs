@@ -2,7 +2,9 @@ using System.Collections;
 using Creature.Attack;
 using Creature.Attack.Component.Movement;
 using Creature.Minion.Slime;
-using Creature.Mob.Minion.Component.detector;
+using Creature.Mob.StateMachineMob.Minion.Component.detector;
+using Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
+using Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using playerCharacter;
 using UnityEngine;
 
@@ -110,7 +112,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 while (true)
                 {
                     Transform target = Slime._detector.DetectTarget()?.transform;
@@ -132,8 +134,8 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 AttackObjectController.Create(
                     mob.transform.position, 
                     mob.DirectionToPlayer, 
@@ -144,8 +146,8 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
                         10f)
                 ).StartRoutine();
                 
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 yield return new WaitForSeconds(1);
                 mob.ChangeState();
             }
@@ -160,12 +162,12 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
                 if (mob.DistanceToPlayer <= mob.MeleeAttackRange)   
                     PlayerCharacter.Instance.TakeDamage(mob.damage);
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 yield return new WaitForSeconds(1);
                 mob.ChangeState();
             }
@@ -186,7 +188,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, true);
                 float duration = 2f;
                 float timer = 0f;
             
@@ -226,7 +228,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             {
                 // Slime.StopCoroutine(Slime.faceToPlayerCoroutine);
                 // ((Slime)creature).faceToPlayerCoroutine = null;
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DIE);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Die);
                 
                 GoldManager.Instance?.AddGold(GOLD_REWARD);
 

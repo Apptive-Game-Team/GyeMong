@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 
-public interface IDetector<T>
+namespace Creature.Mob.StateMachineMob.Minion.Component.detector
 {
-    public List<T> DetectTargets();
-    public T DetectTarget();
+    public interface IDetector<T>
+    {
+        public List<T> DetectTargets();
+        public T DetectTarget();
+    }
 }

@@ -24,8 +24,7 @@ public class InputManager : SingletonObject<InputManager>
 {
     private const float KEY_LISTENER_DELAY = 0.05f;
     private const float KET_DOWN_DELAY = 1f;
-
-
+    
     private Dictionary<ActionCode, bool> keyDownBools = new Dictionary<ActionCode, bool>();
     private Dictionary<ActionCode, bool> keyDownBoolsForListener = new Dictionary<ActionCode, bool>();
     private Dictionary<ActionCode, Coroutine> keyDownCounterCoroutine = new Dictionary<ActionCode, Coroutine>();

@@ -1,7 +1,7 @@
 using System.Collections;
 using Creature.Attack;
 using Creature.Attack.Component.Movement;
-using Creature.Mob.Minion.Component.detector;
+using Creature.Mob.StateMachineMob.Minion.Component.detector;
 using Creature.Mob.StateMachineMob.Minion.Slime;
 using playerCharacter;
 using UnityEngine;
