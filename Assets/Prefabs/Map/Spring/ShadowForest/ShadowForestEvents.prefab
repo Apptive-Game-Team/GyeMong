@@ -245,10 +245,18 @@ MonoBehaviour:
   - rid: 8330687525730910208
   - rid: 8330687525730910211
   - rid: 8330687525730910209
+  - rid: 7445868854478897154
   - rid: 8330687525730910210
   references:
     version: 2
     RefIds:
+    - rid: 7445868854478897154
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 0}
+        _creatureType: 1
+        _name: speed
+        _value: 10
     - rid: 8330687525730910208
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -380,10 +388,18 @@ MonoBehaviour:
   - rid: 8330687525730910208
   - rid: 8330687525730910211
   - rid: 8330687525730910209
+  - rid: 7445868854478897153
   - rid: 8330687525730910210
   references:
     version: 2
     RefIds:
+    - rid: 7445868854478897153
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 0}
+        _creatureType: 1
+        _name: speed
+        _value: 10
     - rid: 8330687525730910208
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
