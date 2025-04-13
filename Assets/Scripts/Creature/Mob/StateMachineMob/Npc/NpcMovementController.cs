@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Event.Interface;
+using Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
 using playerCharacter;
 using UnityEngine;
 

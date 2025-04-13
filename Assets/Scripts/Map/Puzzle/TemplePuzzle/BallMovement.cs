@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Sound;
 using UnityEngine;
 
 namespace Map.Puzzle.TemplePuzzle
@@ -34,9 +35,13 @@ namespace Map.Puzzle.TemplePuzzle
 
         IEnumerator MoveBall()
         {
+
+            SoundObject _soundObject;
             if (currentTile != null)
             {
                 isMoving = true;
+
+                _soundObject = Sound.Play("EFFECT_Ball_Rolling", true);
 
                 Vector2 direction = GetMoveDirection();
 
@@ -67,6 +72,7 @@ namespace Map.Puzzle.TemplePuzzle
                 }
 
                 isMoving = false;
+                Sound.Stop(_soundObject);
                 animator.SetBool("isMove", false);
                 animator.SetFloat("xDir", 0);
                 animator.SetFloat("yDir", 0);
@@ -226,7 +232,7 @@ namespace Map.Puzzle.TemplePuzzle
             while (elapsedTime < downDuration)
             {
                 float t = elapsedTime / downDuration;
-                t = Mathf.Sin(t * Mathf.PI * 0.5f);
+                t = Mathf.Pow(t, 3f);
 
                 transform.position = Vector3.Lerp(startPos, endPos, t);
 
