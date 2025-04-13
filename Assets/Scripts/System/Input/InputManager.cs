@@ -35,15 +35,10 @@ namespace System.Input
         protected override void Awake()
         {
             base.Awake();
-            PortalManager.sceneUnloading += OnSceneUnloading;
-        }
-    
-        private void OnDestroy()
-        {
-            PortalManager.sceneUnloading -= OnSceneUnloading;
+            SceneManager.sceneLoaded += OnSceneUnloading;
         }
 
-        private void OnSceneUnloading(Scene obj)
+        private void OnSceneUnloading(Scene arg0, LoadSceneMode arg1)
         {
             // Reset all key states when the scene is unloaded
             foreach (ActionCode action in Enum.GetValues(typeof(ActionCode)))
@@ -52,6 +47,11 @@ namespace System.Input
             }
         }
 
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnSceneUnloading;
+        }
+        
         public void SetDefaultKey()
         {
             _keyMappings = new Dictionary<ActionCode, KeyCode>()
@@ -226,10 +226,10 @@ namespace System.Input
         {
             foreach (ActionCode action in Enum.GetValues(typeof(ActionCode)))
             {
-                _keyDownBools.Add(action, false);
-                _keyDownCounterCoroutine.Add(action, null);
-                _keyActiveFlags.Add(action, true);
-                _keyDownBoolsForListener.Add(action, false);
+                _keyDownBools[action] = false;
+                _keyDownCounterCoroutine[action] = null;
+                _keyActiveFlags[action] = true;
+                _keyDownBoolsForListener[action] = false;
             }
         }
 
