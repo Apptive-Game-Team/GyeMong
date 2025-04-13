@@ -67,7 +67,7 @@ namespace System.Game
         
         private void UpdateScale(GameObject gameObject, Vector3 originalScale, float rate)
         {
-            gameObject.transform.localScale = new Vector3(originalScale.x * (1+rate * 0.5f), originalScale.y * (1+rate * 0.5f), originalScale.z);
+            gameObject.transform.localScale = new Vector3(originalScale.x * (1+rate * 0.25f), originalScale.y * (1+rate * 0.25f), originalScale.z);
         }
 
         private bool CheckWallImpact()
