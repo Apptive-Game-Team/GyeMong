@@ -56,16 +56,16 @@ namespace Creature
         private Color? _originalColor = null;
         protected IEnumerator Blink()
         {
-            MaterialController.SetMaterial(MaterialController.MaterialType.HIT);
-            MaterialController.SetFloat(1);
+            MaterialController?.SetMaterial(MaterialController.MaterialType.HIT);
+            MaterialController?.SetFloat(1);
             if (!_originalColor.HasValue)
                 _originalColor = GetComponent<SpriteRenderer>().color;
             ;
             GetComponent<SpriteRenderer>().color = Color.white;
             yield return new WaitForSeconds(BLINK_DELAY);
-            if (MaterialController.GetCurrentMaterialType() == MaterialController.MaterialType.HIT)
+            if (MaterialController?.GetCurrentMaterialType() == MaterialController.MaterialType.HIT)
             {
-                MaterialController.SetFloat(0);
+                MaterialController?.SetFloat(0);
             }
 
             GetComponent<SpriteRenderer>().color = _originalColor.Value;
@@ -82,6 +82,8 @@ namespace Creature
 
             Vector3 currentPosition = transform.position;
             Vector3 targetPosition = new Vector3(currentTarget.x, currentTarget.y, currentPosition.z);
+
+            if (Physics2D.Linecast(currentPosition, currentTarget, LayerMask.GetMask("Wall"))) return;
 
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(currentPosition, targetPosition, step);
@@ -102,7 +104,7 @@ namespace Creature
             {
                 float temp = currentShield;
                 currentShield = 0;
-                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                MaterialController?.SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(Blink());
                 currentHp -= (damage - temp);
             }

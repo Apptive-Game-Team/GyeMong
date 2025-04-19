@@ -1,6 +1,10 @@
 using System.Collections;
+using Creature.Attack;
+using Creature.Attack.Component.Movement;
 using Creature.Minion.Slime;
-using Creature.Mob.Minion.Component.detector;
+using Creature.Mob.StateMachineMob.Minion.Component.detector;
+using Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
+using Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using playerCharacter;
 using UnityEngine;
 
@@ -10,7 +14,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
     {
         private const int GOLD_REWARD = 10;
         
-        private bool _isInitialized = false;
+        protected bool isInitialized = false;
         
         [SerializeField] private GameObject rangedAttack;
 
@@ -30,7 +34,6 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
                 base.OnAttacked(damage);
                 if (currentHp <= 0)
                 {
-                    print(currentState);
                     OnDead();
                 }
             }
@@ -63,7 +66,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
         private void OnEnable()
         {
-            if (_isInitialized)
+            if (isInitialized)
             {
                 currentHp = maxHp;
                 ChangeState();
@@ -78,8 +81,8 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             
             currentShield = 0;
             damage = 10;
-            speed = 2;
-            detectionRange = 20;
+            speed = 1.5f;
+            detectionRange = 7;
             MeleeAttackRange = 1;
             RangedAttackRange = 5;
 
@@ -87,7 +90,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             _pathFinder = new SimplePathFinder();
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
-            _isInitialized = true;
+            isInitialized = true;
         }
         
         public abstract class SlimeState : BaseState
@@ -104,12 +107,12 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             }
             public override int GetWeight()
             {
-                return 0;
+                return 1;
             }
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 while (true)
                 {
                     Transform target = Slime._detector.DetectTarget()?.transform;
@@ -131,14 +134,20 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RANGED_ATTACK);
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                GameObject arrow =  Instantiate(Slime.rangedAttack, mob.transform.position, Quaternion.identity);
-                arrow.SetActive(true);
-
-                Slime.RotateArrowTowardsPlayer(arrow);
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                AttackObjectController.Create(
+                    mob.transform.position, 
+                    mob.DirectionToPlayer, 
+                    Slime.rangedAttack,
+                    new LinearMovement(
+                        mob.transform.position, 
+                        mob.transform.position + mob.DirectionToPlayer * mob.RangedAttackRange, 
+                        10f)
+                ).StartRoutine();
+                
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 yield return new WaitForSeconds(1);
                 mob.ChangeState();
             }
@@ -153,12 +162,12 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK);
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME * 2);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
                 if (mob.DistanceToPlayer <= mob.MeleeAttackRange)   
                     PlayerCharacter.Instance.TakeDamage(mob.damage);
-                yield return new WaitForSeconds(SlimeAnimator.ANIMATION_DELTA_TIME);
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.IDLE, true);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 yield return new WaitForSeconds(1);
                 mob.ChangeState();
             }
@@ -174,12 +183,12 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
             public override int GetWeight()
             {
-                return mob.DistanceToPlayer > mob.MeleeAttackRange ? 5 : 0;
+                return mob.DistanceToPlayer > mob.MeleeAttackRange && mob.DistanceToPlayer < mob.DetectionRange ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MELEE_ATTACK, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, true);
                 float duration = 2f;
                 float timer = 0f;
             
@@ -219,7 +228,7 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
             {
                 // Slime.StopCoroutine(Slime.faceToPlayerCoroutine);
                 // ((Slime)creature).faceToPlayerCoroutine = null;
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DIE);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Die);
                 
                 GoldManager.Instance?.AddGold(GOLD_REWARD);
 

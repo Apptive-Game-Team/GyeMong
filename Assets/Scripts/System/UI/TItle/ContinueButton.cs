@@ -35,6 +35,6 @@ public class ContinueButton : MonoBehaviour
 
         optionExitButton.SetActive(true);
         // ��� �ε尡 �Ϸ�� �� �÷��̾� ������ �ε�
-        DataManager.Instance.LoadPlayerData();
+        DataManager.Instance.StartCoroutine(new LoadDataEvent().Execute());
     }
 }

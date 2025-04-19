@@ -1,4 +1,5 @@
 using System;
+using System.Input;
 using System.IO;
 using UnityEngine;
 using System.Security.Cryptography;
@@ -10,15 +11,18 @@ public class DataManager : SingletonObject<DataManager>
 #if UNITY_EDITOR
     private readonly string savePath = Application.dataPath + "/Database";
 #else
-    private readonly string savePath = Application.persistentDataPath + "/Database";
+    private string savePath;
 #endif
     private readonly string encryptionKey = "GyemongFighting!"; // 16, 24, 32 글자로 key 설정
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+#if UNITY_EDITOR
+#else
+        savePath = Path.Combine(Application.persistentDataPath, "Database");
+#endif
     }
-
+    
     private void Start()
     {
         LoadKeyMappings();
@@ -148,9 +152,39 @@ public class DataManager : SingletonObject<DataManager>
         PlayerData playerData = LoadSection<PlayerData>("PlayerData");
         if (!playerData.isFirst)
         {
-            print("qwd");
             PlayerCharacter.Instance.transform.position = playerData.playerPosition;
             StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
         }
     }
+
+    public void DeleteAllData()
+    {
+        try
+        {
+            if (Directory.Exists(savePath))
+            {
+                DirectoryInfo directory = new(savePath);
+
+                // 모든 파일 삭제
+                foreach (FileInfo file in directory.GetFiles())
+                {
+                    file.IsReadOnly = false;
+                    file.Delete();
+                }
+
+                // 모든 폴더 삭제
+                foreach (DirectoryInfo subDirectory in directory.GetDirectories())
+                {
+                    subDirectory.Delete(true);
+                }
+
+                Debug.Log("All saved data has been deleted.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to delete data: {ex.Message}");
+        }
+    }
+
 }

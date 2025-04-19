@@ -31,7 +31,7 @@ public class RuneEquipListController : MonoBehaviour, IMouseInputListener
         {
             RuneUIObject runeUI = Instantiate(runeIcon, transform);
             runeUI.uiState = RuneUIState.EQUIPPED;
-            runeIcon.Init(runeData);
+            runeUI.Init(runeData);
         }
         
         for(int i = 0; i < emptySlotNum; i++)

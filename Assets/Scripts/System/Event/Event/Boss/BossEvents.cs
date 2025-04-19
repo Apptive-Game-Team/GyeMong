@@ -12,19 +12,19 @@ public abstract class BossEvent : Event
 }
 public class ActivateBossRoomEvent : BossEvent
 {
-    [SerializeField] protected GameObject bossRoomBoundary;
+    [SerializeField] protected GameObject bossRoomObject;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        bossRoomBoundary.SetActive(true);
+        bossRoomObject.SetActive(true);
         return null;
     }
 }
 public class DeActivateBossRoomEvent : BossEvent
 {
-    [SerializeField] protected GameObject bossRoomBoundary;
+    [SerializeField] protected GameObject bossRoomObject;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        bossRoomBoundary.SetActive(false);
+        bossRoomObject.SetActive(false);
         return null;
     }
 }
@@ -113,10 +113,13 @@ public class ShowBossHealthBarEvent : BossHpBarEvent
 
 public class HideBossHealthBarEvent : BossHpBarEvent
 {
-  public override IEnumerator Execute(EventObject eventObject = null)
-  {
-    HpBarController.ClearBoss();
-    HpBarController.gameObject.SetActive(false);
-    return null;
-  }
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        if(HpBarController!=null)
+        {
+            HpBarController.ClearBoss();
+            HpBarController.gameObject.SetActive(false);
+        }
+        return null;
+    }
 }

@@ -69,20 +69,30 @@ namespace Map.Puzzle.Maze
                 }
             }
 
-            if (_right) 
+            if (_right)
+            {
                 _gridTile[_width - 1, _height / 2 + 1] = true;
                 _thornGridTile[_width - 2, _height / 2 + 1] = false;
-            if (_left) 
+            }
+            if (_left)
+            {
                 _gridTile[0, _height / 2 + 1] = true;
                 _thornGridTile[1, _height / 2 + 1] = false;
-            if (_top) 
+            }
+            if (_top)
+            {
                 _gridTile[_width / 2, _height - 1] = true;
                 _gridTile[_width / 2 - 1, _height - 1] = true;
-                _thornGridTile[_width / 2 + 1, _height - 2] = false;
-            if (_bottom) 
+                _thornGridTile[_width / 2, _height - 2] = false;
+                _thornGridTile[_width / 2 - 1, _height - 2] = false;
+            }
+            if (_bottom)
+            {
                 _gridTile[_width / 2, 0] = true;
                 _gridTile[_width / 2 - 1, 0] = true;
-                _thornGridTile[_width / 2 + 1, 1] = false;
+                _thornGridTile[_width / 2, 1] = false;
+                _thornGridTile[_width / 2 - 1, 1] = false;
+            }
         }
 
         private void InitializeWalls()
@@ -131,6 +141,8 @@ namespace Map.Puzzle.Maze
                     }
                 }
             }
+            
+            
 
             for (int i = 0; i < _thornGridTile.GetLength(0); i++)
             {
@@ -142,7 +154,7 @@ namespace Map.Puzzle.Maze
                 }
             }
         }
-
+        
         public void ReGenerateMaze(bool _top, bool _bottom, bool _left, bool _right)
         {
             this._top = _top;

@@ -15,6 +15,8 @@ public enum SceneID
     SPRING_GARDEN = 5,
     SPRING_SHADOW_ISLAND = 6,
     SPRING_GOLEM_TEMPLE = 7,
+    Cinematic = 8,
+    SPRING_CLIFF = 9,
 }
 
 

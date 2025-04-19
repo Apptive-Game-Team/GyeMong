@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f3b36508672429188a63484511a1f2, type: 3}
+  m_Name: ShadowForestQuest
+  m_EditorClassIdentifier: 
+  questID: 2
+  questName: ShadowForestQuest
+  questDescription: "\uC548\uAC1C\uC758 \uADF8\uB9BC\uC790\uB97C \uAC00\uC838\uC640\uB77C"
+  questType: 0
+  goals:
+  - goalName: GoToShadowForest
+    goalDescription: "\uADF8\uB9BC\uC790 \uC232\uC73C\uB85C \uAC00\uB77C"
+    isCompleted: 0
+  - goalName: ShadowBottle
+    goalDescription: "\uADF8\uB9BC\uC790 \uBCD1\uC744 \uC5BB\uC5B4\uB77C"
+    isCompleted: 0

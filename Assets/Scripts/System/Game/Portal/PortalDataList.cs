@@ -43,6 +43,12 @@ public enum PortalID
     SPRING_GOLEM_TEMPLE4 = 21,
     SPRING_GOLEM_TEMPLE5 = 22,
     SPRING_GOLEM_TEMPLE6 = 23,
+
+    //Cinimatic
+    Cinematic = 24,
+    
+    // Cliff
+    SPRING_CLIFF1 = 25,
 }
 
 [Serializable]

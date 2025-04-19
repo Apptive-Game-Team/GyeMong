@@ -46667,18 +46667,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 94952803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8627024935a84eb4d880b880db4a838c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  soundObject: {fileID: 0}
-  isDestroyOnHit: 0
-  grazable: 0
-  grazed: 0
+  isGrazed: 0
   isAttacked: 0
-  isMultiHit: 1
-  multiHitDelay: 0.5
-  knockbackAmount: 0
+  _attackInfo: {fileID: 11400000, guid: 3b76a99b597dd6b46a701f611cc0437d, type: 2}
+  _attackObjectSounds: {fileID: 0}
 --- !u!1 &96171211
 GameObject:
   m_ObjectHideFlags: 0
@@ -47988,6 +47983,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4691959356851513209, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4929745152392417421, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4929745152392417421, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -72476,18 +72481,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1918785894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8627024935a84eb4d880b880db4a838c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  soundObject: {fileID: 0}
-  isDestroyOnHit: 0
-  grazable: 0
-  grazed: 0
+  isGrazed: 0
   isAttacked: 0
-  isMultiHit: 1
-  multiHitDelay: 0.5
-  knockbackAmount: 0
+  _attackInfo: {fileID: 11400000, guid: 3b76a99b597dd6b46a701f611cc0437d, type: 2}
+  _attackObjectSounds: {fileID: 0}
 --- !u!1001 &3489562330448837499
 PrefabInstance:
   m_ObjectHideFlags: 0

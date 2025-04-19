@@ -1,7 +1,9 @@
 using System.Collections;
-using System.Game.Quest.Component;
-using System.Game.Quest.Quests;
+using playerCharacter;
 using UnityEngine;
+using Util.QuestSystem.Component;
+using Util.QuestSystem.Quests;
+
 namespace System.Event.Event.Quest
 {
     public abstract class QuestEvent : global::Event
@@ -14,8 +16,8 @@ namespace System.Event.Event.Quest
         
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            Game.Quest.Quests.Quest quest = new Game.Quest.Quests.Quest(_questInfo);
-            QuestComponent.Instance.AddQuest(quest);
+            Util.QuestSystem.Quests.Quest quest = new Util.QuestSystem.Quests.Quest(_questInfo);
+            PlayerCharacter.Instance.GetComponent<QuestComponent>().AddQuest(quest);
             quest.StartQuest();
             return null;
         }
@@ -30,7 +32,7 @@ namespace System.Event.Event.Quest
         private int _goalIndex;
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            Game.Quest.Quests.Quest quest = QuestComponent.Instance.GetQuest(_id);
+            Util.QuestSystem.Quests.Quest quest = PlayerCharacter.Instance.GetComponent<QuestComponent>().GetQuest(_id);
             quest.ClearGoal(_goalIndex);
             return null;
         }

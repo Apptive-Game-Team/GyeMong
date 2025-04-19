@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Sound;
 using UnityEngine;
 
 namespace Map.Puzzle.TemplePuzzle
@@ -12,8 +13,11 @@ namespace Map.Puzzle.TemplePuzzle
         private Vector3 startPosition;
         private List<TempleTile> visitedTiles = new List<TempleTile>();
 
-        public Animator animator;
+        private float delayTime = 0.5f;
+        private float goalDelay = 1f;
 
+        public Animator animator;
+        [SerializeField] private Sprite buttonImage;
         void Start()
         {
             startPosition = transform.position;
@@ -31,9 +35,13 @@ namespace Map.Puzzle.TemplePuzzle
 
         IEnumerator MoveBall()
         {
+
+            SoundObject _soundObject;
             if (currentTile != null)
             {
                 isMoving = true;
+
+                _soundObject = Sound.Play("EFFECT_Ball_Rolling", true);
 
                 Vector2 direction = GetMoveDirection();
 
@@ -64,20 +72,26 @@ namespace Map.Puzzle.TemplePuzzle
                 }
 
                 isMoving = false;
+                Sound.Stop(_soundObject);
                 animator.SetBool("isMove", false);
                 animator.SetFloat("xDir", 0);
                 animator.SetFloat("yDir", 0);
+                
+                var button = FindObjectOfType<BallButton>().gameObject;
+                button.GetComponent<SpriteRenderer>().sprite = buttonImage;
 
                 if (GoalCheck())
                 {
                     Debug.Log("Success");
+
+                    StartCoroutine(GoalAnimation());
+
                     ConditionManager.Instance.Conditions["SpringTemplePuzzleIsCleared"] = true;
                 }
-
                 else
                 {
                     Debug.Log("Nope");
-                    ReturnToStartPosition();
+                    StartCoroutine(ReturnToStartPosition());
                 }
             }
         }
@@ -132,29 +146,107 @@ namespace Map.Puzzle.TemplePuzzle
         }
         public bool GoalCheck()
         {
-            Collider2D hit = Physics2D.OverlapBox(transform.position, new Vector2(0.1f, 0.1f), 0f);
+            Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(0.1f, 0.1f), 0f);
 
-            if (hit != null && hit.CompareTag("Tile"))
+            foreach (Collider2D hit in hits)
             {
-                if (hit.gameObject.name == "Goal(Clone)")
+                if (hit != null && hit.CompareTag("Tile"))
                 {
-                    return true;
+                    if (hit.gameObject.name == "Goal(Clone)")
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
-        void ReturnToStartPosition()
+        private IEnumerator GoalAnimation()
         {
-            transform.position = startPosition;
-            currentTile = GetCurrentTile();
+            yield return new WaitForSeconds(goalDelay);
+
+            float shrinkDuration = 1f;
+            float elapsedTime = 0f;
+            Vector3 initialScale = transform.localScale;
+            Vector3 targetScale = Vector3.zero;
+
+            while (elapsedTime < shrinkDuration)
+            {
+                transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / shrinkDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localScale = targetScale;
+            gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(goalDelay);
+        }
+
+        private IEnumerator ReturnToStartPosition()
+        {
+            yield return new WaitForSeconds(delayTime);
+
+            float fadeDuration = 1f;
+            float elapsedTime = 0f;
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            Color initialColor = spriteRenderer.color;
+
+            Vector3 originalPosition = transform.position;
+
+            while (elapsedTime < fadeDuration)
+            {
+                float shakeAmount = Mathf.Sin(Time.time * 20f) * 0.1f;
+                transform.position = originalPosition + new Vector3(shakeAmount, 0, 0);
+
+                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+                spriteRenderer.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            spriteRenderer.color = new Color(initialColor.r, initialColor.g, initialColor.b, 0f);
+
+            yield return new WaitForSeconds(delayTime);
+
+            spriteRenderer.color = new Color(initialColor.r, initialColor.g, initialColor.b, 1f);
+            transform.position = startPosition + new Vector3(0, 5f, 0);
+
+            StartCoroutine(DownBall());
 
             foreach (TempleTile tile in visitedTiles)
             {
                 tile.iswalked = false;
             }
+        }
+
+        IEnumerator DownBall()
+        {
+            float downDuration = 1f;
+            float elapsedTime = 0f;
+
+            Vector3 startPos = transform.position;
+            Vector3 endPos = startPosition;
+
+            while (elapsedTime < downDuration)
+            {
+                float t = elapsedTime / downDuration;
+                t = Mathf.Pow(t, 3f);
+
+                transform.position = Vector3.Lerp(startPos, endPos, t);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = endPos;
 
             visitedTiles.Clear();
+
+            currentTile = GetCurrentTile();
+
+            yield return null;
         }
 
         TempleTile GetCurrentTile()

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Creature.Player.Component;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Util.ObjectCreator
 {
@@ -7,6 +9,21 @@ namespace Util.ObjectCreator
     {
         private List<T> _pool = new();
         private GameObject _prefab;
+
+        private void OnSceneUnloading(Scene obj)
+        {
+            _pool.Clear();
+        }
+        private void OnPlayerSpawned()
+        {
+            _pool.Clear();
+        }
+        ~ObjectPool()
+        {
+            PlayerChangeListenerCaller.OnPlayerSpawned -= OnPlayerSpawned;
+            PortalManager.sceneUnloading -= OnSceneUnloading; 
+        }
+
         public ObjectPool(int numOfObjects, GameObject prefab, Transform parent = null)
         {
             _prefab = prefab;
@@ -15,6 +32,8 @@ namespace Util.ObjectCreator
                 _prefab.AddComponent<T>();
             }
             CreateObjects(numOfObjects, parent);
+            PortalManager.sceneUnloading += OnSceneUnloading;
+            PlayerChangeListenerCaller.OnPlayerSpawned += OnPlayerSpawned;
         }
 
         public T GetObject()

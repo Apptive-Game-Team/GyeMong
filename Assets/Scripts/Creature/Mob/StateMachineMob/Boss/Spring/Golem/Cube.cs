@@ -4,7 +4,7 @@ using System.Collections;
 using System.Sound;
 using UnityEngine;
 
-namespace Creature.Boss.Spring.Golem
+namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     [Obsolete("Use AttackObjectController instead")]
     public class Cube : MonoBehaviour
@@ -33,7 +33,7 @@ namespace Creature.Boss.Spring.Golem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-
+            Sound.Play("ENEMY_Toss");
             StartCoroutine(StartFalling());
         }
 
@@ -47,10 +47,12 @@ namespace Creature.Boss.Spring.Golem
             {
                 currentSpeed += accele * Time.deltaTime;
                 float newY = transform.position.y - currentSpeed * Time.deltaTime;
+                newY = Mathf.Max(newY, targetPosition.y);
                 transform.position = new Vector3(transform.position.x, newY, transform.position.z);
 
                 yield return null;
             }
+            Sound.Play("ENEMY_Rock_Falled");
             Collider2D collider = GetComponent<Collider2D>();
             isFalled = true;
             if (collider != null)
@@ -67,7 +69,8 @@ namespace Creature.Boss.Spring.Golem
         {
             if (isFalled && other.CompareTag("Boss"))
             {
-                other.GetComponent<Mob.StateMachineMob.Boss.Boss>().StartCoroutine(other.GetComponent<Mob.StateMachineMob.Boss.Boss>().Stun(5f));
+                Debug.Log("Check0");
+                other.GetComponent<Golem>().StartCoroutine(other.GetComponent<Golem>().Stun(5f));
                 Destroy(gameObject);
                 Destroy(cubeShadow);
             }

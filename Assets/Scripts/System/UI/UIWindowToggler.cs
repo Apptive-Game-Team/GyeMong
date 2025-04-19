@@ -1,12 +1,14 @@
+using System.Input;
 using System.Input.Interface;
 using playerCharacter;
 using UI.mouse_input;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace System.UI
 {
-    public class UIWindowToggler<T> : SingletonObject<T>, IInputListener where T : MonoBehaviour
+    public class UIWindowToggler<T> : SingletonObject<T> where T : MonoBehaviour
     {
         protected ActionCode toggleKeyActionCode;
         private bool _isOptionOpened = false;
@@ -16,13 +18,21 @@ namespace System.UI
         {
             _isOptionOpened = !_isOptionOpened;
             _window.SetActive(_isOptionOpened);
-            PlayerCharacter.Instance.SetPlayerMove(!_isOptionOpened);
+            if (SceneManager.GetActiveScene().name != "TitleScene")
+            {
+                PlayerCharacter.Instance.SetPlayerMove(!_isOptionOpened);
+            }
         }
     
         protected override void Awake()
         {
             base.Awake();
-            InputManager.Instance.SetInputListener(this);
+            InputManager.OnKeyEvent += OnKey;
+        }
+        
+        private void OnDestroy()
+        {
+            InputManager.OnKeyEvent -= OnKey;
         }
 
         private void OnEnable()
@@ -31,7 +41,7 @@ namespace System.UI
             MouseInputManager.Instance.SetRaycaster(_window.GetComponentInChildren<GraphicRaycaster>());
         }
 
-        public void OnKey(ActionCode action, InputType type)
+        private void OnKey(ActionCode action, InputType type)
         {
             if (action == toggleKeyActionCode && type == InputType.Down)
             {

@@ -16,11 +16,11 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class Golem : Boss
     {
-        [SerializeField] public GameObject cubePrefab;
+        [SerializeField] private RootPatternManger mapPattern;
+        [SerializeField] private GameObject cubePrefab;
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
         [SerializeField] private GameObject pushOutAttackPrefab;
-        private Shield shieldComponenet;
         float attackdelayTime = 1f;
         [SerializeField] private SoundObject _shockwavesoundObject;
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
@@ -72,7 +72,15 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     if (angle >= excludeMin && angle <= excludeMax)
                         continue;
-                    Instantiate(shockwavePrefab, point, Quaternion.identity);
+                    AttackObjectController.Create(
+                    point,
+                    Vector3.zero,
+                    shockwavePrefab,
+                    new StaticMovement(
+                        point,
+                        attackdelayTime / 2)
+                    )
+                    .StartRoutine();
                 }
                 yield return new WaitForSeconds(attackdelayTime / 3);
             }
@@ -85,7 +93,15 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             StartCoroutine(ShockwaveSoundObject.Play());
             foreach (Vector3 point in points)
             {
-                Instantiate(shockwavePrefab, point, Quaternion.identity);
+                AttackObjectController.Create(
+                    point,
+                    Vector3.zero,
+                    shockwavePrefab,
+                    new StaticMovement(
+                        point,
+                        attackdelayTime / 2)
+                    )
+                    .StartRoutine();
             }
             yield return new WaitForSeconds(attackdelayTime / 3);
         }
@@ -97,12 +113,12 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 weights = new Dictionary<System.Type, int>
                 {
-                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 },
                     { typeof(FallingCubeAttack), 5 },
                     { typeof(ChargeShield), 50 },
                     { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
-                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 5 : 0 }
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -113,7 +129,6 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 get
                 {
-                    SetWeights();
                     return weights;
                 }
             }
@@ -129,11 +144,27 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                yield return new WaitForSeconds(Golem.attackdelayTime);
                 yield return Golem.MakeShock();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
+            }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 50 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 }
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
             }
         }
         public class PushOutAttack : GolemState
@@ -145,11 +176,20 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
-                Golem.Animator.SetBool("Toss", true);
+                Golem.Animator.SetBool("Push", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
-                Instantiate(Golem.pushOutAttackPrefab, PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity);
+                AttackObjectController.Create(
+                    PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f,
+                    Vector3.zero,
+                    Golem.pushOutAttackPrefab,
+                    new StaticMovement(
+                        PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f,
+                        Golem.attackdelayTime/2)
+                    )
+                    .StartRoutine();
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
-                Golem.Animator.SetBool("Toss", false);
+                Golem.Animator.SetBool("Push", false);
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -168,6 +208,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 GameObject cube = Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 Golem.Animator.SetBool("Toss", false);
                 yield return new WaitUntil(() => cube.IsDestroyed());
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -189,7 +230,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.currentShield = 30f;
                 Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
                 Golem.MaterialController.SetFloat(1);
-
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
         }
@@ -210,33 +251,37 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 float interval = 0.2f;
                 float fixedDistance = 7f;
 
-                List<GameObject> spawnedObjects = new List<GameObject>();
-
                 Vector3 direction = Golem.DirectionToPlayer;
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Golem.transform.position + spawnStoneRadius;
 
-                Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval, spawnedObjects));
+                Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval));
 
                 Golem.Animator.SetBool("OneHand", false);
 
                 yield return new WaitForSeconds(Golem.attackdelayTime * 2);
-
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
 
-            private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval, List<GameObject> spawnedObjects)
+            private IEnumerator SpawnFloor(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval)
             {
                 for (int i = 0; i <= numberOfObjects; i++)
                 {
                     Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
-                    GameObject floor = Instantiate(Golem.floorPrefab, spawnPosition, Quaternion.identity);
-                    spawnedObjects.Add(floor);
+                    AttackObjectController.Create(
+                    spawnPosition,
+                    Vector3.zero,
+                    Golem.floorPrefab,
+                    new StaticMovement(
+                        spawnPosition,
+                        Golem.attackdelayTime * 2)
+                    )
+                    .StartRoutine();
                     Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                     Golem.StartCoroutine(Golem._shockwavesoundObject.Play());
                     yield return new WaitForSeconds(interval);
                 }
-                yield return spawnedObjects;
             }
         }
 
@@ -251,17 +296,46 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("TwoHand", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime);
-                Debug.Log("tlqkf!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 yield return Golem.MakeShockwave();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
+                SetWeights();
                 Golem.ChangeState(NextStateWeights);
+            }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 },
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 50 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 }
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
             }
         }
         protected override void Die()
         {
             base.Die();
-            RootPatternManger.Instance.DeActivateRootObjects();
+            Animator.SetBool("isDown", true);
+            mapPattern.DeActivateRootObjects();
+        }
+        public override IEnumerator Stun(float duration)
+        {
+            Debug.Log("Check1");
+            currentShield = 0f;
+            MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+            Debug.Log("Check2");
+            Animator.SetBool("isStun", true);
+            currentState.OnStateExit();
+            StopCoroutine(_currentStateCoroutine);
+            yield return new WaitForSeconds(duration);
+            Animator.SetBool("isStun", false);
+            ChangeState();
         }
     }
 }

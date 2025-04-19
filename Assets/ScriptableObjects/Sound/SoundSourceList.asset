@@ -68,29 +68,41 @@ MonoBehaviour:
     type: 1
     clip: {fileID: 8300000, guid: 0c0d8724e1ec344b88a3e5f45183ba05, type: 3}
   - name: ENEMY_Shockwave
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: 0a7e6008cf37148a5b479c5bf4537dda, type: 3}
   - name: ENEMY_Toss
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: eec2faa7c0a9042f3bded3aad046b348, type: 3}
   - name: ENEMY_Rock_Explosion
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: 93d0515e7e04c41bd9bbd3722d40204f, type: 3}
+  - name: ENEMY_Rock_Falled
+    type: 1
+    clip: {fileID: 8300000, guid: de8a568b4cfe5495f9cf57345e611c0c, type: 3}
   - name: ENEMY_Root
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: d1afc9db5130a40a4813ba0202c7d267, type: 3}
+  - name: ENEMY_Arrow_Drow
+    type: 1
+    clip: {fileID: 8300000, guid: f1bf8c342050e214eb722f60293fddea, type: 3}
   - name: ENEMY_Arrow_Shot
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: 0a9df97cdb71e4e0e8eef3cd10076b3c, type: 3}
   - name: ENEMY_Arrow_Attack
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: 39ffd007313fb4b31b49abe70542238a, type: 3}
   - name: ENEMY_Seed_Explosion
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: 67a367759e2334becbdb95adb0664840, type: 3}
   - name: ENEMY_Vine
-    type: 3
+    type: 1
     clip: {fileID: 8300000, guid: 662dc2c91d272408890e7ac1ab267dae, type: 3}
+  - name: ENEMY_Whip
+    type: 1
+    clip: {fileID: 8300000, guid: 0f9872fa911638049ace2fac508eafa3, type: 3}
+  - name: ENEMY_Human_Grunt
+    type: 1
+    clip: {fileID: 8300000, guid: 5e9ca4641529acb4d8331dc4ef6579e0, type: 3}
   - name: EFFECT_Sword_Defend_Hit
     type: 1
     clip: {fileID: 8300000, guid: 6948407687f944b1684dd3a488fc074e, type: 3}
@@ -103,3 +115,12 @@ MonoBehaviour:
   - name: EFFECT_Sword_Skill
     type: 1
     clip: {fileID: 8300000, guid: 8af085ccb57bb48d8a4cb2a20c1fb065, type: 3}
+  - name: EFFECT_Plant_Grow
+    type: 1
+    clip: {fileID: 8300000, guid: 0af14c3e56cd5c048a308c9a3063fe7b, type: 3}
+  - name: EFFECT_Charge_Complete
+    type: 1
+    clip: {fileID: 8300000, guid: 6442f1de6d1c1224e968dfdf3e78eb6e, type: 3}
+  - name: EFFECT_Ball_Rolling
+    type: 1
+    clip: {fileID: 8300000, guid: 386dcc1e019d775489d74e39bfabdd03, type: 3}

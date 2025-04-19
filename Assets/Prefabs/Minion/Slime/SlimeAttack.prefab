@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 3177125301614160029}
   - component: {fileID: 8398534771569484446}
   - component: {fileID: 792450951232701171}
-  - component: {fileID: 1299270633434595725}
   - component: {fileID: 1186087241229166475}
+  - component: {fileID: -7035211059090515817}
   m_Layer: 0
   m_Name: SlimeAttack
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,18 +116,6 @@ MonoBehaviour:
         - {fileID: 21300000, guid: 1d930323345774908a86c2db50277c6b, type: 3}
         deltaTime: 0.1
         _renderer: {fileID: 8398534771569484446}
---- !u!114 &1299270633434595725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3037104521305943131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d57f0854c331f884b9f10cc8f7f923da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &1186087241229166475
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -163,6 +151,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2
+--- !u!114 &-7035211059090515817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3037104521305943131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 9a97e1d513ad54e43b74ac81c16124f2, type: 2}
+  _attackObjectSounds: {fileID: 0}
 --- !u!1 &3186221089309415068
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Input;
 using System.Sound;
 using Creature.Player.Component;
 using Unity.VisualScripting;
 using playerCharacter;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public abstract class Event
@@ -52,9 +55,10 @@ public class HealEvent : Event
 public class WarpPortalEvent : Event
 {
     public PortalID portalID;
+    public float delay;
     public override IEnumerator Execute(EventObject eventObject = null)
     {
-        return PortalManager.Instance.TransitScene(portalID);
+        return PortalManager.Instance.TransitScene(portalID, delay);
     }
 }
 
@@ -230,6 +234,53 @@ public class EnqueueEvent : Event
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         EventQueue.Instance.AddEvent(e);
+        yield return null;
+    }
+}
+
+public class SetActiveObject : Event
+{
+    [SerializeField] private GameObject _gameObject;
+    [SerializeField] private bool isActive;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        _gameObject.SetActive(isActive);
+        return null;
+    }
+}
+
+public class DropObjectEvent : Event
+{
+    [SerializeField] private GameObject _gameObject;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        GameObject.Instantiate(_gameObject, eventObject.transform.position, _gameObject.transform.rotation);
+        _gameObject.transform.DOMoveY(_gameObject.transform.position.y + 1f, 0.3f).SetEase(Ease.OutQuad)
+            .OnComplete(() => _gameObject.transform.DOMoveY(_gameObject.transform.position.y, 0.3f).SetEase(Ease.InBounce));
+        yield return null;
+    }
+}
+
+public class LoadScene : Event
+{
+    [SerializeField] private string _sceneName;
+
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        SceneManager.LoadScene(_sceneName);
+        yield return null;
+    }
+}
+
+public class ChangeObjectColor : Event
+{
+    [SerializeField] private GameObject _gameObject;
+    [SerializeField] private Color _color;
+    public override IEnumerator Execute(EventObject eventObject = null)
+    {
+        _gameObject.transform.GetComponent<SpriteRenderer>().color = _color;
         yield return null;
     }
 }

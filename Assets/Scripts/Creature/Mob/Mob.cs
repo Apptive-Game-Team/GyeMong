@@ -36,7 +36,7 @@ namespace Creature.Mob
             float backStepSpeed = 50f;
             Vector3 direction = (transform.position - playerPosition).normalized;
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+            LayerMask obstacleLayer = LayerMask.GetMask("Wall", "Player");
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
 
@@ -71,7 +71,7 @@ namespace Creature.Mob
             }
         }
 
-        protected Vector3 lastRushDirection; //�뽬 ���� ���� ����...�� ����� ������?
+        protected Vector3 lastRushDirection;
 
         public IEnumerator RushAttack(float delay)
         {
@@ -83,7 +83,7 @@ namespace Creature.Mob
             Vector3 targetPosition = playerPosition - (direction * TARGET_OFFSET);
             float targetDistance = Vector3.Distance(transform.position, targetPosition);
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            LayerMask obstacleLayer = LayerMask.GetMask("Obstacle");
+            LayerMask obstacleLayer = LayerMask.GetMask("Wall");
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
 
             if (hit.collider != null)

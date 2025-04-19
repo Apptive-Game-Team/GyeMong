@@ -76,8 +76,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 12
-  m_Sprite: {fileID: 66825293, guid: 2194793274e0340e0affae6b0972e724, type: 3}
+  m_SortingOrder: 11
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_Size: {x: 5.7599998, y: 5.7599998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &2740949399424765801
@@ -173,12 +173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 0
-  trigger: 2
-  triggerLimitCounter: 1
+  trigger: 5
+  triggerLimitCounter: -1
   eventSequence:
   - rid: 521773882682900480
   - rid: 3294223817106784258
-  - rid: 3294223817106784259
   references:
     version: 2
     RefIds:
@@ -196,9 +195,6 @@ MonoBehaviour:
       type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
       data:
         delayTime: 2
-    - rid: 3294223817106784259
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!114 &-8692751306265056136
 MonoBehaviour:
   m_ObjectHideFlags: 0

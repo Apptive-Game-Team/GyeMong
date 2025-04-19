@@ -26,12 +26,12 @@ PrefabInstance:
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.45
+      value: 44.8
       objectReference: {fileID: 0}
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.4
+      value: -72.39
       objectReference: {fileID: 0}
     - target: {fileID: 579300838982675827, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -77,13 +77,23 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300114, guid: 99611d99d82c24a6ca48de3c0b39fa62,
+      objectReference: {fileID: 21300000, guid: 788f3fc066a1d479d87728457741afda,
         type: 3}
     - target: {fileID: 2478308951613359036, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 2478308951613359036, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308951613359036, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 2706223787955244828, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: m_Radius
@@ -102,7 +112,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: eventSequence.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -112,7 +122,7 @@ PrefabInstance:
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
       propertyPath: eventSequence.Array.data[1]
-      value: 521773745628250173
+      value: 2388724293505646605
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -128,6 +138,11 @@ PrefabInstance:
         type: 3}
       propertyPath: eventSequence.Array.data[4]
       value: 521773911791632385
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: eventSequence.Array.data[5]
+      value: 7497613932140953605
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
@@ -156,12 +171,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
+      propertyPath: managedReferences[2388724293505646605]
+      value: Assembly-CSharp ShowMessages
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[7497613932140953605]
+      value: Assembly-CSharp HurtEffectEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[7497613932140953605].amount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
       propertyPath: managedReferences[521773745628250173].message.name
       value: System
       objectReference: {fileID: 0}
     - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
         type: 3}
+      propertyPath: managedReferences[2388724293505646605].autoSkipTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
       propertyPath: managedReferences[521773745628250173].message.message
+      value: "\uC800\uC7A5\uC911.."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[2388724293505646605].multiMessages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[2388724293505646605].multiMessages.Array.data[0].name
+      value: System
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[2388724293505646605].multiMessages.Array.data[0].messages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107057368509685491, guid: f79cf1be3a37447669edd05f233eeeec,
+        type: 3}
+      propertyPath: managedReferences[2388724293505646605].multiMessages.Array.data[0].messages.Array.data[0]
       value: "\uC800\uC7A5\uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 4934385667042233568, guid: f79cf1be3a37447669edd05f233eeeec,
@@ -216,16 +271,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.15625, y: 2.28125}
+    pivot: {x: 0.5, y: 0.2}
+    oldSize: {x: 1.92, y: 3.84}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.66, y: 1.18}
   m_EdgeRadius: 0

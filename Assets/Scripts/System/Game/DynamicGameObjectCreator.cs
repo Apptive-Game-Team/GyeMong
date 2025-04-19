@@ -7,8 +7,22 @@ namespace System.Game
         [SerializeField] private GameObject _prefab;
         [SerializeField] [Tooltip("If you want to Summon This GameObject, conditionKey1 == true")] private string _conditionKey1 = "";
         [SerializeField] [Tooltip("If you want to Summon This GameObject, conditionKey2 == false")] private string _conditionKey2 = "";
-
+    
+        [SerializeField] private bool useParentPosition = true;
+        
+        
         private void Start()
+        {
+            if (CheckCondition(_conditionKey1, _conditionKey2))
+            {
+                if (!useParentPosition)
+                    Instantiate(_prefab);
+                else
+                    Instantiate(_prefab, transform.position, Quaternion.identity);
+            }
+        }
+        
+        private bool CheckCondition(string conditionKey1, string conditionKey2)
         {
             bool condition1 = true;
             bool condition2 = false;
@@ -29,10 +43,7 @@ namespace System.Game
                 }
             }
 
-            if (condition1 && !condition2)
-            {
-                Instantiate(_prefab);
-            }
+            return condition1 && !condition2;
         }
     }
 

@@ -153,6 +153,51 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e2f0d7b17aab4b8a802800c62d20884, type: 2}
   - {fileID: 11400000, guid: 9ebf8ea8ebf104c70bef6c353f9b4c35, type: 2}
   - {fileID: 11400000, guid: dfa710a021f634ebd95fcbbbe2f6c1fb, type: 2}
+--- !u!1 &4331037996407810154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4605427219030686443}
+  - component: {fileID: 6831017530260938187}
+  m_Layer: 0
+  m_Name: DrowSoundObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4605427219030686443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331037996407810154}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 844737725874419187}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6831017530260938187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331037996407810154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df41e182033742d8a743905e984913f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceName: ENEMY_Arrow_Shot
 --- !u!1 &7607399698781265360
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,8 +212,8 @@ GameObject:
   - component: {fileID: 8018965693779408895}
   - component: {fileID: 5354083522607184929}
   - component: {fileID: 7472536086023456837}
-  - component: {fileID: 6663936420378834018}
   - component: {fileID: 2303165326997353410}
+  - component: {fileID: 6663936420378834018}
   m_Layer: 0
   m_Name: MidBoss
   m_TagString: Boss
@@ -191,6 +236,7 @@ Transform:
   m_Children:
   - {fileID: 7688074528975113545}
   - {fileID: 799734533708190611}
+  - {fileID: 4605427219030686443}
   - {fileID: 1168519218985706024}
   - {fileID: 6437808754312436988}
   m_Father: {fileID: 0}
@@ -375,19 +421,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.3
---- !u!114 &6663936420378834018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7607399698781265360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d66079f6584a2b8638783f028adf4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _materialDatas: {fileID: 11400000, guid: b83ab9d50893f408cbb45301ce80bf11, type: 2}
 --- !u!114 &2303165326997353410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +449,19 @@ MonoBehaviour:
   SkillIndicator: {fileID: 2579300035636191002}
   arrowSoundObject: {fileID: 5473089280011465190}
   vineSoundObject: {fileID: 1832858006457810338}
+--- !u!114 &6663936420378834018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7607399698781265360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d66079f6584a2b8638783f028adf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materialDatas: {fileID: 11400000, guid: b83ab9d50893f408cbb45301ce80bf11, type: 2}
 --- !u!1001 &2224777554200822745
 PrefabInstance:
   m_ObjectHideFlags: 0

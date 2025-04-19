@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Game.Quest.Quests;
+using System.Input;
 using UnityEngine;
+using Util.QuestSystem.Quests;
 
 [System.Serializable]
 public class PlayerData
 {
     public bool isFirst = true;
-    public string sceneName = "TutorialScene";
+    public string sceneName = "SpringBeach";
     public Vector3 playerPosition = new(4.93f, -1.72f, 0);
     public Vector2 playerDirection = new(1, 0);
 }
@@ -22,16 +23,16 @@ public class RuneDatas
 [Serializable]
 public class QuestData
 {
-    public List<Quest> quests = new();
+    public List<SerializableQuestInfo> quests = new();
 }
 
 [System.Serializable]
 public class SoundData
 {
-    public float masterVolume = 1f;
-    public float UIVolume = 1f;
-    public float bgmVolume = 1f;
-    public float sfxVolume = 1f;
+    public float masterVolume = 0.5f;
+    public float UIVolume = 0.5f;
+    public float bgmVolume = 0.5f;
+    public float sfxVolume = 0.5f;
 }
 
 [System.Serializable]

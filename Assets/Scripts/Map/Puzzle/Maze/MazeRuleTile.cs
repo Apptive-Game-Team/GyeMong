@@ -46,6 +46,7 @@ public class MazeWallTile : RuleTile<MazeWallTile>
             tileType = setType;
             setType = TileType.None;
             tileData.sprite = GetTileSprite(tileMap[tileType][Random.Range(0, tileMap[tileType].Count)]);
+            tileData.colliderType = Tile.ColliderType.Grid;
             Debug.Log("set by setter " + position);
             return;
         }
@@ -76,6 +77,7 @@ public class MazeWallTile : RuleTile<MazeWallTile>
         }
         
         tileData.sprite = GetTileSprite(tileMap[tileType][Random.Range(0, tileMap[tileType].Count)]);
+        tileData.colliderType = Tile.ColliderType.Grid;
     }
     
     private Sprite GetTileSprite(TileBase tileBase)

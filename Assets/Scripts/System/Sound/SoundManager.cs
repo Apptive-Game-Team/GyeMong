@@ -36,6 +36,7 @@ public class SoundManager : SingletonObject<SoundManager>
         if (bgmSoundObject == null)
         {
             bgmSoundObject = gameObject.AddComponent<SoundObject>();
+            bgmSoundObject.enabled = true;
         }
         
         return bgmSoundObject;

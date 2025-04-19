@@ -3,11 +3,13 @@ using System;
 using System.Collections;
 using System.Event.Interface;
 using System.Game.Buff;
+using System.Input;
 using Creature.Player;
 using Creature.Player.Component;
 using Creature.Player.Component.Collider;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Visual.Camera;
 
 namespace playerCharacter
 {
@@ -49,21 +51,18 @@ namespace playerCharacter
         protected override void Awake()
         {
             base.Awake();
-            
             stat = _statData.GetStatComp();
             curHealth = stat.HealthMax;
             curSkillGauge = 0f;
+            playerRb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+            soundController = GetComponent<PlayerSoundController>();
         }
 
         private void Start()
         {
-            playerRb = GetComponent<Rigidbody2D>();
-            animator = GetComponent<Animator>();
-            soundController = GetComponent<PlayerSoundController>();
-
             Renderer renderer = gameObject.GetComponent<Renderer>();
             renderer.material = materials[0];
-            
             changeListenerCaller.CallShieldChangeListeners(curShield);
             changeListenerCaller.CallHpChangeListeners(curHealth);
         }
@@ -157,8 +156,8 @@ namespace playerCharacter
         public void TakeDamage(float damage, bool isUnblockable = false)
         {
             if (isInvincible) return;
-            
-            StartCoroutine(EffectManager.Instance.ShakeCamera());
+
+            CameraManager.Instance.CameraShake(0.1f);
 
             if (damage >= curShield && curShield > 0)
             {
@@ -255,7 +254,6 @@ namespace playerCharacter
 
             RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance, LayerMask.GetMask("Wall"));
             Vector2 targetPosition = hit.collider == null ? startPosition + dashDirection * stat.DashDistance : hit.point + hit.normal * 0.1f;
-            Debug.Log($"{startPosition} , {targetPosition} , {hit.collider}");
 
             float elapsedTime = 0f;
 
@@ -382,6 +380,7 @@ namespace playerCharacter
         private void Die()
         {
             //GameOver Event Triggered.
+            changeListenerCaller.CallPlayerDied();
             try
             {
                 GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
@@ -420,8 +419,6 @@ namespace playerCharacter
         {
             return lastMovementDirection;
         }
-
-
 
         public IEnumerator LoadPlayerEffect()
         {
@@ -476,16 +473,22 @@ namespace playerCharacter
             soundController.SetBool(PlayerSoundType.FOOT, false);
         }
 
-        public void StopPlayer()
+        public void StopPlayer(bool isEnable = false)
         {
+            if (!isEnable) soundController.SetBool(PlayerSoundType.FOOT, isEnable);
             playerRb.velocity = Vector2.zero;
+            animator.SetBool("isMove", false);
         }
 
         public void Trigger()
         {
             curHealth = stat.HealthMax;
             curSkillGauge = 0f;
+            changeListenerCaller.CallHpChangeListeners(curHealth);
+            changeListenerCaller.CallShieldChangeListeners(curShield);
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
             StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / stat.HealthMax));
+            changeListenerCaller.CallPlayerSpawned();
         }
         
         public float CurrentHp { get { return curHealth; } }

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 828874474265935314}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.11, y: -1.09, z: 0}
+  m_LocalPosition: {x: -0.63, y: -7.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1535860397863299029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 87.2596, y: 2.7955666, z: -0.11320203}
+  m_LocalPosition: {x: 87.2596, y: 2.7955666, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -90,7 +90,7 @@ Transform:
   m_GameObject: {fileID: 1888720298336016716}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.3, y: 6.3, z: 0}
+  m_LocalPosition: {x: -1.28, y: -10.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 3661562679651564734}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.5, y: 19.9, z: 0}
+  m_LocalPosition: {x: 16.9, y: -35.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -152,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 3665353059661076308}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 1.1, z: 0}
+  m_LocalPosition: {x: -0.84, y: -3.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -216,7 +216,7 @@ Transform:
   m_GameObject: {fileID: 4712843546960710698}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.6, y: 14.9, z: 0}
+  m_LocalPosition: {x: -69.4, y: -63.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -241,13 +241,22 @@ MonoBehaviour:
   trigger: 0
   triggerLimitCounter: 1
   eventSequence:
+  - rid: 8709460512485146635
   - rid: 8330687525730910208
   - rid: 8330687525730910211
   - rid: 8330687525730910209
+  - rid: 7445868854478897154
   - rid: 8330687525730910210
   references:
     version: 2
     RefIds:
+    - rid: 7445868854478897154
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 0}
+        _creatureType: 1
+        _name: speed
+        _value: 10
     - rid: 8330687525730910208
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -274,6 +283,11 @@ MonoBehaviour:
         _targets:
         - transform: {fileID: 1547250610349787232}
           speed: 3
+    - rid: 8709460512485146635
+      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
+      data:
+        tag: ShadowForestQuestIsContinuing
+        condition: 1
 --- !u!61 &508502452910666282
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -346,7 +360,7 @@ Transform:
   m_GameObject: {fileID: 8015682064032246691}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.98, y: -2.25, z: 0}
+  m_LocalPosition: {x: -87.18, y: -32.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -374,10 +388,18 @@ MonoBehaviour:
   - rid: 8330687525730910208
   - rid: 8330687525730910211
   - rid: 8330687525730910209
+  - rid: 7445868854478897153
   - rid: 8330687525730910210
   references:
     version: 2
     RefIds:
+    - rid: 7445868854478897153
+      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 0}
+        _creatureType: 1
+        _name: speed
+        _value: 10
     - rid: 8330687525730910208
       type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -447,7 +469,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 13.066508}
+  m_Size: {x: 13, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &8481357619677874005
 GameObject:
@@ -474,7 +496,7 @@ Transform:
   m_GameObject: {fileID: 8481357619677874005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.74, y: -0.89, z: 0}
+  m_LocalPosition: {x: -0.35, y: -1.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -496,12 +518,12 @@ PrefabInstance:
     - target: {fileID: 3378644557222966397, guid: 51932e3350fc449dca7f726be1aceb0c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.17959595
+      value: -87.47
       objectReference: {fileID: 0}
     - target: {fileID: 3378644557222966397, guid: 51932e3350fc449dca7f726be1aceb0c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.0755665
+      value: -34.76
       objectReference: {fileID: 0}
     - target: {fileID: 3378644557222966397, guid: 51932e3350fc449dca7f726be1aceb0c,
         type: 3}
@@ -543,7 +565,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 729723143805690462, guid: 51932e3350fc449dca7f726be1aceb0c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

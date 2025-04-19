@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Event.Interface;
+using Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
 using playerCharacter;
 using UnityEngine;
 
@@ -11,7 +12,6 @@ namespace Creature.Mob.StateMachineMob.Npc
         private IPathFinder _pathFinder = new SimplePathFinder();
         private const int MAX_DISTANCE_TO_PLAYER = 2;
         private const int PATH_FINDING_INTERVAL = 1;
-        [SerializeField] private Animator _animator;
 
         private void Start()
         {
@@ -65,16 +65,16 @@ namespace Creature.Mob.StateMachineMob.Npc
                 {
                     if (mob.DistanceToPlayer < MAX_DISTANCE_TO_PLAYER)
                     { // close to Player
-                        Npc._animator.SetBool("walking", false);
+                        Npc.Animator.SetBool("walking", false);
                     }
                     else
                     { // far from Player
-                        Npc._animator.SetBool("walking", true);
+                        Npc.Animator.SetBool("walking", true);
                         mob.transform.position = Vector3.MoveTowards(mob.transform.position, _target, mob.speed * Time.deltaTime);
                         Vector3 direction = _target - mob.transform.position;
                         
-                        Npc._animator.SetFloat("x", direction.x);
-                        Npc._animator.SetFloat("y", direction.y);
+                        Npc.Animator.SetFloat("x", direction.x);
+                        Npc.Animator.SetFloat("y", direction.y);
                     }
                     yield return null;
                 }

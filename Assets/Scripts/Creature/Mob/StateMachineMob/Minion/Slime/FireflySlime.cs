@@ -1,4 +1,5 @@
 using System.Collections;
+using Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using Map.Puzzle.FogMaze;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ namespace Creature.Mob.StateMachineMob.Minion.Slime
 
         public override void StartMob()
         {
+            if (!isInitialized) Initialize();
+            
             _isOn = true;
             _light.SetActive(_isOn);
             _slimeAnimator.SetSprites(_spriteOnVersion);

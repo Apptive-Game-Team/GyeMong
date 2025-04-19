@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Creature.Mob.StateMachineMob.Boss
 {
-    public abstract class Boss : StateMachineMob
+    public abstract class Boss : StateMachineMob, IEventTriggerable
     {
         protected int currentPhase = 0;
         protected int maxPhase;
@@ -70,8 +70,7 @@ namespace Creature.Mob.StateMachineMob.Boss
         {
             currentHp = CurrentMaxHp;
             GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
-            yield return new WaitForSeconds(2f);
-            ChangeState();
+            yield return null;
         }
 
         public override IEnumerator Stun(float duration)
@@ -88,6 +87,7 @@ namespace Creature.Mob.StateMachineMob.Boss
         {
             try
             {
+                currentState.OnStateExit();
                 StopAllCoroutines();
                 GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
             }
@@ -95,6 +95,10 @@ namespace Creature.Mob.StateMachineMob.Boss
             {
                 Debug.Log("BossDownEventObject not found");
             }
+        }
+        public void Trigger()
+        {
+            ChangeState();
         }
     }
 }

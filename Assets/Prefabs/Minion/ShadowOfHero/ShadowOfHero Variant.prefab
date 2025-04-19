@@ -73,6 +73,8 @@ PrefabInstance:
     - {fileID: 2995242466989790000, guid: 51932e3350fc449dca7f726be1aceb0c, type: 3}
     - {fileID: 6635378381645803433, guid: 51932e3350fc449dca7f726be1aceb0c, type: 3}
     - {fileID: 3998907318460349168, guid: 51932e3350fc449dca7f726be1aceb0c, type: 3}
+    - {fileID: 7701234219786804292, guid: 51932e3350fc449dca7f726be1aceb0c, type: 3}
+    - {fileID: 6144199290392050901, guid: 51932e3350fc449dca7f726be1aceb0c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 668407685317662477, guid: 51932e3350fc449dca7f726be1aceb0c,
@@ -87,6 +89,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 791937065043301194}
+    - targetCorrespondingSourceObject: {fileID: 668407685317662477, guid: 51932e3350fc449dca7f726be1aceb0c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 48588845120837935}
   m_SourcePrefab: {fileID: 100100000, guid: 51932e3350fc449dca7f726be1aceb0c, type: 3}
 --- !u!1 &5343940587875943571 stripped
 GameObject:
@@ -113,6 +119,7 @@ MonoBehaviour:
     type: 3}
   skillPrefab: {fileID: 8480704386990181861, guid: d0458759a61874e51908dcbc9e0af182,
     type: 3}
+  _eventObject: {fileID: 48588845120837935}
 --- !u!114 &8496302069083765904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +141,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5343940587875943571}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -153,3 +160,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &48588845120837935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5343940587875943571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 286138671396552708
+  references:
+    version: 2
+    RefIds:
+    - rid: 286138671396552708
+      type: {class: DropObjectEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _gameObject: {fileID: 7070685943049849027, guid: ff9d31204eb0001439356de1f40ac7b5,
+          type: 3}

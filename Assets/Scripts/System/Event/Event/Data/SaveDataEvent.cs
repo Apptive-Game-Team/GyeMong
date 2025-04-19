@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Game.Object.Persisted;
-using System.Game.Quest.Component;
 using playerCharacter;
-using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using Util.QuestSystem.Component;
+
 public class SaveDataEvent : Event
 {
     private PlayerData playerData = new();
@@ -24,7 +24,7 @@ public class SaveDataEvent : Event
         runeData.AcquiredRuneDatas = runeComponent.AcquiredRuneList;
         runeData.EquippedRuneDatas = runeComponent.EquippedRuneList;
 
-        questData.quests = questComponent.GetQuests();
+        questData.quests = questComponent.GetQuestInfos();
         
         DataManager.Instance.SaveSection(questData, "QuestData");
         DataManager.Instance.SaveSection(playerData, "PlayerData");
@@ -69,6 +69,7 @@ public class LoadDataEvent : Event
         SceneManager.LoadScene(playerData.sceneName);
         DataManager.Instance.LoadPlayerData();
         
+        ConditionManager.Instance.Load();
         PersistedGameObjectManager.Instance.SetPersistedGameObjects(DataManager.Instance.LoadSection<PersistedGameObjectDatas>(PersistedGameObjectManager.PERSISTED_DATA_FILE));
         yield return null;
     }

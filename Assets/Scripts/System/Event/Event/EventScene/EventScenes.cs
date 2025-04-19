@@ -18,6 +18,7 @@ public class SlimeEvents : EventScene
         for (int i = 0;i < slimes.Length;i++)
         {
             GameObject randomSlime = slimes[i];
+            randomSlime.SetActive(true);
             Vector2 randomDirection = Random.insideUnitCircle.normalized * 4f;
             Vector3 randomPosition = targetSlime.transform.position + (Vector3)randomDirection;
             randomSlime.transform.position = randomPosition;

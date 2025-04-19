@@ -1,169 +1,52 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Game;
 using Creature.Attack;
 using Creature.Attack.Component;
 using UnityEngine;
-
-using LastEnemyAttackInfo = Creature.Boss.EnemyAttackInfo; 
-
 
 namespace Creature.Player.Component.Collider
 {
     public class HitCollider : MonoBehaviour
     {
         [SerializeField] private AirborneController airborneController;
-        
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (OnEnterWithLastSystem(other.gameObject)) return;
-            if (other.CompareTag("EnemyAttack"))
-            {
-                EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>()?.AttackInfo;
-                AttackObjectController attackObjectController = other.GetComponent<AttackObjectController>();
-                if (enemyAttackInfo == null) return;
 
-                ApplyAirborne(attackObjectController);
+        private Dictionary<Collider2D, float> multiHitTimers = new Dictionary<Collider2D, float>();
+
+        private void OnTriggerEnter2D(Collider2D other) => HandleAttackCollision(other);
+        private void OnTriggerStay2D(Collider2D other) => HandleAttackCollision(other);
+        private void OnCollisionEnter2D(Collision2D other) => HandleAttackCollision(other.collider);
+        private void OnCollisionStay2D(Collision2D other) => HandleAttackCollision(other.collider);
+
+        private void HandleAttackCollision(Collider2D collider)
+        {
+            if (!collider.CompareTag("EnemyAttack")) return;
+
+            EnemyAttackInfo enemyAttackInfo = collider.GetComponent<AttackObjectController>()?.AttackInfo;
+            if (enemyAttackInfo == null) return;
+            AttackObjectController attackObjectController = collider.GetComponent<AttackObjectController>();
+
+            if (enemyAttackInfo.canMultiHit)
+            {
+                float lastHitTime = multiHitTimers.ContainsKey(collider) ? multiHitTimers[collider] : 0f;
+
+                if (Time.time < lastHitTime + enemyAttackInfo.multiHitDelay) return;
+
+                multiHitTimers[collider] = Time.time;
+                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+            }
+            else if (!attackObjectController.isAttacked)
+            {
+                ApplyAirborne(collider.GetComponent<AttackObjectController>());
                 attackObjectController.isAttacked = true;
+
                 if (enemyAttackInfo.soundObject != null)
-                {
                     enemyAttackInfo.soundObject.PlayAsync();
-                }
 
-                if (enemyAttackInfo.isDestroyOnHit)
-                {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                    other.gameObject.SetActive(false);
-                }
-                else
-                {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                }
+                playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                collider.gameObject.SetActive(!enemyAttackInfo.isDestroyOnHit);
             }
-        }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            if (OnStayWithLastSystem(other.gameObject)) return;
-            if (other.CompareTag("EnemyAttack"))
-            {
-                EnemyAttackInfo enemyAttackInfo = other.GetComponent<AttackObjectController>()?.AttackInfo;
-                if (enemyAttackInfo == null) return;
-
-                if (enemyAttackInfo.canMultiHit)
-                {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                    StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
-                }
-            }
-        }
-
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            if (OnEnterWithLastSystem(other.gameObject)) return;
-            if (other.collider.CompareTag("EnemyAttack"))
-            {
-                EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>()?.AttackInfo;
-                if (enemyAttackInfo == null) return;
-
-                other.collider.GetComponent<AttackObjectController>().isAttacked = true;
-                if (enemyAttackInfo.soundObject != null)
-                {
-                    enemyAttackInfo.soundObject.PlayAsync();
-                }
-
-                if (enemyAttackInfo.isDestroyOnHit)
-                {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                    other.collider.gameObject.SetActive(false);
-                }
-                else
-                {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                }
-            }
-        }
-
-        private void OnCollisionStay2D(Collision2D other)
-        {
-            if (OnStayWithLastSystem(other.gameObject)) return;
-            if (other.collider.CompareTag("EnemyAttack"))
-            {
-                EnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<AttackObjectController>()?.AttackInfo;
-                if (enemyAttackInfo == null) return;
-
-                if (enemyAttackInfo.canMultiHit)
-                {
-                    playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                    StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
-                }
-            }
-        }
-
-        private IEnumerator Wait(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-        }
-        
-        [Obsolete("Don't use this method")]
-        private bool OnEnterWithLastSystem(GameObject other)
-        {
-            try
-            {
-                if (other.collider.CompareTag("EnemyAttack"))
-                {
-                    LastEnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<LastEnemyAttackInfo>();
-                    if (enemyAttackInfo == null) return false;
-
-                    enemyAttackInfo.isAttacked = true;
-                    if (enemyAttackInfo.soundObject != null)
-                    {
-                        enemyAttackInfo.soundObject.PlayAsync();
-                    }
-
-                    if (enemyAttackInfo.isDestroyOnHit)
-                    {
-                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                        other.collider.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                    }
-                }
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-            
-        }
-        
-        [Obsolete("Don't use this method")]
-        private bool OnStayWithLastSystem(GameObject other)
-        {
-            try
-            {
-                if (other.collider.CompareTag("EnemyAttack"))
-                {
-                    LastEnemyAttackInfo enemyAttackInfo = other.collider.GetComponent<LastEnemyAttackInfo>();
-                    if (enemyAttackInfo == null) return false;
-
-                    if (enemyAttackInfo.isMultiHit)
-                    {
-                        playerCharacter.PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
-                        StartCoroutine(Wait(enemyAttackInfo.multiHitDelay));
-                    }
-                }
-
-                return true;
-            } catch (Exception e)
-            {
-                return false;
-            }
-            
         }
 
         private void ApplyAirborne(AttackObjectController controller)
@@ -171,7 +54,7 @@ namespace Creature.Player.Component.Collider
             if (controller.AttackInfo.knockbackAmount > 0)
             {
                 Vector3 origin = controller.gameObject.transform.position;
-                Vector3 direction = playerCharacter.PlayerCharacter.Instance.transform.position - origin;
+                Vector3 direction = (playerCharacter.PlayerCharacter.Instance.transform.position - origin).normalized;
                 StartCoroutine(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + playerCharacter.PlayerCharacter.Instance.transform.position));
             }
         }

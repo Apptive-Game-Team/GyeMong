@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 12
+  m_SortingOrder: 11
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -120,7 +120,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.21210802, y: 0.21949124}
+  m_Offset: {x: 0.02531898, y: -0.4648564}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.524319, y: 4.333505}
+  m_Size: {x: 1.5466793, y: 2.96481}
   m_EdgeRadius: 0
 --- !u!50 &394299540722857273
 Rigidbody2D:
@@ -141,7 +141,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8583689789694271782}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -173,11 +173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoop: 0
-  trigger: 2
-  triggerLimitCounter: 1
+  trigger: 5
+  triggerLimitCounter: -1
   eventSequence:
   - rid: 521773882682900480
-  - rid: 3294223817106784259
+  - rid: 3294223817106784258
   references:
     version: 2
     RefIds:
@@ -191,9 +191,10 @@ MonoBehaviour:
         - {fileID: 66825293, guid: 2194793274e0340e0affae6b0972e724, type: 3}
         deltaTime: 0.1
         _renderer: {fileID: 0}
-    - rid: 3294223817106784259
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
+    - rid: 3294223817106784258
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0.5
 --- !u!114 &-8692751306265056136
 MonoBehaviour:
   m_ObjectHideFlags: 0

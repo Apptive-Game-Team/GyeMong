@@ -901,6 +901,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4929745152392417421, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4929745152392417421, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1944,7 +1954,10 @@ MonoBehaviour:
   triggerLimitCounter: -1
   eventSequence:
   - rid: 4949243949170819073
+  - rid: 4949244447536971779
   - rid: 4949243949170819075
+  - rid: 4949244447536971777
+  - rid: 4949244447536971780
   - rid: 4949243949170819074
   references:
     version: 2
@@ -1961,6 +1974,18 @@ MonoBehaviour:
         message:
           name: '[System]'
           message: "\uBB38\uC774 \uC7A0\uACA8\uC788\uC2B5\uB2C8\uB2E4."
+    - rid: 4949244447536971777
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 4949244447536971779
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 4949244447536971780
+      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
 --- !u!212 &497318182
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21853,7 +21878,7 @@ SpriteRenderer:
   m_Size: {x: 10, y: 9.98}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!222 &1040907120
