@@ -36,6 +36,12 @@ namespace Util.QuestSystem.Quests
         [SerializeField] private QuestType _questType;
         [SerializeField] private List<Goal> _goals;
         
+        public string QuestName => _questName;
+        public string QuestDescription => _questDescription;
+        public QuestType QuestType => _questType;
+        public int QuestID => _questID;
+        public List<Goal> Goals => _goals;
+        
         public SerializableQuestInfo(QuestInfo questInfo)
         {
             _questID = questInfo.questID;
