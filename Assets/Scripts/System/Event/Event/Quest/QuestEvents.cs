@@ -1,4 +1,5 @@
 using System.Collections;
+using System.UI.Game.QuestUI;
 using playerCharacter;
 using UnityEngine;
 using Util.QuestSystem.Component;
@@ -19,6 +20,7 @@ namespace System.Event.Event.Quest
             Util.QuestSystem.Quests.Quest quest = new Util.QuestSystem.Quests.Quest(_questInfo);
             PlayerCharacter.Instance.GetComponent<QuestComponent>().AddQuest(quest);
             quest.StartQuest();
+            QuestUI.Instance.SetQuestList();
             return null;
         }
     }
