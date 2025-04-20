@@ -10,7 +10,7 @@ namespace System.Game.Item
         IDLE = 0,
         QUEST = 1,
     }
-    [CreateAssetMenu(fileName = "ItemInfo", menuName = "ScriptableObject/ItemInfo")]
+    [CreateAssetMenu(fileName = "ItemInfo", menuName = "NewItem/ItemInfo")]
     public class ItemInfo : ScriptableObject
     {
         [SerializeField] private ItemType itemType;
