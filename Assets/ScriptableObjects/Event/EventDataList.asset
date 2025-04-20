@@ -12,7 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e948e848db30e5549bfa3bef1ccca450, type: 3}
   m_Name: EventDataList
   m_EditorClassIdentifier: 
-  eventDataList:
-  - name: 
-    id: 0
-    eventObj: {fileID: 0}
+  eventDataList: []
