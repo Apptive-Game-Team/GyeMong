@@ -19,13 +19,18 @@ namespace System.UI.Game.QuestUI
         {
             base.Awake();
             toggleKeyActionCode = ActionCode.Menu;
-            InitializeQuestList();
+            SetQuestList();
         }
         
-        private void InitializeQuestList()
+        public void SetQuestList()
         {
             var questComponent = PlayerCharacter.Instance.GetComponent<QuestComponent>();
             var questInfos = questComponent.GetQuestInfos();
+            
+            foreach (Transform child in questListview.transform)
+            {
+                Destroy(child.gameObject);
+            }
 
             foreach (var questInfo in questInfos)
             {
