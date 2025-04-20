@@ -19,6 +19,7 @@ namespace System.Input
         RunePage,
         Option,
         SelectClick,
+        Menu,
     }
 
     public class InputManager : SingletonObject<InputManager>
@@ -67,6 +68,7 @@ namespace System.Input
                 { ActionCode.RunePage, KeyCode.I },
                 { ActionCode.Option, KeyCode.Escape},
                 { ActionCode.SelectClick, KeyCode.Mouse0 },
+                { ActionCode.Menu, KeyCode.U },
             };
         }
 
