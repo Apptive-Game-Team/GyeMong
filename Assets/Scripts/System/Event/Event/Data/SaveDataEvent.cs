@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Game.Object.Persisted;
+using System.UI.Game.QuestUI;
 using playerCharacter;
 using UnityEngine.SceneManagement;
 using Util.QuestSystem.Component;
@@ -65,6 +66,7 @@ public class LoadDataEvent : Event
         }
         
         questComponent.SetQuests(questData.quests);
+        QuestUI.Instance.SetQuestList();
 
         SceneManager.LoadScene(playerData.sceneName);
         DataManager.Instance.LoadPlayerData();
