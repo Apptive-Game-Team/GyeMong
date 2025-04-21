@@ -52956,6 +52956,7 @@ MonoBehaviour:
   itemImage: {fileID: 1311980547}
   itemName: {fileID: 383467431}
   itemCount: {fileID: 1694284353}
+  itemDescription: {fileID: 779476063}
   slotMask: {fileID: 1869787373}
 --- !u!1 &1402974158
 GameObject:
@@ -56489,6 +56490,7 @@ GameObject:
   - component: {fileID: 5774095161500009209}
   - component: {fileID: 395408362465785131}
   - component: {fileID: 2454783063357191676}
+  - component: {fileID: 8780318446569267140}
   m_Layer: 5
   m_Name: InventoryWindow
   m_TagString: Untagged
@@ -56671,6 +56673,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877093928977182429}
   m_CullTransparentMesh: 1
+--- !u!114 &8780318446569267140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877093928977182429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca752750b1e6204a86ed46e045b85c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

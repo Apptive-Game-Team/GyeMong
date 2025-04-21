@@ -3,6 +3,7 @@ using Creature.Attack.Component.Sound;
 using Map.Puzzle.TemplePuzzle;
 using System.Collections;
 using System.Collections.Generic;
+using System.Game.Inventory;
 using UnityEngine;
 
 namespace System.Game.Item
@@ -14,7 +15,8 @@ namespace System.Game.Item
         {
             if (collision.CompareTag("Player"))
             {
-                //인벤토리에 쳐넣기
+                InventoryData.Instance.AddItem(_itemInfo);
+                Destroy(gameObject);
             }
         }
     }

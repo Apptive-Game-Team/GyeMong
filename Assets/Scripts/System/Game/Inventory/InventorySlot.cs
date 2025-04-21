@@ -13,6 +13,7 @@ namespace System.Game.Inventory
         [SerializeField] private Image itemImage;
         [SerializeField] private TextMeshProUGUI itemName;
         [SerializeField] private TextMeshProUGUI itemCount;
+        [SerializeField] private TextMeshProUGUI itemDescription;
         [SerializeField] private Image slotMask;
         public void AddItem(ItemInfo item, int count = 1)
         {
@@ -20,6 +21,23 @@ namespace System.Game.Inventory
             itemCount.text = count.ToString();
             itemImage.sprite = _item.Image;
             itemName.text = _item.ItemName;
+            itemDescription.text = _item.ItemDescription;
+        }
+        public void UpdateSlot(ItemInfo item)
+        {
+            if (item == null)
+            {
+                _item = null;
+                itemImage.sprite = null;
+                itemImage.enabled = false;
+                itemName.text = "";
+                itemCount.text = "";
+                itemDescription.text = "";
+            }
+            else
+            {
+                AddItem(item);
+            }
         }
     }
 }
