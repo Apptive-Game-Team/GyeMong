@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Game.Item;
 using UnityEngine;
 using TMPro;
+using UI.mouse_input;
 
 namespace System.Game.Inventory
 {
-    public class InventorySlot : MonoBehaviour
+    public class InventorySlot : SelectableUI, IMouseInputListener
     {
         public ItemInfo _item;
         [SerializeField] private Image itemImage;
@@ -21,7 +22,7 @@ namespace System.Game.Inventory
             itemCount.text = count.ToString();
             itemImage.sprite = _item.Image;
             itemName.text = _item.ItemName;
-            itemDescription.text = _item.ItemDescription;
+            itemDescription.text = "";
         }
         public void UpdateSlot(ItemInfo item)
         {
@@ -35,6 +36,26 @@ namespace System.Game.Inventory
                 gameObject.SetActive(true);
                 AddItem(item);
             }
+        }
+        public override void OnInteract()
+        {
+            itemDescription.text = _item.ItemDescription;
+            StartCoroutine(FlashSlotMask());
+        }
+        public override void OnLongInteract()
+        {
+        }
+        public void OnMouseInput(MouseInputState state, ISelectableUI ui)
+        {
+        }
+        private IEnumerator FlashSlotMask()
+        {
+            Color originalColor = slotMask.color;
+            slotMask.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
+            yield return new WaitForSeconds(0.1f);
+            slotMask.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+            yield return new WaitForSeconds(0.1f);
+            slotMask.color = originalColor;
         }
     }
 }
