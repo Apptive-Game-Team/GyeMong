@@ -28,14 +28,11 @@ namespace System.Game.Inventory
             if (item == null)
             {
                 _item = null;
-                itemImage.sprite = null;
-                itemImage.enabled = false;
-                itemName.text = "";
-                itemCount.text = "";
-                itemDescription.text = "";
+                gameObject.SetActive(false);
             }
             else
             {
+                gameObject.SetActive(true);
                 AddItem(item);
             }
         }

@@ -12,6 +12,7 @@ namespace System.Game.Inventory
         private void OnEnable()
         {
             InventoryData.Instance.OnSlotUpdated += UpdateSlotUI;
+            RedrawAll();
         }
 
         private void OnDisable()

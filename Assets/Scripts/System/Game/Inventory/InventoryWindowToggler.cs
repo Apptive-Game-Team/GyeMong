@@ -3,7 +3,7 @@ using System.UI;
 
 namespace System.Game.Inventory
 {
-    public class InveentoryWindowToggler : UIWindowToggler<InveentoryWindowToggler>
+    public class InventoryWindowToggler : UIWindowToggler<InventoryWindowToggler>
     {
         protected override void Awake()
         {
