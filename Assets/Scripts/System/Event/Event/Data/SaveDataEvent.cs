@@ -55,6 +55,8 @@ public class LoadDataEvent : Event
         runeComponent = PlayerCharacter.Instance.GetComponent<RuneComponent>();
         questComponent = PlayerCharacter.Instance.GetComponent<QuestComponent>();
         
+        runeComponent.ClearRune();
+        
         for (int i = 0;i < runeData.AcquiredRuneDatas.Count;i++) 
         {
             runeComponent.AcquireRune(runeData.AcquiredRuneDatas[i]);

@@ -81,11 +81,17 @@ public class RuneComponent : MonoBehaviour
         // _buffComp.DeleteBuff(runeData.runeBuff);
     }
 
+    public void ClearRune()
+    {
+        equippedRuneList.Clear();
+    }
+    
     public void AcquireRune(RuneData runeData)
     {
         acquiredRuneList.Add(runeData);
     }
-
+    
+    
     public bool isRune(int id)
     {
         return equippedRuneList.Exists(x => x.id.Equals(id));
