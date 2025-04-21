@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace System.Game.Inventory
 {
-    public class InventoryData : SingletonObject<InventoryData>
+    public class InventoryData : MonoBehaviour
     {
         [SerializeField] private List<InventorySlot> slots;
         Dictionary<int, ItemInfo> items = new Dictionary<int, ItemInfo>();

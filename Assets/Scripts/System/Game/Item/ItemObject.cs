@@ -1,6 +1,7 @@
 using Creature.Attack.Component.Movement;
 using Creature.Attack.Component.Sound;
 using Map.Puzzle.TemplePuzzle;
+using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
 using System.Game.Inventory;
@@ -15,7 +16,7 @@ namespace System.Game.Item
         {
             if (collision.CompareTag("Player"))
             {
-                InventoryData.Instance.AddItem(_itemInfo);
+                PlayerCharacter.Instance.GetComponent<InventoryData>().AddItem(_itemInfo);
                 Destroy(gameObject);
             }
         }

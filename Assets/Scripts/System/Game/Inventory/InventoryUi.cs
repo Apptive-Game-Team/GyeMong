@@ -1,3 +1,4 @@
+using playerCharacter;
 using System.Collections;
 using System.Collections.Generic;
 using System.Game.Item;
@@ -8,16 +9,17 @@ namespace System.Game.Inventory
     public class InventoryUi : MonoBehaviour
     {
         [SerializeField] private List<InventorySlot> slots;
-
+        private InventoryData _inventoryData;
         private void OnEnable()
         {
-            InventoryData.Instance.OnSlotUpdated += UpdateSlotUI;
+            _inventoryData = PlayerCharacter.Instance.GetComponent<InventoryData>();
+            _inventoryData.OnSlotUpdated += UpdateSlotUI;
             RedrawAll();
         }
 
         private void OnDisable()
         {
-            InventoryData.Instance.OnSlotUpdated -= UpdateSlotUI;
+            _inventoryData.OnSlotUpdated -= UpdateSlotUI;
         }
 
         private void UpdateSlotUI(int slotIndex, ItemInfo item)
@@ -30,7 +32,7 @@ namespace System.Game.Inventory
         {
             for (int i = 0; i < slots.Count; i++)
             {
-                var item = InventoryData.Instance.GetItem(i);
+                var item = _inventoryData.GetItem(i);
                 slots[i].UpdateSlot(item);
             }
         }
