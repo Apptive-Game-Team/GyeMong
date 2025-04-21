@@ -47,6 +47,7 @@ namespace System.Game.Inventory
         }
         public void OnMouseInput(MouseInputState state, ISelectableUI ui)
         {
+            //클릭 시 알파값1로 올리고 떼면0으로 돌아오게 하는 중간과정을 위해 롱클릭도 알파값1로 하면 click->Long_Click의 연속적 이동이 되나?
         }
         private IEnumerator FlashSlotMask()
         {
