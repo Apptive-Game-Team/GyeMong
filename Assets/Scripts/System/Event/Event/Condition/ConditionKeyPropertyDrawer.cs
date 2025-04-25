@@ -10,10 +10,17 @@ namespace System.Event.Event.Condition
     [CustomPropertyDrawer(typeof(ConditionKey))]
     public class ConditionKeyPropertyDrawer : PropertyDrawer
     {
+        private static bool _isQuestKeysInitialized = false;
         private int _selected = -1;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            if (!_isQuestKeysInitialized)
+            {
+                ConditionKeyRepository.UpdateConditionKeysFromQuest();
+                _isQuestKeysInitialized = true;
+            }
+            
             Rect textFieldRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
             string currentValue = property.stringValue;
 
@@ -29,7 +36,7 @@ namespace System.Event.Event.Condition
             {
                 var filtered = ConditionKeyRepository.ConditionKeys
                     .Where(s => s.ToLower().Contains(newValue.ToLower()) && s != newValue)
-                    .Take(5) // 최대 5개
+                    .Take(5)
                     .ToList();
 
                 if (filtered.Count > 0)
