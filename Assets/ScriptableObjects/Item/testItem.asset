@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e948e848db30e5549bfa3bef1ccca450, type: 3}
-  m_Name: EventDataList
+  m_Script: {fileID: 11500000, guid: 32d76d222f5c88843b801cc872141fa3, type: 3}
+  m_Name: testItem
   m_EditorClassIdentifier: 
-  eventDataList: []
+  itemType: 1
+  itemName: "\uC5F4\uC1E0"
+  itemDescription: "\uC5F4\uC1E0\uC774\uB2E4 \u3147\u3147"
+  itemImage: {fileID: 929869098, guid: 710c8dae4e62f40bfb744aaed77735c8, type: 3}
