@@ -8,7 +8,7 @@ namespace System.Game.Inventory
         protected override void Awake()
         {
             base.Awake();
-            toggleKeyActionCode = ActionCode.RunePage;
+            toggleKeyActionCode = ActionCode.Menu;
         }
     }
 }
