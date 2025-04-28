@@ -20,6 +20,8 @@ namespace System.Input
         Option,
         SelectClick,
         Menu,
+        MenuLeft,
+        MenuRight,
     }
 
     public class InputManager : SingletonObject<InputManager>
@@ -69,6 +71,8 @@ namespace System.Input
                 { ActionCode.Option, KeyCode.Escape},
                 { ActionCode.SelectClick, KeyCode.Mouse0 },
                 { ActionCode.Menu, KeyCode.U },
+                { ActionCode.MenuLeft, KeyCode.Q },
+                { ActionCode.MenuRight, KeyCode.E },
             };
         }
 
