@@ -61,12 +61,12 @@ namespace System.Game.Inventory
             }
             return -1;
         }
-        public int FindSameItemSlot(ItemInfo item)
+        public int FindSameItemSlot(ItemInfo newItem)
         {
-            foreach (var kvp in items)
+            foreach (var item in items)
             {
-                if (kvp.Value.item == item)
-                    return kvp.Key;
+                if (item.Value.item == newItem)
+                    return item.Key;
             }
             return -1;
         }
