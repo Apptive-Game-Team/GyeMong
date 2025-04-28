@@ -5,27 +5,51 @@ using UnityEngine;
 
 namespace System.Game.Inventory
 {
+    [Serializable]
+    public struct ItemStack
+    {
+        public ItemInfo item;
+        public int count;
+
+        public ItemStack(ItemInfo item, int count)
+        {
+            this.item = item;
+            this.count = count;
+        }
+    }
     public class InventoryData : MonoBehaviour
     {
         [SerializeField] private List<InventorySlot> slots;
-        Dictionary<int, ItemInfo> items = new Dictionary<int, ItemInfo>();
-        public event Action<int, ItemInfo> OnSlotUpdated;
-        public void SetItem(int slotIndex, ItemInfo item)
+        Dictionary<int, ItemStack> items = new Dictionary<int, ItemStack>();
+
+        public event Action<int, ItemInfo, int> OnSlotUpdated;
+
+        public void SetItem(int slotIndex, ItemInfo item, int count)
         {
-            items[slotIndex] = item;
-            OnSlotUpdated?.Invoke(slotIndex, item);
+            items[slotIndex] = new ItemStack(item, count);
+            OnSlotUpdated?.Invoke(slotIndex, item, count);
         }
-        public ItemInfo GetItem(int slotIndex)
+        public ItemStack GetItem(int slotIndex)
         {
-            return items.TryGetValue(slotIndex, out var item) ? item : null;
+            return items.TryGetValue(slotIndex, out var stack) ? stack : default;
         }
         public bool AddItem(ItemInfo newItem)
         {
+            int sameItemSlot = FindSameItemSlot(newItem);
+            if (sameItemSlot != -1)
+            {
+                var stack = items[sameItemSlot];
+                stack.count++;
+                items[sameItemSlot] = stack;
+                OnSlotUpdated?.Invoke(sameItemSlot, stack.item, stack.count);
+                return true;
+            }
+
             int emptySlot = FindFirstEmptySlot();
             if (emptySlot == -1)
                 return false;
 
-            SetItem(emptySlot, newItem);
+            SetItem(emptySlot, newItem, 1);
             return true;
         }
         public int FindFirstEmptySlot()
@@ -34,6 +58,15 @@ namespace System.Game.Inventory
             {
                 if (!items.ContainsKey(i))
                     return i;
+            }
+            return -1;
+        }
+        public int FindSameItemSlot(ItemInfo item)
+        {
+            foreach (var kvp in items)
+            {
+                if (kvp.Value.item == item)
+                    return kvp.Key;
             }
             return -1;
         }

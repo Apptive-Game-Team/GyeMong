@@ -16,24 +16,24 @@ namespace System.Game.Inventory
             _inventoryData.OnSlotUpdated += UpdateSlotUI;
             RedrawAll();
         }
-
         private void OnDisable()
         {
             _inventoryData.OnSlotUpdated -= UpdateSlotUI;
         }
-
-        private void UpdateSlotUI(int slotIndex, ItemInfo item)
+        private void UpdateSlotUI(int slotIndex, ItemInfo item, int count)
         {
             if (slotIndex < 0 || slotIndex >= slots.Count) return;
-            slots[slotIndex].UpdateSlot(item);
+            slots[slotIndex].UpdateSlot(item, count);
         }
-
         public void RedrawAll()
         {
             for (int i = 0; i < slots.Count; i++)
             {
-                var item = _inventoryData.GetItem(i);
-                slots[i].UpdateSlot(item);
+                var stack = _inventoryData.GetItem(i);
+                if (stack.item != null)
+                    slots[i].UpdateSlot(stack.item, stack.count);
+                else
+                    slots[i].UpdateSlot(null, 0);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace System.Game.Inventory
             itemName.text = _item.ItemName;
             itemDescription.text = "";
         }
-        public void UpdateSlot(ItemInfo item)
+        public void UpdateSlot(ItemInfo item, int count = 1)
         {
             if (item == null)
             {
@@ -34,7 +34,7 @@ namespace System.Game.Inventory
             else
             {
                 gameObject.SetActive(true);
-                AddItem(item);
+                AddItem(item, count);
             }
         }
         public override void OnInteract()
