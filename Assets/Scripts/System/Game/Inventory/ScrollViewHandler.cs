@@ -9,7 +9,8 @@ namespace System.Game.Inventory
     public class ScrollViewHandler : MonoBehaviour
     {
         [SerializeField] private ScrollRect _scrollRect;
-        [SerializeField] private RectTransform _rectTransform;
+        [SerializeField] private int divisionCount;
+        private float stepSize => 1f / (divisionCount - 1);
         private void OnEnable()
         {
             _scrollRect.horizontalNormalizedPosition = 0f;
@@ -22,7 +23,8 @@ namespace System.Game.Inventory
         {
             if(_scrollRect.horizontalNormalizedPosition < 1f)
             {
-                _scrollRect.horizontalNormalizedPosition += 0.01f;
+                _scrollRect.horizontalNormalizedPosition += stepSize;
+                _scrollRect.horizontalNormalizedPosition = Mathf.Min(_scrollRect.horizontalNormalizedPosition, 1f);
             }
             else
                 _scrollRect.horizontalNormalizedPosition = 1f;
@@ -31,7 +33,8 @@ namespace System.Game.Inventory
         {
             if (_scrollRect.horizontalNormalizedPosition > 0f)
             {
-                _scrollRect.horizontalNormalizedPosition -= 0.01f;
+                _scrollRect.horizontalNormalizedPosition -= stepSize;
+                _scrollRect.horizontalNormalizedPosition = Mathf.Max(_scrollRect.horizontalNormalizedPosition, 0f);
             }
             else
                 _scrollRect.horizontalNormalizedPosition = 0f;
