@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Input;
+using System.Input.Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +31,7 @@ namespace UI.mouse_input
         
         public void SetRaycaster(GraphicRaycaster raycaster)
         {
+            print("SetRaycaster : " + raycaster.gameObject.name);
             _hoverDetector = new UIHoverDetector(raycaster);
         }
         
@@ -48,6 +50,11 @@ namespace UI.mouse_input
         public void AddListener(IMouseInputListener listener)
         {
             _listeners.Add(listener);
+        }
+        
+        public void RemoveListener(IMouseInputListener listener)
+        {
+            _listeners.Remove(listener);
         }
         
         private void CheckEnterExit()

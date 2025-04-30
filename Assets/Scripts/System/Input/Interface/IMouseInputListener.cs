@@ -1,4 +1,6 @@
-namespace UI.mouse_input
+using UI.mouse_input;
+
+namespace System.Input.Interface
 {
     public interface IMouseInputListener
     {
