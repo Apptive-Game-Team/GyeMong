@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Map.Stage.Select.Node
 {
@@ -6,6 +7,12 @@ namespace Map.Stage.Select.Node
     public class StageNode : MonoBehaviour, ISelectableUI
     {
         private StageSelectController _stageSelectController;
+        [SerializeField] private string sceneName;
+
+        public void LoadStage()
+        {
+            SceneManager.LoadScene(sceneName);
+        }
         
         public void SetStageSelectController(StageSelectController stageSelectController)
         {

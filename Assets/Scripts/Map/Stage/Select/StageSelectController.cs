@@ -2,10 +2,7 @@ using System.Collections.Generic;
 using System.Input;
 using Map.Objects;
 using Map.Stage.Select.Node;
-using UI.mouse_input;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Map.Stage.Select
 {
@@ -36,6 +33,11 @@ namespace Map.Stage.Select
             {
                 cursor.MoveTo(_currentNode.transform.position);
                 _currentNode = selectedStage;
+            }
+            
+            if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
+            {
+                _currentNode.LoadStage();
             }
         }
         
