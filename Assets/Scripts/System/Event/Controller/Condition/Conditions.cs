@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Event.Event.Condition;
 using Unity.VisualScripting;
 
 [Serializable]
@@ -71,6 +72,7 @@ public class OrConditions : Condition
 public class ToggeableCondition : Condition
 {
     [SerializeField]
+    [ConditionKey]
     private string tag;
     
     [SerializeField]
