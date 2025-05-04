@@ -27,7 +27,6 @@ namespace Map.Objects
         
         public void MoveTo(Vector3 destination)
         {
-            print("Moving to: " + destination);
             _moveQueue.Enqueue(destination);
             if (_moveCoroutine == null)
             {

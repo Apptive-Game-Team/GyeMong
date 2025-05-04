@@ -12,6 +12,11 @@ namespace Map.Stage.Select
         [SerializeField] private List<StageNode> stageNodes = new List<StageNode>();
         [SerializeField] private QueuedSmoothMover cursor;
         
+        [SerializeField] private float inputDelay = 0.5f;
+        private float _lastInputTime;
+        
+        private int _maxIndex;
+        
         private StageNode _currentNode;
         private INodeSelector<StageNode> _nodeSelector;
 
@@ -28,13 +33,21 @@ namespace Map.Stage.Select
 
         private void HandleKeyInput()
         {
-            StageNode selectedStage = _nodeSelector.SelectNode(_currentNode, GetMoveVector());
-            if (selectedStage !=  null)
+            if (Time.time - _lastInputTime < inputDelay) return;
+
+            Vector3 moveVector = GetMoveVector();
+            if (moveVector != Vector3.zero)
             {
-                cursor.MoveTo(_currentNode.transform.position);
-                _currentNode = selectedStage;
+                StageNode selectedStage = _nodeSelector.SelectNode(_currentNode, moveVector);
+                if (selectedStage != null)
+                {
+                    _lastInputTime = Time.time;
+                    Debug.Log("Selected stage: " + selectedStage.gameObject.name);
+                    _currentNode = selectedStage;
+                    cursor.MoveTo(_currentNode.transform.position);
+                }
             }
-            
+
             if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
             {
                 _currentNode.LoadStage();
@@ -44,30 +57,31 @@ namespace Map.Stage.Select
         private Vector3 GetMoveVector()
         {
             Vector3 moveVector = Vector3.zero;
-            if (InputManager.Instance.GetKeyDown(ActionCode.MoveDown))
+            if (InputManager.Instance.GetKey(ActionCode.MoveDown))
             {
-                moveVector = Vector3.down;
+                moveVector += Vector3.down;
             }
-            else if (InputManager.Instance.GetKeyDown(ActionCode.MoveUp))
+            if (InputManager.Instance.GetKey(ActionCode.MoveUp))
             {
-                moveVector = Vector3.up;
+                moveVector += Vector3.up;
+            } 
+            if (InputManager.Instance.GetKey(ActionCode.MoveLeft))
+            {
+                moveVector += Vector3.left;
             }
-            else if (InputManager.Instance.GetKeyDown(ActionCode.MoveLeft))
+            if (InputManager.Instance.GetKey(ActionCode.MoveRight))
             {
-                moveVector = Vector3.left;
-            }
-            else if (InputManager.Instance.GetKeyDown(ActionCode.MoveRight))
-            {
-                moveVector = Vector3.right;
+                moveVector += Vector3.right;
             }
 
-            return moveVector;
+            return moveVector.normalized;
         }
         
         private void Awake()
         {
             _nodeSelector = new LinearNodeSelector(stageNodes);
             _currentNode = stageNodes[0];
+            cursor.MoveTo(_currentNode.transform.position);
             foreach (StageNode stageNode in stageNodes)
             {
                 stageNode.SetStageSelectController(this);
