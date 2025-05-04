@@ -79,6 +79,7 @@ namespace Map.Stage.Select
         
         private void Awake()
         {
+            _maxIndex = PlayerPrefs.GetInt("MaxStageId", 0);
             _nodeSelector = new LinearNodeSelector(stageNodes);
             _currentNode = stageNodes[0];
             cursor.MoveTo(_currentNode.transform.position);

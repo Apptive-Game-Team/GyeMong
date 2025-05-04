@@ -9,6 +9,12 @@ namespace Map.Stage.Select
     public class LinearNodeSelector : INodeSelector<StageNode>
     {
         private List<StageNode> _stageNodes;
+        private int _maxIndex;
+        
+        public void SetMaxIndex(int maxIndex)
+        {
+            _maxIndex = maxIndex;
+        }
         
         public LinearNodeSelector(List<StageNode> stageNodes)
         {
@@ -46,7 +52,7 @@ namespace Map.Stage.Select
                 }
             }
             
-            if (nextIndex < _stageNodes.Count)
+            if (nextIndex <=  Mathf.Min(_maxIndex, _stageNodes.Count - 1))
             {
                 Vector3 toNext =
                     (_stageNodes[nextIndex].transform.position - _stageNodes[currentIndex].transform.position)
