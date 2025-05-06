@@ -7,6 +7,7 @@ namespace Creature.Player.Component.Collider
 {
     public class AttackCollider : MonoBehaviour
     {
+        [SerializeField] private GameObject slashEffectPrefab;
         public float attackDamage;
         private PlayerSoundController _soundController;
         private ParticleSystem _particleSystem;
@@ -39,6 +40,7 @@ namespace Creature.Player.Component.Collider
                 _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                 creature.OnAttacked(attackDamage);
                 PlayerCharacter.Instance.AttackIncreaseGauge();
+                ShowSlashEffect(collision);
             } 
             else
             {
@@ -53,6 +55,7 @@ namespace Creature.Player.Component.Collider
                         foreach (IAttackable @object in attackableObjects)
                         {
                             @object.OnAttacked(attackDamage);
+                            ShowSlashEffect(collision);
                         }
                     }
                 }
@@ -66,6 +69,18 @@ namespace Creature.Player.Component.Collider
                 if (eventObject.trigger == EventObject.EventTrigger.OnAttacked) return true;
             }
             return false;
+        }
+
+        private void ShowSlashEffect(Collider2D other)
+        {
+            Vector2 attackDir = (other.transform.position - transform.position).normalized;
+            Vector2 hitPoint = other.ClosestPoint(transform.position);
+            hitPoint += attackDir * 0.5f;
+            float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
+            Quaternion rot = Quaternion.Euler(0, 0, angle - 45f);
+            
+            var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot);
+            Destroy(slashEffect, 0.15f);
         }
 
         private void SetParticleSystemTexture(Collider2D collision)
