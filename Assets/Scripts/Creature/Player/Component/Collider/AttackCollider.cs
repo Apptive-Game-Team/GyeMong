@@ -7,6 +7,7 @@ namespace Creature.Player.Component.Collider
 {
     public class AttackCollider : MonoBehaviour
     {
+        private const float SlashEffectDuration = 0.25f;
         [SerializeField] private GameObject slashEffectPrefab;
         public float attackDamage;
         private PlayerSoundController _soundController;
@@ -80,7 +81,7 @@ namespace Creature.Player.Component.Collider
             Quaternion rot = Quaternion.Euler(0, 0, angle - 45f);
             
             var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot);
-            Destroy(slashEffect, 0.15f);
+            Destroy(slashEffect, SlashEffectDuration);
         }
 
         private void SetParticleSystemTexture(Collider2D collision)
