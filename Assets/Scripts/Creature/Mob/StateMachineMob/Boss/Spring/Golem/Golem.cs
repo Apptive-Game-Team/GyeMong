@@ -11,6 +11,7 @@ using playerCharacter;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Drawing;
+using Visual.Camera;
 
 namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
@@ -66,6 +67,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
+                CameraManager.Instance.CameraShake(0.2f);
                 foreach (Vector3 point in points)
                 {
                     Vector3 dir = (point - transform.position).normalized;
@@ -91,6 +93,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             Vector3[] points = GetCirclePoints(transform.position, targetRadius, targetRadius * 3 + 10);
             ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
             StartCoroutine(ShockwaveSoundObject.Play());
+            CameraManager.Instance.CameraShake(0.2f);
             foreach (Vector3 point in points)
             {
                 AttackObjectController.Create(
@@ -178,6 +181,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("Push", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                CameraManager.Instance.CameraShake(0.15f);
                 AttackObjectController.Create(
                     PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f,
                     Vector3.zero,
@@ -280,6 +284,7 @@ namespace Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     .StartRoutine();
                     Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                     Golem.StartCoroutine(Golem._shockwavesoundObject.Play());
+                    CameraManager.Instance.CameraShake(0.1f);
                     yield return new WaitForSeconds(interval);
                 }
             }
