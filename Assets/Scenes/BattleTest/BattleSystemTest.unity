@@ -603,6 +603,7 @@ GameObject:
   - component: {fileID: 977444915}
   - component: {fileID: 977444914}
   - component: {fileID: 977444913}
+  - component: {fileID: 977444919}
   m_Layer: 0
   m_Name: Word1 (1)
   m_TagString: Boss
@@ -757,6 +758,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &977444919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977444912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cbe0d89f0c4ce6a638ff23b8c6743d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHp: 0
+  currentShield: 0
+  damage: 0
+  arrowPrefab: {fileID: 0}
+  seedPrefab: {fileID: 0}
+  vinePrefab: {fileID: 0}
+  trunkPrefab: {fileID: 0}
+  meleeAttackPrefab: {fileID: 0}
+  SkillIndicator: {fileID: 0}
+  arrowSoundObject: {fileID: 0}
+  vineSoundObject: {fileID: 0}
 --- !u!1001 &986758064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1009,6 +1033,7 @@ GameObject:
   - component: {fileID: 1094238136}
   - component: {fileID: 1094238137}
   - component: {fileID: 1094238138}
+  - component: {fileID: 1094238139}
   m_Layer: 0
   m_Name: Word1
   m_TagString: Boss
@@ -1163,6 +1188,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 500
+--- !u!114 &1094238139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094238132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cbe0d89f0c4ce6a638ff23b8c6743d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHp: 0
+  currentShield: 0
+  damage: 0
+  arrowPrefab: {fileID: 0}
+  seedPrefab: {fileID: 0}
+  vinePrefab: {fileID: 0}
+  trunkPrefab: {fileID: 0}
+  meleeAttackPrefab: {fileID: 0}
+  SkillIndicator: {fileID: 0}
+  arrowSoundObject: {fileID: 0}
+  vineSoundObject: {fileID: 0}
 --- !u!1001 &1488043991
 PrefabInstance:
   m_ObjectHideFlags: 0

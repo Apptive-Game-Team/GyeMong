@@ -83,7 +83,6 @@ namespace Creature.Player.Component.Collider
             var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot);
             Destroy(slashEffect, SlashEffectDuration);
         }
-
         private void SetParticleSystemTexture(Collider2D collision)
         {
             try
