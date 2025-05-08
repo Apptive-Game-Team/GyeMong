@@ -4,6 +4,7 @@ using UnityEngine;
 using playerCharacter;
 using System.Collections.Generic;
 using System.Input;
+using System.Sound;
 
 public abstract class ChatEvent : Event
 {
@@ -37,11 +38,16 @@ public class ShowMessages : ChatEvent
 {
     [SerializeField] List<MultiChatMessage> multiMessages;
     [SerializeField] float autoSkipTime = 3f;
+    float soundDelay = 0.2f;
+    SoundObject _soundObject;
 
     public override IEnumerator Execute(EventObject eventObject = null)
     {
         foreach (MultiChatMessage chat in multiMessages)
         {
+            _soundObject = Sound.Play("EFFECT_Chat_Sound", true);
+            yield return new WaitForSeconds(soundDelay);
+            Sound.Stop(_soundObject);
             yield return EffectManager.Instance.GetChatController().MultipleChat(chat, autoSkipTime);
         }
     }
