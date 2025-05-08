@@ -5,6 +5,7 @@ using System.Input;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Sound;
 
 [Serializable]
 public class ChatMessage
@@ -90,7 +91,10 @@ public class ChatController : MonoBehaviour
 
         foreach (string line in multiChatMessage.messages)
         {
+            SoundObject _soundObject;
+            _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
             yield return ShowMultipleChat(line);
+            Sound.Stop(_soundObject);
             messageText.text += "\n";
 
             float timer = Time.time;
