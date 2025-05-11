@@ -16,8 +16,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         [SerializeField] private GameObject attackPrefab;
         [SerializeField] private GameObject skillPrefab;
 
-        [SerializeField] private EventObject _eventObject;
-
         public override void OnAttacked(float damage)
         {
             currentHp -= damage;
@@ -33,7 +31,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
         protected override void OnDead()
         {
-            _eventObject.Trigger();
             Destroy(gameObject);
         }
 
