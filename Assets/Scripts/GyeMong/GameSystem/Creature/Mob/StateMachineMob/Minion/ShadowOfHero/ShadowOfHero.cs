@@ -4,6 +4,8 @@ using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Map.Stage;
+using GyeMong.GameSystem.Map.Stage.Select;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
@@ -31,7 +33,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
         protected override void OnDead()
         {
-            Destroy(gameObject);
+            StageManager.ClearStage(this);
         }
 
         private void Start()

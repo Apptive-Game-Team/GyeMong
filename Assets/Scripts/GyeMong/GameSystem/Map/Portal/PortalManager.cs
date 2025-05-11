@@ -23,6 +23,12 @@ namespace GyeMong.GameSystem.Map.Portal
         public IEnumerator TransitScene(PortalID portalID, float delay = 0f)
         {
             yield return EffectManager.Instance.FadeOut();
+            LoadSceneMode(portalID);
+            StartCoroutine(DelayedFadeIn(delay));
+        }
+        
+        public void LoadSceneMode(PortalID portalID)
+        {
             PortalData portalData = portalDataList.GetPortalDataByID(portalID);
             SceneData sceneData = sceneDataList.GetSceneDataByID(portalData.sceneID);
             if (!sceneData.sceneName.Equals(SceneManager.GetActiveScene().name))
@@ -31,7 +37,6 @@ namespace GyeMong.GameSystem.Map.Portal
                 SceneManager.LoadScene(sceneData.sceneName);
             }
             PlayerCharacter.Instance.transform.position = portalData.destination;
-            StartCoroutine(DelayedFadeIn(delay));
         }
 
         private IEnumerator DelayedFadeIn(float delay)
