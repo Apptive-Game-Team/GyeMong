@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Game.Item;
+using System.Input.Interface;
 using UnityEngine;
 using TMPro;
 using UI.mouse_input;
@@ -47,7 +48,7 @@ namespace System.Game.Inventory
         }
         public void OnMouseInput(MouseInputState state, ISelectableUI ui)
         {
-            //Å¬¸¯ ½Ã ¾ËÆÄ°ª1·Î ¿Ã¸®°í ¶¼¸é0À¸·Î µ¹¾Æ¿À°Ô ÇÏ´Â Áß°£°úÁ¤À» À§ÇØ ·ÕÅ¬¸¯µµ ¾ËÆÄ°ª1·Î ÇÏ¸é click->Long_ClickÀÇ ¿¬¼ÓÀû ÀÌµ¿ÀÌ µÇ³ª?
+            //Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ä°ï¿½1ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä°ï¿½1ï¿½ï¿½ ï¿½Ï¸ï¿½ click->Long_Clickï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ç³ï¿½?
         }
         private IEnumerator FlashSlotMask()
         {
