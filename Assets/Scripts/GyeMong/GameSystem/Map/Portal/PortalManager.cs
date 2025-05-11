@@ -36,7 +36,6 @@ namespace GyeMong.GameSystem.Map.Portal
                 sceneUnloading?.Invoke(SceneManager.GetActiveScene());
                 SceneManager.LoadScene(sceneData.sceneName);
             }
-            PlayerCharacter.Instance.transform.position = portalData.destination;
         }
 
         private IEnumerator DelayedFadeIn(float delay)
