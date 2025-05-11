@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Map.Stage.Select
+namespace GyeMong.GameSystem.Map.Stage.Select
 {
     public static class StageSelectPage
     {

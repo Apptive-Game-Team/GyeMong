@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-
-using Map.Stage.Select.Node;
+using GyeMong.GameSystem.Map.Stage.Select.Node;
 using UnityEngine;
 
-namespace Map.Stage.Select
+namespace GyeMong.GameSystem.Map.Stage.Select
 {
     // This class is responsible for selecting the closed node in a linear fashion.
     public class LinearNodeSelector : INodeSelector<StageNode>

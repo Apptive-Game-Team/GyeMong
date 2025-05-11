@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Map.Stage.Select
+namespace GyeMong.GameSystem.Map.Stage.Select
 {
     // This interface is responsible for selecting the node based on the direction of the input.
     public interface INodeSelector<T>

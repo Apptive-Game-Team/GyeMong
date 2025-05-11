@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Input;
+using GyeMong.GameSystem.Map.Stage.Select.Node;
+using GyeMong.InputSystem;
 using Map.Objects;
-using Map.Stage.Select.Node;
 using UnityEngine;
 
-namespace Map.Stage.Select
+namespace GyeMong.GameSystem.Map.Stage.Select
 {
     // This class is responsible for selecting the stage node based on the input.
     public class StageSelectController : MonoBehaviour

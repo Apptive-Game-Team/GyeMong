@@ -1,7 +1,8 @@
+using GyeMong.InputSystem.Interface;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Map.Stage.Select.Node
+namespace GyeMong.GameSystem.Map.Stage.Select.Node
 {
     // for Stage Node, which is a button that represents a stage
     public class StageNode : MonoBehaviour, ISelectableUI
