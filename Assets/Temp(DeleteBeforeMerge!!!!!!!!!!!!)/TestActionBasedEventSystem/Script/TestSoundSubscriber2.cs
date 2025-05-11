@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Gyemong.SoundSystem;
 using UnityEngine;
 
 public class TestSoundSubscriber2 : MonoBehaviour

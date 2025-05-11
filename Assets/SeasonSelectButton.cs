@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Gyemong.GameSystem.Rune.RuneUI;
 using UnityEngine;
 
 public class SeasonSelectButton : SelectableUI
