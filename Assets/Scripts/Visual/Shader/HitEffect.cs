@@ -1,36 +1,38 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HitEffect : MonoBehaviour
+namespace Visual.Shader
 {
-    public GameObject gameObjects;
-    private Material material;
-    private bool flag = true;
-    private float blinkDelay = 0.3f;
-    private float invincibleTime = 1f;
-
-    private void Awake()
+    public class HitEffect : MonoBehaviour
     {
-        material = gameObjects.GetComponent<Renderer>().material;
-    }
+        public GameObject gameObjects;
+        private Material material;
+        private bool flag = true;
+        private float blinkDelay = 0.3f;
+        private float invincibleTime = 1f;
 
-    public void OnClickButton()
-    {   
-        if (flag)
-        {   
-            flag = !flag;
-            StartCoroutine(Blink());
-            Debug.Log("tlqk");
+        private void Awake()
+        {
+            material = gameObjects.GetComponent<Renderer>().material;
         }
-    }
 
-    private IEnumerator Blink()
-    {
-        material.SetFloat("_BlinkTrigger", 1f);
-        yield return new WaitForSeconds(blinkDelay);
-        material.SetFloat("_BlinkTrigger", 0f);
-        yield return new WaitForSeconds(invincibleTime - blinkDelay);
-        flag = !flag;
+        public void OnClickButton()
+        {   
+            if (flag)
+            {   
+                flag = !flag;
+                StartCoroutine(Blink());
+                Debug.Log("tlqk");
+            }
+        }
+
+        private IEnumerator Blink()
+        {
+            material.SetFloat("_BlinkTrigger", 1f);
+            yield return new WaitForSeconds(blinkDelay);
+            material.SetFloat("_BlinkTrigger", 0f);
+            yield return new WaitForSeconds(invincibleTime - blinkDelay);
+            flag = !flag;
+        }
     }
 }

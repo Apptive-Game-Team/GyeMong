@@ -1,30 +1,32 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-[Serializable]
-public class EffectData
+namespace Visual.Effect
 {
-    public string name;
-    public int id;
-    public GameObject effectPrefab;
-}
-
-[CreateAssetMenu(fileName = "EffectDataList", menuName = "ScriptableObject/EffectDataList")]
-public class EffectDataList : ScriptableObject
-{
-    public List<EffectData> effectDataList;
-
-    public EffectData GetEffectData(int id)
+    [Serializable]
+    public class EffectData
     {
-        EffectData effectData = effectDataList.Find(x => x.id == id);
-        if (effectData == null)
-        {
-            Debug.LogError("There's No Effect that has this id!");
-            return null;
-        }
+        public string name;
+        public int id;
+        public GameObject effectPrefab;
+    }
 
-        return effectData;
+    [CreateAssetMenu(fileName = "EffectDataList", menuName = "ScriptableObject/EffectDataList")]
+    public class EffectDataList : ScriptableObject
+    {
+        public List<EffectData> effectDataList;
+
+        public EffectData GetEffectData(int id)
+        {
+            EffectData effectData = effectDataList.Find(x => x.id == id);
+            if (effectData == null)
+            {
+                Debug.LogError("There's No Effect that has this id!");
+                return null;
+            }
+
+            return effectData;
+        }
     }
 }
