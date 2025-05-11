@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Gyemong.EventSystem.Event.Quest
 {
-    public abstract class QuestEvent : global::Gyemong.EventSystem.Event.Event
+    public abstract class QuestEvent : Event
     { }
     
     public class AddQuestEvent : QuestEvent

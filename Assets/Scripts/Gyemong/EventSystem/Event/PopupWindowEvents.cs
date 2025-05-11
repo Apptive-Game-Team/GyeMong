@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Gyemong.EventSystem.Event
 {
-    public abstract class PopupWindowEvent : global::Gyemong.EventSystem.Event.Event
+    public abstract class PopupWindowEvent : Event
     {
     }
 

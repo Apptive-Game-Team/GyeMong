@@ -10,7 +10,14 @@ using UnityEngine.SceneManagement;
 
 namespace Gyemong.EventSystem.Event.Data
 {
-    public class SaveDataEvent : Event
+    public abstract class DataEvent : Event
+    {
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            yield return null;
+        }
+    }
+    public class DataEvents : DataEvent
     {
         private PlayerData playerData = new();
         private RuneDatas runeData = new();
@@ -43,7 +50,7 @@ namespace Gyemong.EventSystem.Event.Data
             yield return null;
         }
     }
-    public class LoadDataEvent : Event
+    public class LoadDataEvent : DataEvent
     {
         private PlayerData playerData;
     
