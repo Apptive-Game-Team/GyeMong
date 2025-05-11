@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Gyemong.GameSystem.Creature.Player.Component;
-using Gyemong.GameSystem.Map.Portal;
+using GyeMong.GameSystem.Creature.Player.Component;
+using GyeMong.GameSystem.Map.Portal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using DG.Tweening;
-using Gyemong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Creature.Player;
 using Util;
 
 namespace Visual.Camera
