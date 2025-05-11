@@ -1,44 +1,25 @@
-using System.Threading.Tasks;
-using GyeMong.DataSystem;
-using GyeMong.EventSystem.Event.Data;
+using GyeMong.GameSystem.Map.Stage.Select;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace GyeMong.UISystem.TItle
 {
     public class ContinueButton : MonoBehaviour
     {
-        private PlayerData playerData;
         private GameObject optionExitButton;
         private void Start() 
         {
-            playerData = DataManager.Instance.LoadSection<PlayerData>("PlayerData");
-            if (playerData.isFirst) gameObject.SetActive(!playerData.isFirst);
+            int maxStageId = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0);
+            gameObject.SetActive(maxStageId > 0);
             optionExitButton = GameObject.Find("OptionController").transform.GetChild(0).GetChild(0).Find("OptionExitButton").gameObject;
         }
 
-        public async void ContinueGame()
+        public void ContinueGame()
         {
-            string sceneName = playerData.sceneName;
-
-            if (string.IsNullOrEmpty(sceneName))
-            {
-                Debug.LogError("Scene name is invalid.");
-                return;
-            }
-
-            // �񵿱������� ��� �ε�
-            AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-
-            // ����� ������ �ε�� ������ ���
-            while (!asyncOperation.isDone)
-            {
-                await Task.Yield();
-            }
-
             optionExitButton.SetActive(true);
-            // ��� �ε尡 �Ϸ�� �� �÷��̾� ������ �ε�
-            DataManager.Instance.StartCoroutine(new LoadDataEvent().Execute());
+
+            StageSelectPage.LoadStageSelectPageOnStage(
+                PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0)
+                );
         }
     }
 }

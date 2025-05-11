@@ -14,6 +14,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
     
     public static class StageSelectPage
     {
+        public static readonly string MAX_STAGE_ID_KEY = "MaxStageId";
         private const string SceneName = "StageSelectPage";
 
         public static void LoadStageSelectPage()
@@ -35,7 +36,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         public static void LoadStageSelectPageOnStageToDestination(Stage currentStageId, Stage maxStageId)
         {
             PlayerPrefs.SetInt("CurrentStageId", (int) currentStageId);
-            PlayerPrefs.SetInt("MaxStageId", (int) maxStageId);
+            PlayerPrefs.SetInt(StageSelectPage.MAX_STAGE_ID_KEY, (int) maxStageId);
             SceneManager.LoadScene(SceneName);
         }
     }
