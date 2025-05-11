@@ -1,6 +1,5 @@
 using System.Collections;
 using Gyemong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime;
-using Gyemong.GameSystem.Map.Puzzle.Maze;
 using UnityEngine;
 
 namespace Gyemong.EventSystem.Event.EventScene
@@ -56,20 +55,6 @@ namespace Gyemong.EventSystem.Event.EventScene
             targetSlime.transform.localScale *= 1.25f;
             yield return new WaitForSeconds(0.2f);
             targetSlime.transform.localScale *= 0.92f;
-        }
-    }
-
-    public class ReGenerateMaze : EventScene
-    {
-        [SerializeField] GameObject maze;
-        [SerializeField] private bool up;
-        [SerializeField] private bool down;
-        [SerializeField] private bool left;
-        [SerializeField] private bool right;
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            maze.GetComponent<MazeGenerator>().ReGenerateMaze(up, down, left, right);
-            yield return null;
         }
     }
 }

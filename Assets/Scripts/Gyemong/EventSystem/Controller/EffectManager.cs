@@ -11,9 +11,6 @@ namespace Gyemong.EventSystem.Controller
     /// </summary>
     public class EffectManager : SingletonObject<EffectManager>
     {
-
-        private CameraController cameraController;
-    
         private HpBarController hpBarController;
         private RawImage hurtEffect;
         private RawImage black;
@@ -22,16 +19,6 @@ namespace Gyemong.EventSystem.Controller
         public ChatController GetChatController()
         {
             return GetComponent<ChatController>();
-        }
-
-        public CameraController GetCameraController()
-        {
-            return cameraController;
-        }
-    
-        public void SetCameraController(CameraController cameraController)
-        {
-            this.cameraController = cameraController;
         }
 
         public void UpdateHpBar(float hp, float shield)

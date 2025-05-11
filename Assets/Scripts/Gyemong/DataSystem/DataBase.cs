@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Gyemong.GameSystem.Rune;
 using Gyemong.InputSystem;
-using Gyemong.QuestSystem.Quests;
 using UnityEngine;
 
 namespace Gyemong.DataSystem
@@ -15,20 +13,7 @@ namespace Gyemong.DataSystem
         public Vector3 playerPosition = new(4.93f, -1.72f, 0);
         public Vector2 playerDirection = new(1, 0);
     }
-
-    [System.Serializable]
-    public class RuneDatas
-    {
-        public List<RuneData> AcquiredRuneDatas = new();
-        public List<RuneData> EquippedRuneDatas = new();
-    }
-
-    [Serializable]
-    public class QuestData
-    {
-        public List<SerializableQuestInfo> quests = new();
-    }
-
+    
     [System.Serializable]
     public class SoundData
     {

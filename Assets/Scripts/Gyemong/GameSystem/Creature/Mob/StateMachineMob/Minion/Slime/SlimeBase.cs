@@ -5,15 +5,12 @@ using Gyemong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using Gyemong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
 using Gyemong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using Gyemong.GameSystem.Creature.Player;
-using Gyemong.StatusSystem.Gold;
 using UnityEngine;
 
 namespace Gyemong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 {
     public abstract class SlimeBase : StateMachineMob
     {
-        private const int GOLD_REWARD = 10;
-        
         protected bool isInitialized = false;
         
         [SerializeField] private GameObject rangedAttack;
@@ -229,8 +226,6 @@ namespace Gyemong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 // Slime.StopCoroutine(Slime.faceToPlayerCoroutine);
                 // ((Slime)creature).faceToPlayerCoroutine = null;
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Die);
-                
-                GoldManager.Instance?.AddGold(GOLD_REWARD);
 
                 yield return new WaitForSeconds(2f);
                 mob.gameObject.SetActive(false);

@@ -2,7 +2,6 @@ using System.Collections;
 using Gyemong.EventSystem;
 using Gyemong.EventSystem.Controller;
 using Gyemong.EventSystem.Interface;
-using Gyemong.GameSystem.Buff;
 using Gyemong.GameSystem.Creature.Player.Component;
 using Gyemong.GameSystem.Creature.Player.Component.Collider;
 using Gyemong.GameSystem.Creature.Player.Controller;
@@ -13,12 +12,11 @@ using Visual.Camera;
 
 namespace Gyemong.GameSystem.Creature.Player
 {
-    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable, IBuffable
+    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
     {
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
         
         public StatComponent stat;
-        public BuffComponent buffComponent;
         [SerializeField] private StatData _statData;
         [SerializeField] private float curHealth;
         [SerializeField] public float curShield;

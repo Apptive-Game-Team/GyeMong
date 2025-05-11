@@ -1,5 +1,3 @@
-using Gyemong.GameSystem.Rune.RuneUI;
-
 namespace Gyemong.InputSystem.Interface
 {
     public interface IMouseInputListener

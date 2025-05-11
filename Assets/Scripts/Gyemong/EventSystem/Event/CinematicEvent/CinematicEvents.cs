@@ -3,24 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Gyemong.EventSystem.Interface;
 using Gyemong.GameSystem.Creature.Player;
-using Gyemong.GameSystem.Map.Puzzle.Maze;
 using Gyemong.InputSystem;
 using UnityEngine;
 
 namespace Gyemong.EventSystem.Event.CinematicEvent
 {
     public abstract class CinematicEvent : Event { }
-
-    public class ChangeDarkness : CinematicEvent
-    {
-        [SerializeField] private DarknessController _darknessController;
-        [SerializeField] private float _intensity;
-        [SerializeField] private float _duration;
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            return _darknessController.ChangeIntensity(_intensity, _duration);
-        }
-    }
 
     public class MoveCreatureEvent : CinematicEvent
     {

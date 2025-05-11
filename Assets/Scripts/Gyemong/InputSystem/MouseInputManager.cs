@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Gyemong.GameSystem.Rune.RuneUI;
 using Gyemong.InputSystem.Interface;
 using UnityEngine;
 using UnityEngine.UI;
