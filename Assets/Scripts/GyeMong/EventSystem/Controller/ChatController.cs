@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GyeMong.InputSystem;
+using GyeMong.SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -68,13 +69,17 @@ namespace GyeMong.EventSystem.Controller
 
             foreach (string line in multiChatMessage.messages)
             {
+                SoundObject _soundObject;
+                _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
                 yield return ShowMultipleChat(line);
+                Sound.Stop(_soundObject);
                 messageText.text += "\n";
 
                 float timer = Time.time;
                 yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
                                                  InputManager.Instance.GetKeyDown(ActionCode.Interaction));
             }
+
         }
 
         private IEnumerator ShowMultipleChat(string messages)
