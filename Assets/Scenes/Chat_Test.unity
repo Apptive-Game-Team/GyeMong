@@ -572,11 +572,7 @@ MonoBehaviour:
     - rid: 4317813276857073667
       type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
       data:
-        multiMessages:
-        - name: "[\uD558\uC774]"
-          messages:
-          - "\uC548\uB155\uD558\uC138\uC6A9"
-          - "\uAC10\uC0AC\uD574\uC6A9"
+        chatData: {fileID: 11400000, guid: 1f006971f1d9ff744b91d5ef44a19b92, type: 2}
         autoSkipTime: 3
 --- !u!212 &603309958
 SpriteRenderer:
