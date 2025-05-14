@@ -43,8 +43,6 @@ namespace GyeMong.EventSystem.Event.Chat
         [SerializeField] float autoSkipTime = 3f;
         float soundDelay = 0.2f;
         SoundObject _soundObject;
-
-
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             foreach (MultiChatMessage chat in multiMessages)
@@ -55,7 +53,6 @@ namespace GyeMong.EventSystem.Event.Chat
                 yield return EffectManager.Instance.GetChatController().MultipleChat(chat, autoSkipTime);
             }
         }
-
     }
 
     [Serializable]

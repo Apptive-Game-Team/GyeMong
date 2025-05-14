@@ -2,26 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GyeMong.InputSystem;
-using GyeMong.SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace GyeMong.EventSystem.Controller
 {
-    [Serializable]
-    public class ChatMessage
-    {
-        public string name;
-        public string message;
-
-        public ChatMessage(string messagesName, string messagesMessage)
-        {
-            name = messagesName;
-            message = messagesMessage;
-        }
-    }
-
     [Serializable]
     public class MultiChatMessage
     {
@@ -75,17 +61,6 @@ namespace GyeMong.EventSystem.Controller
             isWorking = false;
         }
 
-        public IEnumerator Chat(ChatMessage chatMessage, float autoSkipTime)
-        {
-            nameText.text = chatMessage.name;
-            messageText.text = "";
-            yield return ShowChat(chatMessage.message);
-
-            float timer = Time.time;
-            yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
-                                             InputManager.Instance.GetKeyDown(ActionCode.Interaction));
-        }
-
         public IEnumerator MultipleChat(MultiChatMessage multiChatMessage, float autoSkipTime)
         {
             nameText.text = multiChatMessage.name;
@@ -93,31 +68,12 @@ namespace GyeMong.EventSystem.Controller
 
             foreach (string line in multiChatMessage.messages)
             {
-                SoundObject _soundObject;
-                _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
                 yield return ShowMultipleChat(line);
-                Sound.Stop(_soundObject);
                 messageText.text += "\n";
 
                 float timer = Time.time;
                 yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
                                                  InputManager.Instance.GetKeyDown(ActionCode.Interaction));
-            }
-
-        }
-
-        private IEnumerator ShowChat(string message)
-        {
-            foreach (char c in message)
-            {
-                if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
-                {
-                    messageText.text = message;
-                    yield return new WaitForSeconds(SHOW_CHAT_DELAY);
-                    break;
-                }
-                messageText.text += c;
-                yield return new WaitForSeconds(SHOW_CHAT_DELAY);
             }
         }
 
