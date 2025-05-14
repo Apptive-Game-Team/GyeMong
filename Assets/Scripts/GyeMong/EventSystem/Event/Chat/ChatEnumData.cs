@@ -9,4 +9,10 @@ namespace GyeMong.EventSystem.Event.Chat
         Player,
         ø§«¡√Ã¿Â,
     }
+
+    public enum BackgroundImage
+    {
+        Test1,
+        Test2,
+    }
 }

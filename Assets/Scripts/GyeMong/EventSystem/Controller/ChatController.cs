@@ -15,12 +15,14 @@ namespace GyeMong.EventSystem.Controller
         public string name;
         public List<string> messages;
         public Nullable<float> chatDelay;
+        public Image backgroundImage;
     }
 
     public class ChatController : MonoBehaviour
     {
 
         private Image chatWindow;
+        private Image backGround;
         [SerializeField] private GameObject speechBubble;
         private const float CHAT_WINDOW_ALPHA = 0.7f;
         private const float SHOW_CHAT_DELAY = 0.1f;
@@ -33,6 +35,7 @@ namespace GyeMong.EventSystem.Controller
             chatWindow = transform.Find("ChatWindow").GetComponent<Image>();
             nameText = chatWindow.transform.Find("NameArea").GetComponent<TMP_Text>();
             messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
+            backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
         }
 
         public IEnumerator Open()
