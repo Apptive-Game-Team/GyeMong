@@ -32,6 +32,7 @@ namespace GyeMong.GameSystem.Creature.Player
         private PlayerSoundController soundController;
         
         public GameObject attackColliderPrefab;
+        public GameObject attackComboColliderPrefab;
         public GameObject skillColliderPrefab;
         private float blinkDelay = 0.2f;
 
@@ -41,6 +42,8 @@ namespace GyeMong.GameSystem.Creature.Player
         private bool isAttacking = false;
         private bool canMove = true;
         private bool isInvincible = false;
+        private bool canCombo = false;
+        private bool comboQueued = false;
 
 
         public Material[] materials;
@@ -70,8 +73,9 @@ namespace GyeMong.GameSystem.Creature.Player
             {
                 if (canMove)
                 {
-                    HandleInput();
+                    HandleMoveInput();
                 }
+                HandleActionInput();
                 UpdateState();
             }
         }
@@ -84,7 +88,7 @@ namespace GyeMong.GameSystem.Creature.Player
             }
         }
 
-        private void HandleInput()
+        private void HandleMoveInput()
         {
             movement.x = 0;
             movement.y = 0;
@@ -108,15 +112,25 @@ namespace GyeMong.GameSystem.Creature.Player
             }
 
             movement.Normalize();
+        }
 
+        private void HandleActionInput()
+        {
             if (InputManager.Instance.GetKeyDown(ActionCode.Dash) && !isDashing)
             {
                 StartCoroutine(Dash());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Attack) && !isAttacking)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Attack))
             {
-                StartCoroutine(Attack());
+                if (!isAttacking)
+                {
+                    StartCoroutine(Attack());
+                }
+                else if (canCombo)
+                {
+                    comboQueued = true;
+                }
             }
 
             if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge >= stat.SkillCost)
@@ -245,7 +259,7 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
             
-            Vector2 dashDirection = lastMovementDirection.normalized;
+            Vector2 dashDirection = GetCurrentInputDirection();
             Vector2 startPosition = playerRb.position;
 
             RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance, LayerMask.GetMask("Wall"));
@@ -269,26 +283,51 @@ namespace GyeMong.GameSystem.Creature.Player
 
             isDashing = false;
         }
+        
+        private Vector2 GetCurrentInputDirection()
+        {
+            var dir = Vector2.zero;
+            if (InputManager.Instance.GetKey(ActionCode.MoveUp)) dir += Vector2.up;
+            if (InputManager.Instance.GetKey(ActionCode.MoveDown)) dir += Vector2.down;
+            if (InputManager.Instance.GetKey(ActionCode.MoveRight)) dir += Vector2.right;
+            if (InputManager.Instance.GetKey(ActionCode.MoveLeft)) dir += Vector2.left;
+
+            if (dir != Vector2.zero) return dir;
+            return lastMovementDirection.normalized;
+        }
 
         private IEnumerator Attack()
         {
-            soundController.Trigger(PlayerSoundType.SWORD_SWING);
             isAttacking = true;
             canMove = false;
-            animator.SetBool("isAttacking", true);
-
-            SpawnAttackCollider();
-
+            
             movement = Vector2.zero;
             StopPlayer();
+            
+            yield return new WaitForSeconds(stat.AttackDelay / 2);
+            
+            soundController.Trigger(PlayerSoundType.SWORD_SWING);
 
+            animator.SetBool("isAttacking", true);
+
+            SpawnAttackCollider(attackColliderPrefab);
+            
+            canCombo = true;
+            yield return new WaitForSeconds(stat.AttackDelay); // 콤보 입력 대기
+            canCombo = false;
+
+            if (comboQueued)
+            {
+                comboQueued = false;
+                yield return new WaitForSeconds(stat.AttackDelay / 2);
+                soundController.Trigger(PlayerSoundType.SWORD_SWING);
+                SpawnAttackCollider(attackComboColliderPrefab);
+                yield return new WaitForSeconds(stat.AttackDelay);
+                print(":tq");
+            }
+            
             canMove = true;
-            
-            yield return new WaitForSeconds(stat.AttackDelay);
-
-
             animator.SetBool("isAttacking", false);
-            
             isAttacking = false;
         }
 
@@ -319,7 +358,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
             curSkillGauge -= stat.SkillCost;
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
-            SpawnAttackCollider();
+            SpawnAttackCollider(attackColliderPrefab);
             SpawnSkillCollider();
 
             movement = Vector2.zero;
@@ -335,7 +374,7 @@ namespace GyeMong.GameSystem.Creature.Player
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private void SpawnAttackCollider()
+        private void SpawnAttackCollider(GameObject attackPrefab)
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseDirection = (mousePosition - playerRb.position).normalized;
@@ -344,7 +383,7 @@ namespace GyeMong.GameSystem.Creature.Player
             float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
-            GameObject attackCollider = Instantiate(attackColliderPrefab, spawnPosition, spawnRotation, transform);
+            GameObject attackCollider = Instantiate(attackPrefab, spawnPosition, spawnRotation, transform);
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
             Destroy(attackCollider, stat.AttackDelay);
         }
