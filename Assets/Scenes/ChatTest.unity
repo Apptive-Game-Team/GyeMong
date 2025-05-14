@@ -577,14 +577,25 @@ MonoBehaviour:
   trigger: 1
   triggerLimitCounter: -1
   eventSequence:
-  - rid: -2
-  - rid: -2
-  - rid: -2
+  - rid: 4317813276857073664
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 4317813276857073664
+      type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data:
+        multiMessages:
+        - name: z
+          messages:
+          - sdsd
+          - sdfsefsefsf
+          - svsevsfseefsf
+        - name: 33
+          messages:
+          - sfesef
+          - sdfsefsfsefsef
+          - sefsefseffsefsef
+        autoSkipTime: 3
 --- !u!61 &328889858
 BoxCollider2D:
   m_ObjectHideFlags: 0

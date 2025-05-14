@@ -5,6 +5,7 @@ using GyeMong.EventSystem.Controller;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.InputSystem;
 using UnityEngine;
+using GyeMong.SoundSystem;
 
 namespace GyeMong.EventSystem.Event.Chat
 {
@@ -40,14 +41,21 @@ namespace GyeMong.EventSystem.Event.Chat
     {
         [SerializeField] List<MultiChatMessage> multiMessages;
         [SerializeField] float autoSkipTime = 3f;
+        float soundDelay = 0.2f;
+        SoundObject _soundObject;
+
 
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             foreach (MultiChatMessage chat in multiMessages)
             {
+                _soundObject = Sound.Play("EFFECT_Chat_Sound", true);
+                yield return new WaitForSeconds(soundDelay);
+                Sound.Stop(_soundObject);
                 yield return EffectManager.Instance.GetChatController().MultipleChat(chat, autoSkipTime);
             }
         }
+
     }
 
     [Serializable]
