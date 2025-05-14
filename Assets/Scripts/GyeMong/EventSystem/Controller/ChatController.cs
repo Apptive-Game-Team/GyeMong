@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GyeMong.EventSystem.Event.Chat;
 using GyeMong.InputSystem;
 using GyeMong.SoundSystem;
 using TMPro;
@@ -15,7 +16,7 @@ namespace GyeMong.EventSystem.Controller
         public string name;
         public List<string> messages;
         public Nullable<float> chatDelay;
-        public Image backgroundImage;
+        public Sprite backgroundImage;
     }
 
     public class ChatController : MonoBehaviour
@@ -69,6 +70,8 @@ namespace GyeMong.EventSystem.Controller
         {
             nameText.text = multiChatMessage.name;
             messageText.text = "";
+            BackgroundImageData backgroundImageData = Resources.Load<BackgroundImageData>("BackgroundImageData");
+            SetBackgroundImage(multiChatMessage.backgroundImage);
 
             foreach (string line in multiChatMessage.messages)
             {
@@ -82,7 +85,6 @@ namespace GyeMong.EventSystem.Controller
                 yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
                                                  InputManager.Instance.GetKeyDown(ActionCode.Interaction));
             }
-
         }
 
         private IEnumerator ShowMultipleChat(string messages)
@@ -97,6 +99,25 @@ namespace GyeMong.EventSystem.Controller
                 }
                 messageText.text += c;
                 yield return new WaitForSeconds(SHOW_CHAT_DELAY);
+            }
+        }
+
+        public void SetBackgroundImage(Sprite sprite)
+        {
+            if (backGround != null)
+            {
+                if (sprite != null)
+                {
+                    backGround.sprite = sprite;
+                    backGround.color = Color.white;
+                    backGround.enabled = true;
+                }
+                else
+                {
+                    backGround.sprite = null;
+                    backGround.color = new Color(0, 0, 0, 0);
+                    backGround.enabled = false;
+                }
             }
         }
 

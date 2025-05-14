@@ -41,6 +41,7 @@ namespace GyeMong.EventSystem.Event.Chat
     public class ShowMessages : ChatEvent
     {
         [SerializeField] private MultiChatMessageData chatData;
+        [SerializeField] private BackgroundImageData backgroundImageData;
 
         [SerializeField] float autoSkipTime = 3f;
         float soundDelay = 0.2f;
@@ -54,15 +55,32 @@ namespace GyeMong.EventSystem.Event.Chat
                 yield return new WaitForSeconds(soundDelay);
                 Sound.Stop(_soundObject);
 
+                var backgroundSprite = GetBackgroundImageSprite(chat.backgroundImage);
+
                 var multiChatMessage = new GyeMong.EventSystem.Controller.MultiChatMessage
                 {
                     name = chat.speakerName.ToString(),
                     messages = chat.messages,
-                    chatDelay = chat.chatDelay
+                    chatDelay = chat.chatDelay,
+                    backgroundImage = backgroundSprite,
                 };
 
                 yield return EffectManager.Instance.GetChatController().MultipleChat(multiChatMessage, autoSkipTime);
             }
+        }
+
+        private Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
+        {
+            foreach (var imageInfo in backgroundImageData.backgroundImages)
+            {
+                if (imageInfo.backgroundImage == backgroundImage)
+                {
+                    return imageInfo.image;
+                }
+            }
+
+            Debug.LogWarning($"Background image not found for {backgroundImage}");
+            return null;
         }
     }
 

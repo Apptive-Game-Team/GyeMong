@@ -16,16 +16,6 @@ namespace GyeMong.EventSystem.Event.Chat
         }
 
         public List<BackgroundImageInfo> backgroundImages;
-
-        public Sprite GetBackgroundImage(BackgroundImage backgroundImage)
-        {
-            foreach (var bg in backgroundImages)
-            {
-                if (bg.backgroundImage == backgroundImage)
-                    return bg.image;
-            }
-            return null;
-        }
     }
 }
 
