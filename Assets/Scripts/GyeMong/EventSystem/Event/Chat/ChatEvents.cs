@@ -59,46 +59,6 @@ namespace GyeMong.EventSystem.Event.Chat
     }
 
     [Serializable]
-    public class ShowChatEvent : ChatEvent
-    {
-        [SerializeField] ChatMessage message;
-        [SerializeField] float autoSkipTime = 3f;
-
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            yield return EffectManager.Instance.GetChatController().Chat(message, autoSkipTime);
-        }
-    }
-
-    [Serializable]
-    public class ShowChatSequence : ChatEvent
-    {
-        [SerializeField] MultiChatMessage messages;
-        [SerializeField] float autoSkipTime = 3f;
-
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            foreach (string message in messages.messages)
-            {
-                yield return EffectManager.Instance.GetChatController().Chat(new ChatMessage(messages.name, message), autoSkipTime);
-                yield return new SkippableDelayEvent() { delayTime = 999 }.Execute(eventObject);
-            }
-        }
-    }
-
-    [Serializable]
-    public class MultipleShowChatEvent : ChatEvent
-    {
-        [SerializeField] MultiChatMessage messages;
-        [SerializeField] float autoSkipTime = 3f;
-
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            return EffectManager.Instance.GetChatController().MultipleChat(messages, autoSkipTime);
-        }
-    }
-
-    [Serializable]
     public class SpeechBubbleChatEvent : ChatEvent
     {
         [SerializeField]
