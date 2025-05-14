@@ -79,7 +79,6 @@ namespace GyeMong.EventSystem.Event.Chat
                 }
             }
 
-            Debug.LogWarning($"Background image not found for {backgroundImage}");
             return null;
         }
     }
