@@ -16,6 +16,15 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
             return CameraManager.Instance.CameraMove(destination, speed);
         }
     }
+
+    public class CameraFollowPlayer : CameraEvent
+    {
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            CameraManager.Instance.CameraFollow(PlayerCharacter.Instance.transform);
+            yield return null;
+        }
+    }
     
     public class CameraZoomInOut : CameraEvent
     {
