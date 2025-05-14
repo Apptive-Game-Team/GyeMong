@@ -56,7 +56,7 @@ namespace GyeMong.EventSystem.Event.Chat
 
                 var multiChatMessage = new GyeMong.EventSystem.Controller.MultiChatMessage
                 {
-                    name = chat.speakerName,
+                    name = chat.speakerName.ToString(),
                     messages = chat.messages,
                     chatDelay = chat.chatDelay
                 };

@@ -11,7 +11,7 @@ namespace GyeMong.EventSystem.Event.Chat
         [Serializable]
         public class MultiChatMessage
         {
-            public string speakerName;
+            public ChatSpeakerType speakerName;
             public List<string> messages;
             public float chatDelay = 3f;
         }
