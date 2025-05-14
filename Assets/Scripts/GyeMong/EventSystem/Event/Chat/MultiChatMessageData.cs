@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MultiChatMessageData", menuName = "ScriptableObject/MultiChatMessageData", order = 1)]
-public class MultiChatMessageData : ScriptableObject
+namespace GyeMong.EventSystem.Event.Chat
 {
-    [Serializable]
-    public class MultiChatMessage
+    [CreateAssetMenu(fileName = "MultiChatMessageData", menuName = "ScriptableObject/MultiChatMessageData", order = 1)]
+    public class MultiChatMessageData : ScriptableObject
     {
-        public string speakerName;
-        public List<string> messages;
-        public float chatDelay = 3f;
-    }
+        [Serializable]
+        public class MultiChatMessage
+        {
+            public string speakerName;
+            public List<string> messages;
+            public float chatDelay = 3f;
+        }
 
-    public List<MultiChatMessage> chatMessages;
+        public List<MultiChatMessage> chatMessages;
+    }
 }
