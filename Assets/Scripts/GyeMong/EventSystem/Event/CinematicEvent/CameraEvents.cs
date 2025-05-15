@@ -21,7 +21,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            CameraManager.Instance.CameraFollow(PlayerCharacter.Instance.transform);
+            CameraManager.Instance.CameraFollow(SceneContext.Character.transform);
             yield return null;
         }
     }

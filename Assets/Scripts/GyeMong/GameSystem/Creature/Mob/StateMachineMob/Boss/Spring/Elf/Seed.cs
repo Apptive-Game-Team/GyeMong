@@ -74,7 +74,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             if (collision.CompareTag("PlayerAttack") && !isReflected)
             {
                 isReflected = true;
-                Vector2 playerAttackDirection = PlayerCharacter.Instance.mouseDirection;
+                Vector2 playerAttackDirection = SceneContext.Character.mouseDirection;
                 direction = playerAttackDirection.normalized;
                 traveledDistance = 0f;
                 rb.velocity = direction * speed;

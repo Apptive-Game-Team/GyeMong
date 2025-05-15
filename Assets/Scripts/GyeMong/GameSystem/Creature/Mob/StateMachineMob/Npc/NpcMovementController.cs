@@ -37,7 +37,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Npc
             {
                 while (true)
                 {
-                    _path = Npc._pathFinder.FindPath(mob.transform.position, PlayerCharacter.Instance.transform.position);
+                    _path = Npc._pathFinder.FindPath(mob.transform.position, SceneContext.Character.transform.position);
                     UpdateTarget();
                     yield return new WaitForSeconds(PATH_FINDING_INTERVAL);
                 }
@@ -58,7 +58,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Npc
             
             public override IEnumerator StateCoroutine()
             {
-                mob.transform.parent = PlayerCharacter.Instance.transform;
+                mob.transform.parent = SceneContext.Character.transform;
                 _pathFindingCoroutine = mob.StartCoroutine(PathFindingCoroutine());
                 
                 while (true)

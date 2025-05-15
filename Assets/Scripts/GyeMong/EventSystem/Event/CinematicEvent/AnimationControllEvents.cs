@@ -43,7 +43,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
         {
             if (_creatureType == CreatureType.NonPlayableCharacter)
                 _animator.SetFloat(_name, _value);
-            else PlayerCharacter.Instance.GetComponent<Animator>().SetFloat(_name, _value);
+            else SceneContext.Character.GetComponent<Animator>().SetFloat(_name, _value);
             return null;
         }
     }
@@ -64,7 +64,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
             if (_creatureType == CreatureType.NonPlayableCharacter)
                 _animator.SetBool(_name, _value);
             else
-                PlayerCharacter.Instance.GetComponent<Animator>().SetBool(_name, _value);
+                SceneContext.Character.GetComponent<Animator>().SetBool(_name, _value);
 
             return null;
         }

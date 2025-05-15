@@ -30,6 +30,7 @@ namespace GyeMong.EventSystem.Event.Chat
             InputManager.Instance.SetActionState(true);
             ChatController.Close();
             yield return null;
+            
         }
     }
 
