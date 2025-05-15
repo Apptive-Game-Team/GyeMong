@@ -52,6 +52,8 @@ namespace GyeMong.EventSystem.Event.Chat
                 Sound.Stop(_soundObject);
                 yield return ChatController.MultipleChat(chat, autoSkipTime);
             }
+
+            ChatController.SetBackgroundImage(null);
         }
     }
 
