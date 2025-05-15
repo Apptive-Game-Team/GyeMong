@@ -24,7 +24,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detec
 
         public PlayerCharacter DetectTarget()
         {
-            return PlayerCharacter.Instance;
+            return SceneContext.Character;
         }
     }
 }

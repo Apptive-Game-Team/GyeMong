@@ -15,7 +15,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         {
             _particleSystem = GetComponentInChildren<ParticleSystem>();
             _shape = _particleSystem.shape;//.GetComponent<ParticleSystem.ShapeModule>();
-            var player = PlayerCharacter.Instance;
+            var player = SceneContext.Character;
             attackDamage = player.stat.AttackPower;
         }
 
@@ -38,7 +38,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             {
                 _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                 creature.OnAttacked(attackDamage);
-                PlayerCharacter.Instance.AttackIncreaseGauge();
+                SceneContext.Character.AttackIncreaseGauge();
             } 
             else
             {

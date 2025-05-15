@@ -20,7 +20,7 @@ namespace GyeMong.GameSystem.Map
         
         private void Start()
         {
-            _transformSet.Add(PlayerCharacter.Instance.transform);
+            _transformSet.Add(SceneContext.Character.transform);
             _numOfTransform = _transforms.Count;
             _transforms = new List<Transform>(_transformSet);
         }
