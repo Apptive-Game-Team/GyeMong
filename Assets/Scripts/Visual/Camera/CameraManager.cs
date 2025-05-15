@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using playerCharacter;
 using DG.Tweening;
-using GyeMong.GameSystem.Creature.Player;
-using Util;
 
 namespace Visual.Camera
 {
