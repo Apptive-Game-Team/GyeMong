@@ -962,6 +962,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94a44013cb06f0f48bfd802da3e6c197, type: 3}
+--- !u!1 &962346217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
+    type: 3}
+  m_PrefabInstance: {fileID: 962346216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1243932861
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26273,6 +26279,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47fbc2e22b95346e69f88501dd5fa1b1, type: 3}
+--- !u!1 &1275491493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 634883375546071749, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1275491492}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1299154351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26564,6 +26576,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f561c6e6f9d59d5469191a2c95c1e8b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1459062337 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5354083522607184929, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1459062334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1459062338 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1241953916927290027, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1459062334}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1459062339 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
@@ -26837,14 +26861,127 @@ MonoBehaviour:
   trigger: 0
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 2777310640625680430
+  - rid: 6551754847466291200
+  - rid: 6551754847466291201
+  - rid: 6551754847466291202
+  - rid: 6551754847466291203
+  - rid: 6551754847466291204
+  - rid: 6551754847466291205
+  - rid: 6551754847466291206
+  - rid: 6551754847466291207
+  - rid: 6551754847466291208
+  - rid: 6551754847466291209
+  - rid: 6551754847466291210
+  - rid: 6551754847466291211
+  - rid: 6551754847466291212
+  - rid: 6551754847466291213
+  - rid: 6551754847466291214
+  - rid: 6551754847466291215
+  - rid: 6551754847466291216
+  - rid: 6551754847466291217
+  - rid: 6551754847466291218
+  - rid: 6551754847466291219
   references:
     version: 2
     RefIds:
-    - rid: 2777310640625680430
+    - rid: 6551754847466291200
+      type: {class: SetKeyInputEvent, ns: GyeMong.EventSystem.Event.Input, asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 6551754847466291201
+      type: {class: StopAnimatorEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1459062337}
+    - rid: 6551754847466291202
+      type: {class: ChangeSpriteEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 1459062338}
+        _sprite: {fileID: 21300000, guid: 3bd1012804ff5486cb054948185bd4aa, type: 3}
+    - rid: 6551754847466291203
+      type: {class: MoveCreatureEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        creatureType: 0
+        iControllable: {fileID: 0}
+        target: {x: 3, y: 3, z: 0}
+        speed: 1
+    - rid: 6551754847466291204
+      type: {class: CameraMove, ns: GyeMong.EventSystem.Event.CinematicEvent, asm: Assembly-CSharp}
+      data:
+        destination: {x: 2.97, y: 4.17, z: -10}
+        speed: 3
+    - rid: 6551754847466291205
+      type: {class: ActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 962346217}
+    - rid: 6551754847466291206
+      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1592182054}
+    - rid: 6551754847466291207
+      type: {class: OpenChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754847466291208
+      type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data:
+        chatData: {fileID: 0}
+        autoSkipTime: 3
+    - rid: 6551754847466291209
+      type: {class: ChangeSpriteEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 1459062338}
+        _sprite: {fileID: 21300000, guid: 5fd0c1220da3844429dd60969921942e, type: 3}
+    - rid: 6551754847466291210
       type: {class: DelayEvent, ns: GyeMong.EventSystem.Event, asm: Assembly-CSharp}
       data:
         delayTime: 1
+    - rid: 6551754847466291211
+      type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data:
+        chatData: {fileID: 0}
+        autoSkipTime: 3
+    - rid: 6551754847466291212
+      type: {class: CloseChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754847466291213
+      type: {class: ActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1275491493}
+    - rid: 6551754847466291214
+      type: {class: StartAnimatorEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1459062337}
+    - rid: 6551754847466291215
+      type: {class: ShowBossHealthBarEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+    - rid: 6551754847466291216
+      type: {class: SetAnimatorParameter, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 0}
+        _creatureType: 1
+        _name: speed
+        _value: 10
+    - rid: 6551754847466291217
+      type: {class: SetKeyInputEvent, ns: GyeMong.EventSystem.Event.Input, asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 6551754847466291218
+      type: {class: CameraFollowPlayer, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754847466291219
+      type: {class: TriggerEvent, ns: GyeMong.EventSystem.Event, asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 1542271255}
 --- !u!1001 &1581621003
 PrefabInstance:
   m_ObjectHideFlags: 0
