@@ -1,0 +1,314 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5581359416817432458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3544645115551477654}
+  - component: {fileID: 3286561062904517761}
+  - component: {fileID: 1610789005593594130}
+  - component: {fileID: 4250317024222530258}
+  - component: {fileID: 4065997969546532826}
+  - component: {fileID: 263124861457389270}
+  - component: {fileID: 621091777956376672}
+  m_Layer: 9
+  m_Name: EventElf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3544645115551477654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581359416817432458}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.08, y: 0.02, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &3286561062904517761
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581359416817432458}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: 99c8afbb409014f1db45b142ee41fbda, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.92, y: 1.92}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &1610789005593594130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581359416817432458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 2715780017853038622
+  - rid: 2715780017853038614
+  - rid: 2715780017853038610
+  - rid: 2715780017853038624
+  - rid: 2715780017853038615
+  - rid: 286138513274437647
+  - rid: 286138513274437648
+  - rid: 2715780017853038625
+  - rid: 2715780017853038617
+  - rid: 2715780017853038628
+  - rid: 2715780017853038629
+  - rid: 2715780017853038626
+  - rid: 2715780017853038619
+  - rid: 2715780017853038627
+  - rid: 2715780017853038621
+  - rid: 2715780017853038611
+  - rid: 2715780017853038600
+  references:
+    version: 2
+    RefIds:
+    - rid: 286138513274437647
+      type: {class: SpeechBubbleChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        NPC: {fileID: 0}
+        message: "\uC774 \uC0AC\uB78C\uC740 \uC800\uB97C \uAD6C\uD574\uC92C\uC5B4\uC694!"
+        destroyDelay: 2
+    - rid: 286138513274437648
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 0.5
+    - rid: 2715780017853038600
+      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 0}
+    - rid: 2715780017853038610
+      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038611
+      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2715780017853038614
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038615
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038617
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038619
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038621
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+    - rid: 2715780017853038622
+      type: {class: MoveCreatureEvent, ns: , asm: Assembly-CSharp}
+      data:
+        creatureType: 1
+        iControllable: {fileID: 4250317024222530258}
+        target: {x: 0, y: 0, z: 0}
+        speed: 3
+    - rid: 2715780017853038624
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC6EC\uB188\uC774\uB0D0!!"
+          - "\uC678\uBD80\uC778\uC774 \uC5EC\uAE34 \uC5B4\uCA50 \uC77C\uC774\uC9C0?!"
+          - "\uB2F9\uC7A5 \uC774\uACF3\uC5D0\uC11C \uB098\uAC00\uB77C!"
+    - rid: 2715780017853038625
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "...\uADF8\uB798? \uC6B0\uB9AC \uC544\uC774\uB97C \uAD6C\uD574\uC92C\uB2E4\uACE0?"
+          - "\uADF8\uAC74 \uACE0\uB9D9\uC9C0\uB9CC \uC678\uBD80\uC778\uC778 \uB108\uB97C
+            \uBBFF\uC744 \uC21C \uC5C6\uB2E4."
+    - rid: 2715780017853038626
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uC74C.. \uB108\uAC00 \uC6B0\uB9AC \uB300\uB959\uC744 \uAD6C\uD560 \uC6A9\uC0AC\uB77C\uACE0?"
+          - "\uBBFF\uAE30\uC9C0 \uC54A\uB294\uAD70.. \uB108\uAC00 \uC9C4\uC9DC \uC6A9\uC0AC\uB77C\uBA74
+            \uB098\uC640 \uC2F8\uC6CC\uC11C \uC790\uACA9\uC744 \uC99D\uBA85\uD574\uBD10\uB77C!"
+    - rid: 2715780017853038627
+      type: {class: MultipleShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        messages:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          messages:
+          - "\uBD81\uCABD \uC232\uC73C\uB85C \uC640\uB77C."
+          - "\uADF8\uACF3\uC5D0\uC11C \uAE30\uB2E4\uB9AC\uC9C0."
+    - rid: 2715780017853038628
+      type: {class: ShowChatEvent, ns: , asm: Assembly-CSharp}
+      data:
+        message:
+          name: "\uC5D8\uD504 \uCD0C\uC7A5"
+          message: ...
+    - rid: 2715780017853038629
+      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
+      data:
+        delayTime: 1
+--- !u!114 &4250317024222530258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581359416817432458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c50b92080c074c4fb265d6f0a459542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &4065997969546532826
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581359416817432458}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 1
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.010810852, y: -0.5037186}
+  serializedVersion: 2
+  m_Radius: 0.40216827
+--- !u!95 &263124861457389270
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581359416817432458}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c4200f4d07b3f8f41b75d50e82d758f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!50 &621091777956376672
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581359416817432458}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
