@@ -35,8 +35,10 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         
         public static void LoadStageSelectPageOnStageToDestination(Stage currentStageId, Stage maxStageId)
         {
+            Debug.Log("currentStageId: " + currentStageId+ " maxStageId: " + maxStageId);;
             PlayerPrefs.SetInt("CurrentStageId", (int) currentStageId);
-            PlayerPrefs.SetInt(StageSelectPage.MAX_STAGE_ID_KEY, (int) maxStageId);
+            PlayerPrefs.SetInt(MAX_STAGE_ID_KEY, (int) maxStageId);
+            Debug.Log("CurrentStageId: " + PlayerPrefs.GetInt("CurrentStageId", 0) + " MaxStageId: " + PlayerPrefs.GetInt(MAX_STAGE_ID_KEY, 1));
             SceneManager.LoadScene(SceneName);
         }
     }

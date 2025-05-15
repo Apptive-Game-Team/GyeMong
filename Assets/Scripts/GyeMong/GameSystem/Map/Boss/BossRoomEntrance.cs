@@ -19,13 +19,13 @@ namespace GyeMong.GameSystem.Map.Boss
             }
         }
 
-        protected void Start()
-        {
-            if (ConditionManager.Instance.Conditions.TryGetValue(bossConditionKey, out bool down) && down)
-            {
-                Destroy(gameObject);
-            }
-        }
+        // protected void Start()
+        // {
+        //     if (ConditionManager.Instance.Conditions.TryGetValue(bossConditionKey, out bool down) && down)
+        //     {
+        //         Destroy(gameObject);
+        //     }
+        // }
 
         public void Trigger()
         {

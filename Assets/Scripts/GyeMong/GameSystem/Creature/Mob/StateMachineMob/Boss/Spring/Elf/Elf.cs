@@ -6,6 +6,7 @@ using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using UnityEngine;
 
@@ -325,6 +326,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             base.Die();
             Animator.SetBool("isDown", true);
+            StageManager.ClearStage(this);
         }
         protected override void TransPhase()
         {

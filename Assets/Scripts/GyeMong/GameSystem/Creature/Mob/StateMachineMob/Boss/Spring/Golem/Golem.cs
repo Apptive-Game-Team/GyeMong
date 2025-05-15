@@ -5,6 +5,7 @@ using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -320,6 +321,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             base.Die();
             Animator.SetBool("isDown", true);
             mapPattern.DeActivateRootObjects();
+            StageManager.ClearStage(this);
         }
         public override IEnumerator Stun(float duration)
         {
