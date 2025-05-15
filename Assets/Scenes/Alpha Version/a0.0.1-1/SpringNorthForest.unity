@@ -27120,7 +27120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1858088964}
-  - component: {fileID: 1858088963}
+  - component: {fileID: 1858088965}
   m_Layer: 0
   m_Name: PhaseChangeObj
   m_TagString: Untagged
@@ -27128,83 +27128,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1858088963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1858088962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 4
-  triggerLimitCounter: 1
-  eventSequence:
-  - rid: 8155690880284491779
-  - rid: 7405124568204705794
-  - rid: 7405124568204705796
-  - rid: 2388724293505646600
-  - rid: 7405124568204705799
-  - rid: 7405124568204705795
-  - rid: 8155690880284491780
-  - rid: 3120289950044782595
-  - rid: 7405124568204705793
-  - rid: 7405124568204705792
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 2388724293505646600
-      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
-      data:
-        multiMessages:
-        - name: "\uD0C0\uB77D\uD55C \uC5D8\uD504"
-          messages:
-          - "\uB9CC\uB9CC\uD55C \uC0C1\uB300\uB294 \uC544\uB2C8\uAD70.."
-        autoSkipTime: 3
-    - rid: 3120289950044782595
-      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
-      data:
-        triggerable: {fileID: 1459062335}
-    - rid: 7405124568204705792
-      type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-    - rid: 7405124568204705793
-      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-    - rid: 7405124568204705794
-      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _isEnable: 0
-    - rid: 7405124568204705795
-      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _isEnable: 1
-    - rid: 7405124568204705796
-      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
-    - rid: 7405124568204705799
-      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
-    - rid: 8155690880284491779
-      type: {class: SetAnimatorParameterBool, ns: , asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 0}
-        _creatureType: 0
-        _name: isDown
-        _value: 1
-    - rid: 8155690880284491780
-      type: {class: SetAnimatorParameterBool, ns: , asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 0}
-        _creatureType: 0
-        _name: isDown
-        _value: 0
 --- !u!4 &1858088964
 Transform:
   m_ObjectHideFlags: 0
@@ -27220,6 +27143,82 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1858088965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858088962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 6551754847466291220
+  - rid: 6551754847466291221
+  - rid: 6551754847466291222
+  - rid: 6551754847466291223
+  - rid: 6551754847466291224
+  - rid: 6551754847466291225
+  - rid: 6551754847466291226
+  - rid: 6551754847466291227
+  - rid: 6551754847466291228
+  - rid: 6551754847466291229
+  references:
+    version: 2
+    RefIds:
+    - rid: 6551754847466291220
+      type: {class: SetAnimatorParameterBool, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1459062337}
+        _creatureType: 0
+        _name: isDown
+        _value: 1
+    - rid: 6551754847466291221
+      type: {class: SetKeyInputEvent, ns: GyeMong.EventSystem.Event.Input, asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 6551754847466291222
+      type: {class: OpenChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754847466291223
+      type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data:
+        chatData: {fileID: 0}
+        autoSkipTime: 3
+    - rid: 6551754847466291224
+      type: {class: CloseChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754847466291225
+      type: {class: SetKeyInputEvent, ns: GyeMong.EventSystem.Event.Input, asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 6551754847466291226
+      type: {class: SetAnimatorParameterBool, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1459062337}
+        _creatureType: 0
+        _name: isDown
+        _value: 0
+    - rid: 6551754847466291227
+      type: {class: TriggerEvent, ns: GyeMong.EventSystem.Event, asm: Assembly-CSharp}
+      data:
+        triggerable: {fileID: 1459062335}
+    - rid: 6551754847466291228
+      type: {class: HideBossHealthBarEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+    - rid: 6551754847466291229
+      type: {class: ShowBossHealthBarEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
 --- !u!1001 &1874213777
 PrefabInstance:
   m_ObjectHideFlags: 0
