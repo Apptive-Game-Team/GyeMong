@@ -26602,28 +26602,31 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 8709460353337262109
+  - rid: 6551754847466291238
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 8709460353337262109
-      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
+    - rid: 6551754847466291238
+      type: {class: ConditionalBranchEvent, ns: GyeMong.EventSystem.Event.Condition,
+        asm: Assembly-CSharp}
       data:
         _condition:
-          rid: 8709460353337262110
+          rid: 6551754847466291239
         eventInTrue:
-          rid: 8709460353337262111
+          rid: 6551754847466291240
         eventInFalse:
           rid: -2
-    - rid: 8709460353337262110
-      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
+    - rid: 6551754847466291239
+      type: {class: ToggeableCondition, ns: GyeMong.EventSystem.Controller.Condition,
+        asm: Assembly-CSharp}
       data:
         tag: spring_midboss_down
         condition: 0
-    - rid: 8709460353337262111
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
+    - rid: 6551754847466291240
+      type: {class: DestroySelfEvent, ns: GyeMong.EventSystem.Event, asm: Assembly-CSharp}
+      data: 
 --- !u!1 &1542271252
 GameObject:
   m_ObjectHideFlags: 0
