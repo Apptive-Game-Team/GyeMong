@@ -26621,7 +26621,7 @@ GameObject:
   - component: {fileID: 1542271257}
   - component: {fileID: 1542271256}
   - component: {fileID: 1542271255}
-  - component: {fileID: 1542271254}
+  - component: {fileID: 1542271259}
   m_Layer: 0
   m_Name: BossRoomEntrance
   m_TagString: Untagged
@@ -26644,144 +26644,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1542271254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542271252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 0
-  triggerLimitCounter: 1
-  eventSequence:
-  - rid: 521773835193679879
-  - rid: 521773835193679874
-  - rid: 521773745628250139
-  - rid: 521773745628250132
-  - rid: 8709460353337262083
-  - rid: 8709460353337262102
-  - rid: 8709460353337262101
-  - rid: 521773745628250133
-  - rid: 2388724293505646598
-  - rid: 521773745628250138
-  - rid: 521773745628250153
-  - rid: 2388724293505646599
-  - rid: 521773745628250136
-  - rid: 3558735529444638721
-  - rid: 521773835193679872
-  - rid: 521773745628250158
-  - rid: 7497613932140953603
-  - rid: 521773835193679878
-  - rid: 8709460353337262084
-  - rid: 521773745628250140
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 521773745628250132
-      type: {class: MoveCreatureEvent, ns: , asm: Assembly-CSharp}
-      data:
-        creatureType: 0
-        iControllable: {fileID: 0}
-        target: {x: 3, y: 3, z: 0}
-        speed: 1
-    - rid: 521773745628250133
-      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
-    - rid: 521773745628250136
-      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
-    - rid: 521773745628250138
-      type: {class: ChangeSpriteEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _spriteRenderer: {fileID: 0}
-        _sprite: {fileID: 21300000, guid: 5fd0c1220da3844429dd60969921942e, type: 3}
-    - rid: 521773745628250139
-      type: {class: ChangeSpriteEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _spriteRenderer: {fileID: 0}
-        _sprite: {fileID: 21300000, guid: 3bd1012804ff5486cb054948185bd4aa, type: 3}
-    - rid: 521773745628250140
-      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
-      data:
-        triggerable: {fileID: 1542271255}
-    - rid: 521773745628250153
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 1
-    - rid: 521773745628250158
-      type: {class: ShowBossHealthBarEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-    - rid: 521773835193679872
-      type: {class: StartAnimatorEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 0}
-    - rid: 521773835193679874
-      type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 0}
-    - rid: 521773835193679878
-      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _isEnable: 1
-    - rid: 521773835193679879
-      type: {class: SetKeyInputEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _isEnable: 0
-    - rid: 2388724293505646598
-      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
-      data:
-        multiMessages:
-        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          messages:
-          - ...
-        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          messages:
-          - "\uC654\uAD70..."
-        autoSkipTime: 3
-    - rid: 2388724293505646599
-      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
-      data:
-        multiMessages:
-        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          messages:
-          - "..\uADF8\uB7FC \uC2DC\uC791\uD558\uC9C0."
-        autoSkipTime: 3
-    - rid: 3558735529444638721
-      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-        bossRoomObject: {fileID: 0}
-    - rid: 7497613932140953603
-      type: {class: SetAnimatorParameter, ns: , asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 0}
-        _creatureType: 1
-        _name: speed
-        _value: 10
-    - rid: 8709460353337262083
-      type: {class: CameraMove, ns: , asm: Assembly-CSharp}
-      data:
-        destination: {x: 2.97, y: 4.17, z: -10}
-        speed: 3
-    - rid: 8709460353337262084
-      type: {class: CameraFollow, ns: , asm: Assembly-CSharp}
-    - rid: 8709460353337262101
-      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-        bossRoomObject: {fileID: 1592182054}
-    - rid: 8709460353337262102
-      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-        bossRoomObject: {fileID: 0}
 --- !u!114 &1542271255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26959,6 +26821,30 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1542271259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542271252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 0
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 2777310640625680430
+  references:
+    version: 2
+    RefIds:
+    - rid: 2777310640625680430
+      type: {class: DelayEvent, ns: GyeMong.EventSystem.Event, asm: Assembly-CSharp}
+      data:
+        delayTime: 1
 --- !u!1001 &1581621003
 PrefabInstance:
   m_ObjectHideFlags: 0
