@@ -31,7 +31,10 @@ namespace GyeMong.GameSystem.Map.Stage
         {
             if (_currentStageInfo.beforeScript != null)
             {
-                yield return _currentStageInfo.beforeScript.Execute();
+                foreach (var script in _currentStageInfo.beforeScript)
+                {
+                    yield return script.Play();
+                }
             }
             PortalManager.Instance.LoadSceneMode(_currentStageInfo.portalID);
         }
@@ -40,8 +43,12 @@ namespace GyeMong.GameSystem.Map.Stage
         {
             if (_currentStageInfo.afterScript != null)
             {
-                yield return _currentStageInfo.afterScript.Execute();
+                foreach (var script in _currentStageInfo.afterScript)
+                {
+                    yield return script.Play();
+                }
             }
+            
             StageSelectPage.LoadStageSelectPageOnStageToDestination(_currentStageInfo.id, _currentStageInfo.id + 1);
         }
     }

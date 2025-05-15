@@ -10,26 +10,16 @@ using UnityEngine.UI;
 
 namespace GyeMong.EventSystem.Controller
 {
-    [Serializable]
-    public class MultiChatMessage
-    {
-        public string name;
-        public List<string> messages;
-        public Nullable<float> chatDelay;
-        public Sprite backgroundImage;
-    }
-
     public class ChatController : MonoBehaviour
     {
-
-        private Image chatWindow;
-        private Image backGround;
+        private static Image chatWindow;
+        private static Image backGround;
         [SerializeField] private GameObject speechBubble;
         private const float CHAT_WINDOW_ALPHA = 0.7f;
         private const float SHOW_CHAT_DELAY = 0.1f;
-        private TMP_Text nameText;
-        private TMP_Text messageText;
-        private bool isWorking = false;
+        private static TMP_Text nameText;
+        private static TMP_Text messageText;
+        private static bool isWorking = false;
 
         private void Awake()
         {
@@ -39,7 +29,7 @@ namespace GyeMong.EventSystem.Controller
             backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
         }
 
-        public IEnumerator Open()
+        public static IEnumerator Open()
         {
             yield return new WaitWhile(() => isWorking);
             isWorking = true;
@@ -52,7 +42,7 @@ namespace GyeMong.EventSystem.Controller
             nameText.color = color;
         }
 
-        public void Close()
+        public static void Close()
         {
             Color color = chatWindow.color;
             color.a = 0;
@@ -66,12 +56,11 @@ namespace GyeMong.EventSystem.Controller
             isWorking = false;
         }
 
-        public IEnumerator MultipleChat(MultiChatMessage multiChatMessage, float autoSkipTime)
+        public static IEnumerator MultipleChat(MultiChatMessageData.MultiChatMessage multiChatMessage, float autoSkipTime)
         {
-            nameText.text = multiChatMessage.name;
+            nameText.text = multiChatMessage.speakerName.ToString();
             messageText.text = "";
-            BackgroundImageData backgroundImageData = Resources.Load<BackgroundImageData>("BackgroundImageData");
-            SetBackgroundImage(multiChatMessage.backgroundImage);
+            SetBackgroundImage(GetBackgroundImageSprite(multiChatMessage.backgroundImage));
 
             foreach (string line in multiChatMessage.messages)
             {
@@ -87,7 +76,7 @@ namespace GyeMong.EventSystem.Controller
             }
         }
 
-        private IEnumerator ShowMultipleChat(string messages)
+        private static IEnumerator ShowMultipleChat(string messages)
         {
             foreach (char c in messages)
             {
@@ -102,7 +91,7 @@ namespace GyeMong.EventSystem.Controller
             }
         }
 
-        public void SetBackgroundImage(Sprite sprite)
+        public static void SetBackgroundImage(Sprite sprite)
         {
             if (backGround != null)
             {
@@ -119,6 +108,20 @@ namespace GyeMong.EventSystem.Controller
                     backGround.enabled = false;
                 }
             }
+        }
+        
+        private static Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
+        {
+            BackgroundImageData backgroundImageData = Resources.Load<BackgroundImageData>("ScriptableObjects/Chat/BackgroundImage");
+            foreach (var imageInfo in backgroundImageData.backgroundImages)
+            {
+                if (imageInfo.backgroundImage == backgroundImage)
+                {
+                    return imageInfo.image;
+                }
+            }
+
+            return null;
         }
 
         public IEnumerator ShowSpeechBubbleChat(GameObject NPC, string message, float destroyDelay)

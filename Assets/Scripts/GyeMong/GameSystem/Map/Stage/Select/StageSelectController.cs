@@ -55,7 +55,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
                 }
             }
 #endif
-            if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
+            if (InputManager.Instance.GetKeyDown(ActionCode.Enter))
             {
                 _currentNode.LoadStage();
             }
@@ -86,8 +86,9 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         
         private void Awake()
         {
+            PlayerPrefs.SetInt(StageSelectPage.MAX_STAGE_ID_KEY, 1);
             cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 0)].transform.position);
-            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0);
+            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 1);
             _nodeSelector = new LinearNodeSelector(stageNodes, _maxIndex);
             _currentNode = stageNodes[_maxIndex];
             cursor.MoveTo(_currentNode.transform.position);

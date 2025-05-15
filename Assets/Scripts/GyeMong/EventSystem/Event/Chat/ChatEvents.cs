@@ -19,9 +19,7 @@ namespace GyeMong.EventSystem.Event.Chat
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             InputManager.Instance.SetActionState(false);
-            PlayerCharacter.Instance.isControlled = true;
-            PlayerCharacter.Instance.StopPlayer();
-            return EffectManager.Instance.GetChatController().Open();
+            return ChatController.Open();
         }
     }
 
@@ -30,9 +28,7 @@ namespace GyeMong.EventSystem.Event.Chat
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             InputManager.Instance.SetActionState(true);
-            PlayerCharacter.Instance.isControlled = false;
-            PlayerCharacter.Instance.StopPlayer(true);
-            EffectManager.Instance.GetChatController().Close();
+            ChatController.Close();
             yield return null;
         }
     }
@@ -41,7 +37,6 @@ namespace GyeMong.EventSystem.Event.Chat
     public class ShowMessages : ChatEvent
     {
         [SerializeField] private MultiChatMessageData chatData;
-        [SerializeField] private BackgroundImageData backgroundImageData;
 
         [SerializeField] float autoSkipTime = 3f;
         float soundDelay = 0.2f;
@@ -54,32 +49,8 @@ namespace GyeMong.EventSystem.Event.Chat
                 _soundObject = Sound.Play("EFFECT_Chat_Sound", true);
                 yield return new WaitForSeconds(soundDelay);
                 Sound.Stop(_soundObject);
-
-                var backgroundSprite = GetBackgroundImageSprite(chat.backgroundImage);
-
-                var multiChatMessage = new GyeMong.EventSystem.Controller.MultiChatMessage
-                {
-                    name = chat.speakerName.ToString(),
-                    messages = chat.messages,
-                    chatDelay = chat.chatDelay,
-                    backgroundImage = backgroundSprite,
-                };
-
-                yield return EffectManager.Instance.GetChatController().MultipleChat(multiChatMessage, autoSkipTime);
+                yield return ChatController.MultipleChat(chat, autoSkipTime);
             }
-        }
-
-        private Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
-        {
-            foreach (var imageInfo in backgroundImageData.backgroundImages)
-            {
-                if (imageInfo.backgroundImage == backgroundImage)
-                {
-                    return imageInfo.image;
-                }
-            }
-
-            return null;
         }
     }
 

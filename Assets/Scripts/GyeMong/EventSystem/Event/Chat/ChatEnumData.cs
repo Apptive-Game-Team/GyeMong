@@ -6,12 +6,12 @@ namespace GyeMong.EventSystem.Event.Chat
 {
     public enum ChatSpeakerType
     {
-        플레이어,
-        꼬마,
+        Enum0,
+        Enum1,
         Player,
-        마을주민,
-        촌장,
-        문지기석상,
+        Enum3,
+        Enum4,
+        Enum5,
     }
 
     public enum BackgroundImage

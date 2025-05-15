@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   portalID: 10
-  beforeScript: {fileID: 0}
-  afterScript: {fileID: 0}
+  beforeScript:
+  - {fileID: 11400000, guid: d0ab117ab318f164bbba668b7bae711f, type: 2}
+  afterScript: []

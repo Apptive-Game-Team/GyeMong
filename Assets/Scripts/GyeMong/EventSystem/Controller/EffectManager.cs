@@ -86,6 +86,7 @@ namespace GyeMong.EventSystem.Controller
         {
             black = transform.Find("Black").GetComponent<RawImage>();
         }
+        
         public void CachingHpBar(HpBarController controller)
         {
             hpBarController = controller;
