@@ -14,20 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChatSpeakers:
   - speakerType: 0
-    speakerName: "\uAF2C\uB9C8"
+    speakerName: "\uD50C\uB808\uC774\uC5B4"
     image: {fileID: 21300000, guid: 0209c5d21b4593145ac95117d095d91c, type: 3}
   - speakerType: 1
-    speakerName: "\uD50C\uB808\uC774\uC5B4"
-    image: {fileID: 21300000, guid: f4261ddfd87b372419a35b3313750c1a, type: 3}
-  - speakerType: 2
     speakerName: "\uB9C8\uC744\uC8FC\uBBFC"
     image: {fileID: 21300000, guid: 0209c5d21b4593145ac95117d095d91c, type: 3}
+  - speakerType: 2
+    speakerName: "\uB9C8\uC744 \uC8FC\uBBFC"
+    image: {fileID: 21300000, guid: f4261ddfd87b372419a35b3313750c1a, type: 3}
   - speakerType: 3
     speakerName: "\uCD0C\uC7A5"
-    image: {fileID: 21300000, guid: f4261ddfd87b372419a35b3313750c1a, type: 3}
+    image: {fileID: 21300000, guid: 0209c5d21b4593145ac95117d095d91c, type: 3}
   - speakerType: 4
     speakerName: "\uBB38\uC9C0\uAE30 \uC11D\uC0C1"
-    image: {fileID: 21300000, guid: 0209c5d21b4593145ac95117d095d91c, type: 3}
-  - speakerType: 5
-    speakerName: "\uC774\uB984 \uADF8\uB0E5 \uB300\uCDA9 \uB123\uC74C"
     image: {fileID: 21300000, guid: f4261ddfd87b372419a35b3313750c1a, type: 3}
