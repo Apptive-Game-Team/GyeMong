@@ -15,6 +15,7 @@ namespace GyeMong.EventSystem.Controller
     {
         private static Image chatWindow;
         private static Image backGround;
+        private static Image characterImage;
         [SerializeField] private GameObject speechBubble;
         private const float CHAT_WINDOW_ALPHA = 0.7f;
         private const float SHOW_CHAT_DELAY = 0.1f;
@@ -28,6 +29,7 @@ namespace GyeMong.EventSystem.Controller
             nameText = chatWindow.transform.Find("NameArea").GetComponent<TMP_Text>();
             messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
             backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
+            characterImage = chatWindow.transform.Find("CharacterImageArea").GetComponent<Image>();
         }
 
         public static IEnumerator Open()
@@ -62,6 +64,7 @@ namespace GyeMong.EventSystem.Controller
             nameText.text = SetSpeakerName(multiChatMessage.speakerName);
             messageText.text = "";
             SetBackgroundImage(GetBackgroundImageSprite(multiChatMessage.backgroundImage));
+            SetCharacterImage(GetCharacterImageSprite(multiChatMessage.speakerName));
 
             foreach (string line in multiChatMessage.messages)
             {
@@ -110,6 +113,24 @@ namespace GyeMong.EventSystem.Controller
                 }
             }
         }
+        public static void SetCharacterImage(Sprite sprite)
+        {
+            if (backGround != null)
+            {
+                if (sprite != null)
+                {
+                    characterImage.sprite = sprite;
+                    characterImage.color = Color.white;
+                    characterImage.enabled = true;
+                }
+                else
+                {
+                    characterImage.sprite = null;
+                    characterImage.color = new Color(0, 0, 0, 0);
+                    characterImage.enabled = false;
+                }
+            }
+        }
 
         public static String SetSpeakerName(ChatSpeakerType speakerName)
         {
@@ -132,6 +153,20 @@ namespace GyeMong.EventSystem.Controller
             foreach (var imageInfo in backgroundImageData.backgroundImages)
             {
                 if (imageInfo.backgroundImage == backgroundImage)
+                {
+                    return imageInfo.image;
+                }
+            }
+
+            return null;
+        }
+
+        private static Sprite GetCharacterImageSprite(ChatSpeakerType speakerType)
+        {
+            ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
+            foreach (var imageInfo in speakerData.ChatSpeakers)
+            {
+                if (imageInfo.speakerType == speakerType)
                 {
                     return imageInfo.image;
                 }
