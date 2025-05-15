@@ -56,8 +56,8 @@ namespace Creature.Player.Component.Collider
                         foreach (IAttackable @object in attackableObjects)
                         {
                             @object.OnAttacked(attackDamage);
-                            ShowSlashEffect(collision);
                         }
+                        ShowSlashEffect(collision);
                     }
                 }
             }
