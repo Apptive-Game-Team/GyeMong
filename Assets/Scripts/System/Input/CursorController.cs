@@ -1,19 +1,28 @@
+using System.Input.Interface;
 using UI.mouse_input;
 using UnityEngine;
 
-public class CursorController : MonoBehaviour, IMouseInputListener
+namespace System.Input
 {
-    private void Start()
+    public class CursorController : MonoBehaviour, IMouseInputListener
     {
-        MouseInputManager.Instance.AddListener(this);
-    }
-
-    public void OnMouseInput(MouseInputState state, ISelectableUI ui)
-    {
-        if (state == MouseInputState.ENTERED)
+        private void Start()
         {
-            MonoBehaviour mono = (MonoBehaviour) ui;
-            transform.position = mono.transform.position;
+            MouseInputManager.Instance.AddListener(this);
+        }
+    
+        private void OnDestroy()
+        {
+            MouseInputManager.Instance.RemoveListener(this);
+        }
+
+        public void OnMouseInput(MouseInputState state, ISelectableUI ui)
+        {
+            if (state == MouseInputState.ENTERED)
+            {
+                MonoBehaviour mono = (MonoBehaviour) ui;
+                transform.position = mono.transform.position;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace Util.Interface
+namespace Util.ChangeListener
 {
     public interface IChangeListener<T>
     {

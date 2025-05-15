@@ -1,32 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : MonoBehaviour
+namespace Visual.Shader
 {
-    public GameObject boss;
-    private Material shieldMaterial;
-    private bool isShieldActive = false;
+    public class Shield : MonoBehaviour
+    {
+        public GameObject boss;
+        private Material shieldMaterial;
+        private bool isShieldActive = false;
 
-    private void Awake()
-    {
-        shieldMaterial = boss.GetComponent<Renderer>().material;
-    }
-    public void SetActive(bool flag)
-    {
-        isShieldActive = flag;
-        ChangeShieldState(isShieldActive);
-    }
+        private void Awake()
+        {
+            shieldMaterial = boss.GetComponent<Renderer>().material;
+        }
+        public void SetActive(bool flag)
+        {
+            isShieldActive = flag;
+            ChangeShieldState(isShieldActive);
+        }
 
-    public void OnButtonClick()
-    {
-        isShieldActive = !isShieldActive;
-        ChangeShieldState(isShieldActive);
-    }
+        public void OnButtonClick()
+        {
+            isShieldActive = !isShieldActive;
+            ChangeShieldState(isShieldActive);
+        }
 
-    private void ChangeShieldState(bool flag)
-    {
-        Debug.Log("Shield 상태 변경: " + flag);
-        shieldMaterial.SetFloat("_isShieldActive", flag ? 1.0f : 0.0f);
+        private void ChangeShieldState(bool flag)
+        {
+            Debug.Log("Shield 상태 변경: " + flag);
+            shieldMaterial.SetFloat("_isShieldActive", flag ? 1.0f : 0.0f);
+        }
     }
 }
