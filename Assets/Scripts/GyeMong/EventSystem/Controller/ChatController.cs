@@ -7,6 +7,7 @@ using GyeMong.SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static GyeMong.EventSystem.Event.Chat.MultiChatMessageData;
 
 namespace GyeMong.EventSystem.Controller
 {
@@ -58,7 +59,7 @@ namespace GyeMong.EventSystem.Controller
 
         public static IEnumerator MultipleChat(MultiChatMessageData.MultiChatMessage multiChatMessage, float autoSkipTime)
         {
-            nameText.text = multiChatMessage.speakerName.ToString();
+            nameText.text = SetSpeakerName(multiChatMessage.speakerName);
             messageText.text = "";
             SetBackgroundImage(GetBackgroundImageSprite(multiChatMessage.backgroundImage));
 
@@ -108,6 +109,21 @@ namespace GyeMong.EventSystem.Controller
                     backGround.enabled = false;
                 }
             }
+        }
+
+        public static String SetSpeakerName(ChatSpeakerType speakerName)
+        {
+            ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
+            
+            foreach (var info in speakerData.ChatSpeakers)
+            {
+                if (info.speakerType == speakerName)
+                {
+                    return info.speakerName;
+                }
+            }
+
+            return speakerName.ToString();
         }
         
         private static Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
