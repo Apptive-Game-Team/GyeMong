@@ -775,7 +775,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 889852596}
-  - component: {fileID: 889852595}
+  - component: {fileID: 889852597}
   m_Layer: 0
   m_Name: BossDownEventObject
   m_TagString: Untagged
@@ -783,77 +783,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &889852595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 889852594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 4
-  triggerLimitCounter: 1
-  eventSequence:
-  - rid: 521773745628250159
-  - rid: 521773745628250160
-  - rid: 2388724293505646601
-  - rid: 521773745628250161
-  - rid: 8709460353337262104
-  - rid: 8709460353337262103
-  - rid: 521773745628250170
-  - rid: 3558735529444638722
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 521773745628250159
-      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
-      data:
-        tag: spring_midboss_down
-        condition: 1
-    - rid: 521773745628250160
-      type: {class: OpenChatEvent, ns: , asm: Assembly-CSharp}
-    - rid: 521773745628250161
-      type: {class: CloseChatEvent, ns: , asm: Assembly-CSharp}
-    - rid: 521773745628250170
-      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-    - rid: 2388724293505646601
-      type: {class: ShowMessages, ns: , asm: Assembly-CSharp}
-      data:
-        multiMessages:
-        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          messages:
-          - "\uB0B4... \uB0B4\uAC00... \uC774\uB7F4 \uC218\uAC00..."
-        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          messages:
-          - "...\uC81C\uBC95\uC774\uAD70..."
-        - name: "\uC5D8\uD504 \uCD0C\uC7A5"
-          messages:
-          - "...\uC88B\uC544, \uB9C8\uC744\uB85C \uC624\uB3C4\uB85D \uD574\uB77C."
-        autoSkipTime: 3
-    - rid: 3558735529444638722
-      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-        bossRoomObject: {fileID: 0}
-    - rid: 8709460353337262103
-      type: {class: DeActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-        bossRoomObject: {fileID: 0}
-    - rid: 8709460353337262104
-      type: {class: ActivateBossRoomEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1459062335}
-        bossRoomObject: {fileID: 1592182054}
 --- !u!4 &889852596
 Transform:
   m_ObjectHideFlags: 0
@@ -869,6 +798,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &889852597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889852594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: 1
+  eventSequence:
+  - rid: 6551754847466291230
+  - rid: 6551754847466291231
+  - rid: 6551754847466291232
+  - rid: 6551754847466291233
+  - rid: 6551754847466291234
+  - rid: 6551754847466291235
+  - rid: 6551754847466291236
+  - rid: 6551754847466291237
+  references:
+    version: 2
+    RefIds:
+    - rid: 6551754847466291230
+      type: {class: ToggleConditionEvent, ns: GyeMong.EventSystem.Event.Condition,
+        asm: Assembly-CSharp}
+      data:
+        tag: spring_midboss_down
+        condition: 1
+    - rid: 6551754847466291231
+      type: {class: OpenChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754847466291232
+      type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data:
+        chatData: {fileID: 0}
+        autoSkipTime: 3
+    - rid: 6551754847466291233
+      type: {class: CloseChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754847466291234
+      type: {class: ActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1592182054}
+    - rid: 6551754847466291235
+      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 962346217}
+    - rid: 6551754847466291236
+      type: {class: HideBossHealthBarEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+    - rid: 6551754847466291237
+      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1459062335}
+        bossRoomObject: {fileID: 1275491493}
 --- !u!1001 &962346216
 PrefabInstance:
   m_ObjectHideFlags: 0
