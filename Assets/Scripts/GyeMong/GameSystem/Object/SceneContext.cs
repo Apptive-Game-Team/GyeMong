@@ -6,10 +6,22 @@ using UnityEngine;
 
 public class SceneContext : MonoBehaviour
 {
-    public static PlayerCharacter Character;
+    private static PlayerCharacter _character;
+
+    public static PlayerCharacter Character
+    {
+        get
+        {
+            if (_character == null)
+            {
+                _character = FindObjectOfType<PlayerCharacter>();
+            }
+            return _character;
+        }
+    }
 
     private void Awake()
     {
-        Character = GetComponent<PlayerCharacter>();
+        _character = FindObjectOfType<PlayerCharacter>();
     }
 }
