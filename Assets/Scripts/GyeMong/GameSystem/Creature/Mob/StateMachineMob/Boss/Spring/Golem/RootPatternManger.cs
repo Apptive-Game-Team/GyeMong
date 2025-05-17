@@ -16,13 +16,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         private void Awake()
         {
-            if (ConditionManager.Instance.Conditions.TryGetValue("spring_guardian_down", out bool down))
-            {
-                if (down)
-                {
-                    Destroy(gameObject);
-                }
-            }
+            // if (ConditionManager.Instance.Conditions.TryGetValue("spring_guardian_down", out bool down))
+            // {
+            //     if (down)
+            //     {
+            //         Destroy(gameObject);
+            //     }
+            // }
             gameObject.SetActive(false);
             soundObject = GetComponent<SoundObject>();
         }

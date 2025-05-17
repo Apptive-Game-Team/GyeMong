@@ -9,8 +9,8 @@ namespace GyeMong.UISystem.Game.PlayerUI
         private float _maxHp;
         private void Start()
         {
-            PlayerCharacter.Instance.changeListenerCaller.AddHpChangeListener(this);
-            _maxHp = PlayerCharacter.Instance.stat.HealthMax;
+            SceneContext.Character.changeListenerCaller.AddHpChangeListener(this);
+            _maxHp = SceneContext.Character.stat.HealthMax;
         }
 
         protected override float GetCurrentGauge()

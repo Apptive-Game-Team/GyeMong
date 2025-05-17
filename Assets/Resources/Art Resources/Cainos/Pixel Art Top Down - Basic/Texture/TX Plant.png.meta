@@ -267,7 +267,7 @@ TextureImporter:
       213: 21300174
     second: TX Flower
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -284,11 +284,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -327,6 +328,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  swizzle: 50462976
   cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
@@ -339,6 +341,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -351,6 +354,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 1
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -363,6 +367,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -375,6 +380,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -387,6 +393,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -399,6 +406,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1003,37 +1011,36 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TX Grass E: 21300152
-      TX Bush T6: 21300080
-      TX Grass A: 21300144
-      TX Tree T2 Lower: 21300126
-      TX Bush T5: 21300132
-      TX Bush T4: 21300138
-      TX Grass G: 21300156
-      TX Grass F: 21300154
-      TX Tree T2 Upper: 21300128
-      TX Grass L: 21300166
-      TX Grass I: 21300160
-      TX Tree T3 Upper: 21300084
-      TX Grass C: 21300148
-      TX Grass N: 21300170
-      TX Tree T1 Lower: 21300122
-      TX Grass H: 21300158
-      TX Grass D: 21300150
-      TX Grass M: 21300168
-      TX Bush T3: 21300140
-      TX Tree T3 Lower: 21300082
       TX Bush T1: 21300136
-      TX Flower: 21300174
-      TX Grass O: 21300172
       TX Bush T2: 21300134
-      TX Grass K: 21300164
+      TX Bush T3: 21300140
+      TX Bush T4: 21300138
+      TX Bush T5: 21300132
+      TX Bush T6: 21300080
+      TX Flower: 21300174
+      TX Grass A: 21300144
       TX Grass B: 21300146
-      TX Tree T1 Upper: 21300124
+      TX Grass C: 21300148
+      TX Grass D: 21300150
+      TX Grass E: 21300152
+      TX Grass F: 21300154
+      TX Grass G: 21300156
+      TX Grass H: 21300158
+      TX Grass I: 21300160
       TX Grass J: 21300162
-  spritePackingTag: 
+      TX Grass K: 21300164
+      TX Grass L: 21300166
+      TX Grass M: 21300168
+      TX Grass N: 21300170
+      TX Grass O: 21300172
+      TX Tree T1 Lower: 21300122
+      TX Tree T1 Upper: 21300124
+      TX Tree T2 Lower: 21300126
+      TX Tree T2 Upper: 21300128
+      TX Tree T3 Lower: 21300082
+      TX Tree T3 Upper: 21300084
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

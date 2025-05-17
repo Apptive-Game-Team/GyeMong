@@ -9,8 +9,8 @@ namespace GyeMong.UISystem.Game.PlayerUI
         private float _maxShield;
         private void Start()
         {
-            PlayerCharacter.Instance.changeListenerCaller.AddShieldChangeListener(this);
-            _maxShield = PlayerCharacter.Instance.stat.HealthMax;
+            SceneContext.Character.changeListenerCaller.AddShieldChangeListener(this);
+            _maxShield = SceneContext.Character.stat.HealthMax;
         }
 
         protected override float GetCurrentGauge()

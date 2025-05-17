@@ -10,6 +10,11 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         private List<StageNode> _stageNodes;
         private int _maxIndex;
         
+        public void SetMaxIndex(int maxIndex)
+        {
+            _maxIndex = maxIndex;
+        }
+        
         public LinearNodeSelector(List<StageNode> stageNodes, int maxIndex)
         {
             _maxIndex = maxIndex;

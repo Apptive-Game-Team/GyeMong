@@ -13,9 +13,10 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         [SerializeField] private QueuedSmoothMover cursor;
         
         [SerializeField] private float inputDelay = 0.5f;
+        
         private float _lastInputTime;
         
-        private int _maxIndex;
+        [SerializeField] private int _maxIndex;
         
         private StageNode _currentNode;
         private INodeSelector<StageNode> _nodeSelector;
@@ -28,11 +29,17 @@ namespace GyeMong.GameSystem.Map.Stage.Select
 
         private void Update()
         {
+
             HandleKeyInput();
+#if UNITY_EDITOR
+            (_nodeSelector as LinearNodeSelector).SetMaxIndex(_maxIndex);
+
+#endif
         }
 
         private void HandleKeyInput()
         {
+#if UNITY_EDITOR
             if (Time.time - _lastInputTime < inputDelay) return;
 
             Vector3 moveVector = GetMoveVector();
@@ -47,8 +54,8 @@ namespace GyeMong.GameSystem.Map.Stage.Select
                     cursor.MoveTo(_currentNode.transform.position);
                 }
             }
-
-            if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
+#endif
+            if (InputManager.Instance.GetKeyDown(ActionCode.Enter))
             {
                 _currentNode.LoadStage();
             }
@@ -79,9 +86,10 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         
         private void Awake()
         {
-            _maxIndex = PlayerPrefs.GetInt("MaxStageId", 0);
+            cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 0)].transform.position);
+            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 1);
             _nodeSelector = new LinearNodeSelector(stageNodes, _maxIndex);
-            _currentNode = stageNodes[0];
+            _currentNode = stageNodes[_maxIndex];
             cursor.MoveTo(_currentNode.transform.position);
             foreach (StageNode stageNode in stageNodes)
             {

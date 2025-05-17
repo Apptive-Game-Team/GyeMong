@@ -29,8 +29,8 @@ namespace GyeMong.UISystem.Game.PlayerUI
 
         private void Start()
         {
-            PlayerCharacter.Instance.changeListenerCaller.AddSkillGaugeChangeListener(this);
-            _maxSkillGauge = PlayerCharacter.Instance.stat.GrazeMax;
+            SceneContext.Character.changeListenerCaller.AddSkillGaugeChangeListener(this);
+            _maxSkillGauge = SceneContext.Character.stat.GrazeMax;
         }
 
 

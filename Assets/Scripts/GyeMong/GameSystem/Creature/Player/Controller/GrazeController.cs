@@ -74,9 +74,9 @@ namespace GyeMong.GameSystem.Creature.Player.Controller
         {
             if (colliderDistanceMap.TryGetValue(collider, out float distance))
             {
-                PlayerCharacter.Instance.GrazeIncreaseGauge(distance);
+                SceneContext.Character.GrazeIncreaseGauge(distance);
                 GetComponentInChildren<GrazeOutlineController>().AppearAndFadeOut();
-                Debug.Log($"Gauge Increased by {PlayerCharacter.Instance.stat.GrazeGainOnGraze / distance} with ratio {distance}");
+                Debug.Log($"Gauge Increased by {SceneContext.Character.stat.GrazeGainOnGraze / distance} with ratio {distance}");
                 collider.GetComponent<AttackObjectController>().isGrazed = true;
                 _playerSoundController.Trigger(PlayerSoundType.GRAZE);
                 GetComponentInChildren<EventObject>().Trigger();

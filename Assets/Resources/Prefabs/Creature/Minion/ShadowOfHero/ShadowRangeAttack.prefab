@@ -4980,12 +4980,12 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 142013584090857472
+  - rid: 3534368285363011589
   references:
     version: 2
     RefIds:
-    - rid: 142013584090857472
-      type: {class: ParticleEvent, ns: , asm: Assembly-CSharp}
+    - rid: 3534368285363011589
+      type: {class: ParticleEvent, ns: GyeMong.EventSystem.Event.CinematicEvent, asm: Assembly-CSharp}
       data: 
 --- !u!50 &6696663437773738352
 Rigidbody2D:

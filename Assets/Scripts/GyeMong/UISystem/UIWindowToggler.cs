@@ -20,7 +20,7 @@ namespace GyeMong.UISystem
             _window.SetActive(_isOptionOpened);
             if (SceneManager.GetActiveScene().name != "TitleScene")
             {
-                PlayerCharacter.Instance.SetPlayerMove(!_isOptionOpened);
+                SceneContext.Character.SetPlayerMove(!_isOptionOpened);
             }
         }
     

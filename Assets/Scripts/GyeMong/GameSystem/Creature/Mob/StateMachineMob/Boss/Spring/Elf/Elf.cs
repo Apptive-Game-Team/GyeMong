@@ -6,6 +6,7 @@ using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using UnityEngine;
 
@@ -116,7 +117,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, PlayerCharacter.Instance.transform, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2);
+                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, SceneContext.Character.transform, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Sound.Play("EFFECT_Charge_Complete");
                 yield return new WaitForSeconds(Elf.attackdelayTime * 0.5f);
@@ -325,6 +326,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             base.Die();
             Animator.SetBool("isDown", true);
+            StageManager.ClearStage(this);
         }
         protected override void TransPhase()
         {

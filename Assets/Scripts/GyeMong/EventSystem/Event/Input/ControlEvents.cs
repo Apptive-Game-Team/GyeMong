@@ -17,8 +17,8 @@ namespace GyeMong.EventSystem.Event.Input
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             InputManager.Instance.SetActionState(_isEnable);
-            PlayerCharacter.Instance.isControlled = !_isEnable;
-            PlayerCharacter.Instance.StopPlayer(_isEnable);
+            SceneContext.Character.isControlled = !_isEnable;
+            SceneContext.Character.StopPlayer(_isEnable);
             yield return null;
         }
     }

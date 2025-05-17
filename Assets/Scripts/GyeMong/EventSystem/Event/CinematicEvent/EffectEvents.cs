@@ -6,16 +6,7 @@ using UnityEngine;
 namespace GyeMong.EventSystem.Event.CinematicEvent
 {
     public abstract class EffectEvent : Event { }
-
-    [Serializable]
-    public class HurtEffectEvent : EffectEvent
-    {
-        public float amount;
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            return EffectManager.Instance.HurtEffect(amount);
-        }
-    }
+    
     public class ParticleEvent : EffectEvent
     {
         private ParticleSystem _particleSystem;

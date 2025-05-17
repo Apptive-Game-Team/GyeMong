@@ -11,6 +11,10 @@ namespace GyeMong.GameSystem.Creature
         private const float BLINK_DELAY = 0.15f;
         
         protected float maxHp;
+        public float MaxHp
+        {
+            get { return maxHp; }
+        }
         [SerializeField] protected float currentHp;
         public float CurrentHp
         {

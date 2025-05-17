@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Map.Portal;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -68,6 +69,10 @@ namespace Util.ObjectCreator
         {
             foreach (T obj in _pool)
             {
+                if (obj.IsDestroyed())
+                {
+                    _pool.Remove(obj);
+                }
                 if (!obj.gameObject.activeInHierarchy)
                 {
                     return obj;

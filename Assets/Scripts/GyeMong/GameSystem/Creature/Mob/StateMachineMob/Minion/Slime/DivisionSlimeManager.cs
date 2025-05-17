@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GyeMong.EventSystem;
+using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
@@ -36,7 +37,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         {
             if (_activeSlimes.Count == 0)
             {
-                _eventObject.Trigger();
+                StageManager.ClearStage(this);
             }
         }
     }

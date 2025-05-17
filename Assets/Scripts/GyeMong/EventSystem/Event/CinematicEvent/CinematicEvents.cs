@@ -32,7 +32,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
             }
             else if (creatureType == CreatureType.Player)
             {
-                iControllable = (IControllable) PlayerCharacter.Instance;
+                iControllable = (IControllable) SceneContext.Character;
             }
             else
             {

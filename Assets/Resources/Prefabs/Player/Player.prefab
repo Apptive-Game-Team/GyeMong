@@ -112,11 +112,9 @@ GameObject:
   - component: {fileID: 192519716517853443}
   - component: {fileID: 5083188182615057341}
   - component: {fileID: 4047033506906318720}
-  - component: {fileID: 3862622192896607297}
-  - component: {fileID: 3579436764185913057}
   - component: {fileID: 8884589751490043246}
   - component: {fileID: 5207820199311480366}
-  - component: {fileID: 5404203658297343532}
+  - component: {fileID: 8276028414263349999}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -147,7 +145,6 @@ Transform:
   - {fileID: 8014581959096472874}
   - {fileID: 8849795757512225535}
   - {fileID: 5191833558605693684}
-  - {fileID: 816956232922337044}
   - {fileID: 7423271450192686111}
   - {fileID: 1426510800594233167}
   - {fileID: 4346792550110904622}
@@ -421,7 +418,6 @@ MonoBehaviour:
           value: 0
         - valueType: 4
           value: 0
-  buffComponent: {fileID: 0}
   _statData: {fileID: 11400000, guid: 70df7f5775b4eb54994283a5875ac117, type: 2}
   curHealth: 0
   curShield: 0
@@ -451,32 +447,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e2f0d7b17aab4b8a802800c62d20884, type: 2}
   - {fileID: 11400000, guid: 9ebf8ea8ebf104c70bef6c353f9b4c35, type: 2}
   - {fileID: 11400000, guid: dfa710a021f634ebd95fcbbbe2f6c1fb, type: 2}
---- !u!114 &3862622192896607297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49194295218117097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a0626a04d3700c4bbdd5220145872f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equippedRuneList: []
-  acquiredRuneList: []
---- !u!114 &3579436764185913057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49194295218117097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d4c0d2e39a14437a3b2ab0e9d6bad2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8884589751490043246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,7 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadow: {fileID: 8575451407304988533}
---- !u!114 &5404203658297343532
+--- !u!114 &8276028414263349999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -511,32 +481,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 49194295218117097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dca752750b1e6204a86ed46e045b85c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 24d565840948d394a9e19d89ee79d33d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1335504902609846588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,100 +1620,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &5735253051398769773
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 816956232922337044}
-  - component: {fileID: 2378595295194506218}
-  m_Layer: 0
-  m_Name: PlayerGameOverEvent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &816956232922337044
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5735253051398769773}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2490236768487297665}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2378595295194506218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5735253051398769773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 4
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 5246442373933432833
-  - rid: 5246442393686769664
-  - rid: 5246442373933432834
-  - rid: 5246442373933432835
-  - rid: 5246442374326124547
-  - rid: 5246442374326124552
-  - rid: 5246442393686769665
-  - rid: 5246442374326124553
-  - rid: 5246442374326124554
-  references:
-    version: 2
-    RefIds:
-    - rid: 5246442373933432833
-      type: {class: FadeOutEvent, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5246442373933432834
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 1
-    - rid: 5246442373933432835
-      type: {class: PrintTextEvent, ns: , asm: Assembly-CSharp}
-      data:
-        header: GAME OVER
-        description: Press Interaction Key to Revive
-        textColor: {r: 1, g: 1, b: 1, a: 1}
-    - rid: 5246442374326124547
-      type: {class: SkippableDelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 777777
-    - rid: 5246442374326124552
-      type: {class: LoadDataEvent, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5246442374326124553
-      type: {class: ClearTextEvent, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5246442374326124554
-      type: {class: FadeInEvent, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5246442393686769664
-      type: {class: HideBossHealthBarEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 0}
-    - rid: 5246442393686769665
-      type: {class: TriggerEvent, ns: , asm: Assembly-CSharp}
-      data:
-        triggerable: {fileID: 5083188182615057341}
 --- !u!1 &6030112658111273419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,15 +1668,16 @@ MonoBehaviour:
   trigger: 4
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 668130699139874817
+  - rid: 3534368285363011595
   references:
     version: 2
     RefIds:
-    - rid: 668130699139874817
-      type: {class: TimeScaleEvent, ns: , asm: Assembly-CSharp}
+    - rid: 3534368285363011595
+      type: {class: TimeScaleEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
       data:
-        _timeScale: 0.5
-        _modifyDuration: 0.3
+        _timeScale: 0.1
+        _modifyDuration: 0.1
 --- !u!1 &7985671540882104775
 GameObject:
   m_ObjectHideFlags: 0

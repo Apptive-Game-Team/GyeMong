@@ -18,15 +18,15 @@ namespace GyeMong.GameSystem.Creature.Mob
         public float RangedAttackRange { get; protected set; }
         
         public float DistanceToPlayer =>
-            Vector3.Distance(transform.position, PlayerCharacter.Instance.transform.position);
+            Vector3.Distance(transform.position, SceneContext.Character.transform.position);
 
         public Vector3 DirectionToPlayer =>
-            (PlayerCharacter.Instance.transform.position - transform.position).normalized;
+            (SceneContext.Character.transform.position - transform.position).normalized;
         
         
         public IEnumerator BackStep(float targetDistance)
         {
-            Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
+            Vector3 playerPosition = SceneContext.Character.transform.position;
             float backStepSpeed = 50f;
             Vector3 direction = (transform.position - playerPosition).normalized;
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -70,7 +70,7 @@ namespace GyeMong.GameSystem.Creature.Mob
         public IEnumerator RushAttack(float delay)
         {
             float TARGET_OFFSET = 1f;
-            Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
+            Vector3 playerPosition = SceneContext.Character.transform.position;
             float chargeSpeed = 50f;
             Vector3 direction = (playerPosition - transform.position).normalized;
             lastRushDirection = direction;
@@ -101,7 +101,7 @@ namespace GyeMong.GameSystem.Creature.Mob
         public void TrackPlayer()
         {
             float step = speed * Time.deltaTime;
-            Vector3 targetPosition = PlayerCharacter.Instance.transform.position;
+            Vector3 targetPosition = SceneContext.Character.transform.position;
             Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, step);
             transform.position = newPosition;
         }

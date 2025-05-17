@@ -17,15 +17,15 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
         }
     }
 
-    public class CameraFollow : CameraEvent
+    public class CameraFollowPlayer : CameraEvent
     {
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            CameraManager.Instance.CameraFollow(PlayerCharacter.Instance.gameObject.transform);
-            return null;
+            CameraManager.Instance.CameraFollow(SceneContext.Character.transform);
+            yield return null;
         }
     }
-
+    
     public class CameraZoomInOut : CameraEvent
     {
         [SerializeField] private float size;

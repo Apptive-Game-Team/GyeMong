@@ -11,7 +11,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             if (collision.CompareTag("Player"))
             {
-                PlayerCharacter.Instance.Bind(1f);
+                SceneContext.Character.Bind(1f);
             }
         }
     }
