@@ -1,7 +1,9 @@
 using GyeMong.EventSystem.Controller;
+using GyeMong.GameSystem.Creature;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,46 +11,47 @@ namespace GyeMong.UISystem.Game.BattleUI
 {
     public class DominanceGauge : MonoBehaviour
     {
-        [SerializeField] private Slider gaugeSlider;
-        [SerializeField] private float maxGaugeValue = 100f;
-        [SerializeField] private float pushAmountPerHit = 10f;
+        private Slider _gaugeSlider;
 
-        private float currentGaugeValue = 0f;
+        private float _leftHp;
+        private float _rightHp;
+        private float _leftMaxHp = 100;
+        private float _rightMaxHp = 100;
 
-        private void Start()
+        [SerializeField] private Creature boss;
+        private void Awake()
         {
-            gaugeSlider.minValue = -maxGaugeValue;
-            gaugeSlider.maxValue = maxGaugeValue;
-            gaugeSlider.value = currentGaugeValue;
+            _gaugeSlider = GetComponent<Slider>();
+        }
+        private void Update()
+        {
+            UpdateDominanceGauge(SceneContext.Character.CurrentHp, SceneContext.Character.stat.HealthMax, boss.CurrentHp , boss.MaxHp);
         }
 
-        public void PlayerHitBoss(float damage)
+        public void UpdateDominanceGauge(float leftHp, float leftMaxHp, float rightHp, float rightMaxHp)
         {
-            currentGaugeValue += damage * pushAmountPerHit;
-            currentGaugeValue = Mathf.Clamp(currentGaugeValue, -maxGaugeValue, maxGaugeValue);
-            gaugeSlider.value = currentGaugeValue;
+            _leftHp = Mathf.Max(0, leftHp);
+            _rightHp = Mathf.Max(0, rightHp);
+            _leftMaxHp = leftMaxHp;
+            _rightMaxHp = rightMaxHp;
+
+            UpdateGaugeVisual();
         }
 
-        public void BossHitPlayer(float damage)
+        private void UpdateGaugeVisual()
         {
-            currentGaugeValue -= damage * pushAmountPerHit;
-            currentGaugeValue = Mathf.Clamp(currentGaugeValue, -maxGaugeValue, maxGaugeValue);
-            gaugeSlider.value = currentGaugeValue;
-        }
+            float leftRatio = _leftHp / _leftMaxHp;
+            float rightRatio = _rightHp / _rightMaxHp;
 
-        public float GetGaugeValue()
-        {
-            return currentGaugeValue;
-        }
+            if (leftRatio + rightRatio == 0f)
+            {
+                _gaugeSlider.value = 0f;
+                return;
+            }
 
-        public bool IsPlayerDominating()
-        {
-            return currentGaugeValue >= maxGaugeValue;
-        }
+            float dominance = (leftRatio - rightRatio) / (leftRatio + rightRatio);
 
-        public bool IsBossDominating()
-        {
-            return currentGaugeValue <= -maxGaugeValue;
+            _gaugeSlider.value = Mathf.Clamp(dominance, -1f, 1f);
         }
     }
 }
