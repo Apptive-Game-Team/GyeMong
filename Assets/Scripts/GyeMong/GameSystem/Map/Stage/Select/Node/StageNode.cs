@@ -1,7 +1,6 @@
-using GyeMong.GameSystem.Map.Portal;
-using GyeMong.GameSystem.Map.Stage.ScriptableObject;
 using GyeMong.InputSystem.Interface;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GyeMong.GameSystem.Map.Stage.Select.Node
 {
@@ -9,10 +8,11 @@ namespace GyeMong.GameSystem.Map.Stage.Select.Node
     public class StageNode : MonoBehaviour, ISelectableUI
     {
         private StageSelectController _stageSelectController;
-        [SerializeField] private StageInfo stageInfo;
+        [SerializeField] private string sceneName;
+
         public void LoadStage()
         {
-            StageManager.EnterStage(stageInfo, this);
+            SceneManager.LoadScene(sceneName);
         }
         
         public void SetStageSelectController(StageSelectController stageSelectController)

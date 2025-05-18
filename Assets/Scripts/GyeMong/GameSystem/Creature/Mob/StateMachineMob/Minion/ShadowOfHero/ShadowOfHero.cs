@@ -4,8 +4,6 @@ using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
-using GyeMong.GameSystem.Map.Stage;
-using GyeMong.GameSystem.Map.Stage.Select;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
@@ -17,6 +15,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         protected IDetector<PlayerCharacter> _detector;
         [SerializeField] private GameObject attackPrefab;
         [SerializeField] private GameObject skillPrefab;
+
+        [SerializeField] private EventObject _eventObject;
 
         public override void OnAttacked(float damage)
         {
@@ -33,7 +33,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
         protected override void OnDead()
         {
-            StageManager.ClearStage(this);
+            _eventObject.Trigger();
+            Destroy(gameObject);
         }
 
         private void Start()

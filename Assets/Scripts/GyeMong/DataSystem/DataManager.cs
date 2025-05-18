@@ -150,15 +150,15 @@ namespace GyeMong.DataSystem
             }
         }
 
-        // public void LoadPlayerData()
-        // {
-        //     PlayerData playerData = LoadSection<PlayerData>("PlayerData");
-        //     if (!playerData.isFirst)
-        //     {
-        //         PlayerCharacter.Instance.transform.position = playerData.playerPosition;
-        //         StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
-        //     }
-        // }
+        public void LoadPlayerData()
+        {
+            PlayerData playerData = LoadSection<PlayerData>("PlayerData");
+            if (!playerData.isFirst)
+            {
+                PlayerCharacter.Instance.transform.position = playerData.playerPosition;
+                StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
+            }
+        }
 
         public void DeleteAllData()
         {

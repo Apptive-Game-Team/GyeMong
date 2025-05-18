@@ -47,6 +47,15 @@ namespace GyeMong.EventSystem.Event
         }
     }
 
+    public class HealEvent : Event
+    {
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            PlayerCharacter.Instance.Heal(1000);
+            yield return null;
+        }
+    }
+
     [Serializable]
     public class WarpPortalEvent : Event
     {
@@ -57,6 +66,19 @@ namespace GyeMong.EventSystem.Event
             return PortalManager.Instance.TransitScene(portalID, delay);
         }
     }
+
+    [Serializable]
+
+    public class TransformPortalEvent : Event
+    {
+        public Vector3 destination;
+        public override IEnumerator Execute(EventObject eventObject = null)
+        {
+            PlayerCharacter.Instance.transform.position = destination;
+            return null;
+        }
+    }
+
 
     [Serializable]
     public class DelayEvent : Event

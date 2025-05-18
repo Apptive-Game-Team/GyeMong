@@ -30,7 +30,16 @@ namespace GyeMong.EventSystem.Controller
         {
             return hpBarController;
         }
-        
+
+        /// <summary>
+        /// set HurtEffect transparency
+        /// </summary>
+        /// <param name="amount">0(none)~1(fill) alpha value</param>
+        public IEnumerator HurtEffect(float amount)
+        {
+            return Fade(hurtEffect, amount);
+        }
+    
         /// <summary>
         /// The screen is getting Ligther
         /// </summary>
@@ -84,6 +93,7 @@ namespace GyeMong.EventSystem.Controller
 
         private void CachingComponents()
         {
+            hurtEffect = transform.Find("HurtEffect").GetComponent<RawImage>();
             black = transform.Find("Black").GetComponent<RawImage>();
         }
         public void CachingHpBar(HpBarController controller)

@@ -1,5 +1,4 @@
 using GyeMong.DataSystem;
-using GyeMong.GameSystem.Map.Stage.Select;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,7 +16,7 @@ namespace GyeMong.UISystem.TItle
         public void StartGame()
         {
             optionExitButton.SetActive(true);
-            PlayerPrefs.SetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0);
+            DataManager.Instance.DeleteAllData();
             SceneManager.LoadScene("Cinematic");
         }
     }

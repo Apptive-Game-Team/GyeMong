@@ -84,18 +84,19 @@ namespace GyeMong.EventSystem
         {
             if (property.managedReferenceValue == null) return -1;
 
-            string currentTypeName = property.managedReferenceValue.GetType().Name;
-
-            for (int i = 0; i < classNames.Length; i++)
+            string targetName = property.managedReferenceValue.GetType().ToString();
+            int index = 0;
+            foreach (string classPath in classNames)
             {
-                string className = classNames[i].Split('/')[^1];
-                if (className == currentTypeName)
+                string name = classPath.Split('/')[^1];
+                if (name.Equals(targetName))
                 {
-                    return i;
+                    return index;
                 }
+                index++;
             }
-
-            return -1;
+        
+            return -1; //default value
         }
 
         // set property to instance of selected class
