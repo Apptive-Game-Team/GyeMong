@@ -70,7 +70,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             {
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, true);
                 float dashDistance = 1.5f;
-                Vector3 dashTargetPosition = PlayerCharacter.Instance.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
+                Vector3 dashTargetPosition = SceneContext.Character.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
                 yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
                 DivisionSlime.transform.DOMove(dashTargetPosition, 0.3f).SetEase(Ease.OutQuad);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);

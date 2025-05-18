@@ -13,7 +13,7 @@ using DG.Tweening;
 
 namespace GyeMong.GameSystem.Creature.Player
 {
-    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
+    public class PlayerCharacter : MonoBehaviour, IControllable, IEventTriggerable
     {
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
         
@@ -49,9 +49,8 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public Material[] materials;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             stat = _statData.GetStatComp();
             curHealth = stat.HealthMax;
             curSkillGauge = 0f;
