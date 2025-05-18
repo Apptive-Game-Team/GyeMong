@@ -15,7 +15,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
         private void Awake()
         {
-            player = PlayerCharacter.Instance.gameObject;
+            player = SceneContext.Character.gameObject;
             direction = (player.transform.position - transform.position).normalized;
             RotateArrow();
             

@@ -1,53 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GyeMong.EventSystem.Event.Chat;
 using GyeMong.InputSystem;
+using GyeMong.SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static GyeMong.EventSystem.Event.Chat.MultiChatMessageData;
 
 namespace GyeMong.EventSystem.Controller
 {
-    [Serializable]
-    public class ChatMessage
-    {
-        public string name;
-        public string message;
-
-        public ChatMessage(string messagesName, string messagesMessage)
-        {
-            name = messagesName;
-            message = messagesMessage;
-        }
-    }
-
-    [Serializable]
-    public class MultiChatMessage
-    {
-        public string name;
-        public List<string> messages;
-        public Nullable<float> chatDelay;
-    }
-
     public class ChatController : MonoBehaviour
     {
-
-        private Image chatWindow;
+        private static Image chatWindow;
+        private static Image backGround;
+        private static Image characterImage;
         [SerializeField] private GameObject speechBubble;
         private const float CHAT_WINDOW_ALPHA = 0.7f;
         private const float SHOW_CHAT_DELAY = 0.1f;
-        private TMP_Text nameText;
-        private TMP_Text messageText;
-        private bool isWorking = false;
+        private static TMP_Text nameText;
+        private static TMP_Text messageText;
+        private static bool isWorking = false;
 
         private void Awake()
         {
             chatWindow = transform.Find("ChatWindow").GetComponent<Image>();
             nameText = chatWindow.transform.Find("NameArea").GetComponent<TMP_Text>();
             messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
+            backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
+            characterImage = chatWindow.transform.Find("CharacterImageArea").GetComponent<Image>();
         }
 
-        public IEnumerator Open()
+        public static IEnumerator Open()
         {
             yield return new WaitWhile(() => isWorking);
             isWorking = true;
@@ -60,7 +45,7 @@ namespace GyeMong.EventSystem.Controller
             nameText.color = color;
         }
 
-        public void Close()
+        public static void Close()
         {
             Color color = chatWindow.color;
             color.a = 0;
@@ -74,25 +59,19 @@ namespace GyeMong.EventSystem.Controller
             isWorking = false;
         }
 
-        public IEnumerator Chat(ChatMessage chatMessage, float autoSkipTime)
+        public static IEnumerator MultipleChat(MultiChatMessageData.MultiChatMessage multiChatMessage, float autoSkipTime)
         {
-            nameText.text = chatMessage.name;
+            nameText.text = SetSpeakerName(multiChatMessage.speakerName);
             messageText.text = "";
-            yield return ShowChat(chatMessage.message);
-
-            float timer = Time.time;
-            yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
-                                             InputManager.Instance.GetKeyDown(ActionCode.Interaction));
-        }
-
-        public IEnumerator MultipleChat(MultiChatMessage multiChatMessage, float autoSkipTime)
-        {
-            nameText.text = multiChatMessage.name;
-            messageText.text = "";
+            SetBackgroundImage(GetBackgroundImageSprite(multiChatMessage.backgroundImage));
+            SetCharacterImage(GetCharacterImageSprite(multiChatMessage.speakerName));
 
             foreach (string line in multiChatMessage.messages)
             {
+                SoundObject _soundObject;
+                _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
                 yield return ShowMultipleChat(line);
+                Sound.Stop(_soundObject);
                 messageText.text += "\n";
 
                 float timer = Time.time;
@@ -101,22 +80,7 @@ namespace GyeMong.EventSystem.Controller
             }
         }
 
-        private IEnumerator ShowChat(string message)
-        {
-            foreach (char c in message)
-            {
-                if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
-                {
-                    messageText.text = message;
-                    yield return new WaitForSeconds(SHOW_CHAT_DELAY);
-                    break;
-                }
-                messageText.text += c;
-                yield return new WaitForSeconds(SHOW_CHAT_DELAY);
-            }
-        }
-
-        private IEnumerator ShowMultipleChat(string messages)
+        private static IEnumerator ShowMultipleChat(string messages)
         {
             foreach (char c in messages)
             {
@@ -129,6 +93,86 @@ namespace GyeMong.EventSystem.Controller
                 messageText.text += c;
                 yield return new WaitForSeconds(SHOW_CHAT_DELAY);
             }
+        }
+
+        public static void SetBackgroundImage(Sprite sprite)
+        {
+            if (backGround != null)
+            {
+                if (sprite != null)
+                {
+                    backGround.sprite = sprite;
+                    backGround.color = Color.white;
+                    backGround.enabled = true;
+                }
+                else
+                {
+                    backGround.sprite = null;
+                    backGround.color = new Color(0, 0, 0, 0);
+                    backGround.enabled = false;
+                }
+            }
+        }
+        public static void SetCharacterImage(Sprite sprite)
+        {
+            if (backGround != null)
+            {
+                if (sprite != null)
+                {
+                    characterImage.sprite = sprite;
+                    characterImage.color = Color.white;
+                    characterImage.enabled = true;
+                }
+                else
+                {
+                    characterImage.sprite = null;
+                    characterImage.color = new Color(0, 0, 0, 0);
+                    characterImage.enabled = false;
+                }
+            }
+        }
+
+        public static String SetSpeakerName(ChatSpeakerType speakerName)
+        {
+            ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
+            
+            foreach (var info in speakerData.ChatSpeakers)
+            {
+                if (info.speakerType == speakerName)
+                {
+                    return info.speakerName;
+                }
+            }
+
+            return speakerName.ToString();
+        }
+        
+        private static Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
+        {
+            BackgroundImageData backgroundImageData = Resources.Load<BackgroundImageData>("ScriptableObjects/Chat/BackgroundImage");
+            foreach (var imageInfo in backgroundImageData.backgroundImages)
+            {
+                if (imageInfo.backgroundImage == backgroundImage)
+                {
+                    return imageInfo.image;
+                }
+            }
+
+            return null;
+        }
+
+        private static Sprite GetCharacterImageSprite(ChatSpeakerType speakerType)
+        {
+            ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
+            foreach (var imageInfo in speakerData.ChatSpeakers)
+            {
+                if (imageInfo.speakerType == speakerType)
+                {
+                    return imageInfo.image;
+                }
+            }
+
+            return null;
         }
 
         public IEnumerator ShowSpeechBubbleChat(GameObject NPC, string message, float destroyDelay)

@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 179.65, y: 19.68, z: 0}
-  m_LocalScale: {x: -3, y: 3, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -176,21 +176,22 @@ MonoBehaviour:
   trigger: 5
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 8330687638190686208
+  - rid: 3534368285363011587
   references:
     version: 2
     RefIds:
-    - rid: 8330687638190686208
-      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
+    - rid: 3534368285363011587
+      type: {class: AnimationEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
       data:
         frames:
-        - {fileID: -623232602, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
-        - {fileID: -1811532039, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
-        - {fileID: 1300826070, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
-        - {fileID: 709818659, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
-        - {fileID: -1136456208, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
-        - {fileID: 122291462, guid: 1cdc4ed63b93b474f874006bf22271dd, type: 3}
-        deltaTime: 0.05
+        - {fileID: 1416463043, guid: 16da9324c1a38fa4fab72b58982b195d, type: 3}
+        - {fileID: 578287553, guid: 16da9324c1a38fa4fab72b58982b195d, type: 3}
+        - {fileID: 1452400713, guid: 16da9324c1a38fa4fab72b58982b195d, type: 3}
+        - {fileID: -1095442666, guid: 16da9324c1a38fa4fab72b58982b195d, type: 3}
+        - {fileID: -1236820297, guid: 16da9324c1a38fa4fab72b58982b195d, type: 3}
+        - {fileID: -429428854, guid: 16da9324c1a38fa4fab72b58982b195d, type: 3}
+        deltaTime: 0.1
         _renderer: {fileID: 1964477354976896879}
 --- !u!114 &-5238639147842398410
 MonoBehaviour:
