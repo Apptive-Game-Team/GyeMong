@@ -9,6 +9,7 @@ using GyeMong.InputSystem;
 using UnityEngine;
 using Util;
 using Visual.Camera;
+using DG.Tweening;
 
 namespace GyeMong.GameSystem.Creature.Player
 {
@@ -258,12 +259,15 @@ namespace GyeMong.GameSystem.Creature.Player
             movement = Vector2.zero;
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
-            
-            Vector2 dashDirection = GetCurrentInputDirection();
+
+            Vector2 dashDirection = GetCurrentInputDirection(lastMovementDirection.normalized);
             Vector2 startPosition = playerRb.position;
 
-            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance, LayerMask.GetMask("Wall"));
-            Vector2 targetPosition = hit.collider == null ? startPosition + dashDirection * stat.DashDistance : hit.point + hit.normal * 0.1f;
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance,
+                LayerMask.GetMask("Wall"));
+            Vector2 targetPosition = hit.collider == null
+                ? startPosition + dashDirection * stat.DashDistance
+                : hit.point + hit.normal * 0.1f;
 
             float elapsedTime = 0f;
 
@@ -283,8 +287,8 @@ namespace GyeMong.GameSystem.Creature.Player
 
             isDashing = false;
         }
-        
-        private Vector2 GetCurrentInputDirection()
+
+        private Vector2 GetCurrentInputDirection(Vector2 direction)
         {
             var dir = Vector2.zero;
             if (InputManager.Instance.GetKey(ActionCode.MoveUp)) dir += Vector2.up;
@@ -293,7 +297,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (InputManager.Instance.GetKey(ActionCode.MoveLeft)) dir += Vector2.left;
 
             if (dir != Vector2.zero) return dir;
-            return lastMovementDirection.normalized;
+            return direction;
         }
 
         private IEnumerator Attack()
@@ -304,6 +308,7 @@ namespace GyeMong.GameSystem.Creature.Player
             movement = Vector2.zero;
             StopPlayer();
             
+            AttackMove(GetCurrentInputDirection(mouseDirection));
             yield return new WaitForSeconds(stat.AttackDelay / 2);
             
             soundController.Trigger(PlayerSoundType.SWORD_SWING);
@@ -319,16 +324,23 @@ namespace GyeMong.GameSystem.Creature.Player
             if (comboQueued)
             {
                 comboQueued = false;
+                AttackMove(GetCurrentInputDirection(mouseDirection));
                 yield return new WaitForSeconds(stat.AttackDelay / 2);
                 soundController.Trigger(PlayerSoundType.SWORD_SWING);
+                animator.SetBool("isAttacking2", true);
                 SpawnAttackCollider(attackComboColliderPrefab);
                 yield return new WaitForSeconds(stat.AttackDelay);
-                print(":tq");
+                animator.SetBool("isAttacking2", false);
             }
             
             canMove = true;
             animator.SetBool("isAttacking", false);
             isAttacking = false;
+        }
+
+        private void AttackMove(Vector2 direction)
+        {
+            transform.DOMove((Vector2)transform.position + direction / 3, stat.AttackDelay).SetEase(Ease.OutQuad);
         }
 
         private float _chargeThreshold = 1f;

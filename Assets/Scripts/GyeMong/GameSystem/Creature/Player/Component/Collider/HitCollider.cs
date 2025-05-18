@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component;
@@ -52,8 +54,16 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             {
                 Vector3 origin = controller.gameObject.transform.position;
                 Vector3 direction = (PlayerCharacter.Instance.transform.position - origin).normalized;
-                StartCoroutine(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + PlayerCharacter.Instance.transform.position));
+                PlayerCharacter.Instance.isControlled = true;
+                StartCoroutine(ActionAfter(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + PlayerCharacter.Instance.transform.position),
+                    () => { PlayerCharacter.Instance.isControlled = false; }));
             }
+        }
+
+        private IEnumerator ActionAfter(IEnumerator coroutine, Action action)
+        {
+            yield return StartCoroutine(coroutine);
+            action?.Invoke();
         }
     }
 }
