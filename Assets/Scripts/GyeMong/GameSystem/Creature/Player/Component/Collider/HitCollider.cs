@@ -33,7 +33,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
                 if (Time.time < lastHitTime + enemyAttackInfo.multiHitDelay) return;
 
                 multiHitTimers[collider] = Time.time;
-                PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                SceneContext.Character.TakeDamage(enemyAttackInfo.damage);
             }
             else if (!attackObjectController.isAttacked)
             {
@@ -43,7 +43,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
                 if (enemyAttackInfo.soundObject != null)
                     enemyAttackInfo.soundObject.PlayAsync();
 
-                PlayerCharacter.Instance.TakeDamage(enemyAttackInfo.damage);
+                SceneContext.Character.TakeDamage(enemyAttackInfo.damage);
                 collider.gameObject.SetActive(!enemyAttackInfo.isDestroyOnHit);
             }
         }
@@ -53,10 +53,10 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             if (controller.AttackInfo.knockbackAmount > 0)
             {
                 Vector3 origin = controller.gameObject.transform.position;
-                Vector3 direction = (PlayerCharacter.Instance.transform.position - origin).normalized;
-                PlayerCharacter.Instance.isControlled = true;
-                StartCoroutine(ActionAfter(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + PlayerCharacter.Instance.transform.position),
-                    () => { PlayerCharacter.Instance.isControlled = false; }));
+                Vector3 direction = (SceneContext.Character.transform.position - origin).normalized;
+                SceneContext.Character.isControlled = true;
+                StartCoroutine(ActionAfter(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + SceneContext.Character.transform.position),
+                    () => { SceneContext.Character.isControlled = false; }));
             }
         }
 
