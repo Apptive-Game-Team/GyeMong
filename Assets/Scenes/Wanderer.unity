@@ -15955,7 +15955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ef74a0f408d47619252752f44c7d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creature: {fileID: 1986248215}
+  creature: {fileID: 0}
 --- !u!1 &1858646607
 GameObject:
   m_ObjectHideFlags: 0
@@ -16033,38 +16033,19 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1986248221}
-  - component: {fileID: 1986248215}
   - component: {fileID: 1986248220}
   - component: {fileID: 1986248219}
   - component: {fileID: 1986248218}
   - component: {fileID: 1986248217}
   - component: {fileID: 1986248216}
+  - component: {fileID: 1986248222}
   m_Layer: 0
-  m_Name: ShadowOfHero
+  m_Name: Wanderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1986248215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986248214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f35c790ddf35d41c1ab7e60e510ac3ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHp: 0
-  currentShield: 0
-  damage: 0
-  attackPrefab: {fileID: 2979615913887474165, guid: b6e26b6d2caf847669afbb28e31b459e,
-    type: 3}
-  skillPrefab: {fileID: 8480704386990181861, guid: d0458759a61874e51908dcbc9e0af182,
-    type: 3}
 --- !u!114 &1986248216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16228,6 +16209,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1986248222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986248214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a05c399ceb1f472aa2f879967e27e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHp: 0
+  currentShield: 0
+  damage: 10
+  basicAttackPrefab: {fileID: 4806369639637517785, guid: 0fae7d3dd5336434390fb3fe06bd0bd9,
+    type: 3}
+  upwardSlashPrefab: {fileID: 1929313978257415614, guid: ed5aa159ebdb642ca854f0f241e647f9,
+    type: 3}
+  circleSlashPrefab: {fileID: 2317706255003758615, guid: 2aadedd9f51814470a6f36154e999031,
+    type: 3}
+  attackFloorPrefab: {fileID: 8851659273948167976, guid: b1df37d71e735453eb720d044fc9ebf0,
+    type: 3}
+  comboSlashPrefab: {fileID: 5325248778987423570, guid: 37336cb79635249d88a47a64c7229cca,
+    type: 3}
+  growFloorPrefab: {fileID: 7626255705165784212, guid: 4ed45d6bca50d4069aad3fe9d77f5711,
+    type: 3}
 --- !u!1001 &2099379834
 PrefabInstance:
   m_ObjectHideFlags: 0

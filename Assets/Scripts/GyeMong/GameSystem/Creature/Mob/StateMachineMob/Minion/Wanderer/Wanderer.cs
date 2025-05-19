@@ -11,8 +11,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
     public class Wanderer : StateMachineMob
     {
         protected IDetector<PlayerCharacter> _detector;
-        [SerializeField] private GameObject attackPrefab;
-        [SerializeField] private GameObject skillPrefab;
+        [SerializeField] private GameObject basicAttackPrefab;
+        [SerializeField] private GameObject upwardSlashPrefab;
+        [SerializeField] private GameObject circleSlashPrefab;
+        [SerializeField] private GameObject attackFloorPrefab;
+        [SerializeField] private GameObject comboSlashPrefab;
+        [SerializeField] private GameObject growFloorPrefab;
 
         public override void OnAttacked(float damage)
         {
@@ -39,45 +43,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             ChangeState(new DetectingPlayer() {mob= this});
         }
 
-        private IEnumerator MeleeAttack()
+        private IEnumerator StaticAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f)
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
             AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * 0.5f, 
+                    transform.position + DirectionToPlayer * distance, 
                     DirectionToPlayer, 
-                    attackPrefab, 
+                    prefab, 
                     new StaticMovement(
-                        transform.position + DirectionToPlayer * 0.5f, 
-                        0.3f)
-                )
-                .StartRoutine();
-            yield return new WaitForSeconds(0.2f);
-            _animator.SetBool("isAttacking", false);
-            yield return new WaitForSeconds(0.1f);
-        }
-        
-        private IEnumerator RangeAttack()
-        {
-            FaceToPlayer();
-            _animator.SetTrigger("isAttacking");
-            AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * 0.5f, 
-                    DirectionToPlayer, 
-                    attackPrefab, 
-                    new StaticMovement(
-                        transform.position + DirectionToPlayer * 0.5f, 
-                        0.3f)
-                )
-                .StartRoutine();
-            AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * 0.8f, 
-                    DirectionToPlayer, 
-                    skillPrefab, 
-                    new LinearMovement(
-                        transform.position, 
-                        transform.position + DirectionToPlayer * 10, 
-                        10)
+                        transform.position + DirectionToPlayer * distance, 
+                        duration)
                 )
                 .StartRoutine();
             yield return new WaitForSeconds(0.2f);
@@ -110,11 +86,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
+                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                {
+                    return 0;
+                }
                 return 5;
             }
             public override IEnumerator StateCoroutine()
             {
-                throw new System.NotImplementedException();
+                yield return Wanderer.StaticAttack(Wanderer.circleSlashPrefab, 0);
+                yield return new WaitForSeconds(1f);
+                Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
         
@@ -122,11 +104,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
+                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                {
+                    return 0;
+                }
                 return 5;
             }
             public override IEnumerator StateCoroutine()
             {
-                throw new System.NotImplementedException();
+                yield return Wanderer.StaticAttack(Wanderer.basicAttackPrefab);
+                yield return Wanderer.StaticAttack(Wanderer.basicAttackPrefab);
+                yield return Wanderer.StaticAttack(Wanderer.comboSlashPrefab);
+                yield return new WaitForSeconds(1f);
+                Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
         
@@ -134,11 +124,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
+                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                {
+                    return 0;
+                }
                 return 5;
             }
             public override IEnumerator StateCoroutine()
             {
-                throw new System.NotImplementedException();
+                yield return Wanderer.StaticAttack(Wanderer.upwardSlashPrefab);
+                yield return new WaitForSeconds(1f);
+                Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
         
@@ -146,11 +142,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
+                if (mob.DistanceToPlayer > mob.RangedAttackRange)
+                {
+                    return 0;
+                }
                 return 5;
             }
             public override IEnumerator StateCoroutine()
             {
-                throw new System.NotImplementedException();
+                Debug.Log("Ground Smash");
+                yield return Wanderer.StaticAttack(Wanderer.attackFloorPrefab);
+                yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 5f, 100f);
+                yield return new WaitForSeconds(1f);
+                Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
         
@@ -163,6 +167,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
             public override IEnumerator StateCoroutine()
             {
+                Debug.Log("Detecting Player");
                 mob.Animator.SetBool("isMove", false);
                 while (true)
                 {
@@ -174,6 +179,32 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                     }
                     yield return new WaitForSeconds(1f);
                 }
+            }
+        }
+        
+        public class WalkState : WandererState
+        {
+            public override int GetWeight()
+            {
+                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                {
+                    return 5;
+                }
+                return 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                mob.Animator.SetBool("isMove", true);
+                while (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                {
+                    mob.TrackPlayer();
+                    Wanderer.FaceToPlayer();
+                    yield return null;
+                }
+                mob.Animator.SetBool("isMove", false);
+                yield return null;
+                mob.ChangeState();
             }
         }
         
