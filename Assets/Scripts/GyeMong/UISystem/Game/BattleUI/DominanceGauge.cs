@@ -25,13 +25,12 @@ namespace GyeMong.UISystem.Game.BattleUI
         {
             _gaugeSlider = GetComponent<Slider>();
         }
-        private void Start()
-        {
-            adjustConst = boss.MaxHp / SceneContext.Character.stat.HealthMax;
-        }
         private void Update()
         {
-            UpdateDominanceGauge(SceneContext.Character.CurrentHp * adjustConst, SceneContext.Character.stat.HealthMax * adjustConst, boss.CurrentHp, boss.MaxHp);
+            adjustConst = boss.MaxHp / SceneContext.Character.stat.HealthMax;
+            float playerAdjustedMaxHp = SceneContext.Character.stat.HealthMax * adjustConst;
+            float playerAdjustedCurHp = SceneContext.Character.CurrentHp * adjustConst;
+            UpdateDominanceGauge(playerAdjustedCurHp, playerAdjustedMaxHp, boss.CurrentHp, boss.MaxHp);
         }
 
         public void UpdateDominanceGauge(float leftHp, float leftMaxHp, float rightHp, float rightMaxHp)
