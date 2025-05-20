@@ -11,52 +11,47 @@ namespace GyeMong.UISystem.Game.BattleUI
 {
     public class DominanceGauge : MonoBehaviour
     {
+        [SerializeField] private Creature boss;
         private Slider _gaugeSlider;
 
-        private float _leftHp;
-        private float _rightHp;
-        private float _leftMaxHp;
-        private float _rightMaxHp;
+        private float _playerMaxHp;
+        private float _bossMaxHp;
+        private float _totalDominanceRange;
 
-        private float adjustConst;
+        private float _dominanceValue;
 
-        [SerializeField] private Creature boss;
         private void Awake()
         {
             _gaugeSlider = GetComponent<Slider>();
         }
-        private void Update()
+
+        private void Start()
         {
-            adjustConst = boss.MaxHp / SceneContext.Character.stat.HealthMax;
-            float playerAdjustedMaxHp = SceneContext.Character.stat.HealthMax * adjustConst;
-            float playerAdjustedCurHp = SceneContext.Character.CurrentHp * adjustConst;
-            UpdateDominanceGauge(playerAdjustedCurHp, playerAdjustedMaxHp, boss.CurrentHp, boss.MaxHp);
+            _playerMaxHp = SceneContext.Character.stat.HealthMax;
+            _bossMaxHp = boss.MaxHp;
+            _totalDominanceRange = _playerMaxHp + _bossMaxHp;
+            _dominanceValue = 0f;
+            UpdateGaugeVisual();
         }
 
-        public void UpdateDominanceGauge(float leftHp, float leftMaxHp, float rightHp, float rightMaxHp)
+        public void ApplyDamageToPlayer(float damage)
         {
-            _leftHp = Mathf.Max(0, leftHp);
-            _rightHp = Mathf.Max(0, rightHp);
-            _leftMaxHp = leftMaxHp;
-            _rightMaxHp = rightMaxHp;
+            float delta = (damage / _totalDominanceRange) * 2f;
+            _dominanceValue = Mathf.Clamp(_dominanceValue - delta, -1f, 1f);
+            UpdateGaugeVisual();
+        }
 
+        public void ApplyDamageToBoss(float damage)
+        {
+            float delta = (damage / _totalDominanceRange) * 2f;
+            _dominanceValue = Mathf.Clamp(_dominanceValue + delta, -1f, 1f);
             UpdateGaugeVisual();
         }
 
         private void UpdateGaugeVisual()
         {
-            float leftRatio = _leftHp / _leftMaxHp;
-            float rightRatio = _rightHp / _rightMaxHp;
-
-            if (leftRatio + rightRatio == 0f)
-            {
-                _gaugeSlider.value = 0f;
-                return;
-            }
-
-            float dominance = (leftRatio - rightRatio) / (leftRatio + rightRatio);
-
-            _gaugeSlider.value = Mathf.Clamp(dominance, -1f, 1f);
+            _gaugeSlider.value = _dominanceValue;
         }
     }
+
 }
