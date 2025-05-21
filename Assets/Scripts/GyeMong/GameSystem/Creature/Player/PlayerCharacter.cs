@@ -228,15 +228,11 @@ namespace GyeMong.GameSystem.Creature.Player
         
         private IEnumerator TriggerInvincibility()
         {
-            isInvincible = true;
-            
             Material material = gameObject.GetComponent<Renderer>().material;
             material.SetFloat("_BlinkTrigger", 1f);
             yield return new WaitForSeconds(blinkDelay);
             material.SetFloat("_BlinkTrigger", 0f);
             yield return new WaitForSeconds(stat.InvincibilityDuration - blinkDelay);
-
-            isInvincible = false;
         }
 
         private IEnumerator Dash()

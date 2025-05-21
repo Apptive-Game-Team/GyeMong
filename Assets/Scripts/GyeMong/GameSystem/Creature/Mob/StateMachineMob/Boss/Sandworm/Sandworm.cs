@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using GyeMong.GameSystem.Creature.Player;
 using Unity.VisualScripting;
 using Sequence = DG.Tweening.Sequence;
 
@@ -10,9 +11,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
     public class Sandworm : Boss
     {
         [SerializeField] private GameObject venomAttack;
-        private float _venomDistance;
-        private float _venomDuration;
-        private float _venomSpreadAngle;
+        [SerializeField] private GameObject venomPit;
+        [SerializeField] private GameObject groundCrash;
+        private float _venomAttackDistance;
+        private float _venomAttackDuration;
+        private float _venomAttackSpreadAngle;
+        private float _venomPitDuration;
         protected override void Initialize()
         {
             maxPhase = 2;
@@ -24,12 +28,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
-            MeleeAttackRange = 2f;
+            MeleeAttackRange = 3f;
             RangedAttackRange = 100f;
 
-            _venomDistance = 8f;
-            _venomDuration = 0.8f;
-            _venomSpreadAngle = 15f;
+            _venomAttackDistance = 8f;
+            _venomAttackDuration = 0.8f;
+            _venomAttackSpreadAngle = 15f;
+            _venomPitDuration = 2f;
 
             ChangeState(new VenomBreath(){mob = this});
         }
@@ -53,7 +58,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 weights = new Dictionary<System.Type, int>
                     {
                         {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 100 : 0 },
-                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
+                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 100 : 0 },
                         {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
@@ -100,6 +105,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override IEnumerator StateCoroutine()
             {
+                IsActionExist = true;
+                Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
+                attackPosition.y -= 0.4f; 
+                Sandworm.RotateHead(-20f, 1f, 50f, 0.2f, 0.4f);
+                yield return new WaitForSeconds(0.9f);
+                GameObject crash = Instantiate(Sandworm.groundCrash, attackPosition, Quaternion.identity);
+                Destroy(crash, 0.7f);
+                yield return new WaitForSeconds(0.6f);
+                IsActionExist = false;
+                yield return new WaitForSeconds(0.4f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
@@ -185,44 +200,40 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
         private void VenomBreathAttack()
         {
-            // 3방향 회전 벡터
             Vector2[] directions = new Vector2[3];
             directions[0] = DirectionToPlayer;
-            directions[1] = RotateVector(DirectionToPlayer, _venomSpreadAngle);
-            directions[2] = RotateVector(DirectionToPlayer, -_venomSpreadAngle);
+            directions[1] = RotateVector(DirectionToPlayer, _venomAttackSpreadAngle);
+            directions[2] = RotateVector(DirectionToPlayer, -_venomAttackSpreadAngle);
 
             foreach (var dir in directions)
             {
-                SpawnPoisonProjectile(dir);
+                SpawnVenomAttack(dir);
             }
         }
 
-        private void SpawnPoisonProjectile(Vector2 direction)
+        private void SpawnVenomAttack(Vector2 direction)
         {
-            // 타겟 위치 계산 (지면)
             Vector3 startPos = transform.position;
-            Vector3 targetPos = startPos + (Vector3)(direction.normalized * _venomDistance);
-
-            // Instantiate
-            GameObject projectile = Instantiate(venomAttack, startPos, Quaternion.identity);
-
-            // 포물선 효과용 y축 중간점 추가
+            Vector3 targetPos = startPos + (Vector3)(direction.normalized * _venomAttackDistance);
+            
+            GameObject venom = Instantiate(venomAttack, startPos, Quaternion.identity);
+            
             Vector3 peakPos = Vector3.Lerp(startPos, targetPos, 0.5f) + Vector3.up * 1.5f;
-
-            // DoTween으로 곡선 이동 (경로는 start → peak → end)
-            projectile.transform.DOPath(
-                new Vector3[] { startPos, peakPos, targetPos },
-                _venomDuration,
+            
+            venom.transform.DOPath(
+                new[] { startPos, peakPos, targetPos },
+                _venomAttackDuration,
                 PathType.CatmullRom
-            ).SetEase(Ease.InOutSine);
-            // .OnComplete(() =>
-            // {
-            //     // 착지 시 장판 생성
-            //     Instantiate(poisonAreaPrefab, targetPos, Quaternion.identity);
-            // });
+            ).SetEase(Ease.InOutSine)
+            .OnComplete(() =>
+            {
+                if (!venom || !venom.activeInHierarchy) return;
+                Destroy(venom);
+                GameObject pit = Instantiate(venomPit, targetPos, Quaternion.identity);
+                Destroy(pit, _venomPitDuration);
+            });
         }
-
-        // 방향 벡터 회전 함수 (2D 기준)
+        
         private Vector2 RotateVector(Vector2 v, float degrees)
         {
             float radians = degrees * Mathf.Deg2Rad;

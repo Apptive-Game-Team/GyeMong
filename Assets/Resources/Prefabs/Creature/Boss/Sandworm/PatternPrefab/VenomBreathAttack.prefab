@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1963026554675796285}
   - component: {fileID: 5837843093490179891}
   - component: {fileID: 8864466083389182637}
+  - component: {fileID: 1374296841348685340}
   m_Layer: 0
   m_Name: VenomBreathAttack
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,3 +103,38 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: 509295763564a4247a722c6b3ba8baeb, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: f2172a48927493f46a8fdbe02f35b398,
     type: 2}
+--- !u!58 &1374296841348685340
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7967004797931423187}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.4631827
