@@ -8,7 +8,7 @@ public class DailyCycleManager : MonoBehaviour
     public enum TimeOfDay { Dawn, Day, Dusk, Night }
 
     public float secondsPerFullDay = 120f;
-    public float currentTimePercent = 0f;
+    public float currentTimePercent;
     public Light2D globalLight2D;
 
     private float timePerSecond;
@@ -20,6 +20,7 @@ public class DailyCycleManager : MonoBehaviour
 
     private void Start()
     {
+        currentTimePercent = 0.75f;
         timePerSecond = 1f / secondsPerFullDay;
     }
 
