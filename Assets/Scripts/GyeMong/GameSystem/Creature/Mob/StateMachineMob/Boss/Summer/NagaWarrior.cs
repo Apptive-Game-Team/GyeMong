@@ -24,6 +24,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         [SerializeField] private SoundObject arrowSoundObject;
         [SerializeField] private SoundObject vineSoundObject;
         [SerializeField] private DailyCycleManager dailyCycleManager;
+        bool isoverheat = false;
 
         private Color dawnColor = new Color32(255, 255, 255, 255);
         private Color dayColor = new Color32(255, 85, 85, 255);
@@ -43,35 +44,49 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
+        private void Update()
+        {
+            UpdateTime();
+        }
+        void UpdateTime()
+        {
+            Color targetColor;
+            if (dailyCycleManager.currentTimePercent < 0.25f)
+            {
+                float t = dailyCycleManager.currentTimePercent / 0.25f;
+                targetColor = Color.Lerp(dawnColor, dayColor, t);
+            }
+            else if (dailyCycleManager.currentTimePercent < 0.5f)
+            {
+                isoverheat = true;
+                float t = (dailyCycleManager.currentTimePercent - 0.25f) / 0.25f;
+                targetColor = Color.Lerp(dayColor, duskColor, t);
+            }
+            else
+            {
+                isoverheat = false;
+                targetColor = duskColor;
+            }
+            SpriteRenderer.color = targetColor;
+            if (isoverheat)
+            {
+                damage = 15f;
+                speed = 3f;
+            }
+            else
+            {
+                damage = 10f;
+                speed = 2f;
+            }
+        }
         public abstract class NagaWarriorState : CoolDownState
         {
             public NagaWarrior NagaWarrior => mob as NagaWarrior;
             protected Dictionary<System.Type, int> weights;
             public override void OnStateUpdate()
             {
-                UpdateLighting();
             }
-            void UpdateLighting()
-            {
-                Color targetColor;
-
-                if (NagaWarrior.dailyCycleManager.currentTimePercent < 0.25f)
-                {
-                    float t = NagaWarrior.dailyCycleManager.currentTimePercent / 0.25f;
-                    targetColor = Color.Lerp(NagaWarrior.dawnColor, NagaWarrior.dayColor, t);
-                }
-                else if (NagaWarrior.dailyCycleManager.currentTimePercent < 0.5f)
-                {
-                    float t = (NagaWarrior.dailyCycleManager.currentTimePercent - 0.25f) / 0.25f;
-                    targetColor = Color.Lerp(NagaWarrior.dayColor, NagaWarrior.duskColor, t);
-                }
-                else
-                {
-                    targetColor = NagaWarrior.duskColor;
-                }
-                NagaWarrior.SpriteRenderer.color = targetColor;
-            }
-            protected virtual void SetWeights()
+            /*protected virtual void SetWeights()
             {
                 weights = new Dictionary<System.Type, int>
                     {
@@ -87,7 +102,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 {
                     weights[typeof(MeleeAttack)] = 1;
                 }
-            }
+            }*/
             protected Dictionary<System.Type, int> NextStateWeights
             {
                 get
@@ -96,7 +111,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 }
             }
         }
-        public new class BackStep : NagaWarriorState
+        /*public new class BackStep : NagaWarriorState
         {
             public override int GetWeight()
             {
@@ -344,7 +359,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     yield return new WaitForSeconds(interval);
                 }
             }
-        }
+        }*/
         protected override void Die()
         {
             base.Die();
