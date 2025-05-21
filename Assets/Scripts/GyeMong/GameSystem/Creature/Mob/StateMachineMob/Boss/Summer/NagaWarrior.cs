@@ -23,6 +23,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         float attackdelayTime = 1f;
         [SerializeField] private SoundObject arrowSoundObject;
         [SerializeField] private SoundObject vineSoundObject;
+        [SerializeField] private DailyCycleManager dailyCycleManager;
+
+        private Color dawnColor = new Color32(255, 255, 255, 255);
+        private Color dayColor = new Color32(255, 85, 85, 255);
+        private Color duskColor = new Color32(255, 255, 255, 255);
 
         protected override void Initialize()
         {
@@ -44,8 +49,27 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             protected Dictionary<System.Type, int> weights;
             public override void OnStateUpdate()
             {
-                NagaWarrior.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
-                Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
+                UpdateLighting();
+            }
+            void UpdateLighting()
+            {
+                Color targetColor;
+
+                if (NagaWarrior.dailyCycleManager.currentTimePercent < 0.25f)
+                {
+                    float t = NagaWarrior.dailyCycleManager.currentTimePercent / 0.25f;
+                    targetColor = Color.Lerp(NagaWarrior.dawnColor, NagaWarrior.dayColor, t);
+                }
+                else if (NagaWarrior.dailyCycleManager.currentTimePercent < 0.5f)
+                {
+                    float t = (NagaWarrior.dailyCycleManager.currentTimePercent - 0.25f) / 0.25f;
+                    targetColor = Color.Lerp(NagaWarrior.dayColor, NagaWarrior.duskColor, t);
+                }
+                else
+                {
+                    targetColor = NagaWarrior.duskColor;
+                }
+                NagaWarrior.SpriteRenderer.color = targetColor;
             }
             protected virtual void SetWeights()
             {
