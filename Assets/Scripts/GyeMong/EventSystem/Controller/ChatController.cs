@@ -121,25 +121,38 @@ namespace GyeMong.EventSystem.Controller
         }
         public static void SetCharacterImage(Sprite sprite, bool isLeft)
         {
-            if (isLeft)
+            if (sprite != null)
             {
-                characterImage.sprite = sprite;
-                characterImage.color = Color.white;
-                characterImage.enabled = true;
+                if (isLeft)
+                {
+                    characterImage.sprite = sprite;
+                    characterImage.color = Color.white;
+                    characterImage.enabled = true;
+
+                    characterImage2.sprite = null;
+                    characterImage2.color = new Color(0, 0, 0, 0);
+                    characterImage2.enabled = false;
+                }
+                else
+                {
+                    characterImage2.sprite = sprite;
+                    characterImage2.color = Color.white;
+                    characterImage2.enabled = true;
+
+                    characterImage.sprite = null;
+                    characterImage.color = new Color(0, 0, 0, 0);
+                    characterImage.enabled = false;
+                }
+            }
+            else
+            {
+                characterImage.sprite = null;
+                characterImage.color = new Color(0, 0, 0, 0);
+                characterImage.enabled = false;
 
                 characterImage2.sprite = null;
                 characterImage2.color = new Color(0, 0, 0, 0);
                 characterImage2.enabled = false;
-            }
-            else
-            {
-                characterImage2.sprite = sprite;
-                characterImage2.color = Color.white;
-                characterImage2.enabled = true;
-
-                characterImage.sprite = null;
-                characterImage.color = new Color(0, 0, 0, 0);
-                characterImage.enabled = false;
             }
         }
 
