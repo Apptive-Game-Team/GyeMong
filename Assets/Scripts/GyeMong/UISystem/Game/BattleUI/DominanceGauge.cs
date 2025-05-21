@@ -24,33 +24,28 @@ namespace GyeMong.UISystem.Game.BattleUI
         {
             _gaugeSlider = GetComponent<Slider>();
         }
-
         private void Start()
         {
             _playerMaxHp = SceneContext.Character.stat.HealthMax;
             _bossMaxHp = boss.MaxHp;
             _totalDominanceRange = _playerMaxHp + _bossMaxHp;
-            _dominanceValue = 0f;
+            _dominanceValue = _playerMaxHp / _totalDominanceRange;
+
             UpdateGaugeVisual();
         }
-
         public void ApplyDamageToPlayer(float damage)
         {
-            float delta = (damage / _totalDominanceRange) * 2f;
-            _dominanceValue = Mathf.Clamp(_dominanceValue - delta, -1f, 1f);
+            _dominanceValue = Mathf.Clamp(_dominanceValue - damage, 0f, _totalDominanceRange);
             UpdateGaugeVisual();
         }
-
         public void ApplyDamageToBoss(float damage)
         {
-            float delta = (damage / _totalDominanceRange) * 2f;
-            _dominanceValue = Mathf.Clamp(_dominanceValue + delta, -1f, 1f);
+            _dominanceValue = Mathf.Clamp(_dominanceValue + damage*10, 0f, _totalDominanceRange);
             UpdateGaugeVisual();
         }
-
         private void UpdateGaugeVisual()
         {
-            _gaugeSlider.value = _dominanceValue;
+            _gaugeSlider.value = _dominanceValue / _totalDominanceRange;
         }
     }
 
