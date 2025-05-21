@@ -34,6 +34,7 @@ namespace GyeMong.GameSystem.Creature
         protected internal float speed;
 
         protected Animator _animator;
+        protected SpriteRenderer _spriteRenderer;
         
         private MaterialController _materialController;
         public MaterialController MaterialController
@@ -61,7 +62,18 @@ namespace GyeMong.GameSystem.Creature
                 return _animator;
             }
         }
-        
+        public SpriteRenderer SpriteRenderer
+        {
+            get
+            {
+                if (_spriteRenderer == null)
+                {
+                    _spriteRenderer = GetComponent<SpriteRenderer>();
+                }
+
+                return _spriteRenderer;
+            }
+        }
         private Color? _originalColor = null;
         protected IEnumerator Blink()
         {
