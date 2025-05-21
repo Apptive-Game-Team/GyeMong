@@ -16,6 +16,7 @@ namespace GyeMong.EventSystem.Controller
         private static Image chatWindow;
         private static Image backGround;
         private static Image characterImage;
+        private static Image characterImage2;
         [SerializeField] private GameObject speechBubble;
         private const float CHAT_WINDOW_ALPHA = 0.7f;
         private const float SHOW_CHAT_DELAY = 0.1f;
@@ -30,6 +31,7 @@ namespace GyeMong.EventSystem.Controller
             messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
             backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
             characterImage = chatWindow.transform.Find("CharacterImageArea").GetComponent<Image>();
+            characterImage2 = chatWindow.transform.Find("CharacterImageArea2").GetComponent<Image>();
         }
 
         public static IEnumerator Open()
@@ -64,7 +66,11 @@ namespace GyeMong.EventSystem.Controller
             nameText.text = SetSpeakerName(multiChatMessage.speakerName);
             messageText.text = "";
             SetBackgroundImage(GetBackgroundImageSprite(multiChatMessage.backgroundImage));
-            SetCharacterImage(GetCharacterImageSprite(multiChatMessage.speakerName));
+
+            ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
+
+            var speakerInfo = speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName);
+            SetCharacterImage(speakerInfo.image, multiChatMessage.isLeft);
 
             foreach (string line in multiChatMessage.messages)
             {
@@ -113,22 +119,27 @@ namespace GyeMong.EventSystem.Controller
                 }
             }
         }
-        public static void SetCharacterImage(Sprite sprite)
+        public static void SetCharacterImage(Sprite sprite, bool isLeft)
         {
-            if (backGround != null)
+            if (isLeft)
             {
-                if (sprite != null)
-                {
-                    characterImage.sprite = sprite;
-                    characterImage.color = Color.white;
-                    characterImage.enabled = true;
-                }
-                else
-                {
-                    characterImage.sprite = null;
-                    characterImage.color = new Color(0, 0, 0, 0);
-                    characterImage.enabled = false;
-                }
+                characterImage.sprite = sprite;
+                characterImage.color = Color.white;
+                characterImage.enabled = true;
+
+                characterImage2.sprite = null;
+                characterImage2.color = new Color(0, 0, 0, 0);
+                characterImage2.enabled = false;
+            }
+            else
+            {
+                characterImage2.sprite = sprite;
+                characterImage2.color = Color.white;
+                characterImage2.enabled = true;
+
+                characterImage.sprite = null;
+                characterImage.color = new Color(0, 0, 0, 0);
+                characterImage.enabled = false;
             }
         }
 

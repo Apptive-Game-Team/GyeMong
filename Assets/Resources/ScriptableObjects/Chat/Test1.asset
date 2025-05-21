@@ -19,15 +19,25 @@ MonoBehaviour:
     - "\uB808\uC804\uB4DC\uB808\uC804\uB4DC"
     chatDelay: 3
     backgroundImage: 0
+    isLeft: 1
   - speakerName: 2
     messages:
     - "\uC73C\uC544\uC544\uC545"
     - "\uB9DD\uD560\uC624\uB958"
     chatDelay: 3
     backgroundImage: 1
+    isLeft: 0
   - speakerName: 0
     messages:
     - "\uB530\uB530"
     - "\uB760\uB760\uB760\uB760"
     chatDelay: 3
     backgroundImage: 1
+    isLeft: 1
+  - speakerName: 0
+    messages:
+    - "\uB450\uB450\uB450"
+    - "\uB760\uB760\uB760\uB760"
+    chatDelay: 3
+    backgroundImage: 1
+    isLeft: 0
