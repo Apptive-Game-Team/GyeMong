@@ -1,5 +1,5 @@
-using System.Input.Interface;
-using UI.mouse_input;
+using GyeMong.InputSystem;
+using GyeMong.InputSystem.Interface;
 using UnityEngine;
 
 namespace System.Input
@@ -13,7 +13,7 @@ namespace System.Input
     
         private void OnDestroy()
         {
-            MouseInputManager.Instance.RemoveListener(this);
+            //MouseInputManager.Instance.RemoveListener(this);
         }
 
         public void OnMouseInput(MouseInputState state, ISelectableUI ui)
