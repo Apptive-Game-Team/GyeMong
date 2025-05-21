@@ -93,7 +93,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
         protected void Initialize()
         {
-            maxHp = 30;
+            maxHp = 100;
             currentHp = maxHp;
 
             currentShield = 0;
