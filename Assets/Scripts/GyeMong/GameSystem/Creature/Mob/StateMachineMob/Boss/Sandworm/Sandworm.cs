@@ -13,10 +13,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private GameObject venomAttack;
         [SerializeField] private GameObject venomPit;
         [SerializeField] private GameObject groundCrash;
+        [SerializeField] private GameObject laserAttack;
         private float _venomAttackDistance;
         private float _venomAttackDuration;
         private float _venomAttackSpreadAngle;
         private float _venomPitDuration;
+        private float _laserDuration;
         protected override void Initialize()
         {
             maxPhase = 2;
@@ -35,6 +37,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             _venomAttackDuration = 0.8f;
             _venomAttackSpreadAngle = 15f;
             _venomPitDuration = 2f;
+            _laserDuration = 1f;
 
             ChangeState(new VenomBreath(){mob = this});
         }
@@ -59,7 +62,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                     {
                         {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 100 : 0 },
                         {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 100 : 0 },
-                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
+                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 100 : 0 },
                         {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(SandTrapAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 }
@@ -130,6 +133,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override IEnumerator StateCoroutine()
             {
+                IsActionExist = true;
+                bool startPositionFlag = Sandworm.DirectionToPlayer.x > 0;
+                Sandworm.RotateHead(-20f, 0.2f, 0f, 0.2f, 0f);
+                Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
+                yield return new WaitForSeconds(0.3f);
+                Sandworm.LaserAttack(startPositionFlag, attackPosition);
+                yield return new WaitForSeconds(1f);
+                IsActionExist = false;
+                yield return new WaitForSeconds(0.4f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
@@ -243,6 +255,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 v.x * cos - v.y * sin,
                 v.x * sin + v.y * cos
             );
+        }
+        
+        private void LaserAttack(bool startPositionFlag,Vector3 attackPosition)
+        {
+            Vector3 start = startPositionFlag
+                ? transform.position + new Vector3(2.6f, 1f, 0f)
+                : transform.position + new Vector3(-2.6f, 1f, 0f);
+            Vector3 dir = (attackPosition - start).normalized;
+            
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            GameObject laser = Instantiate(laserAttack, start, Quaternion.identity);
+            laser.transform.rotation = Quaternion.Euler(0, 0, angle);
+            
+            laser.transform.DOScaleX(4, _laserDuration).SetEase(Ease.Linear)
+                .OnComplete(() => Destroy(laser));
         }
     }
 }
