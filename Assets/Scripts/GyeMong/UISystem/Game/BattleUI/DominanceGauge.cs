@@ -26,10 +26,16 @@ namespace GyeMong.UISystem.Game.BattleUI
         }
         private void Start()
         {
+            StartCoroutine(Init());
+        }
+        private IEnumerator Init()
+        {
+            yield return null;
+
             _playerMaxHp = SceneContext.Character.stat.HealthMax;
             _bossMaxHp = boss.MaxHp;
             _totalDominanceRange = _playerMaxHp + _bossMaxHp;
-            _dominanceValue = _playerMaxHp / _totalDominanceRange;
+            _dominanceValue = _playerMaxHp;
 
             UpdateGaugeVisual();
         }
@@ -48,5 +54,4 @@ namespace GyeMong.UISystem.Game.BattleUI
             _gaugeSlider.value = _dominanceValue / _totalDominanceRange;
         }
     }
-
 }
