@@ -5,10 +5,12 @@ using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using UnityEngine;
+using static GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf.Elf;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
@@ -110,6 +112,35 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     return weights;
                 }
             }
+        }
+        public class MeleeAttack : NagaWarriorState
+        {
+            public override int GetWeight()
+            {
+                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange / 2) ? 5 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime/2);
+                NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
+                //SetWeights();
+                NagaWarrior.ChangeState(NextStateWeights);
+            }
+            /*protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }*/
         }
         /*public new class BackStep : NagaWarriorState
         {
@@ -365,21 +396,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             base.Die();
             Animator.SetBool("isDown", true);
             StageManager.ClearStage(this);
-        }
-        protected override void TransPhase()
-        {
-            if (currentPhase < maxHps.Count - 1)
-            {
-                currentPhase++;
-                StopAllCoroutines();
-                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-                StartCoroutine(ChangingPhase());
-            }
-            else
-            {
-                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-                Die();
-            }
         }
         private void SpawnAttackCollider(Vector3 direction)
         {
