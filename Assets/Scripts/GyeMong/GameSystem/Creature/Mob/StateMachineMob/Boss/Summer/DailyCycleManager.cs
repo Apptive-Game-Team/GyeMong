@@ -18,6 +18,8 @@ public class DailyCycleManager : MonoBehaviour
     private Color duskColor = new Color32(145, 145, 145, 255);
     private Color nightColor = new Color32(30, 30, 30, 255);
 
+    public TimeOfDay currentTime;
+
     private void Start()
     {
         currentTimePercent = 0.75f;
@@ -31,8 +33,22 @@ public class DailyCycleManager : MonoBehaviour
             currentTimePercent -= 1f;
 
         UpdateLighting();
+        UpdateTime();
     }
+    void UpdateTime()
+    {
+        TimeOfDay newPhase;
 
+        if (currentTimePercent < 0.25f) newPhase = TimeOfDay.Dawn;
+        else if (currentTimePercent < 0.5f) newPhase = TimeOfDay.Day;
+        else if (currentTimePercent < 0.75f) newPhase = TimeOfDay.Dusk;
+        else newPhase = TimeOfDay.Night;
+
+        if (newPhase != currentTime)
+        {
+            currentTime = newPhase;
+        }
+    }
     void UpdateLighting()
     {
         Color targetColor;

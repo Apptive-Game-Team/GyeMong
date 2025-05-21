@@ -1,4 +1,4 @@
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GyeMong.GameSystem.Creature.Attack;
@@ -28,10 +28,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             maxPhase = 2;
             maxHps.Clear();
-            maxHps.Add(100f);
             maxHps.Add(200f);
             currentHp = maxHps[currentPhase];
-            damage = 20f;
+            damage = 10f;
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
@@ -39,13 +38,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
-        public abstract class ElfState : CoolDownState
+        public abstract class NagaWarriorState : CoolDownState
         {
-            public Elf Elf => mob as Elf;
+            public NagaWarrior NagaWarrior => mob as NagaWarrior;
             protected Dictionary<System.Type, int> weights;
             public override void OnStateUpdate()
             {
-                Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+                NagaWarrior.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
             }
             protected virtual void SetWeights()
@@ -73,7 +72,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 }
             }
         }
-        public new class BackStep : ElfState
+        public new class BackStep : NagaWarriorState
         {
             public override int GetWeight()
             {
@@ -103,7 +102,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 }
             }
         }
-        public class RushAndAttack : ElfState
+        public class RushAndAttack : NagaWarriorState
         {
             public RushAndAttack()
             {
@@ -150,7 +149,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 }
             }
         }
-        public class RangedAttack : ElfState
+        public class RangedAttack : NagaWarriorState
         {
             public override int GetWeight()
             {
@@ -173,7 +172,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 Elf.ChangeState(NextStateWeights);
             }
         }
-        public class SeedRangedAttak : ElfState
+        public class SeedRangedAttak : NagaWarriorState
         {
             public SeedRangedAttak()
             {
@@ -204,7 +203,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 Elf.ChangeState(NextStateWeights);
             }
         }
-        public class MeleeAttack : ElfState
+        public class MeleeAttack : NagaWarriorState
         {
             public override int GetWeight()
             {
@@ -226,7 +225,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
         }
 
-        public class WhipAttack : ElfState
+        public class WhipAttack : NagaWarriorState
         {
             private SoundObject _soundObject;
             public WhipAttack()
@@ -271,7 +270,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 Sound.Stop(_soundObject);
             }
         }
-        public class TrunkAttack : ElfState
+        public class TrunkAttack : NagaWarriorState
         {
             public TrunkAttack()
             {
@@ -369,4 +368,4 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             ChangeState();
         }
     }
-}*/
+}
