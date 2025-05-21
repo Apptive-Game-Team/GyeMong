@@ -20,6 +20,9 @@ namespace GyeMong.UISystem.Game.BattleUI
 
         private float _dominanceValue;
 
+        public float PlayerDamageMultiplier { get; private set; } = 1f;
+        public float BossDamageMultiplier { get; private set; } = 1f;
+
         private void Awake()
         {
             _gaugeSlider = GetComponent<Slider>();
@@ -51,7 +54,24 @@ namespace GyeMong.UISystem.Game.BattleUI
         }
         private void UpdateGaugeVisual()
         {
-            _gaugeSlider.value = _dominanceValue / _totalDominanceRange;
+            float ratio = _dominanceValue / _totalDominanceRange;
+            _gaugeSlider.value = ratio;
+
+            UpdateDamageMultipliers(ratio);
+        }
+        private void UpdateDamageMultipliers(float ratio)
+        {
+            PlayerDamageMultiplier = 1f;
+            BossDamageMultiplier = 1f;
+
+            if (ratio <= 0.25f)
+            {
+                BossDamageMultiplier = 1.5f;
+            }
+            else if (ratio >= 0.75f)
+            {
+                PlayerDamageMultiplier = 1.5f;
+            }
         }
     }
 }
