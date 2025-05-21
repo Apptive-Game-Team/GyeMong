@@ -19,6 +19,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private float _venomAttackSpreadAngle;
         private float _venomPitDuration;
         private float _laserDuration;
+        private float _laserDistance;
         protected override void Initialize()
         {
             maxPhase = 2;
@@ -38,14 +39,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             _venomAttackSpreadAngle = 15f;
             _venomPitDuration = 2f;
             _laserDuration = 1f;
+            _laserDistance = 4f;
 
             ChangeState(new VenomBreath(){mob = this});
         }
 
         public abstract class SandwormState : CoolDownState
         {
-            public Sandworm Sandworm => mob as Sandworm;
-            protected Dictionary<System.Type, int> weights;
+            protected Sandworm Sandworm => mob as Sandworm;
+            private Dictionary<System.Type, int> _weights;
             protected bool IsActionExist = false;
 
             public override void OnStateUpdate()
@@ -58,10 +60,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             protected virtual void SetWeights()
             {
-                weights = new Dictionary<System.Type, int>
+                _weights = new Dictionary<System.Type, int>
                     {
-                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 100 : 0 },
-                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 100 : 0 },
+                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
+                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
                         {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 100 : 0 },
                         {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
@@ -73,7 +75,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 get
                 {   
-                    return weights;
+                    return _weights;
                 }
             }
         }
@@ -262,15 +264,46 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Vector3 start = startPositionFlag
                 ? transform.position + new Vector3(2.6f, 1f, 0f)
                 : transform.position + new Vector3(-2.6f, 1f, 0f);
-            Vector3 dir = (attackPosition - start).normalized;
             
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
+            Vector3 dir = (attackPosition - transform.position).normalized;
+            Vector3 startPos = attackPosition - dir * _laserDistance;
+            Vector3 endPos = attackPosition + dir * _laserDistance;     // 레이저가 땅에 닿는 시작 부분, 끝 부분 지정
+            
+            Vector3 startDirection = (startPos - start).normalized;
+            Vector3 endDirection = (endPos - start).normalized;
+            float startLength = (startPos - start).magnitude;
+            float endLength = (endPos - start).magnitude;
+            float realLength = 3.23f;       // 레이저의 처음 각도, 끝 각도, 처음 길이, 끝 길이, 초기 길이 지정
+            
+            float startAngle = Mathf.Atan2(startDirection.y, startDirection.x) * Mathf.Rad2Deg;
+            float endAngle = Mathf.Atan2(endDirection.y, endDirection.x) * Mathf.Rad2Deg;       // 레이저의 각도를 오일러 각도로 변환
+            
             GameObject laser = Instantiate(laserAttack, start, Quaternion.identity);
-            laser.transform.rotation = Quaternion.Euler(0, 0, angle);
-            
-            laser.transform.DOScaleX(4, _laserDuration).SetEase(Ease.Linear)
-                .OnComplete(() => Destroy(laser));
+            StartCoroutine(UpdateLaser(laser.transform, start, startPos, endPos, _laserDuration));
+        }
+        
+        private IEnumerator UpdateLaser(Transform laserTransform, Vector3 fixedStart, Vector3 moveStart, Vector3 moveEnd, float duration)
+        {
+            float time = 0f;
+            float realLength = 3.23f;
+
+            while (time < duration)
+            {
+                float t = time / duration;
+                Vector3 currentTarget = Vector3.Lerp(moveStart, moveEnd, t);
+                Vector3 dir = currentTarget - fixedStart;
+
+                float length = dir.magnitude;
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                
+                laserTransform.position = fixedStart;
+                laserTransform.rotation = Quaternion.Euler(0f, 0f, angle);
+                laserTransform.localScale = new Vector3(length / realLength, 1f, 1f);
+
+                time += Time.deltaTime;
+                yield return null;
+            }
+            Destroy(laserTransform.gameObject);
         }
     }
 }
