@@ -34,17 +34,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
 
         protected override void Initialize()
         {
-            maxPhase = 2;
-            maxHps.Clear();
-            maxHps.Add(200f);
-            currentHp = maxHps[currentPhase];
+            maxHp = 200f;
+            currentHp = maxHp;
             damage = 10f;
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
-            SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
+            //SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
+
+            ChangeState();
         }
         private void Update()
         {
@@ -117,13 +117,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange / 2) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
-                yield return new WaitForSeconds(NagaWarrior.attackdelayTime/2);
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
                 //SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
@@ -141,6 +142,53 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     weights[typeof(MeleeAttack)] = 1;
                 }
             }*/
+        }
+        public class JumpAttack : NagaWarriorState
+        {
+            public override int GetWeight()
+            {
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                Vector3 targetPos = SceneContext.Character.transform.position;
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
+                yield return NagaWarrior.ParabolaJump(targetPos, height: 4f, duration: 0.5f);
+                NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
+                //SetWeights();
+                NagaWarrior.ChangeState(NextStateWeights);
+            }
+
+            /*protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }*/
+        }
+        public IEnumerator ParabolaJump(Vector3 target, float height, float duration)
+        {
+            Vector3 start = transform.position;
+            float time = 0f;
+
+            while (time < duration)
+            {
+                float t = time / duration;
+                float yOffset = 4 * height * t * (1 - t);
+                transform.position = Vector3.Lerp(start, target, t) + Vector3.up * yOffset;
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = target;
         }
         /*public new class BackStep : NagaWarriorState
         {
