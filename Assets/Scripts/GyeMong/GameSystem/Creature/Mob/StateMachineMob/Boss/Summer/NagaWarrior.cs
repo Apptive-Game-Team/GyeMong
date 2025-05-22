@@ -7,8 +7,11 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Creature.Player.Component.Collider;
+using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
+using GyeMong.UISystem.Option.Controller;
 using UnityEngine;
 using static GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf.Elf;
 
@@ -194,7 +197,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 10000 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 1 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -219,6 +222,58 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     weights[typeof(MeleeAttack)] = 1;
                 }
             }*/
+        }
+        public class AuraAttack : NagaWarriorState
+        {
+            public override int GetWeight()
+            {
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 10000 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
+                NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer);
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
+                //SetWeights();
+                NagaWarrior.ChangeState(NextStateWeights);
+            }
+
+            /*protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }*/
+        }
+        private void SpawnSkillCollider(Vector3 direction)
+        {
+            Vector2 spawnPosition = transform.position + direction * 1f;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+
+            GameObject attackCollider = Instantiate(meleeAttackPrefab, spawnPosition, spawnRotation);
+
+            StartCoroutine(MoveColliderForward(attackCollider.transform, direction.normalized, 5f, attackdelayTime * 2));
+        }
+        private IEnumerator MoveColliderForward(Transform obj, Vector3 direction, float speed, float lifeTime)
+        {
+            float elapsedTime = 0f;
+
+            while (elapsedTime < lifeTime)
+            {
+                obj.position += direction * speed * Time.deltaTime;
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            Destroy(obj.gameObject);
         }
         /*public new class BackStep : NagaWarriorState
         {
