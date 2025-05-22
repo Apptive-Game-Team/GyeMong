@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using GyeMong.EventSystem;
 using GyeMong.EventSystem.Controller;
@@ -11,6 +12,8 @@ using Util;
 using Visual.Camera;
 using DG.Tweening;
 using GyeMong.UISystem.Game.BattleUI;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
 
 namespace GyeMong.GameSystem.Creature.Player
 {
@@ -49,8 +52,26 @@ namespace GyeMong.GameSystem.Creature.Player
         private bool canCombo = false;
         private bool comboQueued = false;
 
+        private int maxDash = 2;
+        private int _curDash = 0;
+        public int CurDash
+        {
+            get => _curDash;
+            set
+            {
+                if (_curDash != value)
+                {
+                    _curDash = value;
+                    OnDashChanged?.Invoke(_curDash);
+                }
+            }
+        }
+
+        public event Action<int> OnDashChanged;
 
         public Material[] materials;
+
+        [SerializeField] private TestSkillComponent _testSkillComp;
 
         protected void Awake()
         {
@@ -119,7 +140,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private void HandleActionInput()
         {
-            if (InputManager.Instance.GetKeyDown(ActionCode.Dash) && !isDashing)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Dash) && !isDashing && _curDash > 0)
             {
                 StartCoroutine(Dash());
             }
@@ -138,8 +159,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
             if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge >= stat.SkillCost)
             {
-                StartCoroutine(ChargeSkillAttack());
-                // StartCoroutine(SkillAttack());
+                StartCoroutine(NewSkillAttack());
             }
         }
 
@@ -236,6 +256,7 @@ namespace GyeMong.GameSystem.Creature.Player
         public void GrazeIncreaseGauge(float ratio)
         {
             soundController.Trigger(PlayerSoundType.GRAZE);
+            if(CurDash < maxDash) CurDash++;
             curSkillGauge += stat.GrazeGainOnGraze / ratio;
             if (curSkillGauge > stat.GrazeMax)
             {
@@ -264,6 +285,7 @@ namespace GyeMong.GameSystem.Creature.Player
             movement = Vector2.zero;
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
+            CurDash--;
 
             Vector2 dashDirection = GetCurrentInputDirection(lastMovementDirection.normalized);
             Vector2 startPosition = playerRb.position;
@@ -351,22 +373,8 @@ namespace GyeMong.GameSystem.Creature.Player
         private float _chargeThreshold = 1f;
         private float _chargePowerCoef = 1f;
         
-        public IEnumerator ChargeSkillAttack()
-        {
-            float curChargePower = 0f;
-            
-            soundController.Trigger(PlayerSoundType.SWORD_SWING);
-            while (InputManager.Instance.GetKey(ActionCode.Skill) == true && curChargePower < _chargeThreshold)
-            {
-                curChargePower += Time.deltaTime * _chargePowerCoef;
-                yield return null;
-            }
-            stat.SetStatValue(StatType.SKILL_COEF,StatValueType.FINAL_PERCENT_VALUE, curChargePower);
-            yield return SkillAttack();
-            stat.SetStatValue(StatType.SKILL_COEF,StatValueType.FINAL_PERCENT_VALUE, 0);
-        }
-        
-        private IEnumerator SkillAttack()
+//----------------------------------------
+        private IEnumerator DefaultSkillAttack()
         {
             soundController.Trigger(PlayerSoundType.SWORD_SKILL);
             isAttacking = true;
@@ -377,7 +385,6 @@ namespace GyeMong.GameSystem.Creature.Player
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
             SpawnAttackCollider(attackColliderPrefab);
             SpawnSkillCollider();
-
             movement = Vector2.zero;
             StopPlayer();
 
@@ -389,7 +396,87 @@ namespace GyeMong.GameSystem.Creature.Player
             
             isAttacking = false;
         }
+//----------------------------------------
+        private IEnumerator NewSkillAttack()
+        {
+            soundController.Trigger(PlayerSoundType.SWORD_SKILL);
+            isAttacking = true;
+            canMove = false;
+            animator.SetBool("isAttacking", true);
 
+            curSkillGauge -= stat.SkillCost;
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+            SpawnAttackCollider(attackColliderPrefab);
+            Mob.Mob mob = FindObjectOfType<Mob.Mob>();
+            mob?.StartCoroutine(mob.Stun(0.5f));
+            // if (collision.CompareTag("PlayerAttack") && !isReflected)
+            // {
+            //     isReflected = true;
+            //     Vector2 playerAttackDirection = SceneContext.Character.mouseDirection;
+            //     direction = playerAttackDirection.normalized;
+            //     traveledDistance = 0f;
+            //     rb.velocity = direction * speed;
+            //     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            //     transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            // }
+            movement = Vector2.zero;
+            StopPlayer();
+
+            canMove = true;
+
+            yield return new WaitForSeconds(stat.AttackDelay);
+
+            animator.SetBool("isAttacking", false);
+            
+            isAttacking = false;
+        }
+//----------------------------------------
+        private IEnumerator DashAttack()
+        {
+            curSkillGauge -= stat.SkillCost;
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+            
+            isDashing = true;
+            canMove = false;
+            isInvincible = true;
+            movement = Vector2.zero;
+            animator.SetBool("isDashing", true);
+            soundController.Trigger(PlayerSoundType.DASH);
+
+            Vector2 dashDirection = GetCurrentInputDirection(lastMovementDirection.normalized);
+            Vector2 startPosition = playerRb.position;
+
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance,
+                LayerMask.GetMask("Wall"));
+            Vector2 targetPosition = hit.collider == null
+                ? startPosition + dashDirection * stat.DashDistance
+                : hit.point + hit.normal * 0.1f;
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < stat.DashDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / stat.DashDuration));
+                yield return null;
+            }
+
+            StopPlayer();
+
+            SpawnAttackCollider(attackColliderPrefab);
+            
+            canMove = true;
+            isInvincible = false;
+            animator.SetBool("isDashing", false);
+
+            yield return new WaitForSeconds(stat.DashCooldown);
+
+            isDashing = false;
+
+        }
+        
+        
+//----------------------------------------
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider(GameObject attackPrefab)
         {
