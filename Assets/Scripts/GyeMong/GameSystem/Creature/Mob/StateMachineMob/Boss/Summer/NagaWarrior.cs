@@ -147,7 +147,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 1 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -189,6 +189,36 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
 
             transform.position = target;
+        }
+        public class TaleRushAttack : NagaWarriorState
+        {
+            public override int GetWeight()
+            {
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 10000 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                yield return NagaWarrior.HalfRushAttack(NagaWarrior.attackdelayTime / 2);
+                NagaWarrior.SpawnAttackCollider(NagaWarrior.lastRushDirection);
+                yield return NagaWarrior.RushAttack(NagaWarrior.attackdelayTime / 2);
+                NagaWarrior.SpawnAttackCollider(NagaWarrior.lastRushDirection);
+                //SetWeights();
+                NagaWarrior.ChangeState(NextStateWeights);
+            }
+
+            /*protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }*/
         }
         /*public new class BackStep : NagaWarriorState
         {
