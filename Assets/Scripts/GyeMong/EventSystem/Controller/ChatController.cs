@@ -135,6 +135,11 @@ namespace GyeMong.EventSystem.Controller
                     characterImage.color = new Color(0, 0, 0, 0);
                     characterImage.enabled = false;
                 }
+
+                if (characterImage2.enabled && characterImage2.sprite != null)
+                {
+                    characterImage2.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+                }
             }
             else
             {
@@ -149,6 +154,11 @@ namespace GyeMong.EventSystem.Controller
                     characterImage2.sprite = null;
                     characterImage2.color = new Color(0, 0, 0, 0);
                     characterImage2.enabled = false;
+                }
+
+                if (characterImage.enabled && characterImage.sprite != null)
+                {
+                    characterImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 }
             }
         }
