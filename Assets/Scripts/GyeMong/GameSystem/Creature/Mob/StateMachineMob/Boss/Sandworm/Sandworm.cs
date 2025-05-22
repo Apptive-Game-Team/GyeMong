@@ -68,7 +68,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                         {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
                         {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
-                        {typeof(SandTrapAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange * 2) ? 3 : 0 }
+                        {typeof(SandTrapAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange * 2) ? 2 : 0 }
                     };
             }
             
