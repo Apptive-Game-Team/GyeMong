@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using GyeMong.GameSystem.Creature.Player;
 using Unity.VisualScripting;
+using Visual.Camera;
 using Sequence = DG.Tweening.Sequence;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
@@ -13,6 +14,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private GameObject venomAttack;
         [SerializeField] private GameObject venomPit;
         [SerializeField] private GameObject groundCrash;
+        [SerializeField] private GameObject megaGroundCrash;
         [SerializeField] private GameObject laserAttack;
         [SerializeField] private GameObject bodyAttack;
         private float _venomAttackDuration;
@@ -61,12 +63,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 _weights = new Dictionary<System.Type, int>
                     {
-                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 1 : 0 },
-                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 1 : 0 },
-                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 1 : 0 },
+                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
+                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
+                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
-                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 20 : 0 },
-                        {typeof(SandTrapAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 }
+                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
+                        {typeof(SandTrapAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange * 2) ? 3 : 0 }
                     };
             }
             
@@ -222,6 +224,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override IEnumerator StateCoroutine()
             {
+                IsActionExist = true;
+                Sandworm.RotateHead(-30f, 3f, 30f, 0.2f, 0.5f);
+                Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
+                yield return new WaitForSeconds(3.1f);
+                GameObject groundAttack = Instantiate(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity);
+                Destroy(groundAttack, 1f);
+                yield return new WaitForSeconds(0.6f);
+                IsActionExist = false;
+                yield return new WaitForSeconds(0.4f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
@@ -381,6 +392,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             
             transform.DORotate(new Vector3(0, 0, 720f), duration, RotateMode.FastBeyond360)
                 .SetEase(Ease.InOutSine);
+        }
+
+        private IEnumerator Scream(float duration, float force)
+        {
+            float timer = 0f;
+            while (timer < duration)
+            {
+                timer += Time.deltaTime;
+                CameraManager.Instance.CameraShake(force);
+                yield return null;
+            }
         }
     }
 }
