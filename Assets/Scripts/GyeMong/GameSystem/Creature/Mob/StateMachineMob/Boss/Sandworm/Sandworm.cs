@@ -192,9 +192,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return new WaitForSeconds(2f);
                 Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
                 yield return new WaitForSeconds(0.5f);
+                Sandworm.GetComponentInChildren<ParticleSystem>().Stop();
                 Sandworm.HideOrShow(false, 0.1f);
                 Sandworm.JumpToPlayer(attackPosition, 0.7f);
                 yield return new WaitForSeconds(0.7f);
+                Sandworm.GetComponentInChildren<ParticleSystem>().Play();
                 Sandworm.HideOrShow(true, 0.2f);
                 yield return new WaitForSeconds(0.2f);
                 SetWeights();
