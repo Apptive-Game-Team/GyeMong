@@ -126,7 +126,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
-                //SetWeights();
+                SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
         }
@@ -143,7 +143,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 yield return NagaWarrior.ParabolaJump(targetPos, height: 4f, duration: 0.5f);
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
-                //SetWeights();
+                SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
         }
@@ -175,7 +175,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.lastRushDirection);
                 yield return NagaWarrior.RushAttack(NagaWarrior.attackdelayTime / 2);
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.lastRushDirection);
-                //SetWeights();
+                SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
         }
@@ -190,7 +190,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                //SetWeights();
+                SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
         }
