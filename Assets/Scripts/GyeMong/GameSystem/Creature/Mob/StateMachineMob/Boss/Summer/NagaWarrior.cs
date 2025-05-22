@@ -91,23 +91,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override void OnStateUpdate()
             {
             }
-            /*protected virtual void SetWeights()
+            protected virtual void SetWeights()
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                        { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0 },
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 },
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0},
-                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
                 {
                     weights[typeof(MeleeAttack)] = 1;
                 }
-            }*/
+            }
             protected Dictionary<System.Type, int> NextStateWeights
             {
                 get
@@ -132,25 +129,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 //SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
-            /*protected override void SetWeights()
-            {
-                weights = new Dictionary<System.Type, int>
-                    {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
-                    };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
-                }
-            }*/
         }
         public class JumpAttack : NagaWarriorState
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 1 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -162,20 +146,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 //SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
-
-            /*protected override void SetWeights()
-            {
-                weights = new Dictionary<System.Type, int>
-                    {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
-                    };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
-                }
-            }*/
         }
         public IEnumerator ParabolaJump(Vector3 target, float height, float duration)
         {
@@ -197,7 +167,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 1 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -208,26 +178,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 //SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
-
-            /*protected override void SetWeights()
-            {
-                weights = new Dictionary<System.Type, int>
-                    {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
-                    };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
-                }
-            }*/
         }
         public class AuraAttack : NagaWarriorState
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 10000 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -237,20 +193,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 //SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
-
-            /*protected override void SetWeights()
-            {
-                weights = new Dictionary<System.Type, int>
-                    {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
-                    };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
-                }
-            }*/
         }
         private void SpawnSkillCollider(Vector3 direction)
         {
@@ -275,255 +217,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
 
             Destroy(obj.gameObject);
         }
-        /*public new class BackStep : NagaWarriorState
-        {
-            public override int GetWeight()
-            {
-                return (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0;
-            }
-
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("isMove", true);
-                Elf.Animator.SetFloat("moveType", 1);
-                yield return Elf.BackStep(Elf.RangedAttackRange);
-                Elf.Animator.SetBool("isMove", false);
-                SetWeights();
-                Elf.ChangeState(NextStateWeights);
-            }
-            protected override void SetWeights()
-            {
-                weights = new Dictionary<System.Type, int>
-                    {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
-                    };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
-                }
-            }
-        }
-        public class RushAndAttack : NagaWarriorState
-        {
-            public RushAndAttack()
-            {
-                cooldownTime = 10f;
-            }
-            public override int GetWeight()
-            {
-                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
-            }
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 2);
-                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, Elf.SkillIndicator.transform.position, SceneContext.Character.transform, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2);
-                yield return new WaitForSeconds(Elf.attackdelayTime);
-                Sound.Play("EFFECT_Charge_Complete");
-                yield return new WaitForSeconds(Elf.attackdelayTime * 0.5f);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isMove", true);
-                Elf.Animator.SetFloat("moveType", 1);
-                yield return Elf.RushAttack(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 2);
-                Elf.Animator.SetBool("isMove", false);
-                Elf.SpawnAttackCollider(Elf.lastRushDirection);
-                Elf.Animator.SetBool("isAttack", false);
-                yield return new WaitForSeconds(Elf.attackdelayTime);
-                SetWeights();
-                Elf.ChangeState(NextStateWeights);
-            }
-            protected override void SetWeights()
-            {
-                weights = new Dictionary<System.Type, int>
-                    {
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 }
-                    };
-                if (weights.Values.All(w => w == 0))
-                {
-                    weights[typeof(MeleeAttack)] = 1;
-                }
-            }
-        }
-        public class RangedAttack : NagaWarriorState
-        {
-            public override int GetWeight()
-            {
-                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
-            }
-
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 0);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 0);
-                Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
-                yield return Elf.arrowSoundObject.Play();
-                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("isAttack", false);
-                SetWeights();
-                Elf.ChangeState(NextStateWeights);
-            }
-        }
-        public class SeedRangedAttak : NagaWarriorState
-        {
-            public SeedRangedAttak()
-            {
-                cooldownTime = 30f;
-            }
-            public override int GetWeight()
-            {
-                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
-            }
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 1);
-                Sound.Play("ENEMY_Arrow_Drow");
-                yield return new WaitForSeconds(Elf.attackdelayTime);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 1);
-                int count = 0;
-                while (count < 4)
-                {
-                    GameObject seed = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    yield return Elf.arrowSoundObject.Play();
-                    count++;
-                }
-                Elf.Animator.SetBool("isAttack", false);
-                SetWeights();
-                Elf.ChangeState(NextStateWeights);
-            }
-        }
-        public class MeleeAttack : NagaWarriorState
-        {
-            public override int GetWeight()
-            {
-                return (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0;
-            }
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 2);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 2);
-                Elf.SpawnAttackCollider(Elf.DirectionToPlayer);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("isAttack", false);
-                SetWeights();
-                Elf.ChangeState(NextStateWeights);
-            }
-        }
-
-        public class WhipAttack : NagaWarriorState
-        {
-            private SoundObject _soundObject;
-            public WhipAttack()
-            {
-                cooldownTime = 30f;
-            }
-            public override int GetWeight()
-            {
-                if (Elf.CurrentPhase == 1)
-                {
-                    return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
-                }
-                return 0;
-            }
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 3);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 3);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 3);
-                _soundObject = Sound.Play("EFFECT_Sword_Swing", true);
-                AttackObjectController.Create(
-                    Elf.transform.position,
-                    Vector3.zero,
-                    Elf.vinePrefab,
-                    new StaticMovement(
-                        Elf.transform.position,
-                        Elf.attackdelayTime * 2)
-                )
-                .StartRoutine();
-                yield return new WaitForSeconds(Elf.attackdelayTime * 2);
-                Sound.Stop(_soundObject);
-                Elf.Animator.SetBool("isAttack", false);
-                SetWeights();
-                Elf.ChangeState(NextStateWeights);
-            }
-            public override void OnStateExit()
-            {
-                base.OnStateExit();
-                Sound.Stop(_soundObject);
-            }
-        }
-        public class TrunkAttack : NagaWarriorState
-        {
-            public TrunkAttack()
-            {
-                cooldownTime = 10f;
-            }
-            public override int GetWeight()
-            {
-                return (Elf.CurrentPhase == 1) ? 5 : 0;
-            }
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 4);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 4);
-                Sound.Play("EFFECT_Sword_Swing");
-                int numberOfObjects = 5;
-                float interval = 0.2f;
-                float fixedDistance = 7f;
-
-                Vector3 direction = Elf.DirectionToPlayer;
-                Vector3 spawnStoneRadius = 2 * direction;
-                Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
-                yield return new WaitForSeconds(Elf.attackdelayTime);
-                Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval));
-                yield return new WaitForSeconds(Elf.attackdelayTime * 2);
-                Elf.Animator.SetBool("isAttack", false);
-                SetWeights();
-                Elf.ChangeState(NextStateWeights);
-            }
-            private IEnumerator SpawnTrunk(Vector3 startPosition, Vector3 direction, float fixedDistance, int numberOfObjects, float interval)
-            {
-                for (int i = 0; i <= numberOfObjects; i++)
-                {
-                    Vector3 spawnPosition = startPosition + direction * (fixedDistance * ((float)i / numberOfObjects));
-                    AttackObjectController.Create(
-                    spawnPosition,
-                    Vector3.zero,
-                    Elf.trunkPrefab,
-                    new StaticMovement(
-                        spawnPosition,
-                        Elf.attackdelayTime * 2)
-                    )
-                    .StartRoutine();
-                    yield return new WaitForSeconds(interval);
-                }
-            }
-        }*/
         protected override void Die()
         {
             base.Die();
