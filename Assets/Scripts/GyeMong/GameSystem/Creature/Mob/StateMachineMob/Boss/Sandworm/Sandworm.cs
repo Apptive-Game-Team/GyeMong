@@ -15,7 +15,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private GameObject groundCrash;
         [SerializeField] private GameObject laserAttack;
         [SerializeField] private GameObject bodyAttack;
-        private float _venomAttackDistance;
         private float _venomAttackDuration;
         private float _venomAttackSpreadAngle;
         private float _venomPitDuration;
@@ -34,15 +33,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             detectionRange = 10f;
             MeleeAttackRange = 5f;
             RangedAttackRange = 100f;
-
-            _venomAttackDistance = 8f;
+            
             _venomAttackDuration = 0.8f;
             _venomAttackSpreadAngle = 15f;
             _venomPitDuration = 2f;
             _laserDuration = 1f;
             _laserDistance = 4f;
 
-            ChangeState(new VenomBreath(){mob = this});
+            ChangeState();
         }
 
         public abstract class SandwormState : CoolDownState
@@ -91,10 +89,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             public override IEnumerator StateCoroutine()
             {
                 IsActionExist = true;
+                bool startPositionFlag = Sandworm.DirectionToPlayer.x > 0;
+                Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
                 Sandworm.RotateHead(-15f, 0.5f, 20f, 0.2f, 0.4f);
-                yield return new WaitForSeconds(0.5f);
-                Sandworm.VenomBreathAttack();
                 yield return new WaitForSeconds(0.6f);
+                Sandworm.VenomBreathAttack(startPositionFlag, attackPosition);
+                yield return new WaitForSeconds(0.5f);
                 IsActionExist = false;
                 yield return new WaitForSeconds(0.4f);
                 SetWeights();
@@ -245,23 +245,25 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 .SetEase(Ease.OutBack));
         }
 
-        private void VenomBreathAttack()
+        private void VenomBreathAttack(bool startPositionFlag, Vector3 attackPosition)
         {
             Vector2[] directions = new Vector2[3];
-            directions[0] = DirectionToPlayer;
-            directions[1] = RotateVector(DirectionToPlayer, _venomAttackSpreadAngle);
-            directions[2] = RotateVector(DirectionToPlayer, -_venomAttackSpreadAngle);
+            directions[0] = (attackPosition - transform.position).normalized;
+            directions[1] = RotateVector(directions[0], _venomAttackSpreadAngle);
+            directions[2] = RotateVector(directions[0], -_venomAttackSpreadAngle);
 
             foreach (var dir in directions)
             {
-                SpawnVenomAttack(dir);
+                SpawnVenomAttack(startPositionFlag, dir, attackPosition);
             }
         }
 
-        private void SpawnVenomAttack(Vector2 direction)
+        private void SpawnVenomAttack(bool startPositionFlag, Vector2 direction, Vector3 attackPosition)
         {
-            Vector3 startPos = transform.position;
-            Vector3 targetPos = startPos + (Vector3)(direction.normalized * _venomAttackDistance);
+            Vector3 startPos = startPositionFlag
+                ? transform.position + new Vector3(2.6f, 1f, 0f)
+                : transform.position + new Vector3(-2.6f, 1f, 0f);
+            Vector3 targetPos = startPos + (Vector3)direction * (attackPosition - startPos).magnitude + (Vector3)Random.insideUnitCircle;
             
             GameObject venom = Instantiate(venomAttack, startPos, Quaternion.identity);
             
