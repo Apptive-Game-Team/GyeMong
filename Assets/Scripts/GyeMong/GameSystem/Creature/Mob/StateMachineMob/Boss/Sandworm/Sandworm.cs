@@ -14,6 +14,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private GameObject venomPit;
         [SerializeField] private GameObject groundCrash;
         [SerializeField] private GameObject laserAttack;
+        [SerializeField] private GameObject bodyAttack;
         private float _venomAttackDistance;
         private float _venomAttackDuration;
         private float _venomAttackSpreadAngle;
@@ -31,7 +32,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
-            MeleeAttackRange = 3f;
+            MeleeAttackRange = 5f;
             RangedAttackRange = 100f;
 
             _venomAttackDistance = 8f;
@@ -47,7 +48,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         public abstract class SandwormState : CoolDownState
         {
             protected Sandworm Sandworm => mob as Sandworm;
-            private Dictionary<System.Type, int> _weights;
+            protected Dictionary<System.Type, int> _weights;
             protected bool IsActionExist = false;
 
             public override void OnStateUpdate()
@@ -62,11 +63,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 _weights = new Dictionary<System.Type, int>
                     {
-                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
-                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 100 : 0 },
-                        {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
+                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 1 : 0 },
+                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 1 : 0 },
+                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 1 : 0 },
+                        {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
+                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 20 : 0 },
                         {typeof(SandTrapAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 }
                     };
             }
@@ -159,6 +160,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override IEnumerator StateCoroutine()
             {
+                IsActionExist = true;
+                Sandworm.HideOrShow(true, 0.3f);
+                yield return new WaitForSeconds(0.3f);
+                Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f));
+                yield return new WaitForSeconds(2f);
+                Sandworm.HideOrShow(false, 0.3f);
+                GameObject body = Instantiate(Sandworm.bodyAttack, Sandworm.transform.position, Quaternion.identity);
+                Destroy(body, 0.07f);
+                IsActionExist = false;
+                yield return new WaitForSeconds(0.4f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
@@ -174,9 +185,29 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override IEnumerator StateCoroutine()
             {
+                IsActionExist = true;
+                Sandworm.HideOrShow(true, 0.3f);
+                yield return new WaitForSeconds(0.3f);
+                Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f));
+                yield return new WaitForSeconds(2f);
+                Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
+                yield return new WaitForSeconds(0.5f);
+                Sandworm.HideOrShow(false, 0.1f);
+                Sandworm.JumpToPlayer(attackPosition, 0.7f);
+                yield return new WaitForSeconds(0.7f);
+                Sandworm.HideOrShow(true, 0.2f);
+                yield return new WaitForSeconds(0.2f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
+            }
+
+            protected override void SetWeights()
+            {
+                _weights = new Dictionary<System.Type, int>
+                {
+                    {typeof(ShortBurstOutAttack), 1}
+                };
             }
         }
 
@@ -272,8 +303,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Vector3 startDirection = (startPos - start).normalized;
             Vector3 endDirection = (endPos - start).normalized;
             float startLength = (startPos - start).magnitude;
-            float endLength = (endPos - start).magnitude;
-            float realLength = 3.23f;       // 레이저의 처음 각도, 끝 각도, 처음 길이, 끝 길이, 초기 길이 지정
+            float endLength = (endPos - start).magnitude; // 레이저의 처음 각도, 끝 각도, 처음 길이, 끝 길이 지정
             
             float startAngle = Mathf.Atan2(startDirection.y, startDirection.x) * Mathf.Rad2Deg;
             float endAngle = Mathf.Atan2(endDirection.y, endDirection.x) * Mathf.Rad2Deg;       // 레이저의 각도를 오일러 각도로 변환
@@ -304,6 +334,49 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return null;
             }
             Destroy(laserTransform.gameObject);
+        }
+
+        private void HideOrShow(bool hide, float duration)
+        {
+            float targetX = hide ? -90f : 0f;
+            Vector3 newRotation = new Vector3(targetX, 0f, 0f);
+
+            transform.DORotate(newRotation, duration).SetEase(Ease.InOutSine);
+        }
+
+        private IEnumerator ChasePlayer(float duration)
+        {
+            float time = 0f;
+
+            while (time < duration)
+            {
+                Vector3 target = PlayerCharacter.Instance.transform.position;
+                transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * 3);
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        private void JumpToPlayer(Vector3 playerPosition, float duration)
+        {
+            Vector3 startPos = transform.position;
+
+            Vector3 dir = (playerPosition - startPos).normalized;
+            Vector3 targetPos = playerPosition + dir * 5f;
+            float arcHeight = 0.5f;
+            
+            GameObject jumpAttack = Instantiate(bodyAttack, transform.position, Quaternion.identity, transform);
+            Destroy(jumpAttack, duration);
+            
+            DOTween.To(() => 0f, t =>
+            {
+                Vector3 pos = Vector3.Lerp(startPos, targetPos, t);
+                pos.y += Mathf.Sin(t * Mathf.PI) * arcHeight;
+                transform.position = pos;
+            }, 1f, duration).SetEase(Ease.Linear);
+            
+            transform.DORotate(new Vector3(0, 0, 720f), duration, RotateMode.FastBeyond360)
+                .SetEase(Ease.InOutSine);
         }
     }
 }
