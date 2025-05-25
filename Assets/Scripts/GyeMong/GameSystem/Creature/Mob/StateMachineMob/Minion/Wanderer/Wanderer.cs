@@ -1,10 +1,12 @@
 using System.Collections;
+using GyeMong.EventSystem.Controller;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
+using Visual.Camera;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 {
@@ -71,7 +73,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             speed = 1;
             detectionRange = 10;
             MeleeAttackRange = 2;
-            RangedAttackRange = 20;
+            RangedAttackRange = 3;
 
             _detector = SimplePlayerDistanceDetector.Create(this);
         }
@@ -113,9 +115,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 yield return Wanderer.StaticAttack(Wanderer.basicAttackPrefab);
+                CameraManager.Instance.CameraShake(0.1f);
+                yield return new WaitForSeconds(0.5f);
                 yield return Wanderer.StaticAttack(Wanderer.basicAttackPrefab);
+                CameraManager.Instance.CameraShake(0.1f);
+                yield return new WaitForSeconds(0.5f);
                 yield return Wanderer.StaticAttack(Wanderer.comboSlashPrefab);
-                yield return new WaitForSeconds(1f);
+                CameraManager.Instance.CameraShake(0.3f);
+                yield return new WaitForSeconds(3f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
@@ -133,7 +140,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 yield return Wanderer.StaticAttack(Wanderer.upwardSlashPrefab);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(3f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
@@ -152,8 +159,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             {
                 Debug.Log("Ground Smash");
                 yield return Wanderer.StaticAttack(Wanderer.attackFloorPrefab);
-                yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 5f, 100f);
-                yield return new WaitForSeconds(1f);
+                CameraManager.Instance.CameraShake(0.3f);
+                yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 100f);
+                yield return new WaitForSeconds(3f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
@@ -177,7 +185,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                         mob.ChangeState();
                         yield break;
                     }
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(3f);
                 }
             }
         }
