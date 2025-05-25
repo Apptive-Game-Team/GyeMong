@@ -11,6 +11,9 @@ namespace GyeMong.EventSystem.Event.Chat
         Villager,
         VillageChief,
         StoneStatue,
+        
+        // Summer
+        Wanderer,
     }
 
     public enum BackgroundImage
