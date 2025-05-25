@@ -1,5 +1,6 @@
 using System.Collections;
-
+using Cinemachine;
+using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Portal;
 using GyeMong.GameSystem.Map.Stage.ScriptableObject;
 using GyeMong.GameSystem.Map.Stage.Select;
@@ -24,7 +25,19 @@ namespace GyeMong.GameSystem.Map.Stage
                 Debug.LogError("No stage is currently loaded.");
                 return;
             } 
+            SceneContext.Character.gameObject.SetActive(false);
             context.StartCoroutine(ClearStageCoroutine());
+        }
+        
+        public static void LoseStage(MonoBehaviour context)
+        {
+            if (_currentStageInfo == null)
+            {
+                Debug.LogError("No stage is currently loaded.");
+                return;
+            } 
+            SceneContext.Character.gameObject.SetActive(false);
+            StageSelectPage.LoadStageSelectPageOnStage((int) _currentStageInfo.id);
         }
         
         private static IEnumerator EnterStageCoroutine()

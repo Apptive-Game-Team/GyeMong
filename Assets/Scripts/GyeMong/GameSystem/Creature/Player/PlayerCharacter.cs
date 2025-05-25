@@ -5,6 +5,7 @@ using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
 using GyeMong.GameSystem.Creature.Player.Controller;
+using GyeMong.GameSystem.Map.Stage;
 using GyeMong.InputSystem;
 using UnityEngine;
 using Util;
@@ -376,14 +377,15 @@ namespace GyeMong.GameSystem.Creature.Player
         {
             //GameOver Event Triggered.
             changeListenerCaller.CallPlayerDied();
-            try
-            {
-                GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
-            }
-            catch
-            {
-                Debug.Log("PlayerGameOverEvent not found");
-            }
+            StageManager.LoseStage(this);
+            // try
+            // {
+            //     GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
+            // }
+            // catch
+            // {
+            //     Debug.Log("PlayerGameOverEvent not found");
+            // }
         }
 
         public void SetPlayerMove(bool _canMove)
@@ -486,5 +488,10 @@ namespace GyeMong.GameSystem.Creature.Player
         }
         
         public float CurrentHp { get { return curHealth; } }
+        
+        public void DestroySelf()
+        {
+            Destroy(gameObject);
+        }
     }
 }
