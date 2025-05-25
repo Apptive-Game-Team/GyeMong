@@ -42,7 +42,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             _laserDuration = 1f;
             _laserDistance = 4f;
 
-            ChangeState();
+            //ChangeState();
         }
 
         public abstract class SandwormState : CoolDownState
