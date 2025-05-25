@@ -36,6 +36,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         protected override void OnDead()
         {
             StageManager.ClearStage(this);
+            gameObject.SetActive(false);
         }
 
         private void Start()
@@ -122,7 +123,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 yield return new WaitForSeconds(0.5f);
                 yield return Wanderer.StaticAttack(Wanderer.comboSlashPrefab);
                 CameraManager.Instance.CameraShake(0.3f);
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
@@ -140,7 +141,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 yield return Wanderer.StaticAttack(Wanderer.upwardSlashPrefab);
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
@@ -161,7 +162,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 yield return Wanderer.StaticAttack(Wanderer.attackFloorPrefab);
                 CameraManager.Instance.CameraShake(0.3f);
                 yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 100f);
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
         }
@@ -185,7 +186,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                         mob.ChangeState();
                         yield break;
                     }
-                    yield return new WaitForSeconds(3f);
+                    yield return new WaitForSeconds(1.5f);
                 }
             }
         }
