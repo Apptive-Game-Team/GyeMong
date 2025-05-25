@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using GyeMong.EventSystem.Controller;
+using GyeMong.EventSystem.Event.Input;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
-using Unity.VisualScripting;
+using GyeMong.InputSystem;
 using Visual.Camera;
 using Sequence = DG.Tweening.Sequence;
 
@@ -66,9 +69,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                         {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
                         {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
-                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
-                        {typeof(SandTrapAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange * 2) ? 2 : 0 }
+                        {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange)
+                            && (Sandworm.currentPhase == 1) ? 5 : 0 },
+                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange)
+                            && (Sandworm.currentPhase == 1) ? 5 : 0 },
                     };
             }
             
@@ -85,7 +89,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             public override int GetWeight()
             {
-                return 1;
+                return (Sandworm.currentPhase == 0) ? 1 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -219,12 +223,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             public override int GetWeight()
             {
-                return 0;
+                return (Sandworm.currentPhase == 1) ? 1 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
                 IsActionExist = true;
+                Sandworm.GetComponent<Collider2D>().enabled = false;
                 Sandworm.RotateHead(-30f, 3f, 30f, 0.2f, 0.5f);
                 Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
                 yield return new WaitForSeconds(3.1f);
@@ -233,9 +238,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return new WaitForSeconds(0.6f);
                 IsActionExist = false;
                 yield return new WaitForSeconds(0.4f);
+                yield return Sandworm.StartCoroutine(Sandworm.ChangePhaseAction());
+                Sandworm.GetComponent<Collider2D>().enabled = true;
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
+            }
+            
+            protected override void SetWeights()
+            {
+                _weights = new Dictionary<System.Type, int>
+                {
+                    {typeof(LongBurstOutAttack), 1}
+                };
             }
         }
 
@@ -404,6 +419,39 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 CameraManager.Instance.CameraShake(force);
                 yield return null;
             }
+        }
+
+        protected override void TransPhase()
+        {
+            if (currentPhase < maxHps.Count - 1)
+            {
+                currentPhase++;
+                StopAllCoroutines();
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                StartCoroutine(ChangePhase());
+            }
+            else
+            {
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                Die();
+            }
+        }
+
+        private IEnumerator ChangePhase()
+        {
+            currentHp = CurrentMaxHp;
+            ChangeState();
+            yield return null;
+        }
+
+        private IEnumerator ChangePhaseAction()
+        {
+            yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
+            yield return StartCoroutine(EffectManager.Instance.FadeOut());
+            // change floor to basement
+            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(EffectManager.Instance.FadeIn());
+            yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
         }
     }
 }
