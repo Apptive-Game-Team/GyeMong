@@ -39,7 +39,7 @@ namespace GyeMong.GameSystem.Map.Stage
             SceneContext.Character.gameObject.SetActive(false);
             StageSelectPage.LoadStageSelectPageOnStage((int) _currentStageInfo.id);
         }
-        
+
         private static IEnumerator EnterStageCoroutine()
         {
             if (_currentStageInfo.beforeScript != null)
