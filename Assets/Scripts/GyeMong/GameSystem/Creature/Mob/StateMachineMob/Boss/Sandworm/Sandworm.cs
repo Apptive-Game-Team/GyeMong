@@ -355,6 +355,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             float targetX = hide ? -90f : 0f;
             Vector3 newRotation = new Vector3(targetX, 0f, 0f);
+            GetComponent<Collider2D>().enabled = !hide;
 
             transform.DORotate(newRotation, duration).SetEase(Ease.InOutSine);
         }
