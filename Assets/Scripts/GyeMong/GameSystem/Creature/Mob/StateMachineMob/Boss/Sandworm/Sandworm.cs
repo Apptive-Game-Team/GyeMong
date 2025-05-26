@@ -58,7 +58,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 if (!IsActionExist)
                 {
-                    Sandworm.GetComponent<SpriteRenderer>().flipX = Sandworm.DirectionToPlayer.x > 0;
+                    Sandworm.transform.localScale =
+                        Sandworm.DirectionToPlayer.x > 0 ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
                 }
             }
 
@@ -274,22 +275,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private void VenomBreathAttack(bool startPositionFlag, Vector3 attackPosition)
         {
             Vector2[] directions = new Vector2[3];
-            directions[0] = (attackPosition - transform.position).normalized;
+            Vector3 startPos = startPositionFlag
+                ? transform.position + new Vector3(2.6f, 1f, 0f)
+                : transform.position + new Vector3(-2.6f, 1f, 0f);
+            directions[0] = (attackPosition - startPos).normalized;
             directions[1] = RotateVector(directions[0], _venomAttackSpreadAngle);
             directions[2] = RotateVector(directions[0], -_venomAttackSpreadAngle);
 
             foreach (var dir in directions)
             {
-                SpawnVenomAttack(startPositionFlag, dir, attackPosition);
+                SpawnVenomAttack(startPos, dir, attackPosition);
             }
         }
 
-        private void SpawnVenomAttack(bool startPositionFlag, Vector2 direction, Vector3 attackPosition)
+        private void SpawnVenomAttack(Vector3 startPos, Vector2 direction, Vector3 attackPosition)
         {
-            Vector3 startPos = startPositionFlag
-                ? transform.position + new Vector3(2.6f, 1f, 0f)
-                : transform.position + new Vector3(-2.6f, 1f, 0f);
-            Vector3 targetPos = startPos + (Vector3)direction * (attackPosition - startPos).magnitude + (Vector3)Random.insideUnitCircle;
+            Vector3 targetPos = startPos + (Vector3)direction * (attackPosition - startPos).magnitude + (Vector3)Random.insideUnitCircle / 4;
             
             GameObject venom = Instantiate(venomAttack, startPos, Quaternion.identity);
             
