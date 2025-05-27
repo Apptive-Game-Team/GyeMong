@@ -98,7 +98,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                         { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
                         { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
                         { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 }
+                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.RangedAttackRange) ? 5 : 0 },
+                        { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.RangedAttackRange) ? 5 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -171,10 +172,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             public override IEnumerator StateCoroutine()
             {
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 yield return NagaWarrior.HalfRushAttack(NagaWarrior.attackdelayTime / 2);
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.lastRushDirection);
                 yield return NagaWarrior.RushAttack(NagaWarrior.attackdelayTime / 2);
                 NagaWarrior.SpawnAttackCollider(NagaWarrior.lastRushDirection);
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
@@ -183,7 +186,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.RangedAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -198,7 +201,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 50000 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.RangedAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
