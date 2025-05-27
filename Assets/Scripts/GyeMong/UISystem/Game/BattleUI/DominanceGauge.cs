@@ -45,13 +45,13 @@ namespace GyeMong.UISystem.Game.BattleUI
         public void ApplyDamageToPlayer(float damage)
         {
             float adjustDamage = damage * PlayerDamageMultiplier;
-            _dominanceValue = Mathf.Clamp(_dominanceValue - adjustDamage, 0f, _totalDominanceRange);
+            _dominanceValue = Mathf.Clamp(_dominanceValue - adjustDamage/10, 0f, _totalDominanceRange);
             UpdateGaugeVisual();
         }
         public void ApplyDamageToBoss(float damage)
         {
             float adjustDamage = damage * BossDamageMultiplier;
-            _dominanceValue = Mathf.Clamp(_dominanceValue + adjustDamage * 10, 0f, _totalDominanceRange);
+            _dominanceValue = Mathf.Clamp(_dominanceValue + adjustDamage, 0f, _totalDominanceRange);
             UpdateGaugeVisual();
         }
         private void UpdateGaugeVisual()
