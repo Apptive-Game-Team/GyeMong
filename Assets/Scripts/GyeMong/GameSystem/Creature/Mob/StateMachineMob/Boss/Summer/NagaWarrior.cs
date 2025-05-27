@@ -17,7 +17,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         float attackdelayTime = 1f;
         [SerializeField] private DailyCycleManager dailyCycleManager;
-        bool isoverheat = false;
+        bool isOverheat = false;
+        bool isCool = false;
 
         private Color dawnColor = new Color32(255, 255, 255, 255);
         private Color dayColor = new Color32(255, 85, 85, 255);
@@ -46,25 +47,36 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             Color targetColor;
             if (dailyCycleManager.currentTimePercent < 0.25f)
             {
+                isCool = false;
                 float t = dailyCycleManager.currentTimePercent / 0.25f;
                 targetColor = Color.Lerp(dawnColor, dayColor, t);
             }
             else if (dailyCycleManager.currentTimePercent < 0.5f)
             {
-                isoverheat = true;
+                isOverheat = true;
                 float t = (dailyCycleManager.currentTimePercent - 0.25f) / 0.25f;
                 targetColor = Color.Lerp(dayColor, duskColor, t);
             }
+            else if (dailyCycleManager.currentTimePercent > 0.75f)
+            {
+                isCool = true;
+                targetColor = duskColor;
+            }
             else
             {
-                isoverheat = false;
+                isOverheat = false;
                 targetColor = duskColor;
             }
             SpriteRenderer.color = targetColor;
-            if (isoverheat)
+            if (isOverheat)
             {
                 damage = 15f;
                 speed = 3f;
+            }
+            else if(isCool)
+            {
+                damage = 5f;
+                speed = 1f;
             }
             else
             {
