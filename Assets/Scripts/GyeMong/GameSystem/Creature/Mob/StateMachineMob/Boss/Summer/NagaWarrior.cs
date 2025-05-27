@@ -14,20 +14,16 @@ using GyeMong.SoundSystem;
 using GyeMong.UISystem.Option.Controller;
 using UnityEngine;
 using static GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf.Elf;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
     public class NagaWarrior : Boss
     {
-        [SerializeField] private GameObject arrowPrefab;
-        [SerializeField] private GameObject seedPrefab;
-        [SerializeField] private GameObject vinePrefab;
-        [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
+        [SerializeField] private GameObject breathPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         float attackdelayTime = 1f;
-        [SerializeField] private SoundObject arrowSoundObject;
-        [SerializeField] private SoundObject vineSoundObject;
         [SerializeField] private DailyCycleManager dailyCycleManager;
         bool isoverheat = false;
 
@@ -193,6 +189,46 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
+        }
+        public class BreathAttack : NagaWarriorState
+        {
+            public override int GetWeight()
+            {
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 50000 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                yield return NagaWarrior.SpawnBreath(5f, 6);
+            }
+        }
+        private IEnumerator SpawnBreath(float radius, int numberOfPoints)
+        {
+            Vector3[] points = GetCirclePoints(transform.position, radius, numberOfPoints);
+            foreach (Vector3 point in points)
+            {
+                AttackObjectController.Create(
+                    point,
+                    Vector3.zero,
+                    breathPrefab,
+                    new StaticMovement(
+                        point,
+                        attackdelayTime / 2)
+                    )
+                    .StartRoutine();
+            }
+            yield return null;
+        }
+        private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
+        {
+            Vector3[] points = new Vector3[numberOfPoints];
+            for (int i = 0; i < numberOfPoints; i++)
+            {
+                float angle = i * Mathf.PI * 2 / numberOfPoints;
+                float x = center.x + Mathf.Cos(angle) * radius;
+                float y = center.y + Mathf.Sin(angle) * radius;
+                points[i] = new Vector3(x, y, 0);
+            }
+            return points;
         }
         private void SpawnSkillCollider(Vector3 direction)
         {
