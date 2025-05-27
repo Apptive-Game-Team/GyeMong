@@ -198,25 +198,38 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             public override IEnumerator StateCoroutine()
             {
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 yield return NagaWarrior.SpawnBreath(5f, 6);
+                SetWeights();
+                NagaWarrior.ChangeState(NextStateWeights);
             }
         }
         private IEnumerator SpawnBreath(float radius, int numberOfPoints)
         {
-            Vector3[] points = GetCirclePoints(transform.position, radius, numberOfPoints);
+            Vector3 center = transform.position;
+            Vector3[] points = GetCirclePoints(center, radius, numberOfPoints);
             foreach (Vector3 point in points)
             {
-                AttackObjectController.Create(
-                    point,
-                    Vector3.zero,
-                    breathPrefab,
-                    new StaticMovement(
-                        point,
-                        attackdelayTime / 2)
+                int numberOfObjects = 5;
+                Vector3 direction = (point - center).normalized;
+                float distance = radius;
+                for (int i = 0; i <= numberOfObjects; i++)
+                {
+                    float t = i / (float)numberOfObjects;
+                    Vector3 spawnPosition = center + direction * (distance * t);
+
+                    AttackObjectController.Create(
+                        spawnPosition,
+                        direction,
+                        breathPrefab,
+                        new StaticMovement(
+                            spawnPosition,
+                            attackdelayTime*2)
                     )
                     .StartRoutine();
+                }
             }
-            yield return null;
+            yield return attackdelayTime*2;
         }
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
         {
