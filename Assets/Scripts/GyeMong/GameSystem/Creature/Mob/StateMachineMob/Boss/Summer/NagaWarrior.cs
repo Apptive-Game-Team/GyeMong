@@ -5,16 +5,8 @@ using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
-using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
-using GyeMong.GameSystem.Creature.Player;
-using GyeMong.GameSystem.Creature.Player.Component.Collider;
-using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Map.Stage;
-using GyeMong.SoundSystem;
-using GyeMong.UISystem.Option.Controller;
 using UnityEngine;
-using static GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf.Elf;
-using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
