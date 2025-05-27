@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2478308951613359036}
   - component: {fileID: 4107057368509685491}
   - component: {fileID: 2706223787955244828}
+  - component: {fileID: 2117846164513650149}
   m_Layer: 9
   m_Name: EventObject
   m_TagString: Untagged
@@ -140,3 +141,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.08
+--- !u!114 &2117846164513650149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934385667042233568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 0}
+  _attackObjectSounds: {fileID: 0}

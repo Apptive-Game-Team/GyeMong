@@ -7,12 +7,16 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
+using Visual.Camera;
+using GyeMong.SoundSystem;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
     public class NagaWarrior : Boss
     {
         [SerializeField] private GameObject meleeAttackPrefab;
+        [SerializeField] private GameObject pitCenterPrefab;
+        [SerializeField] private GameObject pitBoundaryPrefab;
         [SerializeField] private GameObject breathPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         float attackdelayTime = 1f;
@@ -143,7 +147,27 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 Vector3 targetPos = SceneContext.Character.transform.position;
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 yield return NagaWarrior.ParabolaJump(targetPos, height: 4f, duration: 0.5f);
-                NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
+                AttackObjectController.Create(
+                    NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
+                    Vector3.zero,
+                    NagaWarrior.pitBoundaryPrefab,
+                    new StaticMovement(
+                        NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
+                        NagaWarrior.attackdelayTime)
+                )
+                .StartRoutine();
+                AttackObjectController.Create(
+                    NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
+                    Vector3.zero,
+                    NagaWarrior.pitCenterPrefab,
+                    new StaticMovement(
+                        NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
+                        NagaWarrior.attackdelayTime)
+                )
+                .StartRoutine();
+                CameraManager.Instance.CameraShake(0.3f);
+                Sound.Play("ENEMY_Rock_Falled");
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
