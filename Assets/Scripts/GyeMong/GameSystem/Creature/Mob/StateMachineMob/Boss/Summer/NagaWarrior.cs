@@ -43,7 +43,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             detectionRange = 10f;
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
-            //SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
+            SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
             airborneController = GetComponent<AirborneController>();
             ChangeState();
         }
