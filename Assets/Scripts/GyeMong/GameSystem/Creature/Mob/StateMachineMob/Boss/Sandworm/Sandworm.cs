@@ -267,20 +267,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }
         }
 
-        private void RotateHead(float upAngle, float upTime, float downAngle, float downTime, float recoverTime)
+        private void RotateHead(float upAngle, float upTime, float downAngle, float downTime, float recoverTime, float recoverAngle = 0f)
         {
             Sequence spitSequence = DOTween.Sequence();
             if (DirectionToPlayer.x > 0)
             {
                 upAngle = -upAngle;
                 downAngle = -downAngle;
+                recoverAngle = -recoverAngle;
             }
             
             spitSequence.Append(transform.DORotate(new Vector3(0, 0, upAngle), upTime)
                 .SetEase(Ease.OutSine));
             spitSequence.Append(transform.DORotate(new Vector3(0, 0, downAngle), downTime)
                 .SetEase(Ease.InQuad));
-            spitSequence.Append(transform.DORotate(Vector3.zero, recoverTime)
+            spitSequence.Append(transform.DORotate(new Vector3(0, 0, recoverAngle), recoverTime)
                 .SetEase(Ease.OutBack));
         }
 
@@ -352,7 +353,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             float time = 0f;
             float realLength = 3.23f;
-
+            Destroy(laserTransform.gameObject, duration);
             while (time < duration)
             {
                 float t = time / duration;
@@ -369,7 +370,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 time += Time.deltaTime;
                 yield return null;
             }
-            Destroy(laserTransform.gameObject);
         }
 
         private void HideOrShow(bool hide, float duration)
@@ -465,6 +465,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             curBGM = Sound.Play("BGM_Summer_Sandworm", true);
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = this }).Execute());
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
+        }
+
+        protected override void Die()
+        {
+            currentState.OnStateExit();
+            StopAllCoroutines();
+            Sound.Stop(curBGM);
+            Sound.Play("ENEMY_Ground_Crash");
+            RotateHead(0,0,50f, 1f, 0, 50f);
+            GetComponent<Collider2D>().enabled = false;
+            StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
         }
     }
 }
