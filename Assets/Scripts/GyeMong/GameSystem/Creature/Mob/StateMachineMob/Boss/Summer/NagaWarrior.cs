@@ -9,6 +9,7 @@ using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
 using Visual.Camera;
 using GyeMong.SoundSystem;
+using UnityEngine.UIElements;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
@@ -150,6 +151,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 Vector3 targetPos = SceneContext.Character.transform.position;
+                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, targetPos, SceneContext.Character.transform, 0.5f, 0.5f, 1f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 yield return NagaWarrior.airborneController.AirborneTo(targetPos);
                 AttackObjectController.Create(
