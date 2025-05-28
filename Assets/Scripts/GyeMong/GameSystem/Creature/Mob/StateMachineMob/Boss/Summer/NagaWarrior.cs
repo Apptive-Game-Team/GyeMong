@@ -241,6 +241,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             public override IEnumerator StateCoroutine()
             {
+                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, NagaWarrior.transform.position, SceneContext.Character.transform, 0.5f, 0.5f, 5f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(5f, 6));
                 SetWeights();
