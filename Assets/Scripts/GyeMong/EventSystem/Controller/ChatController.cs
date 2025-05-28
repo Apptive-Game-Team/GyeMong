@@ -69,6 +69,7 @@ namespace GyeMong.EventSystem.Controller
             nameText.text = SetSpeakerName(multiChatMessage.speakerName);
             messageText.text = "";
             SetBackgroundImage(GetBackgroundImageSprite(multiChatMessage.backgroundImage));
+            SetChatImage(GetChatImageSprite(multiChatMessage.chatImage));
 
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
 
@@ -119,6 +120,24 @@ namespace GyeMong.EventSystem.Controller
                     backGround.sprite = null;
                     backGround.color = new Color(0, 0, 0, 0);
                     backGround.enabled = false;
+                }
+            }
+        }
+        public static void SetChatImage(Sprite sprite)
+        {
+            if (chattingImage != null)
+            {
+                if (sprite != null)
+                {
+                    chattingImage.sprite = sprite;
+                    chattingImage.color = Color.white;
+                    chattingImage.enabled = true;
+                }
+                else
+                {
+                    chattingImage.sprite = null;
+                    chattingImage.color = new Color(0, 0, 0, 0);
+                    chattingImage.enabled = false;
                 }
             }
         }
@@ -188,6 +207,20 @@ namespace GyeMong.EventSystem.Controller
             foreach (var imageInfo in backgroundImageData.backgroundImages)
             {
                 if (imageInfo.backgroundImage == backgroundImage)
+                {
+                    return imageInfo.image;
+                }
+            }
+
+            return null;
+        }
+
+        private static Sprite GetChatImageSprite(ChatImage chatImage)
+        {
+            ChatImageData chatImageData = Resources.Load<ChatImageData>("ScriptableObjects/Chat/ChatImageData");
+            foreach (var imageInfo in chatImageData.chatImages)
+            {
+                if (imageInfo.chatImage == chatImage)
                 {
                     return imageInfo.image;
                 }

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
+  m_Name: Test2
+  m_EditorClassIdentifier: 
+  chatMessages:
+  - speakerName: 5
+    messages:
+    - "\uB9C8\uC774\uD06C\uD14C\uC2A4\uD2B8"
+    - "\uC6D0\uD22C\uCA09\uC6D0\uD22C\uCA09"
+    chatDelay: 3
+    backgroundImage: 0
+    isLeft: 0
+    chatImage: 0
+  - speakerName: 5
+    messages:
+    - "\uD0DC\uAD8C\uB3C4\uAC80\uC740\uB760"
+    - "\uC58D \uC58D\uC58D"
+    chatDelay: 3
+    backgroundImage: 0
+    isLeft: 0
+    chatImage: 1

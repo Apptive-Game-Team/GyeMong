@@ -540,7 +540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &603309957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1247,16 +1247,22 @@ MonoBehaviour:
   triggerLimitCounter: -1
   eventSequence:
   - rid: 4317813597781360640
-  - rid: -2
-  - rid: -2
+  - rid: 4317813597781360642
+  - rid: 4317813597781360641
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 4317813597781360640
       type: {class: OpenChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
       data: 
+    - rid: 4317813597781360641
+      type: {class: CloseChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 4317813597781360642
+      type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data:
+        chatData: {fileID: 11400000, guid: 70cc6a3c489f4d84e82ac3f1a0010a3f, type: 2}
+        autoSkipTime: 3
 --- !u!1 &2121363581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,6 +1429,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127884155560261643, guid: 950391b2cdacabb4c9c7c2e0a9668a39,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127884155560261643, guid: 950391b2cdacabb4c9c7c2e0a9668a39,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127884155560261643, guid: 950391b2cdacabb4c9c7c2e0a9668a39,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127884155560261643, guid: 950391b2cdacabb4c9c7c2e0a9668a39,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7811519537570247259, guid: 950391b2cdacabb4c9c7c2e0a9668a39,
         type: 3}

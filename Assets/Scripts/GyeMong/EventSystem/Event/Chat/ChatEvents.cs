@@ -54,6 +54,7 @@ namespace GyeMong.EventSystem.Event.Chat
             }
 
             ChatController.SetBackgroundImage(null);
+            ChatController.SetChatImage(null);
             ChatController.SetCharacterImage(null, true);
             ChatController.SetCharacterImage(null, false);
         }

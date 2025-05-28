@@ -11,7 +11,7 @@ namespace GyeMong.EventSystem.Event.Chat
         [Serializable]
         public struct ChatImageInfo
         {
-            public ChatImage ChatImage;
+            public ChatImage chatImage;
             public Sprite image;
         }
 
