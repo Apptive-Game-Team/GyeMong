@@ -18,7 +18,7 @@ namespace GyeMong.EventSystem.Controller
         private static Image backGround;
         private static Image characterImage;
         private static Image characterImage2;
-        private static Image showImage;
+        private static Image chattingImage;
         [SerializeField] private GameObject speechBubble;
         private const float CHAT_WINDOW_ALPHA = 0.7f;
         private const float SHOW_CHAT_DELAY = 0.1f;
@@ -34,7 +34,7 @@ namespace GyeMong.EventSystem.Controller
             backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
             characterImage = chatWindow.transform.Find("CharacterImageArea").GetComponent<Image>();
             characterImage2 = chatWindow.transform.Find("CharacterImageArea2").GetComponent<Image>();
-            showImage = chatWindow.transform.Find("ShowImageArea").GetComponent<Image>();
+            chattingImage = chatWindow.transform.Find("ChatImageArea").GetComponent<Image>();
         }
 
         public static IEnumerator Open()
@@ -73,7 +73,7 @@ namespace GyeMong.EventSystem.Controller
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
 
             var speakerInfo = speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName);
-            SetCharacterImage(speakerInfo.image, multiChatMessage.isLeft, multiChatMessage.isShowImage);
+            SetCharacterImage(speakerInfo.image, multiChatMessage.isLeft);
 
             foreach (string line in multiChatMessage.messages)
             {
@@ -122,31 +122,9 @@ namespace GyeMong.EventSystem.Controller
                 }
             }
         }
-        public static void SetCharacterImage(Sprite sprite, bool isLeft, bool isShowImage)
+        public static void SetCharacterImage(Sprite sprite, bool isLeft)
         {
-            if (isShowImage)
-            {
-                if (sprite != null)
-                {
-                    showImage.sprite = sprite;
-                    showImage.color = Color.white;
-                    showImage.enabled = true;
-
-                    Vector3 originalPosition = showImage.rectTransform.localPosition;
-                    Vector3 startPosition = originalPosition + new Vector3(0, 50f, 0);
-                    showImage.rectTransform.localPosition = startPosition;
-
-                    showImage.rectTransform.DOLocalMoveY(originalPosition.y, 0.4f).SetEase(Ease.OutCubic);
-                }
-                else
-                {
-                    showImage.sprite = null;
-                    showImage.color = new Color(0, 0, 0, 0);
-                    showImage.enabled = false;
-                }
-                return;
-            }
-            else if (isLeft)
+            if (isLeft)
             {
                 if (sprite != null)
                 {

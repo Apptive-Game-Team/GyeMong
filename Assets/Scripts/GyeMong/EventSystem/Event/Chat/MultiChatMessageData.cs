@@ -18,7 +18,7 @@ namespace GyeMong.EventSystem.Event.Chat
             public float chatDelay = 3f;
             public BackgroundImage backgroundImage;
             public bool isLeft;
-            public bool isShowImage = false;
+            public ChatImage chatImage;
         }
 
         public List<MultiChatMessage> chatMessages;
