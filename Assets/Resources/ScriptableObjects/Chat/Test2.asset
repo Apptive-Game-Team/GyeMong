@@ -14,18 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chatMessages:
   - speakerName: 5
+    isLeft: 0
     messages:
     - "\uB9C8\uC774\uD06C\uD14C\uC2A4\uD2B8"
     - "\uC6D0\uD22C\uCA09\uC6D0\uD22C\uCA09"
-    chatDelay: 3
     backgroundImage: 0
-    isLeft: 0
     chatImage: 0
+    chatDelay: 3
   - speakerName: 5
+    isLeft: 0
     messages:
     - "\uD0DC\uAD8C\uB3C4\uAC80\uC740\uB760"
     - "\uC58D \uC58D\uC58D"
-    chatDelay: 3
     backgroundImage: 0
-    isLeft: 0
     chatImage: 1
+    chatDelay: 3
+  - speakerName: 5
+    isLeft: 0
+    messages:
+    - "\uCF69\uC9C4\uD638\uAC00\uAC04\uB2E4"
+    - "\uC791\uC740\uACE0\uCD94\uC758\uB9E4\uC6B4\uB9DB\uC744\uBCF4\uC5EC\uC8FC\uB9C8"
+    backgroundImage: 1
+    chatImage: 2
+    chatDelay: 3
+  - speakerName: 5
+    isLeft: 0
+    messages:
+    - "\uD6C4\uC6B0"
+    - "\uD798\uB4DC\uB7EC"
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3

@@ -114,9 +114,25 @@ namespace GyeMong.EventSystem.Controller
         }
         public static void SetChatImage(Sprite sprite)
         {
-            if (chattingImage != null)
+            if (chattingImage == null) return;
+
+            if (sprite != null)
             {
-                SetImage(chattingImage, sprite);
+                chattingImage.sprite = sprite;
+                chattingImage.color = new Color(1, 1, 1, 0);
+                chattingImage.enabled = true;
+
+                Vector3 startPos = chattingImage.rectTransform.localPosition + new Vector3(0, 50, 0);
+                chattingImage.rectTransform.localPosition = startPos;
+
+                chattingImage.rectTransform.DOLocalMoveY(startPos.y - 50, 0.5f).SetEase(Ease.OutCubic);
+                chattingImage.DOFade(1f, 0.5f);
+            }
+            else
+            {
+                chattingImage.sprite = null;
+                chattingImage.color = new Color(0, 0, 0, 0);
+                chattingImage.enabled = false;
             }
         }
         public static void SetCharacterImage(Sprite sprite, bool isLeft)
