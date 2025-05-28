@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4c8072cdf2ee549837d22c5cd6c2ac, type: 3}
+  m_Name: ChatImageData
+  m_EditorClassIdentifier: 
+  chatImages:
+  - ChatImage: 0
+    image: {fileID: 21300000, guid: 1bf40571fd5e448ce86366d90250101a, type: 3}
+  - ChatImage: 1
+    image: {fileID: 21300000, guid: 5d8ed1c9f2ea84fc78b0784754790874, type: 3}
+  - ChatImage: 2
+    image: {fileID: 21300000, guid: 139014d89e39443b6b2d3181bada4d79, type: 3}
+  - ChatImage: 3
+    image: {fileID: 21300000, guid: ce58231c72fe649169d5bac25923fd62, type: 3}
+  - ChatImage: 4
+    image: {fileID: 21300000, guid: 072228895c13f4e0fa63f7f136433e89, type: 3}
+  - ChatImage: 5
+    image: {fileID: 21300000, guid: 397af6ee749774d9b9a23f8f6fb4916d, type: 3}
+  - ChatImage: 6
+    image: {fileID: 21300000, guid: 8d4fb8d270bc5419f8564c2b3c4129ba, type: 3}
+  - ChatImage: 7
+    image: {fileID: 21300000, guid: abefa7a1c670147539324ee184be2d1f, type: 3}
