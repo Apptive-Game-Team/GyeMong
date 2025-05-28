@@ -105,8 +105,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                         { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
                         { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
                         { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.RangedAttackRange) ? 5 : 0 },
-                        { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.RangedAttackRange) ? 5 : 0 }
+                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 },
+                        { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -216,7 +216,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.RangedAttackRange) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -231,12 +231,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.RangedAttackRange) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                yield return NagaWarrior.SpawnBreath(5f, 6);
+                yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(5f, 6));
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
@@ -266,7 +266,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     .StartRoutine();
                 }
             }
-            yield return attackdelayTime*2;
+            yield return new WaitForSeconds(attackdelayTime * 2);
         }
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
         {
