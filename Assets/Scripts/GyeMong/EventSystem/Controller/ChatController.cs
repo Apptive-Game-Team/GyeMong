@@ -109,54 +109,21 @@ namespace GyeMong.EventSystem.Controller
         {
             if (backGround != null)
             {
-                if (sprite != null)
-                {
-                    backGround.sprite = sprite;
-                    backGround.color = Color.white;
-                    backGround.enabled = true;
-                }
-                else
-                {
-                    backGround.sprite = null;
-                    backGround.color = new Color(0, 0, 0, 0);
-                    backGround.enabled = false;
-                }
+                SetImage(backGround, sprite);
             }
         }
         public static void SetChatImage(Sprite sprite)
         {
             if (chattingImage != null)
             {
-                if (sprite != null)
-                {
-                    chattingImage.sprite = sprite;
-                    chattingImage.color = Color.white;
-                    chattingImage.enabled = true;
-                }
-                else
-                {
-                    chattingImage.sprite = null;
-                    chattingImage.color = new Color(0, 0, 0, 0);
-                    chattingImage.enabled = false;
-                }
+                SetImage(chattingImage, sprite);
             }
         }
         public static void SetCharacterImage(Sprite sprite, bool isLeft)
         {
             if (isLeft)
             {
-                if (sprite != null)
-                {
-                    characterImage.sprite = sprite;
-                    characterImage.color = Color.white;
-                    characterImage.enabled = true;
-                }
-                else
-                {
-                    characterImage.sprite = null;
-                    characterImage.color = new Color(0, 0, 0, 0);
-                    characterImage.enabled = false;
-                }
+                SetImage(characterImage, sprite);
 
                 if (characterImage2.enabled && characterImage2.sprite != null)
                 {
@@ -166,18 +133,7 @@ namespace GyeMong.EventSystem.Controller
 
             else
             {
-                if (sprite != null)
-                {
-                    characterImage2.sprite = sprite;
-                    characterImage2.color = Color.white;
-                    characterImage2.enabled = true;
-                }
-                else
-                {
-                    characterImage2.sprite = null;
-                    characterImage2.color = new Color(0, 0, 0, 0);
-                    characterImage2.enabled = false;
-                }
+                SetImage(characterImage2, sprite);
 
                 if (characterImage.enabled && characterImage.sprite != null)
                 {
@@ -241,6 +197,24 @@ namespace GyeMong.EventSystem.Controller
             }
 
             return null;
+        }
+
+        private static void SetImage(Image targetImage, Sprite sprite)
+        {
+            if (targetImage == null) return;
+
+            if (sprite != null)
+            {
+                targetImage.sprite = sprite;
+                targetImage.color = Color.white;
+                targetImage.enabled = true;
+            }
+            else
+            {
+                targetImage.sprite = null;
+                targetImage.color = new Color(0, 0, 0, 0);
+                targetImage.enabled = false;
+            }
         }
 
         public IEnumerator ShowSpeechBubbleChat(GameObject NPC, string message, float destroyDelay)
