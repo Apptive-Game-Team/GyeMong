@@ -21,6 +21,7 @@ namespace GyeMong.EventSystem.Event.Chat
 
     public enum ChatImage
     {
+        nothing,
         openlog1,
         openlog2,
         openlog3,
