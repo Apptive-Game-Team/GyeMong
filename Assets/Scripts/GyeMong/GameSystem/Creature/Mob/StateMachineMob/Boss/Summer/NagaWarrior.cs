@@ -15,6 +15,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
     public class NagaWarrior : Boss
     {
         [SerializeField] private GameObject meleeAttackPrefab;
+        [SerializeField] private GameObject comboAttackPrefab;
         [SerializeField] private GameObject TailRush1Prefab;
         [SerializeField] private GameObject TailRush2Prefab;
         [SerializeField] private GameObject pitCenterPrefab;
@@ -131,9 +132,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
-                NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
+                NagaWarrior.SpawnAttackComboCollider(NagaWarrior.DirectionToPlayer, 1);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
-                NagaWarrior.SpawnAttackCollider(NagaWarrior.DirectionToPlayer);
+                NagaWarrior.SpawnAttackComboCollider(NagaWarrior.DirectionToPlayer, 2);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
@@ -309,15 +310,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             Animator.SetBool("isDown", true);
             StageManager.ClearStage(this);
         }
-        private void SpawnAttackCollider(Vector3 direction)
+        private void SpawnAttackComboCollider(Vector3 direction, int combo)
         {
             Vector2 spawnPosition = transform.position + direction * 1f;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+            GameObject meleeAttackObj = meleeAttackPrefab;
+            if (combo != 1)
+            {
+                meleeAttackObj = comboAttackPrefab;
+            }
             AttackObjectController.Create(
                     spawnPosition,
                     direction,
-                    meleeAttackPrefab,
+                    meleeAttackObj,
                     new StaticMovement(
                         spawnPosition,
                         attackdelayTime / 2)
