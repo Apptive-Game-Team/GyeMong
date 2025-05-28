@@ -14,11 +14,11 @@ namespace GyeMong.EventSystem.Event.Chat
         public class MultiChatMessage
         {
             public ChatSpeakerType speakerName;
-            public List<string> messages;
-            public float chatDelay = 3f;
-            public BackgroundImage backgroundImage;
             public bool isLeft;
+            public List<string> messages;
+            public BackgroundImage backgroundImage;
             public ChatImage chatImage;
+            public float chatDelay = 3f;
         }
 
         public List<MultiChatMessage> chatMessages;
