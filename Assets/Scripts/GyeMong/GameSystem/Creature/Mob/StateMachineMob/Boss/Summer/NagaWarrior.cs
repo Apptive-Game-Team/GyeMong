@@ -220,10 +220,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 50000 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
+                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, 0.5f, 0.5f, 6f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer);
                 Sound.Play("EFFECT_Sword_Swing");
