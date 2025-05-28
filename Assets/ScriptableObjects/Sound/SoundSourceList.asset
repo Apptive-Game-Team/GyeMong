@@ -124,3 +124,48 @@ MonoBehaviour:
   - name: EFFECT_Ball_Rolling
     type: 1
     clip: {fileID: 8300000, guid: 386dcc1e019d775489d74e39bfabdd03, type: 3}
+  - name: BGM_Summer_Sandworm
+    type: 4
+    clip: {fileID: 8300000, guid: 93abc65fb0a7d9a47bb2f33a425869bb, type: 3}
+  - name: ENEMY_Ground_Crash
+    type: 3
+    clip: {fileID: 8300000, guid: 7b226afe2bf79cc439bbbff1d4c4f029, type: 3}
+  - name: ENEMY_Ground_Crash_Action
+    type: 3
+    clip: {fileID: 8300000, guid: 82a00fd198e99784a8d34afb51939ab3, type: 3}
+  - name: ENEMY_Laser
+    type: 3
+    clip: {fileID: 8300000, guid: 2f83f0392f419044c8a1f56e9369ec94, type: 3}
+  - name: ENEMY_Laser_Action
+    type: 3
+    clip: {fileID: 8300000, guid: 84671ea16fb5f6f4085101325938cf6c, type: 3}
+  - name: ENEMY_Sand_Trap
+    type: 3
+    clip: {fileID: 8300000, guid: 66554fc6d397a7747b9d6265a171950c, type: 3}
+  - name: ENEMY_Sand_Trap_Action
+    type: 3
+    clip: {fileID: 8300000, guid: 1e173176bb9c4a04a86cb7a7ac365f09, type: 3}
+  - name: ENEMY_Sand_Trap_Effect
+    type: 3
+    clip: {fileID: 8300000, guid: 6d7c97d825ef6854a8ee0a0d24986cc4, type: 3}
+  - name: ENEMY_Venom_Breath
+    type: 3
+    clip: {fileID: 8300000, guid: 84b3dc3ff43c48c4c9a314e966886ae5, type: 3}
+  - name: ENEMY_Venom_Breath_Action
+    type: 3
+    clip: {fileID: 8300000, guid: d951711b1ecfc95459ffa57980c7481e, type: 3}
+  - name: ENEMY_Hide
+    type: 3
+    clip: {fileID: 8300000, guid: 9792ce6be19926e46870de4e2246cd59, type: 3}
+  - name: ENEMY_Show
+    type: 3
+    clip: {fileID: 8300000, guid: df99259c2e420ee40928008dea4167d1, type: 3}
+  - name: ENEMY_Short_Burst_Action
+    type: 3
+    clip: {fileID: 8300000, guid: f634fdc38ca7c354fa8dbfa7dcbfbe2f, type: 3}
+  - name: ENEMY_Long_Burst_Action
+    type: 3
+    clip: {fileID: 8300000, guid: 201dbd117b52433429c41443e9a507d2, type: 3}
+  - name: ENEMY_Burrowing
+    type: 3
+    clip: {fileID: 8300000, guid: 16932b343252cad468e3cabf9c8d8a03, type: 3}
