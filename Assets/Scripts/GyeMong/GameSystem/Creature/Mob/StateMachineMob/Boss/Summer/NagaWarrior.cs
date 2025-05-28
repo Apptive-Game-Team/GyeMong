@@ -21,6 +21,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         [SerializeField] private GameObject pitCenterPrefab;
         [SerializeField] private GameObject pitBoundaryPrefab;
         [SerializeField] private GameObject breathPrefab;
+        [SerializeField] private GameObject skillAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         private AirborneController airborneController;
         float attackdelayTime = 1f;
@@ -223,6 +224,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer);
+                Sound.Play("EFFECT_Sword_Swing");
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
@@ -287,7 +289,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
-            GameObject attackCollider = Instantiate(meleeAttackPrefab, spawnPosition, spawnRotation);
+            GameObject attackCollider = Instantiate(skillAttackPrefab, spawnPosition, spawnRotation);
 
             StartCoroutine(MoveColliderForward(attackCollider.transform, direction.normalized, 5f, attackdelayTime * 2));
         }
