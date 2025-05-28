@@ -15,6 +15,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
     public class NagaWarrior : Boss
     {
         [SerializeField] private GameObject meleeAttackPrefab;
+        [SerializeField] private GameObject TailRush1Prefab;
+        [SerializeField] private GameObject TailRush2Prefab;
         [SerializeField] private GameObject pitCenterPrefab;
         [SerializeField] private GameObject pitBoundaryPrefab;
         [SerializeField] private GameObject breathPrefab;
@@ -182,10 +184,29 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                yield return NagaWarrior.HalfRushAttack(NagaWarrior.attackdelayTime / 2);
-                NagaWarrior.SpawnAttackCollider(NagaWarrior.lastRushDirection);
-                yield return NagaWarrior.RushAttack(NagaWarrior.attackdelayTime / 2);
-                NagaWarrior.SpawnAttackCollider(NagaWarrior.lastRushDirection);
+                var f_obj = AttackObjectController.Create(
+                    NagaWarrior.transform.position,
+                    Vector3.zero,
+                    NagaWarrior.TailRush1Prefab,
+                    new StaticMovement(
+                        NagaWarrior.transform.position,
+                        NagaWarrior.attackdelayTime / 2)
+                );
+                f_obj.StartRoutine();
+                f_obj.transform.parent = NagaWarrior.transform;
+                yield return NagaWarrior.QuickHalfRushAttack();
+                yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
+                var s_obj = AttackObjectController.Create(
+                    NagaWarrior.transform.position,
+                    Vector3.zero,
+                    NagaWarrior.TailRush2Prefab,
+                    new StaticMovement(
+                        NagaWarrior.transform.position,
+                        NagaWarrior.attackdelayTime / 2)
+                );
+                s_obj.StartRoutine();
+                s_obj.transform.parent = NagaWarrior.transform;
+                yield return NagaWarrior.QuickRushAttack();
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
