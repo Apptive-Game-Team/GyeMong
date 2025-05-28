@@ -19,6 +19,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         [SerializeField] private GameObject pitBoundaryPrefab;
         [SerializeField] private GameObject breathPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
+        private AirborneController airborneController;
         float attackdelayTime = 1f;
         [SerializeField] private DailyCycleManager dailyCycleManager;
         bool isOverheat = false;
@@ -39,7 +40,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
             //SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
-
+            airborneController = GetComponent<AirborneController>();
             ChangeState();
         }
         private void Update()
@@ -146,7 +147,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 Vector3 targetPos = SceneContext.Character.transform.position;
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                yield return NagaWarrior.ParabolaJump(targetPos, height: 4f, duration: 0.5f);
+                yield return NagaWarrior.airborneController.AirborneTo(targetPos);
                 AttackObjectController.Create(
                     NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
                     Vector3.zero,
@@ -171,22 +172,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
-        }
-        public IEnumerator ParabolaJump(Vector3 target, float height, float duration)
-        {
-            Vector3 start = transform.position;
-            float time = 0f;
-
-            while (time < duration)
-            {
-                float t = time / duration;
-                float yOffset = 4 * height * t * (1 - t);
-                transform.position = Vector3.Lerp(start, target, t) + Vector3.up * yOffset;
-                time += Time.deltaTime;
-                yield return null;
-            }
-
-            transform.position = target;
         }
         public class TaleRushAttack : NagaWarriorState
         {
