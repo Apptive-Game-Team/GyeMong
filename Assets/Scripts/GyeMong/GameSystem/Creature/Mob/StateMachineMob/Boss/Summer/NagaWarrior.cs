@@ -220,7 +220,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 50000 : 0;
+                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
