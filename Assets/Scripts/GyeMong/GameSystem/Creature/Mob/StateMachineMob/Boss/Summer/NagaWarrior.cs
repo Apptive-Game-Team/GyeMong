@@ -29,6 +29,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         [SerializeField] private DailyCycleManager dailyCycleManager;
         bool isOverheat = false;
         bool isCool = false;
+        public SoundObject curBGM;
 
         private Color dawnColor = new Color32(255, 255, 255, 255);
         private Color dayColor = new Color32(255, 85, 85, 255);
@@ -46,7 +47,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
             airborneController = GetComponent<AirborneController>();
-            ChangeState();
         }
         private void Update()
         {
