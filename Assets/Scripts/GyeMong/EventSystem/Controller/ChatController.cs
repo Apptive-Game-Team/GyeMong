@@ -68,8 +68,6 @@ namespace GyeMong.EventSystem.Controller
         {
             nameText.text = SetSpeakerName(multiChatMessage.speakerName);
             messageText.text = "";
-            SetBackgroundImage(GetBackgroundImageSprite(multiChatMessage.backgroundImage));
-            SetChatImage(GetChatImageSprite(multiChatMessage.chatImage));
 
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
             var speakerInfo = speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName);
@@ -177,7 +175,7 @@ namespace GyeMong.EventSystem.Controller
             return speakerName.ToString();
         }
         
-        private static Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
+        public static Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
         {
             BackgroundImageData backgroundImageData = Resources.Load<BackgroundImageData>("ScriptableObjects/Chat/BackgroundImage");
             foreach (var imageInfo in backgroundImageData.backgroundImages)
@@ -191,7 +189,7 @@ namespace GyeMong.EventSystem.Controller
             return null;
         }
 
-        private static Sprite GetChatImageSprite(ChatImage chatImage)
+        public static Sprite GetChatImageSprite(ChatImage chatImage)
         {
             ChatImageData chatImageData = Resources.Load<ChatImageData>("ScriptableObjects/Chat/ChatImageData");
             foreach (var imageInfo in chatImageData.chatImages)
@@ -205,7 +203,7 @@ namespace GyeMong.EventSystem.Controller
             return null;
         }
 
-        private static Sprite GetCharacterImageSprite(ChatSpeakerType speakerType)
+        public static Sprite GetCharacterImageSprite(ChatSpeakerType speakerType)
         {
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
             foreach (var imageInfo in speakerData.ChatSpeakers)
