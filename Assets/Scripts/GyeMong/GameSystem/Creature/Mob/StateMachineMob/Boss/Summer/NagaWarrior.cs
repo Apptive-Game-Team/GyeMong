@@ -149,6 +149,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 },
+                        { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }
         }
         public class JumpAttack : NagaWarriorState
         {
@@ -187,6 +201,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 },
+                        { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }
         }
         public class TaleRushAttack : NagaWarriorState
         {
@@ -224,6 +252,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 },
+                        { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
+            }
         }
         public class AuraAttack : NagaWarriorState
         {
@@ -234,15 +276,29 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 if(NagaWarrior.isOverheat)
-                    NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime / 2, NagaWarrior.attackdelayTime / 2, 12f);
+                    NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime, NagaWarrior.attackdelayTime / 4, 12f);
                 else
-                    NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime / 2, NagaWarrior.attackdelayTime / 2, 6f);
+                    NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime, NagaWarrior.attackdelayTime / 4, 6f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer, SceneContext.Character.transform.position);
                 Sound.Play("EFFECT_Sword_Swing");
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
+            }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
             }
         }
         public class BreathAttack : NagaWarriorState
@@ -261,6 +317,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(5f, numberofPoints));
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
+            }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                    {
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
+                    };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
             }
         }
         private IEnumerator SpawnBreath(float radius, int numberOfPoints)
