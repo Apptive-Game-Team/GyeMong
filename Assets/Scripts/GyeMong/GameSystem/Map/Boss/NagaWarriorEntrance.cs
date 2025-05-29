@@ -22,10 +22,11 @@ namespace GyeMong.GameSystem.Map.Boss
         [SerializeField] private float cameraSpeed;
         [SerializeField] private List<MultiChatMessageData.MultiChatMessage> multiMessages;
         [SerializeField] private float autoSkipTime = 3f;
+        private bool _isTriggered = false;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && !_isTriggered)
             {
                 StartCoroutine(TriggerEvents());
             }
@@ -33,6 +34,7 @@ namespace GyeMong.GameSystem.Map.Boss
         
         private IEnumerator TriggerEvents()
         {
+            _isTriggered = true;
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine((new MoveCreatureEvent()
             {
@@ -56,6 +58,7 @@ namespace GyeMong.GameSystem.Map.Boss
             yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));
             boss.GetComponent<NagaWarrior>().curBGM = Sound.Play("BGM_Summer_NagaWarrior", true);
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
+            yield return StartCoroutine((new CameraFollowPlayer()).Execute());
             boss.ChangeState();
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
         }

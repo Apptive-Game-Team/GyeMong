@@ -10,6 +10,7 @@ using UnityEngine;
 using Visual.Camera;
 using GyeMong.SoundSystem;
 using UnityEngine.UIElements;
+using TMPro;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
@@ -226,7 +227,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, 0.5f, 0.5f, 6f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer);
+                NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer, SceneContext.Character.transform.position);
                 Sound.Play("EFFECT_Sword_Swing");
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
@@ -287,7 +288,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             return points;
         }
-        private void SpawnSkillCollider(Vector3 direction)
+        private void SpawnSkillCollider(Vector3 direction, Vector3 targetPosition)
         {
             Vector2 spawnPosition = transform.position + direction * 1f;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -295,19 +296,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
 
             GameObject attackCollider = Instantiate(skillAttackPrefab, spawnPosition, spawnRotation);
 
-            StartCoroutine(MoveColliderForward(attackCollider.transform, direction.normalized, 5f, attackdelayTime * 2));
+            StartCoroutine(MoveColliderToTarget(attackCollider.transform, targetPosition, attackdelayTime * 2));
         }
-        private IEnumerator MoveColliderForward(Transform obj, Vector3 direction, float speed, float lifeTime)
+        private IEnumerator MoveColliderToTarget(Transform obj, Vector3 targetPosition, float speed)
         {
-            float elapsedTime = 0f;
-
-            while (elapsedTime < lifeTime)
+            while (Vector3.Distance(obj.position, targetPosition) > 0.01f)
             {
-                obj.position += direction * speed * Time.deltaTime;
-                elapsedTime += Time.deltaTime;
+                obj.position = Vector3.MoveTowards(obj.position, targetPosition, speed * Time.deltaTime);
                 yield return null;
             }
 
+            obj.position = targetPosition;
             Destroy(obj.gameObject);
         }
         protected override void Die()
