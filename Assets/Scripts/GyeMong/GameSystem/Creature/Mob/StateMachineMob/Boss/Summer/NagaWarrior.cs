@@ -18,15 +18,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
     {
         [SerializeField] private GameObject meleeAttackPrefab;
         [SerializeField] private GameObject comboAttackPrefab;
+        [SerializeField] private GameObject overHeatComboAttackPrefab;
         [SerializeField] private GameObject TailRush1Prefab;
         [SerializeField] private GameObject TailRush2Prefab;
         [SerializeField] private GameObject pitCenterPrefab;
         [SerializeField] private GameObject pitBoundaryPrefab;
         [SerializeField] private GameObject breathPrefab;
         [SerializeField] private GameObject skillAttackPrefab;
+        [SerializeField] private GameObject overHeatSkillAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         private AirborneController airborneController;
-        float attackdelayTime = 1f;
+        float attackdelayTime;
         [SerializeField] private DailyCycleManager dailyCycleManager;
         bool isOverheat = false;
         bool isCool = false;
@@ -46,6 +48,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             detectionRange = 10f;
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
+            attackdelayTime = 1f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
             airborneController = GetComponent<AirborneController>();
         }
@@ -82,17 +85,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             if (isOverheat)
             {
                 damage = 15f;
-                speed = 3f;
+                attackdelayTime = 0.5f;
             }
             else if(isCool)
             {
                 damage = 5f;
-                speed = 1f;
+                attackdelayTime = 2f;
             }
             else
             {
                 damage = 10f;
-                speed = 2f;
+                attackdelayTime = 1f;
             }
         }
         public abstract class NagaWarriorState : CoolDownState
@@ -138,6 +141,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 NagaWarrior.SpawnAttackComboCollider(NagaWarrior.DirectionToPlayer, 1);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 NagaWarrior.SpawnAttackComboCollider(NagaWarrior.DirectionToPlayer, 2);
+                if(NagaWarrior.isOverheat)
+                {
+                    yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
+                    NagaWarrior.SpawnAttackComboCollider(NagaWarrior.DirectionToPlayer, 3);
+                }
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
@@ -152,7 +160,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 Vector3 targetPos = SceneContext.Character.transform.position;
-                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, targetPos, SceneContext.Character.transform, 0.5f, 0.5f, 1f);
+                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, targetPos, SceneContext.Character.transform, NagaWarrior.attackdelayTime/2, NagaWarrior.attackdelayTime / 2, 1f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 yield return NagaWarrior.airborneController.AirborneTo(targetPos);
                 AttackObjectController.Create(
@@ -161,7 +169,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     NagaWarrior.pitBoundaryPrefab,
                     new StaticMovement(
                         NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
-                        NagaWarrior.attackdelayTime)
+                        NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
                 AttackObjectController.Create(
@@ -170,7 +178,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     NagaWarrior.pitCenterPrefab,
                     new StaticMovement(
                         NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
-                        NagaWarrior.attackdelayTime)
+                        NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
                 CameraManager.Instance.CameraShake(0.3f);
@@ -225,7 +233,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             public override IEnumerator StateCoroutine()
             {
-                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, 0.5f, 0.5f, 6f);
+                if(NagaWarrior.isOverheat)
+                    NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime / 2, NagaWarrior.attackdelayTime / 2, 12f);
+                else
+                    NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime / 2, NagaWarrior.attackdelayTime / 2, 6f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer, SceneContext.Character.transform.position);
                 Sound.Play("EFFECT_Sword_Swing");
@@ -242,9 +253,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             public override IEnumerator StateCoroutine()
             {
-                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, NagaWarrior.transform.position, SceneContext.Character.transform, 0.5f, 0.5f, 5f);
+                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime / 2, NagaWarrior.attackdelayTime / 2, 5f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(5f, 6));
+                int numberofPoints = 6;
+                if(NagaWarrior.isOverheat)
+                    numberofPoints = 12;
+                yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(5f, numberofPoints));
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
@@ -293,8 +307,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             Vector2 spawnPosition = transform.position + direction * 1f;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
-
-            GameObject attackCollider = Instantiate(skillAttackPrefab, spawnPosition, spawnRotation);
+            GameObject skillAttackObj = skillAttackPrefab;
+            if (isOverheat)
+            {
+                skillAttackObj = overHeatSkillAttackPrefab; 
+            }
+            GameObject attackCollider = Instantiate(skillAttackObj, spawnPosition, spawnRotation);
 
             StartCoroutine(MoveColliderToTarget(attackCollider.transform, targetPosition, attackdelayTime * 2));
         }
@@ -321,9 +339,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
             GameObject meleeAttackObj = meleeAttackPrefab;
-            if (combo != 1)
+            if (combo == 2)
             {
                 meleeAttackObj = comboAttackPrefab;
+            }
+            else if(combo == 3)
+            {
+                meleeAttackObj = overHeatComboAttackPrefab;
             }
             AttackObjectController.Create(
                     spawnPosition,
