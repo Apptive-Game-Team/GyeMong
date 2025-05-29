@@ -11,7 +11,7 @@ namespace GyeMong.UISystem.Game.BattleUI
 {
     public class DominanceGauge : MonoBehaviour
     {
-        [SerializeField] private Creature boss;
+        [SerializeField] private Boss boss;
         private Slider _gaugeSlider;
 
         private float _playerMaxHp;
@@ -73,6 +73,10 @@ namespace GyeMong.UISystem.Game.BattleUI
             else if (ratio >= 0.75f)
             {
                 PlayerDamageMultiplier = 1.5f;
+            }
+            else if(ratio >= 1f)
+            {
+                boss.Die();
             }
         }
     }
