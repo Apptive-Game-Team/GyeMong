@@ -56,7 +56,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             protected Sandworm Sandworm => mob as Sandworm;
             protected Dictionary<System.Type, int> _weights;
-            protected bool IsActionExist = false;
+            protected bool IsActionExist;
 
             public override void OnStateUpdate()
             {
@@ -239,9 +239,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override IEnumerator StateCoroutine()
             {
-                IsActionExist = true;
+                IsActionExist = false;
+                yield return new WaitForSeconds(0.1f);
                 Sandworm.GetComponent<Collider2D>().enabled = false;
                 Sound.Play("ENEMY_Sand_Trap_Action");
+                IsActionExist = true;
                 Sandworm.RotateHead(-30f, 3.5f, 30f, 0.2f, 0.5f);
                 Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
                 yield return new WaitForSeconds(3.6f);

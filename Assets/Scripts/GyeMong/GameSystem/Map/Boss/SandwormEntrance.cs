@@ -24,10 +24,11 @@ namespace GyeMong.GameSystem.Map.Boss
         [SerializeField] private float cameraZoomSpeed;
         [SerializeField] private List<MultiChatMessage> multiMessages;
         [SerializeField] private float autoSkipTime = 3f;
+        private bool _isTriggered = false;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && !_isTriggered)
             {
                 StartCoroutine(TriggerEvents());
             }
@@ -35,6 +36,7 @@ namespace GyeMong.GameSystem.Map.Boss
         
         private IEnumerator TriggerEvents()
         {
+            _isTriggered = true;
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine((new MoveCreatureEvent()
             {
