@@ -72,17 +72,18 @@ namespace GyeMong.EventSystem.Controller
             SetChatImage(GetChatImageSprite(multiChatMessage.chatImage));
 
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
-
             var speakerInfo = speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName);
             SetCharacterImage(speakerInfo.image, multiChatMessage.isLeft);
 
+            string accumulatedText = "";
+
             foreach (string line in multiChatMessage.messages)
             {
-                SoundObject _soundObject;
-                _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
-                yield return ShowMultipleChat(line);
+                SoundObject _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
+                yield return ShowMultipleChat(line, accumulatedText);
                 Sound.Stop(_soundObject);
-                messageText.text += "\n";
+
+                accumulatedText += line + "\n";
 
                 float timer = Time.time;
                 yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
@@ -90,17 +91,20 @@ namespace GyeMong.EventSystem.Controller
             }
         }
 
-        private static IEnumerator ShowMultipleChat(string messages)
+        private static IEnumerator ShowMultipleChat(string newLine, string prefix)
         {
-            foreach (char c in messages)
+            string currentText = "";
+            foreach (char c in newLine)
             {
                 if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
                 {
-                    messageText.text = messages;
+                    currentText = newLine;
+                    messageText.text = prefix + currentText;
                     yield return new WaitForSeconds(SHOW_CHAT_DELAY);
-                    break;
+                    yield break;
                 }
-                messageText.text += c;
+                currentText += c;
+                messageText.text = prefix + currentText;
                 yield return new WaitForSeconds(SHOW_CHAT_DELAY);
             }
         }
