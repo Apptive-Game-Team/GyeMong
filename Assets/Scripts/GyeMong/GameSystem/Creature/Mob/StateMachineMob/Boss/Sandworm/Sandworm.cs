@@ -28,6 +28,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private float _laserDuration;
         private float _laserDistance;
         private float _sunctionSpeed;
+        private float _chaseSpeed;
         public SoundObject curBGM;
         public SoundObject burrowingSound;
         protected override void Initialize()
@@ -50,6 +51,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             _laserDuration = 1f;
             _laserDistance = 4f;
             _sunctionSpeed = 3f;
+            _chaseSpeed = 4f;
 
             //ChangeState();
         }
@@ -180,7 +182,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 IsActionExist = true;
                 Sandworm.HideOrShow(true, 0.3f);
                 yield return new WaitForSeconds(0.3f);
-                Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f));
+                Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed));
                 yield return new WaitForSeconds(2f);
                 Sandworm.HideOrShow(false, 0.3f);
                 Sound.Play("ENEMY_Short_Burst_Action");
@@ -206,7 +208,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 IsActionExist = true;
                 Sandworm.HideOrShow(true, 0.3f);
                 yield return new WaitForSeconds(0.3f);
-                Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f));
+                Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed));
                 yield return new WaitForSeconds(2f);
                 Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
                 yield return new WaitForSeconds(0.5f);
@@ -253,11 +255,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sound.Play("ENEMY_Sand_Trap");
                 GameObject groundAttack = Instantiate(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity);
                 Destroy(groundAttack, 1f);
-                yield return new WaitForSeconds(0.6f);
-                IsActionExist = false;
-                yield return new WaitForSeconds(0.4f);
+                yield return new WaitForSeconds(1f);
                 yield return Sandworm.StartCoroutine(Sandworm.ChangePhaseEvent());
                 Sandworm.GetComponent<Collider2D>().enabled = true;
+                IsActionExist = false;
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
@@ -387,14 +388,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             transform.DORotate(newRotation, duration).SetEase(Ease.InOutSine);
         }
 
-        private IEnumerator ChasePlayer(float duration)
+        private IEnumerator ChasePlayer(float duration, float chaseSpeed)
         {
             burrowingSound = Sound.Play("ENEMY_Burrowing", true);
             float time = 0f;
             while (time < duration)
             {
                 Vector3 target = PlayerCharacter.Instance.transform.position;
-                transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * 3);
+                transform.position = Vector3.MoveTowards(transform.position, target, chaseSpeed * Time.deltaTime);
                 time += Time.deltaTime;
                 yield return null;
             }
