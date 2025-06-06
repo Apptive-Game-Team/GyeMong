@@ -27,6 +27,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private float _venomPitDuration;
         private float _laserDuration;
         private float _laserDistance;
+        private float _sunctionSpeed;
         public SoundObject curBGM;
         public SoundObject burrowingSound;
         protected override void Initialize()
@@ -48,6 +49,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             _venomPitDuration = 2f;
             _laserDuration = 1f;
             _laserDistance = 4f;
+            _sunctionSpeed = 3f;
 
             //ChangeState();
         }
@@ -246,6 +248,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 IsActionExist = true;
                 Sandworm.RotateHead(-30f, 3.5f, 30f, 0.2f, 0.5f);
                 Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
+                Sandworm.StartCoroutine(Sandworm.PlayerPull(3f, Sandworm._sunctionSpeed));
                 yield return new WaitForSeconds(3.6f);
                 Sound.Play("ENEMY_Sand_Trap");
                 GameObject groundAttack = Instantiate(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity);
@@ -429,6 +432,24 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 timer += Time.deltaTime;
                 CameraManager.Instance.CameraShake(force);
+                yield return null;
+            }
+        }
+        
+        private IEnumerator PlayerPull(float duration, float force)
+        {
+            float elapsed = 0f;
+            PlayerCharacter player = PlayerCharacter.Instance;
+
+            while (elapsed < duration)
+            {
+                if (!player.isDashing)
+                {
+                    Vector2 direction = (transform.position - player.transform.position).normalized;
+                    player.transform.Translate(direction * (force * Time.deltaTime), Space.World);
+                }
+
+                elapsed += Time.deltaTime;
                 yield return null;
             }
         }
