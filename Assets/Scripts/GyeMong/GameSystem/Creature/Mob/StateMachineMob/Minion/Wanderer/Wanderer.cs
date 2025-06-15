@@ -54,14 +54,29 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                     transform.position + DirectionToPlayer * distance, 
                     DirectionToPlayer, 
                     prefab, 
-                    new StaticMovement(
-                        transform.position + DirectionToPlayer * distance, 
+                    new ChildMovement(
+                        transform, 
+                        DirectionToPlayer * distance, 
                         duration)
                 )
                 .StartRoutine();
-            yield return new WaitForSeconds(0.2f);
+            yield return ApplyAttackingMove(0.2f);
             _animator.SetBool("isAttacking", false);
             yield return new WaitForSeconds(0.1f);
+        }
+
+        private IEnumerator ApplyAttackingMove(float duration, float speed = 1)
+        {
+            Vector3 targetPosition = transform.position + DirectionToPlayer * speed;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = targetPosition;
         }
 
         protected void Initialize()
