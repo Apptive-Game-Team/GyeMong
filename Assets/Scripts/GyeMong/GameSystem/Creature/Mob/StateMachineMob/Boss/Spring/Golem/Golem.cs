@@ -316,7 +316,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 }
             }
         }
-        protected override void Die()
+        public override void Die()
         {
             base.Die();
             Animator.SetBool("isDown", true);
