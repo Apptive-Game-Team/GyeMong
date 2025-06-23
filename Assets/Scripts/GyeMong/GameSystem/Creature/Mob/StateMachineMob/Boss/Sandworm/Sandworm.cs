@@ -16,6 +16,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 {
     public class Sandworm : Boss
     {
+        [SerializeField] private TailPattern mapPattern;
         [SerializeField] private GameObject venomAttack;
         [SerializeField] private GameObject venomPit;
         [SerializeField] private GameObject groundCrash;
@@ -180,6 +181,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             public override IEnumerator StateCoroutine()
             {
                 IsActionExist = true;
+                Sandworm.mapPattern.StopPattern();
                 Sandworm.HideOrShow(true, 0.3f);
                 yield return new WaitForSeconds(0.3f);
                 Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed));
@@ -190,6 +192,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Destroy(body, 0.07f);
                 IsActionExist = false;
                 yield return new WaitForSeconds(0.4f);
+                Sandworm.mapPattern.StartPattern();
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
@@ -206,6 +209,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             public override IEnumerator StateCoroutine()
             {
                 IsActionExist = true;
+                Sandworm.mapPattern.StopPattern();
                 Sandworm.HideOrShow(true, 0.3f);
                 yield return new WaitForSeconds(0.3f);
                 Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed));
@@ -243,6 +247,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override IEnumerator StateCoroutine()
             {
+                Sandworm.mapPattern.StopPattern();
                 IsActionExist = false;
                 yield return new WaitForSeconds(0.1f);
                 Sandworm.GetComponent<Collider2D>().enabled = false;
@@ -260,6 +265,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.GetComponent<Collider2D>().enabled = true;
                 IsActionExist = false;
                 SetWeights();
+                Sandworm.mapPattern.StartPattern();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
             }
@@ -494,6 +500,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         protected override void Die()
         {
             currentState.OnStateExit();
+            mapPattern.StopPattern();
             StopAllCoroutines();
             Sound.Stop(curBGM);
             Sound.Play("ENEMY_Ground_Crash");

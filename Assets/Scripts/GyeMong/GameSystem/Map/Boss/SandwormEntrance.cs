@@ -15,6 +15,7 @@ namespace GyeMong.GameSystem.Map.Boss
 {
     public class SandwormEntrance : BossRoomEntrance
     {
+        [SerializeField] private TailPattern mapPattern;
         [SerializeField] private Vector3 playerDestination;
         [SerializeField] private float playerMoveSpeed;
         [SerializeField] private GameObject wall;
@@ -62,6 +63,7 @@ namespace GyeMong.GameSystem.Map.Boss
             yield return StartCoroutine(CameraManager.Instance.CameraZoomInOut(cameraZoomSize, cameraZoomSpeed));
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
             boss.ChangeState();
+            mapPattern.StartPattern();
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
         }
     }
