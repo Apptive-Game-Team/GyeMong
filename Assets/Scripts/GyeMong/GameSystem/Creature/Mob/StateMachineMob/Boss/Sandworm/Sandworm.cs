@@ -506,6 +506,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Sound.Play("ENEMY_Ground_Crash");
             RotateHead(0,0,50f, 1f, 0, 50f);
             GetComponent<Collider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().sortingOrder--;
             StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
         }
     }
