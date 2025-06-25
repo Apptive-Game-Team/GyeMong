@@ -1,15 +1,13 @@
 using GyeMong.EventSystem.Event.Boss;
+using GyeMong.GameSystem.Creature;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
-using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
-using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
-using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GyeMong.GameSystem.Map.MapEvent.SpringNorthForestEntrance;
 using Visual.Camera;
+using GyeMong.EventSystem.Interface;
 
 namespace GyeMong.GameSystem.Map.MapEvent
 {
@@ -19,6 +17,9 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         [SerializeField] private MultiChatMessageData chatData;
         [SerializeField] private float autoSkipTime = 3f;
+
+        [SerializeField] private Creature.Mob.StateMachineMob.Boss.Boss boss;
+
         public IEnumerator Trigger()
         {
             return TriggerEvents();
@@ -56,6 +57,17 @@ namespace GyeMong.GameSystem.Map.MapEvent
             animBoolEvent.SetAnimator(someAnimator);
             animBoolEvent.SetParameter("isDown", false);
             yield return animBoolEvent.Execute();
+
+            //7
+            boss.Trigger();
+
+            //8
+            yield return new HideBossHealthBarEvent().Execute();
+
+            //9
+            var showHpBar = new ShowBossHealthBarEvent();
+            showHpBar.SetBoss(boss);
+            yield return showHpBar.Execute();
         }
     }
 }
