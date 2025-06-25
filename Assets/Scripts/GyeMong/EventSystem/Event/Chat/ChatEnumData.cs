@@ -18,6 +18,7 @@ namespace GyeMong.EventSystem.Event.Chat
     {
         Test1,
         Test2,
+        Nothing,
     }
 
     public enum ChatImage

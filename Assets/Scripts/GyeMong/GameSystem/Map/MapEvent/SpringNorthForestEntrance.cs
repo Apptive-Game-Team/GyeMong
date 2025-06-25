@@ -4,6 +4,7 @@ using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.EventScene;
 using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Player.Component;
+using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace GyeMong.GameSystem.Map.MapEvent
 {
     public class SpringNorthForestEntrance : MonoBehaviour
     {
+        [Header("Boss Room Entrance")]
+        [SerializeField] private BossRoomEntrance bossRoomEntrance;
+
         [Header("Stop Animator")]
         [SerializeField] private Animator targetAnimator;
 
@@ -32,7 +36,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private GameObject bossRoomObj;
 
         [Header("Chat Data")]
-        [SerializeField] private MultiChatMessageData chatData;
+        [SerializeField] private MultiChatMessageData chatData1;
+        [SerializeField] private MultiChatMessageData chatData2;
         [SerializeField] private float autoSkipTime = 3f;
 
         [Header("Start Animator")]
@@ -109,7 +114,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             Debug.Log("7");
 
             //8
-            yield return new ShowMessages(chatData, autoSkipTime).Execute();
+            yield return new ShowMessages(chatData1, autoSkipTime).Execute();
             Debug.Log("8");
 
             //9
@@ -123,7 +128,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             Debug.Log("10");
 
             //11
-            yield return new ShowMessages(chatData, autoSkipTime).Execute();
+            yield return new ShowMessages(chatData2, autoSkipTime).Execute();
             Debug.Log("11");
 
             //12
@@ -162,6 +167,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             Debug.Log("18");
 
             //19
+            bossRoomEntrance.Trigger();
+            Debug.Log("19");
         }
 
         public class CustomStopAnimatorEvent : StopAnimatorEvent
