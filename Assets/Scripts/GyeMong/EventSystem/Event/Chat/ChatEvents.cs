@@ -43,6 +43,12 @@ namespace GyeMong.EventSystem.Event.Chat
         float soundDelay = 0.2f;
         SoundObject _soundObject;
 
+        public ShowMessages(MultiChatMessageData data, float autoSkip = 3f)
+        {
+            chatData = data;
+            autoSkipTime = autoSkip;
+        }
+
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             foreach (var chat in chatData.chatMessages)
