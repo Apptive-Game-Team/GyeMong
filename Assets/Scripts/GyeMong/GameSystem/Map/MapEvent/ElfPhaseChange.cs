@@ -51,6 +51,11 @@ namespace GyeMong.GameSystem.Map.MapEvent
             //5
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
             Debug.Log("17");
+
+            //6
+            animBoolEvent.SetAnimator(someAnimator);
+            animBoolEvent.SetParameter("isDown", false);
+            yield return animBoolEvent.Execute();
         }
     }
 }
