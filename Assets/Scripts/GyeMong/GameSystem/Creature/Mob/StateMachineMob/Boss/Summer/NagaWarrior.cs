@@ -199,24 +199,25 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 Vector3 targetPos = SceneContext.Character.transform.position;
+                Vector3 targetDir = NagaWarrior.DirectionToPlayer;
                 NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, targetPos, SceneContext.Character.transform, NagaWarrior.attackdelayTime/2, NagaWarrior.attackdelayTime / 2, 1f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 yield return NagaWarrior.airborneController.AirborneTo(targetPos);
                 AttackObjectController.Create(
-                    NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
+                    NagaWarrior.transform.position + targetDir,
                     Vector3.zero,
                     NagaWarrior.pitBoundaryPrefab,
                     new StaticMovement(
-                        NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
+                        NagaWarrior.transform.position + targetDir,
                         NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
                 AttackObjectController.Create(
-                    NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
+                    NagaWarrior.transform.position + targetDir,
                     Vector3.zero,
                     NagaWarrior.pitCenterPrefab,
                     new StaticMovement(
-                        NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer,
+                        NagaWarrior.transform.position + targetDir,
                         NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
@@ -409,7 +410,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             GameObject attackCollider = Instantiate(skillAttackObj, spawnPosition, spawnRotation);
 
-            StartCoroutine(MoveColliderToTarget(attackCollider.transform, targetPosition, attackdelayTime * 2));
+            StartCoroutine(MoveColliderToTarget(attackCollider.transform, targetPosition, attackdelayTime * 4));
         }
         private IEnumerator MoveColliderToTarget(Transform obj, Vector3 targetPosition, float speed)
         {
@@ -448,7 +449,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     meleeAttackObj,
                     new StaticMovement(
                         spawnPosition,
-                        attackdelayTime / 2)
+                        (attackdelayTime / 2)*(4-combo))
                 )
                 .StartRoutine();
         }

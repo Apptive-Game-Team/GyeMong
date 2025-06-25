@@ -35,7 +35,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIn
                 yield return null;
             }
             Color color = spriteRenderer.color;
-            color.a = 1f;
+            color.a = 0.8f;
             spriteRenderer.color = color;
             yield return new WaitForSeconds(delay);
             Destroy(indicator.gameObject);
