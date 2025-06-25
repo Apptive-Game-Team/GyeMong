@@ -34,6 +34,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         bool isCool = false;
         public SoundObject curBGM;
 
+        [SerializeField] private BodyHeatUI bodyHeatUI;
+        private float bodyHeat;
         private Color dawnColor = new Color32(255, 255, 255, 255);
         private Color dayColor = new Color32(255, 85, 85, 255);
         private Color duskColor = new Color32(255, 255, 255, 255);
@@ -55,9 +57,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         private void Update()
         {
             UpdateTime();
+            bodyHeatUI.SetHeat(bodyHeat);
         }
         void UpdateTime()
         {
+            UpdateBodyHeat();
             Color targetColor;
             if (dailyCycleManager.currentTimePercent < 0.25f)
             {
@@ -96,6 +100,27 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 damage = 10f;
                 attackdelayTime = 1f;
+            }
+        }
+        void UpdateBodyHeat()
+        {
+            float t = dailyCycleManager.currentTimePercent;
+
+            if (t < 0.25f)
+            {
+                bodyHeat = Mathf.InverseLerp(0f, 0.25f, t);
+            }
+            else if (t < 0.5f)
+            {
+                bodyHeat = 1f;
+            }
+            else if (t < 0.75f)
+            {
+                bodyHeat = Mathf.InverseLerp(0.75f, 0.5f, t);
+            }
+            else
+            {
+                bodyHeat = 0f;
             }
         }
         public abstract class NagaWarriorState : CoolDownState
