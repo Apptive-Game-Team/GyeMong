@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using GyeMong.EventSystem;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
+using GyeMong.GameSystem.Map.MapEvent;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
@@ -72,8 +73,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
         public IEnumerator ChangingPhase()
         {
             currentHp = CurrentMaxHp;
-            GameObject.Find("PhaseChangeObj").GetComponent<EventObject>().Trigger();
-            yield return null;
+
+            GameObject phaseObj = GameObject.Find("PhaseChangeObj");
+
+            if (phaseObj != null)
+            {
+                phaseObj.GetComponent<EventObject>().Trigger();
+            }
+            else
+            {
+                ElfPhaseChange fallback = FindObjectOfType<ElfPhaseChange>();
+                if (fallback != null)
+                {
+                    yield return fallback.Trigger();
+                }
+            }
         }
 
         public override IEnumerator Stun(float duration)
