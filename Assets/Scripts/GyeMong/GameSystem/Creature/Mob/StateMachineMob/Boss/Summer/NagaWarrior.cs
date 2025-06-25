@@ -56,42 +56,55 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         }
         private void Update()
         {
-            UpdateTime();
+            UpdatePhaseState();
+            UpdateBodyHeat();
             bodyHeatUI.SetHeat(bodyHeat);
         }
-        void UpdateTime()
+        private void UpdatePhaseState()
         {
-            UpdateBodyHeat();
+            float t = dailyCycleManager.currentTimePercent;
             Color targetColor;
-            if (dailyCycleManager.currentTimePercent < 0.25f)
+            float phaseT;
+
+            if (t < 0.25f)
             {
                 isCool = false;
-                float t = dailyCycleManager.currentTimePercent / 0.25f;
-                targetColor = Color.Lerp(dawnColor, dayColor, t);
+                isOverheat = false;
+                phaseT = t / 0.25f;
+                targetColor = Color.Lerp(dawnColor, dayColor, phaseT);
             }
-            else if (dailyCycleManager.currentTimePercent < 0.5f)
+            else if (t < 0.5f)
             {
+                isCool = false;
                 isOverheat = true;
-                float t = (dailyCycleManager.currentTimePercent - 0.25f) / 0.25f;
-                targetColor = Color.Lerp(dayColor, duskColor, t);
+                phaseT = (t - 0.25f) / 0.25f;
+                targetColor = Color.Lerp(dayColor, duskColor, phaseT);
             }
-            else if (dailyCycleManager.currentTimePercent > 0.75f)
+            else if (t < 0.75f)
             {
-                isCool = true;
+                isCool = false;
+                isOverheat = false;
                 targetColor = duskColor;
             }
             else
             {
+                isCool = true;
                 isOverheat = false;
                 targetColor = duskColor;
             }
+
             SpriteRenderer.color = targetColor;
+
+            UpdateCombatStats();
+        }
+        private void UpdateCombatStats()
+        {
             if (isOverheat)
             {
                 damage = 15f;
                 attackdelayTime = 0.5f;
             }
-            else if(isCool)
+            else if (isCool)
             {
                 damage = 5f;
                 attackdelayTime = 2f;
@@ -102,7 +115,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 attackdelayTime = 1f;
             }
         }
-        void UpdateBodyHeat()
+        private void UpdateBodyHeat()
         {
             float t = dailyCycleManager.currentTimePercent;
 
