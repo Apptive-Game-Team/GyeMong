@@ -11,7 +11,7 @@ namespace GyeMong.GameSystem.Creature
         private float originShadowLocalY;
 
 
-        public IEnumerator AirborneTo(Vector3 destination, float airborneHeight = 1f, float speed = 10f)
+        public IEnumerator AirborneTo(Vector3 destination, float airborneHeight = 1f, float speed = 3f)
         {
             
             if (isAirborned)
