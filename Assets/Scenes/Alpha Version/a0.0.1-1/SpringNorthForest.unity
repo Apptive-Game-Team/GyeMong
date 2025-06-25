@@ -485,6 +485,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &383593785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383593787}
+  - component: {fileID: 383593786}
+  m_Layer: 0
+  m_Name: PhaseChangeObj (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &383593786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383593785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ceb2c780b37da544b010044c17d992c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  someAnimator: {fileID: 1459062337}
+  chatData: {fileID: 11400000, guid: 498fa5e2f609be044aef1d6affb304bb, type: 2}
+  autoSkipTime: 3
+--- !u!4 &383593787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383593785}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.99, y: 1.79, z: -0.17530909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &823301449
 GameObject:
   m_ObjectHideFlags: 0
@@ -26504,6 +26551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39f3eacb32d9994688759168ae8c4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossRoomEntrance: {fileID: 1404343488}
   targetAnimator: {fileID: 1459062337}
   targetSpriteRenderer: {fileID: 1459062338}
   newSprite: {fileID: 21300000, guid: 3bd1012804ff5486cb054948185bd4aa, type: 3}
@@ -26515,8 +26563,8 @@ MonoBehaviour:
   chatData1: {fileID: 11400000, guid: 0678d962a8e77f94e9a777bd25cef066, type: 2}
   chatData2: {fileID: 11400000, guid: 1688f675bb7cfa74884c941eecc6c327, type: 2}
   autoSkipTime: 3
-  someAnimator: {fileID: 0}
-  boss: {fileID: 0}
+  someAnimator: {fileID: 1459062337}
+  boss: {fileID: 1459062335}
 --- !u!114 &1404343488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27193,7 +27241,7 @@ MonoBehaviour:
     - rid: 6551754847466291208
       type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
       data:
-        chatData: {fileID: 0}
+        chatData: {fileID: 11400000, guid: 0678d962a8e77f94e9a777bd25cef066, type: 2}
         autoSkipTime: 3
     - rid: 6551754847466291209
       type: {class: ChangeSpriteEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
@@ -27208,7 +27256,7 @@ MonoBehaviour:
     - rid: 6551754847466291211
       type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
       data:
-        chatData: {fileID: 0}
+        chatData: {fileID: 11400000, guid: 1688f675bb7cfa74884c941eecc6c327, type: 2}
         autoSkipTime: 3
     - rid: 6551754847466291212
       type: {class: CloseChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
@@ -27568,6 +27616,7 @@ SceneRoots:
   - {fileID: 1542271253}
   - {fileID: 1404343492}
   - {fileID: 1858088964}
+  - {fileID: 383593787}
   - {fileID: 889852596}
   - {fileID: 1459062334}
   - {fileID: 962346216}

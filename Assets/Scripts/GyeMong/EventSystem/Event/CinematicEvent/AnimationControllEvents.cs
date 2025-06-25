@@ -62,6 +62,16 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     }
     public class SetAnimatorParameterBool : AnimationControllEvent
     {
+        public void SetAnimator(Animator animator)
+        {
+            _animator = animator;
+        }
+
+        public void SetParameter(string name, bool value)
+        {
+            _name = name;
+            _value = value;
+        }
         public enum CreatureType
         {
             NonPlayableCharacter,
