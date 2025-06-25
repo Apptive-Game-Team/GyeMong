@@ -20,7 +20,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private GameObject venomAttack;
         [SerializeField] private GameObject venomPit;
         [SerializeField] private GameObject groundCrash;
+        [SerializeField] private GameObject groundCrashIndicator;
         [SerializeField] private GameObject megaGroundCrash;
+        [SerializeField] private GameObject megaGroundCrashIndicator;
         [SerializeField] private GameObject laserAttack;
         [SerializeField] private GameObject bodyAttack;
         private float _venomAttackDuration;
@@ -133,6 +135,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 attackPosition.y -= 0.4f;
                 Sound.Play("ENEMY_Ground_Crash_Action");
                 Sandworm.RotateHead(-20f, 1f, 50f, 0.2f, 0.4f);
+                GameObject indicator = Instantiate(Sandworm.groundCrashIndicator, attackPosition + new Vector3(0.055f, 0.057f, 0f),
+                    Quaternion.Euler(0f, 0f, 90f));
+                Destroy(indicator, 0.9f);
                 yield return new WaitForSeconds(0.9f);
                 Sound.Play("ENEMY_Ground_Crash");
                 GameObject crash = Instantiate(Sandworm.groundCrash, attackPosition, Quaternion.identity);
@@ -191,11 +196,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 GameObject body = Instantiate(Sandworm.bodyAttack, Sandworm.transform.position, Quaternion.identity);
                 Destroy(body, 0.07f);
                 IsActionExist = false;
-                yield return new WaitForSeconds(0.4f);
+                yield return new WaitForSeconds(0.2f);
                 Sandworm.mapPattern.StartPattern();
+                yield return new WaitForSeconds(0.2f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
+            }
+            
+            protected override void SetWeights()
+            {
+                _weights = new Dictionary<System.Type, int>
+                {
+                    {typeof(ShortBurstOutAttack), 1}
+                };
             }
         }
 
@@ -233,7 +247,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 _weights = new Dictionary<System.Type, int>
                 {
-                    {typeof(ShortBurstOutAttack), 1}
+                    {typeof(VenomBreath), 1},
+                    {typeof(HeadAttack), 1},
+                    {typeof(FlameLaser), 1},
                 };
             }
         }
@@ -253,6 +269,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.GetComponent<Collider2D>().enabled = false;
                 Sound.Play("ENEMY_Sand_Trap_Action");
                 IsActionExist = true;
+                GameObject indicator = Instantiate(Sandworm.megaGroundCrashIndicator, Sandworm.transform.position + new Vector3(0.46f, 0.77f, 0f),
+                    Quaternion.Euler(0f, 0f, 90f));
+                Destroy(indicator, 3.6f);
                 Sandworm.RotateHead(-30f, 3.5f, 30f, 0.2f, 0.5f);
                 Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
                 Sandworm.StartCoroutine(Sandworm.PlayerPull(3f, Sandworm._sunctionSpeed));
