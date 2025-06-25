@@ -20,9 +20,10 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [Header("Stop Animator")]
         [SerializeField] private Animator targetAnimator;
 
-        [Header("Change Sprite : elf_back")]
+        [Header("Change Sprite")]
         [SerializeField] private SpriteRenderer targetSpriteRenderer;
-        [SerializeField] private Sprite newSprite;
+        [SerializeField] private Sprite newSprite1;
+        [SerializeField] private Sprite newSprite2;
 
         [Header("Move Creature : Player")]
         [SerializeField] private Transform moveTarget;
@@ -80,7 +81,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             //2 : Change Sprite
             var changeSpriteEvent = new ChangeSpriteEvent();
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
-            changeSpriteEvent.SetSprite(newSprite);
+            changeSpriteEvent.SetSprite(newSprite1);
             yield return changeSpriteEvent.Execute();
             Debug.Log("2");
 
@@ -119,7 +120,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
             //9
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
-            changeSpriteEvent.SetSprite(newSprite);
+            changeSpriteEvent.SetSprite(newSprite2);
             yield return changeSpriteEvent.Execute();
             Debug.Log("9");
 
@@ -154,7 +155,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             //16
             var animParamEvent = new SetAnimatorParameter();
             animParamEvent._creatureType = SetAnimatorParameter.CreatureType.Player;
-            animParamEvent.SetParameter("Speed", 2.0f);
+            animParamEvent.SetParameter("Speed", 10f);
             yield return animParamEvent.Execute();
             Debug.Log("16");
 
