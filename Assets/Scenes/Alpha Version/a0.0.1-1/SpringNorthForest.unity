@@ -1167,7 +1167,7 @@ PrefabInstance:
     - target: {fileID: 634883375546071749, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1813464454651665490, guid: 47fbc2e22b95346e69f88501dd5fa1b1,
         type: 3}
@@ -26554,12 +26554,14 @@ MonoBehaviour:
   bossRoomEntrance: {fileID: 1404343488}
   targetAnimator: {fileID: 1459062337}
   targetSpriteRenderer: {fileID: 1459062338}
-  newSprite: {fileID: 21300000, guid: 3bd1012804ff5486cb054948185bd4aa, type: 3}
+  newSprite1: {fileID: 21300000, guid: 3bd1012804ff5486cb054948185bd4aa, type: 3}
+  newSprite2: {fileID: 21300000, guid: 5fd0c1220da3844429dd60969921942e, type: 3}
   moveTarget: {fileID: 1089005465}
   moveSpeed: 1
   cameraDestination: {x: 2.97, y: 4.17, z: -10}
   cameraSpeed: 3
   bossRoomObj: {fileID: 962346217}
+  bossRoomObj_wall: {fileID: 1275491493}
   chatData1: {fileID: 11400000, guid: 0678d962a8e77f94e9a777bd25cef066, type: 2}
   chatData2: {fileID: 11400000, guid: 1688f675bb7cfa74884c941eecc6c327, type: 2}
   autoSkipTime: 3

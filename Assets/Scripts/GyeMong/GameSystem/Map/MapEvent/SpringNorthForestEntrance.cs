@@ -35,6 +35,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj;
+        [SerializeField] private GameObject bossRoomObj_wall;
 
         [Header("Chat Data")]
         [SerializeField] private MultiChatMessageData chatData1;
@@ -137,6 +138,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             Debug.Log("12");
 
             //13
+            activateBossRoomEvent.SetBossRoomObject(bossRoomObj_wall);
             yield return activateBossRoomEvent.Execute();
             Debug.Log("13");
 
