@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Interface;
+using GyeMong.UISystem.Game.BattleUI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature
 {
     public abstract class Creature : MonoBehaviour, IAttackable
     {
+        protected DominanceGauge dominanceGauge;
         private const float BLINK_DELAY = 0.15f;
         
         protected float maxHp;
@@ -32,6 +34,7 @@ namespace GyeMong.GameSystem.Creature
         protected internal float speed;
 
         protected Animator _animator;
+        protected SpriteRenderer _spriteRenderer;
         
         private MaterialController _materialController;
         public MaterialController MaterialController
@@ -59,7 +62,18 @@ namespace GyeMong.GameSystem.Creature
                 return _animator;
             }
         }
-        
+        public SpriteRenderer SpriteRenderer
+        {
+            get
+            {
+                if (_spriteRenderer == null)
+                {
+                    _spriteRenderer = GetComponent<SpriteRenderer>();
+                }
+
+                return _spriteRenderer;
+            }
+        }
         private Color? _originalColor = null;
         protected IEnumerator Blink()
         {
@@ -103,6 +117,8 @@ namespace GyeMong.GameSystem.Creature
 
         public virtual void OnAttacked(float damage)
         {
+            dominanceGauge = GameObject.Find("DominanceGauge").GetComponent<DominanceGauge>();
+            dominanceGauge.ApplyDamageToBoss(damage);
             if (currentShield >= damage)
             {
                 currentShield -= damage;
@@ -115,19 +131,6 @@ namespace GyeMong.GameSystem.Creature
                 StartCoroutine(Blink());
                 currentHp -= (damage - temp);
             }
-            PlayHitFeedback();
-        }
-        
-        public void PlayHitFeedback()
-        {
-            transform.DOKill(); // 중복 방지
-
-            Sequence seq = DOTween.Sequence();
-            seq.Append(transform.DOScaleX(0.6f, 0.3f))   // 가로로 홀쭉
-                .Join(transform.DOScaleY(1.4f, 0.3f))     // 세로로 늘어남
-                .Append(transform.DOScale(new Vector3(1.1f, 0.9f, 1f), 0.1f)) // 반동
-                .Append(transform.DOScale(Vector3.one, 0.3f)) // 원래대로
-                .SetEase(Ease.OutElastic);
         }
         
         protected virtual void OnDead()
@@ -135,5 +138,3 @@ namespace GyeMong.GameSystem.Creature
         } 
     }
 }
-
-

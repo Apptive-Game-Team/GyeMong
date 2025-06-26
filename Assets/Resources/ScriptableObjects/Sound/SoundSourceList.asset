@@ -93,7 +93,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 39ffd007313fb4b31b49abe70542238a, type: 3}
   - name: ENEMY_Seed_Explosion
     type: 1
-    clip: {fileID: 8300000, guid: 67a367759e2334becbdb95adb0664840, type: 3}
+    clip: {fileID: 8300000, guid: fcdbe68680215c3488eb2bf74f01d8d9, type: 3}
   - name: ENEMY_Vine
     type: 1
     clip: {fileID: 8300000, guid: 662dc2c91d272408890e7ac1ab267dae, type: 3}
@@ -130,3 +130,6 @@ MonoBehaviour:
   - name: EFFECT_Keyboard_Sound
     type: 1
     clip: {fileID: 8300000, guid: 656e0f609ee7324458fdd9f54bdb8ab1, type: 3}
+  - name: BGM_Summer_NagaWarrior
+    type: 4
+    clip: {fileID: 8300000, guid: 498e30a3f67c1f84f87ddc00a18ed0ad, type: 3}
