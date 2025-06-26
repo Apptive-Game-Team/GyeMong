@@ -20,14 +20,6 @@ namespace GyeMong.GameSystem.Map.Boss
             }
         }
 
-        protected void Start()
-        {
-            if (ConditionManager.Instance.Conditions.TryGetValue(bossConditionKey, out bool down) && down)
-            {
-                Destroy(gameObject);
-            }
-        }
-
         public void Trigger()
         {
             if (boss is Creature.Mob.StateMachineMob.Boss.Boss bossInstance)
