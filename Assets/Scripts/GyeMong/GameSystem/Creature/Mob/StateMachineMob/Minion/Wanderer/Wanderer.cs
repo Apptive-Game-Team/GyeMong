@@ -1,12 +1,10 @@
 using System.Collections;
-using GyeMong.EventSystem.Controller;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 {

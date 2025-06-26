@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Interface;
-using GyeMong.UISystem.Game.BattleUI;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature

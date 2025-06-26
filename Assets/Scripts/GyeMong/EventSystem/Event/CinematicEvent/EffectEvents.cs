@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using GyeMong.EventSystem.Controller;
 using UnityEngine;
 
 namespace GyeMong.EventSystem.Event.CinematicEvent

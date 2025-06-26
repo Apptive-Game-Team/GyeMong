@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using GyeMong.GameSystem.Creature.Player;
 using GyeMong.SoundSystem;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {

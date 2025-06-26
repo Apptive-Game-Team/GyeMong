@@ -3,7 +3,6 @@ using DG.Tweening;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
-using GyeMong.GameSystem.Creature.Player;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime

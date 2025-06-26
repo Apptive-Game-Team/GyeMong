@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using GyeMong.EventSystem.Controller;
 using GyeMong.EventSystem.Event;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
@@ -9,7 +7,6 @@ using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm;
 using GyeMong.SoundSystem;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Map.Boss
 {

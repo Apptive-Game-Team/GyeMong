@@ -1,6 +1,4 @@
 using System.Collections;
-using Cinemachine;
-using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Portal;
 using GyeMong.GameSystem.Map.Stage.ScriptableObject;
 using GyeMong.GameSystem.Map.Stage.Select;

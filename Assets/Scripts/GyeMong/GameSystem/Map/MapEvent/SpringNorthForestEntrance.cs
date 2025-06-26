@@ -1,14 +1,10 @@
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
-using GyeMong.EventSystem.Event.EventScene;
 using GyeMong.EventSystem.Event.Input;
-using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Map.MapEvent
 {

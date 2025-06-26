@@ -1,7 +1,5 @@
 using System.Collections;
-using GyeMong.GameSystem.Creature.Player;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.EventSystem.Event.CinematicEvent
 {

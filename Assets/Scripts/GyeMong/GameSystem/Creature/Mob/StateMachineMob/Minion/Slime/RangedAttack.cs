@@ -1,6 +1,5 @@
 using System.Collections;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
-using GyeMong.GameSystem.Creature.Player;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime

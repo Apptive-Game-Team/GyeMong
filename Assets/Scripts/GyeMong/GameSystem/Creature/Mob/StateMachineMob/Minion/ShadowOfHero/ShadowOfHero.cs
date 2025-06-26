@@ -1,12 +1,9 @@
 using System.Collections;
-using GyeMong.EventSystem;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
-using GyeMong.GameSystem.Map.Stage.Select;
-using GyeMong.UISystem.Game.BattleUI;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero

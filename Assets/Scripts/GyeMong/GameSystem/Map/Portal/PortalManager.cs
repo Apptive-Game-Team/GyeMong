@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using GyeMong.EventSystem.Controller;
-using GyeMong.GameSystem.Creature.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;

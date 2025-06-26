@@ -7,10 +7,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
-using Visual.Camera;
 using GyeMong.SoundSystem;
-using UnityEngine.UIElements;
-using TMPro;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
