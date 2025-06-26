@@ -171,11 +171,8 @@ namespace GyeMong.GameSystem.Creature.Player
         public void TakeDamage(float damage, bool isUnblockable = false)
         {
             if (isInvincible) return;
-
-            dominanceGauge = GameObject.Find("DominanceGauge").GetComponent<DominanceGauge>();
-            dominanceGauge.ApplyDamageToPlayer(damage);
-
-            CameraManager.Instance.CameraShake(0.1f);
+            
+            SceneContext.CameraManager.CameraShake(0.1f);
 
             if (damage >= curShield && curShield > 0)
             {

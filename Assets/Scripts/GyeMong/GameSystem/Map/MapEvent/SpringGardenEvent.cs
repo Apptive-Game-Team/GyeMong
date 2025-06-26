@@ -40,10 +40,10 @@ namespace GyeMong.GameSystem.Map.MapEvent
             SlimeEvents slimeEvent = new SlimeEvents(targetSlime, slimes);
 
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
-            yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));            
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));            
             yield return StartCoroutine(slimeEvent.Execute());
             yield return new WaitForSeconds(delayTime);
-            CameraManager.Instance.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
+            SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
         }
     }

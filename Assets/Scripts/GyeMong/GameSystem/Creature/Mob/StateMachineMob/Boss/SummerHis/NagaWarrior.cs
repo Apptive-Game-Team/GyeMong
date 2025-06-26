@@ -234,7 +234,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                         NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
-                CameraManager.Instance.CameraShake(0.3f);
+                SceneContext.CameraManager.CameraShake(0.3f);
                 Sound.Play("ENEMY_Rock_Falled");
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();

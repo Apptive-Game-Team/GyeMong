@@ -15,7 +15,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
             {
                 if (_textPanel == null)
                 {
-                    _textPanel = EffectManager.Instance.transform.Find("EventText").gameObject;
+                    _textPanel = SceneContext.EffectManager.transform.Find("EventText").gameObject;
                 }
                 return _textPanel;
             }

@@ -55,7 +55,7 @@ namespace GyeMong.GameSystem.Map.Boss
             }
             yield return StartCoroutine((new CloseChatEvent().Execute()));*/
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
-            yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             boss.GetComponent<NagaWarrior>().curBGM = Sound.Play("BGM_Summer_NagaWarrior", true);
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
             yield return StartCoroutine((new CameraFollowPlayer()).Execute());

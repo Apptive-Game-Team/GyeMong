@@ -13,7 +13,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
         [SerializeField] private float speed;
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            return CameraManager.Instance.CameraMove(destination, speed);
+            return SceneContext.CameraManager.CameraMove(destination, speed);
         }
     }
 
@@ -21,7 +21,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            CameraManager.Instance.CameraFollow(SceneContext.Character.transform);
+            SceneContext.CameraManager.CameraFollow(SceneContext.Character.transform);
             yield return null;
         }
     }
@@ -32,7 +32,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
         [SerializeField] private float duration;
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            return CameraManager.Instance.CameraZoomInOut(size, duration);
+            return SceneContext.CameraManager.CameraZoomInOut(size, duration);
         }
     }
 
@@ -40,7 +40,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            CameraManager.Instance.CameraZoomReset();
+            SceneContext.CameraManager.CameraZoomReset();
             return null;
         }
     }
@@ -50,7 +50,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
         [SerializeField] private float force;
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            CameraManager.Instance.CameraShake(force);
+            SceneContext.CameraManager.CameraShake(force);
             return null;
         }
     }

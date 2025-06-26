@@ -22,8 +22,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         public override void OnAttacked(float damage)
         {
             currentHp -= damage;
-            dominanceGauge = GameObject.Find("DominanceGauge").GetComponent<DominanceGauge>();
-            dominanceGauge.ApplyDamageToBoss(damage);
             if (currentHp <= 0)
             {
                 OnDead();

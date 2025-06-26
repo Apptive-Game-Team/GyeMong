@@ -55,9 +55,9 @@ namespace GyeMong.GameSystem.Map.Boss
             yield return new ShowMessages(multiMessages, autoSkipTime).Execute();
             yield return StartCoroutine((new CloseChatEvent().Execute()));
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
-            yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             boss.GetComponent<Sandworm>().curBGM = Sound.Play("BGM_Summer_Sandworm", true);
-            yield return StartCoroutine(CameraManager.Instance.CameraZoomInOut(cameraZoomSize, cameraZoomSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(cameraZoomSize, cameraZoomSpeed));
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
             boss.ChangeState();
             mapPattern.StartPattern();

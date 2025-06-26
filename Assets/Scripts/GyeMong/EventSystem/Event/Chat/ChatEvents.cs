@@ -86,7 +86,7 @@ namespace GyeMong.EventSystem.Event.Chat
         float destroyDelay;
         public override IEnumerator Execute(EventObject eventObject)
         {
-            return EffectManager.Instance.GetChatController().ShowSpeechBubbleChat(NPC, message, destroyDelay);
+            return SceneContext.EffectManager.GetChatController().ShowSpeechBubbleChat(NPC, message, destroyDelay);
         }
     }
 }
