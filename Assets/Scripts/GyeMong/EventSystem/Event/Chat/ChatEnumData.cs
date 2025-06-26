@@ -15,6 +15,7 @@ namespace GyeMong.EventSystem.Event.Chat
         
         // Summer
         Wanderer,
+        Sandworm,
     }
 
     public enum BackgroundImage
