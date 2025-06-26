@@ -31,7 +31,7 @@ namespace GyeMong.UISystem.Game.BossUI
             RectTransform rectTransform = GetComponent<RectTransform>();
             _hpBarWidth = rectTransform.rect.width;
             _shieldBarWidth = rectTransform.rect.width;
-            EffectManager.Instance.CachingHpBar(this);
+            SceneContext.EffectManager.CachingHpBar(this);
         }
 
         private void Update()

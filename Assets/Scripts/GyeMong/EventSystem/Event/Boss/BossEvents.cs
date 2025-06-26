@@ -45,7 +45,7 @@ namespace GyeMong.EventSystem.Event.Boss
       {
         if (_hpBarController == null)
         {
-          _hpBarController = EffectManager.Instance.GetHpBarController();
+          _hpBarController = SceneContext.EffectManager.GetHpBarController();
         }
         return _hpBarController;
       }

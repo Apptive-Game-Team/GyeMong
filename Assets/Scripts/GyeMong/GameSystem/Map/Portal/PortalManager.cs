@@ -22,7 +22,7 @@ namespace GyeMong.GameSystem.Map.Portal
 
         public IEnumerator TransitScene(PortalID portalID, float delay = 0f)
         {
-            yield return EffectManager.Instance.FadeOut();
+            yield return SceneContext.EffectManager.FadeOut();
             LoadSceneMode(portalID);
             StartCoroutine(DelayedFadeIn(delay));
         }
@@ -41,7 +41,7 @@ namespace GyeMong.GameSystem.Map.Portal
         private IEnumerator DelayedFadeIn(float delay)
         {
             yield return new WaitForSeconds(delay);
-            yield return EffectManager.Instance.FadeIn();
+            yield return SceneContext.EffectManager.FadeIn();
         }
     }
 }

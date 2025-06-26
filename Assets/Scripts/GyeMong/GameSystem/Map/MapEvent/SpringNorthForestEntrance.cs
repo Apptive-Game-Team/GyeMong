@@ -96,7 +96,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             Debug.Log("3");
 
             //4 : Camera Move
-            yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             Debug.Log("4");
 
             //5 : Activative Boss
@@ -166,7 +166,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             Debug.Log("17");
 
             //18
-            CameraManager.Instance.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
+            SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
             Debug.Log("18");
 
             //19

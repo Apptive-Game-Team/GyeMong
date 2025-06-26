@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using DG.Tweening;
-using GyeMong.GameSystem.Creature.Player;
 using Util;
 
 namespace Visual.Camera
 {
-    public class CameraManager : SingletonObject<CameraManager>
+    public class CameraManager : MonoBehaviour
     {
         private List<CinemachineVirtualCamera> virtualCams;
         private CinemachineVirtualCamera currentCam;
         private float cameraSize;
 
-        protected override void Awake() 
+        protected void Awake() 
         {
             cameraSize = 3.5f;
             GetCameras();

@@ -172,7 +172,7 @@ namespace GyeMong.GameSystem.Creature.Player
         {
             if (isInvincible) return;
             
-            CameraManager.Instance.CameraShake(0.1f);
+            SceneContext.CameraManager.CameraShake(0.1f);
 
             if (damage >= curShield && curShield > 0)
             {

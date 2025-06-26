@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
 
@@ -22,22 +23,22 @@ namespace GyeMong.SoundSystem
 
         public List<SoundSourceList> soundSourceListList;
 
+        private SoundSourceList _soundSourceList;
         public SoundSourceList soundSourceList
         {
             get
             {
-                if (soundSourceList == null)
+                if (_soundSourceList == null)
                 {
-                    soundSourceList = new SoundSourceList();
+                    _soundSourceList = ScriptableObject.CreateInstance<SoundSourceList>();
                     foreach (SoundSourceList list in soundSourceListList)
                     {
-                        soundSourceList.soundSources.AddRange(list.soundSources);
+                        _soundSourceList.soundSources.AddRange(list.soundSources);
                     }
                 }
 
-                return soundSourceList;
+                return _soundSourceList;
             }
-            private set => soundSourceList = value;
         }
 
         private Dictionary<SoundType, float> volumes = new Dictionary<SoundType, float>();
