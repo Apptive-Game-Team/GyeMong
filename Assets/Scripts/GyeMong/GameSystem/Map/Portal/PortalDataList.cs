@@ -50,6 +50,8 @@ namespace GyeMong.GameSystem.Map.Portal
     
         // Cliff
         SPRING_CLIFF1 = 25,
+        
+        WANDERER = 26,
     }
 
     [Serializable]
