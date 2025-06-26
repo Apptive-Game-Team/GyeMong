@@ -23,7 +23,7 @@ namespace GyeMong.GameSystem.Map.Boss
         [SerializeField] private float cameraSpeed;
         [SerializeField] private float cameraZoomSize;
         [SerializeField] private float cameraZoomSpeed;
-        [SerializeField] private List<MultiChatMessageData.MultiChatMessage> multiMessages;
+        [SerializeField] private MultiChatMessageData multiMessages;
         [SerializeField] private float autoSkipTime = 3f;
         private bool _isTriggered = false;
 
@@ -52,10 +52,7 @@ namespace GyeMong.GameSystem.Map.Boss
                 isActive = true
             }).Execute());
             yield return StartCoroutine((new OpenChatEvent().Execute()));
-            foreach (MultiChatMessageData.MultiChatMessage chat in multiMessages)
-            {
-                yield return ChatController.MultipleChat(chat, autoSkipTime);
-            }
+            yield return new ShowMessages(multiMessages);
             yield return StartCoroutine((new CloseChatEvent().Execute()));
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));
