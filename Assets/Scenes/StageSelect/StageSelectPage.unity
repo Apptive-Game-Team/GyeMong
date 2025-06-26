@@ -381,6 +381,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8253498931302874577, guid: 878e22c104ba745f3b528710fbace802,
+        type: 3}
+      propertyPath: sceneDataList
+      value: 
+      objectReference: {fileID: 11400000, guid: 3c43119c412264d5b8ef92f44c6abfce,
+        type: 2}
+    - target: {fileID: 8253498931302874577, guid: 878e22c104ba745f3b528710fbace802,
+        type: 3}
+      propertyPath: portalDataList
+      value: 
+      objectReference: {fileID: 11400000, guid: 00257a94ae7e94b528bf13160fe91d66,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -112,9 +112,7 @@ GameObject:
   - component: {fileID: 192519716517853443}
   - component: {fileID: 5083188182615057341}
   - component: {fileID: 4047033506906318720}
-  - component: {fileID: 8884589751490043246}
   - component: {fileID: 5207820199311480366}
-  - component: {fileID: 8276028414263349999}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -425,8 +423,11 @@ MonoBehaviour:
   isControlled: 0
   attackColliderPrefab: {fileID: 2848122850891802944, guid: 8e8beeeb017f3414891b7e04a9438725,
     type: 3}
+  attackComboColliderPrefab: {fileID: 2848122850891802944, guid: b242b1d90c6b5c24b951bbae457eb8f0,
+    type: 3}
   skillColliderPrefab: {fileID: 2848122850891802944, guid: fcbd072696f050e4a98ba91984d66a04,
     type: 3}
+  isDashing: 0
   materials:
   - {fileID: 2100000, guid: de56a6b3ebfee9940bdcedb5b20cee67, type: 2}
   - {fileID: 2100000, guid: 9aca40901bb145b4f940529ee4b672e8, type: 2}
@@ -447,18 +448,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e2f0d7b17aab4b8a802800c62d20884, type: 2}
   - {fileID: 11400000, guid: 9ebf8ea8ebf104c70bef6c353f9b4c35, type: 2}
   - {fileID: 11400000, guid: dfa710a021f634ebd95fcbbbe2f6c1fb, type: 2}
---- !u!114 &8884589751490043246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49194295218117097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9263955e57e244df9941554340e4e028, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5207820199311480366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,18 +461,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadow: {fileID: 8575451407304988533}
---- !u!114 &8276028414263349999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49194295218117097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24d565840948d394a9e19d89ee79d33d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1335504902609846588
 GameObject:
   m_ObjectHideFlags: 0

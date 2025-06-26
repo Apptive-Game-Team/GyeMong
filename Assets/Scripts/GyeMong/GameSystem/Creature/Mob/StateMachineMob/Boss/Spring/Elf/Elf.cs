@@ -322,7 +322,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 }
             }
         }
-        protected override void Die()
+        public override void Die()
         {
             base.Die();
             Animator.SetBool("isDown", true);
