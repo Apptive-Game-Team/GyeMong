@@ -26,7 +26,7 @@ namespace GyeMong.SoundSystem
                     return source;
             }
 
-            throw new Exception("SoundSource is not found");
+            throw new Exception("SoundSource is not found by name: " + name);
         }
 
         public List<SoundSource> GetSoundSourcesByNameComtains(string subString)

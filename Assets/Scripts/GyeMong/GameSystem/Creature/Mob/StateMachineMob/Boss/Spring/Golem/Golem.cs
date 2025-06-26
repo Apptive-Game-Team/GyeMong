@@ -4,13 +4,10 @@ using System.Linq;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
-using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using Unity.VisualScripting;
 using UnityEngine;
-using System.Drawing;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
@@ -66,7 +63,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
-                CameraManager.Instance.CameraShake(0.2f);
+                SceneContext.CameraManager.CameraShake(0.2f);
                 foreach (Vector3 point in points)
                 {
                     Vector3 dir = (point - transform.position).normalized;
@@ -92,7 +89,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             Vector3[] points = GetCirclePoints(transform.position, targetRadius, targetRadius * 3 + 10);
             ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
             StartCoroutine(ShockwaveSoundObject.Play());
-            CameraManager.Instance.CameraShake(0.2f);
+            SceneContext.CameraManager.CameraShake(0.2f);
             foreach (Vector3 point in points)
             {
                 AttackObjectController.Create(
@@ -180,7 +177,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.Animator.SetBool("Push", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
-                CameraManager.Instance.CameraShake(0.15f);
+                SceneContext.CameraManager.CameraShake(0.15f);
                 AttackObjectController.Create(
                     SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
                     Vector3.zero,
@@ -283,7 +280,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     .StartRoutine();
                     Golem._shockwavesoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                     Golem.StartCoroutine(Golem._shockwavesoundObject.Play());
-                    CameraManager.Instance.CameraShake(0.1f);
+                    SceneContext.CameraManager.CameraShake(0.1f);
                     yield return new WaitForSeconds(interval);
                 }
             }

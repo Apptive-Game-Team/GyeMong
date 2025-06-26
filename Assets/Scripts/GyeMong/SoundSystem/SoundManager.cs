@@ -25,6 +25,7 @@ namespace GyeMong.SoundSystem
 
         public List<SoundSourceList> soundSourceListList;
 
+        private SoundSourceList _soundSourceList;
         public SoundSourceList soundSourceList
         {
             get
@@ -40,8 +41,6 @@ namespace GyeMong.SoundSystem
 
                 return _soundSourceList;
             }
-            private set => _soundSourceList = value;
-        }
 
         private Dictionary<SoundType, float> volumes = new Dictionary<SoundType, float>();
         public List<SoundObject> soundObjects;

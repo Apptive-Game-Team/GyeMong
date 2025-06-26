@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using GyeMong.EventSystem.Controller;
-using GyeMong.GameSystem.Creature.Player;
 using GyeMong.InputSystem;
 using UnityEngine;
 using GyeMong.SoundSystem;
-using GyeMong.GameSystem.Creature.Player.Component;
 
 namespace GyeMong.EventSystem.Event.Chat
 {
@@ -86,7 +83,7 @@ namespace GyeMong.EventSystem.Event.Chat
         float destroyDelay;
         public override IEnumerator Execute(EventObject eventObject)
         {
-            return EffectManager.Instance.GetChatController().ShowSpeechBubbleChat(NPC, message, destroyDelay);
+            return SceneContext.EffectManager.GetChatController().ShowSpeechBubbleChat(NPC, message, destroyDelay);
         }
     }
 }

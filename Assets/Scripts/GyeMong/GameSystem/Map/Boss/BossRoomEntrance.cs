@@ -1,5 +1,3 @@
-using System.Collections;
-using GyeMong.EventSystem.Controller.Condition;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem;

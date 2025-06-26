@@ -1,9 +1,9 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using Util;
 
 namespace GyeMong.GameSystem
 {
-    public class InGameManager : SingletonObject<InGameManager>
+    public class InGameManager : MonoBehaviour
     {
         private void OnEnable()
         {

@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using GyeMong.EventSystem.Controller;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
-using GyeMong.InputSystem;
 using GyeMong.SoundSystem;
-using Visual.Camera;
 using Sequence = DG.Tweening.Sequence;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
@@ -457,7 +454,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             while (timer < duration)
             {
                 timer += Time.deltaTime;
-                CameraManager.Instance.CameraShake(force);
+                SceneContext.CameraManager.CameraShake(force);
                 yield return null;
             }
         }
@@ -507,10 +504,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private IEnumerator ChangePhaseEvent()
         {
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
-            yield return StartCoroutine(EffectManager.Instance.FadeOut());
+            yield return StartCoroutine(SceneContext.EffectManager.FadeOut());
             // change floor to basement
             yield return new WaitForSeconds(0.5f);
-            yield return StartCoroutine(EffectManager.Instance.FadeIn());
+            yield return StartCoroutine(SceneContext.EffectManager.FadeIn());
             curBGM = Sound.Play("BGM_Summer_Sandworm", true);
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = this }).Execute());
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());

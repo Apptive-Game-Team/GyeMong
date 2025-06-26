@@ -1,5 +1,4 @@
 using System.Collections;
-using GyeMong.EventSystem.Controller;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +13,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
             {
                 if (_image == null)
                 {
-                    _image = EffectManager.Instance.transform.Find("EventImage").GetComponent<Image>();
+                    _image = SceneContext.EffectManager.transform.Find("EventImage").GetComponent<Image>();
                 }
                 return _image;
             }

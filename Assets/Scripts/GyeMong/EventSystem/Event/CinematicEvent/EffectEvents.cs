@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using GyeMong.EventSystem.Controller;
 using UnityEngine;
 
 namespace GyeMong.EventSystem.Event.CinematicEvent
@@ -68,7 +67,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            return EffectManager.Instance.FadeIn();
+            return SceneContext.EffectManager.FadeIn();
         }
     }
 
@@ -77,7 +76,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            return EffectManager.Instance.FadeOut();
+            return SceneContext.EffectManager.FadeOut();
         }
     }
 
@@ -85,7 +84,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            return EffectManager.Instance.FadeInFirst();
+            return SceneContext.EffectManager.FadeInFirst();
         }
     }
 
@@ -93,7 +92,7 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            return EffectManager.Instance.ChangeToBlackScreen();
+            return SceneContext.EffectManager.ChangeToBlackScreen();
         }
     }
 }

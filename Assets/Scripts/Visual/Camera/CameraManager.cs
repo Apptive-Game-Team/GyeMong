@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using DG.Tweening;
-using GyeMong.GameSystem.Creature.Player;
-using Util;
 
 namespace Visual.Camera
 {
-    public class CameraManager : SingletonObject<CameraManager>
+    public class CameraManager : MonoBehaviour
     {
         private List<CinemachineVirtualCamera> virtualCams;
         private CinemachineVirtualCamera currentCam;
         private float cameraSize;
 
-        protected override void Awake() 
+        protected void Awake() 
         {
-            cameraSize = 3.5f;
+            cameraSize = 5f;
             GetCameras();
         }
 
@@ -27,7 +25,7 @@ namespace Visual.Camera
             {
                 Collider2D roomCollider = virtualCam.GetComponentInParent<Collider2D>();
                 virtualCam.gameObject.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = roomCollider;
-                virtualCam.Follow = SceneContext.Character.gameObject.transform;
+                virtualCam.Follow = SceneContext.Character?.gameObject.transform;
                 virtualCam.m_Lens.OrthographicSize = cameraSize;
                 virtualCam.Priority = 0;
             }

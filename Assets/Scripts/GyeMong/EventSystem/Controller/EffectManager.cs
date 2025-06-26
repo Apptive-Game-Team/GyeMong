@@ -2,14 +2,13 @@ using System.Collections;
 using GyeMong.UISystem.Game.BossUI;
 using UnityEngine;
 using UnityEngine.UI;
-using Util;
 
 namespace GyeMong.EventSystem.Controller
 {
     /// <summary>
     /// Every Event Management class
     /// </summary>
-    public class EffectManager : SingletonObject<EffectManager>
+    public class EffectManager : MonoBehaviour
     {
         private HpBarController hpBarController;
         private RawImage hurtEffect;
@@ -92,9 +91,8 @@ namespace GyeMong.EventSystem.Controller
             hpBarController = controller;
             hpBarController.gameObject.SetActive(false);
         }
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             CachingComponents();
         }
     }

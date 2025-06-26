@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using GyeMong.EventSystem.Controller;
 using GyeMong.EventSystem.Event;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
@@ -9,7 +8,6 @@ using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior;
 using GyeMong.SoundSystem;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Map.Boss
 {
@@ -55,7 +53,7 @@ namespace GyeMong.GameSystem.Map.Boss
             }
             yield return StartCoroutine((new CloseChatEvent().Execute()));*/
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
-            yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             boss.GetComponent<NagaWarrior>().curBGM = Sound.Play("BGM_Summer_NagaWarrior", true);
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
             yield return StartCoroutine((new CameraFollowPlayer()).Execute());

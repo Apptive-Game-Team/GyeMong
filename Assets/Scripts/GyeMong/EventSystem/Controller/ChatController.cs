@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.InputSystem;
@@ -8,7 +7,6 @@ using GyeMong.SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static GyeMong.EventSystem.Event.Chat.MultiChatMessageData;
 
 namespace GyeMong.EventSystem.Controller
 {
