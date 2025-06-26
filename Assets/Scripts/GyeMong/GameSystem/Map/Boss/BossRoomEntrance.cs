@@ -1,3 +1,4 @@
+using System.Collections;
 using GyeMong.EventSystem.Controller.Condition;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
@@ -8,7 +9,7 @@ namespace GyeMong.GameSystem.Map.Boss
 {
     public class BossRoomEntrance : MonoBehaviour, IEventTriggerable
     {
-        [SerializeField] private Creature.Mob.StateMachineMob.Boss.Boss boss;
+        [SerializeField] protected Creature.Mob.StateMachineMob.Boss.Boss boss;
         private string bossConditionKey;
 
         protected void Awake()

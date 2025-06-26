@@ -26,6 +26,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
             if (enemyAttackInfo.canMultiHit)
             {
+                attackObjectController.isAttacked = true;
                 float lastHitTime = multiHitTimers.ContainsKey(collider) ? multiHitTimers[collider] : 0f;
 
                 if (Time.time < lastHitTime + enemyAttackInfo.multiHitDelay) return;

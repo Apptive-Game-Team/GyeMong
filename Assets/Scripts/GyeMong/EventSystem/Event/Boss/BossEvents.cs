@@ -7,7 +7,7 @@ namespace GyeMong.EventSystem.Event.Boss
 {
   public abstract class BossEvent : Event
   {
-    [SerializeField] protected GameSystem.Creature.Mob.StateMachineMob.Boss.Boss _boss;
+    [SerializeField] public GameSystem.Creature.Mob.StateMachineMob.Boss.Boss _boss;
   }
   public class ActivateBossRoomEvent : BossEvent
   {
@@ -132,7 +132,7 @@ namespace GyeMong.EventSystem.Event.Boss
         HpBarController.ClearBoss();
         HpBarController.gameObject.SetActive(false);
       }
-      return null;
+      yield return null;
     }
   }
 }

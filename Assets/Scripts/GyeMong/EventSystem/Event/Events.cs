@@ -223,13 +223,13 @@ namespace GyeMong.EventSystem.Event
 
     public class SetActiveObject : Event
     {
-        [SerializeField] private GameObject _gameObject;
-        [SerializeField] private bool isActive;
+        [SerializeField] public GameObject _gameObject;
+        [SerializeField] public bool isActive;
 
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             _gameObject.SetActive(isActive);
-            return null;
+            yield return null;
         }
     }
 
