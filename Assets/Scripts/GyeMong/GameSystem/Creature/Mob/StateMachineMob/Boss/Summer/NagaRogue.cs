@@ -8,6 +8,10 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
+public enum Direction
+{
+    Up, Down, Right, Left
+}
 
 public class NagaRogue : StateMachineMob
 {
@@ -23,6 +27,14 @@ public class NagaRogue : StateMachineMob
 
     public float phaseChangeHealthPercent = 0.5f;
     public bool canPhaseChange = true;
+
+    public static Direction GetDirectionToTarget(Vector2 dir)
+    {
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            return dir.x > 0 ? Direction.Left : Direction.Right;
+        else
+            return dir.y > 0 ? Direction.Up : Direction.Down;
+    }
     
     public override void OnAttacked(float damage)
     {
@@ -72,7 +84,8 @@ public class NagaRogue : StateMachineMob
     private IEnumerator MeleeAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f)
     {
         FaceToPlayer();
-        _animator.SetTrigger("isAttacking");
+        Direction dir = GetDirectionToTarget(DirectionToPlayer);
+        _animator.Play($"Stab_{dir}");
         AttackObjectController.Create(
                 transform.position + DirectionToPlayer * distance, 
                 DirectionToPlayer, 
@@ -87,7 +100,8 @@ public class NagaRogue : StateMachineMob
     private IEnumerator RangeThrow(GameObject prefab, float distance = 0.5f, float throwSpeed = 10f)
     {
         FaceToPlayer();
-        _animator.SetTrigger("isAttacking");
+        Direction dir = GetDirectionToTarget(DirectionToPlayer);
+        _animator.Play($"Throw_{dir}");
         AttackObjectController.Create(
                 transform.position + DirectionToPlayer * distance, 
                 DirectionToPlayer, 
@@ -114,7 +128,8 @@ public class NagaRogue : StateMachineMob
     private IEnumerator CurveThrow(GameObject prefab, float distance = 0.5f, float throwSpeed = 8f, float curveAmount = 1f)
     {
         FaceToPlayer();
-        _animator.SetTrigger("isAttacking");
+        Direction dir = GetDirectionToTarget(DirectionToPlayer);
+        _animator.Play($"Throw_{dir}");
         AttackObjectController.Create(
                 transform.position + DirectionToPlayer * distance, 
                 DirectionToPlayer, 
@@ -131,7 +146,8 @@ public class NagaRogue : StateMachineMob
     private IEnumerator RangeFanThrow(GameObject prefab, int daggerCount = 5, float spreadAngle = 45f, float throwSpeed = 10f)
     {
         FaceToPlayer();
-        _animator.SetTrigger("isAttacking");
+        Direction direction = GetDirectionToTarget(DirectionToPlayer);
+        _animator.Play($"Throw_{direction}",-1,0f);
 
         Vector3 origin = transform.position;
         Vector3 toPlayer = (SceneContext.Character.transform.position - origin).normalized;
@@ -160,6 +176,8 @@ public class NagaRogue : StateMachineMob
     }
     public IEnumerator Move(Vector3 dir, float distance = 2f,float duration = 0.5f)
     {
+        Direction direction = GetDirectionToTarget(DirectionToPlayer);
+        _animator.Play($"Move_{direction}");
         float elapsed = 0f;
         Vector3 destination = transform.position + dir * distance;
         while (elapsed < duration)
@@ -173,6 +191,8 @@ public class NagaRogue : StateMachineMob
 
     public IEnumerator Teleport(Vector3 pos, float distance = 2f)
     {
+        Direction direction = GetDirectionToTarget(DirectionToPlayer);
+        _animator.Play($"Move_{direction}");
         transform.position = pos + distance * DirectionToPlayer;
         yield return new WaitForSeconds(0.2f);
     }
