@@ -67,27 +67,34 @@ namespace Util.ObjectCreator
         
         public T GetInactiveObject()
         {
-            foreach (T obj in _pool)
+            for (int i = 0; i < _pool.Count; i++)
             {
+                T obj = _pool[i];
                 try
                 {
                     if (obj.IsDestroyed() || obj.gameObject.IsDestroyed())
                     {
-                        _pool.Remove(obj);
+                        _pool.RemoveAt(i);
+                        i--;
+                        continue;
                     }
+
                     if (!obj.gameObject.activeInHierarchy)
                     {
                         return obj;
                     }
-                } catch (MissingReferenceException e)
+                }
+                catch (MissingReferenceException e)
                 {
                     Debug.LogWarning($"ObjectPool: {typeof(T).Name} - MissingReferenceException: {e.Message}");
-                    _pool.Remove(obj);
+                    _pool.RemoveAt(i);
+                    i--;
                 }
-                
             }
+
             return null;
         }
+
         
         public void ReturnObject(T obj)
         {
