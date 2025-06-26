@@ -182,11 +182,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 CameraManager.Instance.CameraShake(0.15f);
                 AttackObjectController.Create(
-                    PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f,
+                    SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
                     Vector3.zero,
                     Golem.pushOutAttackPrefab,
                     new StaticMovement(
-                        PlayerCharacter.Instance.transform.position - Golem.DirectionToPlayer * 0.5f,
+                        SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
                         Golem.attackdelayTime/2)
                     )
                     .StartRoutine();
@@ -208,7 +208,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("Toss", true);
                 Golem.StartCoroutine(Golem.TossSoundObject.Play());
                 yield return new WaitForSeconds(Golem.attackdelayTime * 2);
-                GameObject cube = Instantiate(Golem.cubePrefab, PlayerCharacter.Instance.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
+                GameObject cube = Instantiate(Golem.cubePrefab, SceneContext.Character.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 Golem.Animator.SetBool("Toss", false);
                 yield return new WaitUntil(() => cube.IsDestroyed());
                 SetWeights();
