@@ -47,8 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrazed: 0
   isAttacked: 0
-  _attackInfo: {fileID: 0}
-  _attackObjectSounds: {fileID: 0}
+  _attackInfo: {fileID: 11400000, guid: d042dc7684a0b9441a54af26e582e8bd, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: b28d57081f3558242baa8bed96d23d9f,
+    type: 2}
 --- !u!1 &4586232118180832888
 GameObject:
   m_ObjectHideFlags: 0

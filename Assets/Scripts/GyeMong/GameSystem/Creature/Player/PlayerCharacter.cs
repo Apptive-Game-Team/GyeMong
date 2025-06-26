@@ -13,8 +13,6 @@ namespace GyeMong.GameSystem.Creature.Player
 {
     public class PlayerCharacter : MonoBehaviour, IControllable, IEventTriggerable
     {
-        protected DominanceGauge dominanceGauge;
-
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
         
         public StatComponent stat;

@@ -6,7 +6,6 @@ namespace GyeMong.UISystem.Game.BossUI
 {
     public class HpBarController : MonoBehaviour
     {
-        [SerializeField] private DominanceGauge dominanceGauge;
         private RectTransform _curHpBar;
         private RectTransform _curShieldBar;
     

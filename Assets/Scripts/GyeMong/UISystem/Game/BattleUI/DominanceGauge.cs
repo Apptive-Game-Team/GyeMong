@@ -7,7 +7,7 @@ namespace GyeMong.UISystem.Game.BattleUI
 {
     public class DominanceGauge : MonoBehaviour
     {
-        [SerializeField] private Boss boss;
+        /*[SerializeField] private Boss boss;
         private Slider _gaugeSlider;
 
         private float _playerMaxHp;
@@ -74,6 +74,6 @@ namespace GyeMong.UISystem.Game.BattleUI
             {
                 boss.Die();
             }
-        }
+        }*/
     }
 }

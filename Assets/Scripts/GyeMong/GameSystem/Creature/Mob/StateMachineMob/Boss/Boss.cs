@@ -100,7 +100,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
             ChangeState();
         }
 
-        public virtual void Die()
+        protected virtual void Die()
         {
             try
             {

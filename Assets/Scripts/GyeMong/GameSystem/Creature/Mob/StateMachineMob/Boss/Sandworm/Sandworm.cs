@@ -513,7 +513,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
         }
 
-        public override void Die()
+        protected override void Die()
         {
             currentState.OnStateExit();
             mapPattern.StopPattern();

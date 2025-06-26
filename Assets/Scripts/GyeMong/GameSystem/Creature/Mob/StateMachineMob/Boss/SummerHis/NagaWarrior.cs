@@ -39,8 +39,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
 
         protected override void Initialize()
         {
-            maxHp = 200f;
-            currentHp = maxHp;
+            maxPhase = 1;
+            maxHps.Clear();
+            maxHps.Add(200f);
+            currentHp = maxHps[currentPhase];
             damage = 10f;
             speed = 2f;
             currentShield = 0f;
@@ -433,7 +435,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             obj.position = targetPosition;
             Destroy(obj.gameObject);
         }
-        public override void Die()
+        protected override void Die()
         {
             base.Die();
             Animator.SetBool("isDown", true);
