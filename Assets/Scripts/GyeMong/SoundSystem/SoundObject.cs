@@ -119,12 +119,5 @@ namespace GyeMong.SoundSystem
                 _audioSource.volume = _volume * _masterVolume;
             }
         }
-
-        public void GetRandomPitchAndVolume(bool flag)
-        {
-            if (!flag) return;
-            _audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-            _audioSource.volume = UnityEngine.Random.Range(0.9f, 1.1f);
-        }
     }
 }

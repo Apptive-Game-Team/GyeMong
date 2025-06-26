@@ -6,7 +6,6 @@ using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
 using GyeMong.GameSystem.Creature.Player.Controller;
 using GyeMong.InputSystem;
-using GyeMong.SoundSystem;
 using UnityEngine;
 using Util;
 using Visual.Camera;
@@ -157,8 +156,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (isInvincible) return;
 
             CameraManager.Instance.CameraShake(0.1f);
-            SoundObject hitSound = Sound.Play("EFFECT_Player_Hit", true);
-            StartCoroutine(HitStop());
+
             if (damage >= curShield && curShield > 0)
             {
                 damage -= curShield;
@@ -488,12 +486,5 @@ namespace GyeMong.GameSystem.Creature.Player
         }
         
         public float CurrentHp { get { return curHealth; } }
-
-        private IEnumerator HitStop()
-        {
-            Time.timeScale = 0.5f;
-            yield return new WaitForSeconds(0.1f);
-            Time.timeScale = 1f;
-        }
     }
 }
