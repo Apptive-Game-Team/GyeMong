@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
+  m_Name: WandererBefore
+  m_EditorClassIdentifier: 
+  chatMessages:
+  - speakerName: 5
+    messages:
+    - "\uBA48\uCDB0\uB77C!"
+    - "\uC774 \uAD6C\uC5ED\uC744 \uC5B4\uC9C0\uB7FD\uD788\uB294 \uB3C4\uC801\uB188\uB4E4
+      \uC911 \uD55C \uBA85\uC774\uAD70!"
+    - "\uC218\uB828\uC744 \uBC29\uD574\uD55C \uC8D7\uAC12, \uBAB8\uC73C\uB85C \uCE58\uB7EC\uB77C!"
+    chatDelay: 3
+    backgroundImage: 0

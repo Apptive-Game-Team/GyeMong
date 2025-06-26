@@ -3,6 +3,7 @@ using System.Collections;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.SoundSystem;
 using UnityEngine;
+using Visual.Camera;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
@@ -53,6 +54,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return null;
             }
             Sound.Play("ENEMY_Rock_Falled");
+            CameraManager.Instance.CameraShake(0.1f);
             Collider2D collider = GetComponent<Collider2D>();
             isFalled = true;
             if (collider != null)
