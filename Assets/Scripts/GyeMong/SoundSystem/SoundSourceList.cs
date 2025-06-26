@@ -15,7 +15,7 @@ namespace GyeMong.SoundSystem
     public class SoundSourceList : ScriptableObject
     {
         [SerializeField]
-        private List<SoundSource> soundSources = new List<SoundSource>();
+        public List<SoundSource> soundSources = new List<SoundSource>();
 
         public SoundSource GetSoundSourceByName(string name)
         {

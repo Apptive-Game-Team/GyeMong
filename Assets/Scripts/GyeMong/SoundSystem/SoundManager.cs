@@ -20,7 +20,26 @@ namespace GyeMong.SoundSystem
 
         private SoundObject bgmSoundObject;
 
-        public SoundSourceList soundSourceList;
+        public List<SoundSourceList> soundSourceListList;
+
+        public SoundSourceList soundSourceList
+        {
+            get
+            {
+                if (soundSourceList == null)
+                {
+                    soundSourceList = new SoundSourceList();
+                    foreach (SoundSourceList list in soundSourceListList)
+                    {
+                        soundSourceList.soundSources.AddRange(list.soundSources);
+                    }
+                }
+
+                return soundSourceList;
+            }
+            private set => soundSourceList = value;
+        }
+
         private Dictionary<SoundType, float> volumes = new Dictionary<SoundType, float>();
         public List<SoundObject> soundObjects;
     
