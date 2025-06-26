@@ -6,6 +6,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.GameSystem.Map.Stage.Select;
+using GyeMong.UISystem.Game.BattleUI;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
@@ -21,6 +22,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         public override void OnAttacked(float damage)
         {
             currentHp -= damage;
+            dominanceGauge = GameObject.Find("DominanceGauge").GetComponent<DominanceGauge>();
+            dominanceGauge.ApplyDamageToBoss(damage);
             if (currentHp <= 0)
             {
                 OnDead();
@@ -93,7 +96,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
         protected void Initialize()
         {
-            maxHp = 30;
+            maxHp = 100;
             currentHp = maxHp;
 
             currentShield = 0;

@@ -96,8 +96,64 @@ namespace GyeMong.GameSystem.Creature.Mob
                 yield return new WaitForFixedUpdate();
             }
         }
-        
-        
+        public IEnumerator QuickRushAttack()
+        {
+            float TARGET_OFFSET = 1f;
+            Vector3 playerPosition = SceneContext.Character.transform.position;
+            float chargeSpeed = 50f;
+            Vector3 direction = (playerPosition - transform.position).normalized;
+            lastRushDirection = direction;
+            Vector3 targetPosition = playerPosition - (direction * TARGET_OFFSET);
+            float targetDistance = Vector3.Distance(transform.position, targetPosition);
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            LayerMask obstacleLayer = LayerMask.GetMask("Wall");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
+
+            if (hit.collider != null)
+            {
+                yield break;
+            }
+
+            float elapsedTime = 0f;
+            float duration = targetDistance / chargeSpeed;
+            while (elapsedTime < duration)
+            {
+                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
+                rb.MovePosition(newPosition);
+                elapsedTime += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+        }
+        public IEnumerator QuickHalfRushAttack()
+        {
+            float TARGET_OFFSET = 1f;
+            Vector3 playerPosition = SceneContext.Character.transform.position;
+            float chargeSpeed = 50f;
+            Vector3 direction = (playerPosition - transform.position).normalized;
+            lastRushDirection = direction;
+            Vector3 targetPosition = playerPosition - (direction * TARGET_OFFSET);
+            float targetDistance = Vector3.Distance(transform.position, targetPosition);
+            float halfDistance = targetDistance / 2f;
+            Vector3 halfTargetPosition = transform.position + direction * halfDistance;
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            LayerMask obstacleLayer = LayerMask.GetMask("Wall");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, halfDistance, obstacleLayer);
+            if (hit.collider != null)
+            {
+                yield break;
+            }
+            float elapsedTime = 0f;
+            float duration = halfDistance / chargeSpeed;
+            while (elapsedTime < duration)
+            {
+                Vector3 newPosition = Vector3.Lerp(transform.position, halfTargetPosition, elapsedTime / duration);
+                rb.MovePosition(newPosition);
+                elapsedTime += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            rb.MovePosition(halfTargetPosition);
+        }
+
         public void TrackPlayer()
         {
             float step = speed * Time.deltaTime;
