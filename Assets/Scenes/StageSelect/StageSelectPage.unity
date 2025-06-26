@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 505893793}
   - component: {fileID: 505893792}
   m_Layer: 0
-  m_Name: Stage (1)
+  m_Name: Spring Stage (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 645387474}
   - component: {fileID: 645387473}
   m_Layer: 0
-  m_Name: "\u1107\u116E\u11BC\u110B\u1165\u1108\u1161\u11BC"
+  m_Name: Spring Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -883,7 +883,7 @@ GameObject:
   - component: {fileID: 989652501}
   - component: {fileID: 989652500}
   m_Layer: 0
-  m_Name: Stage (4)
+  m_Name: Spring Stage (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -981,7 +981,7 @@ GameObject:
   - component: {fileID: 997745150}
   - component: {fileID: 997745149}
   m_Layer: 0
-  m_Name: Stage (3)
+  m_Name: Spring Stage (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1287,7 +1287,7 @@ GameObject:
   - component: {fileID: 1337296261}
   - component: {fileID: 1337296260}
   m_Layer: 0
-  m_Name: "\u3147\u3155\uB984 \uBD95\uC5B4\uBE75"
+  m_Name: Summer Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1354,7 +1354,7 @@ Transform:
   m_GameObject: {fileID: 1337296259}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.48, y: 0.12, z: 0}
+  m_LocalPosition: {x: 21.48, y: -0.01, z: 0}
   m_LocalScale: {x: 0.64233047, y: 0.5152529, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1372,7 +1372,7 @@ GameObject:
   - component: {fileID: 1367523330}
   - component: {fileID: 1367523329}
   m_Layer: 0
-  m_Name: Stage (2)
+  m_Name: Spring Stage (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
