@@ -13,7 +13,7 @@ namespace GyeMong.EventSystem.Event.Input
     [Serializable]
     public class SetKeyInputEvent : ControlEvent
     {
-        [SerializeField] private bool _isEnable;
+        [SerializeField] public bool _isEnable;
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             InputManager.Instance.SetActionState(_isEnable);

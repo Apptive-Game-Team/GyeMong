@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
+  m_Name: EndingCredit
+  m_EditorClassIdentifier: 
+  chatMessages:
+  - speakerName: 5
+    isLeft: 0
+    messages:
+    - Ending Credit
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 5
+    isLeft: 0
+    messages:
+    - "\uB0B4\uC6A9\uC774 \uBB50\uC600\uC8E0?????????"
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
