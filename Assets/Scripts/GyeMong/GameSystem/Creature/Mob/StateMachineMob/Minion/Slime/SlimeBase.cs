@@ -42,7 +42,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             float scale = Mathf.Abs(transform.localScale.x);
             while (true)
             {
-                if (PlayerCharacter.Instance.transform.position.x < transform.position.x)
+                if (SceneContext.Character.transform.position.x < transform.position.x)
                 {
                     transform.localScale = new Vector3(-scale, scale, scale);
                 }
@@ -162,7 +162,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
                 if (mob.DistanceToPlayer <= mob.MeleeAttackRange)   
-                    PlayerCharacter.Instance.TakeDamage(mob.damage);
+                    SceneContext.Character.TakeDamage(mob.damage);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 yield return new WaitForSeconds(1);

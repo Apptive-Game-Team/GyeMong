@@ -5,6 +5,7 @@ using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
 using GyeMong.GameSystem.Creature.Player.Controller;
+using GyeMong.GameSystem.Map.Stage;
 using GyeMong.InputSystem;
 using UnityEngine;
 using Util;
@@ -12,7 +13,7 @@ using Visual.Camera;
 
 namespace GyeMong.GameSystem.Creature.Player
 {
-    public class PlayerCharacter : SingletonObject<PlayerCharacter>, IControllable, IEventTriggerable
+    public class PlayerCharacter : MonoBehaviour, IControllable, IEventTriggerable
     {
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
         
@@ -26,8 +27,7 @@ namespace GyeMong.GameSystem.Creature.Player
         private Vector2 lastMovementDirection;
         private Vector2 mousePosition;
         public Vector2 mouseDirection { get; private set; }
-
-
+        
         private Rigidbody2D playerRb;
         private Animator animator;
         private PlayerSoundController soundController;
@@ -46,9 +46,8 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public Material[] materials;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             stat = _statData.GetStatComp();
             curHealth = stat.HealthMax;
             curSkillGauge = 0f;
@@ -172,7 +171,6 @@ namespace GyeMong.GameSystem.Creature.Player
             PlayerEvent.TriggerOnTakeDamage(damage);
             changeListenerCaller.CallHpChangeListeners(curHealth);
             TakeGauge();
-            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth/stat.HealthMax));
             
             if (curHealth <= 0)
             {
@@ -375,14 +373,15 @@ namespace GyeMong.GameSystem.Creature.Player
         {
             //GameOver Event Triggered.
             changeListenerCaller.CallPlayerDied();
-            try
-            {
-                GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
-            }
-            catch
-            {
-                Debug.Log("PlayerGameOverEvent not found");
-            }
+            StageManager.LoseStage(this);
+            // try
+            // {
+            //     GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
+            // }
+            // catch
+            // {
+            //     Debug.Log("PlayerGameOverEvent not found");
+            // }
         }
 
         public void SetPlayerMove(bool _canMove)
@@ -481,10 +480,14 @@ namespace GyeMong.GameSystem.Creature.Player
             changeListenerCaller.CallHpChangeListeners(curHealth);
             changeListenerCaller.CallShieldChangeListeners(curShield);
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
-            StartCoroutine(EffectManager.Instance.HurtEffect(1 - curHealth / stat.HealthMax));
             changeListenerCaller.CallPlayerSpawned();
         }
         
         public float CurrentHp { get { return curHealth; } }
+        
+        public void DestroySelf()
+        {
+            Destroy(gameObject);
+        }
     }
 }

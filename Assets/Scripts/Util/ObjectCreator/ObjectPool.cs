@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Map.Portal;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -68,10 +69,22 @@ namespace Util.ObjectCreator
         {
             foreach (T obj in _pool)
             {
-                if (!obj.gameObject.activeInHierarchy)
+                try
                 {
-                    return obj;
+                    if (obj.IsDestroyed() || obj.gameObject.IsDestroyed())
+                    {
+                        _pool.Remove(obj);
+                    }
+                    if (!obj.gameObject.activeInHierarchy)
+                    {
+                        return obj;
+                    }
+                } catch (MissingReferenceException e)
+                {
+                    Debug.LogWarning($"ObjectPool: {typeof(T).Name} - MissingReferenceException: {e.Message}");
+                    _pool.Remove(obj);
                 }
+                
             }
             return null;
         }

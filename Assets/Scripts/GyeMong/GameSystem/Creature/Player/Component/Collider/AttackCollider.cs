@@ -7,6 +7,8 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 {
     public class AttackCollider : MonoBehaviour
     {
+        private const float SlashEffectDuration = 0.25f;
+        [SerializeField] private GameObject slashEffectPrefab;
         public float attackDamage;
         private PlayerSoundController _soundController;
         private ParticleSystem _particleSystem;
@@ -15,7 +17,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         {
             _particleSystem = GetComponentInChildren<ParticleSystem>();
             _shape = _particleSystem.shape;//.GetComponent<ParticleSystem.ShapeModule>();
-            var player = PlayerCharacter.Instance;
+            var player = SceneContext.Character;
             attackDamage = player.stat.AttackPower;
         }
 
@@ -38,7 +40,8 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             {
                 _soundController.Trigger(PlayerSoundType.SWORD_ATTACK);
                 creature.OnAttacked(attackDamage);
-                PlayerCharacter.Instance.AttackIncreaseGauge();
+                SceneContext.Character.AttackIncreaseGauge();
+                ShowSlashEffect(collision);
             } 
             else
             {
@@ -52,6 +55,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
                         foreach (IAttackable @object in attackableObjects)
                         {
                             @object.OnAttacked(attackDamage);
+                            ShowSlashEffect(collision);
                         }
                     }
                 }
@@ -67,6 +71,17 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             return false;
         }
 
+        private void ShowSlashEffect(Collider2D other)
+        {
+            Vector2 attackDir = (other.transform.position - transform.position).normalized;
+            Vector2 hitPoint = other.ClosestPoint(transform.position);
+            hitPoint += attackDir * 0.5f;
+            float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
+            Quaternion rot = Quaternion.Euler(0, 0, angle - 45f);
+            
+            var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot);
+            Destroy(slashEffect, SlashEffectDuration);
+        }
         private void SetParticleSystemTexture(Collider2D collision)
         {
             try

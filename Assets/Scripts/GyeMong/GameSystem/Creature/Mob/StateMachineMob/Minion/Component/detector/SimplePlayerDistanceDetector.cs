@@ -24,7 +24,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detec
 
         public PlayerCharacter DetectTarget()
         {
-            PlayerCharacter player = PlayerCharacter.Instance;
+            PlayerCharacter player = SceneContext.Character;
         
             if (Vector3.Distance(player.transform.position, transform.position) < _mob.DetectionRange)
             {
