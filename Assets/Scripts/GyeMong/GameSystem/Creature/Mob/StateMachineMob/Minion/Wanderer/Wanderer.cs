@@ -46,7 +46,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             ChangeState(new DetectingPlayer() {mob= this});
         }
 
-        private IEnumerator StaticAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f)
+        private IEnumerator StaticChildAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f)
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
@@ -57,6 +57,24 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                     new ChildMovement(
                         transform, 
                         DirectionToPlayer * distance, 
+                        duration)
+                )
+                .StartRoutine();
+            yield return ApplyAttackingMove(0.2f);
+            _animator.SetBool("isAttacking", false);
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        private IEnumerator StaticAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f)
+        {
+            FaceToPlayer();
+            _animator.SetTrigger("isAttacking");
+            AttackObjectController.Create(
+                    transform.position + DirectionToPlayer * distance, 
+                    DirectionToPlayer, 
+                    prefab, 
+                    new StaticMovement(
+                        DirectionToPlayer * distance + transform.position, 
                         duration)
                 )
                 .StartRoutine();
@@ -112,7 +130,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
-                yield return Wanderer.StaticAttack(Wanderer.circleSlashPrefab, 0);
+                yield return Wanderer.StaticChildAttack(Wanderer.circleSlashPrefab, 0);
                 yield return new WaitForSeconds(1f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
@@ -130,13 +148,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
-                yield return Wanderer.StaticAttack(Wanderer.basicAttackPrefab);
+                yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab);
                 CameraManager.Instance.CameraShake(0.1f);
                 yield return new WaitForSeconds(0.5f);
-                yield return Wanderer.StaticAttack(Wanderer.basicAttackPrefab);
+                yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab);
                 CameraManager.Instance.CameraShake(0.1f);
                 yield return new WaitForSeconds(0.5f);
-                yield return Wanderer.StaticAttack(Wanderer.comboSlashPrefab);
+                yield return Wanderer.StaticChildAttack(Wanderer.comboSlashPrefab);
                 CameraManager.Instance.CameraShake(0.3f);
                 yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
@@ -155,7 +173,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
-                yield return Wanderer.StaticAttack(Wanderer.upwardSlashPrefab);
+                yield return Wanderer.StaticChildAttack(Wanderer.upwardSlashPrefab);
                 yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
@@ -174,7 +192,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 Debug.Log("Ground Smash");
-                yield return Wanderer.StaticAttack(Wanderer.attackFloorPrefab);
+                yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab);
                 CameraManager.Instance.CameraShake(0.3f);
                 yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 100f);
                 yield return new WaitForSeconds(1.5f);
