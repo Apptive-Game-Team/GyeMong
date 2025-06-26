@@ -208,7 +208,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 _weights = new Dictionary<System.Type, int>
                 {
-                    {typeof(ShortBurstOutAttack), 1}
+                    {typeof(VenomBreath), 1},
+                    {typeof(HeadAttack), 1},
+                    {typeof(FlameLaser), 1},
                 };
             }
         }
@@ -247,9 +249,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 _weights = new Dictionary<System.Type, int>
                 {
-                    {typeof(VenomBreath), 1},
-                    {typeof(HeadAttack), 1},
-                    {typeof(FlameLaser), 1},
+                    {typeof(ShortBurstOutAttack), 1}
                 };
             }
         }
