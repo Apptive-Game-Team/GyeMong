@@ -5,6 +5,7 @@ using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
 using GyeMong.GameSystem.Creature.Player.Controller;
+using GyeMong.GameSystem.Map.Stage;
 using GyeMong.InputSystem;
 using UnityEngine;
 using Util;
@@ -42,7 +43,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private bool isMoving = false;
 
-        private bool isDashing = false;
+        public bool isDashing = false;
         private bool isAttacking = false;
         private bool canMove = true;
         private bool isInvincible = false;
@@ -246,15 +247,11 @@ namespace GyeMong.GameSystem.Creature.Player
         
         private IEnumerator TriggerInvincibility()
         {
-            isInvincible = true;
-            
             Material material = gameObject.GetComponent<Renderer>().material;
             material.SetFloat("_BlinkTrigger", 1f);
             yield return new WaitForSeconds(blinkDelay);
             material.SetFloat("_BlinkTrigger", 0f);
             yield return new WaitForSeconds(stat.InvincibilityDuration - blinkDelay);
-
-            isInvincible = false;
         }
 
         private IEnumerator Dash()
@@ -433,14 +430,15 @@ namespace GyeMong.GameSystem.Creature.Player
         {
             //GameOver Event Triggered.
             changeListenerCaller.CallPlayerDied();
-            try
-            {
-                GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
-            }
-            catch
-            {
-                Debug.Log("PlayerGameOverEvent not found");
-            }
+            StageManager.LoseStage(this);
+            // try
+            // {
+            //     GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
+            // }
+            // catch
+            // {
+            //     Debug.Log("PlayerGameOverEvent not found");
+            // }
         }
 
         public void SetPlayerMove(bool _canMove)
@@ -543,5 +541,10 @@ namespace GyeMong.GameSystem.Creature.Player
         }
         
         public float CurrentHp { get { return curHealth; } }
+        
+        public void DestroySelf()
+        {
+            Destroy(gameObject);
+        }
     }
 }

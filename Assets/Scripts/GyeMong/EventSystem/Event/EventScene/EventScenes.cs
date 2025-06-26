@@ -1,5 +1,6 @@
 using System.Collections;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GyeMong.EventSystem.Event.EventScene
@@ -11,6 +12,12 @@ namespace GyeMong.EventSystem.Event.EventScene
         [SerializeField] private GameObject targetSlime;
         [SerializeField] private GameObject[] slimes;
 
+        public SlimeEvents(GameObject targetSlime, GameObject[] slimes)
+        {
+            this.targetSlime = targetSlime;
+            this.slimes = slimes;
+        }
+
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             for (int i = 0;i < slimes.Length;i++)
@@ -21,7 +28,14 @@ namespace GyeMong.EventSystem.Event.EventScene
                 Vector3 randomPosition = targetSlime.transform.position + (Vector3)randomDirection;
                 randomSlime.transform.position = randomPosition;
 
-                eventObject.StartCoroutine(MoveSlimeToTarget(randomSlime));
+                if (eventObject != null)
+                {
+                    eventObject.StartCoroutine(MoveSlimeToTarget(randomSlime));
+                }
+                else
+                {
+                    CoroutineRunner.Instance.StartCoroutine(MoveSlimeToTarget(randomSlime));
+                }
 
                 float randomTime = Random.Range(0.5f, 1f);
                 yield return new WaitForSeconds(randomTime);

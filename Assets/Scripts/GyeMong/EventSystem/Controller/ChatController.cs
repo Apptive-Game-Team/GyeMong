@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.InputSystem;
 using GyeMong.SoundSystem;
@@ -16,6 +17,8 @@ namespace GyeMong.EventSystem.Controller
         private static Image chatWindow;
         private static Image backGround;
         private static Image characterImage;
+        private static Image characterImage2;
+        private static Image chattingImage;
         [SerializeField] private GameObject speechBubble;
         private const float CHAT_WINDOW_ALPHA = 0.7f;
         private const float SHOW_CHAT_DELAY = 0.1f;
@@ -30,6 +33,8 @@ namespace GyeMong.EventSystem.Controller
             messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
             backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
             characterImage = chatWindow.transform.Find("CharacterImageArea").GetComponent<Image>();
+            characterImage2 = chatWindow.transform.Find("CharacterImageArea2").GetComponent<Image>();
+            chattingImage = chatWindow.transform.Find("ChatImageArea").GetComponent<Image>();
         }
 
         public static IEnumerator Open()
@@ -63,16 +68,20 @@ namespace GyeMong.EventSystem.Controller
         {
             nameText.text = SetSpeakerName(multiChatMessage.speakerName);
             messageText.text = "";
-            SetBackgroundImage(GetBackgroundImageSprite(multiChatMessage.backgroundImage));
-            SetCharacterImage(GetCharacterImageSprite(multiChatMessage.speakerName));
+
+            ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
+            var speakerInfo = speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName);
+            SetCharacterImage(speakerInfo.image, multiChatMessage.isLeft);
+
+            string accumulatedText = "";
 
             foreach (string line in multiChatMessage.messages)
             {
-                SoundObject _soundObject;
-                _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
-                yield return ShowMultipleChat(line);
+                SoundObject _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
+                yield return ShowMultipleChat(line, accumulatedText);
                 Sound.Stop(_soundObject);
-                messageText.text += "\n";
+
+                accumulatedText += line + "\n";
 
                 float timer = Time.time;
                 yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
@@ -80,17 +89,20 @@ namespace GyeMong.EventSystem.Controller
             }
         }
 
-        private static IEnumerator ShowMultipleChat(string messages)
+        private static IEnumerator ShowMultipleChat(string newLine, string prefix)
         {
-            foreach (char c in messages)
+            string currentText = "";
+            foreach (char c in newLine)
             {
                 if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
                 {
-                    messageText.text = messages;
+                    currentText = newLine;
+                    messageText.text = prefix + currentText;
                     yield return new WaitForSeconds(SHOW_CHAT_DELAY);
-                    break;
+                    yield break;
                 }
-                messageText.text += c;
+                currentText += c;
+                messageText.text = prefix + currentText;
                 yield return new WaitForSeconds(SHOW_CHAT_DELAY);
             }
         }
@@ -99,35 +111,51 @@ namespace GyeMong.EventSystem.Controller
         {
             if (backGround != null)
             {
-                if (sprite != null)
-                {
-                    backGround.sprite = sprite;
-                    backGround.color = Color.white;
-                    backGround.enabled = true;
-                }
-                else
-                {
-                    backGround.sprite = null;
-                    backGround.color = new Color(0, 0, 0, 0);
-                    backGround.enabled = false;
-                }
+                SetImage(backGround, sprite);
             }
         }
-        public static void SetCharacterImage(Sprite sprite)
+        public static void SetChatImage(Sprite sprite)
         {
-            if (backGround != null)
+            if (chattingImage == null) return;
+
+            if (sprite != null)
             {
-                if (sprite != null)
+                chattingImage.sprite = sprite;
+                chattingImage.color = new Color(1, 1, 1, 0);
+                chattingImage.enabled = true;
+
+                Vector3 startPos = chattingImage.rectTransform.localPosition + new Vector3(0, 50, 0);
+                chattingImage.rectTransform.localPosition = startPos;
+
+                chattingImage.rectTransform.DOLocalMoveY(startPos.y - 50, 0.5f).SetEase(Ease.OutCubic);
+                chattingImage.DOFade(1f, 0.5f);
+            }
+            else
+            {
+                chattingImage.sprite = null;
+                chattingImage.color = new Color(0, 0, 0, 0);
+                chattingImage.enabled = false;
+            }
+        }
+        public static void SetCharacterImage(Sprite sprite, bool isLeft)
+        {
+            if (isLeft)
+            {
+                SetImage(characterImage, sprite);
+
+                if (characterImage2.enabled && characterImage2.sprite != null)
                 {
-                    characterImage.sprite = sprite;
-                    characterImage.color = Color.white;
-                    characterImage.enabled = true;
+                    characterImage2.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 }
-                else
+            }
+
+            else
+            {
+                SetImage(characterImage2, sprite);
+
+                if (characterImage.enabled && characterImage.sprite != null)
                 {
-                    characterImage.sprite = null;
-                    characterImage.color = new Color(0, 0, 0, 0);
-                    characterImage.enabled = false;
+                    characterImage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 }
             }
         }
@@ -147,7 +175,7 @@ namespace GyeMong.EventSystem.Controller
             return speakerName.ToString();
         }
         
-        private static Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
+        public static Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
         {
             BackgroundImageData backgroundImageData = Resources.Load<BackgroundImageData>("ScriptableObjects/Chat/BackgroundImage");
             foreach (var imageInfo in backgroundImageData.backgroundImages)
@@ -161,7 +189,21 @@ namespace GyeMong.EventSystem.Controller
             return null;
         }
 
-        private static Sprite GetCharacterImageSprite(ChatSpeakerType speakerType)
+        public static Sprite GetChatImageSprite(ChatImage chatImage)
+        {
+            ChatImageData chatImageData = Resources.Load<ChatImageData>("ScriptableObjects/Chat/ChatImageData");
+            foreach (var imageInfo in chatImageData.chatImages)
+            {
+                if (imageInfo.chatImage == chatImage)
+                {
+                    return imageInfo.image;
+                }
+            }
+
+            return null;
+        }
+
+        public static Sprite GetCharacterImageSprite(ChatSpeakerType speakerType)
         {
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
             foreach (var imageInfo in speakerData.ChatSpeakers)
@@ -173,6 +215,24 @@ namespace GyeMong.EventSystem.Controller
             }
 
             return null;
+        }
+
+        private static void SetImage(Image targetImage, Sprite sprite)
+        {
+            if (targetImage == null) return;
+
+            if (sprite != null)
+            {
+                targetImage.sprite = sprite;
+                targetImage.color = Color.white;
+                targetImage.enabled = true;
+            }
+            else
+            {
+                targetImage.sprite = null;
+                targetImage.color = new Color(0, 0, 0, 0);
+                targetImage.enabled = false;
+            }
         }
 
         public IEnumerator ShowSpeechBubbleChat(GameObject NPC, string message, float destroyDelay)

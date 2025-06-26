@@ -69,14 +69,22 @@ namespace Util.ObjectCreator
         {
             foreach (T obj in _pool)
             {
-                if (obj.IsDestroyed())
+                try
                 {
+                    if (obj.IsDestroyed() || obj.gameObject.IsDestroyed())
+                    {
+                        _pool.Remove(obj);
+                    }
+                    if (!obj.gameObject.activeInHierarchy)
+                    {
+                        return obj;
+                    }
+                } catch (MissingReferenceException e)
+                {
+                    Debug.LogWarning($"ObjectPool: {typeof(T).Name} - MissingReferenceException: {e.Message}");
                     _pool.Remove(obj);
                 }
-                if (!obj.gameObject.activeInHierarchy)
-                {
-                    return obj;
-                }
+                
             }
             return null;
         }

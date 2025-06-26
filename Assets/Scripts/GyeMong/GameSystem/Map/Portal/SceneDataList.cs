@@ -18,6 +18,9 @@ namespace GyeMong.GameSystem.Map.Portal
         SPRING_GOLEM_TEMPLE = 7,
         Cinematic = 8,
         SPRING_CLIFF = 9,
+        
+        // Summer
+        WANDERER = 10,
     }
 
 

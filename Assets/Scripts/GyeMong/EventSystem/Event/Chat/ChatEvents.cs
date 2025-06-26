@@ -43,6 +43,12 @@ namespace GyeMong.EventSystem.Event.Chat
         float soundDelay = 0.2f;
         SoundObject _soundObject;
 
+        public ShowMessages(MultiChatMessageData data, float autoSkip = 3f)
+        {
+            chatData = data;
+            autoSkipTime = autoSkip;
+        }
+
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             foreach (var chat in chatData.chatMessages)
@@ -50,11 +56,22 @@ namespace GyeMong.EventSystem.Event.Chat
                 _soundObject = Sound.Play("EFFECT_Chat_Sound", true);
                 yield return new WaitForSeconds(soundDelay);
                 Sound.Stop(_soundObject);
+
+                ChatController.SetBackgroundImage(ChatController.GetBackgroundImageSprite(chat.backgroundImage));
+                ChatController.SetChatImage(ChatController.GetChatImageSprite(chat.chatImage));
+
+                if (chat.chatImage != ChatImage.nothing)
+                {
+                    yield return new WaitForSeconds(2f);
+                }
+
                 yield return ChatController.MultipleChat(chat, autoSkipTime);
             }
 
             ChatController.SetBackgroundImage(null);
-            ChatController.SetCharacterImage(null);
+            ChatController.SetChatImage(null);
+            ChatController.SetCharacterImage(null, true);
+            ChatController.SetCharacterImage(null, false);
         }
     }
 

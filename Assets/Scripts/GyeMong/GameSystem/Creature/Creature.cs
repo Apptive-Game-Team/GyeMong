@@ -138,5 +138,3 @@ namespace GyeMong.GameSystem.Creature
         } 
     }
 }
-
-

@@ -12,6 +12,10 @@ namespace GyeMong.EventSystem.Event.Boss
   public class ActivateBossRoomEvent : BossEvent
   {
     [SerializeField] protected GameObject bossRoomObject;
+    public void SetBossRoomObject(GameObject obj)
+    {
+        bossRoomObject = obj;
+    }
     public override IEnumerator Execute(EventObject eventObject = null)
     {
       bossRoomObject.SetActive(true);
@@ -21,7 +25,11 @@ namespace GyeMong.EventSystem.Event.Boss
   public class DeActivateBossRoomEvent : BossEvent
   {
     [SerializeField] protected GameObject bossRoomObject;
-    public override IEnumerator Execute(EventObject eventObject = null)
+    public void SetBossRoomObject(GameObject obj)
+    {
+        bossRoomObject = obj;
+    }
+        public override IEnumerator Execute(EventObject eventObject = null)
     {
       bossRoomObject.SetActive(false);
       return null;
@@ -50,7 +58,12 @@ namespace GyeMong.EventSystem.Event.Boss
     private const float FILL_TIME = 0.7f;
     private const float DELTA_TIME = 0.02f;
     private const float DEFAULT_HP = 100;
-    public override IEnumerator Execute(EventObject eventObject = null)
+
+    public void SetBoss(GameSystem.Creature.Mob.StateMachineMob.Boss.Boss boss)
+    {
+        _boss = boss;
+    }
+        public override IEnumerator Execute(EventObject eventObject = null)
     {
       HpBarController.gameObject.SetActive(true);
       HpBarController.ClearBoss();
@@ -119,7 +132,7 @@ namespace GyeMong.EventSystem.Event.Boss
         HpBarController.ClearBoss();
         HpBarController.gameObject.SetActive(false);
       }
-      return null;
+      yield return null;
     }
   }
 }

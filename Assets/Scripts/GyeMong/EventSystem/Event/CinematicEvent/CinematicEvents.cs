@@ -74,6 +74,16 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Sprite _sprite;
+
+        public void SetSpriteRenderer(SpriteRenderer renderer)
+        {
+            _spriteRenderer = renderer;
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            _sprite = sprite;
+        }
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             _spriteRenderer.sprite = _sprite;

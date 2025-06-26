@@ -20,6 +20,10 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
 
     public class StartAnimatorEvent : AnimationControllEvent
     {
+        public void SetAnimator(Animator animator)
+        {
+            _animator = animator;
+        }
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             _animator.enabled = true;
@@ -29,6 +33,15 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
 
     public class SetAnimatorParameter : AnimationControllEvent
     {
+        public void SetAnimator(Animator animator)
+        {
+            _animator = animator;
+        }
+        public void SetParameter(string name, float value)
+        {
+            _name = name;
+            _value = value;
+        }
         public enum CreatureType
         {
             NonPlayableCharacter,
@@ -49,6 +62,16 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     }
     public class SetAnimatorParameterBool : AnimationControllEvent
     {
+        public void SetAnimator(Animator animator)
+        {
+            _animator = animator;
+        }
+
+        public void SetParameter(string name, bool value)
+        {
+            _name = name;
+            _value = value;
+        }
         public enum CreatureType
         {
             NonPlayableCharacter,
