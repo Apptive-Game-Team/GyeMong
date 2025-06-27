@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using GyeMong.EventSystem.Controller;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
-using GyeMong.InputSystem;
 using GyeMong.SoundSystem;
-using Visual.Camera;
 using Sequence = DG.Tweening.Sequence;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
@@ -108,7 +105,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 IsActionExist = true;
                 bool startPositionFlag = Sandworm.DirectionToPlayer.x > 0;
-                Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
+                Vector3 attackPosition = SceneContext.Character.transform.position;
                 Sound.Play("ENEMY_Venom_Breath_Action");
                 Sandworm.RotateHead(-15f, 0.75f, 20f, 0.2f, 0.4f);
                 yield return new WaitForSeconds(0.85f);
@@ -131,7 +128,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             public override IEnumerator StateCoroutine()
             {
                 IsActionExist = true;
-                Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
+                Vector3 attackPosition = SceneContext.Character.transform.position;
                 attackPosition.y -= 0.4f;
                 Sound.Play("ENEMY_Ground_Crash_Action");
                 Sandworm.RotateHead(-20f, 1f, 50f, 0.2f, 0.4f);
@@ -164,7 +161,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 bool startPositionFlag = Sandworm.DirectionToPlayer.x > 0;
                 Sound.Play("ENEMY_Laser_Action");
                 Sandworm.RotateHead(-20f, 0.2f, 0f, 0.2f, 0f);
-                Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
+                Vector3 attackPosition = SceneContext.Character.transform.position;
                 yield return new WaitForSeconds(0.3f);
                 Sandworm.LaserAttack(startPositionFlag, attackPosition);
                 yield return new WaitForSeconds(1f);
@@ -230,7 +227,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return new WaitForSeconds(0.3f);
                 Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed));
                 yield return new WaitForSeconds(2f);
-                Vector3 attackPosition = PlayerCharacter.Instance.transform.position;
+                Vector3 attackPosition = SceneContext.Character.transform.position;
                 yield return new WaitForSeconds(0.5f);
                 Sandworm.GetComponentInChildren<ParticleSystem>().Stop();
                 Sandworm.HideOrShow(false, 0.1f);
@@ -419,7 +416,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             float time = 0f;
             while (time < duration)
             {
-                Vector3 target = PlayerCharacter.Instance.transform.position;
+                Vector3 target = SceneContext.Character.transform.position;
                 transform.position = Vector3.MoveTowards(transform.position, target, chaseSpeed * Time.deltaTime);
                 time += Time.deltaTime;
                 yield return null;
@@ -457,7 +454,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             while (timer < duration)
             {
                 timer += Time.deltaTime;
-                CameraManager.Instance.CameraShake(force);
+                SceneContext.CameraManager.CameraShake(force);
                 yield return null;
             }
         }
@@ -465,7 +462,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private IEnumerator PlayerPull(float duration, float force)
         {
             float elapsed = 0f;
-            PlayerCharacter player = PlayerCharacter.Instance;
+            PlayerCharacter player = SceneContext.Character;
 
             while (elapsed < duration)
             {
@@ -507,10 +504,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private IEnumerator ChangePhaseEvent()
         {
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
-            yield return StartCoroutine(EffectManager.Instance.FadeOut());
+            yield return StartCoroutine(SceneContext.EffectManager.FadeOut());
             // change floor to basement
             yield return new WaitForSeconds(0.5f);
-            yield return StartCoroutine(EffectManager.Instance.FadeIn());
+            yield return StartCoroutine(SceneContext.EffectManager.FadeIn());
             curBGM = Sound.Play("BGM_Summer_Sandworm", true);
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = this }).Execute());
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());

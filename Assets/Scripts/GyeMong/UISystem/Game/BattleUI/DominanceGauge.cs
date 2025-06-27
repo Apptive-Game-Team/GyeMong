@@ -1,9 +1,5 @@
-using GyeMong.EventSystem.Controller;
-using GyeMong.GameSystem.Creature;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +7,7 @@ namespace GyeMong.UISystem.Game.BattleUI
 {
     public class DominanceGauge : MonoBehaviour
     {
-        [SerializeField] private Boss boss;
+        /*[SerializeField] private Boss boss;
         private Slider _gaugeSlider;
 
         private float _playerMaxHp;
@@ -78,6 +74,6 @@ namespace GyeMong.UISystem.Game.BattleUI
             {
                 boss.Die();
             }
-        }
+        }*/
     }
 }

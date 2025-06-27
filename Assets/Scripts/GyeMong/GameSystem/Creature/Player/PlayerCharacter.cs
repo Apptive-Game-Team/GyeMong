@@ -1,6 +1,4 @@
 using System.Collections;
-using GyeMong.EventSystem;
-using GyeMong.EventSystem.Controller;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
@@ -8,8 +6,6 @@ using GyeMong.GameSystem.Creature.Player.Controller;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.InputSystem;
 using UnityEngine;
-using Util;
-using Visual.Camera;
 using DG.Tweening;
 using GyeMong.UISystem.Game.BattleUI;
 
@@ -17,8 +13,6 @@ namespace GyeMong.GameSystem.Creature.Player
 {
     public class PlayerCharacter : MonoBehaviour, IControllable, IEventTriggerable
     {
-        protected DominanceGauge dominanceGauge;
-
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
         
         public StatComponent stat;
@@ -171,11 +165,8 @@ namespace GyeMong.GameSystem.Creature.Player
         public void TakeDamage(float damage, bool isUnblockable = false)
         {
             if (isInvincible) return;
-
-            dominanceGauge = GameObject.Find("DominanceGauge").GetComponent<DominanceGauge>();
-            dominanceGauge.ApplyDamageToPlayer(damage);
-
-            CameraManager.Instance.CameraShake(0.1f);
+            
+            SceneContext.CameraManager.CameraShake(0.1f);
 
             if (damage >= curShield && curShield > 0)
             {

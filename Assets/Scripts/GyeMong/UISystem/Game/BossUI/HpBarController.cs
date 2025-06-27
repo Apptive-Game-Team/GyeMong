@@ -1,5 +1,3 @@
-using GyeMong.EventSystem.Controller;
-using GyeMong.GameSystem.Creature;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
 using GyeMong.UISystem.Game.BattleUI;
 using UnityEngine;
@@ -8,7 +6,6 @@ namespace GyeMong.UISystem.Game.BossUI
 {
     public class HpBarController : MonoBehaviour
     {
-        [SerializeField] private DominanceGauge dominanceGauge;
         private RectTransform _curHpBar;
         private RectTransform _curShieldBar;
     
@@ -31,7 +28,7 @@ namespace GyeMong.UISystem.Game.BossUI
             RectTransform rectTransform = GetComponent<RectTransform>();
             _hpBarWidth = rectTransform.rect.width;
             _shieldBarWidth = rectTransform.rect.width;
-            EffectManager.Instance.CachingHpBar(this);
+            SceneContext.EffectManager.CachingHpBar(this);
         }
 
         private void Update()

@@ -1,6 +1,5 @@
 using System.Collections;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GyeMong.EventSystem.Event.EventScene

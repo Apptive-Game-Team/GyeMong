@@ -7,10 +7,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
-using Visual.Camera;
 using GyeMong.SoundSystem;
-using UnityEngine.UIElements;
-using TMPro;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
@@ -42,8 +39,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
 
         protected override void Initialize()
         {
-            maxHp = 200f;
-            currentHp = maxHp;
+            maxPhase = 1;
+            maxHps.Clear();
+            maxHps.Add(200f);
+            currentHp = maxHps[currentPhase];
             damage = 10f;
             speed = 2f;
             currentShield = 0f;
@@ -234,7 +233,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                         NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
-                CameraManager.Instance.CameraShake(0.3f);
+                SceneContext.CameraManager.CameraShake(0.3f);
                 Sound.Play("ENEMY_Rock_Falled");
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
@@ -436,7 +435,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             obj.position = targetPosition;
             Destroy(obj.gameObject);
         }
-        public override void Die()
+        protected override void Die()
         {
             base.Die();
             Animator.SetBool("isDown", true);

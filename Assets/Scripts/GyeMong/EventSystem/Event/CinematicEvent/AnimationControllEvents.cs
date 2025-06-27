@@ -1,5 +1,4 @@
 using System.Collections;
-using GyeMong.GameSystem.Creature.Player;
 using UnityEngine;
 
 namespace GyeMong.EventSystem.Event.CinematicEvent

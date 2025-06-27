@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using GyeMong.EventSystem.Controller;
 using GyeMong.EventSystem.Event;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
@@ -9,7 +7,6 @@ using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm;
 using GyeMong.SoundSystem;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Map.Boss
 {
@@ -23,8 +20,8 @@ namespace GyeMong.GameSystem.Map.Boss
         [SerializeField] private float cameraSpeed;
         [SerializeField] private float cameraZoomSize;
         [SerializeField] private float cameraZoomSpeed;
-        [SerializeField] private List<MultiChatMessage> multiMessages;
-        [SerializeField] private float autoSkipTime = 3f;
+        [SerializeField] private MultiChatMessageData multiMessages;
+        private float autoSkipTime = 3f;
         private bool _isTriggered = false;
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -52,15 +49,12 @@ namespace GyeMong.GameSystem.Map.Boss
                 isActive = true
             }).Execute());
             yield return StartCoroutine((new OpenChatEvent().Execute()));
-            foreach (MultiChatMessage chat in multiMessages)
-            {
-                yield return EffectManager.Instance.GetChatController().MultipleChat(chat, autoSkipTime);
-            }
+            yield return new ShowMessages(multiMessages, autoSkipTime).Execute();
             yield return StartCoroutine((new CloseChatEvent().Execute()));
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
-            yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             boss.GetComponent<Sandworm>().curBGM = Sound.Play("BGM_Summer_Sandworm", true);
-            yield return StartCoroutine(CameraManager.Instance.CameraZoomInOut(cameraZoomSize, cameraZoomSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(cameraZoomSize, cameraZoomSpeed));
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
             boss.ChangeState();
             mapPattern.StartPattern();

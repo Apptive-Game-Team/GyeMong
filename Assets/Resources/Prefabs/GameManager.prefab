@@ -48,7 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8e630bcbece471f84b7d996dfb7b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundSourceList: {fileID: 11400000, guid: f7c70a9f7551f4555ab85c45e449b9c7, type: 2}
+  soundSourceListList:
+  - {fileID: 11400000, guid: f7c70a9f7551f4555ab85c45e449b9c7, type: 2}
+  - {fileID: 11400000, guid: 23d48cf243ad54f50ab09d6cb95bd537, type: 2}
   soundObjects: []
 --- !u!114 &2150656979629955341
 MonoBehaviour:
@@ -98,5 +100,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e78a4dac7244d60a08931098236c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneDataList: {fileID: 11400000, guid: 3c43119c412264d5b8ef92f44c6abfce, type: 2}
-  portalDataList: {fileID: 11400000, guid: 00257a94ae7e94b528bf13160fe91d66, type: 2}
+  sceneDataList: {fileID: 0}
+  portalDataList: {fileID: 0}

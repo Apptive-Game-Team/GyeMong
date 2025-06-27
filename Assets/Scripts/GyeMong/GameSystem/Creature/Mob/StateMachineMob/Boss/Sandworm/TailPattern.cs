@@ -1,8 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using GyeMong.GameSystem.Creature.Player;
-using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
 using GyeMong.SoundSystem;
@@ -34,7 +30,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             while (true)
             {
-                Vector3 targetPos = PlayerCharacter.Instance.transform.position;
+                Vector3 targetPos = SceneContext.Character.transform.position;
                 Vector3 sandwormDir = Vector3.Distance(targetPos, sandworm.transform.position) > 1f ? 
                     (sandworm.transform.position - targetPos).normalized : Vector3.zero;
                 Vector3 spawnPos = targetPos + sandwormDir * _spawnPosAdj;
@@ -46,7 +42,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 GameObject tail = Instantiate(tailImage, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
                 Sound.Play("ENEMY_Map_Tail_Attack");
                 Destroy(tail, _detroyDelay);
-                FlipTail(tail, PlayerCharacter.Instance.transform.position.x < spawnPos.x);
+                FlipTail(tail, SceneContext.Character.transform.position.x < spawnPos.x);
                 BurstEffect(tail);
 
                 yield return new WaitForSeconds(_nextAttackDelay);

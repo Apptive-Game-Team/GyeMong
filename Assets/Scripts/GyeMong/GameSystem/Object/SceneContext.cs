@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using GyeMong.EventSystem.Controller;
 using GyeMong.GameSystem.Creature.Player;
+using Unity.VisualScripting;
 using UnityEngine;
+using Visual.Camera;
 
 public class SceneContext : MonoBehaviour
 {
@@ -17,6 +17,32 @@ public class SceneContext : MonoBehaviour
                 _character = FindObjectOfType<PlayerCharacter>();
             }
             return _character;
+        }
+    }
+    
+    private static EffectManager _effectManager;
+    public static EffectManager EffectManager
+    {
+        get
+        {
+            if (_effectManager == null || _effectManager.IsDestroyed())
+            {
+                _effectManager = FindObjectOfType<EffectManager>();
+            }
+            return _effectManager;
+        }
+    }
+    
+    private static CameraManager _cameraManager;
+    public static CameraManager CameraManager
+    {
+        get
+        {
+            if (_cameraManager == null || _cameraManager.IsDestroyed())
+            {
+                _cameraManager = FindObjectOfType<CameraManager>();
+            }
+            return _cameraManager;
         }
     }
 

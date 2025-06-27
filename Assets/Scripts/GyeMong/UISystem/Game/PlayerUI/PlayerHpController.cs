@@ -1,4 +1,3 @@
-using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 
 namespace GyeMong.UISystem.Game.PlayerUI

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
-using GyeMong.GameSystem.Creature.Player;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Npc

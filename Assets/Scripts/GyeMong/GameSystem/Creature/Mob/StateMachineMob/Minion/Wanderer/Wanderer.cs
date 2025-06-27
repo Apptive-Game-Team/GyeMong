@@ -1,12 +1,10 @@
 using System.Collections;
-using GyeMong.EventSystem.Controller;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 {
@@ -149,13 +147,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab);
-                CameraManager.Instance.CameraShake(0.1f);
+                SceneContext.CameraManager.CameraShake(0.1f);
                 yield return new WaitForSeconds(0.5f);
                 yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab);
-                CameraManager.Instance.CameraShake(0.1f);
+                SceneContext.CameraManager.CameraShake(0.1f);
                 yield return new WaitForSeconds(0.5f);
                 yield return Wanderer.StaticChildAttack(Wanderer.comboSlashPrefab);
-                CameraManager.Instance.CameraShake(0.3f);
+                SceneContext.CameraManager.CameraShake(0.3f);
                 yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
@@ -193,7 +191,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             {
                 Debug.Log("Ground Smash");
                 yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab);
-                CameraManager.Instance.CameraShake(0.3f);
+                SceneContext.CameraManager.CameraShake(0.3f);
                 yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 100f);
                 yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});

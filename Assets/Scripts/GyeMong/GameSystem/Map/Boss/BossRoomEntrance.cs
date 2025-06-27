@@ -1,5 +1,3 @@
-using System.Collections;
-using GyeMong.EventSystem.Controller.Condition;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem;
@@ -17,14 +15,6 @@ namespace GyeMong.GameSystem.Map.Boss
             if (bossConditionKey == null)
             {
                 bossConditionKey = GetConditionKeyByBoss(boss);
-            }
-        }
-
-        protected void Start()
-        {
-            if (ConditionManager.Instance.Conditions.TryGetValue(bossConditionKey, out bool down) && down)
-            {
-                Destroy(gameObject);
             }
         }
 

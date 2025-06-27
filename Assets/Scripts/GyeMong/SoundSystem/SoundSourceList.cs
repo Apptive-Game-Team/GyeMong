@@ -15,7 +15,7 @@ namespace GyeMong.SoundSystem
     public class SoundSourceList : ScriptableObject
     {
         [SerializeField]
-        private List<SoundSource> soundSources = new List<SoundSource>();
+        public List<SoundSource> soundSources = new List<SoundSource>();
 
         public SoundSource GetSoundSourceByName(string name)
         {
@@ -26,7 +26,7 @@ namespace GyeMong.SoundSystem
                     return source;
             }
 
-            throw new Exception("SoundSource is not found");
+            throw new Exception("SoundSource is not found by name: " + name);
         }
 
         public List<SoundSource> GetSoundSourcesByNameComtains(string subString)

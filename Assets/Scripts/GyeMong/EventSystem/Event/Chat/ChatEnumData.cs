@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace GyeMong.EventSystem.Event.Chat
 {
     public enum ChatSpeakerType
@@ -15,6 +11,7 @@ namespace GyeMong.EventSystem.Event.Chat
         
         // Summer
         Wanderer,
+        Sandworm,
     }
 
     public enum BackgroundImage

@@ -1,14 +1,10 @@
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
-using GyeMong.EventSystem.Event.EventScene;
 using GyeMong.EventSystem.Event.Input;
-using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Visual.Camera;
 
 namespace GyeMong.GameSystem.Map.MapEvent
 {
@@ -96,7 +92,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             Debug.Log("3");
 
             //4 : Camera Move
-            yield return StartCoroutine(CameraManager.Instance.CameraMove(cameraDestination, cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             Debug.Log("4");
 
             //5 : Activative Boss
@@ -166,7 +162,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             Debug.Log("17");
 
             //18
-            CameraManager.Instance.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
+            SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
             Debug.Log("18");
 
             //19

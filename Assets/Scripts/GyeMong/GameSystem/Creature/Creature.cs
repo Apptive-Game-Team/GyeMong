@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Interface;
-using GyeMong.UISystem.Game.BattleUI;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature
 {
     public abstract class Creature : MonoBehaviour, IAttackable
     {
-        protected DominanceGauge dominanceGauge;
         private const float BLINK_DELAY = 0.15f;
         
         protected float maxHp;
@@ -117,8 +114,6 @@ namespace GyeMong.GameSystem.Creature
 
         public virtual void OnAttacked(float damage)
         {
-            dominanceGauge = GameObject.Find("DominanceGauge").GetComponent<DominanceGauge>();
-            dominanceGauge.ApplyDamageToBoss(damage);
             if (currentShield >= damage)
             {
                 currentShield -= damage;

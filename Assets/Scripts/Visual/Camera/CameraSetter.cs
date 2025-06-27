@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ namespace Visual.Camera
         {
             if (other.CompareTag("Player"))
             {
-                CameraManager.Instance.ChangeCamera(transform.GetComponentInChildren<CinemachineVirtualCamera>());
+                SceneContext.CameraManager.ChangeCamera(transform.GetComponentInChildren<CinemachineVirtualCamera>());
             }
         }
     }
