@@ -20,6 +20,8 @@ namespace GyeMong.DataSystem
         public float UIVolume = 0.5f;
         public float bgmVolume = 0.5f;
         public float sfxVolume = 0.5f;
+        public float friendlyVolume = 0.5f;
+        public float enemyVolume = 0.5f;
     }
 
     [System.Serializable]

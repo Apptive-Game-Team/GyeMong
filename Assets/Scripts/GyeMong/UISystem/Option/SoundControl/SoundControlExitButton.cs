@@ -25,6 +25,8 @@ namespace GyeMong.UISystem.Option.SoundControl
             soundData.UIVolume = SoundController.Instance.uiVolumeSlider.value;
             soundData.bgmVolume = SoundController.Instance.bgmVolumeSlider.value;
             soundData.sfxVolume = SoundController.Instance.effectVolumeSlider.value;
+            soundData.friendlyVolume = SoundController.Instance.friendlyVolumeSlider.value;
+            soundData.enemyVolume = SoundController.Instance.enemyVolumeSlider.value;
 
             DataManager.Instance.SaveSection<SoundData>(soundData, "SoundData");
         }
