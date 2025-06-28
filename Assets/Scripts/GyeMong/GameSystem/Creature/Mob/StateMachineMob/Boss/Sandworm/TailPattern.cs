@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.SoundSystem;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
@@ -8,7 +9,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
     public class TailPattern : MonoBehaviour
     {
         [SerializeField] private GameObject tailImage;
-        [SerializeField] private GameObject indicatorImage;
         [SerializeField] private GameObject sandworm;
         private float _attackDelay;
         private float _nextAttackDelay;
@@ -35,8 +35,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                     (sandworm.transform.position - targetPos).normalized : Vector3.zero;
                 Vector3 spawnPos = targetPos + sandwormDir * _spawnPosAdj;
                 
-                GameObject indicator = Instantiate(indicatorImage, spawnPos, Quaternion.Euler(0f, 0f, 90f));
-                Destroy(indicator, _attackDelay);
+                IndicatorGenerator.Instance.GenerateIndicator(tailImage, spawnPos, Quaternion.Euler(0f, 0f, 0f), _attackDelay);
                 yield return new WaitForSeconds(_attackDelay);
                 
                 GameObject tail = Instantiate(tailImage, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
