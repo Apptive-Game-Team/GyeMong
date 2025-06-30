@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using GyeMong.EventSystem.Event.Chat;
+using GyeMong.EventSystem.Event.CinematicEvent;
+using UnityEngine.SceneManagement;
 
 namespace GyeMong.GameSystem.Map.MapEvent
 {
@@ -23,7 +25,9 @@ namespace GyeMong.GameSystem.Map.MapEvent
         {
             yield return StartCoroutine((new OpenChatEvent().Execute()));
             yield return new ShowMessages(chatData, autoSkipTime).Execute();
+            yield return new FadeOutEvent().Execute();
             yield return StartCoroutine((new CloseChatEvent().Execute()));
+            SceneManager.LoadScene("StageSelectPage");
         }
     }
 }
