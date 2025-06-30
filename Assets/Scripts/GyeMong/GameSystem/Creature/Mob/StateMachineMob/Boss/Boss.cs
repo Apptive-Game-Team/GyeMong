@@ -106,7 +106,18 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
             {
                 currentState.OnStateExit();
                 StopAllCoroutines();
-                GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
+
+                GameObject downObj = GameObject.Find("ElfDown");
+
+                if (downObj != null)
+                {
+                    ElfDown fallback = FindObjectOfType<ElfDown>();
+                    fallback.Trigger();
+                }
+                else
+                {
+                    GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
+                }
             }
             catch
             {

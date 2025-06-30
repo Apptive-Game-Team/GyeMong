@@ -782,7 +782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &889852596
 Transform:
   m_ObjectHideFlags: 0
@@ -26988,6 +26988,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1683061964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1683061967}
+  - component: {fileID: 1683061965}
+  m_Layer: 0
+  m_Name: BossDownEventObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1683061965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683061964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8bb9607587d7fe4db6ed00550cbc4ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatData: {fileID: 11400000, guid: c60db92709e0ffb46af8054ad80c542b, type: 2}
+  autoSkipTime: 3
+  bossRoomBgm1: {fileID: 0}
+  bossRoomBgm2: {fileID: 0}
+  bossRoomObj_wall: {fileID: 1275491493}
+--- !u!4 &1683061967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683061964}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.99, y: 1.79, z: -0.17530909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1858088962
 GameObject:
   m_ObjectHideFlags: 0
@@ -27376,7 +27425,7 @@ PrefabInstance:
     - target: {fileID: 1866131787590889062, guid: bcba196880861934cafb5d2d3d636f7b,
         type: 3}
       propertyPath: m_Name
-      value: BossRoomEntrance (1)
+      value: BossRoomEntrance_1
       objectReference: {fileID: 0}
     - target: {fileID: 4509312992925196190, guid: bcba196880861934cafb5d2d3d636f7b,
         type: 3}
@@ -27481,6 +27530,7 @@ SceneRoots:
   - {fileID: 1858088964}
   - {fileID: 3096850732489487786}
   - {fileID: 889852596}
+  - {fileID: 1683061967}
   - {fileID: 1459062334}
   - {fileID: 962346216}
   - {fileID: 177539223}
