@@ -151,9 +151,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5b42ab6cf531a4dae213dfc6bbe710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxPrefab: {fileID: 0}
-  circlePrefab: {fileID: 0}
-  capsulePrefab: {fileID: 0}
+  boxPrefab: {fileID: 6309003457626774954, guid: 68bfd45c19609ed4fb1debc57060e0c4,
+    type: 3}
+  circlePrefab: {fileID: 5945908489128085552, guid: 27a302ea6ecad24469cc0d2b400485c8,
+    type: 3}
+  capsulePrefab: {fileID: 8607135463447496517, guid: 23768871b1971be43943e667397c310c,
+    type: 3}
 --- !u!4 &243302454
 Transform:
   m_ObjectHideFlags: 0
@@ -335,7 +338,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b281f85d9882f7645957a29f57b5db9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackObject: {fileID: 1471198628254059304, guid: 2a4ccbbba82bf8d43ab26e0994cbfd9c,
+  _attackObject1: {fileID: 1471198628254059304, guid: 2a4ccbbba82bf8d43ab26e0994cbfd9c,
+    type: 3}
+  _attackObject2: {fileID: 1582423106245993158, guid: 73bc0937ba4d3504d87901060a95267b,
+    type: 3}
+  _attackObject3: {fileID: 1349092434517921609, guid: 43565c25ad2195843856cd3bf329e57e,
     type: 3}
 --- !u!4 &1763293507
 Transform:

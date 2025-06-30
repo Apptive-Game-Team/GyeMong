@@ -7,38 +7,29 @@ namespace GyeMong.GameSystem.Indicator
     {
         private SpriteRenderer _spriteRenderer;
 
-        public IEnumerator Flicker(float duration)
+        public IEnumerator Flick(float duration)
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             Color originalColor = _spriteRenderer.color;
-            Color highAlpha = new Color(originalColor.r, originalColor.g, originalColor.b, 0.8f);
             Color lowAlpha = new Color(originalColor.r, originalColor.g, originalColor.b, 0.2f);
-
+            
+            int flickCount = 6;
+            float flickInterval = 0.1f;
+            float flickStart = duration - flickInterval * flickCount;
             float elapsed = 0f;
-            float flickerStart = duration * (2f / 3f);
 
-            float flickerInterval = 0.1f;
-            float flickerTimer = 0f;
-            bool isHigh = true;
-
-            while (elapsed < duration)
+            while (elapsed < flickStart)
             {
                 elapsed += Time.deltaTime;
-
-                if (elapsed >= flickerStart)
-                {
-                    flickerTimer += Time.deltaTime;
-                    if (flickerTimer >= flickerInterval)
-                    {
-                        flickerTimer = 0f;
-                        isHigh = !isHigh;
-                        _spriteRenderer.color = isHigh ? highAlpha : lowAlpha;
-                    }
-                }
-
                 yield return null;
             }
-            
+
+            for (int i = 0; i < flickCount; i++)
+            {
+                _spriteRenderer.color = (i % 2 == 0) ? lowAlpha : originalColor;
+                yield return new WaitForSeconds(flickInterval);
+            }
+
             Destroy(gameObject);
         }
     }

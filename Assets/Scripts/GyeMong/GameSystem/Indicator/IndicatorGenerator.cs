@@ -15,7 +15,7 @@ namespace GyeMong.GameSystem.Indicator
             if (box == null) return null;
 
             var indicator = UnityEngine.Object.Instantiate(_boxObject);
-            indicator.transform.position = pos + attackObject.transform.TransformPoint(box.offset);
+            indicator.transform.position = pos + (Vector3)box.offset;
             indicator.transform.rotation = rot;
             indicator.transform.localScale = Vector3.Scale(new Vector3(box.size.x, box.size.y, 1f), attackObject.transform.lossyScale);
 
@@ -33,7 +33,7 @@ namespace GyeMong.GameSystem.Indicator
             if (circle == null) return null;
 
             var indicator = UnityEngine.Object.Instantiate(_circleObject);
-            indicator.transform.position = pos + attackObject.transform.TransformPoint(circle.offset);
+            indicator.transform.position = pos + (Vector3)circle.offset;
             indicator.transform.rotation = rot;
 
             float diameter = circle.radius * 2f;
@@ -54,7 +54,7 @@ namespace GyeMong.GameSystem.Indicator
             if (capsule == null) return null;
 
             var indicator = UnityEngine.Object.Instantiate(_capsuleObject);
-            indicator.transform.position = pos + attackObject.transform.TransformPoint(capsule.offset);
+            indicator.transform.position = pos + (Vector3)capsule.offset;
             indicator.transform.rotation = rot * Quaternion.Euler(0f, 0f, 90f);
 
             SpriteRenderer sr = indicator.GetComponent<SpriteRenderer>();
@@ -106,7 +106,7 @@ namespace GyeMong.GameSystem.Indicator
             if (_shapeMap.TryGetValue(type, out var shape))
             {
                 GameObject indicator = shape.CreateIndicator(attackObject, pos, rot);
-                StartCoroutine(indicator.AddComponent<Indicator>().Flicker(duration));
+                StartCoroutine(indicator.AddComponent<Indicator>().Flick(duration));
             }
             else
             {
