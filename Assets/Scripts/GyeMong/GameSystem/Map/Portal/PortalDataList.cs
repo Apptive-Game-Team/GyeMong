@@ -52,6 +52,7 @@ namespace GyeMong.GameSystem.Map.Portal
         SPRING_CLIFF1 = 25,
         
         WANDERER = 26,
+        NAGAWARRIOR = 27,
     }
 
     [Serializable]
