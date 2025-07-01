@@ -9,6 +9,7 @@ using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
 using GyeMong.SoundSystem;
 using GyeMong.EventSystem.Event.Boss;
+using GyeMong.EventSystem.Event;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
@@ -25,6 +26,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         [SerializeField] private GameObject skillAttackPrefab;
         [SerializeField] private GameObject overHeatSkillAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
+        [SerializeField] private GameObject dailyCycleIndicator;
         private AirborneController airborneController;
         float attackdelayTime;
         [SerializeField] private DailyCycleManager dailyCycleManager;
@@ -443,8 +445,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             Sound.Stop(curBGM);
             Sound.Play("ENEMY_Ground_Crash");
             GetComponent<Collider2D>().enabled = false;
-            GetComponent<SpriteRenderer>().sortingOrder--;
             StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
+            StartCoroutine((new SetActiveObject()
+            {
+                _gameObject = dailyCycleIndicator,
+                isActive = false
+            }).Execute());
         }
         private void SpawnAttackComboCollider(Vector3 direction, int combo)
         {
