@@ -322,6 +322,142 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &84912244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 84912245}
+  - component: {fileID: 84912246}
+  m_Layer: 0
+  m_Name: BossDownEventObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &84912245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84912244}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.643032, y: 26.472807, z: -0.0531817}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1127510953}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &84912246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84912244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLoop: 0
+  trigger: 4
+  triggerLimitCounter: -1
+  eventSequence:
+  - rid: 6551754819153690640
+  - rid: 6551754819153690641
+  - rid: 6551754819153690642
+  - rid: 6551754819153690643
+  - rid: 6551754819153690644
+  - rid: 6551754819153690645
+  - rid: 6551754819153690646
+  - rid: 6551754819153690647
+  - rid: 6551754819153690648
+  - rid: 6551754819153690649
+  - rid: 6551754819153690650
+  - rid: 6551754819153690651
+  - rid: 6551754819153690652
+  - rid: 6551754819153690655
+  - rid: 6551754819153690653
+  references:
+    version: 2
+    RefIds:
+    - rid: 6551754819153690640
+      type: {class: StopAnimatorEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _animator: {fileID: 1637330592}
+    - rid: 6551754819153690641
+      type: {class: ChangeSpriteEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 1637330593}
+        _sprite: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808, type: 3}
+    - rid: 6551754819153690642
+      type: {class: HideBossHealthBarEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1637330591}
+    - rid: 6551754819153690643
+      type: {class: ToggleConditionEvent, ns: GyeMong.EventSystem.Event.Condition,
+        asm: Assembly-CSharp}
+      data:
+        tag: spring_guardian_down
+        condition: 1
+    - rid: 6551754819153690644
+      type: {class: SetKeyInputEvent, ns: GyeMong.EventSystem.Event.Input, asm: Assembly-CSharp}
+      data:
+        _isEnable: 0
+    - rid: 6551754819153690645
+      type: {class: OpenChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754819153690646
+      type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data:
+        chatData: {fileID: 0}
+        autoSkipTime: 3
+    - rid: 6551754819153690647
+      type: {class: CloseChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754819153690648
+      type: {class: SetKeyInputEvent, ns: GyeMong.EventSystem.Event.Input, asm: Assembly-CSharp}
+      data:
+        _isEnable: 1
+    - rid: 6551754819153690649
+      type: {class: CameraFollowPlayer, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data: 
+    - rid: 6551754819153690650
+      type: {class: CameraZoomInOut, ns: GyeMong.EventSystem.Event.CinematicEvent,
+        asm: Assembly-CSharp}
+      data:
+        size: 3.6
+        duration: 0.5
+    - rid: 6551754819153690651
+      type: {class: ActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1637330591}
+        bossRoomObject: {fileID: 1592182054}
+    - rid: 6551754819153690652
+      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1637330591}
+        bossRoomObject: {fileID: 1620963477}
+    - rid: 6551754819153690653
+      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1637330591}
+        bossRoomObject: {fileID: 141803510}
+    - rid: 6551754819153690655
+      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
+      data:
+        _boss: {fileID: 1637330591}
+        bossRoomObject: {fileID: 2142563700}
 --- !u!1 &87877852
 GameObject:
   m_ObjectHideFlags: 0
@@ -73220,6 +73356,7 @@ Transform:
   - {fileID: 520865295}
   - {fileID: 1747424050}
   - {fileID: 1881313932}
+  - {fileID: 84912245}
   - {fileID: 2104101707}
   - {fileID: 141803511}
   m_Father: {fileID: 0}
@@ -75735,7 +75872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1881313932
 Transform:
   m_ObjectHideFlags: 0
@@ -75760,101 +75897,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1881313931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
+  m_Script: {fileID: 11500000, guid: b0bc5727d871fcd4f98d24a932495e1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 4
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 6551754819153690640
-  - rid: 6551754819153690641
-  - rid: 6551754819153690642
-  - rid: 6551754819153690643
-  - rid: 6551754819153690644
-  - rid: 6551754819153690645
-  - rid: 6551754819153690646
-  - rid: 6551754819153690647
-  - rid: 6551754819153690648
-  - rid: 6551754819153690649
-  - rid: 6551754819153690650
-  - rid: 6551754819153690651
-  - rid: 6551754819153690652
-  - rid: 6551754819153690655
-  - rid: 6551754819153690653
-  references:
-    version: 2
-    RefIds:
-    - rid: 6551754819153690640
-      type: {class: StopAnimatorEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
-        asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 1637330592}
-    - rid: 6551754819153690641
-      type: {class: ChangeSpriteEvent, ns: GyeMong.EventSystem.Event.CinematicEvent,
-        asm: Assembly-CSharp}
-      data:
-        _spriteRenderer: {fileID: 1637330593}
-        _sprite: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808, type: 3}
-    - rid: 6551754819153690642
-      type: {class: HideBossHealthBarEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1637330591}
-    - rid: 6551754819153690643
-      type: {class: ToggleConditionEvent, ns: GyeMong.EventSystem.Event.Condition,
-        asm: Assembly-CSharp}
-      data:
-        tag: spring_guardian_down
-        condition: 1
-    - rid: 6551754819153690644
-      type: {class: SetKeyInputEvent, ns: GyeMong.EventSystem.Event.Input, asm: Assembly-CSharp}
-      data:
-        _isEnable: 0
-    - rid: 6551754819153690645
-      type: {class: OpenChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
-      data: 
-    - rid: 6551754819153690646
-      type: {class: ShowMessages, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
-      data:
-        chatData: {fileID: 0}
-        autoSkipTime: 3
-    - rid: 6551754819153690647
-      type: {class: CloseChatEvent, ns: GyeMong.EventSystem.Event.Chat, asm: Assembly-CSharp}
-      data: 
-    - rid: 6551754819153690648
-      type: {class: SetKeyInputEvent, ns: GyeMong.EventSystem.Event.Input, asm: Assembly-CSharp}
-      data:
-        _isEnable: 1
-    - rid: 6551754819153690649
-      type: {class: CameraFollowPlayer, ns: GyeMong.EventSystem.Event.CinematicEvent,
-        asm: Assembly-CSharp}
-      data: 
-    - rid: 6551754819153690650
-      type: {class: CameraZoomInOut, ns: GyeMong.EventSystem.Event.CinematicEvent,
-        asm: Assembly-CSharp}
-      data:
-        size: 3.6
-        duration: 0.5
-    - rid: 6551754819153690651
-      type: {class: ActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1637330591}
-        bossRoomObject: {fileID: 1592182054}
-    - rid: 6551754819153690652
-      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1637330591}
-        bossRoomObject: {fileID: 1620963477}
-    - rid: 6551754819153690653
-      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1637330591}
-        bossRoomObject: {fileID: 141803510}
-    - rid: 6551754819153690655
-      type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
-      data:
-        _boss: {fileID: 1637330591}
-        bossRoomObject: {fileID: 2142563700}
+  targetAnimator: {fileID: 1637330592}
+  targetSpriteRenderer: {fileID: 1637330593}
+  newSprite1: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808, type: 3}
+  chatData: {fileID: 0}
+  autoSkipTime: 3
+  bossRoomObj1: {fileID: 1592182054}
+  bossRoomObj2: {fileID: 1620963477}
+  bossRoomObj3: {fileID: 2142563700}
+  bossRoomObj4: {fileID: 141803510}
 --- !u!1 &1933332375
 GameObject:
   m_ObjectHideFlags: 0
