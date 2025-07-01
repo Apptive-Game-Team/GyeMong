@@ -65,6 +65,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private IEnumerator TriggerEvents()
         {
+            _isTriggered = true;
+
             var stopAnimEvent = new CustomStopAnimatorEvent();
             stopAnimEvent.SetAnimator(targetAnimator);
             yield return stopAnimEvent.Execute();
