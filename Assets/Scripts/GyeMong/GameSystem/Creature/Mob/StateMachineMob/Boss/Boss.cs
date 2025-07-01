@@ -112,7 +112,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
                 if (downObj != null)
                 {
                     ElfDown fallback = FindObjectOfType<ElfDown>();
-                    fallback.Trigger();
+                    StartCoroutine(fallback.Trigger());
                 }
                 else
                 {

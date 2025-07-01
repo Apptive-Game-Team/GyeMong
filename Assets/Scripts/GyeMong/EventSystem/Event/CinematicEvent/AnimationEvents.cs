@@ -14,6 +14,21 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
 
         [SerializeField] private SpriteRenderer _renderer = null;
 
+        public void SetRenderer(SpriteRenderer renderer)
+        {
+            _renderer = renderer;
+        }
+
+        public void SetFrames(List<Sprite> spriteList)
+        {
+            frames = spriteList;
+        }
+
+        public void SetDeltaTime(float time)
+        {
+            deltaTime = time;
+        }
+
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             if (_renderer == null) 
