@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7303749f5a0d4e18a9d6d8ae0067cc92, type: 3}
+  m_Name: Sandworm
+  m_EditorClassIdentifier: 
+  id: 6
+  portalID: 27
+  beforeScript:
+  - {fileID: 11400000, guid: 476fc2d2bf5d6f44b9ef7118eaabb76f, type: 2}
+  afterScript:
+  - {fileID: 11400000, guid: 2e7c88d727879cb45944da2526849d1e, type: 2}

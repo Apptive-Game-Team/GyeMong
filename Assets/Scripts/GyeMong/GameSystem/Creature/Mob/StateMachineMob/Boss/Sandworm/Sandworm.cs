@@ -6,6 +6,7 @@ using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using Sequence = DG.Tweening.Sequence;
 
@@ -524,6 +525,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().sortingOrder--;
             StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
+            StageManager.ClearStage(this);
         }
     }
 }
