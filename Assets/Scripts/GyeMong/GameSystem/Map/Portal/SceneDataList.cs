@@ -20,7 +20,9 @@ namespace GyeMong.GameSystem.Map.Portal
         SPRING_CLIFF = 9,
         
         // Summer
-        WANDERER = 10,
+        SUMMER_OPENING = 50,
+        NAGA_ROGUE = 51,
+        WANDERER = 70,
     }
 
 

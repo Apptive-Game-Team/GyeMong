@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53719a619df1455ba69412db0149c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageInfo: {fileID: 0}
+  stageInfo: {fileID: 11400000, guid: 5f2fc8e71c1ce3844aa2da4b0835bcc5, type: 2}
 --- !u!212 &365854323
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -549,7 +549,7 @@ Transform:
   m_GameObject: {fileID: 397783981}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 21, y: 0, z: -10.001161}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2387,7 +2387,7 @@ MonoBehaviour:
   - {fileID: 1670040081}
   cursor: {fileID: 1193039749}
   inputDelay: 0.2
-  _maxIndex: 0
+  _maxIndex: 8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -87,7 +87,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         private void Awake()
         {
             cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 0)].transform.position);
-            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 1);
+            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 5);
             _nodeSelector = new LinearNodeSelector(stageNodes, _maxIndex);
             _currentNode = stageNodes[_maxIndex];
             cursor.MoveTo(_currentNode.transform.position);
