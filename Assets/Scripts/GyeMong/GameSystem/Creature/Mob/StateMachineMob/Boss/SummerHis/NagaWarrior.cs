@@ -8,6 +8,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndica
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
 using GyeMong.SoundSystem;
+using GyeMong.EventSystem.Event.Boss;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
@@ -437,9 +438,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         }
         protected override void Die()
         {
-            base.Die();
-            Animator.SetBool("isDown", true);
-            StageManager.ClearStage(this);
+            currentState.OnStateExit();
+            StopAllCoroutines();
+            Sound.Stop(curBGM);
+            Sound.Play("ENEMY_Ground_Crash");
+            GetComponent<Collider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().sortingOrder--;
+            StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
         }
         private void SpawnAttackComboCollider(Vector3 direction, int combo)
         {
