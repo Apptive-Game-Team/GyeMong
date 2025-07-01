@@ -83,9 +83,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
             else
             {
                 ElfPhaseChange fallback = FindObjectOfType<ElfPhaseChange>();
+                GolemPhaseChange fallback2 = FindObjectOfType<GolemPhaseChange>();
                 if (fallback != null)
                 {
                     yield return fallback.Trigger();
+                }
+                if (fallback2 != null)
+                {
+                    yield return fallback2.Trigger();
                 }
             }
         }
