@@ -13,11 +13,83 @@ MonoBehaviour:
   m_Name: NagaWarriorBefore
   m_EditorClassIdentifier: 
   chatMessages:
-  - speakerName: 5
+  - speakerName: 11
+    isLeft: 0
     messages:
-    - "\uBA48\uCDB0\uB77C!"
-    - "\uC774 \uAD6C\uC5ED\uC744 \uC5B4\uC9C0\uB7FD\uD788\uB294 \uB3C4\uC801\uB188\uB4E4
-      \uC911 \uD55C \uBA85\uC774\uAD70!"
-    - "\uC218\uB828\uC744 \uBC29\uD574\uD55C \uC8D7\uAC12, \uBAB8\uC73C\uB85C \uCE58\uB7EC\uB77C!"
-    chatDelay: 3
+    - "\uC544\uBE60 \uC544\uAE4C \uADF8 \uAC70\uC9C0\uC544\uC800\uC528\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694!
+      \uC544\uC800\uC528 \uC800\uB791\uB3C4 \uC2F8\uC6CC\uC694!"
     backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 10
+    isLeft: 0
+    messages:
+    - "\uC5B4\uD5C8! \uAC70\uC9C0\uB77C\uB2C8! \uB300\uB828\uC744 \uC990\uAE38 \uC218
+      \uC788\uB294 \uC0AC\uB78C\uC740 \uBAA8\uB450 \uC804\uC0AC\uC778\uAC83\uC744..."
+    - "\uD558\uD558 \uBBF8\uC548\uD569\uB2C8\uB2E4. \uC544\uAE4C \uC0AC\uB0E5\uC744
+      \uB098\uAC14\uB2E4 \uC6B0\uC5F0\uD788 \uB3C4\uC801\uB2E8\uACFC \uC2F8\uC6B0\uACE0
+      \uC788\uB294\uAC78 \uBCF4\uC558\uC2B5\uB2C8\uB2E4."
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 0
+    isLeft: 0
+    messages:
+    - ...
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 9
+    isLeft: 0
+    messages:
+    - "\uC5B4\uC774! \uC190\uB2D8\uC774 \uCC3E\uC544\uC654\uC73C\uBA74 \uB098\uC5D0\uAC8C
+      \uBA3C\uC800 \uC548\uB0B4\uD574\uC57C\uB418\uB294\uAC70 \uC544\uB2CC\uAC00.
+      \uB4E3\uC790\uD558\uB2C8 \uADF8\uB0E5 \uC5EC\uD589\uC790\uB3C4 \uC544\uB2C8\uACE0
+      \uC804\uC0AC\uC778\uAC70 \uAC19\uB124\uB9CC."
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 10
+    isLeft: 0
+    messages:
+    - " \uD558\uD558 \uBBF8\uC548\uD569\uB2C8\uB2E4 \uC804\uC0AC\uC7A5\uB2D8. \uD558\uC9C0\uB9CC
+      \uB300\uB828\uC740 \uBA3C\uC800 \uC57D\uC18D\uD558\uB294 \uC0AC\uB78C\uC774
+      \uC6B0\uC120 \uC544\uB2C8\uACA0\uC2B5\uB2C8\uAE4C."
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 0
+    isLeft: 0
+    messages:
+    - ...
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 9
+    isLeft: 0
+    messages:
+    - " \uD558\uD558 \uC190\uB2D8 \uD45C\uC815\uC744 \uBCF4\uB2C8 \uC544\uC9C1 \uC57D\uC18D\uB3C4
+      \uC548\uB41C\uAC70 \uAC19\uC740\uB370..\uADF8\uB798 \uADF8\uB300\uB294 \uBB34\uC5C7\uB54C\uBB38\uC5D0
+      \uC5EC\uAE30\uC5D0 \uC624\uC168\uB294\uAC00."
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 0
+    isLeft: 0
+    messages:
+    - "...(\uC0C1\uD669\uACFC \uC774\uB54C\uAE4C\uC9C0\uC758 \uC5EC\uD589\uC744 \uC804\uB2EC\uD55C\uB2E4)"
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 9
+    isLeft: 0
+    messages:
+    - "\uADF8\uB807\uAD6C\uB9CC...\uADF8\uB798\uC11C \uADC0 \uD070 \uC790\uB4E4\uC758
+      \uB545 \uBC29\uD5A5\uC5D0\uC11C \uC628 \uAC70\uC600\uAD70. "
+    - "\uC88B\uB2E4. \uACB0\uC815\uC774 \uC788\uB294 \uACF3\uC740 \uC54C\uB824\uC904
+      \uC218 \uC788\uB124\uB9CC \uADF8 \uC804\uC5D0,"
+    - "\uB098\uC640 \uB300\uB828\uD558\uC5EC \uC774\uAE34\uB2E4\uBA74 \uC54C\uB824\uC8FC\uB3C4\uB85D
+      \uD558\uC9C0."
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
