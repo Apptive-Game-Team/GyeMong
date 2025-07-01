@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component;
+using GyeMong.SoundSystem;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Player.Component.Collider
@@ -28,6 +29,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
             if (enemyAttackInfo.canMultiHit)
             {
+                ApplyHitImpact(enemyAttackInfo.damage, collider, true);
                 attackObjectController.isAttacked = true;
                 float lastHitTime = multiHitTimers.ContainsKey(collider) ? multiHitTimers[collider] : 0f;
 
@@ -38,7 +40,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             }
             else if (!attackObjectController.isAttacked)
             {
-                ApplyAirborne(collider.GetComponent<AttackObjectController>());
+                ApplyHitImpact(enemyAttackInfo.damage, collider);
                 attackObjectController.isAttacked = true;
 
                 if (enemyAttackInfo.soundObject != null)
@@ -49,14 +51,14 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             }
         }
 
-        private void ApplyAirborne(AttackObjectController controller)
+        private void ApplyAirborne(AttackObjectController controller, float knockbackSpeed)
         {
             if (controller.AttackInfo.knockbackAmount > 0)
             {
                 Vector3 origin = controller.gameObject.transform.position;
                 Vector3 direction = (SceneContext.Character.transform.position - origin).normalized;
                 SceneContext.Character.isControlled = true;
-                StartCoroutine(ActionAfter(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + SceneContext.Character.transform.position),
+                StartCoroutine(ActionAfter(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + SceneContext.Character.transform.position, 1f, knockbackSpeed),
                     () => { SceneContext.Character.isControlled = false; }));
             }
         }
@@ -65,6 +67,53 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         {
             yield return StartCoroutine(coroutine);
             action?.Invoke();
+        }
+
+        private void ApplyHitImpact(float damage, Collider2D collider, bool isMultiHit = false)
+        {
+            float baseDamage = 50f;
+            float ratio = damage / baseDamage;
+
+            // 히트스탑
+            float baseHitStopRatio = 0.2f;
+            float hitStopRatio = baseHitStopRatio * ratio;
+            hitStopRatio = 1 - Mathf.Clamp(hitStopRatio, 0.1f, 0.3f);
+
+            float baseHitStopDuration = 0.3f;
+            float hitStopDuration = baseHitStopDuration * ratio;
+            hitStopDuration = Mathf.Clamp(hitStopDuration, 0.1f, 0.5f);
+
+            // 카메라 셰이크
+            float baseShakePower = 0.1f;
+            float shakePower = baseShakePower * ratio;
+            shakePower = Mathf.Clamp(shakePower, 0.05f, 0.15f);
+
+            // 넉백 스피드
+            float baseKnockbackSpeed = 5f;
+            float knockbackSpeed = baseKnockbackSpeed * ratio;
+            knockbackSpeed = Mathf.Clamp(knockbackSpeed, 3f, 10f);
+
+            // 타격음 볼륨 비율
+            float baseVolumeRatio = 1f;
+            float volumeRatio = baseVolumeRatio * ratio;
+            volumeRatio = Mathf.Clamp(volumeRatio, 0.7f, 1.3f);
+            
+            if (!isMultiHit) StartCoroutine(HitStop(hitStopRatio, hitStopDuration));
+            SceneContext.CameraManager.CameraShake(shakePower);
+            if (!isMultiHit) ApplyAirborne(collider.GetComponent<AttackObjectController>(), knockbackSpeed);
+            HitSound(volumeRatio);
+        }
+
+        private IEnumerator HitStop(float hitStopRatio, float hitStopDuration)
+        {
+            Time.timeScale = hitStopRatio;
+            yield return new WaitForSeconds(hitStopDuration);
+            Time.timeScale = 1f;
+        }
+
+        private void HitSound(float volumeRatio)
+        {
+            Sound.Play("EFFECT_Player_Hit", false, volumeRatio);
         }
     }
 }

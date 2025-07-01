@@ -165,8 +165,6 @@ namespace GyeMong.GameSystem.Creature.Player
         public void TakeDamage(float damage, bool isUnblockable = false)
         {
             if (isInvincible) return;
-            
-            SceneContext.CameraManager.CameraShake(0.1f);
 
             if (damage >= curShield && curShield > 0)
             {
