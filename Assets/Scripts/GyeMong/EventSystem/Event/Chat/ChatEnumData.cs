@@ -14,6 +14,8 @@ namespace GyeMong.EventSystem.Event.Chat
         Sandworm,
         NagaRogue,
         NagaWarrior,
+        NagaFather,
+        NagaChild
     }
 
     public enum BackgroundImage
