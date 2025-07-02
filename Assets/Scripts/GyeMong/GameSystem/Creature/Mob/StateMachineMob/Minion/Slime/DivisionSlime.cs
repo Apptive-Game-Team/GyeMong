@@ -12,6 +12,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         private const float DIVIDE_RATIO = 0.6f;
         private int _divisionLevel = 0;
         private int _maxDivisionLevel = 2;
+        private Tween _dashTween;
+        private bool _isTutorial = true;
         
         protected override void Start()
         {
@@ -48,19 +50,42 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             if (currentState is not SlimeDieState)
             {
                 StopCoroutine(_currentStateCoroutine);
+                if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
                 StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
                 ChangeState();
             }
         }
 
-        public class SlimeRangedAttackState : RangedAttackState { }
-        public class SlimeMeleeAttackState : MeleeAttackState { }
+        public class SlimeRangedAttackState : RangedAttackState
+        {
+            private DivisionSlime DivisionSlime => mob as DivisionSlime;
+            public override int GetWeight()
+            {
+                if (DivisionSlime._isTutorial)
+                {
+                    DivisionSlime._isTutorial = false;
+                    return 1;
+                }
+                return DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange && DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange ? 5 : 0;
+            }
+        }
+
+        public class SlimeMeleeAttackState : MeleeAttackState
+        {
+            private DivisionSlime DivisionSlime => mob as DivisionSlime;
+            public override int GetWeight()
+            {
+                if (DivisionSlime._isTutorial) return 0;
+                return DivisionSlime.DistanceToPlayer <= DivisionSlime.MeleeAttackRange ? 5 : 0;
+            }
+        }
         
         public class DashAttackState : SlimeState
         {
             private DivisionSlime DivisionSlime => mob as DivisionSlime;
             public override int GetWeight()
             {
+                if (DivisionSlime._isTutorial) return 0;
                 return (DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange &&
                         DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange) ? 5 : 0;
             }
@@ -71,7 +96,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 float dashDistance = 1.5f;
                 Vector3 dashTargetPosition = SceneContext.Character.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
                 yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
-                DivisionSlime.transform.DOMove(dashTargetPosition, 0.3f).SetEase(Ease.OutQuad);
+                DivisionSlime._dashTween = DivisionSlime.transform.DOMove(dashTargetPosition, 0.6f).SetEase(Ease.OutQuad);
+                yield return DivisionSlime._dashTween.WaitForCompletion();
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 yield return new WaitForSeconds(1);
