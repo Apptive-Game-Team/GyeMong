@@ -32,7 +32,7 @@ namespace GyeMong.GameSystem.Map.Portal
             if (!sceneData.sceneName.Equals(SceneManager.GetActiveScene().name))
             {
                 sceneUnloading?.Invoke(SceneManager.GetActiveScene());
-                SceneManager.LoadScene(sceneData.sceneName);
+                SceneLoader.LoadScene(sceneData.sceneName);
             }
         }
 
