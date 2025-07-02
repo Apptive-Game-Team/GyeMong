@@ -19,13 +19,14 @@ namespace GyeMong.SoundSystem
                 return _objectPool;
             }
         } 
-        public static SoundObject Play(string soundId, bool loop = false)
+        public static SoundObject Play(string soundId, bool loop = false, float volumeRatio = 1f)
         {
             SoundObject soundObject = ObjectPool.GetObject();
             soundObject.gameObject.SetActive(true);
             soundObject.Initialize();
             soundObject.SetSoundSourceByName(soundId);
             soundObject.SetLoop(loop);
+            soundObject.SetVolumeWithRatio(volumeRatio);
             soundObject.StartCoroutine(Play(soundObject, new SoundPlayCallback(soundObject)));
             return soundObject;
         }

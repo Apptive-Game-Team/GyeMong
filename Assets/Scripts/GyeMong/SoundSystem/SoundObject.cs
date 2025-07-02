@@ -106,6 +106,12 @@ namespace GyeMong.SoundSystem
             UpdateAudioSourceVolume();
         }
 
+        public void SetVolumeWithRatio(float ratio)
+        {
+            this._volume *= ratio;
+            UpdateAudioSourceVolume();
+        }
+
         public void SetMasterVolume(float masterVolume)
         {
             this._masterVolume = masterVolume;

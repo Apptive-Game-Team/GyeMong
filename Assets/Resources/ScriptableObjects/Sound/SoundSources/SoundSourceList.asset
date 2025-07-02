@@ -172,3 +172,12 @@ MonoBehaviour:
   - name: ENEMY_Map_Tail_Attack
     type: 3
     clip: {fileID: 8300000, guid: 55bc1e7db68c57d4093fcbbe4212700c, type: 3}
+  - name: EFFECT_Player_Hit_1
+    type: 1
+    clip: {fileID: 8300000, guid: 1a869941b7fd876428f06e2e1e4d2e16, type: 3}
+  - name: EFFECT_Player_Hit_2
+    type: 1
+    clip: {fileID: 8300000, guid: 2675a667cc5c1a44981b13982a256f0a, type: 3}
+  - name: EFFECT_Player_Hit_3
+    type: 1
+    clip: {fileID: 8300000, guid: 5a32adbe0623aa845a6fb1c33a008f86, type: 3}
