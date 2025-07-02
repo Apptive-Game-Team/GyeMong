@@ -72,7 +72,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
         private void ApplyHitImpact(float damage, Collider2D collider, bool isMultiHit = false)
         {
-            float baseDamage = 50f;
+            float baseDamage = SceneContext.Character.stat.HealthMax / 3;
             float ratio = damage / baseDamage;
 
             // 히트스탑
