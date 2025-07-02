@@ -1,5 +1,6 @@
 using GyeMong.EventSystem.Event.Input;
 using System.Collections;
+using GyeMong.EventSystem.Event;
 using UnityEngine;
 using GyeMong.EventSystem.Event.EventScene;
 
@@ -34,6 +35,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
             SlimeEvents slimeEvent = new SlimeEvents(targetSlime, slimes);
 
+            yield return StartCoroutine((new SkippablePopupWindowEvent()
+                { Title = "Test Title", Message = "Test Message", Duration = 3f }).Execute());
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));            
             yield return StartCoroutine(slimeEvent.Execute());
