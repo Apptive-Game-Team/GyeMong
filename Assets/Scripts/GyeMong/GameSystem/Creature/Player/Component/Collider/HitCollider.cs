@@ -29,13 +29,14 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
             if (enemyAttackInfo.canMultiHit)
             {
-                ApplyHitImpact(enemyAttackInfo.damage, collider, true);
+                
                 attackObjectController.isAttacked = true;
                 float lastHitTime = multiHitTimers.ContainsKey(collider) ? multiHitTimers[collider] : 0f;
 
                 if (Time.time < lastHitTime + enemyAttackInfo.multiHitDelay) return;
 
                 multiHitTimers[collider] = Time.time;
+                ApplyHitImpact(enemyAttackInfo.damage, collider, true);
                 SceneContext.Character.TakeDamage(enemyAttackInfo.damage);
             }
             else if (!attackObjectController.isAttacked)
@@ -113,7 +114,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
         private void HitSound(float volumeRatio)
         {
-            Sound.Play("EFFECT_Player_Hit", false, volumeRatio);
+            Sound.Play($"EFFECT_Player_Hit_{UnityEngine.Random.Range(1, 4)}", false, volumeRatio);
         }
     }
 }
