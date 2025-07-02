@@ -21,36 +21,20 @@ namespace GyeMong.GameSystem.Map.Boss
         [SerializeField] private float cameraZoomSize;
         [SerializeField] private float cameraZoomSpeed;
         [SerializeField] private MultiChatMessageData multiMessages;
-        private float autoSkipTime = 3f;
-        private bool _isTriggered = false;
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void Start()
         {
-            if (other.CompareTag("Player") && !_isTriggered)
-            {
-                StartCoroutine(TriggerEvents());
-            }
+            StartCoroutine(TriggerEvents());
         }
         
         private IEnumerator TriggerEvents()
         {
-            _isTriggered = true;
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
-            yield return StartCoroutine((new MoveCreatureEvent()
-            {
-                creatureType = MoveCreatureEvent.CreatureType.Player,
-                iControllable = null,
-                speed = playerMoveSpeed,
-                target = playerDestination
-            }).Execute());
             yield return StartCoroutine((new SetActiveObject()
             {
                 _gameObject = wall,
                 isActive = true
             }).Execute());
-            yield return StartCoroutine((new OpenChatEvent().Execute()));
-            yield return new ShowMessages(multiMessages, autoSkipTime).Execute();
-            yield return StartCoroutine((new CloseChatEvent().Execute()));
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             boss.GetComponent<Sandworm>().curBGM = Sound.Play("BGM_Summer_Sandworm", true);

@@ -13,6 +13,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         Golem = 4,
         
         Wanderer = 5,
+        Sandworm = 6,
     }
     
     public static class StageSelectPage
