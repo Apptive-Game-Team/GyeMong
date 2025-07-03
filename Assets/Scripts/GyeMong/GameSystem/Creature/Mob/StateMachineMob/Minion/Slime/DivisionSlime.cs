@@ -222,7 +222,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             PlayerCharacter player = SceneContext.Character;
             float time = Time.time;
             yield return new WaitUntil(() =>
-                (player.CurrentHp < player.stat.HealthMax || player.CurrentSkillGauge > 0 || Time.time > time + 2f));
+                (player.CurrentHp < player.stat.HealthMax || player.CurrentSkillGauge > 0 || Time.time > time + 1f));
             if (player.CurrentSkillGauge > 0)
             {
                 yield return new WaitForSeconds(0.5f);
