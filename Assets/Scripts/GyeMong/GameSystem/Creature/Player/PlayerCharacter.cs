@@ -531,8 +531,9 @@ namespace GyeMong.GameSystem.Creature.Player
             changeListenerCaller.CallPlayerSpawned();
         }
         
-        public float CurrentHp { get { return curHealth; } }
-        
+        public float CurrentHp => curHealth;
+        public float CurrentSkillGauge => curSkillGauge;
+
         public void DestroySelf()
         {
             Destroy(gameObject);

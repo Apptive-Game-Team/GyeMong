@@ -1,8 +1,13 @@
 using System.Collections;
 using DG.Tweening;
+using GyeMong.EventSystem.Event;
+using GyeMong.EventSystem.Event.Input;
+using GyeMong.GameSystem.Creature.Attack;
+using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
+using GyeMong.GameSystem.Creature.Player;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
@@ -13,7 +18,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         private int _divisionLevel = 0;
         private int _maxDivisionLevel = 2;
         private Tween _dashTween;
-        private bool _isTutorial = true;
+        private bool _isTutorial;
+        private bool _isTutorialShown;
         
         protected override void Start()
         {
@@ -32,7 +38,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
             MeleeAttackRange = 3f;
-            RangedAttackRange = 10f;
+            RangedAttackRange = 8f;
             detectionRange = 20f;
 
             damage = 10f;
@@ -41,6 +47,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         public override void StartMob()
         {
             StartCoroutine(FaceToPlayer());
+            _isTutorial = PlayerPrefs.GetInt("TutorialFlag", 0) == 0;
             ChangeState();
         }
 
@@ -49,10 +56,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             base.OnAttacked(damage);
             if (currentState is not SlimeDieState)
             {
-                StopCoroutine(_currentStateCoroutine);
+                StartCoroutine(Stun(0.5f));
                 if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
                 StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
-                ChangeState();
             }
         }
 
@@ -61,12 +67,38 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             private DivisionSlime DivisionSlime => mob as DivisionSlime;
             public override int GetWeight()
             {
+                return DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange && DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange ? 5 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                if (DivisionSlime._isTutorial && !DivisionSlime._isTutorialShown) 
+                    yield return DivisionSlime.GrazeSystemTutorial1();
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                AttackObjectController.Create(
+                    mob.transform.position, 
+                    mob.DirectionToPlayer, 
+                    DivisionSlime.rangedAttack,
+                    new LinearMovement(
+                        mob.transform.position, 
+                        mob.transform.position + mob.DirectionToPlayer * mob.RangedAttackRange, 
+                        10f)
+                ).StartRoutine();
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
+                yield return new WaitForSeconds(1);
+                if (DivisionSlime._isTutorial) 
+                    yield return DivisionSlime.GrazeSystemTutorial2();
+                mob.ChangeState();
+            }
+
+            public override void OnStateExit()
+            {
                 if (DivisionSlime._isTutorial)
                 {
-                    DivisionSlime._isTutorial = false;
-                    return 1;
+                    DivisionSlime.StartCoroutine(DivisionSlime.GrazeSystemTutorial2());
                 }
-                return DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange && DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange ? 5 : 0;
             }
         }
 
@@ -142,7 +174,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
         private void Divide()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Vector3 spawnPosition = transform.position;
                 int attempts = 10;
@@ -173,6 +205,35 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 slimeComponent.ChangeState(new SlimeMoveState(slimeComponent));
                 
                 DivisionSlimeManager.Instance.RegisterSlime(slimeComponent);
+            }
+        }
+
+        private IEnumerator GrazeSystemTutorial1()
+        {
+            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
+            yield return StartCoroutine((new SkippablePopupWindowEvent()
+                { Title = "스치기 시스템 배우기", Message = "슬라임의 원거리 공격을 아슬아슬하게 피해보자", Duration = 3f }).Execute());
+            _isTutorialShown = true;
+            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
+        }
+        
+        private IEnumerator GrazeSystemTutorial2()
+        {
+            PlayerCharacter player = SceneContext.Character;
+            float time = Time.time;
+            yield return new WaitUntil(() =>
+                (player.CurrentHp < player.stat.HealthMax || player.CurrentSkillGauge > 0 || Time.time > time + 2f));
+            if (player.CurrentSkillGauge > 0)
+            {
+                yield return new WaitForSeconds(0.5f);
+                yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
+                yield return StartCoroutine((new SkippablePopupWindowEvent()
+                    { Title = "스치기 시스템 배우기", Message = "좌상단에 늘어난 게이지를 이용해 특수공격(마우스 우클릭)을 사용할 수 있다.", Duration = 3f }).Execute());
+                yield return StartCoroutine((new SkippablePopupWindowEvent()
+                    { Title = "슬라임 잡기", Message = "이제 귀여운 슬라임을 잡아보자!", Duration = 3f }).Execute());
+                yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
+                _isTutorial = false;
+                //PlayerPrefs.SetInt("TutorialFlag", 1);
             }
         }
     }
