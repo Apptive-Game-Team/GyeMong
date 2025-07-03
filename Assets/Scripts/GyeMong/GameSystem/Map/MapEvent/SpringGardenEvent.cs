@@ -13,15 +13,14 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         [SerializeField] private Vector3 cameraDestination;
         [SerializeField] private float cameraSpeed;
-        private float delayTime = 1f;
+        private float _delayTime = 1f;
 
-        private bool _isTriggered = false;
-        private void OnTriggerEnter2D(Collider2D other)
+        private bool _isTutorial;
+
+        private void Start()
         {
-            if (other.CompareTag("Player") && !_isTriggered)
-            {
-                StartCoroutine(TriggerEvents());
-            }
+            _isTutorial = PlayerPrefs.GetInt("Tutorial", 0) == 0;
+            StartCoroutine(TriggerEvents());
         }
 
         public IEnumerator Trigger()
@@ -31,16 +30,19 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private IEnumerator TriggerEvents()
         {
-            _isTriggered = true;
+            if (_isTutorial)
+            {
+                yield return StartCoroutine((new SkippablePopupWindowEvent()
+                    { Title = "Test Title", Message = "Test Message", Duration = 3f }).Execute());
+                //PlayerPrefs.SetInt("Tutorial", 1); 빌드 할 때 주석 풀기.
+            }
 
             SlimeEvents slimeEvent = new SlimeEvents(targetSlime, slimes);
-
-            yield return StartCoroutine((new SkippablePopupWindowEvent()
-                { Title = "Test Title", Message = "Test Message", Duration = 3f }).Execute());
+            
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));            
             yield return StartCoroutine(slimeEvent.Execute());
-            yield return new WaitForSeconds(delayTime);
+            yield return new WaitForSeconds(_delayTime);
             SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
         }
