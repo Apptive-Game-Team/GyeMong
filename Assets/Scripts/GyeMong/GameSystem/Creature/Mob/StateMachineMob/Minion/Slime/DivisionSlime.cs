@@ -20,6 +20,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         private Tween _dashTween;
         private bool _isTutorial;
         private bool _isTutorialShown;
+        private Coroutine _stunCoroutine;
         
         protected override void Start()
         {
@@ -56,8 +57,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             base.OnAttacked(damage);
             if (currentState is not SlimeDieState)
             {
-                StartCoroutine(Stun(0.5f));
                 if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
+                if (_stunCoroutine != null)
+                {
+                    StopCoroutine(_stunCoroutine);
+                    _stunCoroutine = null;
+                }
+                StartCoroutine(Stun(0.5f));
                 StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
             }
         }
@@ -230,10 +236,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
                     { Title = "스치기 시스템 배우기", Message = "좌상단에 늘어난 게이지를 이용해 특수공격(마우스 우클릭)을 사용할 수 있다.", Duration = 3f }).Execute());
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
+                    { Title = "스치기 시스템 배우기", Message = "게이지는 기본 공격을 적중시켜도 미세하게 오른다.", Duration = 3f }).Execute());
+                yield return StartCoroutine((new SkippablePopupWindowEvent()
                     { Title = "슬라임 잡기", Message = "이제 귀여운 슬라임을 잡아보자!", Duration = 3f }).Execute());
                 yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
                 _isTutorial = false;
                 //PlayerPrefs.SetInt("TutorialFlag", 1);
+                //PlayerPrefs.Save();
             }
         }
     }

@@ -38,7 +38,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
                     { Title = "돌진", Message = "좌측 Shift키를 눌러 돌진할 수 있다.", Duration = 3f }).Execute());
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
-                    { Title = "공격", Message = "마우스 좌 클릭을 통해 공격할 수 있다.", Duration = 3f }).Execute());
+                    { Title = "기본공격", Message = "마우스 좌클릭을 통해 공격할 수 있다.", Duration = 3f }).Execute());
             }
 
             SlimeEvents slimeEvent = new SlimeEvents(targetSlime, slimes);

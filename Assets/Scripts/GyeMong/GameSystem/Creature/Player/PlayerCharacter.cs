@@ -207,6 +207,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public void AttackIncreaseGauge()
         {
+            if (PlayerPrefs.GetInt("TutorialFlag", 0) == 0) return;
             curSkillGauge += stat.GrazeGainOnAttack;
             if (curSkillGauge > stat.GrazeMax)
             {
