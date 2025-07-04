@@ -241,6 +241,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     { Title = "슬라임 잡기", Message = "이제 귀여운 슬라임을 잡아보자!", Duration = 3f }).Execute());
                 yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
                 _isTutorial = false;
+                SceneContext.Character.isTutorial = false;
                 //PlayerPrefs.SetInt("TutorialFlag", 1);
                 //PlayerPrefs.Save();
             }
