@@ -1,5 +1,6 @@
 using GyeMong.EventSystem.Event.Input;
 using System.Collections;
+using GyeMong.EventSystem.Event;
 using UnityEngine;
 using GyeMong.EventSystem.Event.EventScene;
 
@@ -12,15 +13,15 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         [SerializeField] private Vector3 cameraDestination;
         [SerializeField] private float cameraSpeed;
-        private float delayTime = 1f;
+        private float _delayTime = 1f;
 
-        private bool _isTriggered = false;
-        private void OnTriggerEnter2D(Collider2D other)
+        private bool _isTutorial;
+
+        private void Start()
         {
-            if (other.CompareTag("Player") && !_isTriggered)
-            {
-                StartCoroutine(TriggerEvents());
-            }
+            PlayerPrefs.SetInt("TutorialFlag", 0);
+            _isTutorial = PlayerPrefs.GetInt("TutorialFlag", 0) == 0;
+            StartCoroutine(TriggerEvents());
         }
 
         public IEnumerator Trigger()
@@ -30,15 +31,23 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private IEnumerator TriggerEvents()
         {
-            _isTriggered = true;
+            if (_isTutorial)
+            {
+                yield return StartCoroutine((new SkippablePopupWindowEvent()
+                    { Title = "플레이어 이동", Message = "W, A, S, D를 눌러서 이동할 수 있다.", Duration = 3f }).Execute());
+                yield return StartCoroutine((new SkippablePopupWindowEvent()
+                    { Title = "돌진", Message = "좌측 Shift키를 눌러 돌진할 수 있다.", Duration = 3f }).Execute());
+                yield return StartCoroutine((new SkippablePopupWindowEvent()
+                    { Title = "기본공격", Message = "마우스 좌클릭을 통해 공격할 수 있다.", Duration = 3f }).Execute());
+            }
 
             SlimeEvents slimeEvent = new SlimeEvents(targetSlime, slimes);
-
+            
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));            
             yield return StartCoroutine(slimeEvent.Execute());
-            yield return new WaitForSeconds(delayTime);
-            SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
+            yield return new WaitForSeconds(_delayTime);
+            SceneContext.CameraManager.CameraFollow(SceneContext.Character.gameObject.transform);
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
         }
     }
