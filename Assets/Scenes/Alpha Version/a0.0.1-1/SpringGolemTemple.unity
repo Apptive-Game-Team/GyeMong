@@ -75136,6 +75136,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
         type: 3}
+      propertyPath: chatData
+      value: 
+      objectReference: {fileID: 11400000, guid: 34e54789cfec51d49bc1045cdd5a0757,
+        type: 2}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
       propertyPath: mapPattern
       value: 
       objectReference: {fileID: 141803514}
