@@ -338,7 +338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &84912245
 Transform:
   m_ObjectHideFlags: 0
@@ -75141,15 +75141,51 @@ PrefabInstance:
       objectReference: {fileID: 141803514}
     - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
         type: 3}
+      propertyPath: newSprite1
+      value: 
+      objectReference: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808,
+        type: 3}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: bossRoomObj1
+      value: 
+      objectReference: {fileID: 1592182054}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: bossRoomObj2
+      value: 
+      objectReference: {fileID: 1620963477}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: bossRoomObj3
+      value: 
+      objectReference: {fileID: 2142563700}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: bossRoomObj4
+      value: 
+      objectReference: {fileID: 141803510}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
       propertyPath: SkillIndicator
       value: 
       objectReference: {fileID: 1637330594}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: targetAnimator
+      value: 
+      objectReference: {fileID: 1637330592}
     - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
         type: 3}
       propertyPath: pushOutAttackPrefab
       value: 
       objectReference: {fileID: 8583689789694271782, guid: decf5d83744ed8a449c92a1d788cf170,
         type: 3}
+    - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
+        type: 3}
+      propertyPath: targetSpriteRenderer
+      value: 
+      objectReference: {fileID: 1637330593}
     - target: {fileID: 2462093118315421597, guid: 541b7061a84e84331a9394f8687c118f,
         type: 3}
       propertyPath: m_LocalPosition.x

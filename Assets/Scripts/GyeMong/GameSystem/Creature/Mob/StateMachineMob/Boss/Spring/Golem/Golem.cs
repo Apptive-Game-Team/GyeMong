@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GyeMong.EventSystem.Event.Boss;
+using GyeMong.EventSystem.Event.Chat;
+using GyeMong.EventSystem.Event.CinematicEvent;
+using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
@@ -22,6 +26,24 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         [SerializeField] private SoundObject _shockwavesoundObject;
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
         [SerializeField] private SoundObject _tossSoundObject;
+
+        [Header("Stop Animator")]
+        [SerializeField] private Animator targetAnimator;
+
+        [Header("Change Sprite")]
+        [SerializeField] private SpriteRenderer targetSpriteRenderer;
+        [SerializeField] private Sprite newSprite1;
+
+        [Header("Chat Data")]
+        [SerializeField] private MultiChatMessageData chatData;
+        [SerializeField] private float autoSkipTime = 3f;
+
+        [Header("Boss Room Object")]
+        [SerializeField] private GameObject bossRoomObj1;
+        [SerializeField] private GameObject bossRoomObj2;
+        [SerializeField] private GameObject bossRoomObj3;
+        [SerializeField] private GameObject bossRoomObj4;
+
         public SoundObject TossSoundObject => _tossSoundObject;
         protected override void Initialize()
         {
@@ -324,8 +346,72 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             base.Die();
             Animator.SetBool("isDown", true);
             mapPattern.DeActivateRootObjects();
+            StartCoroutine(DieRoutine());
+        }
+        private IEnumerator DieRoutine()
+        {
+            yield return StartCoroutine(Trigger());
             StageManager.ClearStage(this);
         }
+
+        public IEnumerator Trigger()
+        {
+            return TriggerEvents();
+        }
+
+        private IEnumerator TriggerEvents()
+        {
+            var stopAnimEvent = new CustomStopAnimatorEvent();
+            stopAnimEvent.SetAnimator(targetAnimator);
+            yield return stopAnimEvent.Execute();
+
+            var changeSpriteEvent = new ChangeSpriteEvent();
+            changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
+            changeSpriteEvent.SetSprite(newSprite1);
+            yield return changeSpriteEvent.Execute();
+
+            yield return new HideBossHealthBarEvent().Execute();
+
+            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
+
+            yield return StartCoroutine((new OpenChatEvent().Execute()));
+
+            yield return new ShowMessages(chatData, autoSkipTime).Execute();
+
+            yield return StartCoroutine((new CloseChatEvent().Execute()));
+
+            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
+
+            SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
+
+            var zoomEvent = new CameraZoomInOut();
+            zoomEvent.SetSize(3.6f);
+            zoomEvent.SetDuration(0.5f);
+            yield return StartCoroutine(zoomEvent.Execute());
+
+            var activateBossRoomEvent = new ActivateBossRoomEvent();
+            activateBossRoomEvent.SetBossRoomObject(bossRoomObj1);
+            yield return activateBossRoomEvent.Execute();
+
+            var deactivateEvent = new DeActivateBossRoomEvent();
+            deactivateEvent.SetBossRoomObject(bossRoomObj2);
+            yield return deactivateEvent.Execute();
+
+            deactivateEvent.SetBossRoomObject(bossRoomObj3);
+            yield return deactivateEvent.Execute();
+
+            deactivateEvent.SetBossRoomObject(bossRoomObj4);
+            yield return deactivateEvent.Execute();
+        }
+
+        public class CustomStopAnimatorEvent : StopAnimatorEvent
+        {
+            public void SetAnimator(Animator animator)
+            {
+                _animator = animator;
+            }
+        }
+
         public override IEnumerator Stun(float duration)
         {
             Debug.Log("Check1");
