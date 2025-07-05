@@ -26387,6 +26387,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
+      propertyPath: chatData
+      value: 
+      objectReference: {fileID: 11400000, guid: c60db92709e0ffb46af8054ad80c542b,
+        type: 2}
+    - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
+      propertyPath: bossRoomBgm1
+      value: 
+      objectReference: {fileID: 1592182054}
+    - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
+      propertyPath: bossRoomBgm2
+      value: 
+      objectReference: {fileID: 962346217}
+    - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
       propertyPath: SkillIndicator
       value: 
       objectReference: {fileID: 1459062336}
@@ -26395,6 +26411,11 @@ PrefabInstance:
       propertyPath: drowSoundObject
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
+        type: 3}
+      propertyPath: bossRoomObj_wall
+      value: 
+      objectReference: {fileID: 1275491493}
     - target: {fileID: 6437808754312436988, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27004,7 +27025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1683061965
 MonoBehaviour:
   m_ObjectHideFlags: 0
