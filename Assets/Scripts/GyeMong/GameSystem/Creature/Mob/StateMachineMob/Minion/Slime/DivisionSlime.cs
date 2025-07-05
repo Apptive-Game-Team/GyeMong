@@ -111,7 +111,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         {
             ChangeState(new DieState(this));
             DivisionSlimeManager.Instance.UnregisterSlime(this);
-            StageManager.ClearStage(this);
         }
 
         public class MoveState : SlimeMoveState { }
