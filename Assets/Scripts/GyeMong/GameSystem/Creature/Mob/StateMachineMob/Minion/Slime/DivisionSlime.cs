@@ -3,6 +3,7 @@ using DG.Tweening;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
+using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
@@ -110,6 +111,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         {
             ChangeState(new DieState(this));
             DivisionSlimeManager.Instance.UnregisterSlime(this);
+            StageManager.ClearStage(this);
         }
 
         public class MoveState : SlimeMoveState { }
