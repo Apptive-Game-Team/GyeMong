@@ -45,6 +45,8 @@ namespace GyeMong.GameSystem.Creature.Player
         private bool comboQueued = false;
         private CircleCollider2D _hitCollider;
 
+        public bool isTutorial;
+
         public Material[] materials;
 
         protected void Awake()
@@ -56,6 +58,7 @@ namespace GyeMong.GameSystem.Creature.Player
             animator = GetComponent<Animator>();
             soundController = GetComponent<PlayerSoundController>();
             _hitCollider = transform.Find("HitCollider").GetComponent<CircleCollider2D>();
+            isTutorial = PlayerPrefs.GetInt("TutorialFlag") == 0;
         }
 
         private void Start()
@@ -206,6 +209,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public void AttackIncreaseGauge()
         {
+            if (isTutorial) return;
             curSkillGauge += stat.GrazeGainOnAttack;
             if (curSkillGauge > stat.GrazeMax)
             {
@@ -538,8 +542,9 @@ namespace GyeMong.GameSystem.Creature.Player
             changeListenerCaller.CallPlayerSpawned();
         }
         
-        public float CurrentHp { get { return curHealth; } }
-        
+        public float CurrentHp => curHealth;
+        public float CurrentSkillGauge => curSkillGauge;
+
         public void DestroySelf()
         {
             Destroy(gameObject);

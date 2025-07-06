@@ -13,7 +13,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
     {
         protected bool isInitialized = false;
         
-        [SerializeField] private GameObject rangedAttack;
+        [SerializeField] protected GameObject rangedAttack;
 
         
         protected IDetector<PlayerCharacter> _detector;
@@ -189,7 +189,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 float duration = 2f;
                 float timer = 0f;
             
-                while (duration > timer && mob.DistanceToPlayer > mob.MeleeAttackRange)
+                while (duration > timer && mob.DistanceToPlayer > mob.RangedAttackRange)
                 {
                     timer += Time.deltaTime;
                     yield return null;
