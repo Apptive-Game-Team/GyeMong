@@ -361,10 +361,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         private IEnumerator TriggerEvents()
         {
-            var stopAnimEvent = new CustomStopAnimatorEvent();
-            stopAnimEvent.SetAnimator(targetAnimator);
-            yield return stopAnimEvent.Execute();
-
             var changeSpriteEvent = new ChangeSpriteEvent();
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
             changeSpriteEvent.SetSprite(newSprite1);
@@ -402,14 +398,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             deactivateEvent.SetBossRoomObject(bossRoomObj4);
             yield return deactivateEvent.Execute();
-        }
-
-        public class CustomStopAnimatorEvent : StopAnimatorEvent
-        {
-            public void SetAnimator(Animator animator)
-            {
-                _animator = animator;
-            }
         }
 
         public override IEnumerator Stun(float duration)
