@@ -29,7 +29,7 @@ namespace GyeMong.EventSystem.Controller
             chatWindow = transform.Find("ChatWindow").GetComponent<Image>();
             nameText = chatWindow.transform.Find("NameArea").GetComponent<TMP_Text>();
             messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
-            backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
+            backGround = transform.Find("BackgroundArea").GetComponent <Image>();
             characterImage = chatWindow.transform.Find("CharacterImageArea").GetComponent<Image>();
             characterImage2 = chatWindow.transform.Find("CharacterImageArea2").GetComponent<Image>();
             chattingImage = chatWindow.transform.Find("ChatImageArea").GetComponent<Image>();
