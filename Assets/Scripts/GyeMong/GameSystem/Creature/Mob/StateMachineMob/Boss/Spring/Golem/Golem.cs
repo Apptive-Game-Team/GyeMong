@@ -350,11 +350,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         }
         private IEnumerator DieRoutine()
         {
-            yield return StartCoroutine(Trigger());
+            yield return StartCoroutine(DownTrigger());
             StageManager.ClearStage(this);
         }
 
-        public IEnumerator Trigger()
+        public IEnumerator DownTrigger()
         {
             return TriggerEvents();
         }

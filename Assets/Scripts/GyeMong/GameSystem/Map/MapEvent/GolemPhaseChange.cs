@@ -14,6 +14,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private Animator someAnimator;
 
         [SerializeField] private Creature.Mob.StateMachineMob.Boss.Boss boss;
+
+        private float delayTime = 3f;
         public IEnumerator Trigger()
         {
             return TriggerEvents();
@@ -27,6 +29,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return animBoolEvent.Execute();
 
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
+
+            yield return new WaitForSeconds(delayTime);
 
             animBoolEvent.SetAnimator(someAnimator);
             animBoolEvent.SetParameter("isDown", false);
