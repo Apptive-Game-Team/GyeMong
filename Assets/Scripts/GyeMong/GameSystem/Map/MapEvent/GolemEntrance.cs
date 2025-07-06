@@ -1,18 +1,17 @@
 using GyeMong.EventSystem.Event.Boss;
-using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Map.MapEvent
 {
-    public class SpringNorthForestEntrance : MonoBehaviour
+    public class GolemEntrance : MonoBehaviour
     {
-        [Header("Boss Room Entrance")]
-        [SerializeField] private BossRoomEntrance bossRoomEntrance;
-
         [Header("Stop Animator")]
         [SerializeField] private Animator targetAnimator;
 
@@ -26,26 +25,29 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private float moveSpeed = 2f;
 
         [Header("Camera Move")]
-        [SerializeField] private Vector3 cameraDestination;
-        [SerializeField] private float cameraSpeed;
+        [SerializeField] private Vector3 cameraDestination1;
+        [SerializeField] private Vector3 cameraDestination2;
+        [SerializeField] private float cameraSpeed1;
+        [SerializeField] private float cameraSpeed2;
 
         [Header("Boss Room Object")]
-        [SerializeField] private GameObject bossRoomObj;
-        [SerializeField] private GameObject bossRoomObj_wall;
-
-        [Header("Chat Data")]
-        [SerializeField] private MultiChatMessageData chatData1;
-        [SerializeField] private MultiChatMessageData chatData2;
-        [SerializeField] private float autoSkipTime = 3f;
-
-        [Header("Start Animator")]
-        [SerializeField] private Animator someAnimator;
+        [SerializeField] private GameObject bossRoomObj1;
+        [SerializeField] private GameObject bossRoomObj2;
+        [SerializeField] private GameObject bossRoomObj3;
+        [SerializeField] private GameObject bossRoomObj4;
 
         [Header("")]
         [SerializeField] private GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Boss boss;
 
+        [Header("Start Animator")]
+        [SerializeField] private Animator someAnimator;
 
-        private float delayTime = 1f;
+        [Header("Boss Room Entrance")]
+        [SerializeField] private BossRoomEntrance bossRoomEntrance;
+
+        [Header("Animation Event")]
+        [SerializeField] private List<Sprite> animationFrames = new List<Sprite>(6);
+        [SerializeField] private SpriteRenderer someRenderer;
 
         private bool _isTriggered = false;
         private void OnTriggerEnter2D(Collider2D other)
@@ -65,8 +67,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
         {
             _isTriggered = true;
 
-            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
- 
             var stopAnimEvent = new CustomStopAnimatorEvent();
             stopAnimEvent.SetAnimator(targetAnimator);
             yield return stopAnimEvent.Execute();
@@ -76,6 +76,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             changeSpriteEvent.SetSprite(newSprite1);
             yield return changeSpriteEvent.Execute();
 
+            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
+
             var moveEvent = new MoveCreatureEvent();
             moveEvent.creatureType = MoveCreatureEvent.CreatureType.Player;
             moveEvent.iControllable = null;
@@ -83,40 +85,44 @@ namespace GyeMong.GameSystem.Map.MapEvent
             moveEvent.speed = moveSpeed;
             yield return StartCoroutine(moveEvent.Execute());
 
-            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination1, cameraSpeed1));
 
-            var activateBossRoomEvent = new ActivateBossRoomEvent();
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj);
-            yield return activateBossRoomEvent.Execute();
+            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination2, cameraSpeed2));
+
+            var zoomEvent = new CameraZoomInOut();
+            zoomEvent.SetSize(10f);
+            zoomEvent.SetDuration(3f);
+            yield return StartCoroutine(zoomEvent.Execute());
 
             var deactivateEvent = new DeActivateBossRoomEvent();
-            deactivateEvent.SetBossRoomObject(bossRoomObj);
+            deactivateEvent.SetBossRoomObject(bossRoomObj1);
             yield return deactivateEvent.Execute();
 
-            yield return StartCoroutine((new OpenChatEvent().Execute()));
+            var activateBossRoomEvent = new ActivateBossRoomEvent();
+            activateBossRoomEvent.SetBossRoomObject(bossRoomObj2);
+            yield return activateBossRoomEvent.Execute();
 
-            yield return new ShowMessages(chatData1, autoSkipTime).Execute();
+            yield return new WaitForSeconds(1);
 
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
             changeSpriteEvent.SetSprite(newSprite2);
             yield return changeSpriteEvent.Execute();
 
-            yield return new WaitForSeconds(delayTime);
+            yield return new WaitForSeconds(1);
 
-            yield return new ShowMessages(chatData2, autoSkipTime).Execute();
-
-            yield return StartCoroutine((new CloseChatEvent().Execute()));
-
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj_wall);
-            yield return activateBossRoomEvent.Execute();
-
-            var startEvent = new StartAnimatorEvent();
-            startEvent.SetAnimator(someAnimator);
-            yield return startEvent.Execute();
+            var animEvent = new GyeMong.EventSystem.Event.CinematicEvent.AnimationEvent();
+            animEvent.SetRenderer(someRenderer);
+            animEvent.SetFrames(animationFrames);
+            animEvent.SetDeltaTime(0.5f);
+            yield return animEvent.Execute();
 
             var showHpEvent = new ShowBossHealthBarEvent();
             showHpEvent.SetBoss(boss);
             yield return showHpEvent.Execute();
+
+            var startEvent = new StartAnimatorEvent();
+            startEvent.SetAnimator(someAnimator);
+            yield return startEvent.Execute();
 
             var animParamEvent = new SetAnimatorParameter();
             animParamEvent._creatureType = SetAnimatorParameter.CreatureType.Player;
@@ -125,9 +131,13 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
 
-            SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
-
             bossRoomEntrance.Trigger();
+
+            activateBossRoomEvent.SetBossRoomObject(bossRoomObj3);
+            yield return activateBossRoomEvent.Execute();
+
+            activateBossRoomEvent.SetBossRoomObject(bossRoomObj4);
+            yield return activateBossRoomEvent.Execute();
         }
 
         public class CustomStopAnimatorEvent : StopAnimatorEvent
@@ -139,3 +149,4 @@ namespace GyeMong.GameSystem.Map.MapEvent
         }
     }
 }
+

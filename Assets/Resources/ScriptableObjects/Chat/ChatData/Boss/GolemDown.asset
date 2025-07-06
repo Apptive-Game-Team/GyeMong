@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
-  m_Name: ElfDown
+  m_Name: GolemDown
   m_EditorClassIdentifier: 
   chatMessages:
-  - speakerName: 3
-    isLeft: 1
+  - speakerName: 5
+    isLeft: 0
     messages:
-    - "\uC73C\uC73D..\uC9F1\uC384\uAD70"
+    - "\uC544\uD30C\uC789"
     backgroundImage: 2
     chatImage: 0
     chatDelay: 3
