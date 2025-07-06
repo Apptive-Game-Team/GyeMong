@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
+  m_Name: 4_AfterElf
+  m_EditorClassIdentifier: 
+  chatMessages:
+  - speakerName: 3
+    isLeft: 0
+    messages:
+    - "\uC81C\uAC00 \uC84C\uC2B5\uB2C8\uB2E4. \uC138\uACC4\uB97C \uAD6C\uD558\uACA0\uB2E4\uB294
+      \uB9D0\uC500\uC740 \uD5C8\uD48D\uC774 \uC544\uB2CC\uAC70 \uAC19\uAD70\uC694."
+    - "\uACB0\uC815\uC740 \uC232 \uC548\uCABD\uC758 \uACE8\uB818\uC0AC\uC6D0\uC5D0
+      \uC788\uC2B5\uB2C8\uB2E4. \uC6B0\uB9AC \uC232\uC744 \uC9C0\uCF1C\uC8FC\uB294
+      \uC218\uD638\uC2E0\uC774 \uBA38\uBB3C\uACE0 \uACC4\uC2DC\uC8E0."
+    - "\uD558\uC9C0\uB9CC \uC0AC\uC6D0\uC740 \uC5F4\uC1E0 \uC5C6\uC774\uB294 \uB4E4\uC5B4
+      \uAC08 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uC544\uBB34\uB098 \uB4E4\uC774\uC9C0
+      \uC54A\uAE30 \uC704\uD574 \uC5F4\uC1E0\uB294 \uADF8\uB9BC\uC790 \uC232\uC758
+      \uC2DC\uB828\uC744 \uACAA\uC740 \uC790\uC5D0\uAC8C\uB9CC \uB0B4\uB824\uC9D1\uB2C8\uB2E4."
+    - "\uC6B0\uC120 \uB0A8\uCABD\uC758 \uADF8\uB9BC\uC790 \uC232\uC5D0\uC11C \uC2DC\uB828\uC744
+      \uADF9\uBCF5\uD558\uC2DC\uB294 \uAC83\uC774 \uBA3C\uC800\uC785\uB2C8\uB2E4."
+    backgroundImage: 2
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 0
+    isLeft: 1
+    messages:
+    - ...
+    backgroundImage: 2
+    chatImage: 0
+    chatDelay: 3
