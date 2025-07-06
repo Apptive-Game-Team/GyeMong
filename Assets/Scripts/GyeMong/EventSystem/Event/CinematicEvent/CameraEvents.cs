@@ -28,6 +28,15 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         [SerializeField] private float size;
         [SerializeField] private float duration;
+        public void SetSize(float value)
+        {
+            size = value;
+        }
+
+        public void SetDuration(float value)
+        {
+            duration = value;
+        }
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             return SceneContext.CameraManager.CameraZoomInOut(size, duration);

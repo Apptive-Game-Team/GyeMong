@@ -102,8 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e78a4dac7244d60a08931098236c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneDataList: {fileID: 0}
-  portalDataList: {fileID: 0}
+  sceneDataList: {fileID: 11400000, guid: 3c43119c412264d5b8ef92f44c6abfce, type: 2}
+  portalDataList: {fileID: 11400000, guid: 00257a94ae7e94b528bf13160fe91d66, type: 2}
 --- !u!114 &4360534568010519165
 MonoBehaviour:
   m_ObjectHideFlags: 0
