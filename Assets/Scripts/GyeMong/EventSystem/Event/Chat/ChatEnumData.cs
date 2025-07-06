@@ -21,10 +21,7 @@ namespace GyeMong.EventSystem.Event.Chat
         Black = 0,
         Nothing = 1,
         Spring = 2,
-        Summer = 3,
-        
-        // Summer
-        Summer = 50,
+        Summer = 3
     }
 
     public enum ChatImage
