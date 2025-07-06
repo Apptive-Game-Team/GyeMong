@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 193917179254442945}
   - component: {fileID: 5425141076164865545}
   - component: {fileID: 8253498931302874577}
+  - component: {fileID: 4360534568010519165}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -102,3 +103,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneDataList: {fileID: 0}
   portalDataList: {fileID: 0}
+--- !u!114 &4360534568010519165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032769826511270979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16bbf754fd06f420596e0747a0157712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
