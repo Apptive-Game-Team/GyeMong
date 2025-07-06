@@ -6,7 +6,7 @@ using UnityEngine;
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
 {
     [Obsolete("Use AttackObjectController instead")]
-    public class Trunk : MonoBehaviour
+    public class Vine : MonoBehaviour
     {
         [SerializeField] private Animator animator;
 
@@ -15,22 +15,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             if (animator == null)
                 animator = GetComponent<Animator>();
 
-            animator.Play("Trunk");
-            StartCoroutine(DestroyAfterDelay(0.417f));
+            animator.Play("Vine");
+            StartCoroutine(DestroyAfterDelay(2f));
         }
 
         private IEnumerator DestroyAfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
             Destroy(gameObject);
-        }
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-
-            if (collision.CompareTag("Player"))
-            {
-                SceneContext.Character.Bind(1f);
-            }
         }
     }
 }
