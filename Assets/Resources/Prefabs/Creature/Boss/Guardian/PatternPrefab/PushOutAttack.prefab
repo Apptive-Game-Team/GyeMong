@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3118012797175491201}
   - component: {fileID: 2740949399424765801}
   - component: {fileID: 394299540722857273}
-  - component: {fileID: 7820030691431913668}
   - component: {fileID: -8692751306265056136}
   m_Layer: 0
   m_Name: PushOutAttack
@@ -160,41 +159,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &7820030691431913668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8583689789694271782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 5
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 521773882682900480
-  - rid: 3294223817106784258
-  references:
-    version: 2
-    RefIds:
-    - rid: 521773882682900480
-      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
-      data:
-        frames:
-        - {fileID: 929469871, guid: 2194793274e0340e0affae6b0972e724, type: 3}
-        - {fileID: -1576842532, guid: 2194793274e0340e0affae6b0972e724, type: 3}
-        - {fileID: 1924862839, guid: 2194793274e0340e0affae6b0972e724, type: 3}
-        - {fileID: 66825293, guid: 2194793274e0340e0affae6b0972e724, type: 3}
-        deltaTime: 0.1
-        _renderer: {fileID: 0}
-    - rid: 3294223817106784258
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 0.5
 --- !u!114 &-8692751306265056136
 MonoBehaviour:
   m_ObjectHideFlags: 0

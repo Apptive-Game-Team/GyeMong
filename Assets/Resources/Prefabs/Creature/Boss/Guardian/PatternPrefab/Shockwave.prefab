@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5261490959825808151}
-  - component: {fileID: 3610578329581568504}
   - component: {fileID: 2096135843370694871}
   - component: {fileID: 8155886504737565004}
   - component: {fileID: 4058262523324732391}
@@ -36,38 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3610578329581568504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6910081737103628750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 5
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 521773882682900484
-  references:
-    version: 2
-    RefIds:
-    - rid: 521773882682900484
-      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
-      data:
-        frames:
-        - {fileID: -814833421, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: -1470430974, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: 885157182, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: 1312734711, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: 555509500, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: 1924693295, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        deltaTime: 0.1
-        _renderer: {fileID: 0}
 --- !u!212 &2096135843370694871
 SpriteRenderer:
   m_ObjectHideFlags: 0
