@@ -43,7 +43,7 @@ namespace GyeMong.GameSystem.Creature.Player
         private bool isInvincible = false;
         private bool canCombo = false;
         private bool comboQueued = false;
-
+        private CircleCollider2D _hitCollider;
 
         public Material[] materials;
 
@@ -55,6 +55,7 @@ namespace GyeMong.GameSystem.Creature.Player
             playerRb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             soundController = GetComponent<PlayerSoundController>();
+            _hitCollider = transform.Find("HitCollider").GetComponent<CircleCollider2D>();
         }
 
         private void Start()
@@ -331,7 +332,15 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private void AttackMove(Vector2 direction)
         {
-            transform.DOMove((Vector2)transform.position + direction / 3, stat.AttackDelay).SetEase(Ease.OutQuad);
+            Vector2 currentPos = transform.position;
+            Vector2 targetPos = currentPos + direction / 3;
+            
+            Vector2 dirNormalized = direction.normalized;
+            float distance = (direction / 3).magnitude;
+            float colliderRadius = _hitCollider.radius;
+            float adjustedDistance = distance + colliderRadius;
+            RaycastHit2D hit = Physics2D.Raycast(currentPos, dirNormalized, adjustedDistance, LayerMask.GetMask("Wall"));
+            if (hit.collider == null) transform.DOMove(targetPos, stat.AttackDelay).SetEase(Ease.OutQuad);
         }
 
         private float _chargeThreshold = 1f;
