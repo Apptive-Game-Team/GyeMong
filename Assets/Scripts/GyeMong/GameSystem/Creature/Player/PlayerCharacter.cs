@@ -44,6 +44,7 @@ namespace GyeMong.GameSystem.Creature.Player
         private bool canCombo = false;
         private bool comboQueued = false;
 
+        public bool isTutorial;
 
         public Material[] materials;
 
@@ -55,6 +56,7 @@ namespace GyeMong.GameSystem.Creature.Player
             playerRb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             soundController = GetComponent<PlayerSoundController>();
+            isTutorial = PlayerPrefs.GetInt("TutorialFlag") == 0;
         }
 
         private void Start()
@@ -205,6 +207,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public void AttackIncreaseGauge()
         {
+            if (isTutorial) return;
             curSkillGauge += stat.GrazeGainOnAttack;
             if (curSkillGauge > stat.GrazeMax)
             {
@@ -529,8 +532,9 @@ namespace GyeMong.GameSystem.Creature.Player
             changeListenerCaller.CallPlayerSpawned();
         }
         
-        public float CurrentHp { get { return curHealth; } }
-        
+        public float CurrentHp => curHealth;
+        public float CurrentSkillGauge => curSkillGauge;
+
         public void DestroySelf()
         {
             Destroy(gameObject);
