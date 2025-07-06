@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8155886504737565004}
   - component: {fileID: 4058262523324732391}
   - component: {fileID: 6299423114584147079}
+  - component: {fileID: -7478687601610222090}
+  - component: {fileID: 6433331673810555485}
   m_Layer: 0
   m_Name: Shockwave
   m_TagString: EnemyAttack
@@ -166,3 +168,37 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: b83d486e9f2098f429f423beba3a4234, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: 4c41dc256e2ec854cbfdb7bc65c980e1,
     type: 2}
+--- !u!95 &-7478687601610222090
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6910081737103628750}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 44e181ec0a1341f43ada9e2ae7b4adae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6433331673810555485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6910081737103628750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6abb9433e55554642b8f47e987ec6fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}

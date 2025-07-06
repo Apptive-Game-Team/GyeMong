@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2740949399424765801}
   - component: {fileID: 394299540722857273}
   - component: {fileID: -8692751306265056136}
+  - component: {fileID: 993988626821524918}
   m_Layer: 0
   m_Name: PushOutAttack
   m_TagString: EnemyAttack
@@ -176,3 +177,16 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: 095d509d626cd8342a713ecd3df03bd8, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: 0dcb8c465b28ddf479ab341b4e2a11b1,
     type: 2}
+--- !u!114 &993988626821524918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583689789694271782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63e9f27804fdbf747b6cf177fc7d155f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
