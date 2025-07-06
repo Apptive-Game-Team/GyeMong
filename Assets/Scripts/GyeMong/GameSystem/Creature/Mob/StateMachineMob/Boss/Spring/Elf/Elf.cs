@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GyeMong.EventSystem.Event.Boss;
+using GyeMong.EventSystem.Event.Chat;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
@@ -22,6 +24,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         float attackdelayTime = 1f;
         [SerializeField] private SoundObject arrowSoundObject;
         [SerializeField] private SoundObject vineSoundObject;
+
+        [Header("Chat Data")]
+        [SerializeField] private MultiChatMessageData chatData;
+        [SerializeField] private float autoSkipTime = 3f;
+
+        [Header("Boss Room Object")]
+        [SerializeField] private GameObject bossRoomBgm1;
+        [SerializeField] private GameObject bossRoomBgm2;
+        [SerializeField] private GameObject bossRoomObj_wall;
 
         protected override void Initialize()
         {
@@ -325,8 +336,42 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             base.Die();
             Animator.SetBool("isDown", true);
+            StartCoroutine(DieRoutine());
+        }
+
+        private IEnumerator DieRoutine()
+        {
+            yield return StartCoroutine(Trigger());
             StageManager.ClearStage(this);
         }
+
+        public IEnumerator Trigger()
+        {
+            return TriggerEvents();
+        }
+
+        private IEnumerator TriggerEvents()
+        {
+            yield return StartCoroutine((new OpenChatEvent().Execute()));
+
+            yield return new ShowMessages(chatData, autoSkipTime).Execute();
+
+            yield return StartCoroutine((new CloseChatEvent().Execute()));
+
+            var activateBossRoomEvent = new ActivateBossRoomEvent();
+            activateBossRoomEvent.SetBossRoomObject(bossRoomBgm1);
+            yield return activateBossRoomEvent.Execute();
+
+            var deactivateEvent = new DeActivateBossRoomEvent();
+            deactivateEvent.SetBossRoomObject(bossRoomBgm2);
+            yield return deactivateEvent.Execute();
+
+            yield return new HideBossHealthBarEvent().Execute();
+
+            deactivateEvent.SetBossRoomObject(bossRoomObj_wall);
+            yield return deactivateEvent.Execute();
+        }
+
         protected override void TransPhase()
         {
             if (currentPhase < maxHps.Count - 1)

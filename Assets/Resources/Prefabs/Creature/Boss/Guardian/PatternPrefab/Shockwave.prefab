@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5261490959825808151}
-  - component: {fileID: 3610578329581568504}
   - component: {fileID: 2096135843370694871}
   - component: {fileID: 8155886504737565004}
   - component: {fileID: 4058262523324732391}
   - component: {fileID: 6299423114584147079}
+  - component: {fileID: -7478687601610222090}
+  - component: {fileID: 6433331673810555485}
   m_Layer: 0
   m_Name: Shockwave
   m_TagString: EnemyAttack
@@ -36,38 +37,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3610578329581568504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6910081737103628750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 5
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 521773882682900484
-  references:
-    version: 2
-    RefIds:
-    - rid: 521773882682900484
-      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
-      data:
-        frames:
-        - {fileID: -814833421, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: -1470430974, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: 885157182, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: 1312734711, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: 555509500, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        - {fileID: 1924693295, guid: 1d1acc5e66eef934193b60cf7d628880, type: 3}
-        deltaTime: 0.1
-        _renderer: {fileID: 0}
 --- !u!212 &2096135843370694871
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -199,3 +168,37 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: b83d486e9f2098f429f423beba3a4234, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: 4c41dc256e2ec854cbfdb7bc65c980e1,
     type: 2}
+--- !u!95 &-7478687601610222090
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6910081737103628750}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 44e181ec0a1341f43ada9e2ae7b4adae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6433331673810555485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6910081737103628750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6abb9433e55554642b8f47e987ec6fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}

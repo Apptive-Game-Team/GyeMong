@@ -7,6 +7,7 @@ using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
+using GyeMong.GameSystem.Map.Stage;
 using GyeMong.GameSystem.Creature.Player;
 using UnityEngine;
 

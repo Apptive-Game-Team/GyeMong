@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e5e3ca8f6045c4bade9e072ddb6c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmName: BGM_Title
 --- !u!114 &95729710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,89 +422,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 878e22c104ba745f3b528710fbace802, type: 3}
---- !u!1001 &350934251
-PrefabInstance:
+--- !u!1 &443517736
+GameObject:
   m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 443517738}
+  - component: {fileID: 443517737}
+  m_Layer: 0
+  m_Name: BGMObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &443517737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443517736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63dc61501fe42d44bc0010df2d0c046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmName: BGM_Title
+--- !u!4 &443517738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443517736}
   serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_Name
-      value: BGMObject
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: eventSequence.Array.data[0]
-      value: 6048795592339750913
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: managedReferences[6048795592339750913]
-      value: Assembly-CSharp GyeMong.EventSystem.Event.BGMEvent
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: managedReferences[6048795592339750913].bgmName
-      value: BGM_Title
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 94a44013cb06f0f48bfd802da3e6c197, type: 3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 29.45351, y: 4.145478, z: -0.116452865}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &929052964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1898,4 +1861,4 @@ SceneRoots:
   - {fileID: 1016599113}
   - {fileID: 2123567959}
   - {fileID: 295396768}
-  - {fileID: 350934251}
+  - {fileID: 443517738}
