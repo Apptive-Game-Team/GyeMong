@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 6903973534843988526}
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
-  - component: {fileID: 2608428945595376751}
   - component: {fileID: 1515025265303950281}
+  - component: {fileID: 6936342611837080653}
+  - component: {fileID: -576143548290095285}
   m_Layer: 0
   m_Name: MidBossVine
   m_TagString: EnemyAttack
@@ -160,38 +161,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5}
   m_EdgeRadius: 0
---- !u!114 &2608428945595376751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349092434517921609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 1
-  trigger: 5
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 521773891873669122
-  references:
-    version: 2
-    RefIds:
-    - rid: 521773891873669122
-      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
-      data:
-        frames:
-        - {fileID: 21300000, guid: 2ec89d0c0b5764ee9b09f7256f5fb277, type: 3}
-        - {fileID: 21300000, guid: 743e4af482abf47788ef4754ee6d5cab, type: 3}
-        - {fileID: 21300000, guid: bd0cb68e2ef9b41809dc88119a4880a2, type: 3}
-        - {fileID: 21300000, guid: ff0cfd3e3524940d3b1345ba7bfb38a3, type: 3}
-        - {fileID: 21300000, guid: 562c0739ff55346c2a29f49ad7355c03, type: 3}
-        - {fileID: 21300000, guid: c7558db62a9e14b79b1ccfff09670269, type: 3}
-        deltaTime: 0.1
-        _renderer: {fileID: 0}
 --- !u!114 &1515025265303950281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,3 +178,37 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: d33007b1fe3f4f64ca6c0f072cd3b30e, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: 8776415d6483aa043957031af9658e2a,
     type: 2}
+--- !u!95 &6936342611837080653
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3f697c8205d05c34bb6245785bd6df20, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-576143548290095285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b207fc8e8247e7e45912fea08149c9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
