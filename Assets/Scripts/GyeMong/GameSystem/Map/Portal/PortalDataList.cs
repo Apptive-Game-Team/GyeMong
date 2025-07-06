@@ -51,8 +51,13 @@ namespace GyeMong.GameSystem.Map.Portal
         // Cliff
         SPRING_CLIFF1 = 25,
         
-        WANDERER = 26,
-        SANDWORM = 27,
+        //Naga Rouge
+        SUMMER_OPENING = 50,
+        SUMMER_OPENING_2 = 51,
+        NAGA_ROUGE = 52,
+        
+        //Wanderer
+        WANDERER = 70,
     }
 
     [Serializable]

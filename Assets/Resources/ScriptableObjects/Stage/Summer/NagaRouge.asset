@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7303749f5a0d4e18a9d6d8ae0067cc92, type: 3}
-  m_Name: Wanderer
+  m_Name: NagaRouge
   m_EditorClassIdentifier: 
-  id: 7
-  portalID: 70
-  beforeScript:
-  - {fileID: 11400000, guid: c04ced972bd904f29a8925bc76d323f1, type: 2}
-  afterScript:
-  - {fileID: 11400000, guid: a8e114991c2aa45c583f80022d032d5c, type: 2}
+  id: 5
+  portalID: 50
+  beforeScript: []
+  afterScript: []
