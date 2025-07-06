@@ -16,9 +16,10 @@ namespace GyeMong.EventSystem.Event.Chat
 
     public enum BackgroundImage
     {
-        Test1,
-        Test2,
-        Nothing,
+        Black = 0,
+        Nothing = 1,
+        Spring = 2,
+        Summer = 3,
     }
 
     public enum ChatImage
