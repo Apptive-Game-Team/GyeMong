@@ -6,58 +6,19 @@ namespace GyeMong.GameSystem.Map.Portal
 {
     public enum PortalID
     {
-        NONE = 0,
-    
-        // Beach
-        SPRING_BEACH1 = 1,
-        SPRING_BEACH2 = 2,
-        SPRING_BEACH3 = 3,
-    
-        // Town
-        SPRING_TOWN_LEFT = 4,
-        SPRING_TOWN_RIGHT = 5,
-        SPRING_TOWN_UP = 6,
-        SPRING_TOWN_DOWN = 7,
-    
-        // North Forest
-        SPRING_NORTH_FOREST = 8,
-    
-        // South Road
-        SPRING_SOUTH_ROAD_UP = 9,
-        SPRING_SOUTH_ROAD_LEFT_ = 10,
-        SPRING_SOUTH_ROAD_DOWN = 11,
-    
-        // Garden
-        SPRING_GARDEN = 12,
-    
-        // Shadow Island
-        SPRING_SHADOW_ISLAND1 = 13,
-        SPRING_SHADOW_ISLAND2 = 14,
-        SPRING_SHADOW_ISLAND3 = 15,
-        SPRING_SHADOW_ISLAND4 = 16,
-        SPRING_SHADOW_ISLAND5 = 17,
-    
-        // Golem Temple
-        SPRING_GOLEM_TEMPLE1 = 18,
-        SPRING_GOLEM_TEMPLE2 = 19,
-        SPRING_GOLEM_TEMPLE3 = 20,
-        SPRING_GOLEM_TEMPLE4 = 21,
-        SPRING_GOLEM_TEMPLE5 = 22,
-        SPRING_GOLEM_TEMPLE6 = 23,
-
-        //Cinimatic
+        None = 0,
+        
+        // Spring
+        SpringNorthForest = 6,
+        SpringBeach = 10,
+        SpringShadowIsland = 16,
+        SpringGolemTemple = 22,
         Cinematic = 24,
-    
-        // Cliff
-        SPRING_CLIFF1 = 25,
+        SpringCliff = 25,
         
-        //Naga Rouge
-        SUMMER_OPENING = 50,
-        SUMMER_OPENING_2 = 51,
-        NAGA_ROUGE = 52,
-        
-        //Wanderer
-        WANDERER = 70,
+        // Summer
+        Wanderer = 26,
+        Sandworm = 27,
     }
 
     [Serializable]
