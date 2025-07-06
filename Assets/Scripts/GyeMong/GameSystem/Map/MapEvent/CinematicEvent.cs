@@ -29,10 +29,10 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private IEnumerator TriggerEvents()
         {
-            /*yield return StartCoroutine((new OpenChatEvent().Execute()));
-            yield return new ShowMessages(chatData, autoSkipTime).Execute();*/
+            yield return StartCoroutine((new OpenChatEvent().Execute()));
+            yield return new ShowMessages(chatData, autoSkipTime).Execute();
             yield return new FadeOutEvent().Execute();
-            /*yield return StartCoroutine((new CloseChatEvent().Execute()));*/
+            yield return StartCoroutine((new CloseChatEvent().Execute()));
 
             GyeMong.GameSystem.Map.Stage.Select.Stage currentStage = GyeMong.GameSystem.Map.Stage.Select.Stage.Beach;
             GyeMong.GameSystem.Map.Stage.Select.Stage maxStage = GyeMong.GameSystem.Map.Stage.Select.Stage.Slime;
