@@ -30,19 +30,16 @@ namespace GyeMong.EventSystem.Event
     
     public class SkippablePopupWindowEvent : PopupWindowEvent
     {
-        [SerializeField] private string _title;
-        [SerializeField] private string _message;
-        [SerializeField] private float _duration;
+        public string Title;
+        public string Message;
+        public float Duration;
     
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            yield return PopupWindowController.Instance.OpenPopupWindow(_title, _message);
+            yield return PopupWindowController.Instance.OpenPopupWindow(Title, Message);
             
             float timer = Time.time;
-            yield return new WaitUntil(() =>
-            {
-                return (timer + _duration < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction);
-            });
+            yield return new WaitUntil(() => (timer + Duration < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction));
             
             yield return PopupWindowController.Instance.ClosePopupWindow();
         }
