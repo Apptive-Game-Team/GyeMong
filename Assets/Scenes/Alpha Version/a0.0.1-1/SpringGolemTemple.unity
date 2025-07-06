@@ -74459,12 +74459,12 @@ MonoBehaviour:
   someAnimator: {fileID: 1637330592}
   bossRoomEntrance: {fileID: 1561955228}
   animationFrames:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1979126298, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+  - {fileID: -15224446, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+  - {fileID: 588034305, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+  - {fileID: 1568532850, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+  - {fileID: -2034889144, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+  - {fileID: 2020349588, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
   someRenderer: {fileID: 1637330593}
 --- !u!114 &1561955228
 MonoBehaviour:
