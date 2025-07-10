@@ -31,7 +31,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
         {
             yield return StartCoroutine((new OpenChatEvent().Execute()));
             yield return new ShowMessages(chatData, autoSkipTime).Execute();
-            yield return new FadeOutEvent().Execute();
             yield return StartCoroutine((new CloseChatEvent().Execute()));
 
             GyeMong.GameSystem.Map.Stage.Select.Stage currentStage = GyeMong.GameSystem.Map.Stage.Select.Stage.Beach;
