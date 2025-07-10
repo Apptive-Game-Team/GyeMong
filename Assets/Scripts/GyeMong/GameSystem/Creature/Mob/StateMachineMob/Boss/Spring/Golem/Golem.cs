@@ -33,9 +33,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         [Header("Change Sprite")]
         [SerializeField] private SpriteRenderer targetSpriteRenderer;
         [SerializeField] private Sprite newSprite1;
-
-        [Header("Chat Data")]
-        [SerializeField] private MultiChatMessageData chatData;
+        
         [SerializeField] private float autoSkipTime = 3f;
 
         [Header("Boss Room Object")]
@@ -367,17 +365,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return changeSpriteEvent.Execute();
 
             yield return new HideBossHealthBarEvent().Execute();
-
-            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
-
-            yield return StartCoroutine((new OpenChatEvent().Execute()));
-
-            yield return new ShowMessages(chatData, autoSkipTime).Execute();
-
-            yield return StartCoroutine((new CloseChatEvent().Execute()));
-
-            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
-
+            
             SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
 
             var zoomEvent = new CameraZoomInOut();
