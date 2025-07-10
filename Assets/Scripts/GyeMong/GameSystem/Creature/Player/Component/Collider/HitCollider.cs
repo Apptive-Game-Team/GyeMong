@@ -91,7 +91,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
             // 넉백 스피드
             float baseKnockbackSpeed = 5f;
-            float knockbackSpeed = baseKnockbackSpeed * ratio;
+            float knockbackSpeed = Mathf.Max(baseKnockbackSpeed * ratio, 3f);
             knockbackSpeed = Mathf.Clamp(knockbackSpeed, 3f, 10f);
 
             // 타격음 볼륨 비율
