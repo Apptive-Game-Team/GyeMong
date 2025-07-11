@@ -28,8 +28,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         [SerializeField] private float autoSkipTime = 3f;
 
         [Header("Boss Room Object")]
-        [SerializeField] private GameObject bossRoomBgm1;
-        [SerializeField] private GameObject bossRoomBgm2;
         [SerializeField] private GameObject bossRoomObj_wall;
 
         protected override void Initialize()
@@ -357,12 +355,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             yield return StartCoroutine((new CloseChatEvent().Execute()));
 
             var activateBossRoomEvent = new ActivateBossRoomEvent();
-            activateBossRoomEvent.SetBossRoomObject(bossRoomBgm1);
-            yield return activateBossRoomEvent.Execute();
 
             var deactivateEvent = new DeActivateBossRoomEvent();
-            deactivateEvent.SetBossRoomObject(bossRoomBgm2);
-            yield return deactivateEvent.Execute();
 
             yield return new HideBossHealthBarEvent().Execute();
 
