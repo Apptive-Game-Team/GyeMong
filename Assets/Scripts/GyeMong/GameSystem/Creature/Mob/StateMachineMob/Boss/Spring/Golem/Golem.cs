@@ -39,8 +39,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj1;
         [SerializeField] private GameObject bossRoomObj2;
-        [SerializeField] private GameObject bossRoomObj3;
-        [SerializeField] private GameObject bossRoomObj4;
 
         public SoundObject TossSoundObject => _tossSoundObject;
         protected override void Initialize()
@@ -374,17 +372,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return StartCoroutine(zoomEvent.Execute());
 
             var activateBossRoomEvent = new ActivateBossRoomEvent();
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj1);
-            yield return activateBossRoomEvent.Execute();
 
             var deactivateEvent = new DeActivateBossRoomEvent();
+
+            deactivateEvent.SetBossRoomObject(bossRoomObj1);
+            yield return deactivateEvent.Execute();
+
             deactivateEvent.SetBossRoomObject(bossRoomObj2);
-            yield return deactivateEvent.Execute();
-
-            deactivateEvent.SetBossRoomObject(bossRoomObj3);
-            yield return deactivateEvent.Execute();
-
-            deactivateEvent.SetBossRoomObject(bossRoomObj4);
             yield return deactivateEvent.Execute();
         }
 
