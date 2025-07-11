@@ -30,6 +30,10 @@ namespace GyeMong.EventSystem.Event.Chat
             {
                 SoundObject _soundObject = Sound.Play("EFFECT_Chat_Sound", true);
                 yield return new WaitForSeconds(0.2f);
+                
+                ChatController.SetBackgroundImage(ChatController.GetBackgroundImageSprite(chat.backgroundImage));
+                ChatController.SetChatImage(ChatController.GetChatImageSprite(chat.chatImage));
+                
                 Sound.Stop(_soundObject);
                 yield return ChatController.MultipleChat(chat, 3f);
             }

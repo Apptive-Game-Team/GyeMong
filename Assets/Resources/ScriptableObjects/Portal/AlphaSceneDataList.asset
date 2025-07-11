@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: AlphaSceneDataList
   m_EditorClassIdentifier: 
   sceneDatas:
+  - sceneID: 8
+    sceneName: Cinematic
   - sceneID: 1
     sceneName: SpringBeach
   - sceneID: 2
@@ -21,15 +23,15 @@ MonoBehaviour:
     sceneName: SpringNorthForest
   - sceneID: 4
     sceneName: SpringSouthRoad
-  - sceneID: 5
-    sceneName: SpringGarden
   - sceneID: 6
     sceneName: SpringShadowIsland
   - sceneID: 7
     sceneName: SpringGolemTemple
-  - sceneID: 8
-    sceneName: Cinematic
   - sceneID: 9
     sceneName: SpringCliff
-  - sceneID: 10
+  - sceneID: 50
+    sceneName: SummerOpeningScene
+  - sceneID: 51
+    sceneName: NagaRogueScene
+  - sceneID: 70
     sceneName: Wanderer

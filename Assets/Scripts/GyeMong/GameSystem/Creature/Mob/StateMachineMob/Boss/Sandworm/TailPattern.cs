@@ -34,6 +34,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Vector3 sandwormDir = Vector3.Distance(targetPos, sandworm.transform.position) > 1f ? 
                     (sandworm.transform.position - targetPos).normalized : Vector3.zero;
                 Vector3 spawnPos = targetPos + sandwormDir * _spawnPosAdj;
+
                 
                 IndicatorGenerator.Instance.GenerateIndicator(tailImage, spawnPos, Quaternion.Euler(0f, 0f, 0f), _attackDelay);
                 yield return new WaitForSeconds(_attackDelay);

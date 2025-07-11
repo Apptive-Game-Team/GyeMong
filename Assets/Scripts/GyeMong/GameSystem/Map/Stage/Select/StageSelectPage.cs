@@ -10,8 +10,8 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         Elf = 2,
         Shadow = 3,
         Golem = 4,
-        
-        Wanderer = 5,
+        NagaRouge = 5,
+        Wanderer = 7,
     }
     
     public static class StageSelectPage

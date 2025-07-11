@@ -1,10 +1,13 @@
 using System.Collections;
+using GyeMong.EventSystem.Event.Chat;
+using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
+using GyeMong.SoundSystem;
 using UnityEngine;
 public enum Direction
 {
@@ -22,7 +25,10 @@ public class NagaRogue : StateMachineMob
     [SerializeField] private GameObject rushCamelPrefab;
     [SerializeField] private GameObject poisonMinionPrefab;
     [SerializeField] private GameObject sandMinionPrefab;
+    [SerializeField] private ParticleSystem sandStormParticles;
+    [SerializeField] private MultiChatMessageData phaseChangeChat;
 
+    public float curveThrowRnage = 10f;
     public float phaseChangeHealthPercent = 0.5f;
     public bool canPhaseChange = true;
 
@@ -56,7 +62,6 @@ public class NagaRogue : StateMachineMob
     private void Start()
     {
         Initialize();
-        ChangeState(new DetectingPlayer() {mob = this});
     }
 
     protected void Initialize()
@@ -125,6 +130,7 @@ public class NagaRogue : StateMachineMob
     
     private IEnumerator CurveThrow(GameObject prefab, float distance = 0.5f, float throwSpeed = 8f, float curveAmount = 1f)
     {
+        Sound.Play("ENEMY_NagaRogue_Throw");
         FaceToPlayer();
         Direction dir = GetDirectionToTarget(DirectionToPlayer);
         _animator.Play($"Throw_{dir}");
@@ -143,6 +149,7 @@ public class NagaRogue : StateMachineMob
     }
     private IEnumerator RangeFanThrow(GameObject prefab, int daggerCount = 5, float spreadAngle = 45f, float throwSpeed = 10f)
     {
+        Sound.Play("ENEMY_NagaRogue_Throw");
         FaceToPlayer();
         Direction direction = GetDirectionToTarget(DirectionToPlayer);
         _animator.Play($"Throw_{direction}",-1,0f);
@@ -172,6 +179,38 @@ public class NagaRogue : StateMachineMob
         }
         yield return new WaitForSeconds(0.2f);
     }
+    private IEnumerator RangeFanDaggerThrow(GameObject prefab, int daggerCount = 5, float spreadAngle = 45f, float throwSpeed = 10f)
+    {
+        Sound.Play("ENEMY_NagaRogue_Throw");
+        FaceToPlayer();
+        Direction direction = GetDirectionToTarget(DirectionToPlayer);
+        _animator.Play($"Throw_{direction}",-1,0f);
+
+        Vector3 origin = transform.position;
+        Vector3 toPlayer = (SceneContext.Character.transform.position - origin).normalized;
+        float baseAngle = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
+
+        float startAngle = baseAngle - (spreadAngle / 2f);
+        float angleStep = spreadAngle / (daggerCount - 1);
+
+        for (int i = 0; i < daggerCount; i++)
+        {
+            float angle = startAngle + angleStep * i;
+            float rad = angle * Mathf.Deg2Rad;
+
+            Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0).normalized;
+            Vector3 spawnPos = origin + dir * 0.5f;
+            Vector3 targetPos = spawnPos + dir * 10f; 
+
+            AttackObjectController.Create(
+                spawnPos,
+                dir,
+                prefab,
+                new RetrieveMovement(spawnPos, targetPos, throwSpeed)
+            ).StartRoutine();
+        }
+        yield return new WaitForSeconds(0.2f);
+    }
     public IEnumerator Move(Vector3 dir, float distance = 2f,float duration = 0.5f)
     {
         Direction direction = GetDirectionToTarget(DirectionToPlayer);
@@ -187,16 +226,42 @@ public class NagaRogue : StateMachineMob
         transform.position = destination;
     }
 
+    public IEnumerator ChangeAlpha(float targetAlpha, float duration = 0.3f)
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        Color startColor = sr.color;
+        float startAlpha = startColor.a;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = Mathf.Clamp01(time / duration);
+            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+
+            sr.color = new Color(startColor.r, startColor.g, startColor.b, newAlpha);
+
+            yield return null;
+        }
+        
+        sr.color = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+    }
+    
     public IEnumerator Teleport(Vector3 pos, float distance = 2f)
     {
+        FaceToPlayer();
         Direction direction = GetDirectionToTarget(DirectionToPlayer);
-        _animator.Play($"Move_{direction}");
+        _animator.Play($"Dash_{direction}",-1,0f);
+        yield return ChangeAlpha(0f);
         transform.position = pos + distance * DirectionToPlayer;
         yield return new WaitForSeconds(0.2f);
+        yield return ChangeAlpha(1f);
     }
     
     public IEnumerator CamelAttack(float distance = 10f, float rushSpeed = 10f)
     {
+        Sound.Play("ENEMY_NagaRogue_CamelCharge");
         float angle = Random.Range(0f, 360f);
         Vector3 dir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0).normalized;
         
@@ -242,8 +307,9 @@ public class NagaRogue : StateMachineMob
         }
         public override IEnumerator StateCoroutine()
         {
+            Sound.Play("ENEMY_NagaRogue_Ambush");
             yield return NagaRogue.Teleport(SceneContext.Character.transform.position);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
             yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
             yield return new WaitForSeconds(1f);
@@ -260,7 +326,7 @@ public class NagaRogue : StateMachineMob
 
         public override IEnumerator StateCoroutine()
         {
-            yield return NagaRogue.RangeFanThrow(NagaRogue.daggerPrefab, 5, 135f);
+            yield return NagaRogue.RangeFanDaggerThrow(NagaRogue.daggerPrefab, 5, 135f);
             yield return new WaitForSeconds(1f);
             NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
         }
@@ -269,7 +335,7 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 50 : 0;
+            return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 100 : 0;
         }
 
         public override IEnumerator StateCoroutine()
@@ -286,7 +352,7 @@ public class NagaRogue : StateMachineMob
         
         public override int GetWeight()
         {
-            return (mob.DistanceToPlayer >= mob.MeleeAttackRange) ? 50 : 0;
+            return (mob.DistanceToPlayer >= NagaRogue.curveThrowRnage) ? 50 : 0;
         }
 
         public override IEnumerator StateCoroutine()
@@ -312,6 +378,16 @@ public class NagaRogue : StateMachineMob
         public override IEnumerator StateCoroutine()
         {
             NagaRogue.canPhaseChange = false;
+            yield return new OpenChatEvent().Execute();
+            yield return new ShowMessages(NagaRogue.phaseChangeChat, 3f).Execute();
+            yield return new CloseChatEvent().Execute();
+            yield return new SetKeyInputEvent(){_isEnable = false}.Execute();
+            var main = NagaRogue.sandStormParticles.main;
+            main.startSpeed = 10f;
+            var emission = NagaRogue.sandStormParticles.emission;
+            emission.rateOverTime = 200f;            
+            NagaRogue.ChangeState();
+            yield return new SetKeyInputEvent(){_isEnable = true}.Execute();
             Vector3 originPos = NagaRogue.transform.position;
             yield return NagaRogue.Teleport(new Vector3(999999, 999999, 0));
             // NagaRogue.sandstormPrefab.SetActive(true);

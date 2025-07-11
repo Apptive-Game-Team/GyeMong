@@ -23,8 +23,16 @@ namespace GyeMong.EventSystem
             Type[] types = assembly.GetTypes();
             foreach (Type type in types)
             {
-                if (!type.IsAbstract && type.IsSubclassOf(typeof(Event.Event))){
-                    classInfos.Add(type.Name, type);
+                if (!type.IsAbstract && type.IsSubclassOf(typeof(Event.Event)))
+                {
+                    if (!classInfos.ContainsKey(type.Name))
+                    {
+                        classInfos.Add(type.Name, type);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Duplicate class name detected: {type.Name}. Skipping...");
+                    }
                 }
             }
 

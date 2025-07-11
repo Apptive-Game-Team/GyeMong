@@ -143,6 +143,10 @@ namespace GyeMong.EventSystem.Event
     {
         [SerializeField]
         private string bgmName;
+        public BGMEvent(string bgmName)
+        {
+            this.bgmName = bgmName;
+        }
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             SoundObject soundObject = SoundManager.Instance.GetBgmObject();
