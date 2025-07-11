@@ -51,17 +51,16 @@ namespace GyeMong.EventSystem.Event.EventScene
             Vector3 targetPosition = targetSlime.transform.position;
             float duration = Random.Range(1.5f, 2.5f);
             float elapsedTime = 0f;
-            float delay = 0.01f;
             Vector3 scale = slime.transform.localScale;
             slime.transform.localScale = startPosition.x < targetPosition.x ? scale : new Vector3(-scale.x, scale.y, scale.z);
             slime.SetActive(true);
 
             while (elapsedTime < duration)
             {
-                elapsedTime += delay;
+                elapsedTime += Time.deltaTime;
                 float t = elapsedTime / duration;
                 slime.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-                yield return new WaitForSeconds(delay);
+                yield return null;
             }
             slime.SetActive(false);
 
