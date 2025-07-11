@@ -11,8 +11,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         private GameObject[] rootObjects;
         [SerializeField] private List<GameObject> rootSpawnZone;
 
-        private SoundObject soundObject;
-
         private void Awake()
         {
             // if (ConditionManager.Instance.Conditions.TryGetValue("spring_guardian_down", out bool down))
@@ -23,7 +21,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             //     }
             // }
             gameObject.SetActive(false);
-            soundObject = GetComponent<SoundObject>();
         }
         void OnEnable()
         {
@@ -59,7 +56,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         }
         private void ActivateRootObjects(int[] indices)
         {
-            StartCoroutine(soundObject.Play());
+            Sound.Play("ENEMY_Root");
             foreach (int index in indices)
             {
                 rootObjects[index].SetActive(true);
