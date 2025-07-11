@@ -142,7 +142,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             {
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, true);
                 float dashDistance = 1.5f;
+                Vector3 currentPos = DivisionSlime.transform.position;
+                Vector2 dashDirection = DivisionSlime.DirectionToPlayer;
                 Vector3 dashTargetPosition = SceneContext.Character.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
+                float distanceToTarget = Vector3.Distance(currentPos, dashTargetPosition);
+                RaycastHit2D hit = Physics2D.Raycast(currentPos, dashDirection, distanceToTarget, LayerMask.GetMask("Wall"));
+                if (hit.collider != null)
+                {
+                    dashTargetPosition = hit.point - dashDirection * 0.05f;
+                }
                 Sound.Play("ENEMY_DivisionSlime_DashAttack");
                 yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
                 DivisionSlime._dashTween = DivisionSlime.transform.DOMove(dashTargetPosition, 0.6f).SetEase(Ease.OutQuad);
