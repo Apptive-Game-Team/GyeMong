@@ -442,7 +442,7 @@ MonoBehaviour:
       type: {class: ActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
       data:
         _boss: {fileID: 1637330591}
-        bossRoomObject: {fileID: 1592182054}
+        bossRoomObject: {fileID: 0}
     - rid: 6551754819153690652
       type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
       data:
@@ -73895,7 +73895,7 @@ MonoBehaviour:
       type: {class: DeActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
       data:
         _boss: {fileID: 1637330591}
-        bossRoomObject: {fileID: 1592182054}
+        bossRoomObject: {fileID: 0}
     - rid: 6551754819153690664
       type: {class: ActivateBossRoomEvent, ns: GyeMong.EventSystem.Event.Boss, asm: Assembly-CSharp}
       data:
@@ -74451,7 +74451,7 @@ MonoBehaviour:
   cameraDestination2: {x: 28.8, y: 4, z: -10}
   cameraSpeed1: 3
   cameraSpeed2: 1
-  bossRoomObj1: {fileID: 1592182054}
+  bossRoomObj1: {fileID: 0}
   bossRoomObj2: {fileID: 1620963477}
   bossRoomObj3: {fileID: 2142563700}
   bossRoomObj4: {fileID: 141803510}
@@ -74876,62 +74876,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 871fd300f434817478d214e7159c525c, type: 3}
---- !u!1 &1592182054
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1592182056}
-  - component: {fileID: 1592182055}
-  m_Layer: 0
-  m_Name: BgmObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1592182055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592182054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 1
-  trigger: 5
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 6551754819153690624
-  references:
-    version: 2
-    RefIds:
-    - rid: 6551754819153690624
-      type: {class: BGMEvent, ns: GyeMong.EventSystem.Event, asm: Assembly-CSharp}
-      data:
-        bgmName: BGM_Spring
---- !u!4 &1592182056
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592182054}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1620963475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75155,7 +75099,7 @@ PrefabInstance:
         type: 3}
       propertyPath: bossRoomObj1
       value: 
-      objectReference: {fileID: 1592182054}
+      objectReference: {fileID: 0}
     - target: {fileID: 294747914705953580, guid: 541b7061a84e84331a9394f8687c118f,
         type: 3}
       propertyPath: bossRoomObj2
@@ -75947,7 +75891,7 @@ MonoBehaviour:
   newSprite1: {fileID: 21300000, guid: 5ff8887bbfac64d4ea7f2259aef3f808, type: 3}
   chatData: {fileID: 0}
   autoSkipTime: 3
-  bossRoomObj1: {fileID: 1592182054}
+  bossRoomObj1: {fileID: 0}
   bossRoomObj2: {fileID: 1620963477}
   bossRoomObj3: {fileID: 2142563700}
   bossRoomObj4: {fileID: 141803510}
@@ -77319,7 +77263,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 219050278}
   - {fileID: 823301452}
-  - {fileID: 1592182056}
   - {fileID: 92901065}
   - {fileID: 1874213777}
   - {fileID: 1581621003}

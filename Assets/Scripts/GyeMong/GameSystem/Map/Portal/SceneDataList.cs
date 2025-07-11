@@ -21,6 +21,7 @@ namespace GyeMong.GameSystem.Map.Portal
         // Summer
         Wanderer = 10,
         Sandworm = 11,
+        NagaRouge = 12,
     }
 
 
