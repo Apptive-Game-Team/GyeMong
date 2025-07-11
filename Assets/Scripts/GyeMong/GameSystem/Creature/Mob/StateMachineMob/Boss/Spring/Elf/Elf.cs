@@ -22,8 +22,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         [SerializeField] private GameObject meleeAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         float attackdelayTime = 1f;
-        [SerializeField] private SoundObject arrowSoundObject;
-        [SerializeField] private SoundObject vineSoundObject;
 
         [Header("Chat Data")]
         [SerializeField] private MultiChatMessageData chatData;
@@ -176,7 +174,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
-                yield return Elf.arrowSoundObject.Play();
+                Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
@@ -206,7 +204,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 while (count < 4)
                 {
                     GameObject seed = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    yield return Elf.arrowSoundObject.Play();
+                    yield return Sound.Play("ENEMY_Arrow_Shot");
                     count++;
                 }
                 Elf.Animator.SetBool("isAttack", false);
