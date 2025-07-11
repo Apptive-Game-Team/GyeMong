@@ -58,6 +58,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             base.OnAttacked(damage);
             if (currentState is not SlimeDieState)
             {
+                _slimeAnimator.Stop();
                 if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
                 if (_stunCoroutine != null)
                 {
@@ -98,14 +99,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 if (DivisionSlime._isTutorial) 
                     yield return DivisionSlime.GrazeSystemTutorial2();
                 mob.ChangeState();
-            }
-
-            public override void OnStateExit()
-            {
-                if (DivisionSlime._isTutorial)
-                {
-                    DivisionSlime.StartCoroutine(DivisionSlime.GrazeSystemTutorial2());
-                }
             }
         }
 
