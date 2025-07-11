@@ -11,7 +11,8 @@ namespace GyeMong.GameSystem.Map.Bmg
 
         private void Start()
         {
-            StartCoroutine(TriggerEvents());
+            BgmManager.Initialize();
+            // StartCoroutine(TriggerEvents());
         }
 
         public IEnumerator Trigger()
