@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1813008252662639558}
   - component: {fileID: 7183257790069292148}
   - component: {fileID: 5809504813328949194}
+  - component: {fileID: 492203925548355407}
   m_Layer: 0
   m_Name: MidBossSeedExplode
   m_TagString: EnemyAttack
@@ -198,3 +199,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &492203925548355407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1edb92299386714495ccf25e65b995a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
