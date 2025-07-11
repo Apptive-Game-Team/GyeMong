@@ -209,7 +209,6 @@ GameObject:
   - component: {fileID: 844737725874419187}
   - component: {fileID: 1241953916927290027}
   - component: {fileID: 2180471816956545926}
-  - component: {fileID: 8018965693779408895}
   - component: {fileID: 5354083522607184929}
   - component: {fileID: 7472536086023456837}
   - component: {fileID: 2303165326997353410}
@@ -320,51 +319,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &8018965693779408895
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7607399698781265360}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!95 &5354083522607184929
 Animator:
   serializedVersion: 5
@@ -449,6 +403,11 @@ MonoBehaviour:
   SkillIndicator: {fileID: 2579300035636191002}
   arrowSoundObject: {fileID: 5473089280011465190}
   vineSoundObject: {fileID: 1832858006457810338}
+  chatData: {fileID: 0}
+  autoSkipTime: 3
+  bossRoomBgm1: {fileID: 0}
+  bossRoomBgm2: {fileID: 0}
+  bossRoomObj_wall: {fileID: 0}
 --- !u!114 &6663936420378834018
 MonoBehaviour:
   m_ObjectHideFlags: 0
