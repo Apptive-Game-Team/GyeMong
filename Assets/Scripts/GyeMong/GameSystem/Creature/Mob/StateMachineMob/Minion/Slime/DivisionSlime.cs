@@ -60,13 +60,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             if (currentState is not SlimeDieState)
             {
                 _slimeAnimator.Stop();
+                _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle);
                 if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
                 if (_stunCoroutine != null)
                 {
                     StopCoroutine(_stunCoroutine);
                     _stunCoroutine = null;
                 }
-                StartCoroutine(Stun(0.5f));
+                _stunCoroutine = StartCoroutine(Stun(0.5f));
                 StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
             }
         }
