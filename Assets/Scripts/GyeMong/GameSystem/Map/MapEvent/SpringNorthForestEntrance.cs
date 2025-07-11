@@ -30,7 +30,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private float cameraSpeed;
 
         [Header("Boss Room Object")]
-        [SerializeField] private GameObject bossRoomObj;
         [SerializeField] private GameObject bossRoomObj_wall;
 
         [Header("Chat Data")]
@@ -85,12 +84,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
 
             var activateBossRoomEvent = new ActivateBossRoomEvent();
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj);
-            yield return activateBossRoomEvent.Execute();
 
             var deactivateEvent = new DeActivateBossRoomEvent();
-            deactivateEvent.SetBossRoomObject(bossRoomObj);
-            yield return deactivateEvent.Execute();
 
             yield return StartCoroutine((new OpenChatEvent().Execute()));
 
