@@ -568,7 +568,6 @@ GameObject:
   m_Component:
   - component: {fileID: 141803511}
   - component: {fileID: 141803514}
-  - component: {fileID: 141803513}
   - component: {fileID: 141803512}
   m_Layer: 0
   m_Name: MapPatterns
@@ -688,19 +687,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &141803513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141803510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8df41e182033742d8a743905e984913f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sourceName: ENEMY_Root
 --- !u!114 &141803514
 MonoBehaviour:
   m_ObjectHideFlags: 0

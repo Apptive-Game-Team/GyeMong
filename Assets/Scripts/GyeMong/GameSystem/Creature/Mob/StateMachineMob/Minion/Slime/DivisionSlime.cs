@@ -23,6 +23,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         private bool _isTutorial;
         private bool _isTutorialShown;
         private Coroutine _stunCoroutine;
+        public Coroutine FacingCoroutine;
         
         protected override void Start()
         {
@@ -49,7 +50,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
         public override void StartMob()
         {
-            StartCoroutine(FaceToPlayer());
+            FacingCoroutine = StartCoroutine(FaceToPlayer());
             _isTutorial = PlayerPrefs.GetInt("TutorialFlag", 0) == 0;
             ChangeState();
         }
@@ -227,10 +228,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 slimeComponent.MeleeAttackRange *= DIVIDE_RATIO;
                 slimeComponent.RangedAttackRange *= DIVIDE_RATIO;
                 slimeComponent._divisionLevel = _divisionLevel + 1;
-                slimeComponent.ChangeState(new SlimeMoveState(slimeComponent));
+                slimeComponent.FacingCoroutine = slimeComponent.StartCoroutine(slimeComponent.FaceToPlayer());
+                slimeComponent.ChangeState();
                 
                 DivisionSlimeManager.Instance.RegisterSlime(slimeComponent);
             }
+            StopCoroutine(FacingCoroutine);
         }
 
         private IEnumerator GrazeSystemTutorial1()

@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,9 @@ namespace GyeMong.GameSystem.Map.Portal
     public enum SceneID
     {
         None = 0,
-    
+        Title = 13,
+        StageSelect = 14,    
+        
         // Spring
         SpringBeach = 1,
         SpringTown = 2,
@@ -30,13 +33,20 @@ namespace GyeMong.GameSystem.Map.Portal
     {
         public SceneID sceneID;
         public string sceneName;
-
+        public string defaultBGM;
     }
 
     [CreateAssetMenu(fileName = "SceneDataList", menuName = "ScriptableObject/New SceneDataList")]
     public class SceneDataList : ScriptableObject
     {
         public List<SceneData> sceneDatas;
+        
+        public SceneData GetSceneDataByName(string name)
+        {
+            SceneData sceneData = sceneDatas.Find(x => x.sceneName.Equals(name));
+            if (sceneData == null) Debug.LogErrorFormat("There's No Scene! Please Check SceneDataList!");
+            return sceneData;
+        }
 
         public SceneData GetSceneDataByID(SceneID id)
         {

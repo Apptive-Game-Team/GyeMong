@@ -201,8 +201,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 int count = 0;
                 while (count < 4)
                 {
-                    GameObject seed = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    yield return Sound.Play("ENEMY_Arrow_Shot");
+                    Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    Sound.Play("ENEMY_Arrow_Shot");
+                    yield return new WaitForSeconds(Elf.attackdelayTime/3);
                     count++;
                 }
                 Elf.Animator.SetBool("isAttack", false);
