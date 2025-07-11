@@ -64,11 +64,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         private IEnumerator Explode()
         {
             _explosionSoundObject.PlayAsync();
+            GameObject obj = Instantiate(explodePrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
-            GameObject obj = Instantiate(explodePrefab,transform.position,Quaternion.identity);
-            obj.GetComponent<Animator>().Play("SeedExplode");
-            yield return new WaitForSeconds(0.5f);
-            Destroy(gameObject);
+            yield return null;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
