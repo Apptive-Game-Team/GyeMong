@@ -193,3 +193,12 @@ MonoBehaviour:
   - name: ENEMY_NagaRogue_Ambush
     type: 3
     clip: {fileID: 8300000, guid: e54f956c8588cee458efd61f707646ab, type: 3}
+  - name: ENEMY_DivisionSlime_RangedAttack
+    type: 3
+    clip: {fileID: 8300000, guid: 9d22d75f4b4a2ac41993a6724c346525, type: 3}
+  - name: ENEMY_DivisionSlime_DashAttack
+    type: 3
+    clip: {fileID: 8300000, guid: 0ebc88bcfe090c44683bbbccc0d03cc8, type: 3}
+  - name: ENEMY_DivisionSlime_MeleeAttack
+    type: 3
+    clip: {fileID: 8300000, guid: 830fa7e40fda03f4faa545d5d8591035, type: 3}

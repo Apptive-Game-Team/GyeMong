@@ -9,6 +9,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.pathfinde
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.SoundSystem;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
@@ -83,6 +84,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 if (DivisionSlime._isTutorial && !DivisionSlime._isTutorialShown) 
                     yield return DivisionSlime.GrazeSystemTutorial1();
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack);
+                Sound.Play("ENEMY_DivisionSlime_RangedAttack");
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 AttackObjectController.Create(
                     mob.transform.position, 
@@ -110,6 +112,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 if (DivisionSlime._isTutorial) return 0;
                 return DivisionSlime.DistanceToPlayer <= DivisionSlime.MeleeAttackRange ? 5 : 0;
             }
+            
+            public override IEnumerator StateCoroutine()
+            {
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
+                Sound.Play("ENEMY_DivisionSlime_MeleeAttack");
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
+                if (mob.DistanceToPlayer <= mob.MeleeAttackRange)   
+                    SceneContext.Character.TakeDamage(mob.damage);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
+                yield return new WaitForSeconds(1);
+                mob.ChangeState();
+            }
         }
         
         public class DashAttackState : SlimeState
@@ -127,6 +142,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, true);
                 float dashDistance = 1.5f;
                 Vector3 dashTargetPosition = SceneContext.Character.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
+                Sound.Play("ENEMY_DivisionSlime_DashAttack");
                 yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
                 DivisionSlime._dashTween = DivisionSlime.transform.DOMove(dashTargetPosition, 0.6f).SetEase(Ease.OutQuad);
                 yield return DivisionSlime._dashTween.WaitForCompletion();
