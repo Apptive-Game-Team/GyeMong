@@ -10,22 +10,33 @@ public class BgmManager
     
     public static void Initialize()
     {
+        Play();
+        
+        SceneManager.sceneLoaded += (scene, mode) =>
+        {
+            Play(scene);
+        };
+    }
+    
+    private static void Play()
+    {
         if (bgmCoroutine != null)
         {
             Stop();
         }
         Play(PortalManager.Instance.sceneDataList.GetSceneDataByName(
-            SceneManager.GetActiveScene().name)
+                SceneManager.GetActiveScene().name)
             .defaultBGM);
-        
-        SceneManager.sceneLoaded += (scene, mode) =>
+    }
+    
+
+    private static void Play(Scene scene)
+    {
+        if (bgmCoroutine != null)
         {
-            if (bgmCoroutine != null)
-            {
-                Stop();
-            }
-            Play(PortalManager.Instance.sceneDataList.GetSceneDataByName(scene.name).defaultBGM);
-        };
+            Stop();
+        }
+        Play(PortalManager.Instance.sceneDataList.GetSceneDataByName(scene.name).defaultBGM);
     }
     
     public static void Play(string sound)
@@ -47,7 +58,7 @@ public class BgmManager
             soundObject.Stop();
             bgmCoroutine = null;
         }
-        
-        
+
+        Play();
     }
 }
