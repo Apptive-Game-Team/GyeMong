@@ -766,105 +766,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2936ccf9d70c47744b2db8ce66734254, type: 3}
---- !u!1001 &962346216
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2944121797620221523, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_Name
-      value: BGMObject
-      objectReference: {fileID: 0}
-    - target: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: trigger
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: eventSequence.Array.data[0]
-      value: 6551754817893564461
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: managedReferences[6551754817893564461]
-      value: Assembly-CSharp GyeMong.EventSystem.Event.BGMEvent
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426687253262352755, guid: 94a44013cb06f0f48bfd802da3e6c197,
-        type: 3}
-      propertyPath: managedReferences[6551754817893564461].bgmName
-      value: BGM_Spring_MidBoss
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 94a44013cb06f0f48bfd802da3e6c197, type: 3}
---- !u!1 &962346217 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4307715046352479183, guid: 94a44013cb06f0f48bfd802da3e6c197,
-    type: 3}
-  m_PrefabInstance: {fileID: 962346216}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1275491492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26305,7 +26206,7 @@ PrefabInstance:
         type: 3}
       propertyPath: bossRoomBgm2
       value: 
-      objectReference: {fileID: 962346217}
+      objectReference: {fileID: 0}
     - target: {fileID: 2303165326997353410, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
         type: 3}
       propertyPath: SkillIndicator
@@ -26346,11 +26247,7 @@ PrefabInstance:
     - {fileID: 1816522763214820845, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
     - {fileID: 4331037996407810154, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1459062340}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d67d3763aabc4d48b458c4b487b0fe7, type: 3}
 --- !u!114 &1459062335 stripped
 MonoBehaviour:
@@ -26358,7 +26255,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1459062334}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1459062339}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19cbe0d89f0c4ce6a638ff23b8c6743d, type: 3}
@@ -26388,53 +26285,6 @@ SpriteRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1459062334}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1459062339 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7607399698781265360, guid: 9d67d3763aabc4d48b458c4b487b0fe7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1459062334}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1459062340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1459062339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 2
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 6551754847466291238
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 6551754847466291238
-      type: {class: ConditionalBranchEvent, ns: GyeMong.EventSystem.Event.Condition,
-        asm: Assembly-CSharp}
-      data:
-        _condition:
-          rid: 6551754847466291239
-        eventInTrue:
-          rid: 6551754847466291240
-        eventInFalse:
-          rid: -2
-    - rid: 6551754847466291239
-      type: {class: ToggeableCondition, ns: GyeMong.EventSystem.Controller.Condition,
-        asm: Assembly-CSharp}
-      data:
-        tag: spring_midboss_down
-        condition: 0
-    - rid: 6551754847466291240
-      type: {class: DestroySelfEvent, ns: GyeMong.EventSystem.Event, asm: Assembly-CSharp}
-      data: 
 --- !u!1001 &1581621003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26799,7 +26649,7 @@ PrefabInstance:
         type: 3}
       propertyPath: bossRoomObj
       value: 
-      objectReference: {fileID: 962346217}
+      objectReference: {fileID: 0}
     - target: {fileID: 4509312992925196190, guid: bcba196880861934cafb5d2d3d636f7b,
         type: 3}
       propertyPath: someAnimator
@@ -26890,6 +26740,5 @@ SceneRoots:
   - {fileID: 3524801753505309715}
   - {fileID: 3096850732489487786}
   - {fileID: 1459062334}
-  - {fileID: 962346216}
   - {fileID: 177539223}
   - {fileID: 1889423061}
