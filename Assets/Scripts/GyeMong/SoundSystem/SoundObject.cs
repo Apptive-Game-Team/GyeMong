@@ -58,6 +58,10 @@ namespace GyeMong.SoundSystem
 
         public void SetLoop(bool isLoop)
         {
+            if (_audioSource == null)
+            {
+                Initialize();
+            }
             _audioSource.loop = isLoop;
         }
 

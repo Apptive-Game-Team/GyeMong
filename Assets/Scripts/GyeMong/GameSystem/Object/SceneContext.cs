@@ -1,5 +1,6 @@
 using GyeMong.EventSystem.Controller;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.SoundSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using Visual.Camera;
@@ -43,6 +44,20 @@ public class SceneContext : MonoBehaviour
                 _cameraManager = FindObjectOfType<CameraManager>();
             }
             return _cameraManager;
+        }
+    }
+    
+    private static SoundObject _bgmObject;
+    public static SoundObject BgmObject
+    {
+        get
+        {
+            if (_bgmObject == null || _bgmObject.IsDestroyed())
+            {
+                _bgmObject = Sound.GetSoundObject();
+            }
+
+            return _bgmObject;
         }
     }
 
