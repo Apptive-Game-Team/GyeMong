@@ -1,10 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using GyeMong.EventSystem.Event.Chat;
-using GyeMong.EventSystem.Event.CinematicEvent;
-using UnityEngine.SceneManagement;
-using GyeMong.GameSystem.Map.Stage.ScriptableObject;
-using GyeMong.GameSystem.Map.Stage;
 using GyeMong.GameSystem.Map.Stage.Select;
 
 namespace GyeMong.GameSystem.Map.MapEvent
@@ -13,10 +9,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
     {
         [SerializeField] private MultiChatMessageData chatData;
         [SerializeField] private float autoSkipTime = 3f;
-
-        [Header("Stage To Enter After Cutscene")]
-        [SerializeField] private StageInfo nextStage;
-
+        
         private void Start()
         {
             StartCoroutine(TriggerEvents());
