@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Util;
@@ -93,24 +94,26 @@ namespace GyeMong.GameSystem.Indicator
         }
         
 
-        public void GenerateIndicator(GameObject attackObject, Vector3 pos, Quaternion rot, float duration)
+        public IEnumerator GenerateIndicator(GameObject attackObject, Vector3 pos, Quaternion rot, float duration, Action action = null)
         {
             Collider2D col = attackObject.GetComponent<Collider2D>();
             if (col == null)
             {
                 Debug.LogWarning("Collider2D not found");
-                return;
+                yield return null;
             }
 
             var type = col.GetType();
             if (_shapeMap.TryGetValue(type, out var shape))
             {
                 GameObject indicator = shape.CreateIndicator(attackObject, pos, rot);
-                StartCoroutine(indicator.AddComponent<Indicator>().Flick(duration));
+                yield return indicator.AddComponent<Indicator>().Flick(duration);
+                action?.Invoke();
             }
             else
             {
                 Debug.LogWarning($"No provider registered for {type}");
+                yield return null;
             }
         }
     }

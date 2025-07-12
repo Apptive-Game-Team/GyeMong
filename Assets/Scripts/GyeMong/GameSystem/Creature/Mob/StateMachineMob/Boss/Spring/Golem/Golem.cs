@@ -8,6 +8,7 @@ using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using Unity.VisualScripting;
@@ -88,15 +89,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     if (angle >= excludeMin && angle <= excludeMax)
                         continue;
-                    AttackObjectController.Create(
-                    point,
-                    Vector3.zero,
-                    shockwavePrefab,
-                    new StaticMovement(
-                        point,
-                        attackdelayTime / 2)
-                    )
-                    .StartRoutine();
+                    StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (shockwavePrefab,point, Quaternion.identity, attackdelayTime / 2,
+                        () => AttackObjectController.Create(
+                            point,
+                            Vector3.zero,
+                            shockwavePrefab,
+                            new StaticMovement(
+                                point,
+                                attackdelayTime / 2)
+                        ).StartRoutine()));
                 }
                 yield return new WaitForSeconds(attackdelayTime / 3);
             }
@@ -110,15 +112,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             SceneContext.CameraManager.CameraShake(0.2f);
             foreach (Vector3 point in points)
             {
-                AttackObjectController.Create(
-                    point,
-                    Vector3.zero,
-                    shockwavePrefab,
-                    new StaticMovement(
-                        point,
-                        attackdelayTime / 2)
-                    )
-                    .StartRoutine();
+                StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (shockwavePrefab,point, Quaternion.identity, attackdelayTime / 2,
+                        () => AttackObjectController.Create(
+                            point,
+                            Vector3.zero,
+                            shockwavePrefab,
+                            new StaticMovement(
+                                point,
+                                attackdelayTime / 2)
+                        ).StartRoutine()));
             }
             yield return new WaitForSeconds(attackdelayTime / 3);
         }
