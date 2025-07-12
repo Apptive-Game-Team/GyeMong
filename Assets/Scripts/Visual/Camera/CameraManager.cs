@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -6,6 +7,7 @@ using DG.Tweening;
 using GyeMong.GameSystem.Creature.Player.Component;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 namespace Visual.Camera
 {
@@ -15,7 +17,7 @@ namespace Visual.Camera
         private CinemachineVirtualCamera currentCam;
         private float cameraSize;
         private Volume mainCamVolume;
-        [SerializeField] VolumeProfile mainVolumeProfile;
+        private VolumeProfile mainVolumeProfile;
         private ColorAdjustments ca;
         private ColorAdjustments cloneCa;
 
@@ -23,6 +25,7 @@ namespace Visual.Camera
         {
             cameraSize = 5f;
             GetCameras();
+            mainVolumeProfile = Resources.Load<VolumeProfile>("CameraProfile/MainSetting");
             mainCamVolume = UnityEngine.Camera.main.GetComponent<Volume>();
             mainCamVolume.profile = Instantiate(mainVolumeProfile);
             for (int i = 0; i < mainCamVolume.profile.components.Count; i++)
@@ -31,6 +34,11 @@ namespace Visual.Camera
                 mainCamVolume.profile.components[i] = component;
             }
             PlayerChangeListenerCaller.OnPlayerDied += SetVolumeGray;
+        }
+
+        private void OnDestroy()
+        {
+            PlayerChangeListenerCaller.OnPlayerDied -= SetVolumeGray;
         }
 
         private void GetCameras()
