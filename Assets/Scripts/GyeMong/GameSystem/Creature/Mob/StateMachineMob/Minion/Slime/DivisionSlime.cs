@@ -186,6 +186,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Die);
                     yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 }
+                DivisionSlimeManager.Instance.UnregisterSlime(DivisionSlime);
                 Destroy(DivisionSlime.gameObject);
             }
         }
@@ -193,7 +194,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         protected override void OnDead()
         {
             ChangeState(new DieState(this));
-            DivisionSlimeManager.Instance.UnregisterSlime(this);
         }
 
         public class MoveState : SlimeMoveState { }
