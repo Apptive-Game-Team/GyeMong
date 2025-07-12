@@ -16,6 +16,8 @@ namespace GyeMong.EventSystem.Event.Chat
         Sandworm = 80,
         
         None = 100,
+        
+        Monolong = 200,
     }
 
     public enum BackgroundImage
