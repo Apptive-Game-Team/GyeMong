@@ -15,7 +15,7 @@ namespace Visual.Camera
         private CinemachineVirtualCamera currentCam;
         private float cameraSize;
         private Volume mainCamVolume;
-        [SerializeField] VolumeProfile mainVolumeProfile;
+        private VolumeProfile mainVolumeProfile;
         private ColorAdjustments ca;
         private ColorAdjustments cloneCa;
 
@@ -23,6 +23,7 @@ namespace Visual.Camera
         {
             cameraSize = 5f;
             GetCameras();
+            mainVolumeProfile = Resources.Load<VolumeProfile>("CameraProfile/MainSetting");
             mainCamVolume = UnityEngine.Camera.main.GetComponent<Volume>();
             mainCamVolume.profile = Instantiate(mainVolumeProfile);
             for (int i = 0; i < mainCamVolume.profile.components.Count; i++)
