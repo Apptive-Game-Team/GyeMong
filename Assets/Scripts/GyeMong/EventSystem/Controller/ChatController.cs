@@ -59,6 +59,7 @@ namespace GyeMong.EventSystem.Controller
             nameText.color = color;
             nameText.text = "";
             messageText.text = "";
+            SetCharacterImage(null, true);
             isWorking = false;
         }
 
@@ -111,6 +112,7 @@ namespace GyeMong.EventSystem.Controller
             {
                 SetImage(backGround, sprite);
             }
+            else SetImage(backGround, null);
         }
         public static void SetChatImage(Sprite sprite)
         {
@@ -137,6 +139,13 @@ namespace GyeMong.EventSystem.Controller
         }
         public static void SetCharacterImage(Sprite sprite, bool isLeft)
         {
+            if (sprite == null)
+            {
+                SetImage(characterImage, sprite);
+                SetImage(characterImage2, sprite);
+                return;
+            }
+            
             if (isLeft)
             {
                 SetImage(characterImage, sprite);

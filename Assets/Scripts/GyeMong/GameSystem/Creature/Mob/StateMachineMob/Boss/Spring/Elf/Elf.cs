@@ -333,6 +333,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             base.Die();
             Animator.SetBool("isDown", true);
+            BgmManager.Stop();
             StartCoroutine(DieRoutine());
         }
 
