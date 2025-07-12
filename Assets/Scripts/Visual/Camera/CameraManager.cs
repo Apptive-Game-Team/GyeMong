@@ -43,6 +43,8 @@ namespace Visual.Camera
 
         public IEnumerator CameraMove(Vector3 destination, float speed)
         {
+            yield return new WaitUntil(() => currentCam != null);
+            
             currentCam.Follow = null;
 
             yield return currentCam.transform
