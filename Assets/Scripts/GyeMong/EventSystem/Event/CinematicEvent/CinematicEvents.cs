@@ -22,8 +22,6 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
         [SerializeField] public  float speed;
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            bool isEnable = InputManager.Instance.GetKeyActive(ActionCode.MoveDown);
-            InputManager.Instance.SetActionState(false);
             IControllable iControllable = null;
             if (creatureType == CreatureType.Selectable)
             {
@@ -39,7 +37,6 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
             }
         
             yield return iControllable.MoveTo(target, speed);
-            InputManager.Instance.SetActionState(isEnable);
         }
     }
 

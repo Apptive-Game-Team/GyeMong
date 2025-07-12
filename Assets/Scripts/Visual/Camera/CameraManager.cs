@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using DG.Tweening;
+using GyeMong.GameSystem.Creature.Player.Component;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Visual.Camera
 {
@@ -11,11 +14,23 @@ namespace Visual.Camera
         private List<CinemachineVirtualCamera> virtualCams;
         private CinemachineVirtualCamera currentCam;
         private float cameraSize;
+        private Volume mainCamVolume;
+        [SerializeField] VolumeProfile mainVolumeProfile;
+        private ColorAdjustments ca;
+        private ColorAdjustments cloneCa;
 
         protected void Awake() 
         {
             cameraSize = 5f;
             GetCameras();
+            mainCamVolume = UnityEngine.Camera.main.GetComponent<Volume>();
+            mainCamVolume.profile = Instantiate(mainVolumeProfile);
+            for (int i = 0; i < mainCamVolume.profile.components.Count; i++)
+            {
+                var component = Instantiate(mainCamVolume.profile.components[i]);
+                mainCamVolume.profile.components[i] = component;
+            }
+            PlayerChangeListenerCaller.OnPlayerDied += SetVolumeGray;
         }
 
         private void GetCameras()
@@ -53,6 +68,29 @@ namespace Visual.Camera
                 .WaitForCompletion();
         }
 
+        public void SetVolumeGray()
+        {
+            StartCoroutine(FadeSaturation(-50f, 2f));
+        }
+        
+        private IEnumerator FadeSaturation(float targetValue, float duration)
+        {
+            if (!mainCamVolume.profile.TryGet<ColorAdjustments>(out var ca))
+                yield break;
+
+            float initialValue = ca.saturation.value;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                ca.saturation.value = Mathf.Lerp(initialValue, targetValue, elapsed / duration);
+                yield return null;
+            }
+
+            ca.saturation.value = targetValue;
+        }
+        
         public void CameraFollow(Transform transform)
         {
             currentCam.Follow = transform;
