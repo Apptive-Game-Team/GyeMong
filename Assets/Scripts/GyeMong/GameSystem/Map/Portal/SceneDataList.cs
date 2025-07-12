@@ -10,6 +10,7 @@ namespace GyeMong.GameSystem.Map.Portal
         None = 0,
         Title = 13,
         StageSelect = 14,    
+        Loading = 15,
         
         // Spring
         SpringBeach = 1,
