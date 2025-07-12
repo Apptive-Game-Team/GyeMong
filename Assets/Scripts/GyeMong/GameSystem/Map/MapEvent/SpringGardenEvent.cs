@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GyeMong.EventSystem.Event;
 using GyeMong.EventSystem.Event.Chat;
+using GyeMong.EventSystem.Event.CinematicEvent;
 using UnityEngine;
 using GyeMong.EventSystem.Event.EventScene;
 
@@ -16,6 +17,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private Vector3 cameraDestination;
         [SerializeField] private float cameraSpeed;
         [SerializeField] private List<MultiChatMessageData> beforeScript;
+        [SerializeField] private GameObject elfChild;
         private float _delayTime = 1f;
 
         private bool _isTutorial;
@@ -34,6 +36,25 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private IEnumerator TriggerEvents()
         {
+            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
+            yield return new WaitForSeconds(1f);
+            
+            var animParamEvent = new SetAnimatorParameter {_creatureType = SetAnimatorParameter.CreatureType.Player};
+            animParamEvent.SetParameter("yDir", 0);
+            animParamEvent.SetParameter("xDir", -1);
+            yield return animParamEvent.Execute();
+            yield return new WaitForSeconds(0.4f);
+            animParamEvent.SetParameter("xDir", 1);
+            yield return animParamEvent.Execute();
+            yield return new WaitForSeconds(0.4f);
+            animParamEvent.SetParameter("xDir", -1);
+            yield return animParamEvent.Execute();
+            yield return new WaitForSeconds(0.4f);
+            animParamEvent.SetParameter("xDir", 1);
+            yield return animParamEvent.Execute();
+
+            yield return new WaitForSeconds(1f);
+            
             if (beforeScript != null)
             {
                 foreach (var script in beforeScript)
@@ -58,6 +79,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));            
             yield return StartCoroutine(slimeEvent.Execute());
             yield return new WaitForSeconds(_delayTime);
+            yield return (new SetActiveObject() {_gameObject = elfChild, isActive = false}).Execute();
             SceneContext.CameraManager.CameraFollow(SceneContext.Character.gameObject.transform);
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
         }
