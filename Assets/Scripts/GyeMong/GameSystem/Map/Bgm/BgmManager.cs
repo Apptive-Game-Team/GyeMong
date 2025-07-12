@@ -7,6 +7,7 @@ public class BgmManager
 {
     private static Coroutine bgmCoroutine;
     private static SoundObject soundObject;
+    private static string currentBgmName = "";
     
     public static void Initialize()
     {
@@ -41,11 +42,16 @@ public class BgmManager
     
     public static void Play(string sound)
     {
+        if (currentBgmName.Equals(sound) && bgmCoroutine != null)
+        {
+            return;
+        }
         if (bgmCoroutine == null)
         {
             soundObject = SoundManager.Instance.GetBgmObject();
         }
 
+        currentBgmName = sound;
         soundObject.SetSoundSourceByName(sound);
         soundObject.SetLoop(true);
         bgmCoroutine = soundObject.StartCoroutine(soundObject.Play());
