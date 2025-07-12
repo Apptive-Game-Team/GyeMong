@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3232832413338149968}
   - component: {fileID: -8050813542674744381}
   m_Layer: 0
-  m_Name: GardenKey
+  m_Name: ShadowKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4814796725110161025}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.48, y: -4.66, z: 0}
+  m_LocalPosition: {x: -4.48, y: 3.3400002, z: 0}
   m_LocalScale: {x: 0.19474624, y: 0.19474624, z: 0.19474624}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,9 +75,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: a7224ca35e4020543873fae44559c491, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,21 +103,13 @@ MonoBehaviour:
   trigger: 1
   triggerLimitCounter: 1
   eventSequence:
-  - rid: 286138576501211136
-  - rid: 7497613985432731654
+  - rid: -2
+  - rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 286138576501211136
-      type: {class: ToggleConditionEvent, ns: , asm: Assembly-CSharp}
-      data:
-        tag: Garden_Maze_Door_Opened
-        condition: 1
-    - rid: 7497613985432731654
-      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
-      data:
-        _gameObject: {fileID: 4814796725110161025}
-        isActive: 0
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &3232832413338149968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,33 +126,12 @@ MonoBehaviour:
   trigger: 2
   triggerLimitCounter: -1
   eventSequence:
-  - rid: 286138671396552762
+  - rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 286138671396552762
-      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _condition:
-          rid: 286138671396552763
-        eventInTrue:
-          rid: 7497613985432731653
-        eventInFalse:
-          rid: 286138671396552765
-    - rid: 286138671396552763
-      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
-      data:
-        tag: Garden_Maze_Door_Opened
-        condition: 0
-    - rid: 286138671396552765
-      type: {class: DelayEvent, ns: , asm: Assembly-CSharp}
-      data:
-        delayTime: 0
-    - rid: 7497613985432731653
-      type: {class: SetActiveObject, ns: , asm: Assembly-CSharp}
-      data:
-        _gameObject: {fileID: 4814796725110161025}
-        isActive: 0
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!58 &-8050813542674744381
 CircleCollider2D:
   m_ObjectHideFlags: 0

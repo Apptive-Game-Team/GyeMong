@@ -1,6 +1,8 @@
 using System.Collections;
+using GyeMong.EventSystem.Event;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
@@ -15,6 +17,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         protected IDetector<PlayerCharacter> _detector;
         [SerializeField] private GameObject attackPrefab;
         [SerializeField] private GameObject skillPrefab;
+        [SerializeField] private GameObject key;
 
         public override void OnAttacked(float damage)
         {
@@ -31,7 +34,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
         protected override void OnDead()
         {
-            StageManager.ClearStage(this);
+            StartCoroutine(DeadTrigger());
         }
 
         private void Start()
@@ -40,7 +43,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             
             // for debug
 
-            ChangeState(new DetectingPlayer() {mob= this});
+            //ChangeState(new DetectingPlayer() {mob= this});
         }
 
         private IEnumerator MeleeAttack()
@@ -224,6 +227,29 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         public abstract class ShadowState : BaseState
         {
             protected ShadowOfHero ShadowOfHero => mob as ShadowOfHero;
+        }
+
+        public class DieState : ShadowState
+        {
+            public override int GetWeight()
+            {
+                return 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                ShadowOfHero.GetComponent<SpriteRenderer>().enabled = false;
+                yield return null;
+            }
+        }
+
+        private IEnumerator DeadTrigger()
+        {
+            GetComponent<Collider2D>().enabled = false;
+            ChangeState(new DieState());
+            yield return (new DropObjectEvent() { _gameObject = key, _position = transform.position}).Execute();
+            yield return new WaitForSecondsRealtime(1f);
+            StageManager.ClearStage(this);
         }
     }
 }
