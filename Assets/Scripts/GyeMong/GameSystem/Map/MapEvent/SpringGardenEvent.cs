@@ -1,6 +1,8 @@
 using GyeMong.EventSystem.Event.Input;
 using System.Collections;
+using System.Collections.Generic;
 using GyeMong.EventSystem.Event;
+using GyeMong.EventSystem.Event.Chat;
 using UnityEngine;
 using GyeMong.EventSystem.Event.EventScene;
 
@@ -13,6 +15,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         [SerializeField] private Vector3 cameraDestination;
         [SerializeField] private float cameraSpeed;
+        [SerializeField] private List<MultiChatMessageData> beforeScript;
         private float _delayTime = 1f;
 
         private bool _isTutorial;
@@ -31,6 +34,14 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private IEnumerator TriggerEvents()
         {
+            if (beforeScript != null)
+            {
+                foreach (var script in beforeScript)
+                {
+                    yield return script.Play();
+                }
+            }
+            
             if (_isTutorial)
             {
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
