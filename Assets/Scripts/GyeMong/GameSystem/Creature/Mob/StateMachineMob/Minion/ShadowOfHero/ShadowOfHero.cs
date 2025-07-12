@@ -229,24 +229,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             protected ShadowOfHero ShadowOfHero => mob as ShadowOfHero;
         }
 
-        public class DieState : ShadowState
-        {
-            public override int GetWeight()
-            {
-                return 0;
-            }
-
-            public override IEnumerator StateCoroutine()
-            {
-                ShadowOfHero.GetComponent<SpriteRenderer>().enabled = false;
-                yield return null;
-            }
-        }
-
         private IEnumerator DeadTrigger()
         {
             GetComponent<Collider2D>().enabled = false;
-            ChangeState(new DieState());
+            GetComponent<SpriteRenderer>().enabled = false;
+            StopCoroutine(_currentStateCoroutine);
             yield return (new DropObjectEvent() { _gameObject = key, _position = transform.position}).Execute();
             yield return new WaitForSecondsRealtime(1f);
             StageManager.ClearStage(this);
