@@ -29,7 +29,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             GyeMong.GameSystem.Map.Stage.Select.Stage currentStage = GyeMong.GameSystem.Map.Stage.Select.Stage.Beach;
             GyeMong.GameSystem.Map.Stage.Select.Stage maxStage = GyeMong.GameSystem.Map.Stage.Select.Stage.Slime;
 
-            StageSelectPage.LoadStageSelectPageOnStageToDestination(currentStage, maxStage);
+            PlayerPrefs.DeleteAll();
+            StageSelectPage.LoadStageSelectPage();
         }
     }
 }

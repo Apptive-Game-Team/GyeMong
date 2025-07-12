@@ -1,6 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
+using GyeMong.EventSystem.Event;
 using GyeMong.GameSystem.Map.Stage.Select.Node;
 using GyeMong.InputSystem;
+using GyeMong.UISystem;
 using Map.Objects;
 using UnityEngine;
 
@@ -88,8 +91,13 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         
         private void Awake()
         {
-            cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 1)].transform.position);
-            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 5);
+            cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 0)].transform.position);
+            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0);
+            if (_maxIndex == 0)
+            {
+                StartCoroutine(
+                    TutorialCoroutine());
+            }
             _nodeSelector = new LinearNodeSelector(stageNodes, _maxIndex);
             _currentNode = stageNodes[_maxIndex];
             _currentNode.SetOnOff(true);
@@ -98,6 +106,21 @@ namespace GyeMong.GameSystem.Map.Stage.Select
             {
                 stageNode.SetStageSelectController(this);
             }
+        }
+
+        private IEnumerator TutorialCoroutine()
+        {
+            _currentNode = stageNodes[1];
+            _currentNode.SetOnOff(true);
+            _maxIndex = 1;
+            PlayerPrefs.SetInt(StageSelectPage.MAX_STAGE_ID_KEY, 1);
+            cursor.MoveTo(_currentNode.transform.position);
+            yield return new SkippablePopupWindowEvent()
+            {
+                Title = "세상을 구하러 가자!",
+                Message = "Enter를 눌러 게임을 진행하자.",
+                Duration = 3f
+            }.Execute();
         }
     }
 }
