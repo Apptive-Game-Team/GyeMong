@@ -91,10 +91,9 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         
         private void Awake()
         {
-            cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 1)].transform.position);
-            PlayerPrefs.SetInt(StageSelectPage.MAX_STAGE_ID_KEY, 1);
-            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 5);
-            if (_maxIndex == 1)
+            cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 0)].transform.position);
+            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0);
+            if (_maxIndex == 0)
             {
                 StartCoroutine(
                     TutorialCoroutine());
@@ -111,6 +110,11 @@ namespace GyeMong.GameSystem.Map.Stage.Select
 
         private IEnumerator TutorialCoroutine()
         {
+            _currentNode = stageNodes[1];
+            _currentNode.SetOnOff(true);
+            _maxIndex = 1;
+            PlayerPrefs.SetInt(StageSelectPage.MAX_STAGE_ID_KEY, 1);
+            cursor.MoveTo(_currentNode.transform.position);
             yield return new SkippablePopupWindowEvent()
             {
                 Title = "세상을 구하러 가자!",
