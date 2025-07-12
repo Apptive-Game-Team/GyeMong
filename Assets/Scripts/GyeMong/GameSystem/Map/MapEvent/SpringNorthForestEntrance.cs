@@ -54,11 +54,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
             }
         }
 
-        public IEnumerator Trigger()
-        {
-            return TriggerEvents();
-        }
-
         private IEnumerator TriggerEvents()
         {
             _isTriggered = true;
@@ -86,6 +81,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             var activateBossRoomEvent = new ActivateBossRoomEvent();
 
             var deactivateEvent = new DeActivateBossRoomEvent();
+            
+            BgmManager.Play("BGM_Spring_MidBoss");
 
             yield return StartCoroutine((new OpenChatEvent().Execute()));
 

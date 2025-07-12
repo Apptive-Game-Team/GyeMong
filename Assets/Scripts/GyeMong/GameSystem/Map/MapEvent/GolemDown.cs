@@ -33,6 +33,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private IEnumerator TriggerEvents()
         {
+            BgmManager.Stop();
             var stopAnimEvent = new CustomStopAnimatorEvent();
             stopAnimEvent.SetAnimator(targetAnimator);
             yield return stopAnimEvent.Execute();

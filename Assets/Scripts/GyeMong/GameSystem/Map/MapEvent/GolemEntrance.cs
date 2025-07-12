@@ -104,6 +104,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
             yield return new WaitForSeconds(1);
 
+            BgmManager.Play("BGM_Spring_Boss");
+            
             var animEvent = new GyeMong.EventSystem.Event.CinematicEvent.AnimationEvent();
             animEvent.SetRenderer(someRenderer);
             animEvent.SetFrames(animationFrames);
