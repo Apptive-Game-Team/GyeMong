@@ -18,12 +18,13 @@ public class GameOverUIController : MonoBehaviour
 
     void SetGameOverUI()
     {
-        gameOverUI.SetActive(true);
         StartCoroutine(WaitForInteract());
     }
 
     IEnumerator WaitForInteract()
     {
+        yield return new WaitForSeconds(2f);
+        gameOverUI.SetActive(true);
         yield return new WaitUntil(() => InputManager.Instance.GetKeyDown(ActionCode.Interaction));
         gameOverUI.SetActive(false);
         StageManager.LoseStage(this);
