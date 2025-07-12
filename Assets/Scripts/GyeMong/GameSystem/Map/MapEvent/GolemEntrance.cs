@@ -6,6 +6,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
 using System.Collections.Generic;
+using GyeMong.EventSystem.Event.Chat;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Map.MapEvent
@@ -46,6 +47,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [Header("Animation Event")]
         [SerializeField] private List<Sprite> animationFrames = new List<Sprite>(6);
         [SerializeField] private SpriteRenderer someRenderer;
+        [SerializeField] private List<MultiChatMessageData> beforeScript;
 
         private bool _isTriggered = false;
         private void OnTriggerEnter2D(Collider2D other)
@@ -111,14 +113,22 @@ namespace GyeMong.GameSystem.Map.MapEvent
             animEvent.SetFrames(animationFrames);
             animEvent.SetDeltaTime(0.5f);
             yield return animEvent.Execute();
+            
+            var startEvent = new StartAnimatorEvent();
+            startEvent.SetAnimator(someAnimator);
+            yield return startEvent.Execute();
+            
+            if (beforeScript != null)
+            {
+                foreach (var script in beforeScript)
+                {
+                    yield return script.Play();
+                }
+            }
 
             var showHpEvent = new ShowBossHealthBarEvent();
             showHpEvent.SetBoss(boss);
             yield return showHpEvent.Execute();
-
-            var startEvent = new StartAnimatorEvent();
-            startEvent.SetAnimator(someAnimator);
-            yield return startEvent.Execute();
 
             var animParamEvent = new SetAnimatorParameter();
             animParamEvent._creatureType = SetAnimatorParameter.CreatureType.Player;
