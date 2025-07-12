@@ -987,10 +987,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: BeachMap
       objectReference: {fileID: 0}
+    - target: {fileID: 3288816671326435450, guid: fec9eb766a82244aa97ec572fbfe0fa8,
+        type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3288816671326435450, guid: fec9eb766a82244aa97ec572fbfe0fa8,
+        type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.size
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4703269627896603617, guid: fec9eb766a82244aa97ec572fbfe0fa8,
         type: 3}
       propertyPath: m_Points.Array.data[5].y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282220263862443903, guid: fec9eb766a82244aa97ec572fbfe0fa8,
+        type: 3}
+      propertyPath: m_UsedByComposite
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1363,7 +1378,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2146000243}
   - component: {fileID: 2146000242}
-  - component: {fileID: 2146000241}
   m_Layer: 0
   m_Name: DivisionSlimeManager
   m_TagString: Untagged
@@ -1371,28 +1385,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2146000241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146000240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 4
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: -2
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
 --- !u!114 &2146000242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1405,6 +1397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c004c787eb7bdd478a3051ff1c78b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  afterScript:
+  - {fileID: 11400000, guid: 00ecab5525df74d5f860a18cedaffbea, type: 2}
 --- !u!4 &2146000243
 Transform:
   m_ObjectHideFlags: 0
@@ -1444,6 +1438,28 @@ PrefabInstance:
       propertyPath: cameraDestination.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2225460214615197347, guid: 30055aca067ec91458d59a057edc5762,
+        type: 3}
+      propertyPath: afterScript.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225460214615197347, guid: 30055aca067ec91458d59a057edc5762,
+        type: 3}
+      propertyPath: beforeScript.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225460214615197347, guid: 30055aca067ec91458d59a057edc5762,
+        type: 3}
+      propertyPath: afterScript.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 00ecab5525df74d5f860a18cedaffbea,
+        type: 2}
+    - target: {fileID: 2225460214615197347, guid: 30055aca067ec91458d59a057edc5762,
+        type: 3}
+      propertyPath: beforeScript.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d0ab117ab318f164bbba668b7bae711f,
+        type: 2}
     - target: {fileID: 4135122353140515754, guid: 30055aca067ec91458d59a057edc5762,
         type: 3}
       propertyPath: m_Name
