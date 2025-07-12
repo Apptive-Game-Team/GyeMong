@@ -31,9 +31,9 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         {
 
             HandleKeyInput();
+            
 #if UNITY_EDITOR
             (_nodeSelector as LinearNodeSelector).SetMaxIndex(_maxIndex);
-
 #endif
         }
 
@@ -50,7 +50,9 @@ namespace GyeMong.GameSystem.Map.Stage.Select
                 {
                     _lastInputTime = Time.time;
                     Debug.Log("Selected stage: " + selectedStage.gameObject.name);
+                    _currentNode.SetOnOff(false);
                     _currentNode = selectedStage;
+                    _currentNode.SetOnOff(true);
                     cursor.MoveTo(_currentNode.transform.position);
                 }
             }
@@ -86,10 +88,11 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         
         private void Awake()
         {
-            cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 0)].transform.position);
+            cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 1)].transform.position);
             _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 5);
             _nodeSelector = new LinearNodeSelector(stageNodes, _maxIndex);
             _currentNode = stageNodes[_maxIndex];
+            _currentNode.SetOnOff(true);
             cursor.MoveTo(_currentNode.transform.position);
             foreach (StageNode stageNode in stageNodes)
             {
