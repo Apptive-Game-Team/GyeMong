@@ -15,7 +15,10 @@ public class GameOverUIController : MonoBehaviour
     {
         PlayerChangeListenerCaller.OnPlayerDied += SetGameOverUI;
     }
-
+    private void OnDestroy()
+    {
+        PlayerChangeListenerCaller.OnPlayerDied -= SetGameOverUI;
+    }
     void SetGameOverUI()
     {
         StartCoroutine(WaitForInteract());
