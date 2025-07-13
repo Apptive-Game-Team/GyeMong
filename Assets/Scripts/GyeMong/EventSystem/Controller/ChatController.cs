@@ -27,12 +27,12 @@ namespace GyeMong.EventSystem.Controller
         private void Awake()
         {
             chatWindow = transform.Find("ChatWindow").GetComponent<Image>();
-            nameText = chatWindow.transform.Find("NameArea").GetComponent<TMP_Text>();
-            messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
+            nameText = transform.Find("NameArea").GetComponent<TMP_Text>();
+            messageText = transform.Find("MessageArea").GetComponent<TMP_Text>();
             backGround = transform.Find("BackgroundArea").GetComponent <Image>();
-            characterImage = chatWindow.transform.Find("CharacterImageArea").GetComponent<Image>();
-            characterImage2 = chatWindow.transform.Find("CharacterImageArea2").GetComponent<Image>();
-            chattingImage = chatWindow.transform.Find("ChatImageArea").GetComponent<Image>();
+            characterImage = transform.Find("CharacterImageArea").GetComponent<Image>();
+            characterImage2 = transform.Find("CharacterImageArea2").GetComponent<Image>();
+            chattingImage = transform.Find("ChatImageArea").GetComponent<Image>();
         }
 
         public static IEnumerator Open()
