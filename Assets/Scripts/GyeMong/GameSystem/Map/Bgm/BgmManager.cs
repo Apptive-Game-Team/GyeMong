@@ -42,7 +42,7 @@ public class BgmManager
     
     public static void Play(string sound)
     {
-        if (currentBgmName.Equals(sound) && bgmCoroutine != null)
+        if (currentBgmName == sound && bgmCoroutine != null)
         {
             return;
         }
