@@ -38,6 +38,7 @@ namespace GyeMong.EventSystem.Controller
         public static IEnumerator Open()
         {
             yield return new WaitWhile(() => isWorking);
+            SetCharacterImage(null, true);
             isWorking = true;
             Color color = chatWindow.color;
             color.a = CHAT_WINDOW_ALPHA;
