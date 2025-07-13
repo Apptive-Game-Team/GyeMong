@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: ElfPhaseChange
   m_EditorClassIdentifier: 
+  bgmName: 
   chatMessages:
   - speakerName: 3
+    faceType: 4
     isLeft: 1
     messages:
     - "\uBCF4\uAE30\uBCF4\uB2E4 \uAC15\uD558\uAD70\uC694..!"
