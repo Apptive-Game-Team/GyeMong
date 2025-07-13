@@ -46,7 +46,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
             Destroy(minion);
             SceneContext.CameraManager.CameraFollow(SceneContext.Character.transform);
-            yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(-3f, cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(5f, cameraSpeed));
             StartCoroutine(nagaRogueOpeningEvent.TriggerEvents());
         }
     }
