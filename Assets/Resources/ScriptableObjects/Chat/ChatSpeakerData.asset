@@ -81,12 +81,22 @@ MonoBehaviour:
     Faces: []
   - speakerType: 50
     speakerName: "\uB3C4\uC801\uB2E8 \uC878\uAC1C"
-    image: {fileID: 21300000, guid: b4e01c76bdabec048935ab713519aa46, type: 3}
+    image: {fileID: 21300000, guid: 44ce1e6d29ac94fe783ad65be04e1c68, type: 3}
     Faces: []
   - speakerType: 51
     speakerName: "\uB3C4\uC801\uB2E8 \uB450\uBAA9"
-    image: {fileID: 21300000, guid: 198c4030366539945a72c5f87dffbd04, type: 3}
-    Faces: []
+    image: {fileID: 21300000, guid: 0c7869b88feca4ccfa4b3b68130e83f7, type: 3}
+    Faces:
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: 0c7869b88feca4ccfa4b3b68130e83f7, type: 3}
+    - faceType: 12
+      faceImage: {fileID: 21300000, guid: 0b512504fed2143baa5661e4717f0e63, type: 3}
+    - faceType: 11
+      faceImage: {fileID: 21300000, guid: d065245a4a1504e28aef38d921f31fec, type: 3}
+    - faceType: 11
+      faceImage: {fileID: 21300000, guid: b60e1270a0dd148dcadf30d27bbc9800, type: 3}
+    - faceType: 10
+      faceImage: {fileID: 21300000, guid: bb78c0ef574094f3ca19972e60ef33c7, type: 3}
   - speakerType: 100
     speakerName: 
     image: {fileID: 0}
