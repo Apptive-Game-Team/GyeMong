@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: Summer_Opening_RougeChat
   m_EditorClassIdentifier: 
+  bgmName: 
   chatMessages:
   - speakerName: 50
+    faceType: 0
     isLeft: 1
     messages:
     - "\uB450\uBAA9!"
@@ -23,6 +25,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 51
+    faceType: 0
     isLeft: 0
     messages:
     - "\uC81C\uB300\uB85C \uBCF8 \uAC83 \uB9DE\uB098? \uADF8 \uB188\uB4E4\uC740 \uC774\uB7F0
@@ -34,6 +37,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 50
+    faceType: 0
     isLeft: 1
     messages:
     - "\uD2C0\uB9BC\uC5C6\uC2B5\uB2C8\uB2E4. \uB2E4\uB9CC \uADF8 \uB188\uB4E4 \uCE58\uACE0\uB294
@@ -47,6 +51,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 51
+    faceType: 0
     isLeft: 0
     messages:
     - "\uD06C\uD5E4\uD5E4.. \uADF8\uB807\uB2E4\uBA74 \uD589\uC6B4\uC774\uAD70...\uADC0
@@ -60,6 +65,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 50
+    faceType: 0
     isLeft: 1
     messages:
     - "\uC608!"
