@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GyeMong.SoundSystem;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
 {
@@ -9,6 +10,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         private void Start()
         {
             GetComponent<Animator>().Play("SeedExplode");
+            Sound.Play("ENEMY_Seed_Explosion");
             StartCoroutine(DestroyAfterDelay(0.5f));
         }
 
