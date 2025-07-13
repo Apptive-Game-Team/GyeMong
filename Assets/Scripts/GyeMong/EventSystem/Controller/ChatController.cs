@@ -184,6 +184,7 @@ namespace GyeMong.EventSystem.Controller
             {
                 if (info.speakerType == speakerName)
                 {
+                    if (info.speakerType == ChatSpeakerType.None) return "";
                     return info.speakerName + " : ";
                 }
             }
