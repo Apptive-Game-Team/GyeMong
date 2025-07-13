@@ -264,8 +264,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
                 _isTutorial = false;
                 SceneContext.Character.isTutorial = false;
-                //PlayerPrefs.SetInt("TutorialFlag", 1);
-                //PlayerPrefs.Save();
+                PlayerPrefs.SetInt("TutorialFlag", 1);
+                PlayerPrefs.Save();
             }
         }
     }
