@@ -14,6 +14,7 @@ namespace GyeMong.EventSystem.Event.Chat
         public class MultiChatMessage
         {
             public ChatSpeakerType speakerName;
+            public ChatSpeakerData.ChatSpeakerFace faceType = ChatSpeakerData.ChatSpeakerFace.None;
             public bool isLeft;
             public List<string> messages;
             public BackgroundImage backgroundImage;

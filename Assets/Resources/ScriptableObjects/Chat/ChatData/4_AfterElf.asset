@@ -15,6 +15,7 @@ MonoBehaviour:
   bgmName: BGM_Light_Chat
   chatMessages:
   - speakerName: 3
+    faceType: 11
     isLeft: 0
     messages:
     - "\uC81C\uAC00 \uC84C\uC2B5\uB2C8\uB2E4."
@@ -28,6 +29,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 3
+    faceType: 1
     isLeft: 0
     messages:
     - "\uD558\uC9C0\uB9CC \uC0AC\uC6D0\uC740 \uC5F4\uC1E0 \uC5C6\uC774\uB294 \uB4E4\uC5B4
@@ -41,6 +43,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 0
+    faceType: 13
     isLeft: 1
     messages:
     - ...

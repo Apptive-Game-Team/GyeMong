@@ -70,7 +70,15 @@ namespace GyeMong.EventSystem.Controller
 
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
             var speakerInfo = speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName);
-            SetCharacterImage(speakerInfo.image, multiChatMessage.isLeft);
+            Sprite characterSprite = multiChatMessage.faceType == ChatSpeakerData.ChatSpeakerFace.None ? speakerInfo.image :
+                speakerInfo.Faces.Find(info => info.faceType == multiChatMessage.faceType).faceImage;
+            
+            if (characterSprite == null)
+            {
+                characterSprite = speakerInfo.image;
+            }
+            
+            SetCharacterImage(characterSprite, multiChatMessage.isLeft);
 
             string accumulatedText = "";
 
