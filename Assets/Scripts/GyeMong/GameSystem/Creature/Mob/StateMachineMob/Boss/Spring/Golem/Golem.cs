@@ -358,6 +358,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 }
             }
         }
+        protected override void TransPhase()
+        {
+            if (currentPhase < maxHps.Count - 1)
+            {
+                currentPhase++;
+                StopAllCoroutines();
+                Animator.SetBool("isStun", false);
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                StartCoroutine(ChangingPhase());
+            }
+            else
+            {
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                Die();
+            }
+        }
         protected override void Die()
         {
             base.Die();
