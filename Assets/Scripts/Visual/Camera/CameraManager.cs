@@ -107,7 +107,11 @@ namespace Visual.Camera
         public IEnumerator CameraZoomInOut(float size, float duration)
         {
             yield return DOTween.To(() => currentCam.m_Lens.OrthographicSize,
-                x => currentCam.m_Lens.OrthographicSize = x, size, duration)
+                x =>
+                {
+                    currentCam.gameObject.GetComponent<CinemachineConfiner2D>().InvalidateCache();
+                    currentCam.m_Lens.OrthographicSize = x;
+                }, size, duration)
                 .WaitForCompletion();
         }
 
