@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
@@ -199,19 +200,36 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("Push", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 SceneContext.CameraManager.CameraShake(0.15f);
-                AttackObjectController.Create(
+                Golem.StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (Golem.pushOutAttackPrefab, SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity, Golem.attackdelayTime / 2,
+                        () => AttackObjectController.Create(
                     SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
                     Vector3.zero,
                     Golem.pushOutAttackPrefab,
                     new StaticMovement(
                         SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
-                        Golem.attackdelayTime/2)
+                        Golem.attackdelayTime / 2)
                     )
-                    .StartRoutine();
+                    .StartRoutine()));
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("Push", false);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
+            }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 },
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 50 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 }
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
             }
         }
 
