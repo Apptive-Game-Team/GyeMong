@@ -434,6 +434,7 @@ namespace GyeMong.GameSystem.Creature.Player
             //GameOver Event Triggered.
             changeListenerCaller.CallPlayerDied();
             animator.SetBool("isHuck",true);
+            GetComponent<AirborneController>().StopAllCoroutines();
             StopPlayer();
             Mob.Mob[] mobList = FindObjectsOfType<Mob.Mob>();
             foreach (var mob in mobList)
