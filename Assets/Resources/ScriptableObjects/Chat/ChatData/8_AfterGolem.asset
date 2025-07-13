@@ -15,6 +15,7 @@ MonoBehaviour:
   bgmName: "BGM_\uC2E0\uBE44_Chat"
   chatMessages:
   - speakerName: 4
+    faceType: 0
     isLeft: 0
     messages:
     - "\uACB0\uC815\uC744...\uB0B4\uAC00 \uBB34\uC5C7\uC744 \uC704\uD574..."
@@ -24,6 +25,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 3
+    faceType: 2
     isLeft: 0
     messages:
     - "\uACB0\uAD6D \uD574\uB0B4\uC168\uAD70\uC694. \uC5ED\uC2DC \uC800\uB97C \uC774\uAE34
@@ -42,6 +44,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 0
+    faceType: 10
     isLeft: 1
     messages:
     - "...(\uACE8\uB818\uC758 \uB9C8\uC9C0\uB9C9 \uB9D0\uC5D0 \uB300\uD574 \uBB3B\uB294\uB2E4)"
@@ -49,6 +52,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 3
+    faceType: 4
     isLeft: 0
     messages:
     - "\uD760...\uACE8\uB818\uC740 \uC608\uB85C\uBD80\uD130 \uC774 \uC232\uC744 \uC9C0\uCF1C\uC8FC\uB294
@@ -67,6 +71,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 3
+    faceType: 12
     isLeft: 0
     messages:
     - "\uADF8\uB807\uB2E4\uBA74 \uC544\uB9C8, \uB9C8\uBC95\uC758 \uBD80\uC791\uC6A9
@@ -78,6 +83,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 3
+    faceType: 1
     isLeft: 0
     messages:
     - "\uC544\uB9C8\uB3C4 \uC55E\uC73C\uB85C \uC774\uB7F0 \uC2DC\uB828\uB4E4\uC774
@@ -88,6 +94,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 3
+    faceType: 12
     isLeft: 0
     messages:
     - "\uD558\uC9C0\uB9CC \uC774\uACA8\uB0B4\uC2DC\uAE38 \uBC14\uB78D\uB2C8\uB2E4."
@@ -99,6 +106,7 @@ MonoBehaviour:
     chatImage: 0
     chatDelay: 3
   - speakerName: 3
+    faceType: 14
     isLeft: 0
     messages:
     - "\uC81C \uB098\uB984\uB300\uB85C \uC751\uC6D0\uD558\uACA0\uC2B5\uB2C8\uB2E4."
