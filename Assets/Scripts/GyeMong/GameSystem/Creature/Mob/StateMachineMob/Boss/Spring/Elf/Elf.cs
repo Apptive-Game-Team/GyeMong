@@ -101,7 +101,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     {
                         { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
                     };
                 if (weights.Values.All(w => w == 0))
                 {

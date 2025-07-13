@@ -63,8 +63,14 @@ MonoBehaviour:
       faceImage: {fileID: 21300000, guid: f5d32715f53b940118f39065d397277d, type: 3}
   - speakerType: 4
     speakerName: "\uBB38\uC9C0\uAE30 \uC11D\uC0C1"
-    image: {fileID: 1979126298, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
-    Faces: []
+    image: {fileID: 21300000, guid: e7d9a95830d8044008cd33a5de825dbb, type: 3}
+    Faces:
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: e7d9a95830d8044008cd33a5de825dbb, type: 3}
+    - faceType: 10
+      faceImage: {fileID: 21300000, guid: 5adf633f111fb485e927e2a2966906e2, type: 3}
+    - faceType: 14
+      faceImage: {fileID: 21300000, guid: ee730d4cf506841268ef77ecd6ff0d2d, type: 3}
   - speakerType: 5
     speakerName: System
     image: {fileID: 0}

@@ -94,6 +94,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
                 currentState = weightedStates[randomIndex];
                 _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
             }
+            else
+            {
+                ChangeState();
+            }
         }
         
         public abstract class BaseState
