@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3534975a4e472e89828f5b8fb4e990, type: 3}
   m_Name: PushOutAttack
   m_EditorClassIdentifier: 
-  damage: 15
+  damage: 0
   soundObject: {fileID: 0}
   isDestroyOnHit: 0
-  grazable: 1
+  grazable: 0
   canMultiHit: 0
   multiHitDelay: 0
   knockbackAmount: 6
