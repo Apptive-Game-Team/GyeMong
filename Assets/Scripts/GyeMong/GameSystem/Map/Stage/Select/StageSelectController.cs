@@ -110,6 +110,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
 
         private IEnumerator TutorialCoroutine()
         {
+            yield return new WaitForSeconds(0.5f);
             _currentNode = stageNodes[1];
             _currentNode.SetOnOff(true);
             _maxIndex = 1;
