@@ -18,7 +18,7 @@ namespace GyeMong.EventSystem.Controller
         private static Image characterImage2;
         private static Image chattingImage;
         [SerializeField] private GameObject speechBubble;
-        private const float CHAT_WINDOW_ALPHA = 1f;
+        private const float CHAT_WINDOW_ALPHA = 0.8f;
         private const float SHOW_CHAT_DELAY = 0.1f;
         private static TMP_Text nameText;
         private static TMP_Text messageText;
@@ -184,7 +184,7 @@ namespace GyeMong.EventSystem.Controller
             {
                 if (info.speakerType == speakerName)
                 {
-                    return info.speakerName;
+                    return info.speakerName + " : ";
                 }
             }
 
