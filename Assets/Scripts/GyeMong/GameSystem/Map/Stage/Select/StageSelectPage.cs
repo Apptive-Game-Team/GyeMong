@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Util;
 
 namespace GyeMong.GameSystem.Map.Stage.Select
 {
@@ -10,10 +11,8 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         Elf = 2,
         Shadow = 3,
         Golem = 4,
-        
-        Wanderer = 5,
-        NagaRogue = 6,
-        NagaWarrior = 7,
+        NagaRouge = 5,
+        Wanderer = 7,
     }
     
     public static class StageSelectPage
@@ -23,18 +22,18 @@ namespace GyeMong.GameSystem.Map.Stage.Select
 
         public static void LoadStageSelectPage()
         {
-            SceneManager.LoadScene(SceneName);
+            SceneLoader.LoadScene(SceneName);
         }
         public static void LoadStageSelectPage(int maxStageId)
         {
             PlayerPrefs.SetInt("MaxStageId", maxStageId);
-            SceneManager.LoadScene(SceneName);
+            SceneLoader.LoadScene(SceneName);
         }
         
         public static void LoadStageSelectPageOnStage(int currentStageId)
         {
             PlayerPrefs.SetInt("CurrentStageId", currentStageId);
-            SceneManager.LoadScene(SceneName);
+            SceneLoader.LoadScene(SceneName);
         }
         
         public static void LoadStageSelectPageOnStageToDestination(Stage currentStageId, Stage maxStageId)
@@ -43,7 +42,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
             PlayerPrefs.SetInt("CurrentStageId", (int) currentStageId);
             PlayerPrefs.SetInt(MAX_STAGE_ID_KEY, (int) maxStageId);
             Debug.Log("CurrentStageId: " + PlayerPrefs.GetInt("CurrentStageId", 0) + " MaxStageId: " + PlayerPrefs.GetInt(MAX_STAGE_ID_KEY, 1));
-            SceneManager.LoadScene(SceneName);
+            SceneLoader.LoadScene(SceneName);
         }
     }
 }

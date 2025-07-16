@@ -18,7 +18,7 @@ namespace GyeMong.EventSystem.Controller
         private static Image characterImage2;
         private static Image chattingImage;
         [SerializeField] private GameObject speechBubble;
-        private const float CHAT_WINDOW_ALPHA = 0.7f;
+        private const float CHAT_WINDOW_ALPHA = 0.8f;
         private const float SHOW_CHAT_DELAY = 0.1f;
         private static TMP_Text nameText;
         private static TMP_Text messageText;
@@ -27,17 +27,18 @@ namespace GyeMong.EventSystem.Controller
         private void Awake()
         {
             chatWindow = transform.Find("ChatWindow").GetComponent<Image>();
-            nameText = chatWindow.transform.Find("NameArea").GetComponent<TMP_Text>();
-            messageText = chatWindow.transform.Find("MessageArea").GetComponent<TMP_Text>();
-            backGround = chatWindow.transform.Find("BackgroundArea").GetComponent <Image>();
-            characterImage = chatWindow.transform.Find("CharacterImageArea").GetComponent<Image>();
-            characterImage2 = chatWindow.transform.Find("CharacterImageArea2").GetComponent<Image>();
-            chattingImage = chatWindow.transform.Find("ChatImageArea").GetComponent<Image>();
+            nameText = transform.Find("NameArea").GetComponent<TMP_Text>();
+            messageText = transform.Find("MessageArea").GetComponent<TMP_Text>();
+            backGround = transform.Find("BackgroundArea").GetComponent <Image>();
+            characterImage = transform.Find("CharacterImageArea").GetComponent<Image>();
+            characterImage2 = transform.Find("CharacterImageArea2").GetComponent<Image>();
+            chattingImage = transform.Find("ChatImageArea").GetComponent<Image>();
         }
 
         public static IEnumerator Open()
         {
             yield return new WaitWhile(() => isWorking);
+            SetCharacterImage(null, true);
             isWorking = true;
             Color color = chatWindow.color;
             color.a = CHAT_WINDOW_ALPHA;
@@ -59,6 +60,7 @@ namespace GyeMong.EventSystem.Controller
             nameText.color = color;
             nameText.text = "";
             messageText.text = "";
+            SetCharacterImage(null, true);
             isWorking = false;
         }
 
@@ -69,7 +71,15 @@ namespace GyeMong.EventSystem.Controller
 
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
             var speakerInfo = speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName);
-            SetCharacterImage(speakerInfo.image, multiChatMessage.isLeft);
+            Sprite characterSprite = multiChatMessage.faceType == ChatSpeakerData.ChatSpeakerFace.None ? speakerInfo.image :
+                speakerInfo.Faces.Find(info => info.faceType == multiChatMessage.faceType).faceImage;
+            
+            if (characterSprite == null)
+            {
+                characterSprite = speakerInfo.image;
+            }
+            
+            SetCharacterImage(characterSprite, multiChatMessage.isLeft);
 
             string accumulatedText = "";
 
@@ -111,6 +121,7 @@ namespace GyeMong.EventSystem.Controller
             {
                 SetImage(backGround, sprite);
             }
+            else SetImage(backGround, null);
         }
         public static void SetChatImage(Sprite sprite)
         {
@@ -137,6 +148,13 @@ namespace GyeMong.EventSystem.Controller
         }
         public static void SetCharacterImage(Sprite sprite, bool isLeft)
         {
+            if (sprite == null)
+            {
+                SetImage(characterImage, sprite);
+                SetImage(characterImage2, sprite);
+                return;
+            }
+            
             if (isLeft)
             {
                 SetImage(characterImage, sprite);
@@ -166,7 +184,8 @@ namespace GyeMong.EventSystem.Controller
             {
                 if (info.speakerType == speakerName)
                 {
-                    return info.speakerName;
+                    if (info.speakerType == ChatSpeakerType.None) return "";
+                    return info.speakerName + " : ";
                 }
             }
 

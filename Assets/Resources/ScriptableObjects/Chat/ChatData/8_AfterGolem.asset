@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
+  m_Name: 8_AfterGolem
+  m_EditorClassIdentifier: 
+  bgmName: "BGM_\uC2E0\uBE44_Chat"
+  chatMessages:
+  - speakerName: 4
+    faceType: 1
+    isLeft: 0
+    messages:
+    - "\uACB0\uC815\uC744...\uB0B4\uAC00 \uBB34\uC5C7\uC744 \uC704\uD574..."
+    - "\uC5B4\uCA4C\uB2E4 \uC774\uB807\uAC8C..."
+    - "\uBA38\uB9AC\uAC00 \uC544\uD504\uAD70..."
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 4
+    faceType: 14
+    isLeft: 0
+    messages:
+    - ...
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 3
+    faceType: 2
+    isLeft: 0
+    messages:
+    - "\uACB0\uAD6D \uD574\uB0B4\uC168\uAD70\uC694. \uC5ED\uC2DC \uC800\uB97C \uC774\uAE34
+      \uBD84 \uB2F5\uC2B5\uB2C8\uB2E4."
+    - "\uADF8\uB098\uC800\uB098 \uADF8\uB9BC\uC790 \uC232\uC758 \uC2DC\uB828\uC740
+      \uC5B4\uB5A0\uC168\uC2B5\uB2C8\uAE4C."
+    - "\uADF8\uB9BC\uC790 \uC232\uC758 \uC2DC\uB828\uC740 \uC790\uC2E0\uC758 \uC9C4\uC815\uD55C
+      \uC801\uC744 \uBE44\uCD98\uB2E4\uB358\uB2E4 \uC790\uC2E0\uC774 \uC774\uACA8\uB0B4\uC9C0
+      \uBABB\uD55C \uACFC\uAC70\uB97C \uBE44\uCD98\uB2E4\uB358\uAC00"
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 3
+    faceType: 2
+    isLeft: 0
+    messages:
+    - "\uC5EC\uB7EC \uC774\uC57C\uAE30\uAC00 \uC788\uC2B5\uB2C8\uB2E4\uB9CC \uC9C4\uC2E4\uC740
+      \uC54C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+    - "\uC911\uC694\uD55C\uAC74 \uC5EC\uD589\uC790\uB2D8\uC774 \uC2DC\uB828\uC744
+      \uC774\uACA8\uB0BC \uC815\uB3C4\uB85C \uAC15\uC778\uD55C \uC0AC\uB78C\uC774\uC5C8\uB2E4\uB294
+      \uAC83\uC785\uB2C8\uB2E4."
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 0
+    faceType: 10
+    isLeft: 1
+    messages:
+    - "...(\uACE8\uB818\uC758 \uB9C8\uC9C0\uB9C9 \uB9D0\uC5D0 \uB300\uD574 \uBB3B\uB294\uB2E4)"
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 3
+    faceType: 4
+    isLeft: 0
+    messages:
+    - "\uD760...\uACE8\uB818\uC740 \uC608\uB85C\uBD80\uD130 \uC774 \uC232\uC744 \uC9C0\uCF1C\uC8FC\uB294
+      \uC218\uD638\uC2E0\uC774\uC5C8\uC2B5\uB2C8\uB2E4."
+    - "\uC9C0\uAE08\uB3C4 \uC7A0\uB4E4\uC5B4 \uACC4\uC2DC\uC9C0\uB9CC \uC232\uC758
+      \uC704\uAE30\uAC00 \uCC3E\uC544\uC624\uBA74 \uAE68\uC5B4\uB098\uC2E0\uB2E4\uB294
+      \uC804\uC124\uC774 \uB0B4\uB824\uC624\uACE0 \uC788\uC8E0. "
+    - "\uC5EC\uD589\uC790\uB2D8\uC774 \uB9C8\uC744\uC744 \uB5A0\uB098\uC2DC\uACE0
+      \uB9C8\uC744\uC758 \uC624\uB798\uB41C \uAE30\uB85D\uB4E4\uC744 \uC0B4\uD3B4\uBCF4\uC558\uC2B5\uB2C8\uB2E4."
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 3
+    faceType: 4
+    isLeft: 0
+    messages:
+    - "\uB300\uB959\uC774 \uC6D0\uB798 \uD558\uB098\uC600\uB2E4\uB294 \uC0AC\uC2E4\uC740
+      \uB9DE\uB294\uB4EF \uD569\uB2C8\uB2E4."
+    - "\uB3C4\uB9C8\uBC40\uAC19\uC740 \uC57C\uB9CC\uC778\uB4E4, \uC800 \uBA40\uB9AC
+      \uBCF4\uC9C0 \uBABB\uD55C \uB2E4\uB978 \uBBFC\uC871\uB4E4\uACFC\uB3C4 \uD568\uAED8\uD55C
+      \uD754\uC801\uC774 \uBCF4\uC774\uB354\uAD70\uC694."
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 3
+    faceType: 12
+    isLeft: 0
+    messages:
+    - "\uADF8\uB807\uB2E4\uBA74 \uC544\uB9C8, \uB9C8\uBC95\uC758 \uBD80\uC791\uC6A9
+      \uD639\uC740 \uACB0\uC815\uC758 \uC624\uC5FC\uC73C\uB85C \uC6B0\uB9AC\uC758
+      \uC218\uD638\uC2E0\uC774 \uC624\uC5FC\uB418\uC5C8\uB358\uB4EF \uD569\uB2C8\uB2E4. "
+    - "\uC5EC\uD589\uC790\uB2D8\uC774 \uACB0\uC815\uC744 \uD30C\uAD34\uD55C \uB355\uBD84\uC5D0
+      \uC218\uD638\uC2E0\uB2D8\uC740 \uACE7 \uC815\uD654\uB418\uC2E4\uAC81\uB2C8\uB2E4."
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 3
+    faceType: 1
+    isLeft: 0
+    messages:
+    - "\uC544\uB9C8\uB3C4 \uC55E\uC73C\uB85C \uC774\uB7F0 \uC2DC\uB828\uB4E4\uC774
+      \uACC4\uC18D \uCC3E\uC544\uC624\uC2DC\uACA0\uC8E0."
+    - "\uBB34\uC870\uAC74\uC801\uC73C\uB85C \uD560 \uC218 \uC788\uC73C\uC2E4\uAC70\uB780
+      \uC785\uBC1C\uB9B0 \uB9D0\uC740 \uD558\uC9C0\uC54A\uACA0\uC2B5\uB2C8\uB2E4."
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 3
+    faceType: 12
+    isLeft: 0
+    messages:
+    - "\uD558\uC9C0\uB9CC \uC774\uACA8\uB0B4\uC2DC\uAE38 \uBC14\uB78D\uB2C8\uB2E4."
+    - "\uB2F9\uC7A5 \uC774 \uB108\uBA38\uC758 \uB545\uC740 \uB354\uC704\uC640 \uC57C\uB9CC\uACFC
+      \uC0AC\uB9C9\uC758 \uB545\uC785\uB2C8\uB2E4. \uC5B4\uB5A4 \uC5B4\uB824\uC6C0\uC774
+      \uC788\uC744\uC9C0 \uBAA8\uB974\uACA0\uC73C\uB098 \uC21C\uD0C4\uC9C0\uB9CC\uC740
+      \uC54A\uC73C\uC2E4 \uAC81\uB2C8\uB2E4. "
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 3
+    faceType: 14
+    isLeft: 0
+    messages:
+    - "\uC81C \uB098\uB984\uB300\uB85C \uC751\uC6D0\uD558\uACA0\uC2B5\uB2C8\uB2E4."
+    - "\uBAA8\uB4E0 \uAC78 \uC774\uACA8\uB0B4\uC2E0\uB2E4\uBA74, \uC774 \uB545\uC5D0\uC11C
+      \uB208\uC744 \uBCFC\uC218\uB3C4 \uC788\uACA0\uAD70\uC694 \uD558\uD558.."
+    backgroundImage: 3
+    chatImage: 0
+    chatDelay: 3

@@ -13,7 +13,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
     {
         protected bool isInitialized = false;
         
-        [SerializeField] private GameObject rangedAttack;
+        [SerializeField] protected GameObject rangedAttack;
 
         
         protected IDetector<PlayerCharacter> _detector;
@@ -161,7 +161,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
-                if (mob.DistanceToPlayer <= mob.MeleeAttackRange)   
+                if (mob.DistanceToPlayer <= mob.MeleeAttackRange && SceneContext.Character != null && SceneContext.Character.gameObject.activeInHierarchy)   
                     SceneContext.Character.TakeDamage(mob.damage);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
@@ -189,7 +189,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 float duration = 2f;
                 float timer = 0f;
             
-                while (duration > timer && mob.DistanceToPlayer > mob.MeleeAttackRange)
+                while (duration > timer && mob.DistanceToPlayer > mob.RangedAttackRange)
                 {
                     timer += Time.deltaTime;
                     yield return null;

@@ -11,6 +11,7 @@ using GyeMong.SoundSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace GyeMong.EventSystem.Event
 {
@@ -143,6 +144,10 @@ namespace GyeMong.EventSystem.Event
     {
         [SerializeField]
         private string bgmName;
+        public BGMEvent(string bgmName)
+        {
+            this.bgmName = bgmName;
+        }
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             SoundObject soundObject = SoundManager.Instance.GetBgmObject();
@@ -234,11 +239,12 @@ namespace GyeMong.EventSystem.Event
 
     public class DropObjectEvent : Event
     {
-        [SerializeField] private GameObject _gameObject;
+        [SerializeField] public GameObject _gameObject;
+        [SerializeField] public Vector3 _position;
 
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            GameObject.Instantiate(_gameObject, eventObject.transform.position, _gameObject.transform.rotation);
+            Object.Instantiate(_gameObject, _position, _gameObject.transform.rotation);
             _gameObject.transform.DOMoveY(_gameObject.transform.position.y + 1f, 0.3f).SetEase(Ease.OutQuad)
                 .OnComplete(() => _gameObject.transform.DOMoveY(_gameObject.transform.position.y, 0.3f).SetEase(Ease.InBounce));
             yield return null;

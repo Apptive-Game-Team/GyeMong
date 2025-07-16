@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
+  m_Name: 1_BeforeTutorial
+  m_EditorClassIdentifier: 
+  bgmName: BGM_Battle_Chat
+  chatMessages:
+  - speakerName: 0
+    faceType: 11
+    isLeft: 1
+    messages:
+    - ...!
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 1
+    faceType: 11
+    isLeft: 0
+    messages:
+    - "\uD79D\uD79D...\uC544\uC800\uC528\uB294 \uB204\uAD6C\uC5D0\uC694?"
+    - "\uC800 \uC880 \uB3C4\uC640\uC904 \uC218 \uC788\uC5B4\uC694?"
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 1
+    faceType: 11
+    isLeft: 0
+    messages:
+    - "\uC9D1\uC73C\uB85C \uAC00\uB294 \uAE38\uC744 \uC2AC\uB77C\uC784\uB4E4\uC774
+      \uB9C9\uACE0 \uC788\uC5B4\uC11C \uB3CC\uC544\uAC08 \uC218\uAC00 \uC5C6\uC5B4\uC694."
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 0
+    faceType: 1
+    isLeft: 1
+    messages:
+    - ...
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3

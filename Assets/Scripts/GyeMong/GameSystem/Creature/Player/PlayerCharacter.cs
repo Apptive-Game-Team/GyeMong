@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
@@ -43,7 +44,9 @@ namespace GyeMong.GameSystem.Creature.Player
         private bool isInvincible = false;
         private bool canCombo = false;
         private bool comboQueued = false;
+        private CircleCollider2D _hitCollider;
 
+        public bool isTutorial;
 
         public Material[] materials;
 
@@ -55,6 +58,8 @@ namespace GyeMong.GameSystem.Creature.Player
             playerRb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             soundController = GetComponent<PlayerSoundController>();
+            _hitCollider = transform.Find("HitCollider").GetComponent<CircleCollider2D>();
+            isTutorial = PlayerPrefs.GetInt("TutorialFlag") == 0;
         }
 
         private void Start()
@@ -165,8 +170,6 @@ namespace GyeMong.GameSystem.Creature.Player
         public void TakeDamage(float damage, bool isUnblockable = false)
         {
             if (isInvincible) return;
-            
-            SceneContext.CameraManager.CameraShake(0.1f);
 
             if (damage >= curShield && curShield > 0)
             {
@@ -207,6 +210,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public void AttackIncreaseGauge()
         {
+            if (isTutorial) return;
             curSkillGauge += stat.GrazeGainOnAttack;
             if (curSkillGauge > stat.GrazeMax)
             {
@@ -333,7 +337,15 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private void AttackMove(Vector2 direction)
         {
-            transform.DOMove((Vector2)transform.position + direction / 3, stat.AttackDelay).SetEase(Ease.OutQuad);
+            Vector2 currentPos = transform.position;
+            Vector2 targetPos = currentPos + direction / 3;
+            
+            Vector2 dirNormalized = direction.normalized;
+            float distance = (direction / 3).magnitude;
+            float colliderRadius = _hitCollider.radius;
+            float adjustedDistance = distance + colliderRadius;
+            RaycastHit2D hit = Physics2D.Raycast(currentPos, dirNormalized, adjustedDistance, LayerMask.GetMask("Wall"));
+            if (hit.collider == null) transform.DOMove(targetPos, stat.AttackDelay).SetEase(Ease.OutQuad);
         }
 
         private float _chargeThreshold = 1f;
@@ -421,15 +433,15 @@ namespace GyeMong.GameSystem.Creature.Player
         {
             //GameOver Event Triggered.
             changeListenerCaller.CallPlayerDied();
-            StageManager.LoseStage(this);
-            // try
-            // {
-            //     GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
-            // }
-            // catch
-            // {
-            //     Debug.Log("PlayerGameOverEvent not found");
-            // }
+            animator.SetBool("isHuck",true);
+            GetComponent<AirborneController>()?.StopAllCoroutines();
+            StopPlayer();
+            Mob.Mob[] mobList = FindObjectsOfType<Mob.Mob>();
+            foreach (var mob in mobList)
+            {
+                StartCoroutine(mob.Stun(float.MaxValue));
+            }
+            isControlled = true;
         }
 
         public void SetPlayerMove(bool _canMove)
@@ -531,8 +543,9 @@ namespace GyeMong.GameSystem.Creature.Player
             changeListenerCaller.CallPlayerSpawned();
         }
         
-        public float CurrentHp { get { return curHealth; } }
-        
+        public float CurrentHp => curHealth;
+        public float CurrentSkillGauge => curSkillGauge;
+
         public void DestroySelf()
         {
             Destroy(gameObject);

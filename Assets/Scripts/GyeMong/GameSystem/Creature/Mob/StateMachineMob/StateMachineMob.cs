@@ -26,9 +26,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
         }
         
         public override IEnumerator Stun(float stunTime)
-        { 
-            currentState.OnStateExit();
-            StopCoroutine(_currentStateCoroutine);
+        {
+            if (_currentStateCoroutine != null)
+            {
+                currentState.OnStateExit();
+                StopCoroutine(_currentStateCoroutine);
+            }
          
             yield return new WaitForSeconds(stunTime);
             ChangeState();
@@ -90,6 +93,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
                 int randomIndex = Random.Range(0, weightedStates.Count);
                 currentState = weightedStates[randomIndex];
                 _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
+            }
+            else
+            {
+                ChangeState();
             }
         }
         

@@ -83,9 +83,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
             else
             {
                 ElfPhaseChange fallback = FindObjectOfType<ElfPhaseChange>();
+                GolemPhaseChange fallback2 = FindObjectOfType<GolemPhaseChange>();
                 if (fallback != null)
                 {
                     yield return fallback.Trigger();
+                }
+                if (fallback2 != null)
+                {
+                    yield return fallback2.Trigger();
                 }
             }
         }
@@ -106,7 +111,18 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
             {
                 currentState.OnStateExit();
                 StopAllCoroutines();
-                GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
+
+                GameObject downObj = GameObject.Find("ElfDown");
+
+                if (downObj != null)
+                {
+                    ElfDown fallback = FindObjectOfType<ElfDown>();
+                    StartCoroutine(fallback.Trigger());
+                }
+                else
+                {
+                    GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
+                }
             }
             catch
             {

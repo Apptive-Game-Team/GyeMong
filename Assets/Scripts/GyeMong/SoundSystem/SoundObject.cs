@@ -58,6 +58,10 @@ namespace GyeMong.SoundSystem
 
         public void SetLoop(bool isLoop)
         {
+            if (_audioSource == null)
+            {
+                Initialize();
+            }
             _audioSource.loop = isLoop;
         }
 
@@ -103,6 +107,12 @@ namespace GyeMong.SoundSystem
         public void SetVolume(float volume)
         {
             this._volume = volume;
+            UpdateAudioSourceVolume();
+        }
+
+        public void SetVolumeWithRatio(float ratio)
+        {
+            this._volume *= ratio;
             UpdateAudioSourceVolume();
         }
 

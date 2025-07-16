@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: -2846430557153995475}
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
-  - component: {fileID: 1862771403402579794}
   - component: {fileID: 7183257790069292148}
+  - component: {fileID: 5809504813328949194}
+  - component: {fileID: 492203925548355407}
   m_Layer: 0
   m_Name: MidBossSeedExplode
   m_TagString: EnemyAttack
@@ -160,42 +161,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5522325, y: 0.51856446}
   m_EdgeRadius: 0
---- !u!114 &1862771403402579794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349092434517921609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 2
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 521773891873669120
-  - rid: 521773891873669121
-  references:
-    version: 2
-    RefIds:
-    - rid: 521773891873669120
-      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
-      data:
-        frames:
-        - {fileID: -1065740472, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
-        - {fileID: -1968753551, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
-        - {fileID: -859968383, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
-        - {fileID: 540752854, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
-        - {fileID: -1457230939, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
-        - {fileID: -1870672501, guid: 8460cf966d79fa94bbae4b5f023fafce, type: 3}
-        deltaTime: 0.1
-        _renderer: {fileID: 0}
-    - rid: 521773891873669121
-      type: {class: DestroySelfEvent, ns: , asm: Assembly-CSharp}
-      data: 
 --- !u!114 &7183257790069292148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,3 +178,36 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: 0fb739348104c3c4da0da9879c7b15c7, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: f34047139b4a8a34a892dce7159cfbc1,
     type: 2}
+--- !u!95 &5809504813328949194
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3f697c8205d05c34bb6245785bd6df20, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &492203925548355407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1edb92299386714495ccf25e65b995a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

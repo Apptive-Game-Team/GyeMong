@@ -12,18 +12,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: EndingCredit
   m_EditorClassIdentifier: 
+  bgmName: BGM_Light_Chat
   chatMessages:
-  - speakerName: 5
+  - speakerName: 100
+    faceType: 0
     isLeft: 0
     messages:
-    - Ending Credit
+    - "\uB2F9\uC2E0\uC740 \uBAA8\uB4E0 \uC2DC\uB828\uC744 \uACAC\uB38C\uB0B4\uACE0"
+    - "\uB05D\uAE4C\uC9C0 \uC774 \uBAA8\uD5D8\uC744 \uC644\uC131\uD574 \uC8FC\uC168\uC2B5\uB2C8\uB2E4."
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 100
+    faceType: 0
+    isLeft: 0
+    messages:
+    - "\uC774 \uC774\uC57C\uAE30\uB294 \uC774\uC81C \uB2F9\uC2E0\uC758 \uAC83\uC774
+      \uB418\uC5C8\uC2B5\uB2C8\uB2E4. "
+    - "\uB05D\uAE4C\uC9C0 \uD568\uAED8\uD574 \uC8FC\uC154\uC11C \uAC10\uC0AC\uD569\uB2C8\uB2E4."
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 0
+    faceType: 0
+    isLeft: 0
+    messages:
+    - "\uC548\uB155 \uB108\uAC00 \uD50C\uB808\uC774\uC5B4\uB2C8?"
+    - "Staff\uB4E4\uC744 \uC18C\uAC1C\uD560\uAC8C"
     backgroundImage: 0
     chatImage: 0
     chatDelay: 3
   - speakerName: 5
+    faceType: 0
     isLeft: 0
     messages:
-    - "\uB0B4\uC6A9\uC774 \uBB50\uC600\uC8E0?????????"
+    - "\uB514\uC790\uC774\uB108"
+    - "\uBC30\uC2DC\uC5F0"
+    - "\uCD5C\uC591\uC9C4"
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 5
+    faceType: 0
+    isLeft: 0
+    messages:
+    - "\uAC1C\uBC1C\uC790"
+    - "\uAE40\uD604\uC9C4"
+    - "\uBB38\uC131\uD544"
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 5
+    faceType: 0
+    isLeft: 0
+    messages:
+    - "\uC815\uC724\uC131"
+    - "\uC815\uC9C4\uC6B1"
+    - "\uD669\uC778\uC12D"
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 200
+    faceType: 0
+    isLeft: 1
+    messages:
+    - "\uD300\uC7A5"
+    - "\uBB38\uC131\uD544"
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 0
+    faceType: 12
+    isLeft: 0
+    messages:
+    - "\uB0B4 \uB2E4\uC74C \uBAA8\uD5D8\uB3C4 \uB2E4\uB4E4 \uAE30\uB300\uD574\uC918~~"
     backgroundImage: 0
     chatImage: 0
     chatDelay: 3

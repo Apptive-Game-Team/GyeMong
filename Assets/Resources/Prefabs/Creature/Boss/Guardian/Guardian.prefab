@@ -299,7 +299,6 @@ GameObject:
   - component: {fileID: 6873251832098809791}
   - component: {fileID: 2802353968276510282}
   - component: {fileID: 7223301118056849855}
-  - component: {fileID: 7995023902525698719}
   - component: {fileID: 4698537365717467408}
   - component: {fileID: 8049876469865353739}
   m_Layer: 0
@@ -425,6 +424,14 @@ MonoBehaviour:
   pushOutAttackPrefab: {fileID: 0}
   _shockwavesoundObject: {fileID: 8712382308670165956}
   _tossSoundObject: {fileID: 5499017597752326933}
+  targetAnimator: {fileID: 0}
+  targetSpriteRenderer: {fileID: 0}
+  newSprite1: {fileID: 0}
+  autoSkipTime: 3
+  bossRoomObj1: {fileID: 0}
+  bossRoomObj2: {fileID: 0}
+  bossRoomObj3: {fileID: 0}
+  bossRoomObj4: {fileID: 0}
 --- !u!114 &6873251832098809791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,41 +576,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!58 &7995023902525698719
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4866844568941268327}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 5
 --- !u!114 &4698537365717467408
 MonoBehaviour:
   m_ObjectHideFlags: 0

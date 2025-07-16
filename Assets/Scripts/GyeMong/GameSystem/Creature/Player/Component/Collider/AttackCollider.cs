@@ -77,9 +77,10 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             Vector2 hitPoint = other.ClosestPoint(transform.position);
             hitPoint += attackDir * 0.5f;
             float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
-            Quaternion rot = Quaternion.Euler(0, 0, angle - 45f);
+            Quaternion rot = Quaternion.Euler(0, 0, angle - 90);
             
-            var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot);
+            var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot, other.transform);
+            slashEffectPrefab.GetComponent<SpriteRenderer>().sortingOrder = other.GetComponent<SpriteRenderer>().sortingOrder + 1;
             Destroy(slashEffect, SlashEffectDuration);
         }
         private void SetParticleSystemTexture(Collider2D collision)

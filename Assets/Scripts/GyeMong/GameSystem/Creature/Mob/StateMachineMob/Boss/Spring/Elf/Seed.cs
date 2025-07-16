@@ -58,14 +58,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             rb.velocity = Vector2.zero;
             yield return new WaitForSeconds(1f);
-            Explode();
+            StartCoroutine(Explode());
         }
 
-        private void Explode()
+        private IEnumerator Explode()
         {
             _explosionSoundObject.PlayAsync();
-            Instantiate(explodePrefab,transform.position,Quaternion.identity);
+            GameObject obj = Instantiate(explodePrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
+            yield return null;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
+  m_Name: Summer_NagaRouge_PhaseChange
+  m_EditorClassIdentifier: 
+  bgmName: 
+  chatMessages:
+  - speakerName: 51
+    faceType: 4
+    isLeft: 0
+    messages:
+    - "\uB124\uB188, \uCD9C\uC2E0\uC774..\uC544\uB2C8 \uC815\uCCB4\uAC00 \uBB50\uC9C0?"
+    - "\uC548\uB418\uACA0\uAD70. \uC598\uB4E4\uC544 \uBCF8\uB54C\uB97C \uBCF4\uC5EC\uC918\uB77C!"
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3

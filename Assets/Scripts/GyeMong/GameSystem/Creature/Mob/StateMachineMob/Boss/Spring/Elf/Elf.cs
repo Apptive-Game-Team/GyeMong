@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GyeMong.EventSystem.Event.Boss;
+using GyeMong.EventSystem.Event.Chat;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
@@ -20,8 +22,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         [SerializeField] private GameObject meleeAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         float attackdelayTime = 1f;
-        [SerializeField] private SoundObject arrowSoundObject;
-        [SerializeField] private SoundObject vineSoundObject;
+
+        [Header("Chat Data")]
+        [SerializeField] private MultiChatMessageData chatData;
+        [SerializeField] private float autoSkipTime = 3f;
+
+        [Header("Boss Room Object")]
+        [SerializeField] private GameObject bossRoomObj_wall;
 
         protected override void Initialize()
         {
@@ -94,7 +101,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     {
                         { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -165,7 +172,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
-                yield return Elf.arrowSoundObject.Play();
+                Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
@@ -194,8 +201,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 int count = 0;
                 while (count < 4)
                 {
-                    GameObject seed = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    yield return Elf.arrowSoundObject.Play();
+                    Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    Sound.Play("ENEMY_Arrow_Shot");
+                    yield return new WaitForSeconds(Elf.attackdelayTime/3);
                     count++;
                 }
                 Elf.Animator.SetBool("isAttack", false);
@@ -325,8 +333,39 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             base.Die();
             Animator.SetBool("isDown", true);
+            BgmManager.Stop();
+            StartCoroutine(DieRoutine());
+        }
+
+        private IEnumerator DieRoutine()
+        {
+            yield return StartCoroutine(Trigger());
             StageManager.ClearStage(this);
         }
+
+        public IEnumerator Trigger()
+        {
+            return TriggerEvents();
+        }
+
+        private IEnumerator TriggerEvents()
+        {
+            yield return StartCoroutine((new OpenChatEvent().Execute()));
+
+            yield return new ShowMessages(chatData, autoSkipTime).Execute();
+
+            yield return StartCoroutine((new CloseChatEvent().Execute()));
+
+            var activateBossRoomEvent = new ActivateBossRoomEvent();
+
+            var deactivateEvent = new DeActivateBossRoomEvent();
+
+            yield return new HideBossHealthBarEvent().Execute();
+
+            deactivateEvent.SetBossRoomObject(bossRoomObj_wall);
+            yield return deactivateEvent.Execute();
+        }
+
         protected override void TransPhase()
         {
             if (currentPhase < maxHps.Count - 1)

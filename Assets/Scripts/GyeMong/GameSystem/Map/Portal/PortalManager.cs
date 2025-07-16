@@ -8,7 +8,7 @@ namespace GyeMong.GameSystem.Map.Portal
 {
     public class PortalManager : SingletonObject<PortalManager>
     {
-        [SerializeField] SceneDataList sceneDataList;
+        [SerializeField] public SceneDataList sceneDataList;
         [SerializeField] PortalDataList portalDataList;
 
         public static event Action<Scene> sceneUnloading;
@@ -32,7 +32,7 @@ namespace GyeMong.GameSystem.Map.Portal
             if (!sceneData.sceneName.Equals(SceneManager.GetActiveScene().name))
             {
                 sceneUnloading?.Invoke(SceneManager.GetActiveScene());
-                SceneManager.LoadScene(sceneData.sceneName);
+                SceneLoader.LoadScene(sceneData.sceneName);
             }
         }
 
