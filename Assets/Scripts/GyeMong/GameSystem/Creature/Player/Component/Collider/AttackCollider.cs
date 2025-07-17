@@ -11,12 +11,10 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         [SerializeField] private GameObject slashEffectPrefab;
         public float attackDamage;
         private PlayerSoundController _soundController;
-        private ParticleSystem _particleSystem;
+       
         private ParticleSystem.ShapeModule _shape;
         private void Start()
         {
-            _particleSystem = GetComponentInChildren<ParticleSystem>();
-            _shape = _particleSystem.shape;//.GetComponent<ParticleSystem.ShapeModule>();
             var player = SceneContext.Character;
             attackDamage = player.stat.AttackPower;
         }
@@ -30,8 +28,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         {
             attackDamage = damage;
         }
-  
-    
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
         
@@ -82,25 +79,6 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot, other.transform);
             slashEffectPrefab.GetComponent<SpriteRenderer>().sortingOrder = other.GetComponent<SpriteRenderer>().sortingOrder + 1;
             Destroy(slashEffect, SlashEffectDuration);
-        }
-        private void SetParticleSystemTexture(Collider2D collision)
-        {
-            try
-            {
-                Sprite sprite;
-                try
-                {
-                    sprite = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
-                }
-                catch (MissingComponentException)
-                {
-                    sprite = collision.GetComponentInChildren<SpriteRenderer>().sprite;
-                }
-                _shape.texture = sprite.texture;
-            } catch
-            {
-                Debug.Log("No SpriteRenderer found");
-            }
         }
     }
 }
