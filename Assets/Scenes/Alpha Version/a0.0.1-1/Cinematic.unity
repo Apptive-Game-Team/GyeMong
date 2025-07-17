@@ -465,19 +465,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6119122225689502246, guid: 9e0587d8e0084f744a075d3349a2c85b,
-        type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 1193522125}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e0587d8e0084f744a075d3349a2c85b, type: 3}
---- !u!224 &434168611 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6119122225689502246, guid: 9e0587d8e0084f744a075d3349a2c85b,
-    type: 3}
-  m_PrefabInstance: {fileID: 434168610}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &523984363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -767,8 +757,8 @@ Camera:
   m_GameObject: {fileID: 1846702556}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

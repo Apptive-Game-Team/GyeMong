@@ -14,8 +14,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
         [SerializeField] private Vector3 playerDestination;
         [SerializeField] private float playerMoveSpeed;
         [SerializeField] private Vector3 cameraDestination;
+        [SerializeField] private GameObject minionObject;
         [SerializeField] private float cameraSpeed;
         [SerializeField] private MultiChatMessageData battleOpeningChat;
+        [SerializeField] private NagaRogueOpeningEvent nagaRogueOpeningEvent;
         private float autoSkipTime = 3f;
 
         private void Start()
@@ -25,6 +27,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
 
         private IEnumerator TriggerEvents()
         {
+            GameObject minion = Instantiate(minionObject, new Vector3(cameraDestination.x, cameraDestination.y, 0f), Quaternion.identity);
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine((new MoveCreatureEvent()
             {
@@ -34,13 +37,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
                 target = playerDestination
             }).Execute());
             
-            yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
+            SceneContext.CameraManager.CameraFollow(minion.transform);
+            yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(3f, cameraSpeed));
             yield return StartCoroutine((new OpenChatEvent().Execute()));
             yield return new ShowMessages(battleOpeningChat, autoSkipTime).Execute();
             yield return StartCoroutine((new CloseChatEvent().Execute()));
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
-            SceneManager.LoadScene("Scenes/Summer/NagaRogueScene");
+            Destroy(minion);
+            SceneContext.CameraManager.CameraFollow(SceneContext.Character.transform);
+            yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(5f, cameraSpeed));
+            StartCoroutine(nagaRogueOpeningEvent.TriggerEvents());
         }
     }
 }

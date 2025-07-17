@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
@@ -8,6 +9,7 @@ using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using Unity.VisualScripting;
@@ -33,16 +35,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         [Header("Change Sprite")]
         [SerializeField] private SpriteRenderer targetSpriteRenderer;
         [SerializeField] private Sprite newSprite1;
-
-        [Header("Chat Data")]
-        [SerializeField] private MultiChatMessageData chatData;
+        
         [SerializeField] private float autoSkipTime = 3f;
 
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj1;
         [SerializeField] private GameObject bossRoomObj2;
-        [SerializeField] private GameObject bossRoomObj3;
-        [SerializeField] private GameObject bossRoomObj4;
 
         public SoundObject TossSoundObject => _tossSoundObject;
         protected override void Initialize()
@@ -92,15 +90,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     if (angle >= excludeMin && angle <= excludeMax)
                         continue;
-                    AttackObjectController.Create(
-                    point,
-                    Vector3.zero,
-                    shockwavePrefab,
-                    new StaticMovement(
-                        point,
-                        attackdelayTime / 2)
-                    )
-                    .StartRoutine();
+                    StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (shockwavePrefab,point, Quaternion.identity, attackdelayTime / 2,
+                        () => AttackObjectController.Create(
+                            point,
+                            Vector3.zero,
+                            shockwavePrefab,
+                            new StaticMovement(
+                                point,
+                                attackdelayTime / 2)
+                        ).StartRoutine()));
                 }
                 yield return new WaitForSeconds(attackdelayTime / 3);
             }
@@ -114,15 +113,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             SceneContext.CameraManager.CameraShake(0.2f);
             foreach (Vector3 point in points)
             {
-                AttackObjectController.Create(
-                    point,
-                    Vector3.zero,
-                    shockwavePrefab,
-                    new StaticMovement(
-                        point,
-                        attackdelayTime / 2)
-                    )
-                    .StartRoutine();
+                StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (shockwavePrefab,point, Quaternion.identity, attackdelayTime / 2,
+                        () => AttackObjectController.Create(
+                            point,
+                            Vector3.zero,
+                            shockwavePrefab,
+                            new StaticMovement(
+                                point,
+                                attackdelayTime / 2)
+                        ).StartRoutine()));
             }
             yield return new WaitForSeconds(attackdelayTime / 3);
         }
@@ -200,19 +200,36 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("Push", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 SceneContext.CameraManager.CameraShake(0.15f);
-                AttackObjectController.Create(
+                Golem.StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (Golem.pushOutAttackPrefab, SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity, Golem.attackdelayTime / 2,
+                        () => AttackObjectController.Create(
                     SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
                     Vector3.zero,
                     Golem.pushOutAttackPrefab,
                     new StaticMovement(
                         SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
-                        Golem.attackdelayTime/2)
+                        Golem.attackdelayTime / 2)
                     )
-                    .StartRoutine();
+                    .StartRoutine()));
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("Push", false);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
+            }
+            protected override void SetWeights()
+            {
+                weights = new Dictionary<System.Type, int>
+                {
+                    { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 },
+                    { typeof(FallingCubeAttack), 5 },
+                    { typeof(ChargeShield), 50 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 }
+                };
+                if (weights.Values.All(w => w == 0))
+                {
+                    weights[typeof(MeleeAttack)] = 1;
+                }
             }
         }
 
@@ -341,6 +358,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 }
             }
         }
+        protected override void TransPhase()
+        {
+            if (currentPhase < maxHps.Count - 1)
+            {
+                currentPhase++;
+                StopAllCoroutines();
+                Animator.SetBool("isStun", false);
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                StartCoroutine(ChangingPhase());
+            }
+            else
+            {
+                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                Die();
+            }
+        }
         protected override void Die()
         {
             base.Die();
@@ -367,17 +400,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return changeSpriteEvent.Execute();
 
             yield return new HideBossHealthBarEvent().Execute();
-
-            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
-
-            yield return StartCoroutine((new OpenChatEvent().Execute()));
-
-            yield return new ShowMessages(chatData, autoSkipTime).Execute();
-
-            yield return StartCoroutine((new CloseChatEvent().Execute()));
-
-            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
-
+            
             SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
 
             var zoomEvent = new CameraZoomInOut();
@@ -386,17 +409,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return StartCoroutine(zoomEvent.Execute());
 
             var activateBossRoomEvent = new ActivateBossRoomEvent();
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj1);
-            yield return activateBossRoomEvent.Execute();
 
             var deactivateEvent = new DeActivateBossRoomEvent();
+
+            deactivateEvent.SetBossRoomObject(bossRoomObj1);
+            yield return deactivateEvent.Execute();
+
             deactivateEvent.SetBossRoomObject(bossRoomObj2);
-            yield return deactivateEvent.Execute();
-
-            deactivateEvent.SetBossRoomObject(bossRoomObj3);
-            yield return deactivateEvent.Execute();
-
-            deactivateEvent.SetBossRoomObject(bossRoomObj4);
             yield return deactivateEvent.Execute();
         }
 

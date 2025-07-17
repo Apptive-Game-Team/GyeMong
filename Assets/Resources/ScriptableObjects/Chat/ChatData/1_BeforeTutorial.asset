@@ -12,29 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: 1_BeforeTutorial
   m_EditorClassIdentifier: 
+  bgmName: BGM_Battle_Chat
   chatMessages:
   - speakerName: 0
+    faceType: 11
     isLeft: 1
     messages:
     - ...!
-    backgroundImage: 2
+    backgroundImage: 1
     chatImage: 0
     chatDelay: 3
   - speakerName: 1
+    faceType: 11
     isLeft: 0
     messages:
-    - "\uD79D\uD79D...\uC544\uC800\uC528\uB294 \uB204\uAD6C\uC5D0\uC694? \uC800 \uC880
-      \uB3C4\uC640\uC904 \uC218 \uC788\uC5B4\uC694?"
-    - "\uBC14\uB2F7\uAC00\uC5D0 \uB180\uB7EC\uB098\uC654\uB2E4\uAC00 \uC9D1\uC73C\uB85C
-      \uAC00\uB294 \uAE38\uC744 \uC2AC\uB77C\uC784\uB4E4\uC774 \uB9C9\uACE0 \uC788\uC5B4\uC11C
-      \uB3CC\uC544\uAC08 \uC218\uAC00 \uC5C6\uC5B4\uC694."
-    backgroundImage: 2
+    - "\uD79D\uD79D...\uC544\uC800\uC528\uB294 \uB204\uAD6C\uC5D0\uC694?"
+    - "\uC800 \uC880 \uB3C4\uC640\uC904 \uC218 \uC788\uC5B4\uC694?"
+    backgroundImage: 1
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 1
+    faceType: 11
+    isLeft: 0
+    messages:
+    - "\uC9D1\uC73C\uB85C \uAC00\uB294 \uAE38\uC744 \uC2AC\uB77C\uC784\uB4E4\uC774
+      \uB9C9\uACE0 \uC788\uC5B4\uC11C \uB3CC\uC544\uAC08 \uC218\uAC00 \uC5C6\uC5B4\uC694."
+    backgroundImage: 1
     chatImage: 0
     chatDelay: 3
   - speakerName: 0
+    faceType: 1
     isLeft: 1
     messages:
     - ...
-    backgroundImage: 2
+    backgroundImage: 1
     chatImage: 0
     chatDelay: 3

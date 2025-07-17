@@ -6,6 +6,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
 using System.Collections.Generic;
+using GyeMong.EventSystem.Event.Chat;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Map.MapEvent
@@ -33,8 +34,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj1;
         [SerializeField] private GameObject bossRoomObj2;
-        [SerializeField] private GameObject bossRoomObj3;
-        [SerializeField] private GameObject bossRoomObj4;
 
         [Header("")]
         [SerializeField] private GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Boss boss;
@@ -48,6 +47,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [Header("Animation Event")]
         [SerializeField] private List<Sprite> animationFrames = new List<Sprite>(6);
         [SerializeField] private SpriteRenderer someRenderer;
+        [SerializeField] private List<MultiChatMessageData> beforeScript;
 
         private bool _isTriggered = false;
         private void OnTriggerEnter2D(Collider2D other)
@@ -95,12 +95,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return StartCoroutine(zoomEvent.Execute());
 
             var deactivateEvent = new DeActivateBossRoomEvent();
-            deactivateEvent.SetBossRoomObject(bossRoomObj1);
-            yield return deactivateEvent.Execute();
 
             var activateBossRoomEvent = new ActivateBossRoomEvent();
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj2);
-            yield return activateBossRoomEvent.Execute();
 
             yield return new WaitForSeconds(1);
 
@@ -110,19 +106,29 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
             yield return new WaitForSeconds(1);
 
+            BgmManager.Play("BGM_Spring_Boss");
+            
             var animEvent = new GyeMong.EventSystem.Event.CinematicEvent.AnimationEvent();
             animEvent.SetRenderer(someRenderer);
             animEvent.SetFrames(animationFrames);
             animEvent.SetDeltaTime(0.5f);
             yield return animEvent.Execute();
+            
+            var startEvent = new StartAnimatorEvent();
+            startEvent.SetAnimator(someAnimator);
+            yield return startEvent.Execute();
+            
+            if (beforeScript != null)
+            {
+                foreach (var script in beforeScript)
+                {
+                    yield return script.Play();
+                }
+            }
 
             var showHpEvent = new ShowBossHealthBarEvent();
             showHpEvent.SetBoss(boss);
             yield return showHpEvent.Execute();
-
-            var startEvent = new StartAnimatorEvent();
-            startEvent.SetAnimator(someAnimator);
-            yield return startEvent.Execute();
 
             var animParamEvent = new SetAnimatorParameter();
             animParamEvent._creatureType = SetAnimatorParameter.CreatureType.Player;
@@ -133,10 +139,10 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
             bossRoomEntrance.Trigger();
 
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj3);
+            activateBossRoomEvent.SetBossRoomObject(bossRoomObj1);
             yield return activateBossRoomEvent.Execute();
 
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj4);
+            activateBossRoomEvent.SetBossRoomObject(bossRoomObj2);
             yield return activateBossRoomEvent.Execute();
         }
 

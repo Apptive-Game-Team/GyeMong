@@ -14,6 +14,7 @@ namespace GyeMong.EventSystem.Event.Chat
         public class MultiChatMessage
         {
             public ChatSpeakerType speakerName;
+            public ChatSpeakerData.ChatSpeakerFace faceType = ChatSpeakerData.ChatSpeakerFace.None;
             public bool isLeft;
             public List<string> messages;
             public BackgroundImage backgroundImage;
@@ -21,10 +22,16 @@ namespace GyeMong.EventSystem.Event.Chat
             public float chatDelay = 3f;
         }
 
+        public string bgmName;
         public List<MultiChatMessage> chatMessages;
 
         public IEnumerator Play()
         {
+            if (bgmName != null && bgmName.Length != 0)
+            {
+                BgmManager.Play(bgmName);
+            }
+            
             yield return ChatController.Open();
             foreach (var chat in chatMessages)
             {
@@ -38,6 +45,10 @@ namespace GyeMong.EventSystem.Event.Chat
                 yield return ChatController.MultipleChat(chat, 3f);
             }
             ChatController.Close();
+            if (bgmName != null && bgmName.Length != 0)
+            {
+                BgmManager.Stop();
+            }
         }
     }
 }

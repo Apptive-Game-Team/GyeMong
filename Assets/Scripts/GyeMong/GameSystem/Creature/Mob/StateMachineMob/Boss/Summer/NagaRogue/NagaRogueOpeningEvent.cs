@@ -22,12 +22,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
         private float autoSkipTime = 3f;
         private bool _isTriggered = false;
 
-        private void Start()
-        {
-            StartCoroutine(TriggerEvents());
-        }
-
-        private IEnumerator TriggerEvents()
+        public IEnumerator TriggerEvents()
         {
             _isTriggered = true;
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());

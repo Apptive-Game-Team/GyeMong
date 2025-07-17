@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 336463672346664978}
   - component: {fileID: 4804340384773425591}
   - component: {fileID: 4670670036856467166}
-  - component: {fileID: 6413054057925698153}
   - component: {fileID: 6123171955908174124}
   - component: {fileID: 1703842748222202308}
   - component: {fileID: 6595939274270175886}
@@ -117,51 +116,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &6413054057925698153
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5182638141169527034}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.048, y: 2.048}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!95 &6123171955908174124
 Animator:
   serializedVersion: 5
@@ -217,7 +171,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.58
 --- !u!114 &6595939274270175886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,4 +213,8 @@ MonoBehaviour:
     type: 3}
   sandMinionPrefab: {fileID: 4319988163936315400, guid: f95221006a555384886e80c74bfb4d95,
     type: 3}
+  sandStormParticles: {fileID: 0}
+  phaseChangeChat: {fileID: 0}
+  curveThrowRnage: 10
   phaseChangeHealthPercent: 0.5
+  canPhaseChange: 1

@@ -1,8 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using DG.Tweening;
+using GyeMong.GameSystem.Creature.Player.Component;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 namespace Visual.Camera
 {
@@ -11,11 +16,29 @@ namespace Visual.Camera
         private List<CinemachineVirtualCamera> virtualCams;
         private CinemachineVirtualCamera currentCam;
         private float cameraSize;
+        private Volume mainCamVolume;
+        private VolumeProfile mainVolumeProfile;
+        private ColorAdjustments ca;
+        private ColorAdjustments cloneCa;
 
         protected void Awake() 
         {
             cameraSize = 5f;
             GetCameras();
+            mainVolumeProfile = Resources.Load<VolumeProfile>("CameraProfile/MainSetting");
+            mainCamVolume = UnityEngine.Camera.main.GetComponent<Volume>();
+            mainCamVolume.profile = Instantiate(mainVolumeProfile);
+            for (int i = 0; i < mainCamVolume.profile.components.Count; i++)
+            {
+                var component = Instantiate(mainCamVolume.profile.components[i]);
+                mainCamVolume.profile.components[i] = component;
+            }
+            PlayerChangeListenerCaller.OnPlayerDied += SetVolumeGray;
+        }
+
+        private void OnDestroy()
+        {
+            PlayerChangeListenerCaller.OnPlayerDied -= SetVolumeGray;
         }
 
         private void GetCameras()
@@ -43,6 +66,8 @@ namespace Visual.Camera
 
         public IEnumerator CameraMove(Vector3 destination, float speed)
         {
+            yield return new WaitUntil(() => currentCam != null);
+            
             currentCam.Follow = null;
 
             yield return currentCam.transform
@@ -51,6 +76,29 @@ namespace Visual.Camera
                 .WaitForCompletion();
         }
 
+        public void SetVolumeGray()
+        {
+            StartCoroutine(FadeSaturation(-50f, 2f));
+        }
+        
+        private IEnumerator FadeSaturation(float targetValue, float duration)
+        {
+            if (!mainCamVolume.profile.TryGet<ColorAdjustments>(out var ca))
+                yield break;
+
+            float initialValue = ca.saturation.value;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                ca.saturation.value = Mathf.Lerp(initialValue, targetValue, elapsed / duration);
+                yield return null;
+            }
+
+            ca.saturation.value = targetValue;
+        }
+        
         public void CameraFollow(Transform transform)
         {
             currentCam.Follow = transform;
@@ -59,7 +107,11 @@ namespace Visual.Camera
         public IEnumerator CameraZoomInOut(float size, float duration)
         {
             yield return DOTween.To(() => currentCam.m_Lens.OrthographicSize,
-                x => currentCam.m_Lens.OrthographicSize = x, size, duration)
+                x =>
+                {
+                    currentCam.gameObject.GetComponent<CinemachineConfiner2D>().InvalidateCache();
+                    currentCam.m_Lens.OrthographicSize = x;
+                }, size, duration)
                 .WaitForCompletion();
         }
 

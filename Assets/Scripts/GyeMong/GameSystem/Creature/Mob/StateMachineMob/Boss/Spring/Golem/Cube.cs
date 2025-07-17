@@ -51,10 +51,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 yield return null;
             }
+            isFalled = true;
             Sound.Play("ENEMY_Rock_Falled");
             SceneContext.CameraManager.CameraShake(0.1f);
             Collider2D collider = GetComponent<Collider2D>();
-            isFalled = true;
             if (collider != null)
             {
                 collider.isTrigger = false;
@@ -65,12 +65,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             Destroy(cubeShadow);
         }
 
-        private void OnTriggerStay2D(Collider2D other)
+        private void OnCollisionStay2D(Collision2D collision)
         {
-            if (isFalled && other.CompareTag("Boss"))
+            if (isFalled && collision.collider.CompareTag("Boss"))
             {
                 Debug.Log("Check0");
-                other.GetComponent<Golem>().StartCoroutine(other.GetComponent<Golem>().Stun(5f));
+                Golem golem = collision.collider.GetComponent<Golem>();
+                if (golem != null)
+                {
+                    golem.StartCoroutine(golem.Stun(5f));
+                }
                 Destroy(gameObject);
                 Destroy(cubeShadow);
             }

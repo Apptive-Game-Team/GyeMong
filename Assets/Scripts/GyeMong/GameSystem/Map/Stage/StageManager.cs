@@ -9,11 +9,19 @@ namespace GyeMong.GameSystem.Map.Stage
     public class StageManager
     {
         private static StageInfo _currentStageInfo;
+        private static Coroutine _clearStageCoroutine;
+        private static Coroutine _enterStageCoroutine;
 
         public static void EnterStage(StageInfo stageInfo, MonoBehaviour context)
         {
+            if (_enterStageCoroutine != null)
+            {
+                Debug.LogError("Enter stage coroutine is already running.");
+                return;
+            }
+            
             _currentStageInfo = stageInfo;
-            context.StartCoroutine(EnterStageCoroutine());
+            _enterStageCoroutine = context.StartCoroutine(EnterStageCoroutine());
         }
         
         public static void ClearStage(MonoBehaviour context)
@@ -23,8 +31,12 @@ namespace GyeMong.GameSystem.Map.Stage
                 Debug.LogError("No stage is currently loaded.");
                 return;
             } 
+            if (_clearStageCoroutine != null)
+            {
+                Debug.LogError("Clear stage coroutine is already running.");
+            }
             SceneContext.Character.gameObject.SetActive(false);
-            context.StartCoroutine(ClearStageCoroutine());
+            _clearStageCoroutine = context.StartCoroutine(ClearStageCoroutine());
         }
         
         public static void LoseStage(MonoBehaviour context)
@@ -48,6 +60,7 @@ namespace GyeMong.GameSystem.Map.Stage
                 }
             }
             PortalManager.Instance.LoadSceneMode(_currentStageInfo.portalID);
+            _enterStageCoroutine = null;
         }
 
         private static IEnumerator ClearStageCoroutine()
@@ -61,6 +74,7 @@ namespace GyeMong.GameSystem.Map.Stage
             }
             
             StageSelectPage.LoadStageSelectPageOnStageToDestination(_currentStageInfo.id, _currentStageInfo.id + 1);
+            _clearStageCoroutine = null;
         }
     }
 }

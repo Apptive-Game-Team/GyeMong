@@ -90,9 +90,9 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             shakePower = Mathf.Clamp(shakePower, 0.05f, 0.15f);
 
             // 넉백 스피드
-            float baseKnockbackSpeed = 5f;
-            float knockbackSpeed = baseKnockbackSpeed * ratio;
-            knockbackSpeed = Mathf.Clamp(knockbackSpeed, 3f, 10f);
+            float baseKnockbackSpeed = 9f;
+            float knockbackSpeed = Mathf.Min(baseKnockbackSpeed / ratio, 8f);
+            knockbackSpeed = Mathf.Clamp(knockbackSpeed, 8f, 10f);
 
             // 타격음 볼륨 비율
             float baseVolumeRatio = 1f;

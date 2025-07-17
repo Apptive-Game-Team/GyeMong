@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8253498931302874577}
   - component: {fileID: 4360534568010519165}
   - component: {fileID: 1665461335346525028}
+  - component: {fileID: 5621752726144729828}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -128,3 +129,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d565840948d394a9e19d89ee79d33d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5621752726144729828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032769826511270979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5b42ab6cf531a4dae213dfc6bbe710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxPrefab: {fileID: 6309003457626774954, guid: 68bfd45c19609ed4fb1debc57060e0c4,
+    type: 3}
+  circlePrefab: {fileID: 5945908489128085552, guid: 27a302ea6ecad24469cc0d2b400485c8,
+    type: 3}
+  capsulePrefab: {fileID: 8607135463447496517, guid: 23768871b1971be43943e667397c310c,
+    type: 3}

@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: ElfDown
   m_EditorClassIdentifier: 
+  bgmName: 
   chatMessages:
   - speakerName: 3
+    faceType: 1
     isLeft: 1
     messages:
-    - "\uC73C\uC73D..\uC9F1\uC384\uAD70"
-    backgroundImage: 2
+    - "\uC81C\uAC00 \uC84C\uC2B5\uB2C8\uB2E4."
+    backgroundImage: 1
     chatImage: 0
     chatDelay: 3

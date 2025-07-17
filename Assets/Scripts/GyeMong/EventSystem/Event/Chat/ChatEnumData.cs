@@ -14,6 +14,10 @@ namespace GyeMong.EventSystem.Event.Chat
         RougeBoss = 51,
         Wanderer = 70,
         Sandworm = 80,
+        
+        None = 100,
+        
+        Monolong = 200,
     }
 
     public enum BackgroundImage
@@ -22,9 +26,6 @@ namespace GyeMong.EventSystem.Event.Chat
         Nothing = 1,
         Spring = 2,
         Summer = 3,
-        
-        // Summer
-        Summer = 50,
     }
 
     public enum ChatImage

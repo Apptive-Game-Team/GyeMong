@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
@@ -432,15 +433,15 @@ namespace GyeMong.GameSystem.Creature.Player
         {
             //GameOver Event Triggered.
             changeListenerCaller.CallPlayerDied();
-            StageManager.LoseStage(this);
-            // try
-            // {
-            //     GameObject.Find("PlayerGameOverEvent").gameObject.GetComponent<EventObject>().Trigger();
-            // }
-            // catch
-            // {
-            //     Debug.Log("PlayerGameOverEvent not found");
-            // }
+            animator.SetBool("isHuck",true);
+            GetComponent<AirborneController>()?.StopAllCoroutines();
+            StopPlayer();
+            Mob.Mob[] mobList = FindObjectsOfType<Mob.Mob>();
+            foreach (var mob in mobList)
+            {
+                StartCoroutine(mob.Stun(float.MaxValue));
+            }
+            isControlled = true;
         }
 
         public void SetPlayerMove(bool _canMove)

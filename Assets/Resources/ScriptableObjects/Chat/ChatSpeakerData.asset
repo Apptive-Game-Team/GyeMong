@@ -15,28 +15,93 @@ MonoBehaviour:
   ChatSpeakers:
   - speakerType: 0
     speakerName: "\uD50C\uB808\uC774\uC5B4"
-    image: {fileID: 21300000, guid: 637db4fe454f3ed4aa30eb45a1ea8820, type: 3}
+    image: {fileID: 21300000, guid: 69a98a621c63b4b22878cb63529a7fd7, type: 3}
+    Faces:
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: 69a98a621c63b4b22878cb63529a7fd7, type: 3}
+    - faceType: 4
+      faceImage: {fileID: 21300000, guid: 2957a8085a9374698ab95ffdf7af7453, type: 3}
+    - faceType: 10
+      faceImage: {fileID: 21300000, guid: 2e1459338a7364a2c90ef886d7076928, type: 3}
+    - faceType: 11
+      faceImage: {fileID: 21300000, guid: d7b563a6eac124400aafd026cd3ce5ab, type: 3}
+    - faceType: 13
+      faceImage: {fileID: 21300000, guid: 5436bd5fc727c45c8a5d051487db6e0a, type: 3}
+    - faceType: 14
+      faceImage: {fileID: 21300000, guid: 9f3947bc583d44a12abd13a3799492df, type: 3}
+    - faceType: 12
+      faceImage: {fileID: 21300000, guid: b6beb9eaab4d54893afd02484bc62ec1, type: 3}
   - speakerType: 1
     speakerName: "\uC5D8\uD504 \uAF2C\uB9C8"
-    image: {fileID: -221016768, guid: 3988ec1ec750b4c76acd42ec70c5d1e8, type: 3}
+    image: {fileID: 21300000, guid: 5a28f3512055542909ed6aefea49827f, type: 3}
+    Faces:
+    - faceType: 4
+      faceImage: {fileID: 21300000, guid: 2f4dc4fa9779948a593882fc4a2f2db2, type: 3}
+    - faceType: 12
+      faceImage: {fileID: 21300000, guid: 66a65deaf44e74229a61ba4ff403121e, type: 3}
+    - faceType: 11
+      faceImage: {fileID: 21300000, guid: c23cb9a3c4ba540f9b28dd92922106a6, type: 3}
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: 5a28f3512055542909ed6aefea49827f, type: 3}
   - speakerType: 2
     speakerName: "\uC5D8\uD504 \uC8FC\uBBFC"
-    image: {fileID: -2107610215, guid: 3988ec1ec750b4c76acd42ec70c5d1e8, type: 3}
+    image: {fileID: 21300000, guid: ce570e5bdb8dd480991458876865ab22, type: 3}
+    Faces: []
   - speakerType: 3
     speakerName: "\uC5D8\uD504 \uCD0C\uC7A5"
-    image: {fileID: 21300000, guid: 99c8afbb409014f1db45b142ee41fbda, type: 3}
+    image: {fileID: 21300000, guid: f5d32715f53b940118f39065d397277d, type: 3}
+    Faces:
+    - faceType: 4
+      faceImage: {fileID: 21300000, guid: 72e9527b4f75e482988588a3d7ef3912, type: 3}
+    - faceType: 2
+      faceImage: {fileID: 21300000, guid: 77d54610859194d9a8af0337a47bed21, type: 3}
+    - faceType: 12
+      faceImage: {fileID: 21300000, guid: 77d54610859194d9a8af0337a47bed21, type: 3}
+    - faceType: 14
+      faceImage: {fileID: 21300000, guid: a47493ab1a8da48308647719b8c25d89, type: 3}
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: f5d32715f53b940118f39065d397277d, type: 3}
   - speakerType: 4
     speakerName: "\uBB38\uC9C0\uAE30 \uC11D\uC0C1"
-    image: {fileID: 1979126298, guid: 63ddccc32ecdc4f288c61c35af67262a, type: 3}
+    image: {fileID: 21300000, guid: e7d9a95830d8044008cd33a5de825dbb, type: 3}
+    Faces:
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: e7d9a95830d8044008cd33a5de825dbb, type: 3}
+    - faceType: 10
+      faceImage: {fileID: 21300000, guid: 5adf633f111fb485e927e2a2966906e2, type: 3}
+    - faceType: 14
+      faceImage: {fileID: 21300000, guid: ee730d4cf506841268ef77ecd6ff0d2d, type: 3}
   - speakerType: 5
     speakerName: System
     image: {fileID: 0}
+    Faces: []
   - speakerType: 70
     speakerName: "\uBC29\uB791\uC790"
     image: {fileID: 21300000, guid: 6a8bb3aedf368b8419c359806ddede7d, type: 3}
+    Faces: []
   - speakerType: 50
     speakerName: "\uB3C4\uC801\uB2E8 \uC878\uAC1C"
-    image: {fileID: 21300000, guid: b4e01c76bdabec048935ab713519aa46, type: 3}
+    image: {fileID: 21300000, guid: 44ce1e6d29ac94fe783ad65be04e1c68, type: 3}
+    Faces: []
   - speakerType: 51
     speakerName: "\uB3C4\uC801\uB2E8 \uB450\uBAA9"
-    image: {fileID: 21300000, guid: 198c4030366539945a72c5f87dffbd04, type: 3}
+    image: {fileID: 21300000, guid: 0c7869b88feca4ccfa4b3b68130e83f7, type: 3}
+    Faces:
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: 0c7869b88feca4ccfa4b3b68130e83f7, type: 3}
+    - faceType: 12
+      faceImage: {fileID: 21300000, guid: 0b512504fed2143baa5661e4717f0e63, type: 3}
+    - faceType: 11
+      faceImage: {fileID: 21300000, guid: d065245a4a1504e28aef38d921f31fec, type: 3}
+    - faceType: 11
+      faceImage: {fileID: 21300000, guid: b60e1270a0dd148dcadf30d27bbc9800, type: 3}
+    - faceType: 10
+      faceImage: {fileID: 21300000, guid: bb78c0ef574094f3ca19972e60ef33c7, type: 3}
+  - speakerType: 100
+    speakerName: 
+    image: {fileID: 0}
+    Faces: []
+  - speakerType: 200
+    speakerName: "Team 6203\uC758 \uD300\uC7A5"
+    image: {fileID: 21300000, guid: 7923ba510d7ef4732a7396a57ba8c0f2, type: 3}
+    Faces: []

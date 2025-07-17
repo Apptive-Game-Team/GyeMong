@@ -30,12 +30,10 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private float cameraSpeed;
 
         [Header("Boss Room Object")]
-        [SerializeField] private GameObject bossRoomObj;
         [SerializeField] private GameObject bossRoomObj_wall;
 
         [Header("Chat Data")]
         [SerializeField] private MultiChatMessageData chatData1;
-        [SerializeField] private MultiChatMessageData chatData2;
         [SerializeField] private float autoSkipTime = 3f;
 
         [Header("Start Animator")]
@@ -54,11 +52,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
             {
                 StartCoroutine(TriggerEvents());
             }
-        }
-
-        public IEnumerator Trigger()
-        {
-            return TriggerEvents();
         }
 
         private IEnumerator TriggerEvents()
@@ -86,26 +79,23 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
 
             var activateBossRoomEvent = new ActivateBossRoomEvent();
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj);
-            yield return activateBossRoomEvent.Execute();
 
             var deactivateEvent = new DeActivateBossRoomEvent();
-            deactivateEvent.SetBossRoomObject(bossRoomObj);
-            yield return deactivateEvent.Execute();
+            
+            BgmManager.Play("BGM_Spring_MidBoss");
 
             yield return StartCoroutine((new OpenChatEvent().Execute()));
 
             yield return new ShowMessages(chatData1, autoSkipTime).Execute();
 
+            yield return StartCoroutine((new CloseChatEvent().Execute()));
+            
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
             changeSpriteEvent.SetSprite(newSprite2);
             yield return changeSpriteEvent.Execute();
 
             yield return new WaitForSeconds(delayTime);
-
-            yield return new ShowMessages(chatData2, autoSkipTime).Execute();
-
-            yield return StartCoroutine((new CloseChatEvent().Execute()));
+            
 
             activateBossRoomEvent.SetBossRoomObject(bossRoomObj_wall);
             yield return activateBossRoomEvent.Execute();

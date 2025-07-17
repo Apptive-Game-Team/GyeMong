@@ -30,6 +30,14 @@ namespace GyeMong.SoundSystem
             soundObject.StartCoroutine(Play(soundObject, new SoundPlayCallback(soundObject)));
             return soundObject;
         }
+        
+        public static SoundObject GetSoundObject()
+        {
+            SoundObject soundObject = ObjectPool.GetObject();
+            soundObject.gameObject.SetActive(true);
+            return soundObject;
+        }
+        
         public static void Stop(SoundObject soundObject)
         {
             soundObject?.Stop();

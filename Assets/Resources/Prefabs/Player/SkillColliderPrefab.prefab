@@ -114,6 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa45c59c81be5646a158a43f749f5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slashEffectPrefab: {fileID: 2010286183680275256, guid: 6258eb554c5493c42985c14fedab2744,
+    type: 3}
   attackDamage: 0
 --- !u!212 &-3350436086995963345
 SpriteRenderer:

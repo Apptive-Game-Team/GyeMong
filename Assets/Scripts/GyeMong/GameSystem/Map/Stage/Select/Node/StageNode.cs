@@ -8,6 +8,9 @@ namespace GyeMong.GameSystem.Map.Stage.Select.Node
     public class StageNode : MonoBehaviour, ISelectableUI
     {
         private StageSelectController _stageSelectController;
+        [SerializeField] private Sprite onSprite;
+        [SerializeField] private Sprite offSprite;
+        
         [SerializeField] private StageInfo stageInfo;
         public void LoadStage()
         {
@@ -17,6 +20,11 @@ namespace GyeMong.GameSystem.Map.Stage.Select.Node
         public void SetStageSelectController(StageSelectController stageSelectController)
         {
             _stageSelectController = stageSelectController;
+        }
+        
+        public void SetOnOff(bool isOn)
+        {
+            GetComponent<SpriteRenderer>().sprite = isOn ? onSprite : offSprite;
         }
 
         public void OnInteract()

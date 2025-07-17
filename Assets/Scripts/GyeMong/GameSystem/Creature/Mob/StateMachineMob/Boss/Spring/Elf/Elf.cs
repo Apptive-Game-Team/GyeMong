@@ -22,16 +22,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         [SerializeField] private GameObject meleeAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         float attackdelayTime = 1f;
-        [SerializeField] private SoundObject arrowSoundObject;
-        [SerializeField] private SoundObject vineSoundObject;
 
         [Header("Chat Data")]
         [SerializeField] private MultiChatMessageData chatData;
         [SerializeField] private float autoSkipTime = 3f;
 
         [Header("Boss Room Object")]
-        [SerializeField] private GameObject bossRoomBgm1;
-        [SerializeField] private GameObject bossRoomBgm2;
         [SerializeField] private GameObject bossRoomObj_wall;
 
         protected override void Initialize()
@@ -105,7 +101,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     {
                         { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -176,7 +172,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
-                yield return Elf.arrowSoundObject.Play();
+                Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
@@ -205,8 +201,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 int count = 0;
                 while (count < 4)
                 {
-                    GameObject seed = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    yield return Elf.arrowSoundObject.Play();
+                    Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    Sound.Play("ENEMY_Arrow_Shot");
+                    yield return new WaitForSeconds(Elf.attackdelayTime/3);
                     count++;
                 }
                 Elf.Animator.SetBool("isAttack", false);
@@ -336,6 +333,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             base.Die();
             Animator.SetBool("isDown", true);
+            BgmManager.Stop();
             StartCoroutine(DieRoutine());
         }
 
@@ -359,12 +357,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             yield return StartCoroutine((new CloseChatEvent().Execute()));
 
             var activateBossRoomEvent = new ActivateBossRoomEvent();
-            activateBossRoomEvent.SetBossRoomObject(bossRoomBgm1);
-            yield return activateBossRoomEvent.Execute();
 
             var deactivateEvent = new DeActivateBossRoomEvent();
-            deactivateEvent.SetBossRoomObject(bossRoomBgm2);
-            yield return deactivateEvent.Execute();
 
             yield return new HideBossHealthBarEvent().Execute();
 

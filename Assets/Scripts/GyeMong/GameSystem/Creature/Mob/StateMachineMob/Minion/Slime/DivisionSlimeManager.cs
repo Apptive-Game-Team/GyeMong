@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using GyeMong.EventSystem;
+using GyeMong.EventSystem.Event.Chat;
+using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
 
@@ -9,17 +12,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
     {
         public static DivisionSlimeManager Instance;
         private HashSet<DivisionSlime> _activeSlimes = new HashSet<DivisionSlime>();
-        private EventObject _eventObject;
+        [SerializeField] private List<MultiChatMessageData> afterScript;
 
         private void Awake()
         {
             if (Instance != null) Destroy(this);
             else Instance = this;
-        }
-
-        private void Start()
-        {
-            _eventObject = GetComponent<EventObject>();
         }
         
         public void RegisterSlime(DivisionSlime slime)
@@ -30,13 +28,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         public void UnregisterSlime(DivisionSlime slime)
         {
             _activeSlimes.Remove(slime);
-            CheckAllSlimesDead();
+            StartCoroutine(CheckAllSlimesDead());
         }
         
-        private void CheckAllSlimesDead()
+        private IEnumerator CheckAllSlimesDead()
         {
             if (_activeSlimes.Count == 0)
             {
+                yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
+                if (afterScript != null)
+                {
+                    foreach (var script in afterScript)
+                    {
+                        yield return script.Play();
+                    }
+                }
+                yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
                 StageManager.ClearStage(this);
             }
         }
