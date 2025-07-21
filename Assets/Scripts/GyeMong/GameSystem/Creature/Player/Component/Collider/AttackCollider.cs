@@ -7,7 +7,6 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 {
     public class AttackCollider : MonoBehaviour
     {
-        private const float SlashEffectDuration = 0.25f;
         [SerializeField] private GameObject slashEffectPrefab;
         public float attackDamage;
         private PlayerSoundController _soundController;
@@ -70,15 +69,13 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
         private void ShowSlashEffect(Collider2D other)
         {
-            Vector2 attackDir = (other.transform.position - transform.position).normalized;
+            Vector2 attackDir = (other.transform.position - SceneContext.Character.transform.position).normalized;
             Vector2 hitPoint = other.ClosestPoint(transform.position);
             hitPoint += attackDir * 0.5f;
             float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
-            Quaternion rot = Quaternion.Euler(0, 0, angle - 90);
+            Quaternion rot = Quaternion.Euler(0, 0, angle + 45);
             
             var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot, other.transform);
-            slashEffectPrefab.GetComponent<SpriteRenderer>().sortingOrder = other.GetComponent<SpriteRenderer>().sortingOrder + 1;
-            Destroy(slashEffect, SlashEffectDuration);
         }
     }
 }
