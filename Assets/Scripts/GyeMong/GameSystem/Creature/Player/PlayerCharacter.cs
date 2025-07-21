@@ -199,6 +199,7 @@ namespace GyeMong.GameSystem.Creature.Player
                 isHealing = false;
                 isAttacking = false;
                 canMove = true;
+                Debug.Log("Heal is unfailed");
             }
 
             if (curHealth <= 0)
@@ -398,6 +399,8 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public IEnumerator Heal()
         {
+            Debug.Log("IsHealing..");
+
             isHealing = true;
             isAttacking = true;
             canMove = false;
@@ -428,6 +431,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (elapsed >= 1f)
             {
                 Heal(stat.HealAmount);
+                Debug.Log("Heal is Complete");
             }
 
             isHealing = false;
