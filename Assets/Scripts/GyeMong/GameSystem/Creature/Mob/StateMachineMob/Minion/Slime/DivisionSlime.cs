@@ -22,8 +22,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         private Tween _dashTween;
         private bool _isTutorial;
         private bool _isTutorialShown;
+        private float _jumpHeight;
         private Coroutine _stunCoroutine;
-        public Coroutine FacingCoroutine;
         
         protected override void Start()
         {
@@ -46,12 +46,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             detectionRange = 20f;
 
             damage = 10f;
+            _jumpHeight = 1.2f;
         }
 
         public override void StartMob()
         {
-            FacingCoroutine = StartCoroutine(FaceToPlayer());
-            _isTutorial = PlayerPrefs.GetInt("TutorialFlag", 0) == 0;
+            _faceToPlayerCoroutine = StartCoroutine(FaceToPlayer());
+            _isTutorial = !PlayerPrefs.HasKey("TutorialFlag");
             ChangeState();
         }
 
@@ -60,16 +61,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             base.OnAttacked(damage);
             if (currentState is not SlimeDieState)
             {
+                if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
+                if (currentHp > 0)
+                {
+                    if (_stunCoroutine != null)
+                    {
+                        StopCoroutine(_stunCoroutine);
+                        _stunCoroutine = null;
+                    }
+                    _stunCoroutine = StartCoroutine(Stun(1f));
+                    StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
+                }
                 _slimeAnimator.Stop();
                 _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle);
-                if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
-                if (_stunCoroutine != null)
-                {
-                    StopCoroutine(_stunCoroutine);
-                    _stunCoroutine = null;
-                }
-                _stunCoroutine = StartCoroutine(Stun(0.5f));
-                StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
+                if (currentHp <= 0) ChangeState(new DieState(this));
             }
         }
 
@@ -141,11 +146,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, true);
-                float dashDistance = 1.5f;
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
                 Vector3 currentPos = DivisionSlime.transform.position;
                 Vector2 dashDirection = DivisionSlime.DirectionToPlayer;
-                Vector3 dashTargetPosition = SceneContext.Character.transform.position + DivisionSlime.DirectionToPlayer * dashDistance;
+                Vector3 dashTargetPosition =
+                    SceneContext.Character.transform.position + (Vector3)Random.insideUnitCircle;
                 float distanceToTarget = Vector3.Distance(currentPos, dashTargetPosition);
                 RaycastHit2D hit = Physics2D.Raycast(currentPos, dashDirection, distanceToTarget, LayerMask.GetMask("Wall"));
                 if (hit.collider != null)
@@ -154,7 +159,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 }
                 Sound.Play("ENEMY_DivisionSlime_DashAttack");
                 yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
-                DivisionSlime._dashTween = DivisionSlime.transform.DOMove(dashTargetPosition, 0.6f).SetEase(Ease.OutQuad);
+                float scaleY = DivisionSlime.transform.localScale.y;
+                DivisionSlime._dashTween = DivisionSlime.transform.
+                    DOJump(dashTargetPosition, DivisionSlime._jumpHeight, 1, 1f).SetEase(Ease.OutQuad).
+                    OnComplete(() => { DivisionSlime.transform.DOScaleY(0.7f * scaleY, 0.2f).SetLoops(2, LoopType.Yoyo); });
                 yield return DivisionSlime._dashTween.WaitForCompletion();
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
@@ -193,10 +201,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
         protected override void OnDead()
         {
-            ChangeState(new DieState(this));
+            
         }
 
         public class MoveState : SlimeMoveState { }
+
+        public class SlimeIdleState : IdleState { }
 
         private void Divide()
         {
@@ -224,16 +234,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 DivisionSlime slimeComponent = newSlime.GetComponent<DivisionSlime>();
                 
                 slimeComponent._slimeAnimator = SlimeAnimator.Create(slimeComponent.gameObject, sprites);
+                slimeComponent._detector = SimplePlayerDetector.Create(slimeComponent);
                 slimeComponent.damage *= DIVIDE_RATIO;
                 slimeComponent.MeleeAttackRange *= DIVIDE_RATIO;
                 slimeComponent.RangedAttackRange *= DIVIDE_RATIO;
+                slimeComponent._jumpHeight *= DIVIDE_RATIO;
                 slimeComponent._divisionLevel = _divisionLevel + 1;
-                slimeComponent.FacingCoroutine = slimeComponent.StartCoroutine(slimeComponent.FaceToPlayer());
+                slimeComponent._faceToPlayerCoroutine = slimeComponent.StartCoroutine(slimeComponent.FaceToPlayer());
                 slimeComponent.ChangeState();
                 
                 DivisionSlimeManager.Instance.RegisterSlime(slimeComponent);
             }
-            StopCoroutine(FacingCoroutine);
         }
 
         private IEnumerator GrazeSystemTutorial1()

@@ -116,6 +116,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     if (target != null)
                     {
                         mob.ChangeState(new SlimeMoveState(Slime));
+                        yield break;
                     }
                     yield return new WaitForSeconds(1f);
                 }
@@ -185,7 +186,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 float duration = 2f;
                 float timer = 0f;
             
