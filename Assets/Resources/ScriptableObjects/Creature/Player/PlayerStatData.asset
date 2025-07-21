@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statDataList:
   - statType: 1
-    value: 150
+    value: 1500
   - statType: 2
     value: 30
   - statType: 3
@@ -43,3 +43,7 @@ MonoBehaviour:
     value: 0.7
   - statType: 15
     value: 1
+  - statType: 16
+    value: 20
+  - statType: 17
+    value: 300

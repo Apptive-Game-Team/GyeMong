@@ -21,7 +21,9 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         DASH_DISTANCE,
         DASH_COOLDOWN,
         ATTACK_DELAY,
-        INVINCIBILITY_DURATION
+        INVINCIBILITY_DURATION,
+        HEAL_COST,
+        HEAL_AMOUNT
     }
 
     public enum StatValueType
@@ -140,7 +142,9 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         public float DashCooldown => GetStatValue(StatType.DASH_COOLDOWN);
         public float AttackDelay => GetStatValue(StatType.ATTACK_DELAY);
         public float InvincibilityDuration => GetStatValue(StatType.INVINCIBILITY_DURATION);
-        
+        public float HealAmount => GetStatValue(StatType.HEAL_AMOUNT);
+        public float HealCost => GetStatValue(StatType.HEAL_COST);
+
         public StatComponent()
         {
             statEntries.Add(new StatEntry(StatType.HEALTH_MAX, new Stat()));
@@ -157,6 +161,8 @@ namespace GyeMong.GameSystem.Creature.Player.Component
             statEntries.Add(new StatEntry(StatType.DASH_COOLDOWN, new Stat()));
             statEntries.Add(new StatEntry(StatType.ATTACK_DELAY, new Stat()));
             statEntries.Add(new StatEntry(StatType.INVINCIBILITY_DURATION, new Stat()));
+            statEntries.Add(new StatEntry(StatType.HEAL_AMOUNT, new Stat()));
+            statEntries.Add(new StatEntry(StatType.HEAL_COST, new Stat()));
         }
 
         private float GetStatValue(StatType statType)
