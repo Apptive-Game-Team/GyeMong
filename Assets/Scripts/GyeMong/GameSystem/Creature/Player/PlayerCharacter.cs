@@ -35,9 +35,9 @@ namespace GyeMong.GameSystem.Creature.Player
         private float blinkDelay = 0.2f;
 
         private bool isMoving = false;
-
         public bool isDashing = false;
         private bool isAttacking = false;
+        private bool isHealing = false;
         private bool canMove = true;
         private bool isInvincible = false;
         private bool canCombo = false;
@@ -45,6 +45,8 @@ namespace GyeMong.GameSystem.Creature.Player
         private CircleCollider2D _hitCollider;
 
         public bool isTutorial;
+
+        private Coroutine healingCoroutine;
 
         public Material[] materials;
 
@@ -142,8 +144,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
             if (InputManager.Instance.GetKeyDown(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost)
             {
-                StartCoroutine(Heal());
-                // StartCoroutine(SkillAttack());
+                healingCoroutine = StartCoroutine(Heal());
             }
         }
 
@@ -190,7 +191,16 @@ namespace GyeMong.GameSystem.Creature.Player
             PlayerEvent.TriggerOnTakeDamage(damage);
             changeListenerCaller.CallHpChangeListeners(curHealth);
             TakeGauge();
-            
+
+            if (isHealing)
+            {
+                StopCoroutine(healingCoroutine);
+                healingCoroutine = null;
+                isHealing = false;
+                isAttacking = false;
+                canMove = true;
+            }
+
             if (curHealth <= 0)
             {
                 StartCoroutine(TriggerInvincibility());
@@ -388,20 +398,39 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public IEnumerator Heal()
         {
+            isHealing = true;
             isAttacking = true;
             canMove = false;
             movement = Vector2.zero;
             StopPlayer();
 
-            //soundController.Trigger(PlayerSoundType.HEAL);
+            float elapsed = 0f;
+            float consumedGauge = 0f;
 
-            curSkillGauge -= stat.HealCost;
-            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+            // soundController.Trigger(PlayerSoundType.HEAL_START);
 
-            Heal(stat.HealAmount);
+            while (elapsed < 1f)
+            {
+                float delta = Time.deltaTime;
+                float costPerSecond = stat.HealCost / 1f;
+                float cost = costPerSecond * delta;
 
-            yield return new WaitForSeconds(0.5f);
+                if (curSkillGauge < cost) break;
 
+                curSkillGauge -= cost;
+                consumedGauge += cost;
+                elapsed += delta;
+
+                changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+                yield return null;
+            }
+
+            if (elapsed >= 1f)
+            {
+                Heal(stat.HealAmount);
+            }
+
+            isHealing = false;
             isAttacking = false;
             canMove = true;
         }
