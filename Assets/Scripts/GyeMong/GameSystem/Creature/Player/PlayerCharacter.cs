@@ -139,6 +139,12 @@ namespace GyeMong.GameSystem.Creature.Player
                 StartCoroutine(ChargeSkillAttack());
                 // StartCoroutine(SkillAttack());
             }
+
+            if (InputManager.Instance.GetKeyDown(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost)
+            {
+                StartCoroutine(Heal());
+                // StartCoroutine(SkillAttack());
+            }
         }
 
         private void MoveCharacter()
@@ -215,16 +221,6 @@ namespace GyeMong.GameSystem.Creature.Player
                 curSkillGauge = stat.GrazeMax;
             }
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
-        }
-
-        public void Heal(float amount)
-        {
-            curHealth += amount;
-            if (curHealth > stat.HealthMax)
-            {
-                curHealth = stat.HealthMax;
-            }
-            changeListenerCaller.CallHpChangeListeners(curHealth);
         }
 
         public void GrazeIncreaseGauge(float ratio)
@@ -388,6 +384,36 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetBool("isAttacking", false);
             
             isAttacking = false;
+        }
+
+        public IEnumerator Heal()
+        {
+            isAttacking = true;
+            canMove = false;
+            movement = Vector2.zero;
+            StopPlayer();
+
+            //soundController.Trigger(PlayerSoundType.HEAL);
+
+            curSkillGauge -= stat.HealCost;
+            changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+
+            Heal(stat.HealAmount);
+
+            yield return new WaitForSeconds(0.5f);
+
+            isAttacking = false;
+            canMove = true;
+        }
+
+        public void Heal(float amount)
+        {
+            curHealth += amount;
+            if (curHealth > stat.HealthMax)
+            {
+                curHealth = stat.HealthMax;
+            }
+            changeListenerCaller.CallHpChangeListeners(curHealth);
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
