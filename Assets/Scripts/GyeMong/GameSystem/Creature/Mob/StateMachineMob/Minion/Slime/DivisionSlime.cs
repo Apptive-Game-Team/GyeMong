@@ -70,7 +70,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                         _stunCoroutine = null;
                     }
                     _stunCoroutine = StartCoroutine(Stun(1f));
-                    StartCoroutine(GetComponent<AirborneController>().AirborneTo(transform.position - DirectionToPlayer * MeleeAttackRange));
                 }
                 _slimeAnimator.Stop();
                 _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle);
@@ -159,10 +158,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 }
                 Sound.Play("ENEMY_DivisionSlime_DashAttack");
                 yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
-                float scaleY = DivisionSlime.transform.localScale.y;
-                DivisionSlime._dashTween = DivisionSlime.transform.
-                    DOJump(dashTargetPosition, DivisionSlime._jumpHeight, 1, 1f).SetEase(Ease.OutQuad).
-                    OnComplete(() => { DivisionSlime.transform.DOScaleY(0.7f * scaleY, 0.2f).SetLoops(2, LoopType.Yoyo); });
+                DivisionSlime._dashTween = DivisionSlime.transform
+                    .DOJump(dashTargetPosition, DivisionSlime._jumpHeight, 1, 1f).SetEase(Ease.OutQuad);
                 yield return DivisionSlime._dashTween.WaitForCompletion();
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
@@ -216,9 +213,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 int attempts = 10;
                 do
                 {
-                    Vector3 candidatePosition = transform.position + Random.insideUnitSphere;
+                    Vector3 candidatePosition = transform.position + Random.insideUnitSphere * 2;
                     candidatePosition.z = 0f;
-                    var hit = Physics2D.Raycast(transform.position, candidatePosition - transform.position, Vector3.Distance(transform.position, candidatePosition), LayerMask.GetMask("Wall"));
+                    var hit = Physics2D.Raycast(transform.position, (candidatePosition - transform.position).normalized,
+                        Vector3.Distance(transform.position, candidatePosition), LayerMask.GetMask("Wall"));
                     if (hit.collider == null)
                     {
                         spawnPosition = candidatePosition;

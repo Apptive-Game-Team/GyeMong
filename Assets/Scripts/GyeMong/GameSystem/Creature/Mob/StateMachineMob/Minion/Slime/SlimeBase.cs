@@ -39,17 +39,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             
         public IEnumerator FaceToPlayer()
         {
-            float scale = Mathf.Abs(transform.localScale.x);
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             while (true)
             {
-                if (SceneContext.Character.transform.position.x < transform.position.x)
-                {
-                    transform.localScale = new Vector3(-scale, scale, scale);
-                }
-                else
-                {
-                    transform.localScale = new Vector3(scale, scale, scale);
-                }
+                spriteRenderer.flipX = SceneContext.Character.transform.position.x < transform.position.x;
                 yield return null;
             }
         }
