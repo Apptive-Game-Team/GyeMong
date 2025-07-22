@@ -278,7 +278,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
             public override IEnumerator StateCoroutine()
             {
-                float duration = 3f, elapsedTime = 0f;
+                float duration = 2f, elapsedTime = 0f;
                 mob.Animator.SetBool("isMove", true);
                 while (elapsedTime < duration)
                 {
