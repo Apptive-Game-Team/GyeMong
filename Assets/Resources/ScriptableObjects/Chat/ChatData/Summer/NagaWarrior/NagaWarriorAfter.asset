@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
+  m_Name: NagaWarriorAfter
+  m_EditorClassIdentifier: 
+  chatMessages:
+  - speakerName: 9
+    isLeft: 0
+    messages:
+    - "\uB300\uB2E8\uD558\uAD70. \uC0AC\uB9C9\uC758 \uC804\uC0AC\uB85C\uC11C \uC644\uBCBD\uD788
+      \uC84C\uC5B4. \uB355\uBD84\uC5D0 \uC624\uB79C\uB9CC\uC5D0 \uD328\uBC30\uB97C
+      \uC990\uACBC\uB2E4\uB124. \uD558\uD558\uD558\uD558."
+    - "\uACB0\uC815\uC740 \uC0AC\uC6D0 \uC9C0\uD558\uC5D0 \uC788\uB2E4\uB124. \uB2E4\uB9CC
+      \uC0AC\uC6D0\uC5D0\uB294 \uC218\uD638\uC790\uAC00 \uC788\uC73C\uB2C8 \uC870\uC2EC\uD558\uAC8C\uB098.
+      \uC6B0\uB9AC \uC804\uC0AC\uB4E4\uACFC\uB294 \uACB0\uC774 \uB2E4\uB97C\uAC78\uC138."
+    - "\uB098\uB97C \uD3EC\uD568\uD55C \uC6B0\uB9AC \uAE0D\uC9C0\uB192\uC740 \uC804\uC0AC\uB4E4\uC774
+      \uD55C \uB450\uBC88 \uB3C4\uC804\uD558\uC5EC \uD328\uBC30\uD55C\uAC8C \uC544\uB2C8\uB2C8
+      \uB9D0\uC774\uC57C. "
+    backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
