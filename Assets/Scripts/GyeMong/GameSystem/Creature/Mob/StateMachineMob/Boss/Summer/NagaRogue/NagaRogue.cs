@@ -6,9 +6,12 @@ using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 public enum Direction
 {
     Up, Down, Right, Left
@@ -309,6 +312,13 @@ public class NagaRogue : StateMachineMob
         {
             Sound.Play("ENEMY_NagaRogue_Ambush");
             yield return NagaRogue.Teleport(SceneContext.Character.transform.position);
+
+            Direction dir = GetDirectionToTarget(NagaRogue.DirectionToPlayer);
+            NagaRogue._animator.Play($"Stab_{dir}");
+            Quaternion rotation = Quaternion.LookRotation(Vector3.forward, NagaRogue.DirectionToPlayer);
+            NagaRogue.StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (NagaRogue.basicAttackPrefab, NagaRogue.transform.position + NagaRogue.DirectionToPlayer, rotation, 0.5f));
+           
             yield return new WaitForSeconds(0.5f);
             yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
             yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
