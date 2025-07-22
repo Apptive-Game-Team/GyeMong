@@ -14,6 +14,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
     public class ShadowOfHero : StateMachineMob
     {
         private Vector2 _movement;
+        private bool _isCopyingAttack;
         private int _attackCount = 0;
         private const int MAX_ATTACK_COUNT = 3;
         private Rigidbody2D _shadowRb;
@@ -95,7 +96,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             yield return new WaitForSeconds(0.1f);
         }
         
-        private void CopyAction()
+        private IEnumerator CopyAction()
         {
             _movement.x = 0;
             _movement.y = 0;
@@ -123,13 +124,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             else Animator.SetBool("isMove", true);
             _shadowRb.velocity = _movement * SceneContext.Character.stat.MoveSpeed;
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Attack))
+            if (InputManager.Instance.GetKeyDown(ActionCode.Attack) && !_isCopyingAttack)
             {
+                _isCopyingAttack = true;
                 _shadowRb.velocity = Vector2.zero;
                 Animator.SetBool("isMove", false);
-                StartCoroutine(MeleeAttack());
-                _shadowRb.velocity = _movement * SceneContext.Character.stat.MoveSpeed;
+                yield return MeleeAttack();
+                _isCopyingAttack = false;
             }
+
+            yield return null;
         }
 
         protected void Initialize()
@@ -190,12 +194,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
             public override IEnumerator StateCoroutine()
             {
+                mob.Animator.SetBool("isMove", true);
                 while (mob.DistanceToPlayer > mob.MeleeAttackRange)
                 {
                      mob.TrackPlayer();
                      ShadowOfHero.FaceToPlayer();
                      yield return null;
                 }
+                mob.Animator.SetBool("isMove", false);
                 yield return null;
                 mob.ChangeState();
             }
@@ -277,7 +283,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
                 while (elapsedTime < duration)
                 {
                     elapsedTime += Time.deltaTime;
-                    ShadowOfHero.CopyAction();
+                    yield return ShadowOfHero.CopyAction();
                     ShadowOfHero.FaceToPlayer();
                     yield return null;
                 }
