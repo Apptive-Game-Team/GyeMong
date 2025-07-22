@@ -102,7 +102,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     shootPos,
                     direction, 
                     DivisionSlime.rangedAttack,
-                    new LinearMovement(
+                    new ParabolicMovement(
                         shootPos,
                         shootPos + direction * mob.RangedAttackRange,
                         10f)
