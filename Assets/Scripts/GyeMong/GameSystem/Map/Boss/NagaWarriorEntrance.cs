@@ -20,6 +20,7 @@ namespace GyeMong.GameSystem.Map.Boss
         [SerializeField] private float cameraSpeed;
         [SerializeField] private MultiChatMessageData chatData1;
         [SerializeField] private float autoSkipTime = 3f;
+        [SerializeField] private DailyCycleManager dailyCycleManager;
         private float delayTime = 1f;
         private bool _isTriggered = false;
 
@@ -62,6 +63,7 @@ namespace GyeMong.GameSystem.Map.Boss
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
             yield return StartCoroutine((new CameraFollowPlayer()).Execute());
             boss.ChangeState();
+            dailyCycleManager.StartCoroutine(dailyCycleManager.DayCycleRoutine());
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
         }
     }

@@ -10,6 +10,7 @@ using UnityEngine;
 using GyeMong.SoundSystem;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event;
+using GyeMong.GameSystem.Indicator;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
@@ -185,6 +186,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 {
                     yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                     NagaWarrior.SpawnAttackComboCollider(NagaWarrior.DirectionToPlayer, 3);
+                    //burn effect
                 }
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
@@ -318,6 +320,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 if(NagaWarrior.isOverheat)
                     NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime, NagaWarrior.attackdelayTime / 4, 12f);
+                //burn effect
                 else
                     NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime, NagaWarrior.attackdelayTime / 4, 6f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
@@ -350,7 +353,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             public override IEnumerator StateCoroutine()
             {
-                NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime / 2, NagaWarrior.attackdelayTime / 2, 5f);
+                //burn effect
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 int numberofPoints = 6;
                 if(NagaWarrior.isOverheat)
@@ -387,16 +390,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 {
                     float t = i / (float)numberOfObjects;
                     Vector3 spawnPosition = center + direction * (distance * t);
-
-                    AttackObjectController.Create(
+                    StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (breathPrefab, spawnPosition, Quaternion.identity, attackdelayTime / 2,
+                        () => AttackObjectController.Create(
                         spawnPosition,
                         direction,
                         breathPrefab,
                         new StaticMovement(
                             spawnPosition,
-                            attackdelayTime*2)
-                    )
-                    .StartRoutine();
+                            attackdelayTime * 2)
+                        ).StartRoutine()));
                 }
             }
             yield return new WaitForSeconds(attackdelayTime * 2);
@@ -472,7 +475,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     meleeAttackObj,
                     new StaticMovement(
                         spawnPosition,
-                        (attackdelayTime / 2)*(4-combo))
+                        0.5f)
                 )
                 .StartRoutine();
         }
