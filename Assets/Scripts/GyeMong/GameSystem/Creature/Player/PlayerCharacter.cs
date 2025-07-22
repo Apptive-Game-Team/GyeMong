@@ -37,7 +37,7 @@ namespace GyeMong.GameSystem.Creature.Player
         private bool isMoving = false;
 
         public bool isDashing = false;
-        private bool isAttacking = false;
+        public bool isAttacking = false;
         private bool canMove = true;
         private bool isInvincible = false;
         private bool canCombo = false;
