@@ -2,9 +2,7 @@ using System.Collections;
 using GyeMong.EventSystem.Event;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
-using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
-using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Indicator;
@@ -101,7 +99,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
         protected void Initialize()
         {
-            maxHp = 100;
+            maxHp = 30;
             currentHp = maxHp;
 
             currentShield = 0;
@@ -190,7 +188,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
                     yield return ShadowOfHero.RangeAttack();
                 }
                 mob.Animator.SetBool("isHuck", true);
-                yield return new WaitForSeconds(5f); // Exhausted Delay
+                yield return new WaitForSeconds(3f); // Exhausted Delay
                 mob.Animator.SetBool("isHuck", false);
                 mob.ChangeState();
             }
