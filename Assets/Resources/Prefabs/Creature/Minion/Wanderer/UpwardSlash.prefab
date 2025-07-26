@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1450038259387367426}
   - component: {fileID: 7605132888016124915}
   - component: {fileID: 806288293605380378}
-  - component: {fileID: 7003841254033347509}
   - component: {fileID: 3912081706836277511}
+  - component: {fileID: 558508273915726842}
   m_Layer: 0
   m_Name: UpwardSlash
   m_TagString: EnemyAttack
@@ -108,8 +108,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!58 &7003841254033347509
-CircleCollider2D:
+--- !u!114 &3912081706836277511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929313978257415614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrazed: 0
+  isAttacked: 0
+  _attackInfo: {fileID: 11400000, guid: 46599e5a557af46efb3ca538a18ed180, type: 2}
+  _attackObjectSounds: {fileID: 11400000, guid: 77fd5f8ae3bd54f7aa8fe59f5bb08977,
+    type: 2}
+--- !u!70 &558508273915726842
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -140,23 +157,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &3912081706836277511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929313978257415614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7382d54ee44846359cac0a284126b5c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGrazed: 0
-  isAttacked: 0
-  _attackInfo: {fileID: 11400000, guid: 46599e5a557af46efb3ca538a18ed180, type: 2}
-  _attackObjectSounds: {fileID: 11400000, guid: 77fd5f8ae3bd54f7aa8fe59f5bb08977,
-    type: 2}
+  m_Offset: {x: -0.22294936, y: 0.0054230215}
+  m_Size: {x: 0.43358868, y: 0.7071535}
+  m_Direction: 0
