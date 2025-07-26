@@ -126,9 +126,10 @@ namespace GyeMong.GameSystem.Indicator
             return GenerateIndicator(
                 attackObjectController.gameObject,
                 attackObjectController.transform.position,
-            attackObjectController.transform.rotation,
-            duration,
-            () => attackObjectController.StartRoutine());
+                attackObjectController.transform.rotation,
+                duration,
+                () => attackObjectController.StartRoutine()
+            );
         }
     }
 }
