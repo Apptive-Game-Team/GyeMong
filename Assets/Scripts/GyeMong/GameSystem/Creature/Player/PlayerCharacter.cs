@@ -306,7 +306,8 @@ namespace GyeMong.GameSystem.Creature.Player
             StopPlayer();
             
             AttackMove(GetCurrentInputDirection(mouseDirection));
-            yield return new WaitForSeconds(stat.AttackDelay / 2);
+            
+            yield return new WaitForSeconds(0.1f);
             
             soundController.Trigger(PlayerSoundType.SWORD_SWING);
 
@@ -315,23 +316,25 @@ namespace GyeMong.GameSystem.Creature.Player
             SpawnAttackCollider(attackColliderPrefab);
             
             canCombo = true;
-            yield return new WaitForSeconds(stat.AttackDelay); // 콤보 입력 대기
+            yield return new WaitForSeconds(0.3f); // 콤보 입력 대기
             canCombo = false;
 
             if (comboQueued)
             {
                 comboQueued = false;
                 AttackMove(GetCurrentInputDirection(mouseDirection));
-                yield return new WaitForSeconds(stat.AttackDelay / 2);
+                yield return new WaitForSeconds(0.1f);
                 soundController.Trigger(PlayerSoundType.SWORD_SWING);
                 animator.SetBool("isAttacking2", true);
                 SpawnAttackCollider(attackComboColliderPrefab);
-                yield return new WaitForSeconds(stat.AttackDelay);
+                yield return new WaitForSeconds(0.3f);
                 animator.SetBool("isAttacking2", false);
+                animator.SetBool("isAttacking", false);
             }
             
             canMove = true;
             animator.SetBool("isAttacking", false);
+            yield return new WaitForSeconds(stat.AttackDelay - 0.3f);
             isAttacking = false;
         }
 
@@ -345,7 +348,7 @@ namespace GyeMong.GameSystem.Creature.Player
             float colliderRadius = _hitCollider.radius;
             float adjustedDistance = distance + colliderRadius;
             RaycastHit2D hit = Physics2D.Raycast(currentPos, dirNormalized, adjustedDistance, LayerMask.GetMask("Wall"));
-            if (hit.collider == null) transform.DOMove(targetPos, stat.AttackDelay).SetEase(Ease.OutQuad);
+            if (hit.collider == null) transform.DOMove(targetPos, 0.2f).SetEase(Ease.OutQuad);
         }
 
         private float _chargeThreshold = 1f;
@@ -402,7 +405,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
             GameObject attackCollider = Instantiate(attackPrefab, spawnPosition, spawnRotation, transform);
             attackCollider.GetComponent<AttackCollider>().Init(soundController);
-            Destroy(attackCollider, stat.AttackDelay);
+            Destroy(attackCollider, 0.35f);
         }
 
         private void SpawnSkillCollider()
