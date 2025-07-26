@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GyeMong.GameSystem.Creature.Attack;
 using UnityEngine;
 using Util;
 
@@ -118,6 +119,16 @@ namespace GyeMong.GameSystem.Indicator
                 Debug.LogWarning($"No provider registered for {type}");
                 yield return null;
             }
+        }
+
+        public IEnumerator GenerateIndicator(AttackObjectController attackObjectController, float duration)
+        {
+            return GenerateIndicator(
+                attackObjectController.gameObject,
+                attackObjectController.transform.position,
+            attackObjectController.transform.rotation,
+            duration,
+            () => attackObjectController.StartRoutine());
         }
     }
 }
