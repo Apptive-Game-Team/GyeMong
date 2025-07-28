@@ -10,7 +10,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detec
 
         public static SimplePlayerDetector Create(global::GyeMong.GameSystem.Creature.Creature creature)
         {
-            SimplePlayerDetector detector = creature.gameObject.AddComponent<SimplePlayerDetector>();
+            SimplePlayerDetector detector = creature.gameObject.GetComponent<SimplePlayerDetector>() == null ?
+                creature.gameObject.AddComponent<SimplePlayerDetector>() : creature.gameObject.GetComponent<SimplePlayerDetector>();
             detector.creature = creature;
             return detector;
         }
