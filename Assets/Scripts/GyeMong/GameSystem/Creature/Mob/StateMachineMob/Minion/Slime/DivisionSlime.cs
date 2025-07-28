@@ -25,7 +25,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         private bool _isTutorial;
         private bool _isTutorialShown;
         private float _jumpHeight;
-        private Coroutine _stunCoroutine;
         
         protected override void Start()
         {
@@ -63,19 +62,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             base.OnAttacked(damage);
             if (currentState is not SlimeDieState)
             {
-                if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
-                if (currentHp > 0)
+                if (currentHp <= 0)
                 {
-                    if (_stunCoroutine != null)
-                    {
-                        StopCoroutine(_stunCoroutine);
-                        _stunCoroutine = null;
-                    }
-                    _stunCoroutine = StartCoroutine(Stun(1f));
+                    if (_dashTween != null && _dashTween.IsActive()) _dashTween.Kill();
+                    ChangeState(new DieState(this));
                 }
-                _slimeAnimator.Stop();
-                _slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle);
-                if (currentHp <= 0) ChangeState(new DieState(this));
             }
         }
 
