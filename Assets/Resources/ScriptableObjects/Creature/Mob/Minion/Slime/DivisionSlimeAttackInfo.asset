@@ -16,6 +16,6 @@ MonoBehaviour:
   soundObject: {fileID: 0}
   isDestroyOnHit: 0
   grazable: 0
-  canMultiHit: 0
-  multiHitDelay: 0
+  canMultiHit: 1
+  multiHitDelay: 1
   knockbackAmount: 0
