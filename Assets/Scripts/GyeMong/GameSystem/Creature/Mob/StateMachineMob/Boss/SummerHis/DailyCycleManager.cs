@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -25,16 +26,22 @@ public class DailyCycleManager : MonoBehaviour
         timePerSecond = 1f / secondsPerFullDay;
     }
 
-    private void Update()
+    public IEnumerator DayCycleRoutine()
     {
-        currentTimePercent += timePerSecond * Time.deltaTime;
-        if (currentTimePercent >= 1f)
-            currentTimePercent -= 1f;
+        while (true)
+        {
+            currentTimePercent += timePerSecond * Time.deltaTime;
+            if (currentTimePercent >= 1f)
+                currentTimePercent -= 1f;
 
-        UpdateLighting();
-        UpdateTime();
-        dailyCycleIndicatorUi.UpdateClock(currentTimePercent);
+            UpdateLighting();
+            UpdateTime();
+            dailyCycleIndicatorUi.UpdateClock(currentTimePercent);
+
+            yield return null;
+        }
     }
+
     void UpdateTime()
     {
         TimeOfDay newPhase;

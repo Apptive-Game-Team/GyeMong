@@ -3,8 +3,11 @@ using GyeMong.EventSystem.Event;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.InputSystem;
 using UnityEngine;
@@ -22,6 +25,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         [SerializeField] private GameObject attackPrefab;
         [SerializeField] private GameObject skillPrefab;
         [SerializeField] private GameObject key;
+        [SerializeField] private SkllIndicatorDrawer SkillIndicator;
 
         public override void OnAttacked(float damage)
         {
@@ -44,7 +48,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         private void Start()
         {
             Initialize();
-            
+            SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
             // for debug
 
             //ChangeState(new DetectingPlayer() {mob= this});
@@ -54,16 +58,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
-            AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * 0.5f, 
-                    DirectionToPlayer, 
-                    attackPrefab, 
-                    new StaticMovement(
-                        transform.position + DirectionToPlayer * 0.5f, 
-                        0.3f)
-                )
-                .StartRoutine();
-            yield return new WaitForSeconds(0.2f);
+            Quaternion rotation = Quaternion.LookRotation(Vector3.forward, DirectionToPlayer);
+            StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (attackPrefab, transform.position + DirectionToPlayer, rotation, 0.3f,
+                        () =>
+                            AttackObjectController.Create(
+                                transform.position + DirectionToPlayer * 0.5f,
+                                DirectionToPlayer,
+                                attackPrefab,
+                                new StaticMovement(
+                                    transform.position + DirectionToPlayer * 0.5f, 0.3f)
+                               ).StartRoutine()
+                    ));
+            yield return new WaitForSeconds(0.5f);
             _animator.SetBool("isAttacking", false);
             yield return new WaitForSeconds(0.1f);
         }
@@ -221,6 +228,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
             public override IEnumerator StateCoroutine()
             {
+                ShadowOfHero.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, ShadowOfHero.SkillIndicator.transform.position, SceneContext.Character.transform, 0.5f, 0.4f);
+                yield return new WaitForSeconds(1f);
                 for (int i = 0; i < 10; i++)
                 {
                     yield return ShadowOfHero.RangeAttack();

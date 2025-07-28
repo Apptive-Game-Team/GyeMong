@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
@@ -7,6 +8,7 @@ using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using UnityEngine;
@@ -221,12 +223,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 2);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 2);
-                Elf.SpawnAttackCollider(Elf.DirectionToPlayer);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
+                Elf.SpawnAttackCollider(Elf.DirectionToPlayer, true);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
@@ -381,20 +379,39 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Die();
             }
         }
-        private void SpawnAttackCollider(Vector3 direction)
+        private void SpawnAttackCollider(Vector3 direction, bool hasIndicator = false)
         {
             Vector2 spawnPosition = transform.position + direction * 1f;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
-            AttackObjectController.Create(
-                    spawnPosition,
-                    direction,
-                    meleeAttackPrefab,
-                    new StaticMovement(
-                        spawnPosition,
-                        attackdelayTime / 2)
-                )
-                .StartRoutine();
+            if(hasIndicator)
+                StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
+                    (meleeAttackPrefab, spawnPosition, spawnRotation, attackdelayTime / 2,
+                        () =>
+                        {
+                            Animator.SetBool("attackDelay", false);
+                            Animator.SetBool("isAttack", true);
+                            Animator.SetFloat("attackType", 2);
+                            AttackObjectController.Create(
+                                spawnPosition,
+                                direction,
+                                meleeAttackPrefab,
+                                new StaticMovement(
+                                    spawnPosition,
+                                    attackdelayTime / 2)
+                            ).StartRoutine();
+                        }
+                    ));
+            else
+                AttackObjectController.Create(
+                                spawnPosition,
+                                direction,
+                                meleeAttackPrefab,
+                                new StaticMovement(
+                                    spawnPosition,
+                                    attackdelayTime / 2)
+                            ).StartRoutine();
+
         }
         public override IEnumerator Stun(float duration)
         {
