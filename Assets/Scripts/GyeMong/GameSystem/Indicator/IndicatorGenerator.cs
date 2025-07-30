@@ -126,7 +126,7 @@ namespace GyeMong.GameSystem.Indicator
             return GenerateIndicator(
                 attackObjectController.gameObject,
                 attackObjectController.transform.position,
-                attackObjectController.transform.rotation,
+                attackObjectController.transform.rotation * Quaternion.Euler(0, 0, 90f),
                 duration,
                 () => attackObjectController.StartRoutine()
             );
