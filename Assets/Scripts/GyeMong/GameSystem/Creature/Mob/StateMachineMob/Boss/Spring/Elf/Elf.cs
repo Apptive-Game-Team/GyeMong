@@ -36,8 +36,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             maxPhase = 2;
             maxHps.Clear();
-            maxHps.Add(100f);
-            maxHps.Add(200f);
+            maxHps.Add(10f);
+            maxHps.Add(20f);
             currentHp = maxHps[currentPhase];
             damage = 20f;
             speed = 2f;
