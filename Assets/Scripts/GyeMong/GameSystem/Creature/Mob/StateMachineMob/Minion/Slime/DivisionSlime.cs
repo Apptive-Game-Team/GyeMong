@@ -7,21 +7,28 @@ using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.pathfinder;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
-using GyeMong.GameSystem.Map.Stage;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
 using GyeMong.GameSystem.Indicator;
 using GyeMong.SoundSystem;
-using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 {
+    public enum SlimeType
+    {
+        Idle,
+        Melee,
+        Ranged,
+    }
+    
     public class DivisionSlime : SlimeBase
     {
         [SerializeField] private GameObject bounceAttackPrefab;
         private CapsuleCollider2D _bounceAttackCollider;
         private GameObject _playerCollider;
+        private SlimeType _type = SlimeType.Idle;
         private const float DIVIDE_RATIO = 0.6f;
         private int _divisionLevel = 0;
         private int _maxDivisionLevel = 2;
@@ -79,6 +86,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             private DivisionSlime DivisionSlime => mob as DivisionSlime;
             public override int GetWeight()
             {
+                if (DivisionSlime._type == SlimeType.Melee) return 0;
                 return !DivisionSlime.IsInBounceAttackRange() && DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange ? 5 : 0;
             }
 
@@ -177,6 +185,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             public override int GetWeight()
             {
                 if (DivisionSlime._isTutorial) return 0;
+                if (DivisionSlime._type == SlimeType.Ranged) return 0;
                 return (!DivisionSlime.IsInBounceAttackRange() &&
                         DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange) ? 5 : 0;
             }
@@ -262,6 +271,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             private DivisionSlime DivisionSlime => mob as DivisionSlime;
             public override int GetWeight()
             {
+                if (DivisionSlime._type == SlimeType.Ranged && DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange) return 0;
                 return !DivisionSlime.IsInBounceAttackRange() && DivisionSlime.DistanceToPlayer < DivisionSlime.DetectionRange ? 5 : 0;
             }
         }
@@ -301,6 +311,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 slimeComponent.RangedAttackRange = RangedAttackRange * DIVIDE_RATIO;
                 slimeComponent._scale = _scale * DIVIDE_RATIO;
                 slimeComponent._divisionLevel = _divisionLevel + 1;
+                slimeComponent._type = (SlimeType)(i + 1);
                 slimeComponent._bounceAttackCollider = bounceAttackPrefab.GetComponent<CapsuleCollider2D>();
                 slimeComponent._playerCollider = SceneContext.Character.GetComponentInChildren<HitCollider>().gameObject;
                 slimeComponent._faceToPlayerCoroutine = slimeComponent.StartCoroutine(slimeComponent.FaceToPlayer());
