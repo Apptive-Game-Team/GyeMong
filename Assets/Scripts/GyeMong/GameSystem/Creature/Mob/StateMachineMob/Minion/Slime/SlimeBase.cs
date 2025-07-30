@@ -39,17 +39,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             
         public IEnumerator FaceToPlayer()
         {
-            float scale = Mathf.Abs(transform.localScale.x);
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             while (true)
             {
-                if (SceneContext.Character.transform.position.x < transform.position.x)
-                {
-                    transform.localScale = new Vector3(-scale, scale, scale);
-                }
-                else
-                {
-                    transform.localScale = new Vector3(scale, scale, scale);
-                }
+                spriteRenderer.flipX = SceneContext.Character.transform.position.x < transform.position.x;
                 yield return null;
             }
         }
@@ -116,6 +109,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     if (target != null)
                     {
                         mob.ChangeState(new SlimeMoveState(Slime));
+                        yield break;
                     }
                     yield return new WaitForSeconds(1f);
                 }
@@ -185,7 +179,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 float duration = 2f;
                 float timer = 0f;
             
