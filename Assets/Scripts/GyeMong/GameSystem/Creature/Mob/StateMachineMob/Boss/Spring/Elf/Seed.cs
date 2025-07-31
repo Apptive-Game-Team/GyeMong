@@ -80,11 +80,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 rb.velocity = direction * speed;
                 RotateArrow();
             }
-            else if (collision.CompareTag("Boss") && isReflected)
+            /*else if (collision.CompareTag("Boss") && isReflected)
             {
                 collision.GetComponent<Elf>().StartCoroutine(collision.GetComponent<Elf>().Stun(5f));
                 Destroy(gameObject);
-            }
+            }*/
         }
     }
 }
