@@ -77,8 +77,8 @@ public class NagaRogue : StateMachineMob
         damage = 10;
         speed = 1;
         detectionRange = 50;
-        MeleeAttackRange = 2;
-        RangedAttackRange = 20;
+        MeleeAttackRange = 3;
+        RangedAttackRange = 10;
 
         _detector = SimplePlayerDistanceDetector.Create(this);
     }
@@ -122,6 +122,24 @@ public class NagaRogue : StateMachineMob
         yield return new WaitForSeconds(0.2f);
     }
 
+    private IEnumerator RetrieveObject(GameObject prefab, float retrieveSpeed = 10f)
+    {
+        FaceToPlayer();
+        Vector3 dirToPlayer = SceneContext.Character.transform.position - prefab.transform.position;
+        AttackObjectController ac = AttackObjectController.Create(
+            SceneContext.Character.transform.position,
+            dirToPlayer,
+            prefab,
+            new LinearMovement(
+                prefab.transform.position,
+                transform.position,
+                retrieveSpeed)
+        );
+        ac.StartRoutine();
+        ac.gameObject.GetComponent<ReturnDagger>().Initiate(transform);
+        yield return new WaitForSeconds(0.2f);
+    }
+    
     public float GetRandomCurve()
     {
         float minCurve = 3f;
@@ -311,6 +329,7 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
+            return 0;
             return 50;
         }
         public override IEnumerator StateCoroutine()
@@ -329,7 +348,7 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return (mob.DistanceToPlayer >= mob.MeleeAttackRange && NagaRogue.daggerList.Count <= 0) ? 50 : 0;
+            return (mob.DistanceToPlayer <= mob.RangedAttackRange && mob.DistanceToPlayer > mob.MeleeAttackRange && NagaRogue.daggerList.Count <= 0) ? 100 : 0;
         }
 
         public override IEnumerator StateCoroutine()
@@ -344,13 +363,24 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return (NagaRogue.daggerList.Count > 0) ? 1557 : 0;
+            return (NagaRogue.daggerList.Count * 10);
         }
 
         public override IEnumerator StateCoroutine()
         {
-            yield return NagaRogue.Move(NagaRogue.DirectionToPlayer);
-            yield return NagaRogue.RangeFanDaggerThrow(NagaRogue.daggerPrefab, 4, 180f);
+            List<GameObject> deleteDaggerList = new();
+            yield return NagaRogue.Move(-NagaRogue.DirectionToPlayer);
+            foreach (var dagger in NagaRogue.daggerList)
+            {
+                yield return NagaRogue.RetrieveObject(dagger);
+                dagger.SetActive(false);
+                deleteDaggerList.Add(dagger);
+            }
+
+            foreach (var dagger in deleteDaggerList)
+            {
+                NagaRogue.daggerList.Remove(dagger);
+            }
             yield return new WaitForSeconds(1f);
             NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
         }
@@ -360,13 +390,12 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return 0;
             return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 100 : 0;
         }
 
         public override IEnumerator StateCoroutine()
         {
-            yield return NagaRogue.RangeFanThrow(NagaRogue.shurikenPrefab,3, 90f);
+            yield return NagaRogue.RangeFanDaggerThrow(NagaRogue.daggerPrefab,3, 90f);
             yield return NagaRogue.Move(-NagaRogue.DirectionToPlayer);
             yield return new WaitForSeconds(1f);
             NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
@@ -378,12 +407,11 @@ public class NagaRogue : StateMachineMob
         
         public override int GetWeight()
         {
-            return (mob.DistanceToPlayer >= NagaRogue.curveThrowRnage) ? 50 : 0;
+            return (mob.DistanceToPlayer > NagaRogue.RangedAttackRange) ? 50 : 0;
         }
 
         public override IEnumerator StateCoroutine()
         {
-            yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:NagaRogue.GetRandomCurve());
             yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:NagaRogue.GetRandomCurve());
             yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:NagaRogue.GetRandomCurve());
             yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:NagaRogue.GetRandomCurve());
