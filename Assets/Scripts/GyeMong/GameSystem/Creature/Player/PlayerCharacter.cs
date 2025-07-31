@@ -174,6 +174,8 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public void TakeDamage(float damage, bool isUnblockable = false)
         {
+            damage = 1;
+
             if (isInvincible) return;
 
             if (damage >= curShield && curShield > 0)
