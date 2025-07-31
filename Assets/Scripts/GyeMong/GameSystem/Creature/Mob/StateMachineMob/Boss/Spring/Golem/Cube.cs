@@ -38,8 +38,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         private IEnumerator StartFalling()
         {
-            float accele = 70f;
-            float speed = 70f;
+            float accele = 50f;
+            float speed = 50f;
             float currentSpeed = speed;
             Vector3 targetPosition = player.transform.position;
             while (transform.position.y > targetPosition.y)
@@ -59,7 +59,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 collider.isTrigger = false;
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
 
             Destroy(gameObject);
             Destroy(cubeShadow);
@@ -73,7 +73,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem golem = collision.collider.GetComponent<Golem>();
                 if (golem != null)
                 {
-                    golem.StartCoroutine(golem.Stun(5f));
+                    golem.StartCoroutine(golem.Stun(1f));
                 }
                 Destroy(gameObject);
                 Destroy(cubeShadow);

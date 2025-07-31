@@ -74,10 +74,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             float targetRadius = 14;
             int startRadius = 4;
-            float excludeAngle = Random.Range(-30f, -150f);
+            float excludeAngle;
+            if (Random.value < 3/14f)
+            {
+                excludeAngle = Random.Range(0f, 30f);
+            }
+            else
+            {
+                excludeAngle = Random.Range(150f, 360f);
+            }
             float excludeMin = excludeAngle - 10f;
             float excludeMax = excludeAngle + 10f;
-
             for (int i = startRadius; i <= targetRadius; i++)
             {
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
@@ -88,10 +95,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 {
                     Vector3 dir = (point - transform.position).normalized;
                     float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    if (angle < 0f) angle += 360f;
                     if (angle >= excludeMin && angle <= excludeMax)
                         continue;
                     StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
-                    (shockwavePrefab,point, Quaternion.identity, attackdelayTime / 2,
+                    (shockwavePrefab, point, Quaternion.identity, attackdelayTime / 2,
                         () => AttackObjectController.Create(
                             point,
                             Vector3.zero,
@@ -104,6 +112,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return new WaitForSeconds(attackdelayTime / 3);
             }
         }
+
         public IEnumerator MakeShock()
         {
             int targetRadius = 4;
@@ -137,7 +146,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 },
                     { typeof(FallingCubeAttack), 5 },
                     { typeof(ChargeShield), 50 },
-                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 10 : 0 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
                     { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 }
                 };
@@ -165,7 +174,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-                yield return new WaitForSeconds(Golem.attackdelayTime);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 yield return Golem.MakeShock();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
@@ -178,7 +187,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 {
                     { typeof(FallingCubeAttack), 5 },
                     { typeof(ChargeShield), 50 },
-                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 10 : 0 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 },
                     { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 }
                 };
@@ -200,14 +209,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("Push", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 SceneContext.CameraManager.CameraShake(0.15f);
+                Vector3 targetPos = SceneContext.Character.transform.position;
                 Golem.StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
-                    (Golem.pushOutAttackPrefab, SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f, Quaternion.identity, Golem.attackdelayTime / 2,
+                    (Golem.pushOutAttackPrefab, targetPos - Golem.DirectionToPlayer * 0.5f, Quaternion.identity, Golem.attackdelayTime / 2,
                         () => AttackObjectController.Create(
-                    SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
+                    targetPos - Golem.DirectionToPlayer * 0.5f,
                     Vector3.zero,
                     Golem.pushOutAttackPrefab,
                     new StaticMovement(
-                        SceneContext.Character.transform.position - Golem.DirectionToPlayer * 0.5f,
+                        targetPos - Golem.DirectionToPlayer * 0.5f,
                         Golem.attackdelayTime / 2)
                     )
                     .StartRoutine()));
@@ -223,7 +233,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 },
                     { typeof(FallingCubeAttack), 5 },
                     { typeof(ChargeShield), 50 },
-                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 10 : 0 },
                     { typeof(ShockwaveAttack), (Golem.CurrentPhase == 1) ? 5 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
@@ -265,8 +275,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
-                yield return new WaitForSeconds(2f);
-                Golem.currentShield = 30f;
+                yield return new WaitForSeconds(Golem.attackdelayTime);
+                Golem.currentShield = 5f;
                 Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
                 Golem.MaterialController.SetFloat(1);
                 SetWeights();
@@ -284,7 +294,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("OneHand", true);
-                yield return new WaitForSeconds(Golem.attackdelayTime);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
 
                 int numberOfObjects = 5;
                 float interval = 0.2f;
@@ -298,7 +308,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 Golem.Animator.SetBool("OneHand", false);
 
-                yield return new WaitForSeconds(Golem.attackdelayTime * 2);
+                yield return new WaitForSeconds(Golem.attackdelayTime );
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
@@ -335,7 +345,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-                yield return new WaitForSeconds(Golem.attackdelayTime);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 yield return Golem.MakeShockwave();
                 Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
@@ -349,7 +359,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     { typeof(MeleeAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 },
                     { typeof(FallingCubeAttack), 5 },
                     { typeof(ChargeShield), 50 },
-                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 5 : 0 },
+                    { typeof(UpStoneAttack), (Golem.DistanceToPlayer >= Golem.MeleeAttackRange) ? 10 : 0 },
                     { typeof(PushOutAttack), (Golem.DistanceToPlayer <= Golem.MeleeAttackRange) ? 10 : 0 }
                 };
                 if (weights.Values.All(w => w == 0))
