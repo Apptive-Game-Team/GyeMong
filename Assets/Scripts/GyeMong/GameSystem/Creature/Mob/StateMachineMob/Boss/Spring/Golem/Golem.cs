@@ -54,7 +54,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             damage = 30f;
             currentShield = 0f;
             detectionRange = 10f;
-            MeleeAttackRange = 4f;
+            MeleeAttackRange = 5f;
         }
 
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
@@ -72,46 +72,62 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         public IEnumerator MakeShockwave()
         {
-            float targetRadius = 14;
+            float targetRadius = 18;
             int startRadius = 4;
-            float excludeAngle;
-            if (Random.value < 3/14f)
-            {
-                excludeAngle = Random.Range(0f, 30f);
-            }
-            else
-            {
-                excludeAngle = Random.Range(150f, 360f);
-            }
-            float excludeMin = excludeAngle - 10f;
-            float excludeMax = excludeAngle + 10f;
+            Vector3 dirToPlayer = SceneContext.Character.transform.position - transform.position;
+            float playerAngle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
+            if (playerAngle < 0f) playerAngle += 360f;
+            float sectorMin = playerAngle - 45f;
+            float sectorMax = playerAngle + 45f;
+            if (sectorMin < 0f) sectorMin += 360f;
+            if (sectorMax >= 360f) sectorMax -= 360f;
+            float excludeCenter = sectorMin + Random.Range(0f, 30f);
+            if (excludeCenter >= 360f) excludeCenter -= 360f;
+
+            float excludeMin = excludeCenter - 10f;
+            float excludeMax = excludeCenter + 10f;
+
+            if (excludeMin < 0f) excludeMin += 360f;
+            if (excludeMax >= 360f) excludeMax -= 360f;
+
             for (int i = startRadius; i <= targetRadius; i++)
             {
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
                 SceneContext.CameraManager.CameraShake(0.2f);
+
                 foreach (Vector3 point in points)
                 {
                     Vector3 dir = (point - transform.position).normalized;
                     float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     if (angle < 0f) angle += 360f;
-                    if (angle >= excludeMin && angle <= excludeMax)
+                    bool isInExclude;
+                    if (excludeMin < excludeMax)
+                        isInExclude = (angle >= excludeMin && angle <= excludeMax);
+                    else
+                        isInExclude = (angle >= excludeMin || angle <= excludeMax);
+
+                    if (isInExclude)
                         continue;
-                    StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
-                    (shockwavePrefab, point, Quaternion.identity, attackdelayTime / 2,
+                    StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(
+                        shockwavePrefab,
+                        point,
+                        Quaternion.identity,
+                        attackdelayTime / 2,
                         () => AttackObjectController.Create(
                             point,
                             Vector3.zero,
                             shockwavePrefab,
-                            new StaticMovement(
-                                point,
-                                attackdelayTime / 2)
+                            new StaticMovement(point, attackdelayTime / 2)
                         ).StartRoutine()));
                 }
+
                 yield return new WaitForSeconds(attackdelayTime / 3);
             }
         }
+
+
 
         public IEnumerator MakeShock()
         {
@@ -221,7 +237,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                         Golem.attackdelayTime / 2)
                     )
                     .StartRoutine()));
-                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                yield return new WaitForSeconds(Golem.attackdelayTime);
                 Golem.Animator.SetBool("Push", false);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
@@ -259,6 +275,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return new WaitUntil(() => cube.IsDestroyed());
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
+            }
+            public override void OnStateExit()
+            {
+                base.OnStateExit();
+                Golem.Animator.SetBool("Toss", false);
             }
         }
 
@@ -374,6 +395,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 currentPhase++;
                 StopAllCoroutines();
+                currentState.OnStateExit();
                 Animator.SetBool("isStun", false);
                 MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(ChangingPhase());
