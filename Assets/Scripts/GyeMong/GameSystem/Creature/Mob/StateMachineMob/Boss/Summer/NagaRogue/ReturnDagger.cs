@@ -10,12 +10,12 @@ public class ReturnDagger : MonoBehaviour
         _bossTr = bossTr;
     }
     
-    // void Update()
-    // {
-    //     if (ropeLine.enabled)
-    //     {
-    //         ropeLine.SetPosition(0, _bossTr.position);
-    //         ropeLine.SetPosition(1, transform.position);
-    //     }
-    // }
+    void Update()
+    {
+        if (ropeLine.enabled)
+        {
+            ropeLine.SetPosition(0, _bossTr.position);
+            ropeLine.SetPosition(1, transform.position);
+        }
+    }
 }

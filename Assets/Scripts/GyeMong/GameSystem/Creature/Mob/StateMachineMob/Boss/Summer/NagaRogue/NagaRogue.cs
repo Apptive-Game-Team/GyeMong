@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Attack;
@@ -28,6 +29,7 @@ public class NagaRogue : StateMachineMob
     [SerializeField] private ParticleSystem sandStormParticles;
     [SerializeField] private MultiChatMessageData phaseChangeChat;
 
+    private List<GameObject> daggerList = new();
     public float curveThrowRnage = 10f;
     public float phaseChangeHealthPercent = 0.5f;
     public bool canPhaseChange = true;
@@ -62,6 +64,8 @@ public class NagaRogue : StateMachineMob
     private void Start()
     {
         Initialize();
+        //test
+        ChangeState();
     }
 
     protected void Initialize()
@@ -147,7 +151,7 @@ public class NagaRogue : StateMachineMob
             .StartRoutine();
         yield return new WaitForSeconds(0.5f);
     }
-    private IEnumerator RangeFanThrow(GameObject prefab, int daggerCount = 5, float spreadAngle = 45f, float throwSpeed = 10f)
+    private IEnumerator RangeFanThrow(GameObject prefab, int daggerCount = 4, float spreadAngle = 45f, float throwSpeed = 5f)
     {
         Sound.Play("ENEMY_NagaRogue_Throw");
         FaceToPlayer();
@@ -179,15 +183,16 @@ public class NagaRogue : StateMachineMob
         }
         yield return new WaitForSeconds(0.2f);
     }
-    private IEnumerator RangeFanDaggerThrow(GameObject prefab, int daggerCount = 5, float spreadAngle = 45f, float throwSpeed = 10f)
+    private IEnumerator RangeFanDaggerThrow(GameObject prefab, int daggerCount = 4, float spreadAngle = 45f, float throwSpeed = 10f, float daggerRange = 10f)
     {
-        Sound.Play("ENEMY_NagaRogue_Throw");
         FaceToPlayer();
         Direction direction = GetDirectionToTarget(DirectionToPlayer);
         _animator.Play($"Throw_{direction}",-1,0f);
 
         Vector3 origin = transform.position;
         Vector3 toPlayer = (SceneContext.Character.transform.position - origin).normalized;
+        float daggerSpawnDistance = 0.5f;
+        
         float baseAngle = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
 
         float startAngle = baseAngle - (spreadAngle / 2f);
@@ -199,17 +204,20 @@ public class NagaRogue : StateMachineMob
             float rad = angle * Mathf.Deg2Rad;
 
             Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0).normalized;
-            Vector3 spawnPos = origin + dir * 0.5f;
-            Vector3 targetPos = spawnPos + dir * 10f; 
+            Vector3 spawnPos = origin + dir * daggerSpawnDistance;
+            Vector3 targetPos = spawnPos + dir * daggerRange;
 
-            AttackObjectController.Create(
+            AttackObjectController ac = AttackObjectController.Create(
                 spawnPos,
                 dir,
                 prefab,
-                new RetrieveMovement(spawnPos, targetPos, throwSpeed)
-            ).StartRoutine();
+                new LinearMovement(spawnPos, targetPos, throwSpeed)
+            );
+            ac.gameObject.GetComponent<ReturnDagger>().Initiate(transform);
+            ac.StartRoutineWithCallOnEnd(() => daggerList.Add(ac.gameObject));
+            Sound.Play("ENEMY_NagaRogue_Throw");
+            yield return new WaitForSeconds(0.2f);
         }
-        yield return new WaitForSeconds(0.2f);
     }
     public IEnumerator Move(Vector3 dir, float distance = 2f,float duration = 0.5f)
     {
@@ -321,20 +329,38 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return (mob.DistanceToPlayer >= mob.MeleeAttackRange) ? 50 : 0;
+            return (mob.DistanceToPlayer >= mob.MeleeAttackRange && NagaRogue.daggerList.Count <= 0) ? 50 : 0;
         }
 
         public override IEnumerator StateCoroutine()
         {
-            yield return NagaRogue.RangeFanDaggerThrow(NagaRogue.daggerPrefab, 5, 135f);
+            yield return NagaRogue.RangeFanDaggerThrow(NagaRogue.daggerPrefab, 4, 180f);
             yield return new WaitForSeconds(1f);
             NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
         }
     }
-    public class ThrowWithdraw : NagaRogueState
+    
+    public class DaggerRetrieve : NagaRogueState
     {
         public override int GetWeight()
         {
+            return (NagaRogue.daggerList.Count > 0) ? 1557 : 0;
+        }
+
+        public override IEnumerator StateCoroutine()
+        {
+            yield return NagaRogue.Move(NagaRogue.DirectionToPlayer);
+            yield return NagaRogue.RangeFanDaggerThrow(NagaRogue.daggerPrefab, 4, 180f);
+            yield return new WaitForSeconds(1f);
+            NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+        }
+    }
+    
+    public class ThrowBackstep : NagaRogueState
+    {
+        public override int GetWeight()
+        {
+            return 0;
             return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 100 : 0;
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using GyeMong.GameSystem.Creature.Attack.Component;
@@ -75,6 +76,29 @@ namespace GyeMong.GameSystem.Creature.Attack
                 if (!position.HasValue)
                 {
                     gameObject.SetActive(false);
+                    break;
+                }
+                transform.position = position.Value;
+                yield return null;
+            }
+            
+            _attackObjectSounds?.endSoundId?.ForEach(id => { Sound.Play(id);});
+        }
+        public void StartRoutineWithCallOnEnd(Action onEnd = null)
+        {
+            StartCoroutine(ExecuteAttackSequenceCallOnEnd(onEnd));
+        }
+        private IEnumerator ExecuteAttackSequenceCallOnEnd(Action onEnd)
+        {
+            float elapsedTime = 0;
+            _attackObjectSounds?.startSoundId?.ForEach(id => { Sound.Play(id);});
+            while (true)
+            {
+                elapsedTime += Time.deltaTime;
+                Vector3? position = _movement.GetPosition(elapsedTime);
+                if (!position.HasValue)
+                {
+                    onEnd?.Invoke();
                     break;
                 }
                 transform.position = position.Value;
