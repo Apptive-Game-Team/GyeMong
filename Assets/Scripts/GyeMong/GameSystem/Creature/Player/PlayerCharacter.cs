@@ -196,6 +196,7 @@ namespace GyeMong.GameSystem.Creature.Player
             {
                 StopCoroutine(healingCoroutine);
                 healingCoroutine = null;
+                animator.SetBool("isHealing", false);
                 isHealing = false;
                 isAttacking = false;
                 canMove = true;
@@ -400,6 +401,7 @@ namespace GyeMong.GameSystem.Creature.Player
         public IEnumerator Heal()
         {
             Debug.Log("IsHealing..");
+            animator.SetBool("isHealing", true);
 
             isHealing = true;
             isAttacking = true;
@@ -440,8 +442,9 @@ namespace GyeMong.GameSystem.Creature.Player
                 yield return null;
             }
 
-            Debug.Log("힐 중단 or 완료");
+            Debug.Log("힐 끝");
 
+            animator.SetBool("isHealing", false);
             isHealing = false;
             isAttacking = false;
             canMove = true;
