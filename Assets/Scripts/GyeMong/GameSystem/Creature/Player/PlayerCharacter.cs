@@ -412,27 +412,35 @@ namespace GyeMong.GameSystem.Creature.Player
 
             // soundController.Trigger(PlayerSoundType.HEAL_START);
 
-            while (elapsed < 1f)
+            while (InputManager.Instance.GetKey(ActionCode.Heal))
             {
                 float delta = Time.deltaTime;
                 float costPerSecond = stat.HealCost / 1f;
                 float cost = costPerSecond * delta;
 
-                if (curSkillGauge < cost) break;
+                if (curSkillGauge < cost)
+                {
+                    Debug.Log("게이지 부족으로 힐 중단");
+                    break;
+                }
 
                 curSkillGauge -= cost;
                 consumedGauge += cost;
                 elapsed += delta;
 
                 changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+
+                if (elapsed >= 1f)
+                {
+                    Heal(stat.HealAmount);
+                    Debug.Log("Heal is Complete");
+                    break;
+                }
+
                 yield return null;
             }
 
-            if (elapsed >= 1f)
-            {
-                Heal(stat.HealAmount);
-                Debug.Log("Heal is Complete");
-            }
+            Debug.Log("힐 중단 or 완료");
 
             isHealing = false;
             isAttacking = false;
