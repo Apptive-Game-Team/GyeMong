@@ -129,12 +129,23 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             else Animator.SetBool("isMove", true);
             _shadowRb.velocity = _movement * SceneContext.Character.stat.MoveSpeed;
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Attack) && !_isCopyingAttack)
+            if (SceneContext.Character.isAttacking && !_isCopyingAttack)
             {
                 _isCopyingAttack = true;
                 _shadowRb.velocity = Vector2.zero;
                 Animator.SetBool("isMove", false);
-                yield return MeleeAttack();
+                _animator.SetTrigger("isAttacking");
+                yield return new WaitForSeconds(0.1f);
+                AttackObjectController.Create(
+                    transform.position + DirectionToPlayer * 0.5f,
+                    DirectionToPlayer,
+                    attackPrefab,
+                    new StaticMovement(
+                        transform.position + DirectionToPlayer * 0.5f, 0.3f)
+                ).StartRoutine();
+                yield return new WaitForSeconds(0.4f);
+                _animator.SetBool("isAttacking", false);
+                Animator.SetBool("isMove", true);
                 _isCopyingAttack = false;
             }
 
