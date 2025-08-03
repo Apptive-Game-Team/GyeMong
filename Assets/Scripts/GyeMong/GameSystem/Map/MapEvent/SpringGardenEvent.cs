@@ -14,21 +14,28 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private GameObject targetSlime;
         [SerializeField] private GameObject[] slimes;
 
+        [Header("First Event")]
         [SerializeField] private float cameraSize1;
         [SerializeField] private float cameraDuration1;
         [SerializeField] private Vector3 cameraDestination1;
         [SerializeField] private float cameraSpeed1;
         [SerializeField] private Vector3 cameraDestination1_2;
         [SerializeField] private float cameraSpeed1_2;
+        
+        [Header("Second Event")]
         [SerializeField] private float cameraSpeed2;
+        
+        [Header("Third Event")]
         [SerializeField] private Vector3 cameraDestination3;
         [SerializeField] private float cameraSpeed3;
         [SerializeField] private float cameraSize3;
         [SerializeField] private float cameraDuration3;
+        
+        [Header("Elf Event")]
         [SerializeField] private List<MultiChatMessageData> beforeScript;
         [SerializeField] private GameObject elfChild;
+        
         private float _delayTime = 1f;
-
         private bool _isTutorial;
 
         private void Start()
