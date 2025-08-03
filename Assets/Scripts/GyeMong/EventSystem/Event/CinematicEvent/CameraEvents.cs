@@ -9,6 +9,8 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
     {
         [SerializeField] private Vector3 destination;
         [SerializeField] private float speed;
+        public void SetDestination(Vector3 value) => destination = value;
+        public void SetSpeed(float value) => speed = value;
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             return SceneContext.CameraManager.CameraMove(destination, speed);
