@@ -55,6 +55,9 @@ namespace GyeMong.GameSystem.Map.MapEvent
             cameraMoveEvent1.SetDestination(cameraDestination1);
             cameraMoveEvent1.SetSpeed(cameraSpeed1);
             yield return cameraMoveEvent1.Execute();
+            yield return StartCoroutine(SceneContext.EffectManager.FadeOut(0f));
+            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(SceneContext.EffectManager.FadeIn(1f));
             yield return new WaitForSeconds(0.5f);
             var cameraMoveEvent2 = new CameraMove();
             cameraMoveEvent2.SetDestination(cameraDestination1_2);
