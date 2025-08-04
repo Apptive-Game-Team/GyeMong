@@ -77967,9 +77967,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8769dc8b41fb1f0438bc5799f57dcf2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDestination: {x: 29, y: 4, z: 0}
+  playerDestination: {x: 29, y: 8, z: 0}
   playerMoveSpeed: 2
-  cameraDestination: {x: 35, y: 8.5, z: -10}
+  cameraDestination: {x: 35, y: 9.2, z: -10}
   minionObject: {fileID: 4319988163936315400, guid: 952b6aaefa2d64d44a63e87a7b918316,
     type: 3}
   cameraSpeed: 3
@@ -78021,7 +78021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nagaRogue: {fileID: 8923030510415073920}
-  playerDestination: {x: 29, y: 9, z: 0}
+  playerDestination: {x: 29, y: 11, z: 0}
   playerMoveSpeed: 2
   wall: {fileID: 516904775}
   cameraDestination: {x: 0, y: 0, z: 0}
@@ -78248,7 +78248,7 @@ Transform:
   m_GameObject: {fileID: 4311090451529734521}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.13, y: 12.51, z: 0}
+  m_LocalPosition: {x: 29.12, y: 14.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

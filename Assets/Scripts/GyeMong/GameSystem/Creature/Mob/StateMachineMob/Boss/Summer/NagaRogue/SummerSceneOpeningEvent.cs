@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using GyeMong.EventSystem.Event;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
@@ -38,6 +39,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
             }).Execute());
             
             SceneContext.CameraManager.CameraFollow(minion.transform);
+            yield return SceneContext.Character.transform.DOScale(new Vector3(0.5f,0.5f,0.5f), cameraSpeed);
             yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(3f, cameraSpeed));
             yield return StartCoroutine((new OpenChatEvent().Execute()));
             yield return new ShowMessages(battleOpeningChat, autoSkipTime).Execute();
@@ -45,6 +47,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
             Destroy(minion);
+            SceneContext.Character.transform.localScale = new Vector3(1f, 1f, 1f);
             SceneContext.CameraManager.CameraFollow(SceneContext.Character.transform);
             yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(5f, cameraSpeed));
             StartCoroutine(nagaRogueOpeningEvent.TriggerEvents());
