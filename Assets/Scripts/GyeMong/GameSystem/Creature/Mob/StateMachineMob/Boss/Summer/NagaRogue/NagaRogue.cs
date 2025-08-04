@@ -237,19 +237,40 @@ public class NagaRogue : StateMachineMob
             yield return new WaitForSeconds(0.2f);
         }
     }
-    public IEnumerator Move(Vector3 dir, float distance = 2f,float duration = 0.5f)
+    public IEnumerator Move(Vector3 dir, float distance = 2f, float duration = 0.5f)
     {
+        // 1) 애니메이션
         Direction direction = GetDirectionToTarget(DirectionToPlayer);
-        _animator.Play($"Move_{direction}");
-        float elapsed = 0f;
-        Vector3 destination = transform.position + dir * distance;
+        _animator.Play($"Dash_{direction}");
+
+        // 2) 캐릭터 콜라이더 크기만큼 BoxCast 해서 충돌 체크
+        Collider2D col = GetComponent<Collider2D>();
+        RaycastHit2D hit = Physics2D.BoxCast(
+            col.bounds.center,
+            col.bounds.size,
+            0f,
+            dir,
+            distance,
+            LayerMask.GetMask("Obstacle")
+        );
+
+        // 충돌 지점까지 거리, 없으면 원거리 이동
+        float moveDist = hit.collider != null ? hit.distance : distance;
+
+        // 3) 실제 이동
+        Vector3 startPos = transform.position;
+        Vector3 endPos   = startPos + dir * moveDist;
+        float elapsed    = 0f;
+
         while (elapsed < duration)
         {
-            transform.position = Vector3.Lerp(transform.position, destination, elapsed / duration);
+            transform.position = Vector3.Lerp(startPos, endPos, elapsed / duration);
+            
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = destination;
+
+        transform.position = endPos;
     }
 
     public IEnumerator ChangeAlpha(float targetAlpha, float duration = 0.3f)

@@ -392,6 +392,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 601325765833786408, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107324611101068760, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1789762736961004039, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -507,6 +517,11 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].y
       value: -11.841644
       objectReference: {fileID: 0}
+    - target: {fileID: 3847295034289836671, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4233064012126676472, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -541,6 +556,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TileColorArray.Array.data[8].m_Data.r
       value: 0.7454688
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827510028971709381, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4932231612225608373, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
         type: 3}
@@ -4867,6 +4887,11 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[1].Array.data[130].Y
       value: 50000000
       objectReference: {fileID: 0}
+    - target: {fileID: 4945293966996246898, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5271437029102168662, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
         type: 3}
       propertyPath: m_Enabled
@@ -5035,6 +5060,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088513456758036890, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6488721960715579503, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
         type: 3}
