@@ -1121,35 +1121,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5214546229750011516, guid: a79e18b60c4263c4e949bbcf0ea49099,
+    - target: {fileID: 3512257973603151227, guid: a79e18b60c4263c4e949bbcf0ea49099,
         type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5214546229750011516, guid: a79e18b60c4263c4e949bbcf0ea49099,
-        type: 3}
-      propertyPath: eventSequence.Array.data[0]
-      value: 3534368307848413184
-      objectReference: {fileID: 0}
-    - target: {fileID: 5214546229750011516, guid: a79e18b60c4263c4e949bbcf0ea49099,
-        type: 3}
-      propertyPath: managedReferences[3534368307848413184]
-      value: Assembly-CSharp GyeMong.EventSystem.Event.EventScene.SlimeEvents
-      objectReference: {fileID: 0}
-    - target: {fileID: 5214546229750011516, guid: a79e18b60c4263c4e949bbcf0ea49099,
-        type: 3}
-      propertyPath: managedReferences[3534368307848413184].targetSlime
+      propertyPath: bounceAttackPrefab
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5214546229750011516, guid: a79e18b60c4263c4e949bbcf0ea49099,
+      objectReference: {fileID: 8803794943195885897, guid: 8351bd785a0162e48b0a74c3bb11b11a,
         type: 3}
-      propertyPath: managedReferences[3534368307848413184].slimes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7314021124766925139, guid: a79e18b60c4263c4e949bbcf0ea49099,
         type: 3}
       propertyPath: m_Name
       value: DivisionSlime
+      objectReference: {fileID: 0}
+    - target: {fileID: 7699352649446549994, guid: a79e18b60c4263c4e949bbcf0ea49099,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7699352649446549994, guid: a79e18b60c4263c4e949bbcf0ea49099,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7699352649446549994, guid: a79e18b60c4263c4e949bbcf0ea49099,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7699352649446549994, guid: a79e18b60c4263c4e949bbcf0ea49099,
         type: 3}
@@ -1201,8 +1197,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5214546229750011516, guid: a79e18b60c4263c4e949bbcf0ea49099, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

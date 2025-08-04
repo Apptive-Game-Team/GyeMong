@@ -24,8 +24,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private void Start()
         {
-            PlayerPrefs.SetInt("TutorialFlag", 0);
-            _isTutorial = PlayerPrefs.GetInt("TutorialFlag", 0) == 0;
+            _isTutorial = !PlayerPrefs.HasKey("TutorialFlag");
             StartCoroutine(TriggerEvents());
         }
 

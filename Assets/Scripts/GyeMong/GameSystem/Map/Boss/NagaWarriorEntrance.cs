@@ -18,8 +18,10 @@ namespace GyeMong.GameSystem.Map.Boss
         [SerializeField] private GameObject wall;
         [SerializeField] private Vector3 cameraDestination;
         [SerializeField] private float cameraSpeed;
-        [SerializeField] private List<MultiChatMessageData.MultiChatMessage> multiMessages;
+        [SerializeField] private MultiChatMessageData chatData1;
         [SerializeField] private float autoSkipTime = 3f;
+        [SerializeField] private DailyCycleManager dailyCycleManager;
+        private float delayTime = 1f;
         private bool _isTriggered = false;
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -46,18 +48,22 @@ namespace GyeMong.GameSystem.Map.Boss
                 _gameObject = wall,
                 isActive = true
             }).Execute());
-            /*yield return StartCoroutine((new OpenChatEvent().Execute()));
-            foreach (MultiChatMessageData.MultiChatMessage chat in multiMessages)
-            {
-                yield return EffectManager.Instance.GetChatController().MultipleChat(chat, autoSkipTime);
-            }
-            yield return StartCoroutine((new CloseChatEvent().Execute()));*/
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             boss.GetComponent<NagaWarrior>().curBGM = Sound.Play("BGM_Summer_NagaWarrior", true);
+
+            yield return StartCoroutine((new OpenChatEvent().Execute()));
+
+            yield return new ShowMessages(chatData1, autoSkipTime).Execute();
+
+            yield return StartCoroutine((new CloseChatEvent().Execute()));
+
+            yield return new WaitForSeconds(delayTime);
+
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
             yield return StartCoroutine((new CameraFollowPlayer()).Execute());
             boss.ChangeState();
+            dailyCycleManager.StartCoroutine(dailyCycleManager.DayCycleRoutine());
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
         }
     }
