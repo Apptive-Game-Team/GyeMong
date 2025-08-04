@@ -37,14 +37,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
             
             // 그림자 숲 도착
-            var cameraZoomEvent1 = new CameraZoomInOut();
-            cameraZoomEvent1.SetSize(cameraSize1);
-            cameraZoomEvent1.SetDuration(cameraDuration1);
-            yield return cameraZoomEvent1.Execute();
-            var cameraMoveEvent1 = new CameraMove();
-            cameraMoveEvent1.SetDestination(cameraDestination1);
-            cameraMoveEvent1.SetSpeed(cameraSpeed1);
-            yield return cameraMoveEvent1.Execute();
+            yield return SceneContext.CameraManager.CameraZoomInOut(cameraSize1, cameraDuration1);
+            yield return SceneContext.CameraManager.CameraMove(cameraDestination1, cameraSpeed1);
             yield return StartCoroutine(SceneContext.EffectManager.FadeOut(0f));
             yield return new WaitForSeconds(0.5f);
             StartCoroutine(SceneContext.EffectManager.FadeIn(1f));
@@ -60,10 +54,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             yield return new WaitForSeconds(1f);
             
             // 그림자 발견
-            var cameraMoveEvent2 = new CameraMove();
-            cameraMoveEvent2.SetDestination(cameraDestination2);
-            cameraMoveEvent2.SetSpeed(cameraSpeed2);
-            yield return cameraMoveEvent2.Execute();
+            yield return SceneContext.CameraManager.CameraMove(cameraDestination2, cameraSpeed2);
             yield return (new MoveCreatureEvent()
             {
                 creatureType = MoveCreatureEvent.CreatureType.Selectable,

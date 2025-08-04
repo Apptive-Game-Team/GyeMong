@@ -54,22 +54,13 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return (new SetKeyInputEvent() { _isEnable = false }).Execute();
             
             // 해변 도착
-            var cameraZoomEvent1 = new CameraZoomInOut();
-            cameraZoomEvent1.SetSize(cameraSize1);
-            cameraZoomEvent1.SetDuration(cameraDuration1);
-            yield return cameraZoomEvent1.Execute();
-            var cameraMoveEvent1 = new CameraMove();
-            cameraMoveEvent1.SetDestination(cameraDestination1);
-            cameraMoveEvent1.SetSpeed(cameraSpeed1);
-            yield return cameraMoveEvent1.Execute();
+            yield return SceneContext.CameraManager.CameraZoomInOut(cameraSize1,  cameraDuration1);
+            yield return SceneContext.CameraManager.CameraMove(cameraDestination1, cameraSpeed1);
             yield return StartCoroutine(SceneContext.EffectManager.FadeOut(0f));
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(SceneContext.EffectManager.FadeIn(1f));
             yield return new WaitForSeconds(0.5f);
-            var cameraMoveEvent2 = new CameraMove();
-            cameraMoveEvent2.SetDestination(cameraDestination1_2);
-            cameraMoveEvent2.SetSpeed(cameraSpeed1_2);
-            yield return cameraMoveEvent2.Execute();
+            yield return SceneContext.CameraManager.CameraMove(cameraDestination1_2, cameraSpeed1_2);
             yield return new WaitForSeconds(1f);
             var animParamEvent = new SetAnimatorParameter {_creatureType = SetAnimatorParameter.CreatureType.Player};
             animParamEvent.SetParameter("yDir", 0);
@@ -88,12 +79,9 @@ namespace GyeMong.GameSystem.Map.MapEvent
             
             
             // 꼬마 엘프 조우
-            var cameraMoveEvent = new CameraMove();
             Vector3 cameraDestination = ((SceneContext.Character.transform.position + elfChild.transform.position) / 2);
             cameraDestination.z = -10;
-            cameraMoveEvent.SetDestination(cameraDestination);
-            cameraMoveEvent.SetSpeed(cameraSpeed2);
-            yield return cameraMoveEvent.Execute();
+            yield return SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed2);
             if (beforeScript != null)
             {
                 foreach (var script in beforeScript)
@@ -118,10 +106,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return (new SetKeyInputEvent() { _isEnable = false }).Execute();
             yield return SceneContext.CameraManager.CameraMove(cameraDestination3, cameraSpeed3);
             yield return (new SetActiveObject() {_gameObject = elfChild, isActive = false}).Execute();
-            var cameraZoomEvent3 = new CameraZoomInOut();
-            cameraZoomEvent3.SetSize(cameraSize3);
-            cameraZoomEvent3.SetDuration(cameraDuration3);
-            yield return cameraZoomEvent3.Execute();
+            yield return SceneContext.CameraManager.CameraZoomInOut(cameraSize3, cameraSpeed3);
             yield return slimeEvent.Execute();
             yield return new WaitForSeconds(_delayTime);
             SceneContext.CameraManager.CameraFollow(SceneContext.Character.gameObject.transform);
