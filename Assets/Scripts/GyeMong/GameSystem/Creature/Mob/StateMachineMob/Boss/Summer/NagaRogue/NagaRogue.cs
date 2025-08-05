@@ -92,7 +92,7 @@ public class NagaRogue : StateMachineMob
     {
         FaceToPlayer();
         Direction dir = GetDirectionToTarget(DirectionToPlayer);
-        _animator.Play($"Stab_{dir}");
+        Animator.Play($"Stab_{dir}");
         AttackObjectController.Create(
                 transform.position + DirectionToPlayer * distance, 
                 DirectionToPlayer, 
@@ -108,7 +108,7 @@ public class NagaRogue : StateMachineMob
     {
         FaceToPlayer();
         Direction dir = GetDirectionToTarget(DirectionToPlayer);
-        _animator.Play($"Throw_{dir}");
+        Animator.Play($"Throw_{dir}");
         AttackObjectController.Create(
                 transform.position + DirectionToPlayer * distance, 
                 DirectionToPlayer, 
@@ -122,7 +122,7 @@ public class NagaRogue : StateMachineMob
         yield return new WaitForSeconds(0.2f);
     }
 
-    private IEnumerator RetrieveObject(GameObject prefab, float retrieveSpeed = 10f)
+    private IEnumerator RetrieveObject(GameObject prefab, float retrieveSpeed = 30f)
     {
         FaceToPlayer();
         Vector3 dirToPlayer = SceneContext.Character.transform.position - prefab.transform.position;
@@ -137,7 +137,7 @@ public class NagaRogue : StateMachineMob
         );
         ac.StartRoutine();
         ac.gameObject.GetComponent<ReturnDagger>().Initiate(transform);
-        yield return new WaitForSeconds(0.2f);
+        yield return null;
     }
     
     public float GetRandomCurve()
@@ -155,7 +155,7 @@ public class NagaRogue : StateMachineMob
         Sound.Play("ENEMY_NagaRogue_Throw");
         FaceToPlayer();
         Direction dir = GetDirectionToTarget(DirectionToPlayer);
-        _animator.Play($"Throw_{dir}");
+        Animator.Play($"Throw_{dir}",0,0f);
         AttackObjectController.Create(
                 transform.position + DirectionToPlayer * distance, 
                 DirectionToPlayer, 
@@ -174,7 +174,7 @@ public class NagaRogue : StateMachineMob
         Sound.Play("ENEMY_NagaRogue_Throw");
         FaceToPlayer();
         Direction direction = GetDirectionToTarget(DirectionToPlayer);
-        _animator.Play($"Throw_{direction}",-1,0f);
+        Animator.Play($"Throw_{direction}",-1,0f);
 
         Vector3 origin = transform.position;
         Vector3 toPlayer = (SceneContext.Character.transform.position - origin).normalized;
@@ -201,11 +201,11 @@ public class NagaRogue : StateMachineMob
         }
         yield return new WaitForSeconds(0.2f);
     }
-    private IEnumerator RangeFanDaggerThrow(GameObject prefab, int daggerCount = 4, float spreadAngle = 45f, float throwSpeed = 10f, float daggerRange = 10f)
+    private IEnumerator RangeFanDaggerThrow(GameObject prefab, int daggerCount = 4, float spreadAngle = 45f, float throwSpeed = 20f, float daggerRange = 10f)
     {
         FaceToPlayer();
         Direction direction = GetDirectionToTarget(DirectionToPlayer);
-        _animator.Play($"Throw_{direction}",-1,0f);
+        Animator.Play($"Throw_{direction}",-1,0f);
 
         Vector3 origin = transform.position;
         Vector3 toPlayer = (SceneContext.Character.transform.position - origin).normalized;
@@ -234,14 +234,14 @@ public class NagaRogue : StateMachineMob
             ac.gameObject.GetComponent<ReturnDagger>().Initiate(transform);
             ac.StartRoutineWithCallOnEnd(() => daggerList.Add(ac.gameObject));
             Sound.Play("ENEMY_NagaRogue_Throw");
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.02f);
         }
     }
     public IEnumerator Move(Vector3 dir, float distance = 2f, float duration = 0.5f)
     {
         // 1) 애니메이션
         Direction direction = GetDirectionToTarget(DirectionToPlayer);
-        _animator.Play($"Dash_{direction}");
+        Animator.Play($"Dash_{direction}");
 
         // 2) 캐릭터 콜라이더 크기만큼 BoxCast 해서 충돌 체크
         Collider2D col = GetComponent<Collider2D>();
@@ -350,14 +350,12 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return 0;
             return 50;
         }
         public override IEnumerator StateCoroutine()
         {
             Sound.Play("ENEMY_NagaRogue_Ambush");
-            yield return NagaRogue.Teleport(SceneContext.Character.transform.position);
-            yield return new WaitForSeconds(0.5f);
+            yield return NagaRogue.Move(NagaRogue.DirectionToPlayer);
             yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
             yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
             yield return new WaitForSeconds(1f);
