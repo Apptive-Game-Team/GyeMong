@@ -201,6 +201,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 86593395}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &86593397 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4401279979771944131, guid: f41e5b1c48af2e04c8bf8b3509ac534f,
+    type: 3}
+  m_PrefabInstance: {fileID: 86593395}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f561c6e6f9d59d5469191a2c95c1e8b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &92901065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -874,7 +886,7 @@ MonoBehaviour:
   skillPrefab: {fileID: 8480704386990181861, guid: d0458759a61874e51908dcbc9e0af182,
     type: 3}
   key: {fileID: 4814796725110161025, guid: 0efd04cacb9b9f1409984ed9e57696c7, type: 3}
-  SkillIndicator: {fileID: 0}
+  SkillIndicator: {fileID: 86593397}
 --- !u!4 &1230071926
 Transform:
   m_ObjectHideFlags: 0

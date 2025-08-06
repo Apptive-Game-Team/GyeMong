@@ -1,8 +1,10 @@
 using System.Collections;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
 
@@ -17,7 +19,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject attackFloorPrefab;
         [SerializeField] private GameObject comboSlashPrefab;
         [SerializeField] private GameObject growFloorPrefab;
-
+        [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         public override void OnAttacked(float damage)
         {
             currentHp -= damage;
@@ -42,23 +44,28 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             Initialize();
 
             ChangeState(new DetectingPlayer() {mob= this});
+            
+            SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
 
-        private IEnumerator StaticChildAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f)
+        private IEnumerator StaticChildAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f, float delay = 0.3f)
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
-            AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * distance, 
-                    DirectionToPlayer, 
-                    prefab, 
-                    new ChildMovement(
-                        transform, 
-                        DirectionToPlayer * distance, 
-                        duration)
-                )
-                .StartRoutine();
+            
             yield return ApplyAttackingMove(0.2f);
+            
+            yield return IndicatorGenerator.Instance.GenerateIndicator(
+                    AttackObjectController.Create(
+                        transform.position + DirectionToPlayer * distance, 
+                        DirectionToPlayer, 
+                        prefab, 
+                        new ChildMovement(
+                            transform, 
+                            DirectionToPlayer * distance, 
+                            duration)
+                    ), delay);
+            
             _animator.SetBool("isAttacking", false);
             yield return new WaitForSeconds(0.1f);
         }
@@ -67,6 +74,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
+            
+            yield return ApplyAttackingMove(0.2f);
+            
             AttackObjectController.Create(
                     transform.position + DirectionToPlayer * distance, 
                     DirectionToPlayer, 
@@ -74,9 +84,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                     new StaticMovement(
                         DirectionToPlayer * distance + transform.position, 
                         duration)
-                )
-                .StartRoutine();
-            yield return ApplyAttackingMove(0.2f);
+                ).StartRoutine();
+            
             _animator.SetBool("isAttacking", false);
             yield return new WaitForSeconds(0.1f);
         }
@@ -97,7 +106,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         protected void Initialize()
         {
-            maxHp = 30;
+            maxHp = 10;
             currentHp = maxHp;
 
             currentShield = 0;
@@ -128,7 +137,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
-                yield return Wanderer.StaticChildAttack(Wanderer.circleSlashPrefab, 0);
+                yield return Wanderer.StaticChildAttack(Wanderer.circleSlashPrefab, 0, delay: 0.7f);
                 yield return new WaitForSeconds(1f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
@@ -146,7 +155,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
-                yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab);
+                yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab, delay: 1f);
                 SceneContext.CameraManager.CameraShake(0.1f);
                 yield return new WaitForSeconds(0.5f);
                 yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab);
@@ -171,7 +180,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
-                yield return Wanderer.StaticChildAttack(Wanderer.upwardSlashPrefab);
+                yield return Wanderer.StaticChildAttack(Wanderer.upwardSlashPrefab, delay: 0.6f);
                 yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
@@ -190,7 +199,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 Debug.Log("Ground Smash");
-                yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab);
+                yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab, delay: 1f);
                 SceneContext.CameraManager.CameraShake(0.3f);
                 yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 100f);
                 yield return new WaitForSeconds(1.5f);

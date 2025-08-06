@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1157534177067683750}
   - component: {fileID: 2849253069313158672}
   - component: {fileID: 2053884609267933794}
-  - component: {fileID: 5772433741591835018}
+  - component: {fileID: 6640274688676398610}
   m_Layer: 0
   m_Name: AttackFloor
   m_TagString: EnemyAttack
@@ -125,8 +125,8 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: 3add27a75317357439439f20f4a87963, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: 4c41dc256e2ec854cbfdb7bc65c980e1,
     type: 2}
---- !u!58 &5772433741591835018
-CircleCollider2D:
+--- !u!70 &6640274688676398610
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -157,6 +157,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Offset: {x: 0.06570816, y: 0}
+  m_Size: {x: 0.66964006, y: 0.6887509}
+  m_Direction: 0
