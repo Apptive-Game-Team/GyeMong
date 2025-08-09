@@ -77,9 +77,9 @@ namespace GyeMong.GameSystem.Creature.Player
                 if (canMove)
                 {
                     HandleMoveInput();
+                    UpdateState();
                 }
                 HandleActionInput();
-                UpdateState();
             }
         }
 
@@ -261,7 +261,9 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
 
-            Vector2 dashDirection = GetCurrentInputDirection(lastMovementDirection.normalized);
+            Vector2 dashDirection = GetCurrentInputDirection(mouseDirection);
+            animator.SetFloat("xDir", dashDirection.x);
+            animator.SetFloat("yDir", dashDirection.y);
             Vector2 startPosition = playerRb.position;
 
             RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance,
@@ -270,14 +272,9 @@ namespace GyeMong.GameSystem.Creature.Player
                 ? startPosition + dashDirection * stat.DashDistance
                 : hit.point + hit.normal * 0.1f;
 
-            float elapsedTime = 0f;
-
-            while (elapsedTime < stat.DashDuration)
-            {
-                elapsedTime += Time.deltaTime;
-                playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / stat.DashDuration));
-                yield return null;
-            }
+            yield return playerRb.DOMove(targetPosition, stat.DashDuration)
+                .SetEase(Ease.InOutQuad)
+                .WaitForCompletion();
 
             StopPlayer();
 
