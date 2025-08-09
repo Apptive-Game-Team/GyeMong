@@ -146,7 +146,11 @@ namespace GyeMong.GameSystem.Creature.Player
         private void MoveCharacter()
         {
             soundController.SetRun(isMoving);
-            playerRb.velocity = movement * stat.MoveSpeed;
+            
+            Vector2 currentVelocity = playerRb.velocity;
+            currentVelocity = Vector2.Lerp(currentVelocity, movement * stat.MoveSpeed, stat.MoveAcceleration * Time.fixedDeltaTime);
+
+            playerRb.velocity = currentVelocity;
         }
 
         private void UpdateState()
