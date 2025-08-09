@@ -312,7 +312,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (InputManager.Instance.GetKey(ActionCode.MoveRight)) dir += Vector2.right;
             if (InputManager.Instance.GetKey(ActionCode.MoveLeft)) dir += Vector2.left;
 
-            if (dir != Vector2.zero) return dir;
+            if (dir != Vector2.zero) return dir.normalized;
             return direction;
         }
 
@@ -337,6 +337,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (comboQueued)
             {
                 comboQueued = false;
+                UpdateState();
                 soundController.Trigger(PlayerSoundType.SWORD_SWING);
                 animator.SetBool("isAttacking2", true);
                 SpawnAttackCollider(attackComboColliderPrefab);
@@ -349,6 +350,8 @@ namespace GyeMong.GameSystem.Creature.Player
             canMove = true;
             animator.SetBool("isAttacking", false);
             isAttacking = false;
+            
+            yield return null;
         }
 
         private void AttackMove(Vector2 direction)
