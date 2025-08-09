@@ -273,7 +273,7 @@ namespace GyeMong.GameSystem.Creature.Player
                 : hit.point + hit.normal * 0.1f;
 
             yield return playerRb.DOMove(targetPosition, stat.DashDuration)
-                .SetEase(Ease.InOutQuad)
+                .SetEase(Ease.OutCubic)
                 .WaitForCompletion();
 
             StopPlayer();
