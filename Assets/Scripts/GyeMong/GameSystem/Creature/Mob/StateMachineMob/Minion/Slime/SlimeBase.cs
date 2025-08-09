@@ -180,10 +180,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             public override IEnumerator StateCoroutine()
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
-                float duration = 2f;
+                float duration = 1f;
                 float timer = 0f;
             
-                while (duration > timer && mob.DistanceToPlayer > mob.RangedAttackRange)
+                while (duration > timer && mob.DistanceToPlayer > mob.MeleeAttackRange)
                 {
                     timer += Time.deltaTime;
                     yield return null;
