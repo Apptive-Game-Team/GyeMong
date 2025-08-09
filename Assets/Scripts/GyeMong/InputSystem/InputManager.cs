@@ -24,7 +24,8 @@ namespace GyeMong.InputSystem
         Menu,
         MenuLeft,
         MenuRight,
-        Enter
+        Enter,
+        Heal
     }
 
     public class InputManager : SingletonObject<InputManager>
@@ -76,7 +77,8 @@ namespace GyeMong.InputSystem
                 { ActionCode.Menu, KeyCode.U },
                 { ActionCode.MenuLeft, KeyCode.Q },
                 { ActionCode.MenuRight, KeyCode.E },
-                { ActionCode.Enter, KeyCode.Return }
+                { ActionCode.Enter, KeyCode.Return },
+                { ActionCode.Heal, KeyCode.R }
             };
         }
 

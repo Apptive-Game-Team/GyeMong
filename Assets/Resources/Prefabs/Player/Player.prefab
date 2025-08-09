@@ -188,7 +188,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: 6a8bb3aedf368b8419c359806ddede7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -416,6 +416,28 @@ MonoBehaviour:
           value: 0
         - valueType: 4
           value: 0
+    - statType: 16
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
+    - statType: 17
+      stat:
+        valueEntries:
+        - valueType: 1
+          value: 0
+        - valueType: 2
+          value: 0
+        - valueType: 3
+          value: 0
+        - valueType: 4
+          value: 0
   _statData: {fileID: 11400000, guid: 70df7f5775b4eb54994283a5875ac117, type: 2}
   curHealth: 0
   curShield: 0
@@ -428,6 +450,7 @@ MonoBehaviour:
   skillColliderPrefab: {fileID: 2848122850891802944, guid: fcbd072696f050e4a98ba91984d66a04,
     type: 3}
   isDashing: 0
+  isTutorial: 0
   materials:
   - {fileID: 2100000, guid: de56a6b3ebfee9940bdcedb5b20cee67, type: 2}
   - {fileID: 2100000, guid: 9aca40901bb145b4f940529ee4b672e8, type: 2}

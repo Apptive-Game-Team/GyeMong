@@ -37,9 +37,9 @@ namespace GyeMong.GameSystem.Creature.Player
         private float blinkDelay = 0.2f;
 
         private bool isMoving = false;
-
         public bool isDashing = false;
         public bool isAttacking = false;
+        private bool isHealing = false;
         private bool canMove = true;
         private bool isInvincible = false;
         private bool canCombo = false;
@@ -47,6 +47,8 @@ namespace GyeMong.GameSystem.Creature.Player
         private CircleCollider2D _hitCollider;
 
         public bool isTutorial;
+
+        private Coroutine healingCoroutine;
 
         public Material[] materials;
 
@@ -141,6 +143,11 @@ namespace GyeMong.GameSystem.Creature.Player
                 StartCoroutine(ChargeSkillAttack());
                 // StartCoroutine(SkillAttack());
             }
+
+            if (InputManager.Instance.GetKeyDown(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost)
+            {
+                healingCoroutine = StartCoroutine(Heal());
+            }
         }
 
         private void MoveCharacter()
@@ -169,6 +176,8 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public void TakeDamage(float damage, bool isUnblockable = false)
         {
+            damage = 1;
+
             if (isInvincible) return;
 
             if (damage >= curShield && curShield > 0)
@@ -186,7 +195,18 @@ namespace GyeMong.GameSystem.Creature.Player
             PlayerEvent.TriggerOnTakeDamage(damage);
             changeListenerCaller.CallHpChangeListeners(curHealth);
             TakeGauge();
-            
+
+            if (isHealing)
+            {
+                StopCoroutine(healingCoroutine);
+                healingCoroutine = null;
+                animator.SetBool("isHealing", false);
+                isHealing = false;
+                isAttacking = false;
+                canMove = true;
+                Debug.Log("Heal is unfailed");
+            }
+
             if (curHealth <= 0)
             {
                 StartCoroutine(TriggerInvincibility());
@@ -217,16 +237,6 @@ namespace GyeMong.GameSystem.Creature.Player
                 curSkillGauge = stat.GrazeMax;
             }
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
-        }
-
-        public void Heal(float amount)
-        {
-            curHealth += amount;
-            if (curHealth > stat.HealthMax)
-            {
-                curHealth = stat.HealthMax;
-            }
-            changeListenerCaller.CallHpChangeListeners(curHealth);
         }
 
         public void GrazeIncreaseGauge(float ratio)
@@ -388,6 +398,68 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetBool("isAttacking", false);
             
             isAttacking = false;
+        }
+
+        public IEnumerator Heal()
+        {
+            Debug.Log("IsHealing..");
+            animator.SetBool("isHealing", true);
+
+            isHealing = true;
+            isAttacking = true;
+            canMove = false;
+            movement = Vector2.zero;
+            StopPlayer();
+
+            float elapsed = 0f;
+            float consumedGauge = 0f;
+
+            // soundController.Trigger(PlayerSoundType.HEAL_START);
+
+            while (InputManager.Instance.GetKey(ActionCode.Heal))
+            {
+                float delta = Time.deltaTime;
+                float costPerSecond = stat.HealCost / 1f;
+                float cost = costPerSecond * delta;
+
+                if (curSkillGauge < cost)
+                {
+                    Debug.Log("게이지 부족으로 힐 중단");
+                    break;
+                }
+
+                curSkillGauge -= cost;
+                consumedGauge += cost;
+                elapsed += delta;
+
+                changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+
+                if (elapsed >= 1f)
+                {
+                    Heal(stat.HealAmount);
+                    Debug.Log("Heal is Complete");
+                    break;
+                }
+
+                yield return null;
+            }
+
+            Debug.Log("힐 끝");
+
+            animator.SetBool("isHealing", false);
+            isHealing = false;
+            isAttacking = false;
+            canMove = true;
+        }
+
+        public void Heal(float amount)
+        {
+            curHealth += amount;
+            if (curHealth > stat.HealthMax)
+            {
+                curHealth = stat.HealthMax;
+            }
+            changeListenerCaller.CallHpChangeListeners(curHealth);
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
