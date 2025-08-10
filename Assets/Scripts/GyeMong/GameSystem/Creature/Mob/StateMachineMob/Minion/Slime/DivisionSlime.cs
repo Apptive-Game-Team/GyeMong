@@ -109,7 +109,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     new ParabolicMovement(
                         shootPos,
                         shootPos + direction * mob.RangedAttackRange,
-                        10f)
+                        7f)
                 );
                 rangedAttack.transform.SetParent(DivisionSlime.transform);
                 rangedAttack.transform.localScale = new Vector3(0.28f, 0.28f, 0);
