@@ -11,7 +11,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
     {
         private GameObject player;
         private Vector3 direction;
-        private float speed = 15f;
+        private float speed = 30f;
         private SoundObject _explosionSoundObject;
         private Rigidbody2D rb;
         private float targetDistance = 10f;
@@ -69,7 +69,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             yield return null;
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        /*private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("PlayerAttack") && !isReflected)
             {
@@ -84,7 +84,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 collision.GetComponent<Elf>().StartCoroutine(collision.GetComponent<Elf>().Stun(5f));
                 Destroy(gameObject);
-            }*/
-        }
+            }#1#
+        }*/
     }
 }

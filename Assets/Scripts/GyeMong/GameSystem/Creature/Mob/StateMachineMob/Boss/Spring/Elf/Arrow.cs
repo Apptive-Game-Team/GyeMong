@@ -8,7 +8,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
     public class Arrow : MonoBehaviour
     {
         private Vector3 direction;
-        private float speed = 15f;
+        private float speed = 30f;
         private Rigidbody2D rb;
         private float targetDistance = 10f;
         private float traveledDistance = 0f;
@@ -49,7 +49,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
         }
-        private void OnTriggerEnter2D(Collider2D collision)
+        /*private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("PlayerAttack") && !isReflected)
             {
@@ -64,7 +64,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 collision.GetComponent<Boss>().OnAttacked(20f);
                 Destroy(gameObject);
-            }*/
-        }
+            }#1#
+        }*/
     }
 }
