@@ -69,9 +69,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             yield return null;
         }
 
-        /*private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("PlayerAttack") && !isReflected)
+            if (collision.CompareTag("Player"))
+            {
+                StartCoroutine(Explode());
+            }
+            /*if (collision.CompareTag("PlayerAttack") && !isReflected)
             {
                 isReflected = true;
                 Vector2 playerAttackDirection = SceneContext.Character.mouseDirection;
@@ -79,12 +83,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 traveledDistance = 0f;
                 rb.velocity = direction * speed;
                 RotateArrow();
-            }
+            }*/
             /*else if (collision.CompareTag("Boss") && isReflected)
             {
                 collision.GetComponent<Elf>().StartCoroutine(collision.GetComponent<Elf>().Stun(5f));
                 Destroy(gameObject);
-            }#1#
-        }*/
+            }*/
+        }
     }
 }
