@@ -219,6 +219,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 }
                 else
                 {
+                    DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
+                    yield return new WaitForSeconds(0.1f);
+                    DivisionSlime.StopCoroutine(DivisionSlime._faceToPlayerCoroutine);
+                    dashTargetPosition = SceneContext.Character.transform.position + (Vector3)dashDirection * DivisionSlime._scale / 4;
                     DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DashAttack);
                     jumpHeight = Vector3.Distance(DivisionSlime.transform.position, dashTargetPosition) / 3;
                     Sound.Play("ENEMY_DivisionSlime_DashAttack");
