@@ -81,6 +81,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             }
         }
 
+        private void SetRangedAttack(Vector3 shootPos, Vector3 direction, Transform parent)
+        {
+            AttackObjectController rangedAttackObject = AttackObjectController.Create(
+                shootPos,
+                direction,
+                rangedAttack,
+                new ParabolicMovement(
+                    shootPos,
+                    shootPos + direction * RangedAttackRange,
+                    7f)
+            );
+            rangedAttackObject.transform.SetParent(parent);
+            rangedAttackObject.transform.localScale = new Vector3(0.28f, 0.28f, 0);
+            rangedAttackObject.StartRoutine();
+        }
+
         public class SlimeRangedAttackState : RangedAttackState
         {
             private DivisionSlime DivisionSlime => mob as DivisionSlime;
@@ -102,18 +118,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 Vector3 scaledOffset = Vector3.Scale(offset, DivisionSlime.transform.lossyScale);
                 Vector3 shootPos = mob.transform.position + scaledOffset;
                 Vector3 direction = (SceneContext.Character.transform.position - shootPos).normalized;
-                AttackObjectController rangedAttack = AttackObjectController.Create(
-                    shootPos,
-                    direction,
-                    DivisionSlime.rangedAttack,
-                    new ParabolicMovement(
-                        shootPos,
-                        shootPos + direction * mob.RangedAttackRange,
-                        7f)
-                );
-                rangedAttack.transform.SetParent(DivisionSlime.transform);
-                rangedAttack.transform.localScale = new Vector3(0.28f, 0.28f, 0);
-                rangedAttack.StartRoutine();
+                DivisionSlime.SetRangedAttack(shootPos, direction, DivisionSlime.transform);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
