@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Attack;
@@ -260,17 +261,8 @@ public class NagaRogue : StateMachineMob
         // 3) 실제 이동
         Vector3 startPos = transform.position;
         Vector3 endPos   = startPos + dir * moveDist;
-        float elapsed    = 0f;
 
-        while (elapsed < duration)
-        {
-            transform.position = Vector3.Lerp(startPos, endPos, elapsed / duration);
-            
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = endPos;
+        yield return transform.DOMove(endPos, duration).SetEase(Ease.InOutCubic).WaitForCompletion();
     }
 
     public IEnumerator ChangeAlpha(float targetAlpha, float duration = 0.3f)
@@ -350,7 +342,7 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return 50;
+            return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 50 : 0;
         }
         public override IEnumerator StateCoroutine()
         {
