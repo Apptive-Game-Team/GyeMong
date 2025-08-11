@@ -37,7 +37,8 @@ namespace GyeMong.GameSystem.Creature.Player
         private float blinkDelay = 0.2f;
 
         private bool isMoving = false;
-
+        
+        private bool canDash = true;
         public bool isDashing = false;
         public bool isAttacking = false;
         private bool canMove = true;
@@ -49,6 +50,10 @@ namespace GyeMong.GameSystem.Creature.Player
         public bool isTutorial;
 
         public Material[] materials;
+
+        private Coroutine _attackCoroutine;
+        private Tween _attackMoveTween;
+        private Tween _dashTween;
 
         protected void Awake()
         {
@@ -77,9 +82,9 @@ namespace GyeMong.GameSystem.Creature.Player
                 if (canMove)
                 {
                     HandleMoveInput();
+                    UpdateState();
                 }
                 HandleActionInput();
-                UpdateState();
             }
         }
 
@@ -119,16 +124,17 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private void HandleActionInput()
         {
-            if (InputManager.Instance.GetKeyDown(ActionCode.Dash) && !isDashing)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Dash) && canDash)
             {
                 StartCoroutine(Dash());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Attack))
+            if ((InputManager.Instance.GetKeyDown(ActionCode.Attack) || InputManager.Instance.GetKey(ActionCode.Attack)) &&
+                !isDashing)
             {
                 if (!isAttacking)
                 {
-                    StartCoroutine(Attack());
+                    _attackCoroutine = StartCoroutine(Attack());
                 }
                 else if (canCombo)
                 {
@@ -146,7 +152,11 @@ namespace GyeMong.GameSystem.Creature.Player
         private void MoveCharacter()
         {
             soundController.SetRun(isMoving);
-            playerRb.velocity = movement * stat.MoveSpeed;
+            
+            Vector2 currentVelocity = playerRb.velocity;
+            currentVelocity = Vector2.Lerp(currentVelocity, movement * stat.MoveSpeed, stat.MoveAcceleration * Time.fixedDeltaTime);
+
+            playerRb.velocity = currentVelocity;
         }
 
         private void UpdateState()
@@ -251,13 +261,26 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private IEnumerator Dash()
         {
+            canDash = false;
             isDashing = true;
             canMove = false;
             movement = Vector2.zero;
             animator.SetBool("isDashing", true);
             soundController.Trigger(PlayerSoundType.DASH);
 
-            Vector2 dashDirection = GetCurrentInputDirection(lastMovementDirection.normalized);
+            if (_attackCoroutine != null)
+            {
+                StopCoroutine(_attackCoroutine);
+                _attackCoroutine = null;
+                isAttacking = false;
+                animator.SetBool("isAttacking", false);
+                animator.SetBool("isAttacking2", false);
+            }
+            _attackMoveTween?.Kill();
+
+            Vector2 dashDirection = GetCurrentInputDirection(mouseDirection);
+            animator.SetFloat("xDir", dashDirection.x);
+            animator.SetFloat("yDir", dashDirection.y);
             Vector2 startPosition = playerRb.position;
 
             RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance,
@@ -266,23 +289,19 @@ namespace GyeMong.GameSystem.Creature.Player
                 ? startPosition + dashDirection * stat.DashDistance
                 : hit.point + hit.normal * 0.1f;
 
-            float elapsedTime = 0f;
-
-            while (elapsedTime < stat.DashDuration)
-            {
-                elapsedTime += Time.deltaTime;
-                playerRb.MovePosition(Vector2.Lerp(startPosition, targetPosition, elapsedTime / stat.DashDuration));
-                yield return null;
-            }
+            yield return (_dashTween = playerRb.DOMove(targetPosition, stat.DashDuration)
+                .SetEase(Ease.OutCubic))
+                .WaitForCompletion();
 
             StopPlayer();
 
             canMove = true;
+            isDashing = false;
             animator.SetBool("isDashing", false);
 
             yield return new WaitForSeconds(stat.DashCooldown);
 
-            isDashing = false;
+            canDash = true;
         }
 
         private Vector2 GetCurrentInputDirection(Vector2 direction)
@@ -293,7 +312,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (InputManager.Instance.GetKey(ActionCode.MoveRight)) dir += Vector2.right;
             if (InputManager.Instance.GetKey(ActionCode.MoveLeft)) dir += Vector2.left;
 
-            if (dir != Vector2.zero) return dir;
+            if (dir != Vector2.zero) return dir.normalized;
             return direction;
         }
 
@@ -305,14 +324,11 @@ namespace GyeMong.GameSystem.Creature.Player
             movement = Vector2.zero;
             StopPlayer();
             
-            AttackMove(GetCurrentInputDirection(mouseDirection));
-            yield return new WaitForSeconds(stat.AttackDelay / 2);
-            
-            soundController.Trigger(PlayerSoundType.SWORD_SWING);
-
             animator.SetBool("isAttacking", true);
-
             SpawnAttackCollider(attackColliderPrefab);
+            soundController.Trigger(PlayerSoundType.SWORD_SWING);
+            yield return new WaitForSeconds(stat.AttackDelay / 2);
+            AttackMove(GetCurrentInputDirection(mouseDirection));
             
             canCombo = true;
             yield return new WaitForSeconds(stat.AttackDelay); // 콤보 입력 대기
@@ -321,11 +337,12 @@ namespace GyeMong.GameSystem.Creature.Player
             if (comboQueued)
             {
                 comboQueued = false;
-                AttackMove(GetCurrentInputDirection(mouseDirection));
-                yield return new WaitForSeconds(stat.AttackDelay / 2);
+                UpdateState();
                 soundController.Trigger(PlayerSoundType.SWORD_SWING);
                 animator.SetBool("isAttacking2", true);
                 SpawnAttackCollider(attackComboColliderPrefab);
+                yield return new WaitForSeconds(stat.AttackDelay / 2);
+                AttackMove(GetCurrentInputDirection(mouseDirection));
                 yield return new WaitForSeconds(stat.AttackDelay);
                 animator.SetBool("isAttacking2", false);
             }
@@ -333,6 +350,8 @@ namespace GyeMong.GameSystem.Creature.Player
             canMove = true;
             animator.SetBool("isAttacking", false);
             isAttacking = false;
+            
+            yield return null;
         }
 
         private void AttackMove(Vector2 direction)
@@ -345,7 +364,8 @@ namespace GyeMong.GameSystem.Creature.Player
             float colliderRadius = _hitCollider.radius;
             float adjustedDistance = distance + colliderRadius;
             RaycastHit2D hit = Physics2D.Raycast(currentPos, dirNormalized, adjustedDistance, LayerMask.GetMask("Wall"));
-            if (hit.collider == null) transform.DOMove(targetPos, stat.AttackDelay).SetEase(Ease.OutQuad);
+            if (hit.collider == null && (_dashTween == null || !_dashTween.IsActive() || !_dashTween.IsPlaying())) 
+                _attackMoveTween = transform.DOMove(targetPos, stat.AttackDelay).SetEase(Ease.OutCubic);
         }
 
         private float _chargeThreshold = 1f;

@@ -15,6 +15,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         GRAZE_GAIN_ON_GRAZE,
         GRAZE_GAIN_ON_ATTACK,
         MOVE_SPEED,
+        MOVE_ACCELERATION,
         DASH_SPEED,
         SKILL_SPEED,
         DASH_DURATION,
@@ -133,6 +134,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         public float GrazeGainOnGraze => GetStatValue(StatType.GRAZE_GAIN_ON_GRAZE);
         public float GrazeGainOnAttack => GetStatValue(StatType.GRAZE_GAIN_ON_ATTACK);
         public float MoveSpeed => GetStatValue(StatType.MOVE_SPEED);
+        public float MoveAcceleration => GetStatValue(StatType.MOVE_ACCELERATION);
         public float DashSpeed  => GetStatValue(StatType.DASH_SPEED);
         public float SkillSpeed  => GetStatValue(StatType.SKILL_SPEED);
         public float DashDuration => GetStatValue(StatType.DASH_DURATION);
@@ -151,6 +153,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component
             statEntries.Add(new StatEntry(StatType.GRAZE_GAIN_ON_GRAZE, new Stat()));
             statEntries.Add(new StatEntry(StatType.GRAZE_GAIN_ON_ATTACK, new Stat()));
             statEntries.Add(new StatEntry(StatType.MOVE_SPEED, new Stat()));
+            statEntries.Add(new StatEntry(StatType.MOVE_ACCELERATION, new Stat()));
             statEntries.Add(new StatEntry(StatType.DASH_SPEED, new Stat()));
             statEntries.Add(new StatEntry(StatType.SKILL_SPEED, new Stat()));
             statEntries.Add(new StatEntry(StatType.DASH_DURATION, new Stat()));
