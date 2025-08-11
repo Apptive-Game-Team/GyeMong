@@ -28,6 +28,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
 
         private IEnumerator TriggerEvents()
         {
+            yield return SceneContext.CameraManager.CameraZoomInOut(2.5f, 0);
             GameObject minion = Instantiate(minionObject, new Vector3(cameraDestination.x, cameraDestination.y, 0f), Quaternion.identity);
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine((new MoveCreatureEvent()
@@ -37,10 +38,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
                 speed = playerMoveSpeed,
                 target = playerDestination
             }).Execute());
-            
-            SceneContext.CameraManager.CameraFollow(minion.transform);
-            yield return SceneContext.Character.transform.DOScale(new Vector3(0.5f,0.5f,0.5f), cameraSpeed);
-            yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(3f, cameraSpeed));
+            yield return new WaitForSeconds(0.5f);
+            //SceneContext.CameraManager.CameraFollow(minion.transform);
+            yield return SceneContext.Character.transform.DOScale(new Vector3(0.7f,0.7f,0.7f), cameraSpeed);
+            StartCoroutine(
+                SceneContext.CameraManager.CameraMove(new Vector3(cameraDestination.x, cameraDestination.y, -10f),
+                    cameraSpeed));
+            yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(3.5f, cameraSpeed));
             yield return StartCoroutine((new OpenChatEvent().Execute()));
             yield return new ShowMessages(battleOpeningChat, autoSkipTime).Execute();
             yield return StartCoroutine((new CloseChatEvent().Execute()));
