@@ -152,7 +152,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             damage = 10;
             speed = 1;
             detectionRange = 10;
-            MeleeAttackRange = 2;
+            maxMeleeAttackRange = 2;
             RangedAttackRange = 20;
 
             _detector = SimplePlayerDistanceDetector.Create(this);
@@ -192,7 +192,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         {
             public override int GetWeight()
             {
-                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                if (mob.DistanceToPlayer > mob.maxMeleeAttackRange)
                 {
                     return 5;
                 }
@@ -202,7 +202,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             public override IEnumerator StateCoroutine()
             {
                 mob.Animator.SetBool("isMove", true);
-                while (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                while (mob.DistanceToPlayer > mob.maxMeleeAttackRange)
                 {
                      mob.TrackPlayer();
                      ShadowOfHero.FaceToPlayer();
@@ -218,7 +218,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         {
             public override int GetWeight()
             {
-                if (ShadowOfHero._attackCount >= MAX_ATTACK_COUNT && mob.DistanceToPlayer < mob.MeleeAttackRange)
+                if (ShadowOfHero._attackCount >= MAX_ATTACK_COUNT && mob.DistanceToPlayer < mob.maxMeleeAttackRange)
                 {
                     ShadowOfHero._attackCount = 0;
                     return 100;
@@ -245,7 +245,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         {
             public override int GetWeight()
             {
-                if (mob.DistanceToPlayer < mob.MeleeAttackRange)
+                if (mob.DistanceToPlayer < mob.maxMeleeAttackRange)
                     return 5;
                 return 0;
             }
@@ -262,7 +262,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         {
             public override int GetWeight()
             {
-                if (mob.DistanceToPlayer > mob.MeleeAttackRange && mob.DistanceToPlayer < mob.RangedAttackRange)
+                if (mob.DistanceToPlayer > mob.maxMeleeAttackRange && mob.DistanceToPlayer < mob.RangedAttackRange)
                 {
                     return 5;
                 }
@@ -282,7 +282,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         {
             public override int GetWeight()
             {
-                return ShadowOfHero.DistanceToPlayer < ShadowOfHero.MeleeAttackRange ? 5 : 0;
+                return ShadowOfHero.DistanceToPlayer < ShadowOfHero.maxMeleeAttackRange ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()

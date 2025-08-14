@@ -43,7 +43,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
-            MeleeAttackRange = 2f;
+            maxMeleeAttackRange = 2f;
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
@@ -61,11 +61,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 weights = new Dictionary<System.Type, int>
                     {
                         { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                        { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0 },
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 10 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 },
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 10 : 0},
-                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
+                        { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 50 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 10 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 10 : 0},
+                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
                     };
                 if (weights.Values.All(w => w == 0))
@@ -101,8 +101,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 10 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 10 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
                     };
                 if (weights.Values.All(w => w == 0))
@@ -119,7 +119,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -146,11 +146,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 10 : 0 },
-                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 10 : 0 },
+                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 10 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 }
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 10 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -162,7 +162,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -216,7 +216,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -251,7 +251,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -276,7 +276,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 if (Elf.CurrentPhase == 1)
                 {
-                    return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
+                    return (Elf.DistanceToPlayer < Elf.maxMeleeAttackRange) ? 5 : 0;
                 }
                 return 0;
             }

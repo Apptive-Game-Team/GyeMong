@@ -43,7 +43,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             _pathFinder = new SimplePathFinder();
             _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
             
-            MeleeAttackRange = 2f;
+            maxMeleeAttackRange = 2f;
             RangedAttackRange = 8f;
             detectionRange = 20f;
 
@@ -84,7 +84,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             private DivisionSlime DivisionSlime => mob as DivisionSlime;
             public override int GetWeight()
             {
-                return DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange && DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange ? 5 : 0;
+                return DivisionSlime.DistanceToPlayer > DivisionSlime.maxMeleeAttackRange && DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -122,7 +122,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             public override int GetWeight()
             {
                 if (DivisionSlime._isTutorial) return 0;
-                return DivisionSlime.DistanceToPlayer <= DivisionSlime.MeleeAttackRange ? 5 : 0;
+                return DivisionSlime.DistanceToPlayer <= DivisionSlime.maxMeleeAttackRange ? 5 : 0;
             }
             
             public override IEnumerator StateCoroutine()
@@ -175,7 +175,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             public override int GetWeight()
             {
                 if (DivisionSlime._isTutorial) return 0;
-                return (DivisionSlime.DistanceToPlayer > DivisionSlime.MeleeAttackRange &&
+                return (DivisionSlime.DistanceToPlayer > DivisionSlime.maxMeleeAttackRange &&
                         DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange) ? 5 : 0;
             }
 
@@ -270,7 +270,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 slimeComponent._slimeAnimator = SlimeAnimator.Create(slimeComponent.gameObject, sprites);
                 slimeComponent._detector = SimplePlayerDetector.Create(slimeComponent);
                 slimeComponent.damage *= DIVIDE_RATIO;
-                slimeComponent.MeleeAttackRange *= DIVIDE_RATIO;
+                slimeComponent.maxMeleeAttackRange *= DIVIDE_RATIO;
                 slimeComponent.RangedAttackRange *= DIVIDE_RATIO;
                 slimeComponent._jumpHeight *= DIVIDE_RATIO;
                 slimeComponent._divisionLevel = _divisionLevel + 1;

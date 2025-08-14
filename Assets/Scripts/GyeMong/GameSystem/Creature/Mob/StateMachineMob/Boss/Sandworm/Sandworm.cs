@@ -43,7 +43,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
-            MeleeAttackRange = 5f;
+            maxMeleeAttackRange = 5f;
             RangedAttackRange = 100f;
             
             _venomAttackDuration = 0.8f;
@@ -77,11 +77,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 _weights = new Dictionary<System.Type, int>
                     {
                         {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
+                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.maxMeleeAttackRange) ? 5 : 0 },
                         {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange)
+                        {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.maxMeleeAttackRange)
                             && (Sandworm.currentPhase == 1) ? 5 : 0 },
-                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange)
+                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.maxMeleeAttackRange)
                             && (Sandworm.currentPhase == 1) ? 5 : 0 },
                     };
             }

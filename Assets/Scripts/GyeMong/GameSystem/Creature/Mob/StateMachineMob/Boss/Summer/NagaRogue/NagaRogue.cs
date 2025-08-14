@@ -76,7 +76,7 @@ public class NagaRogue : StateMachineMob
         damage = 10;
         speed = 1;
         detectionRange = 50;
-        MeleeAttackRange = 2;
+        maxMeleeAttackRange = 2;
         RangedAttackRange = 20;
 
         _detector = SimplePlayerDistanceDetector.Create(this);
@@ -331,7 +331,7 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return (mob.DistanceToPlayer >= mob.MeleeAttackRange) ? 50 : 0;
+            return (mob.DistanceToPlayer >= mob.maxMeleeAttackRange) ? 50 : 0;
         }
 
         public override IEnumerator StateCoroutine()
@@ -345,7 +345,7 @@ public class NagaRogue : StateMachineMob
     {
         public override int GetWeight()
         {
-            return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 100 : 0;
+            return (mob.DistanceToPlayer <= mob.maxMeleeAttackRange) ? 100 : 0;
         }
 
         public override IEnumerator StateCoroutine()

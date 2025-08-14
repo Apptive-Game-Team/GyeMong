@@ -73,7 +73,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             damage = 10;
             speed = 1.5f;
             detectionRange = 7;
-            MeleeAttackRange = 1;
+            maxMeleeAttackRange = 1;
             RangedAttackRange = 5;
 
             _detector = SimplePlayerDistanceDetector.Create(this);
@@ -120,7 +120,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         {
             public override int GetWeight()
             {
-                return mob.DistanceToPlayer > mob.MeleeAttackRange && mob.DistanceToPlayer < mob.RangedAttackRange ? 5 : 0;
+                return mob.DistanceToPlayer > mob.maxMeleeAttackRange && mob.DistanceToPlayer < mob.RangedAttackRange ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -148,14 +148,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         {
             public override int GetWeight()
             {
-                return mob.DistanceToPlayer <= mob.MeleeAttackRange ? 5 : 0;
+                return mob.DistanceToPlayer <= mob.maxMeleeAttackRange ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
-                if (mob.DistanceToPlayer <= mob.MeleeAttackRange && SceneContext.Character != null && SceneContext.Character.gameObject.activeInHierarchy)   
+                if (mob.DistanceToPlayer <= mob.maxMeleeAttackRange && SceneContext.Character != null && SceneContext.Character.gameObject.activeInHierarchy)   
                     SceneContext.Character.TakeDamage(mob.damage);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
@@ -174,7 +174,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override int GetWeight()
             {
-                return mob.DistanceToPlayer > mob.MeleeAttackRange && mob.DistanceToPlayer < mob.DetectionRange ? 5 : 0;
+                return mob.DistanceToPlayer > mob.maxMeleeAttackRange && mob.DistanceToPlayer < mob.DetectionRange ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()

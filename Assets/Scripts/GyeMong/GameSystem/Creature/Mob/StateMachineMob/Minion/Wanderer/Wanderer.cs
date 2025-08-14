@@ -104,7 +104,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             damage = 10;
             speed = 1;
             detectionRange = 10;
-            MeleeAttackRange = 2;
+            maxMeleeAttackRange = 2;
             RangedAttackRange = 3;
 
             _detector = SimplePlayerDistanceDetector.Create(this);
@@ -120,7 +120,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
-                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                if (mob.DistanceToPlayer > mob.maxMeleeAttackRange)
                 {
                     return 0;
                 }
@@ -138,7 +138,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
-                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                if (mob.DistanceToPlayer > mob.maxMeleeAttackRange)
                 {
                     return 0;
                 }
@@ -163,7 +163,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
-                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                if (mob.DistanceToPlayer > mob.maxMeleeAttackRange)
                 {
                     return 0;
                 }
@@ -226,7 +226,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
-                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                if (mob.DistanceToPlayer > mob.maxMeleeAttackRange)
                 {
                     return 5;
                 }
@@ -236,7 +236,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 mob.Animator.SetBool("isMove", true);
-                while (mob.DistanceToPlayer > mob.MeleeAttackRange)
+                while (mob.DistanceToPlayer > mob.maxMeleeAttackRange)
                 {
                     mob.TrackPlayer();
                     Wanderer.FaceToPlayer();

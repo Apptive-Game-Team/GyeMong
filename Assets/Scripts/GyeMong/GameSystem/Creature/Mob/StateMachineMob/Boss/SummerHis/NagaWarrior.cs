@@ -51,7 +51,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
-            MeleeAttackRange = 2f;
+            maxMeleeAttackRange = 2f;
             RangedAttackRange = 8f;
             attackdelayTime = 1f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
@@ -150,9 +150,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
                         { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 },
                         { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
                     };
@@ -173,7 +173,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer <= NagaWarrior.maxMeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -195,8 +195,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
                         { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 },
                         { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
                     };
@@ -210,7 +210,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -248,8 +248,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
                         { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 },
                         { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
                     };
@@ -263,7 +263,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public override int GetWeight()
             {
-                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0;
+                return (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -299,8 +299,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
                         { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 },
                         { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
                     };
@@ -334,9 +334,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
                         { typeof(BreathAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
@@ -366,9 +366,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
-                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(MeleeAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(JumpAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
+                        { typeof(TaleRushAttack), (NagaWarrior.DistanceToPlayer >= NagaWarrior.maxMeleeAttackRange) ? 5 : 0 },
                         { typeof(AuraAttack), (NagaWarrior.DistanceToPlayer <= NagaWarrior.RangedAttackRange) ? 5 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
