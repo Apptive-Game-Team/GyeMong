@@ -35,7 +35,7 @@ namespace GyeMong.GameSystem.Creature.Player
         public GameObject attackComboColliderPrefab;
         public GameObject skillColliderPrefab;
         public GameObject healEffectPrefab;
-        private GameObject activeHealEffect;
+        private GameObject activeEffect;
         private float blinkDelay = 0.2f;
 
         private bool isMoving = false;
@@ -201,7 +201,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (isHealing)
             {
                 StopCoroutine(healingCoroutine);
-                DestroyHealEffect();
+                DestroyEffect();
                 healingCoroutine = null;
                 animator.SetBool("isHealing", false);
                 isHealing = false;
@@ -408,7 +408,7 @@ namespace GyeMong.GameSystem.Creature.Player
             Debug.Log("IsHealing..");
             animator.SetBool("isHealing", true);
 
-            SpawnHealEffect();
+            SpawnEffect(healEffectPrefab);
 
             isHealing = true;
             isAttacking = true;
@@ -450,7 +450,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
             Debug.Log("힐 끝");
 
-            DestroyHealEffect();
+            DestroyEffect();
 
             animator.SetBool("isHealing", false);
             isHealing = false;
@@ -467,21 +467,22 @@ namespace GyeMong.GameSystem.Creature.Player
             }
             changeListenerCaller.CallHpChangeListeners(curHealth);
         }
-        private void SpawnHealEffect()
+        private void SpawnEffect(GameObject prefab)
         {
-            if (healEffectPrefab == null) return;
+            if (prefab == null) return;
 
-            if (activeHealEffect != null) return;
+            if (activeEffect != null && activeEffect.name.Contains(prefab.name)) return;
 
-            activeHealEffect = Instantiate(healEffectPrefab, transform.position, Quaternion.identity, transform);
+            DestroyEffect();
+
+            activeEffect = Instantiate(prefab, transform.position, Quaternion.identity, transform);
         }
-
-        private void DestroyHealEffect()
+        private void DestroyEffect()
         {
-            if (activeHealEffect != null)
+            if (activeEffect != null)
             {
-                Destroy(activeHealEffect);
-                activeHealEffect = null;
+                Destroy(activeEffect);
+                activeEffect = null;
             }
         }
 
