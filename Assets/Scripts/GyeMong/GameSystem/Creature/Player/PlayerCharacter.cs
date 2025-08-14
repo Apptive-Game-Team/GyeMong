@@ -35,7 +35,9 @@ namespace GyeMong.GameSystem.Creature.Player
         public GameObject attackComboColliderPrefab;
         public GameObject skillColliderPrefab;
         public GameObject healEffectPrefab;
-        private GameObject activeEffect;
+        public GameObject healCompleteEffectPrefab;
+        private GameObject activeHealEffect;
+        private GameObject activeHealCompleteEffect;
         private float blinkDelay = 0.2f;
 
         private bool isMoving = false;
@@ -201,7 +203,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (isHealing)
             {
                 StopCoroutine(healingCoroutine);
-                DestroyEffect();
+                DestroyEffect(ref activeHealEffect);
                 healingCoroutine = null;
                 animator.SetBool("isHealing", false);
                 isHealing = false;
@@ -408,7 +410,7 @@ namespace GyeMong.GameSystem.Creature.Player
             Debug.Log("IsHealing..");
             animator.SetBool("isHealing", true);
 
-            SpawnEffect(healEffectPrefab);
+            SpawnHealEffect(healEffectPrefab);
 
             isHealing = true;
             isAttacking = true;
@@ -440,6 +442,7 @@ namespace GyeMong.GameSystem.Creature.Player
                 if (elapsed >= 1f)
                 {
                     Heal(stat.HealAmount);
+                    SpawnHealCompleteEffect(healCompleteEffectPrefab);
                     soundController.Trigger(PlayerSoundType.HEAL);
                     Debug.Log("Heal is Complete");
                     break;
@@ -450,12 +453,13 @@ namespace GyeMong.GameSystem.Creature.Player
 
             Debug.Log("힐 끝");
 
-            DestroyEffect();
-
+            DestroyEffect(ref activeHealEffect);
+            
             animator.SetBool("isHealing", false);
             isHealing = false;
             isAttacking = false;
             canMove = true;
+
         }
 
         public void Heal(float amount)
@@ -467,17 +471,25 @@ namespace GyeMong.GameSystem.Creature.Player
             }
             changeListenerCaller.CallHpChangeListeners(curHealth);
         }
-        private void SpawnEffect(GameObject prefab)
+        private void SpawnHealEffect(GameObject prefab)
         {
             if (prefab == null) return;
-
-            if (activeEffect != null && activeEffect.name.Contains(prefab.name)) return;
-
-            DestroyEffect();
-
-            activeEffect = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+            if (activeHealEffect != null) return;
+            DestroyEffect(ref activeHealEffect);
+            DestroyEffect(ref activeHealCompleteEffect);
+            activeHealEffect = Instantiate(prefab, transform);
+            activeHealEffect.transform.localPosition = Vector3.zero;
         }
-        private void DestroyEffect()
+        private void SpawnHealCompleteEffect(GameObject prefab)
+        {
+            if (prefab == null) return;
+            if (activeHealCompleteEffect != null) return;
+            DestroyEffect(ref activeHealEffect);
+            DestroyEffect(ref activeHealCompleteEffect);
+            activeHealCompleteEffect = Instantiate(prefab, transform);
+            activeHealCompleteEffect.transform.localPosition = Vector3.zero;
+        }
+        private void DestroyEffect(ref GameObject activeEffect)
         {
             if (activeEffect != null)
             {
