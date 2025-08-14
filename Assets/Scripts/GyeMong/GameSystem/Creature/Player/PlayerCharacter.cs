@@ -437,6 +437,7 @@ namespace GyeMong.GameSystem.Creature.Player
                 if (elapsed >= 1f)
                 {
                     Heal(stat.HealAmount);
+                    soundController.Trigger(PlayerSoundType.HEAL);
                     Debug.Log("Heal is Complete");
                     break;
                 }
