@@ -47,8 +47,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             maxPhase = 2;
             maxHps.Clear();
-            maxHps.Add(10f);
             maxHps.Add(20f);
+            maxHps.Add(30f);
             currentHp = maxHps[currentPhase];
             currentShield = 0f;
             damage = 30f;
