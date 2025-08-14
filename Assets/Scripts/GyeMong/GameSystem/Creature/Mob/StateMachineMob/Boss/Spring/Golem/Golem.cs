@@ -133,23 +133,27 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             int targetRadius = 4;
             Vector3[] points = GetCirclePoints(transform.position, targetRadius, targetRadius * 3 + 10);
-            ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
-            StartCoroutine(ShockwaveSoundObject.Play());
-            SceneContext.CameraManager.CameraShake(0.2f);
             foreach (Vector3 point in points)
             {
                 StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
                     (shockwavePrefab,point, Quaternion.identity, attackdelayTime / 2,
-                        () => AttackObjectController.Create(
-                            point,
-                            Vector3.zero,
-                            shockwavePrefab,
-                            new StaticMovement(
+                        () =>
+                        {
+                            ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
+                            StartCoroutine(ShockwaveSoundObject.Play());
+                            SceneContext.CameraManager.CameraShake(0.2f);
+                            AttackObjectController.Create(
                                 point,
-                                attackdelayTime / 2)
-                        ).StartRoutine()));
+                                Vector3.zero,
+                                shockwavePrefab,
+                                new StaticMovement(
+                                    point,
+                                    attackdelayTime / 2)
+                            ).StartRoutine();
+                        }));
             }
-            yield return new WaitForSeconds(attackdelayTime / 3);
+            
+            yield return new WaitForSeconds(attackdelayTime / 2);
         }
         public abstract class GolemState : CoolDownState
         {
@@ -190,10 +194,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 yield return Golem.MakeShock();
+                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 Golem.Animator.SetBool("TwoHand", false);
-                yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
