@@ -299,10 +299,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
+                Golem.Animator.SetBool("isShield", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime);
                 Golem.currentShield = 5f;
                 Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
                 Golem.MaterialController.SetFloat(1);
+                Golem.Animator.SetBool("isShield", false);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
