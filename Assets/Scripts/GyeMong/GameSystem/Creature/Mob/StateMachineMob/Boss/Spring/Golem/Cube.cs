@@ -53,6 +53,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             }
             isFalled = true;
             Sound.Play("ENEMY_Rock_Falled");
+            SceneContext.CameraManager.CameraShake(0.15f);
             SceneContext.CameraManager.CameraShake(0.1f);
             Collider2D collider = GetComponent<Collider2D>();
             if (collider != null)

@@ -330,7 +330,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Vector3 direction = Golem.DirectionToPlayer;
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Golem.transform.position + spawnStoneRadius;
-
+                SceneContext.CameraManager.CameraShake(0.15f);
                 Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval));
 
                 Golem.Animator.SetBool("OneHand", false);
