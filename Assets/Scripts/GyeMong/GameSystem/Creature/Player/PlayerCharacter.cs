@@ -34,6 +34,8 @@ namespace GyeMong.GameSystem.Creature.Player
         public GameObject attackColliderPrefab;
         public GameObject attackComboColliderPrefab;
         public GameObject skillColliderPrefab;
+        public GameObject healEffectPrefab;
+        private GameObject activeHealEffect;
         private float blinkDelay = 0.2f;
 
         private bool isMoving = false;
@@ -199,6 +201,7 @@ namespace GyeMong.GameSystem.Creature.Player
             if (isHealing)
             {
                 StopCoroutine(healingCoroutine);
+                DestroyHealEffect();
                 healingCoroutine = null;
                 animator.SetBool("isHealing", false);
                 isHealing = false;
@@ -405,6 +408,8 @@ namespace GyeMong.GameSystem.Creature.Player
             Debug.Log("IsHealing..");
             animator.SetBool("isHealing", true);
 
+            SpawnHealEffect();
+
             isHealing = true;
             isAttacking = true;
             canMove = false;
@@ -413,8 +418,6 @@ namespace GyeMong.GameSystem.Creature.Player
 
             float elapsed = 0f;
             float consumedGauge = 0f;
-
-            // soundController.Trigger(PlayerSoundType.HEAL_START);
 
             while (InputManager.Instance.GetKey(ActionCode.Heal))
             {
@@ -447,6 +450,8 @@ namespace GyeMong.GameSystem.Creature.Player
 
             Debug.Log("힐 끝");
 
+            DestroyHealEffect();
+
             animator.SetBool("isHealing", false);
             isHealing = false;
             isAttacking = false;
@@ -461,6 +466,23 @@ namespace GyeMong.GameSystem.Creature.Player
                 curHealth = stat.HealthMax;
             }
             changeListenerCaller.CallHpChangeListeners(curHealth);
+        }
+        private void SpawnHealEffect()
+        {
+            if (healEffectPrefab == null) return;
+
+            if (activeHealEffect != null) return;
+
+            activeHealEffect = Instantiate(healEffectPrefab, transform.position, Quaternion.identity, transform);
+        }
+
+        private void DestroyHealEffect()
+        {
+            if (activeHealEffect != null)
+            {
+                Destroy(activeHealEffect);
+                activeHealEffect = null;
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
