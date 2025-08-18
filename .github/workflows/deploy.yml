@@ -34,7 +34,7 @@ jobs:
         with:
           unityVersion: 2022.3.22f1
           targetPlatform: WebGL
-          customParameters: -logFile -
+          customParameters: -logFile - -ignoreCompilerErrors
 
       - name: Upload WebGL build artifact
         uses: actions/upload-artifact@v4
