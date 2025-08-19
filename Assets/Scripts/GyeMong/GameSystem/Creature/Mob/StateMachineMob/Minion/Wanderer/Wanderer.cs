@@ -6,6 +6,7 @@ using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
 using DG.Tweening;
+using GyeMong.GameSystem.Indicator;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 {
@@ -68,15 +69,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private IEnumerator StaticAttack(GameObject prefab, Vector3 targetPos, float distance = 0.5f, float duration = 0.5f)
         {
             Vector3 attackDir = (targetPos - transform.position).normalized;
-            AttackObjectController.Create(
-                    transform.position + attackDir * distance, 
-                    attackDir, 
-                    prefab, 
-                    new StaticMovement(
-                        attackDir * distance + transform.position, 
-                        duration)
-                )
-                .StartRoutine();
+            Quaternion rotation = Quaternion.LookRotation(Vector3.forward, targetPos - transform.position);
+            StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(prefab, transform.position + attackDir * distance, rotation, 0.3f,
+                () =>
+                {
+                    AttackObjectController.Create(
+                            transform.position + attackDir * distance, 
+                            attackDir, 
+                            prefab, 
+                            new StaticMovement(
+                                attackDir * distance + transform.position, 
+                                duration)
+                        )
+                        .StartRoutine();
+                }));
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -205,6 +211,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 Wanderer._animator.SetTrigger(IsAttacking);
                 yield return Wanderer.StaticAttack(Wanderer.attackFloorPrefab, targetPos);
                 Wanderer._animator.SetBool(IsAttacking, false);
+                yield return new WaitForSeconds(0.3f);
                 SceneContext.CameraManager.CameraShake(0.3f);
                 GameObject growFloorAttack = Instantiate(Wanderer.growFloorPrefab, targetPos, Quaternion.identity);
                 Destroy(growFloorAttack, 1.5f);
