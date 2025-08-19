@@ -226,10 +226,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             public override int GetWeight()
             {
-                if (mob.DistanceToPlayer > mob.MeleeAttackRange)
-                {
-                    return 5;
-                }
                 return 0;
             }
 
