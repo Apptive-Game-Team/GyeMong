@@ -10,7 +10,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
 {
     public class NagaRogueOpeningEvent : MonoBehaviour
     {
-        [SerializeField] private global::NagaRogue nagaRogue; 
+        [SerializeField] private NagaRogue nagaRogue; 
         [SerializeField] private Vector3 playerDestination;
         [SerializeField] private float playerMoveSpeed;
         [SerializeField] private GameObject wall;
