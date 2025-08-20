@@ -477,6 +477,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2832107695111822258, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
+        type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2980147215863620375, guid: e7e65a642d45e46ba8e8fc6f26e7d8e3,
         type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
@@ -77904,6 +77909,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122920374545422110, guid: c2f3182f131863545b899e8b19921037,
+        type: 3}
+      propertyPath: orthographic size
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5820504544349565276, guid: c2f3182f131863545b899e8b19921037,
         type: 3}
