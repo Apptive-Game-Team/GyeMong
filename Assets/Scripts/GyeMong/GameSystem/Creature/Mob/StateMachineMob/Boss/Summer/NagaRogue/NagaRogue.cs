@@ -33,8 +33,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
         [SerializeField] private GameObject sandMinionPrefab;
         [SerializeField] private ParticleSystem sandStormParticles;
         [SerializeField] private MultiChatMessageData phaseChangeChat;
+        [SerializeField] private EdgeCollider2D mapEdge;
+        private float boundaryInset = 0.2f; // 안쪽으로 밀어넣는 거리
 
         private List<GameObject> daggerList = new();
+        public const float DaggerRange = 20f;
         public float curveThrowRnage = 10f;
         public float phaseChangeHealthPercent = 0.5f;
         public bool canPhaseChange = true;
@@ -151,28 +154,42 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
             yield return new WaitForSeconds(0.5f);
         }
         
-        private IEnumerator RangeThrow(GameObject prefab, float daggerRange = 10f, float throwSpeed = 20f)
+        private IEnumerator RangeThrow(
+            GameObject prefab,
+            float daggerRange = 20f,
+            float throwSpeed  = 20f,
+            float aimErrorDeg = 0f        // ← 추가: 오차 각(도)
+        )
         {
             FaceToPlayer();
-            Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
+            Direction dirEnum = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
             Sound.Play("ENEMY_NagaRogue_Throw");
-            Animator.Play($"Throw_{dir}", 0, 0f);
-            Vector3 spawnPos = transform.position + DirectionToPlayer * 0.6f;
-            Vector3 targetPos = spawnPos + DirectionToPlayer * daggerRange;
+            Animator.Play($"Throw_{dirEnum}", 0, 0f);
+
+            // 기준 방향 + 랜덤 오차
+            Vector3 forward = DirectionToPlayer.normalized;
+            if (aimErrorDeg > 0f)
+            {
+                float err = Random.Range(-aimErrorDeg, aimErrorDeg);
+                forward = Quaternion.Euler(0, 0, err) * forward;
+            }
+
+            Vector3 spawnPos = transform.position + forward * 0.6f;
+            Vector3 targetPos = spawnPos + forward * daggerRange;
 
             var ac = AttackObjectController.Create(
-                spawnPos, DirectionToPlayer, prefab,
+                spawnPos, forward, prefab,
                 new LinearMovement(spawnPos, targetPos, throwSpeed)
             );
             ac.gameObject.GetComponent<ReturnDagger>().Initiate(transform);
             ac.StartRoutineWithCallOnEnd(() => daggerList.Add(ac.gameObject));
-            
+
             yield return new WaitForSeconds(0.2f);
         }
         
         private IEnumerator DaggerFanThrow(GameObject prefab, int daggerCount = 3, 
             float spreadAngle = 120f, float frontConeHalf = 15f,
-            float throwSpeed = 20f, float daggerRange = 10f)
+            float throwSpeed = 20f, float daggerRange = 20f)
         {
             FaceToPlayer();
             Direction direction = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
@@ -206,6 +223,247 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
                 yield return new WaitForSeconds(0.015f);
             }
         }
+//---------------------------------여러 방향 선택하는 알고리즘들-----------------------------
+// 유틸
+private Vector3 Perp(Vector3 v) => new Vector3(-v.y, v.x, 0).normalized;
+
+private bool InViewport(Vector3 world, float margin = 0.06f) {
+    var cam = Camera.main;
+    if (!cam) return true;
+    var v = cam.WorldToViewportPoint(world);
+    return v.z > 0 && v.x > margin && v.x < 1 - margin && v.y > margin && v.y < 1 - margin;
+}
+private static Vector3 ClosestPointOnSegment(Vector3 p, Vector3 a, Vector3 b)
+{
+    Vector3 ab = b - a;
+    float t = Vector3.Dot(p - a, ab) / Mathf.Max(ab.sqrMagnitude, 1e-6f);
+    t = Mathf.Clamp01(t);
+    return a + ab * t;
+}
+
+private bool IsEdgeClockwise(EdgeCollider2D edge)
+{
+    if (!edge || edge.pointCount < 3) return false;
+    var pts = edge.points;
+    float area2 = 0f;
+    for (int i = 0; i < pts.Length; i++)
+    {
+        Vector2 a = pts[i];
+        Vector2 b = pts[(i + 1) % pts.Length];
+        area2 += a.x * b.y - b.x * a.y;
+    }
+    // 음수면 시계방향
+    return area2 < 0f;
+}
+
+private bool IsInsideEdge(EdgeCollider2D edge, Vector2 worldPoint)
+{
+    if (!edge || edge.pointCount < 3) return true;
+    var pts = edge.points;
+    int n = pts.Length, crossings = 0;
+    Vector2 p1 = edge.transform.TransformPoint(pts[0]);
+    for (int i = 1; i <= n; i++)
+    {
+        Vector2 p2 = edge.transform.TransformPoint(pts[i % n]);
+        // 오른쪽(+x) 레이 교차 카운트
+        bool cond = ((p1.y > worldPoint.y) != (p2.y > worldPoint.y)) &&
+                    (worldPoint.x < (p2.x - p1.x) * (worldPoint.y - p1.y) / (p2.y - p1.y) + p1.x);
+        if (cond) crossings++;
+        p1 = p2;
+    }
+    return (crossings & 1) == 1;
+}
+
+private Vector3 ClampInsideEdge(EdgeCollider2D edge, Vector3 worldPoint, float inset)
+{
+    if (!edge) return worldPoint;
+    if (IsInsideEdge(edge, worldPoint)) return worldPoint;
+
+    // 1) 가장 가까운 선분에서 최근접점 구하기
+    var pts = edge.points;
+    int n = pts.Length;
+    float bestSqr = float.PositiveInfinity;
+    int bestIdx = 0;
+    Vector3 bestClosest = worldPoint;
+
+    for (int i = 0; i < n; i++)
+    {
+        Vector3 a = edge.transform.TransformPoint(pts[i]);
+        Vector3 b = edge.transform.TransformPoint(pts[(i + 1) % n]);
+        Vector3 cp = ClosestPointOnSegment(worldPoint, a, b);
+        float sq = (cp - worldPoint).sqrMagnitude;
+        if (sq < bestSqr) { bestSqr = sq; bestClosest = cp; bestIdx = i; }
+    }
+
+    // 2) 해당 선분의 '안쪽' 노멀 계산
+    Vector3 aw = edge.transform.TransformPoint(pts[bestIdx]);
+    Vector3 bw = edge.transform.TransformPoint(pts[(bestIdx + 1) % n]);
+    Vector2 seg = (bw - aw);
+    Vector2 nLeft = new Vector2(-seg.y, seg.x).normalized;
+    bool _edgeClockwise = IsEdgeClockwise(mapEdge);
+    Vector2 nInside = _edgeClockwise ? -nLeft : nLeft;
+
+    // 3) 안쪽으로 inset 만큼 밀어넣기 + 장애물 겹침시 약간씩 더 안쪽으로
+    Vector3 candidate = bestClosest + (Vector3)(nInside * inset);
+    for (int t = 0; t < 5 && !IsPointFree(candidate); t++)
+        candidate += (Vector3)(nInside * (inset * 0.5f));
+
+    // 4) 여전히 겹치면 접선 방향으로 슬라이드
+    if (!IsPointFree(candidate))
+    {
+        Vector2 tangent = seg.normalized;
+        for (int s = 1; s <= 4; s++)
+        {
+            Vector3 left = candidate + (Vector3)(tangent * s * 0.3f);
+            if (IsInsideEdge(edge, left) && IsPointFree(left)) { candidate = left; break; }
+
+            Vector3 right = candidate - (Vector3)(tangent * s * 0.3f);
+            if (IsInsideEdge(edge, right) && IsPointFree(right)) { candidate = right; break; }
+        }
+    }
+    return candidate;
+}
+
+// 다방향 샘플로 최적 스트레이프 방향 선택
+private Vector3 ChooseBestStrafeDir(
+    float maxDist = 1.6f,
+    int samplesPerSide = 7,
+    float coneHalfDeg = 80f)
+{
+    var col = GetComponent<Collider2D>();
+    var center = col.bounds.center;
+    var size   = col.bounds.size;
+
+    Vector3 fwd  = DirectionToPlayer.normalized;
+    Vector3 side = Perp(fwd);               // 오른쪽
+    Vector3[] bases = { side, -side };      // 좌/우 모두 조사
+
+    int obstacleMask = LayerMask.GetMask("Obstacle");
+
+    float bestScore = float.NegativeInfinity;
+    Vector3 bestDir = side;
+    float bestClr   = 0.3f;
+
+    foreach (var basis in bases)
+    {
+        for (int i = 0; i < samplesPerSide; i++)
+        {
+            // [-1..1] 분포로 각도 뽑기 (가운데 → 바깥 순)
+            float t = (samplesPerSide == 1) ? 0f : (i / (samplesPerSide - 1f)) * 2f - 1f;
+            float ang = t * coneHalfDeg;
+            Vector3 cand = Quaternion.Euler(0, 0, ang) * basis;
+
+            // 장애물까지 여유거리 측정(BoxCast)
+            var hit = Physics2D.BoxCast(center, size, 0f, cand, maxDist, obstacleMask);
+            float clr = hit.collider ? hit.distance : maxDist;
+
+            // 그 방향으로 실제 이동했을 때의 목표점(화면 안 선호)
+            Vector3 target = transform.position + cand * Mathf.Min(clr, maxDist);
+
+            // 점수 구성
+            float alignStrafe = Mathf.Abs(Vector3.Dot(cand, side)); // 진정한 좌/우일수록 +
+            float centerBias  = 0f;
+            if (Camera.main) {
+                var camC = Camera.main.transform.position; camC.z = transform.position.z;
+                float before = Vector3.Distance(transform.position, camC);
+                float after  = Vector3.Distance(target, camC);
+                centerBias = Mathf.Max(0f, before - after);         // 화면 중앙 쪽으로 가면 +
+            }
+            float viewPenalty = InViewport(target) ? 0f : 0.6f;      // 화면 밖이면 페널티
+
+            float score = clr + alignStrafe * 0.35f + centerBias * 0.25f - viewPenalty;
+
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestDir = cand;
+                bestClr = clr;
+            }
+        }
+    }
+    return bestDir;
+}
+
+private IEnumerator PreThrowStrafe(float duration = 0.25f, float distance = 1f)
+{
+    Vector3 dir= ChooseBestStrafeDir(maxDist : 10f, samplesPerSide: 9, coneHalfDeg: 85f);
+    yield return MoveSmart(dir, distance, duration); 
+}
+
+// 단검들의 중심(Centroid)
+private Vector3 GetDaggersCentroid()
+{
+    if (daggerList == null || daggerList.Count == 0) return transform.position;
+    Vector3 sum = Vector3.zero; int n = 0;
+    foreach (var d in daggerList)
+    {
+        if (d && d.activeInHierarchy) { sum += d.transform.position; n++; }
+    }
+    return (n > 0) ? sum / n : transform.position;
+}
+
+// 해당 지점이 'Obstacle'과 겹치지 않는지 검사(보스 콜라이더 크기 기준)
+private bool IsPointFree(Vector3 pos, float skin = 0.04f)
+{
+    var col = GetComponent<Collider2D>();
+    int obstacleMask = LayerMask.GetMask("Obstacle");
+
+    if (!col) // 콜라이더가 없다면 포인트만 검사(간단 폴백)
+        return Physics2D.OverlapPoint(pos, obstacleMask) == null;
+
+    Vector2 size = (Vector2)col.bounds.size - new Vector2(skin, skin);
+    size.x = Mathf.Max(0.01f, size.x);
+    size.y = Mathf.Max(0.01f, size.y);
+    return Physics2D.OverlapBox(pos, size, 0f, obstacleMask) == null;
+}
+
+// P(플레이어)에서 d만큼 떨어진 연장선상의 '유효한' 지점을 찾는다.
+// 못 찾으면 약간 앞/뒤, 좌/우로 샘플링해서 가장 가까운 유효 지점을 반환.
+        
+
+private Vector3 FindRetrievePoint(float d,
+    int alongSamples = 8, float alongStep = 0.35f,
+    int lateralSamples = 6, float lateralStep = 0.3f)
+{
+    Vector3 p = SceneContext.Character.transform.position;     // 플레이어
+    Vector3 c = GetDaggersCentroid();                          // 단검들의 중심
+    Vector3 dir = (p - c);
+    if (dir.sqrMagnitude < 0.0001f) dir = DirectionToPlayer;   // 특수 케이스 처리
+    dir.Normalize();
+
+    
+    // 1) 기본 지점: P에서 dir로 d만큼 떨어진 곳
+    Vector3 desired = p + dir * d;
+    if (IsPointFree(desired)) return desired;
+
+    // 2) 선을 따라 앞/뒤로 조금씩 움직이며 검색
+    for (int i = 1; i <= alongSamples; i++)
+    {
+        float s = i * alongStep;
+        Vector3 fwd = p + dir * (d + s);
+        if (IsPointFree(fwd)) return fwd;
+
+        Vector3 back = p + dir * (d - s);
+        if (IsPointFree(back)) return back;
+    }
+
+    // 3) 수직 방향(좌/우)으로 살짝 비켜서 검색
+    Vector3 perp = new Vector3(-dir.y, dir.x, 0f);
+    for (int i = 1; i <= lateralSamples; i++)
+    {
+        float o = i * lateralStep;
+        Vector3 left  = desired + perp * o;
+        if (IsPointFree(left)) return left;
+
+        Vector3 right = desired - perp * o;
+        if (IsPointFree(right)) return right;
+    }
+
+    // 4) 끝까지 못 찾으면 기본 지점 반환(장애물과 겹칠 수도 있음)
+    return desired;
+}
+
+
 
 // 장애물 회피용: 원하는 방향(desired) 근처에서 여러 후보를 테스트하고 최고 점수 방향 선택
 private Vector3 ChooseDashDirection(Vector3 desired, float distance, int samples = 9, float maxAngle = 75f)
@@ -256,7 +514,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
     }
 
     Direction animDir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
-    Animator.Play($"Dash_{animDir}");
+    Animator.Play($"Backstep_{animDir}");
     yield return transform.DOMove(endPos, duration).SetEase(Ease.InOutCubic).WaitForCompletion();
 }
         public IEnumerator ChangeAlpha(float targetAlpha, float duration = 0.3f)
@@ -332,21 +590,17 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
 
         public IEnumerator Teleport(Vector3 targetPos, float distance = 2f)
         {
+            const float PostDelay = 0.5f;
             FaceToPlayer();
             Direction direction = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
-            _animator.Play($"Dash_{direction}",-1,0f);
+            _animator.Play($"BackStep_{direction}",-1,0f);
             Sound.Play("ENEMY_NagaRogue_Ambush");
             yield return ChangeAlpha(0f);
-            Vector3 dst;
-            bool ok = GetFreePosInCircle(targetPos, distance, out dst);
-            if (!ok)
-            {
-                dst = SceneContext.Character.transform.position;
-            }
-            transform.position = dst;
+            transform.position = targetPos;
             yield return new WaitForSeconds(0.2f);
             FaceToPlayer();
             yield return ChangeAlpha(1f);
+            yield return new WaitForSeconds(PostDelay);
         }
     
         public IEnumerator CamelAttack(float distance = 10f, float rushSpeed = 10f)
@@ -392,25 +646,27 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
         //states============================================================================추후 분리
         public class DashSlash : NagaRogueState
         {
+            public const float DashRange = 1f;
             public override int GetWeight()
             {
-                return 0;
                 return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 50 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
                 Sound.Play("ENEMY_NagaRogue_Ambush");
-                yield return NagaRogue.MoveSmart(NagaRogue.DirectionToPlayer);
+                yield return NagaRogue.MoveSmart(NagaRogue.DirectionToPlayer, DashRange);
                 yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
                 yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
                 yield return new WaitForSeconds(1f);
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
             }
         }
-        public class DaggerThrow : NagaRogueState
+        public class TripleDaggerThrow : NagaRogueState
         {
-            private const float ThrowDelay = 0.3f;
+            private const float ThrowDelay = 0.2f;
+            private const float PostDelay = 1f;
             private const float ThrowSpeed = 15f;
+            private const float AimErrorDeg = 15f;
             public override int GetWeight()
             {
                 return (mob.DistanceToPlayer <= mob.RangedAttackRange && mob.DistanceToPlayer > mob.MeleeAttackRange) ? 50 : 0;
@@ -418,11 +674,35 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
 
             public override IEnumerator StateCoroutine()
             {
-                yield return NagaRogue.RangeThrow(NagaRogue.daggerPrefab, mob.RangedAttackRange, ThrowSpeed);
-                yield return new WaitForSeconds(ThrowDelay);
+                yield return NagaRogue.PreThrowStrafe();
+                for (int i = 0; i < 3; i++)
+                {
+                    if (mob.DistanceToPlayer < mob.MeleeAttackRange) break;
+                    yield return NagaRogue.RangeThrow(NagaRogue.daggerPrefab, DaggerRange, ThrowSpeed, AimErrorDeg);
+                    yield return new WaitForSeconds(ThrowDelay);
+                }
+                yield return new WaitForSeconds(PostDelay);
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
             }
         }
+
+        public class KitingThrow : NagaRogueState
+        {
+            public override int GetWeight()
+            {
+                return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 100 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 5f, out var pos);
+                yield return NagaRogue.Teleport(pos, 7f);
+                yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 5, daggerRange: DaggerRange);
+                yield return new WaitForSeconds(1f);
+                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+            }
+        }
+        
         public class DaggerFan : NagaRogueState
         {
             public override int GetWeight()
@@ -463,7 +743,8 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             public override IEnumerator StateCoroutine()
             {
                 List<GameObject> deleteDaggerList = new();
-                yield return NagaRogue.Teleport(SceneContext.Character.transform.position);
+                Vector3 pos = NagaRogue.FindRetrievePoint(5f);
+                yield return NagaRogue.Teleport(pos);
                 foreach (var dagger in NagaRogue.daggerList)
                 {
                     yield return NagaRogue.RetrieveObject(dagger);
@@ -480,13 +761,12 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             }
         }
 
-        public class ThrowCurveShuriken : NagaRogueState
+        public class ThrowShurikenTP : NagaRogueState
         {
         
             public override int GetWeight()
             {
-                return 0;
-                return (mob.DistanceToPlayer > NagaRogue.RangedAttackRange) ? 50 : 0;
+                return (mob.DistanceToPlayer >= NagaRogue.RangedAttackRange) ? 100 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -495,6 +775,8 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 {
                     yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:NagaRogue.GetRandomCurve());
                 }
+                NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 5f, out var pos);
+                yield return NagaRogue.Teleport(pos, 5f);
                 yield return new WaitForSeconds(1f);
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
             }
