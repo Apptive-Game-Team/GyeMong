@@ -106,6 +106,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
         {
             FaceToPlayer();
             Vector3 dirToPlayer = SceneContext.Character.transform.position - prefab.transform.position;
+            Sound.Play("ENEMY_NagaRogue_Retrieve");
             AttackObjectController ac = AttackObjectController.Create(
                 SceneContext.Character.transform.position,
                 dirToPlayer,
@@ -456,7 +457,6 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
         {
             public override int GetWeight()
             {
-                return 0;
                 return (NagaRogue.daggerList.Count >= 10 ? 300 : 0);
             }
 
