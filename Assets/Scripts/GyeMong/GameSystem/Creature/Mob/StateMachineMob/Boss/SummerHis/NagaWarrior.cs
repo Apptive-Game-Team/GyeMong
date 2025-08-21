@@ -148,7 +148,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override void OnStateUpdate()
             {
                 NagaWarrior.Animator.SetFloat("xDir", NagaWarrior.DirectionToPlayer.x);
-                NagaWarrior.Animator.SetFloat("yDir", Mathf.Abs(NagaWarrior.DirectionToPlayer.y));
+                NagaWarrior.Animator.SetFloat("yDir", -Mathf.Abs(NagaWarrior.DirectionToPlayer.y));
             }
             protected virtual void SetWeights()
             {
@@ -235,7 +235,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, targetPos, SceneContext.Character.transform, NagaWarrior.attackdelayTime/2, NagaWarrior.attackdelayTime / 2, 1f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 NagaWarrior.Animator.SetFloat("xJumpDir", targetDir.x);
-                NagaWarrior.Animator.SetFloat("yJumpDir", Mathf.Abs(targetDir.y));
+                NagaWarrior.Animator.SetFloat("yJumpDir", -Mathf.Abs(targetDir.y));
                 NagaWarrior.Animator.SetBool("isAttack", true);
                 yield return NagaWarrior.airborneController.AirborneTo(targetPos);
                 AttackObjectController.Create(
