@@ -24,7 +24,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
         [SerializeField] private GameObject pushOutAttackPrefab;
-        float attackdelayTime = 1f;
+        float attackdelayTime = 2f;
         [SerializeField] private SoundObject _shockwavesoundObject;
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
         [SerializeField] private SoundObject _tossSoundObject;
@@ -274,8 +274,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Golem.Animator.SetBool("Toss", true);
                 Golem.StartCoroutine(Golem.TossSoundObject.Play());
                 yield return new WaitForSeconds(Golem.attackdelayTime * 2);
-                GameObject cube = Instantiate(Golem.cubePrefab, SceneContext.Character.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 Golem.Animator.SetBool("Toss", false);
+                GameObject cube = Instantiate(Golem.cubePrefab, SceneContext.Character.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
