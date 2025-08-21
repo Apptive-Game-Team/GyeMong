@@ -22,6 +22,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         private void HandleAttackCollision(Collider2D collider)
         {
             if (!collider.CompareTag("EnemyAttack")) return;
+            if (SceneContext.Character.isInvincible) return;
 
             EnemyAttackInfo enemyAttackInfo = collider.GetComponent<AttackObjectController>()?.AttackInfo;
             if (enemyAttackInfo == null) return;

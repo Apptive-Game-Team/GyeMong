@@ -46,7 +46,7 @@ namespace GyeMong.GameSystem.Creature.Player
         public bool isAttacking = false;
         private bool isHealing = false;
         private bool canMove = true;
-        private bool isInvincible = false;
+        public bool isInvincible = false;
         private bool canCombo = false;
         private bool comboQueued = false;
         private CircleCollider2D _hitCollider;
