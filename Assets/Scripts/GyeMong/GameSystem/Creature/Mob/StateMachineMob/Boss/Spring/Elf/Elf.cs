@@ -19,6 +19,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
     {
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject seedPrefab;
+        [SerializeField] private GameObject bindingArrowPrefab;
+        [SerializeField] private GameObject homingArrowPrefab;
+        [SerializeField] private GameObject splitArrowPrefab;
         [SerializeField] private GameObject vinePrefab;
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
@@ -66,7 +69,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
                         { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 10 : 0},
                         { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
+                        { typeof(HomingArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
+                        { typeof(SplitArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
+                        { typeof(BindingArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -260,6 +266,87 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     {
                         { typeof(RadialRangedAttak), 5 }
                     };
+            }
+        }
+        public class BindingArrowAttack : ElfState
+        {
+            public BindingArrowAttack()
+            {
+                cooldownTime = 5f;
+            }
+            public override int GetWeight()
+            {
+                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                GameObject arrowObj = Instantiate(Elf.bindingArrowPrefab, Elf.transform.position, Quaternion.identity);
+                arrowObj.GetComponent<BindingArrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer);
+                Sound.Play("ENEMY_Arrow_Shot");
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
+                Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
+                Elf.ChangeState(NextStateWeights);
+            }
+        }
+        public class HomingArrowAttack : ElfState
+        {
+            public HomingArrowAttack()
+            {
+                cooldownTime = 5f;
+            }
+            public override int GetWeight()
+            {
+                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                GameObject arrowObj = Instantiate(Elf.homingArrowPrefab, Elf.transform.position, Quaternion.identity);
+                arrowObj.GetComponent<HomingArrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer);
+                Sound.Play("ENEMY_Arrow_Shot");
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
+                Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
+                Elf.ChangeState(NextStateWeights);
+            }
+        }
+        public class SplitArrowAttack : ElfState
+        {
+            public SplitArrowAttack()
+            {
+                cooldownTime = 5f;
+            }
+            public override int GetWeight()
+            {
+                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                GameObject arrowObj = Instantiate(Elf.splitArrowPrefab, Elf.transform.position, Quaternion.identity);
+                arrowObj.GetComponent<SplitArrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer);
+                Sound.Play("ENEMY_Arrow_Shot");
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
+                Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
+                Elf.ChangeState(NextStateWeights);
             }
         }
         public class MeleeAttack : ElfState
