@@ -174,7 +174,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 GameObject arrowObj = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
-                arrowObj.GetComponent<Arrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer);
+                arrowObj.GetComponent<BasicArrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer);
                 Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -210,7 +210,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     float rad = angle * Mathf.Deg2Rad;
                     Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
                     GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    seedObj.GetComponent<Seed>().SetDirection(dir, Elf.DistanceToPlayer);
+                    seedObj.GetComponent<SeedArrow>().SetDirection(dir, Elf.DistanceToPlayer);
                 }
                 Sound.Play("ENEMY_Arrow_Shot");
                 Elf.Animator.SetBool("isAttack", false);
@@ -245,7 +245,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     float rad = randomAngle * Mathf.Deg2Rad;
                     Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
                     GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    seedObj.GetComponent<Seed>().SetDirection(dir, Elf.DistanceToPlayer);
+                    seedObj.GetComponent<SeedArrow>().SetDirection(dir, Elf.DistanceToPlayer);
                     Sound.Play("ENEMY_Arrow_Shot");
                     yield return new WaitForSeconds(Elf.attackdelayTime/3);
                     count++;

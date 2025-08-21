@@ -5,19 +5,20 @@ using UnityEngine;
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
 {
     [Obsolete("Use AttackObjectController instead")]
-    public class Arrow : MonoBehaviour
+    public abstract class ArrowBase : MonoBehaviour
     {
-        private Vector3 direction;
-        private float speed = 30f;
-        private Rigidbody2D rb;
-        private float targetDistance = 10f;
-        private float traveledDistance = 0f;
+        protected Vector3 direction;
+        [SerializeField] protected float speed = 30f;
+        protected Rigidbody2D rb;
+        protected float targetDistance = 10f;
+        protected float traveledDistance = 0f;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
         }
-        public void SetDirection(Vector3 dir, float distance)
+
+        public virtual void SetDirection(Vector3 dir, float distance)
         {
             direction = dir.normalized;
             targetDistance = distance;
@@ -25,13 +26,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             StartCoroutine(FireArrow(targetDistance));
         }
 
-        private void RotateArrow()
+        protected void RotateArrow()
         {
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
-        private IEnumerator FireArrow(float remainingDistance)
+        protected virtual IEnumerator FireArrow(float remainingDistance)
         {
             traveledDistance = 0f;
             rb.velocity = direction * speed;
@@ -43,8 +44,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
 
             rb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(0.5f);
-            Destroy(gameObject);
+            yield return OnReachEnd();
         }
+
+        protected abstract IEnumerator OnReachEnd();
     }
 }
