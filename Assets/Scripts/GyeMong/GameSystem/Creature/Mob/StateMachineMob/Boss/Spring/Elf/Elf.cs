@@ -173,7 +173,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
-                Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+                GameObject arrowObj = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+                arrowObj.GetComponent<Arrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer);
                 Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -196,11 +197,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 1);
-                int count = 0;
-                while (count < 4)
+                
+                float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
+                float spread = 40f;
+                int arrowCount = 4;
+                float step = spread / (arrowCount - 1);
+                float startAngle = baseAngle - spread / 2f;
+
+                for (int i = 0; i < arrowCount; i++)
                 {
-                    Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    count++;
+                    float angle = startAngle + step * i;
+                    float rad = angle * Mathf.Deg2Rad;
+                    Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
+                    GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    seedObj.GetComponent<Seed>().SetDirection(dir, Elf.DistanceToPlayer);
                 }
                 Sound.Play("ENEMY_Arrow_Shot");
                 Elf.Animator.SetBool("isAttack", false);
@@ -230,7 +240,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 int count = 0;
                 while (count < 4)
                 {
-                    Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
+                    float randomAngle = Random.Range(baseAngle - 20f, baseAngle + 20f);
+                    float rad = randomAngle * Mathf.Deg2Rad;
+                    Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
+                    GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    seedObj.GetComponent<Seed>().SetDirection(dir, Elf.DistanceToPlayer);
                     Sound.Play("ENEMY_Arrow_Shot");
                     yield return new WaitForSeconds(Elf.attackdelayTime/3);
                     count++;
