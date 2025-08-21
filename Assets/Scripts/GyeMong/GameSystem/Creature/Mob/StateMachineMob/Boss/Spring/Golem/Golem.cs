@@ -130,9 +130,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
 
 
-        public IEnumerator MakeShock()
+        public IEnumerator MakeShock(int targetRadius)
         {
-            int targetRadius = 4;
             Vector3[] points = GetCirclePoints(transform.position, targetRadius, targetRadius * 3 + 10);
             foreach (Vector3 point in points)
             {
@@ -154,7 +153,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                         }));
             }
             
-            yield return new WaitForSeconds(attackdelayTime / 2);
+            yield return null;
         }
         public abstract class GolemState : CoolDownState
         {
@@ -195,8 +194,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.Animator.SetBool("TwoHand", true);
-                yield return Golem.MakeShock();
-                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                yield return Golem.MakeShock(2);
+                yield return Golem.MakeShock(4);
+                yield return new WaitForSeconds(Golem.attackdelayTime);
                 Golem.Animator.SetBool("TwoHand", false);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
