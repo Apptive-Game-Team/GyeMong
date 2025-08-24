@@ -13,7 +13,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
+namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueScript
 {
     public enum Direction
     {
@@ -39,7 +39,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
         private List<GameObject> daggerList = new();
         public const float DaggerRange = 20f;
         public float curveThrowRnage = 10f;
-        public float phaseChangeHealthPercent = 0.5f;
+        public float phaseChangeHealthPercent = 0.66f;
         public bool canPhaseChange = true;
 
         public override void OnAttacked(float damage)
@@ -87,18 +87,25 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
         {
             protected NagaRogue NagaRogue => mob as NagaRogue;
         }
-    
-        private IEnumerator MeleeAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f)
+
+        private IEnumerator SetIdleAnim(float delay)
         {
+            Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
+            Animator.Play($"Idle_{dir}",-1,0f);
+            yield return new WaitForSeconds(delay);
+        }
+        private IEnumerator MeleeAttack(GameObject prefab, float duration = 0.5f)
+        {
+            const float startPosDist = 1f;
             FaceToPlayer();
             Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
             Animator.Play($"Stab_{dir}");
             AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * distance, 
+                    transform.position + DirectionToPlayer * startPosDist, 
                     DirectionToPlayer, 
                     prefab, 
                     new StaticMovement(
-                        transform.position + DirectionToPlayer * distance, 
+                        transform.position + DirectionToPlayer * startPosDist, 
                         duration)
                 )
                 .StartRoutine();
@@ -188,7 +195,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
         }
         
         private IEnumerator DaggerFanThrow(GameObject prefab, int daggerCount = 3, 
-            float spreadAngle = 120f, float frontConeHalf = 15f,
+            float spreadAngle = 120f,
             float throwSpeed = 20f, float daggerRange = 20f)
         {
             FaceToPlayer();
@@ -201,8 +208,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
 
             float startAngle = baseAngle - (spreadAngle / 2f);
             float angleStep = spreadAngle / (daggerCount - 1);
-            
-            float gateCenter = baseAngle + Random.Range(-frontConeHalf, frontConeHalf);
             
             for (int i = 0; i < daggerCount; i++)
             {
@@ -384,7 +389,7 @@ private Vector3 ChooseBestStrafeDir(
     return bestDir;
 }
 
-private IEnumerator PreThrowStrafe(float duration = 0.25f, float distance = 1f)
+private IEnumerator PreThrowStrafe(float duration = 0.5f, float distance = 2f)
 {
     Vector3 dir= ChooseBestStrafeDir(maxDist : 10f, samplesPerSide: 9, coneHalfDeg: 85f);
     yield return MoveSmart(dir, distance, duration); 
@@ -514,7 +519,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
     }
 
     Direction animDir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
-    Animator.Play($"Backstep_{animDir}");
+    Animator.Play($"Backstep_{animDir}",-1,0f);
     yield return transform.DOMove(endPos, duration).SetEase(Ease.InOutCubic).WaitForCompletion();
 }
         public IEnumerator ChangeAlpha(float targetAlpha, float duration = 0.3f)
@@ -590,7 +595,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
 
         public IEnumerator Teleport(Vector3 targetPos, float distance = 2f)
         {
-            const float PostDelay = 0.5f;
+            const float PostDelay = 0.1f;
             FaceToPlayer();
             Direction direction = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
             _animator.Play($"BackStep_{direction}",-1,0f);
@@ -647,6 +652,8 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
         public class DashSlash : NagaRogueState
         {
             public const float DashRange = 1f;
+            private const float MeleeDelay = 0.3f;
+            private const float PostDelay = 1f;
             public override int GetWeight()
             {
                 return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 50 : 0;
@@ -655,10 +662,12 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             {
                 Sound.Play("ENEMY_NagaRogue_Ambush");
                 yield return NagaRogue.MoveSmart(NagaRogue.DirectionToPlayer, DashRange);
-                yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
-                yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab, 1f);
-                yield return new WaitForSeconds(1f);
-                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+                yield return new WaitForSeconds(MeleeDelay);
+                for (int i = 0; i < 2; i++)
+                {
+                    yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab);  
+                }
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
         public class TripleDaggerThrow : NagaRogueState
@@ -677,17 +686,22 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 yield return NagaRogue.PreThrowStrafe();
                 for (int i = 0; i < 3; i++)
                 {
-                    if (mob.DistanceToPlayer < mob.MeleeAttackRange) break;
+                    if (mob.DistanceToPlayer < mob.MeleeAttackRange)
+                    {
+                        NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+                        yield break;
+                    }
                     yield return NagaRogue.RangeThrow(NagaRogue.daggerPrefab, DaggerRange, ThrowSpeed, AimErrorDeg);
                     yield return new WaitForSeconds(ThrowDelay);
                 }
-                yield return new WaitForSeconds(PostDelay);
-                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+                
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
 
         public class KitingThrow : NagaRogueState
         {
+            private const float PostDelay = 1f;
             public override int GetWeight()
             {
                 return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 100 : 0;
@@ -698,13 +712,13 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 5f, out var pos);
                 yield return NagaRogue.Teleport(pos, 7f);
                 yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 5, daggerRange: DaggerRange);
-                yield return new WaitForSeconds(1f);
-                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
         
         public class DaggerFan : NagaRogueState
         {
+            private const float PostDelay = 1f;
             public override int GetWeight()
             {
                 return 0;
@@ -715,11 +729,12 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             {
                 yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 3, 60f);
                 yield return new WaitForSeconds(1f);
-                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
         public class DaggerFlower : NagaRogueState
         {
+            private const float PostDelay = 1f;
             public override int GetWeight()
             {
                 return 0;
@@ -730,11 +745,12 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             {
                 yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 9, 360f);
                 yield return new WaitForSeconds(1f);
-                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }    
         public class TeleportDaggerRetrieve : NagaRogueState
         {
+            private const float PostDelay = 1f;
             public override int GetWeight()
             {
                 return (NagaRogue.daggerList.Count >= 10 ? 300 : 0);
@@ -756,14 +772,13 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 {
                     NagaRogue.daggerList.Remove(dagger);
                 }
-                yield return new WaitForSeconds(1f);
-                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
 
         public class ThrowShurikenTP : NagaRogueState
         {
-        
+            private const float PostDelay = 1f;
             public override int GetWeight()
             {
                 return (mob.DistanceToPlayer >= NagaRogue.RangedAttackRange) ? 100 : 0;
@@ -777,11 +792,36 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 }
                 NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 5f, out var pos);
                 yield return NagaRogue.Teleport(pos, 5f);
-                yield return new WaitForSeconds(1f);
-                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
 
+        public class PostPatternState : NagaRogueState
+        {
+            private readonly float Delay;
+            
+            public PostPatternState(float delay)
+            {
+                Delay = delay;
+            }
+
+            public PostPatternState() {}
+            public override int GetWeight()
+            {
+                return 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                if (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue.phaseChangeHealthPercent)
+                {
+                    yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, spreadAngle:90f);
+                }
+                yield return NagaRogue.SetIdleAnim(Delay);
+                NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+            }
+        }
+        
         public class DetectingPlayer : NagaRogueState
         {
             public override int GetWeight()
@@ -792,7 +832,6 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             public override IEnumerator StateCoroutine()
             {
                 Debug.Log("Detecting Player");
-                mob.Animator.SetBool("isMove", false);
                 while (true)
                 {
                     Transform target = NagaRogue._detector.DetectTarget()?.transform;
@@ -811,7 +850,6 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
         {
             public override int GetWeight()
             {
-                return 0;
                 return (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue.phaseChangeHealthPercent && NagaRogue.canPhaseChange)? 99999 : 0;
             }
 
@@ -819,28 +857,15 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             {
                 NagaRogue.canPhaseChange = false;
                 yield return new OpenChatEvent().Execute();
+                SceneContext.CameraManager.CameraShake(0.1f);
                 yield return new ShowMessages(NagaRogue.phaseChangeChat, 3f).Execute();
                 yield return new CloseChatEvent().Execute();
                 yield return new SetKeyInputEvent(){_isEnable = false}.Execute();
-                var main = NagaRogue.sandStormParticles.main;
-                main.startSpeed = 10f;
-                var emission = NagaRogue.sandStormParticles.emission;
-                emission.rateOverTime = 200f;            
+                
                 NagaRogue.ChangeState();
                 yield return new SetKeyInputEvent(){_isEnable = true}.Execute();
-                Vector3 originPos = NagaRogue.transform.position;
-                yield return NagaRogue.Teleport(new Vector3(999999, 999999, 0));
-                // NagaRogue.sandstormPrefab.SetActive(true);
-            
-                for (int i = 0; i < 3; i++)
-                {
-                    yield return NagaRogue.CamelAttack();
-                }
+                
 
-                yield return NagaRogue.Teleport(originPos);
-                Instantiate(NagaRogue.poisonMinionPrefab, NagaRogue.transform.position + new Vector3(2,1,0), Quaternion.identity);
-                Instantiate(NagaRogue.sandMinionPrefab, NagaRogue.transform.position + new Vector3(-2,1,0), Quaternion.identity);
-                yield return new WaitForSeconds(1f);
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
             }
         }

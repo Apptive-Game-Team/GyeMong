@@ -6,7 +6,7 @@ using GyeMong.EventSystem.Event.Input;
 using GyeMong.SoundSystem;
 using UnityEngine;
 
-namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
+namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueScript
 {
     public class NagaRogueOpeningEvent : MonoBehaviour
     {

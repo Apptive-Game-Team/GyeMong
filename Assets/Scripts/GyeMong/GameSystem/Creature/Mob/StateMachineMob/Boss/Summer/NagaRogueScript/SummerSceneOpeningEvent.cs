@@ -7,7 +7,7 @@ using GyeMong.GameSystem.Map.Portal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
+namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueScript
 {
     public class SummerSceneOpeningEvent : MonoBehaviour
     {
