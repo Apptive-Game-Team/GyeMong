@@ -22,7 +22,6 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         private void HandleAttackCollision(Collider2D collider)
         {
             if (!collider.CompareTag("EnemyAttack")) return;
-            if (SceneContext.Character.isInvincible) return;
 
             EnemyAttackInfo enemyAttackInfo = collider.GetComponent<AttackObjectController>()?.AttackInfo;
             if (enemyAttackInfo == null) return;
@@ -73,6 +72,8 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
         private void ApplyHitImpact(float damage, Collider2D collider, bool isMultiHit = false)
         {
+            if (SceneContext.Character.isInvincible) return;
+            
             float baseDamage = SceneContext.Character.stat.HealthMax / 3;
             float ratio = damage / baseDamage;
 
