@@ -33,13 +33,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         [SerializeField] private GameObject sandMinionPrefab;
         [SerializeField] private ParticleSystem sandStormParticles;
         [SerializeField] private MultiChatMessageData phaseChangeChat;
-        [SerializeField] private EdgeCollider2D mapEdge;
-        private float boundaryInset = 0.2f; // 안쪽으로 밀어넣는 거리
+        [SerializeField] private Transform centerPoint;
 
         private List<GameObject> daggerList = new();
         public const float DaggerRange = 20f;
-        public float curveThrowRnage = 10f;
-        public float phaseChangeHealthPercent = 0.66f;
+        private float _phaseChangeHealthPercent = 0.66f;
         public bool canPhaseChange = true;
 
         public override void OnAttacked(float damage)
@@ -91,7 +89,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         private IEnumerator SetIdleAnim(float delay)
         {
             Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
-            Animator.Play($"Idle_{dir}",-1,0f);
+            Animator.Play($"Idle_{dir}");
             yield return new WaitForSeconds(delay);
         }
         private IEnumerator MeleeAttack(GameObject prefab, float duration = 0.5f)
@@ -116,6 +114,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         {
             FaceToPlayer();
             Vector3 dirToPlayer = SceneContext.Character.transform.position - prefab.transform.position;
+            Direction direction = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
+            Animator.Play($"Throw_{direction}", -1, 0f);
             Sound.Play("ENEMY_NagaRogue_Retrieve");
             AttackObjectController ac = AttackObjectController.Create(
                 SceneContext.Character.transform.position,
@@ -244,89 +244,6 @@ private static Vector3 ClosestPointOnSegment(Vector3 p, Vector3 a, Vector3 b)
     float t = Vector3.Dot(p - a, ab) / Mathf.Max(ab.sqrMagnitude, 1e-6f);
     t = Mathf.Clamp01(t);
     return a + ab * t;
-}
-
-private bool IsEdgeClockwise(EdgeCollider2D edge)
-{
-    if (!edge || edge.pointCount < 3) return false;
-    var pts = edge.points;
-    float area2 = 0f;
-    for (int i = 0; i < pts.Length; i++)
-    {
-        Vector2 a = pts[i];
-        Vector2 b = pts[(i + 1) % pts.Length];
-        area2 += a.x * b.y - b.x * a.y;
-    }
-    // 음수면 시계방향
-    return area2 < 0f;
-}
-
-private bool IsInsideEdge(EdgeCollider2D edge, Vector2 worldPoint)
-{
-    if (!edge || edge.pointCount < 3) return true;
-    var pts = edge.points;
-    int n = pts.Length, crossings = 0;
-    Vector2 p1 = edge.transform.TransformPoint(pts[0]);
-    for (int i = 1; i <= n; i++)
-    {
-        Vector2 p2 = edge.transform.TransformPoint(pts[i % n]);
-        // 오른쪽(+x) 레이 교차 카운트
-        bool cond = ((p1.y > worldPoint.y) != (p2.y > worldPoint.y)) &&
-                    (worldPoint.x < (p2.x - p1.x) * (worldPoint.y - p1.y) / (p2.y - p1.y) + p1.x);
-        if (cond) crossings++;
-        p1 = p2;
-    }
-    return (crossings & 1) == 1;
-}
-
-private Vector3 ClampInsideEdge(EdgeCollider2D edge, Vector3 worldPoint, float inset)
-{
-    if (!edge) return worldPoint;
-    if (IsInsideEdge(edge, worldPoint)) return worldPoint;
-
-    // 1) 가장 가까운 선분에서 최근접점 구하기
-    var pts = edge.points;
-    int n = pts.Length;
-    float bestSqr = float.PositiveInfinity;
-    int bestIdx = 0;
-    Vector3 bestClosest = worldPoint;
-
-    for (int i = 0; i < n; i++)
-    {
-        Vector3 a = edge.transform.TransformPoint(pts[i]);
-        Vector3 b = edge.transform.TransformPoint(pts[(i + 1) % n]);
-        Vector3 cp = ClosestPointOnSegment(worldPoint, a, b);
-        float sq = (cp - worldPoint).sqrMagnitude;
-        if (sq < bestSqr) { bestSqr = sq; bestClosest = cp; bestIdx = i; }
-    }
-
-    // 2) 해당 선분의 '안쪽' 노멀 계산
-    Vector3 aw = edge.transform.TransformPoint(pts[bestIdx]);
-    Vector3 bw = edge.transform.TransformPoint(pts[(bestIdx + 1) % n]);
-    Vector2 seg = (bw - aw);
-    Vector2 nLeft = new Vector2(-seg.y, seg.x).normalized;
-    bool _edgeClockwise = IsEdgeClockwise(mapEdge);
-    Vector2 nInside = _edgeClockwise ? -nLeft : nLeft;
-
-    // 3) 안쪽으로 inset 만큼 밀어넣기 + 장애물 겹침시 약간씩 더 안쪽으로
-    Vector3 candidate = bestClosest + (Vector3)(nInside * inset);
-    for (int t = 0; t < 5 && !IsPointFree(candidate); t++)
-        candidate += (Vector3)(nInside * (inset * 0.5f));
-
-    // 4) 여전히 겹치면 접선 방향으로 슬라이드
-    if (!IsPointFree(candidate))
-    {
-        Vector2 tangent = seg.normalized;
-        for (int s = 1; s <= 4; s++)
-        {
-            Vector3 left = candidate + (Vector3)(tangent * s * 0.3f);
-            if (IsInsideEdge(edge, left) && IsPointFree(left)) { candidate = left; break; }
-
-            Vector3 right = candidate - (Vector3)(tangent * s * 0.3f);
-            if (IsInsideEdge(edge, right) && IsPointFree(right)) { candidate = right; break; }
-        }
-    }
-    return candidate;
 }
 
 // 다방향 샘플로 최적 스트레이프 방향 선택
@@ -813,8 +730,9 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
 
             public override IEnumerator StateCoroutine()
             {
-                if (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue.phaseChangeHealthPercent)
+                if (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue._phaseChangeHealthPercent)
                 {
+                    yield return NagaRogue.PreThrowStrafe();
                     yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, spreadAngle:90f);
                 }
                 yield return NagaRogue.SetIdleAnim(Delay);
@@ -850,7 +768,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
         {
             public override int GetWeight()
             {
-                return (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue.phaseChangeHealthPercent && NagaRogue.canPhaseChange)? 99999 : 0;
+                return (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue._phaseChangeHealthPercent && NagaRogue.canPhaseChange)? 99999 : 0;
             }
 
             public override IEnumerator StateCoroutine()
