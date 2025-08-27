@@ -17,6 +17,7 @@ namespace GyeMong.GameSystem.Creature.Player.Controller
         SWORD_DEFEND_HIT = 6,
         SWORD_DEFEND_PERFECT = 7,
         GRAZE = 8,
+        HEAL = 9,
     }
 
     public enum FloorType
@@ -61,6 +62,7 @@ namespace GyeMong.GameSystem.Creature.Player.Controller
             soundObjects.Add(PlayerSoundType.FOOT, transform.Find("FootSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.GRAZE, transform.Find("GrazeSound").GetComponent<SoundObject>());
             soundObjects.Add(PlayerSoundType.SWORD_SKILL, transform.Find("SwordSkillSound").GetComponent<SoundObject>());
+            soundObjects.Add(PlayerSoundType.HEAL, transform.Find("HealSound").GetComponent<SoundObject>());
         }
 
         public void SetRun(bool isRun)

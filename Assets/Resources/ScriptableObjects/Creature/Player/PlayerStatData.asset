@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statDataList:
   - statType: 1
-    value: 150
+    value: 15
   - statType: 2
     value: 30
   - statType: 3
-    value: 3
+    value: 1
   - statType: 4
     value: 1
   - statType: 5
@@ -30,16 +30,22 @@ MonoBehaviour:
   - statType: 8
     value: 4
   - statType: 9
-    value: 10
+    value: 15
   - statType: 10
     value: 10
   - statType: 11
-    value: 0.1
+    value: 10
   - statType: 12
-    value: 2
+    value: 0.4
   - statType: 13
-    value: 1
+    value: 2
   - statType: 14
-    value: 0.7
+    value: 1
   - statType: 15
+    value: 0.2
+  - statType: 16
+    value: 1
+  - statType: 16
+    value: 20
+  - statType: 17
     value: 1
