@@ -34,26 +34,26 @@ namespace GyeMong.EventSystem.Controller
         /// The screen is getting Ligther
         /// </summary>
         /// <returns>return IEnumerator</returns>
-        public IEnumerator FadeIn()
+        public IEnumerator FadeIn(float duration = 0.5f)
         {
-            return Fade(black, 0);
+            return Fade(black, 0, duration);
         }
 
         /// <summary>
         /// The screen is getting darker
         /// </summary>
         /// /// <returns>return IEnumerator</returns>
-        public IEnumerator FadeOut()
+        public IEnumerator FadeOut(float duration = 0.5f)
         {
-            return Fade(black, 1);
+            return Fade(black, 1, duration);
         }
 
-        public IEnumerator FadeInFirst()
+        public IEnumerator FadeInFirst(float duration = 0.5f)
         {
             Color color = black.color;
             color.a = 1;
             black.color = color;
-            return Fade(black, 0);
+            return Fade(black, 0, duration);
         }
 
         public IEnumerator ChangeToBlackScreen()
@@ -65,7 +65,7 @@ namespace GyeMong.EventSystem.Controller
             yield return null;
         }
 
-        private IEnumerator Fade(RawImage image, float targetAlpha, float duration = 0.5f)
+        private IEnumerator Fade(RawImage image, float targetAlpha, float duration)
         {
             Color color = image.color;
             float startAlpha = color.a;

@@ -1,3 +1,4 @@
+using System;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
@@ -35,7 +36,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private GameObject bossRoomObj1;
         [SerializeField] private GameObject bossRoomObj2;
 
-        [Header("")]
+        [Header("Boss")]
         [SerializeField] private GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Boss boss;
 
         [Header("Start Animator")]
@@ -50,21 +51,15 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private List<MultiChatMessageData> beforeScript;
 
         private bool _isTriggered = false;
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("Player") && !_isTriggered)
-            {
-                StartCoroutine(TriggerEvents());
-            }
-        }
 
-        public IEnumerator Trigger()
+        private void Start()
         {
-            return TriggerEvents();
+            StartCoroutine(TriggerEvents());
         }
 
         private IEnumerator TriggerEvents()
         {
+            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
             _isTriggered = true;
 
             var stopAnimEvent = new CustomStopAnimatorEvent();
@@ -75,8 +70,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
             changeSpriteEvent.SetSprite(newSprite1);
             yield return changeSpriteEvent.Execute();
-
-            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
 
             var moveEvent = new MoveCreatureEvent();
             moveEvent.creatureType = MoveCreatureEvent.CreatureType.Player;
