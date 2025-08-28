@@ -385,6 +385,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 if(NagaWarrior.isOverheat)
                     numberofPoints = 12;
                 NagaWarrior.Animator.SetBool("isAttack", true);
+                Sound.Play("ENEMY_Seed_Explosion");
                 yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(5f, numberofPoints));
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
