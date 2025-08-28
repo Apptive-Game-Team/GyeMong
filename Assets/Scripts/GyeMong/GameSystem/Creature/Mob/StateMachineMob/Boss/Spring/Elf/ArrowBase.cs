@@ -23,7 +23,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             direction = dir.normalized;
             targetDistance = distance;
             RotateArrow();
-            StartCoroutine(FireArrow(13f));
+            StartCoroutine(FireArrow(targetDistance));
         }
 
         protected void RotateArrow()
