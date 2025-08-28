@@ -1,7 +1,6 @@
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Util.ChangeListener;
 
 namespace GyeMong.UISystem.Game.PlayerUI
 {
@@ -12,6 +11,8 @@ namespace GyeMong.UISystem.Game.PlayerUI
 
         private void Start()
         {
+            SceneContext.Character.changeListenerCaller.AddDashListener(this);
+
             _cooldownTime = SceneContext.Character.stat.DashCooldown;
             _currentTime = 0f;
         }
@@ -32,10 +33,10 @@ namespace GyeMong.UISystem.Game.PlayerUI
             {
                 _currentTime -= Time.deltaTime;
                 if (_currentTime < 0f) _currentTime = 0f;
-
                 UpdateSkillGauge();
             }
         }
+
         public void OnDashUsed(float cooldown)
         {
             _cooldownTime = cooldown;
