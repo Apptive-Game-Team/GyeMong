@@ -107,12 +107,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             if (isOverheat)
             {
                 damage = 15f;
-                attackdelayTime = 0.5f;
+                attackdelayTime = 0.75f;
             }
             else if (isCool)
             {
                 damage = 5f;
-                attackdelayTime = 2f;
+                attackdelayTime = 1.5f;
             }
             else
             {
