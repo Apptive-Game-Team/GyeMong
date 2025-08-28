@@ -188,42 +188,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.ChangeState(NextStateWeights);
             }
         }
-        public class RadialRangedAttak : ElfState
-        {
-            public override int GetWeight()
-            {
-                return 0;
-            }
-            public override IEnumerator StateCoroutine()
-            {
-                Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 1);
-                Sound.Play("ENEMY_Arrow_Drow");
-                yield return new WaitForSeconds(Elf.attackdelayTime/3);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 1);
-                
-                float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
-                float spread = 40f;
-                int arrowCount = 4;
-                float step = spread / (arrowCount - 1);
-                float startAngle = baseAngle - spread / 2f;
-
-                for (int i = 0; i < arrowCount; i++)
-                {
-                    float angle = startAngle + step * i;
-                    float rad = angle * Mathf.Deg2Rad;
-                    Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
-                    GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    seedObj.GetComponent<SeedArrow>().SetDirection(dir, Elf.DistanceToPlayer);
-                }
-                Sound.Play("ENEMY_Arrow_Shot");
-                Elf.Animator.SetBool("isAttack", false);
-                SetWeights();
-                Elf.ChangeState(NextStateWeights);
-            }
-        }
         public class SeedRangedAttak : ElfState
         {
             public SeedRangedAttak()
@@ -244,28 +208,42 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 1);
                 int count = 0;
+                float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
                 while (count < 4)
                 {
-                    float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
                     float randomAngle = Random.Range(baseAngle - 20f, baseAngle + 20f);
                     float rad = randomAngle * Mathf.Deg2Rad;
                     Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
                     GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
                     seedObj.GetComponent<SeedArrow>().SetDirection(dir, Elf.DistanceToPlayer);
                     Sound.Play("ENEMY_Arrow_Shot");
-                    yield return new WaitForSeconds(Elf.attackdelayTime/3);
+                    yield return new WaitForSeconds(Elf.attackdelayTime/2);
                     count++;
                 }
                 Elf.Animator.SetBool("isAttack", false);
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 1);
+                Sound.Play("ENEMY_Arrow_Drow");
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 1);
+                float spread = 40f;
+                int arrowCount = 4;
+                float step = spread / (arrowCount - 1);
+                float startAngle = baseAngle - spread / 2f;
+                for (int i = 0; i < arrowCount; i++)
+                {
+                    float angle = startAngle + step * i;
+                    float rad = angle * Mathf.Deg2Rad;
+                    Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
+                    GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    seedObj.GetComponent<SeedArrow>().SetDirection(dir, Elf.DistanceToPlayer);
+                }
+                Sound.Play("ENEMY_Arrow_Shot");
+                Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
-            }
-            protected override void SetWeights()
-            {
-                weights = new Dictionary<System.Type, int>
-                    {
-                        { typeof(RadialRangedAttak), 5 }
-                    };
             }
         }
         public class BindingArrowAttack : ElfState

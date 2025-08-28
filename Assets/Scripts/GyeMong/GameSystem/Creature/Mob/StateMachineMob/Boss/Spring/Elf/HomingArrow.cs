@@ -8,8 +8,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
     public class HomingArrow : ArrowBase
     {
         private GameObject player;
-        [SerializeField] private float homingDuration = 2f;
+        [SerializeField] private float homingDuration = 1f;
         [SerializeField] private float rotateSpeed = 720f; // 초당 회전 속도(도)
+
+        private bool homingFinished = false;
 
         protected override void Awake()
         {
@@ -24,14 +26,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
 
             while (traveledDistance < remainingDistance)
             {
-                if (elapsed < homingDuration && player != null)
+                if (!homingFinished && elapsed < homingDuration && player != null)
                 {
+                    // 플레이어 방향으로 유도
                     Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
                     float targetAngle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
                     float currentAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                     float angle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, rotateSpeed * Time.deltaTime);
 
                     direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0).normalized;
+                    rb.velocity = direction * speed;
+                    RotateArrow();
+                }
+                else if (!homingFinished)
+                {
+                    // 유도 종료 → 마지막 방향으로 직선 비행 시작
+                    homingFinished = true;
                     rb.velocity = direction * speed;
                     RotateArrow();
                 }

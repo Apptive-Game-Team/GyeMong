@@ -8,7 +8,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
     public abstract class ArrowBase : MonoBehaviour
     {
         protected Vector3 direction;
-        [SerializeField] protected float speed = 30f;
+        [SerializeField] protected float speed = 25f;
         protected Rigidbody2D rb;
         protected float targetDistance = 10f;
         protected float traveledDistance = 0f;
@@ -23,7 +23,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             direction = dir.normalized;
             targetDistance = distance;
             RotateArrow();
-            StartCoroutine(FireArrow(12f));
+            StartCoroutine(FireArrow(13f));
         }
 
         protected void RotateArrow()
