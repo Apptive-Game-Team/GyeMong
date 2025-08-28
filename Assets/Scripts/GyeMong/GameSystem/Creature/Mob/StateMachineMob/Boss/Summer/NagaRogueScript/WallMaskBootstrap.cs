@@ -5,13 +5,17 @@ using UnityEngine.Rendering.Universal;
 [DefaultExecutionOrder(-1000)]
 public class WallMaskBootstrap : MonoBehaviour
 {
-    public LayerMask wallLayer;      // Walls 레이어
-    [Range(1,4)] public int downscale = 1; // 1=풀, 2=1/2, 4=1/4
+    [Header("Mask contents (GameObject Layer)")]
+    public LayerMask wallLayer;
+    [Range(1,4)] public int downscale = 1;
 
-    Camera _main;
-    Camera _maskCam;
+    [Header("URP Renderer index from URP Asset > Renderer List")]
+    [SerializeField] int rendererIndex = 0; // 네가 말한 0 유지
+
+    Camera _main, _maskCam;
     RenderTexture _rt;
 
+    public static RenderTexture CurrentMaskRT { get; private set; }
     static readonly int WallMaskTexId = Shader.PropertyToID("_WallMaskTex");
 
     void Awake()
@@ -19,32 +23,37 @@ public class WallMaskBootstrap : MonoBehaviour
         _main = GetComponent<Camera>();
         CreateOrResizeRT();
         CreateMaskCamera();
-        Shader.SetGlobalTexture(WallMaskTexId, _rt);
+        SyncAll("Awake");     // ★ 초기 프레임부터 맞춤
+        PushGlobal();
+    }
+
+    void OnEnable()  { PushGlobal(); }
+    void OnDisable() { Shader.SetGlobalTexture(WallMaskTexId, null); }
+
+    void OnDestroy()
+    {
+        if (_maskCam) Destroy(_maskCam.gameObject);
+        if (_rt) { _rt.Release(); Destroy(_rt); }
     }
 
     void CreateMaskCamera()
     {
         var go = new GameObject("WallMaskCamera");
+        go.hideFlags = HideFlags.DontSave;
         go.transform.SetParent(transform, false);
+
         _maskCam = go.AddComponent<Camera>();
-
-        // 화면에는 안 그리고 RT로만 출력
-        _maskCam.clearFlags = CameraClearFlags.SolidColor;
+        _maskCam.enabled         = true;
+        _maskCam.clearFlags      = CameraClearFlags.SolidColor;
         _maskCam.backgroundColor = Color.black;
-        _maskCam.cullingMask = wallLayer; // 벽만
-        _maskCam.targetTexture = _rt;
-        _maskCam.enabled = true;
-        _maskCam.depth = -1000; // 화면 렌더 순서에 영향 없음
+        _maskCam.cullingMask     = wallLayer;
+        _maskCam.targetTexture   = _rt;
+        _maskCam.depth           = -1000;
 
-        // URP 설정(같은 Renderer를 쓰도록 ‘시도’)
-        var mainData = _main.GetUniversalAdditionalCameraData();
         var maskData = _maskCam.GetUniversalAdditionalCameraData();
         maskData.renderPostProcessing = false;
-        maskData.antialiasing = AntialiasingMode.None;
-
-        // ⚠ 여기서 renderer를 강제로 맞추는 코드는 버전마다 API가 달라서 뺐다.
-        // 대부분은 파이프라인 기본 Renderer가 같아서 문제 없음.
-        // (필요하면 아래 “선택: Renderer 수동 지정” 참고)
+        maskData.antialiasing         = AntialiasingMode.None;
+        maskData.SetRenderer(rendererIndex);   // ★ 강제 동일 Renderer 사용
     }
 
     void CreateOrResizeRT()
@@ -53,49 +62,61 @@ public class WallMaskBootstrap : MonoBehaviour
         int h = Mathf.Max(8, Screen.height / Mathf.Max(1, downscale));
 
         if (_rt != null && (_rt.width != w || _rt.height != h))
-        {
-            _rt.Release();
-            Destroy(_rt);
-            _rt = null;
-        }
+        { _rt.Release(); Destroy(_rt); _rt = null; }
+
         if (_rt == null)
         {
             _rt = new RenderTexture(w, h, 0, RenderTextureFormat.R8)
-            {
-                name = "WallMaskRT",
-                filterMode = FilterMode.Bilinear,
-                wrapMode = TextureWrapMode.Clamp
-            };
+            { name = "WallMaskRT", filterMode = FilterMode.Bilinear, wrapMode = TextureWrapMode.Clamp };
         }
+        CurrentMaskRT = _rt;
     }
 
-    void Update()
+    void LateUpdate()
     {
-        // 해상도 변화 대응
-        int w = Mathf.Max(8, Screen.width  / Mathf.Max(1, downscale));
-        int h = Mathf.Max(8, Screen.height / Mathf.Max(1, downscale));
-        if (_rt.width != w || _rt.height != h)
-        {
-            CreateOrResizeRT();
-            if (_maskCam) _maskCam.targetTexture = _rt;
-            Shader.SetGlobalTexture(WallMaskTexId, _rt);
-        }
+        // Cinemachine이 LateUpdate에서 렌즈를 건드리므로 여기서도 동기화
+        SyncAll("LateUpdate");
     }
 
-    // CinemachineBrain이 LateUpdate에서 렌즈/행렬을 세팅한 ‘직후’ 동기화
     void OnPreCull()
     {
-        if (!_maskCam) return;
+        // 렌더 직전에 한 번 더 보증
+        SyncAll("OnPreCull");
+        PushGlobal();
+    }
 
+    void SyncAll(string tag)
+    {
+        if (!_maskCam || !_main) return;
+
+        // 위치/회전/뷰-프로젝션/오쏘 옵션/클리핑/뷰포트까지 전부 맞춤
         _maskCam.transform.SetPositionAndRotation(transform.position, transform.rotation);
 
-        // 행렬까지 1:1 복사 → 완벽 싱크
-        _maskCam.projectionMatrix     = _main.projectionMatrix;
-        _maskCam.worldToCameraMatrix  = _main.worldToCameraMatrix;
+        _maskCam.orthographic        = _main.orthographic;
+        _maskCam.orthographicSize    = _main.orthographicSize;
+        _maskCam.nearClipPlane       = _main.nearClipPlane;
+        _maskCam.farClipPlane        = _main.farClipPlane;
+        _maskCam.rect                = _main.rect;
 
-        _maskCam.orthographic         = _main.orthographic;
-        _maskCam.orthographicSize     = _main.orthographicSize;
+        _maskCam.projectionMatrix    = _main.projectionMatrix;
+        _maskCam.worldToCameraMatrix = _main.worldToCameraMatrix;
 
+        // (선택) Pixel Perfect Camera를 메인에 쓰면, 같은 값으로 하나 더 붙여도 됨
+        // var ppMain = _main.GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
+        // if (ppMain && !_maskCam.GetComponent<UnityEngine.U2D.PixelPerfectCamera>())
+        //     UnityEngine.U2D.PixelPerfectCameraUtilities.AddCopy(ppMain, _maskCam.gameObject);
+
+        // Base 카메라인지 디버그
+        var mainData = _main.GetUniversalAdditionalCameraData();
+        if (mainData.renderType != CameraRenderType.Base)
+        {
+            Debug.LogWarning($"[WallMask] Script is on an Overlay camera. Put it on the BASE camera. ({tag})");
+        }
+    }
+
+    void PushGlobal()
+    {
         Shader.SetGlobalTexture(WallMaskTexId, _rt);
+        CurrentMaskRT = _rt;
     }
 }

@@ -20,6 +20,8 @@ public class SilhouetteOverlay : MonoBehaviour
         _sr.sortingLayerName = overlaySortingLayer;
         _sr.sortingOrder = source.sortingOrder + overlayOrderBoost;
         _sr.color = Color.white; // 색은 머티리얼에서 처리
+        if (WallMaskBootstrap.CurrentMaskRT)
+            _sr.material.SetTexture("_WallMaskTex", WallMaskBootstrap.CurrentMaskRT);
     }
 
     void LateUpdate()
@@ -35,5 +37,8 @@ public class SilhouetteOverlay : MonoBehaviour
 
         // 필요하면 원본의 Enable/Disable 상태 맞추기
         _sr.enabled = source.enabled;
+        var rt = WallMaskBootstrap.CurrentMaskRT;
+        if (rt && _sr.material.GetTexture("_WallMaskTex") != rt)
+            _sr.material.SetTexture("_WallMaskTex", rt);
     }
 }
