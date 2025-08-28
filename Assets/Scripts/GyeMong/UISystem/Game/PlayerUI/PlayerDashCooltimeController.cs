@@ -2,17 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDashCooltimeController : MonoBehaviour
+namespace GyeMong.UISystem.Game.PlayerUI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerDashCooltimeController : GaugeController
     {
-        
-    }
+        private float _cooldownTime;
+        private float _currentTime;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            _cooldownTime = SceneContext.Character.stat.DashCooldown;
+            _currentTime = 0f;
+        }
+
+        protected override float GetCurrentGauge()
+        {
+            return _currentTime;
+        }
+
+        protected override float GetMaxGauge()
+        {
+            return _cooldownTime;
+        }
+
+        private new void Update()
+        {
+            if (_currentTime > 0f)
+            {
+                _currentTime -= Time.deltaTime;
+                if (_currentTime < 0f) _currentTime = 0f;
+
+                UpdateSkillGauge();
+            }
+        }
+
+        public void StartCooldown()
+        {
+            _cooldownTime = SceneContext.Character.stat.DashCooldown;
+            _currentTime = _cooldownTime;
+            UpdateSkillGauge();
+        }
     }
 }
