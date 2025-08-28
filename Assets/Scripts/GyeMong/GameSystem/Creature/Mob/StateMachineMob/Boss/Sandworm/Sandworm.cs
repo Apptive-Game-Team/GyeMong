@@ -14,6 +14,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 {
     public class Sandworm : Boss
     {
+        [Header("Pattern Prefabs")]
         [SerializeField] private TailPattern mapPattern;
         [SerializeField] private GameObject venomAttack;
         [SerializeField] private GameObject venomPit;
@@ -23,6 +24,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private GameObject megaGroundCrashIndicator;
         [SerializeField] private GameObject laserAttack;
         [SerializeField] private GameObject bodyAttack;
+        
         private float _venomAttackDuration;
         private float _venomAttackSpreadAngle;
         private float _venomPitDuration;
@@ -30,8 +32,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private float _laserDistance;
         private float _sunctionSpeed;
         private float _chaseSpeed;
+
+        [Header("Movement")] 
+        [SerializeField] private SandwormMovement movement;
+        
+        [Header("Sound")]
         public SoundObject curBGM;
         public SoundObject burrowingSound;
+        
         protected override void Initialize()
         {
             maxPhase = 2;
