@@ -355,7 +355,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime, NagaWarrior.attackdelayTime / 4, 6f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 NagaWarrior.Animator.SetBool("isAttack", true);
-                NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer, SceneContext.Character.transform.position);
+                NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer, NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer * 15f);
                 Sound.Play("EFFECT_Sword_Swing");
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
@@ -417,7 +417,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             Vector3[] points = GetCirclePoints(center, radius, numberOfPoints);
             foreach (Vector3 point in points)
             {
-                int numberOfObjects = 5;
+                int numberOfObjects = 10;
                 Vector3 direction = (point - center).normalized;
                 float distance = radius;
                 for (int i = 0; i <= numberOfObjects; i++)
