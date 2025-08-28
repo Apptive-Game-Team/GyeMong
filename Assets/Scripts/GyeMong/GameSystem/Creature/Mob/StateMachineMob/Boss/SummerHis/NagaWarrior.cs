@@ -145,10 +145,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public NagaWarrior NagaWarrior => mob as NagaWarrior;
             protected Dictionary<System.Type, int> weights;
+            public float faceToFront;
             public override void OnStateUpdate()
             {
+                if (NagaWarrior.DirectionToPlayer.y > 0)
+                    faceToFront = 0f;
+                else faceToFront = NagaWarrior.DirectionToPlayer.y;
                 NagaWarrior.Animator.SetFloat("xDir", NagaWarrior.DirectionToPlayer.x);
-                NagaWarrior.Animator.SetFloat("yDir", -Mathf.Abs(NagaWarrior.DirectionToPlayer.y));
+                NagaWarrior.Animator.SetFloat("yDir", faceToFront);
             }
             protected virtual void SetWeights()
             {
@@ -229,30 +233,33 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 Vector3 targetPos = SceneContext.Character.transform.position;
-                Vector3 targetDir = NagaWarrior.DirectionToPlayer;
+                Vector3 jumpDirToPlayer = NagaWarrior.DirectionToPlayer;
+                float _jumpDirToPlayerY = jumpDirToPlayer.y;
+                if (NagaWarrior.DirectionToPlayer.y > 0)
+                    _jumpDirToPlayerY = 0f;
                 NagaWarrior.Animator.SetFloat("patternType", 2);
                 NagaWarrior.Animator.SetBool("isDelay", true);
                 NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, targetPos, SceneContext.Character.transform, NagaWarrior.attackdelayTime/2, NagaWarrior.attackdelayTime / 2, 1f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                NagaWarrior.Animator.SetFloat("xJumpDir", targetDir.x);
-                NagaWarrior.Animator.SetFloat("yJumpDir", -Mathf.Abs(targetDir.y));
+                NagaWarrior.Animator.SetFloat("xJumpDir", jumpDirToPlayer.x);
+                NagaWarrior.Animator.SetFloat("yJumpDir", _jumpDirToPlayerY);
                 NagaWarrior.Animator.SetBool("isAttack", true);
                 yield return NagaWarrior.airborneController.AirborneTo(targetPos);
                 AttackObjectController.Create(
-                    NagaWarrior.transform.position + targetDir,
+                    NagaWarrior.transform.position + jumpDirToPlayer,
                     Vector3.zero,
                     NagaWarrior.pitBoundaryPrefab,
                     new StaticMovement(
-                        NagaWarrior.transform.position + targetDir,
+                        NagaWarrior.transform.position + jumpDirToPlayer,
                         NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
                 AttackObjectController.Create(
-                    NagaWarrior.transform.position + targetDir,
+                    NagaWarrior.transform.position + jumpDirToPlayer,
                     Vector3.zero,
                     NagaWarrior.pitCenterPrefab,
                     new StaticMovement(
-                        NagaWarrior.transform.position + targetDir,
+                        NagaWarrior.transform.position + jumpDirToPlayer,
                         NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
