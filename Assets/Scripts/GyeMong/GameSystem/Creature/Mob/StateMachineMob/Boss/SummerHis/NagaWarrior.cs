@@ -149,7 +149,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override void OnStateUpdate()
             {
                 if (NagaWarrior.DirectionToPlayer.y > 0)
-                    faceToFront = 0f;
+                    faceToFront = 0.1f;
                 else faceToFront = NagaWarrior.DirectionToPlayer.y;
                 NagaWarrior.Animator.SetFloat("xDir", NagaWarrior.DirectionToPlayer.x);
                 NagaWarrior.Animator.SetFloat("yDir", faceToFront);
@@ -236,7 +236,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 Vector3 jumpDirToPlayer = NagaWarrior.DirectionToPlayer;
                 float _jumpDirToPlayerY = jumpDirToPlayer.y;
                 if (NagaWarrior.DirectionToPlayer.y > 0)
-                    _jumpDirToPlayerY = 0f;
+                    _jumpDirToPlayerY = 0.1f;
                 NagaWarrior.Animator.SetFloat("patternType", 2);
                 NagaWarrior.Animator.SetBool("isDelay", true);
                 NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, targetPos, SceneContext.Character.transform, NagaWarrior.attackdelayTime/2, NagaWarrior.attackdelayTime / 2, 1f);
