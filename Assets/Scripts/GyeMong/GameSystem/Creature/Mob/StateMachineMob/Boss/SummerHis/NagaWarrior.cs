@@ -318,7 +318,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 );
                 s_obj.StartRoutine();
                 s_obj.transform.parent = NagaWarrior.transform;
-                yield return NagaWarrior.QuickRushAttack();
+                yield return NagaWarrior.QuickHalfRushAttack();
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
