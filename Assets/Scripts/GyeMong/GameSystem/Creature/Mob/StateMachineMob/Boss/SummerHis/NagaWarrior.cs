@@ -295,7 +295,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     NagaWarrior.TailRush1Prefab,
                     new ChildMovement(
                         NagaWarrior.transform, Vector3.zero,
-                        NagaWarrior.attackdelayTime / 2)
+                        NagaWarrior.attackdelayTime / 3)
                 );
                 f_obj.StartRoutine();
                 f_obj.transform.parent = NagaWarrior.transform;
@@ -307,7 +307,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     NagaWarrior.TailRush2Prefab,
                     new ChildMovement(
                         NagaWarrior.transform, Vector3.zero,
-                        NagaWarrior.attackdelayTime / 2)
+                        NagaWarrior.attackdelayTime / 3)
                 );
                 s_obj.StartRoutine();
                 s_obj.transform.parent = NagaWarrior.transform;
@@ -429,7 +429,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                         ).StartRoutine()));
                 }
             }
-            Sound.Play("ENEMY_Naga_Breath",false,4f);
+            Sound.Play("ENEMY_Naga_Breath",false,5f);
             yield return new WaitForSeconds(attackdelayTime * 2);
         }
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
