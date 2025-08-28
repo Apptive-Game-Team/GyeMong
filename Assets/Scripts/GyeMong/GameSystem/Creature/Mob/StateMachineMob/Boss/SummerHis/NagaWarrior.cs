@@ -463,7 +463,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             GameObject attackCollider = Instantiate(skillAttackObj, spawnPosition, spawnRotation);
 
-            StartCoroutine(MoveColliderToTarget(attackCollider.transform, targetPosition, attackdelayTime * 4));
+            StartCoroutine(MoveColliderToTarget(attackCollider.transform, targetPosition, 10/attackdelayTime));
         }
         private IEnumerator MoveColliderToTarget(Transform obj, Vector3 targetPosition, float speed)
         {
