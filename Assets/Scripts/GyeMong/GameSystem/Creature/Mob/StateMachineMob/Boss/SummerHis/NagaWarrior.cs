@@ -293,8 +293,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     NagaWarrior.transform.position,
                     Vector3.zero,
                     NagaWarrior.TailRush1Prefab,
-                    new StaticMovement(
-                        NagaWarrior.transform.position,
+                    new ChildMovement(
+                        NagaWarrior.transform, Vector3.zero,
                         NagaWarrior.attackdelayTime / 2)
                 );
                 f_obj.StartRoutine();
@@ -305,8 +305,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     NagaWarrior.transform.position,
                     Vector3.zero,
                     NagaWarrior.TailRush2Prefab,
-                    new StaticMovement(
-                        NagaWarrior.transform.position,
+                    new ChildMovement(
+                        NagaWarrior.transform, Vector3.zero,
                         NagaWarrior.attackdelayTime / 2)
                 );
                 s_obj.StartRoutine();
