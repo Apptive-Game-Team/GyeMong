@@ -314,6 +314,8 @@ namespace GyeMong.GameSystem.Creature.Player
             isDashing = false;
             animator.SetBool("isDashing", false);
 
+            SceneContext.Character.changeListenerCaller.CallDashUsed(stat.DashCooldown);
+
             yield return new WaitForSeconds(stat.DashCooldown);
 
             canDash = true;

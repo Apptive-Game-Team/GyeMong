@@ -1,10 +1,11 @@
+using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace GyeMong.UISystem.Game.PlayerUI
 {
-    public class PlayerDashCooltimeController : GaugeController
+    public class PlayerDashCooltimeController : GaugeController, IDashListener
     {
         private float _cooldownTime;
         private float _currentTime;
@@ -35,11 +36,16 @@ namespace GyeMong.UISystem.Game.PlayerUI
                 UpdateSkillGauge();
             }
         }
-
-        public void StartCooldown()
+        public void OnDashUsed(float cooldown)
         {
-            _cooldownTime = SceneContext.Character.stat.DashCooldown;
+            _cooldownTime = cooldown;
             _currentTime = _cooldownTime;
+            UpdateSkillGauge();
+        }
+
+        public void OnChanged(float changedValue)
+        {
+            _cooldownTime = changedValue;
             UpdateSkillGauge();
         }
     }
