@@ -385,8 +385,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 if(NagaWarrior.isOverheat)
                     numberofPoints = 12;
                 NagaWarrior.Animator.SetBool("isAttack", true);
-                Sound.Play("ENEMY_Seed_Explosion");
-                yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(5f, numberofPoints));
+                yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(10f, numberofPoints));
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
@@ -430,6 +429,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                         ).StartRoutine()));
                 }
             }
+            Sound.Play("ENEMY_Naga_Breath",false,4f);
             yield return new WaitForSeconds(attackdelayTime * 2);
         }
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
