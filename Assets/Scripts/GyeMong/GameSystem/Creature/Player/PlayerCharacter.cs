@@ -298,11 +298,12 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetFloat("yDir", dashDirection.y);
             Vector2 startPosition = playerRb.position;
 
-            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance,
-                LayerMask.GetMask("Wall"));
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance, LayerMask.GetMask("Wall"));
             Vector2 targetPosition = hit.collider == null
                 ? startPosition + dashDirection * stat.DashDistance
                 : hit.point + hit.normal * 0.1f;
+
+            SceneContext.Character.changeListenerCaller.CallDashUsed(stat.DashCooldown);
 
             yield return (_dashTween = playerRb.DOMove(targetPosition, stat.DashDuration)
                 .SetEase(Ease.OutCubic))
@@ -314,10 +315,7 @@ namespace GyeMong.GameSystem.Creature.Player
             isDashing = false;
             animator.SetBool("isDashing", false);
 
-            SceneContext.Character.changeListenerCaller.CallDashUsed(stat.DashCooldown);
-
             yield return new WaitForSeconds(stat.DashCooldown);
-
             canDash = true;
         }
 

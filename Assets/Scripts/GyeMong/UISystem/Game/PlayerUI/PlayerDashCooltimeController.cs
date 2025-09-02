@@ -1,53 +1,67 @@
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 using UnityEngine;
+using System.Collections;
 using Util.ChangeListener;
+using UnityEngine.UI;
 
 namespace GyeMong.UISystem.Game.PlayerUI
 {
-    public class PlayerDashCooltimeController : GaugeController, IDashListener
+    public class PlayerDashCooltimeController : MonoBehaviour, IDashListener, IChangeListener<float>
     {
-        private float _cooldownTime;
-        private float _currentTime;
+        [SerializeField] private Slider dashSlider;
+
+        private Coroutine cooldownRoutine;
+
+        private void Awake()
+        {
+            if (dashSlider == null) dashSlider = GetComponent<Slider>();
+        }
 
         private void Start()
         {
             SceneContext.Character.changeListenerCaller.AddDashListener(this);
-
-            _cooldownTime = SceneContext.Character.stat.DashCooldown;
-            _currentTime = 0f;
+            if (dashSlider != null) dashSlider.value = 1f;
         }
 
-        protected override float GetCurrentGauge()
+        public void OnChanged(float value)
         {
-            return _currentTime;
-        }
-
-        protected override float GetMaxGauge()
-        {
-            return _cooldownTime;
-        }
-
-        private new void Update()
-        {
-            if (_currentTime > 0f)
-            {
-                _currentTime -= Time.deltaTime;
-                if (_currentTime < 0f) _currentTime = 0f;
-                UpdateSkillGauge();
-            }
+            OnDashUsed(value);
         }
 
         public void OnDashUsed(float cooldown)
         {
-            _cooldownTime = cooldown;
-            _currentTime = _cooldownTime;
-            UpdateSkillGauge();
+            if (dashSlider == null) return;
+
+            if (cooldownRoutine != null)
+                StopCoroutine(cooldownRoutine);
+
+            cooldownRoutine = StartCoroutine(DashCooldownRoutine(cooldown));
         }
 
-        public void OnChanged(float changedValue)
+        private IEnumerator DashCooldownRoutine(float cooldown)
         {
-            _cooldownTime = changedValue;
-            UpdateSkillGauge();
+            float dashDuration = Mathf.Max(0.0001f, SceneContext.Character.stat.DashDuration);
+            float t = 0f;
+
+            while (t < dashDuration)
+            {
+                t += Time.deltaTime;
+                dashSlider.value = Mathf.Lerp(1f, 0f, t / dashDuration);
+                yield return null;
+            }
+            dashSlider.value = 0f;
+
+            t = 0f;
+            cooldown = Mathf.Max(0f, cooldown);
+            while (t < cooldown)
+            {
+                t += Time.deltaTime;
+                dashSlider.value = (cooldown <= 0f) ? 1f : Mathf.Lerp(0f, 1f, t / cooldown);
+                yield return null;
+            }
+            dashSlider.value = 1f;
+
+            cooldownRoutine = null;
         }
     }
 }
