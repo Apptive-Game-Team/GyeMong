@@ -154,7 +154,7 @@ namespace GyeMong.GameSystem.Creature.Player
                 // StartCoroutine(SkillAttack());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost && curHealth != stat.HealthMax)
             {
                 healingCoroutine = StartCoroutine(Heal());
             }
