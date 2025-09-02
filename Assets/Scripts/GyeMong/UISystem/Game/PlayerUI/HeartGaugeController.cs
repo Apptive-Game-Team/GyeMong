@@ -20,6 +20,7 @@ namespace GyeMong.UISystem.Game.PlayerUI
 
             maxHp = (int)SceneContext.Character.stat.HealthMax;
             CreateHearts(maxHp);
+            OnChanged(SceneContext.Character.stat.HealthMax);
         }
         
         private void CreateHearts(int count)
