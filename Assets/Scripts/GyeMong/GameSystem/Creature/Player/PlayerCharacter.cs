@@ -443,21 +443,20 @@ namespace GyeMong.GameSystem.Creature.Player
             float elapsed = 0f;
             float consumedGauge = 0f;
 
+            float tick = 0.1f;
+            float costPerTick = stat.HealCost * tick / 1f;
+
             while (InputManager.Instance.GetKey(ActionCode.Heal))
             {
-                float delta = Time.deltaTime;
-                float costPerSecond = stat.HealCost / 1f;
-                float cost = costPerSecond * delta;
-
-                if (curSkillGauge < cost)
+                if (curSkillGauge < costPerTick)
                 {
                     Debug.Log("게이지 부족으로 힐 중단");
                     break;
                 }
 
-                curSkillGauge -= cost;
-                consumedGauge += cost;
-                elapsed += delta;
+                curSkillGauge -= costPerTick;
+                consumedGauge += costPerTick;
+                elapsed += tick;
 
                 changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
 
@@ -467,21 +466,22 @@ namespace GyeMong.GameSystem.Creature.Player
                     SpawnHealCompleteEffect(healCompleteEffectPrefab);
                     soundController.Trigger(PlayerSoundType.HEAL);
                     Debug.Log("Heal is Complete");
+
+                    curSkillGauge -= (stat.HealCost - consumedGauge);
                     break;
                 }
 
-                yield return null;
+                yield return new WaitForSeconds(tick);
             }
 
             Debug.Log("힐 끝");
 
             DestroyEffect(ref activeHealEffect);
-            
+
             animator.SetBool("isHealing", false);
             isHealing = false;
             isAttacking = false;
             canMove = true;
-
         }
 
         public void Heal(float amount)
