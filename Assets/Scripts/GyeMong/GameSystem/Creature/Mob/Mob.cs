@@ -71,28 +71,44 @@ namespace GyeMong.GameSystem.Creature.Mob
         {
             float TARGET_OFFSET = 1f;
             Vector3 playerPosition = SceneContext.Character.transform.position;
-            float chargeSpeed = 50f;
             Vector3 direction = (playerPosition - transform.position).normalized;
             lastRushDirection = direction;
+
             Vector3 targetPosition = playerPosition - (direction * TARGET_OFFSET);
             float targetDistance = Vector3.Distance(transform.position, targetPosition);
+
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             LayerMask obstacleLayer = LayerMask.GetMask("Wall");
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
 
+            // 충돌 체크
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDistance, obstacleLayer);
             if (hit.collider != null)
             {
                 yield break;
             }
 
-            float elapsedTime = 0f;
-            float duration = targetDistance / chargeSpeed;
+            // 돌진 전 대기
             yield return new WaitForSeconds(delay);
-            while (elapsedTime < duration)
+
+            float currentSpeed = 0f;
+            float acceleration = 80f; // 가속도 (값 조절 가능)
+            float traveledDistance = 0f;
+
+            while (traveledDistance < targetDistance)
             {
-                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
+                currentSpeed += acceleration * Time.fixedDeltaTime; // 시간에 따라 속도 증가
+                float moveStep = currentSpeed * Time.fixedDeltaTime;
+
+                // 이동량 누적
+                traveledDistance += moveStep;
+
+                // 목표 위치를 넘기지 않도록 보정
+                if (traveledDistance > targetDistance)
+                    moveStep -= (traveledDistance - targetDistance);
+
+                Vector3 newPosition = transform.position + direction * moveStep;
                 rb.MovePosition(newPosition);
-                elapsedTime += Time.fixedDeltaTime;
+
                 yield return new WaitForFixedUpdate();
             }
         }
