@@ -199,8 +199,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             public override IEnumerator StateCoroutine()
             {
                 Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 0);
-                //Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, SceneContext.Character.transform.position, SceneContext.Character.transform, Elf.attackdelayTime * 1.5f, Elf.attackdelayTime / 2,3f);
+                Elf.Animator.SetFloat("attackType", 0); 
+                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, SceneContext.Character.transform.position, Elf.transform, Elf.attackdelayTime /2, Elf.attackdelayTime / 2,4f);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
