@@ -26,6 +26,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
+        [SerializeField] private GameObject[] arrowIndicators;
         float attackdelayTime = 1f;
 
         [Header("Chat Data")]
@@ -240,10 +241,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[0], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
                 Sound.Play("ENEMY_Arrow_Drow");
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                Destroy(arrowIndicator);
                 int count = 0;
                 float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
                 while (count < 4)
@@ -298,9 +301,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[1], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                Destroy(arrowIndicator);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
@@ -325,9 +330,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[2], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                Destroy(arrowIndicator);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
@@ -352,9 +359,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[3], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                Destroy(arrowIndicator);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
