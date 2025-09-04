@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
@@ -26,43 +27,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private List<Sprite> tailSprites;
 
         [Header("Sandworm Body")]
-        [SerializeField] private List<SpriteRenderer> sandwormBody;
+        public List<SpriteRenderer> sandwormBody;
 
-        [Header("Motion Value")] 
+        [Header("Head Attack Move Value")] 
         [SerializeField] private float bodyRotateValue;
 
         private Tween _idleTween;
-        private bool _isIdle = true;
+        public bool isIdle = true;
         private bool _check = true;
         private bool[] _hidden = new bool[7];
 
         private void Start()
         {
             //IdleMove();
-        }
-
-        private void Update()
-        {
-            FacePlayer();
-            if (Input.GetMouseButton(1))
-            {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                mousePos.z = 0;
-                StartCoroutine(HeadAttackMove(mousePos, 0.2f));
-            }
-
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                StartCoroutine(HideOrShow(_check, 0.5f));
-                _check = !_check;
-            }
-
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                mousePos.z = 0;
-                StartCoroutine(BodyAttackMove(mousePos, 1f));
-            }
         }
         
         public void IdleMove()
@@ -80,7 +57,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         public IEnumerator HeadAttackMove(Vector3 dest, float dur, float preDelay = 0.5f, float postDelay = 0.1f,
             float backDelay = 1f)
         {
-            _isIdle = false;
             _idleTween?.Kill();
 
             Vector3 originalBodyPos = bodyTip.transform.position;
@@ -121,24 +97,43 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             });
             
             yield return seq.WaitForCompletion();
-            _isIdle = true;
         }
 
-        public IEnumerator BodyAttackMove(Vector3 targetPos, float duration)
+        public IEnumerator AttackMove(bool dir, float upAngle, float upTime, float downAngle, float downTime, float recoverTime, float recoverAngle = 0f)
         {
-            _isIdle = true;
-            FacePlayer(true);
-            _isIdle = false;
+            var seq = DOTween.Sequence();
 
+            seq.Append(headRotateTip.transform.DORotate
+                    (new Vector3(0, 0, dir ? upAngle : -upAngle), 
+                        upTime)
+                .SetEase(Ease.OutSine));
+            seq.Append(headRotateTip.transform.DORotate
+                    (new Vector3(0, 0, dir ? downAngle : -downAngle), 
+                        downTime)
+                .SetEase(Ease.InQuad));
+            seq.Append(headRotateTip.transform.DORotate(new Vector3(0, 0, recoverAngle), recoverTime)
+                .SetEase(Ease.Linear));
+
+
+            yield return seq.WaitForCompletion();
+        }
+
+        public IEnumerator BodyAttackMove(Vector3 targetPos, float speed)
+        {
+            isIdle = true;
+            FacePlayer(true);
+            isIdle = false;
+            
+            
             int length = sandwormBody.Count;
             Vector3 dir = (targetPos - root.transform.position).normalized;
             float dist = Vector3.Distance(root.transform.position, targetPos);
+            float duration = dist / speed;
             var rootSource = root.data.sourceObjects;
             var bodySource = bodyConstraint.data.sourceObjects;
             bodySource.SetWeight(2, 0);
             bodyConstraint.data.sourceObjects = bodySource;
             
-            // 1) 튀어나오면서 바로 타겟 위치까지 돌진
             moveTip.transform.position = transform.position;
             Vector3 startPos = moveTip.transform.position;
             Vector3 midPos = (startPos + targetPos) / 2 + new Vector3(0, dist / 5, 0);
@@ -146,13 +141,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 startPos,
                 midPos,
-                targetPos,
+                targetPos + dir * (dist * 0.2f),
             };
 
             var attackTween = moveTip.transform.DOPath(attackPath, duration * 0.7f, PathType.CatmullRom);
             rootSource.SetWeight(0, 0.1f);
             root.data.sourceObjects = rootSource;
-            attackTween.SetEase(Ease.OutQuad) // 튀어나오면서 돌진 → 자연스럽게
+            attackTween.SetEase(Ease.OutQuad)
             .OnUpdate(() =>
             {
                 float progress = attackTween.ElapsedPercentage();
@@ -178,7 +173,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             });
 
             yield return attackTween.WaitForCompletion();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(duration * 0.3f);
             rootSource.SetWeight(0, 0f);
             root.data.sourceObjects = rootSource;
             transform.position = targetPos;
@@ -186,12 +181,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             moveTip.transform.position = transform.TransformPoint(new Vector3(0, 0, 0));
             bodySource.SetWeight(2, 0.1f);
             bodyConstraint.data.sourceObjects = bodySource;
+            yield return null;
         }
 
 
         public IEnumerator HideOrShow(bool hide, float duration)
         {
-            _isIdle = false;
+            isIdle = false;
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             Vector3 dir = (mousePos - root.transform.position).normalized;
@@ -202,7 +198,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 var tween = moveTip.transform.DOPath(
                     new[]
                     {
-                        moveTip.transform.position, transform.TransformPoint(new Vector3(0, 1.5f, 0)),
+                        moveTip.transform.position, 
+                        transform.TransformPoint(new Vector3(0, 1.5f, 0)),
                         transform.position
                     },
                     duration
@@ -230,15 +227,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }
             else
             {
-                _isIdle = true;
+                isIdle = true;
                 FacePlayer(true);
-                _isIdle = false;
+                isIdle = false;
                 moveTip.transform.position = transform.position;
                 var tween = moveTip.transform.DOPath(
                     new[]
                     {
-                        moveTip.transform.position, transform.TransformPoint(new Vector3(0, 1.5f, 0)),
-                        transform.TransformPoint(new Vector3(0, 2.5f, 0)) + dir * 0.4f
+                        moveTip.transform.position, 
+                        transform.TransformPoint(new Vector3(0, 1.5f, 0)),
+                        transform.TransformPoint(new Vector3(0, 2.8f, 0)) + dir * 0.4f
                     },
                     duration
                     , PathType.CatmullRom
@@ -262,7 +260,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 
                 yield return tween.WaitForCompletion();
                 
-                _isIdle = true;
+                isIdle = true;
             }
         }
 
@@ -279,25 +277,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }, target, duration).SetUpdate(UpdateType.Late);
         }
 
-        private void FacePlayer(bool hide = false)
+        public void FacePlayer(bool hide = false)
         {
-            if (!_isIdle) return;
+            if (!isIdle) return;
             
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
-            Vector3 dir = (mousePos - root.transform.position).normalized;
+            Vector3 dir = (SceneContext.Character.transform.position - root.transform.position).normalized;
 
             if (!hide)
             {
-                moveTip.transform.position = transform.TransformPoint(new Vector3(0, 2.5f, 0)) + dir * 0.4f;
+                moveTip.transform.position = transform.TransformPoint(new Vector3(0, 2.8f, 0)) + dir * 0.4f;
             }
-            bodyTip.transform.position = transform.TransformPoint(new Vector3(0, 1.2f, 0)) - dir * 1f;
+            bodyTip.transform.position = transform.TransformPoint(new Vector3(0, 1.5f, 0)) - dir * 1f;
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            
             if (angle < 0) angle += 360f;
 
-            if (angle is (>= 0f and < 30f) or ( >= 330f and < 360f))
+            if (angle is (>= 0f and < 15f) or ( >= 345f and < 360f))
             {
                 sandwormBody[0].sprite = headSprites[0];
                 for (int i = 1; i < sandwormBody.Count; i++)
@@ -306,7 +301,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 }
                 sandwormBody[0].sortingOrder = 18;
             }
-            else if (angle is >= 30f and < 60f)
+            else if (angle is >= 15f and < 60f)
             {
                 sandwormBody[0].sprite = headSprites[1];
                 for (int i = 1; i < sandwormBody.Count; i++)
@@ -324,7 +319,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 }
                 sandwormBody[0].sortingOrder = 12;
             }
-            else if (angle is >= 120f and < 150f)
+            else if (angle is >= 120f and < 165f)
             {
                 sandwormBody[0].sprite = headSprites[3];
                 for (int i = 1; i < sandwormBody.Count; i++)
@@ -333,7 +328,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 }
                 sandwormBody[0].sortingOrder = 12;
             }
-            else if (angle is >= 150f and < 210f)
+            else if (angle is >= 165f and < 195f)
             {
                 sandwormBody[0].sprite = headSprites[4];
                 for (int i = 1; i < sandwormBody.Count; i++)
@@ -342,7 +337,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 }
                 sandwormBody[0].sortingOrder = 18;
             }
-            else if (angle is >= 210f and < 240f)
+            else if (angle is >= 195f and < 240f)
             {
                 sandwormBody[0].sprite = headSprites[5];
                 for (int i = 1; i < sandwormBody.Count; i++)
