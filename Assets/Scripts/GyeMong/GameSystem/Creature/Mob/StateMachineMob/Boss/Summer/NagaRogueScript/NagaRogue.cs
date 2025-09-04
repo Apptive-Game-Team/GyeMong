@@ -92,7 +92,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             Animator.Play($"Idle_{dir}");
             yield return new WaitForSeconds(delay);
         }
-        private IEnumerator MeleeAttack(GameObject prefab, float duration = 0.5f)
+        private IEnumerator MeleeAttack(GameObject prefab, float duration = 0.3f)
         {
             const float startPosDist = 1f;
             FaceToPlayer();
@@ -110,7 +110,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             yield return new WaitForSeconds(0.2f);
         }
 
-        private IEnumerator RetrieveObject(GameObject prefab, float retrieveSpeed = 30f)
+        private IEnumerator RetrieveObject(GameObject prefab, float retrieveSpeed = 40f)
         {
             FaceToPlayer();
             Vector3 dirToPlayer = SceneContext.Character.transform.position - prefab.transform.position;
@@ -196,7 +196,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         
         private IEnumerator DaggerFanThrow(GameObject prefab, int daggerCount = 3, 
             float spreadAngle = 120f,
-            float throwSpeed = 20f, float daggerRange = 20f)
+            float throwSpeed = 20f, float daggerRange = 15f)
         {
             FaceToPlayer();
             Direction direction = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
@@ -628,7 +628,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             {
                 NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 5f, out var pos);
                 yield return NagaRogue.Teleport(pos, 7f);
-                yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 5, daggerRange: DaggerRange);
+                yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 4, daggerRange: DaggerRange, spreadAngle: 60f);
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
@@ -665,33 +665,89 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }    
-        public class TeleportDaggerRetrieve : NagaRogueState
+public class TeleportDaggerRetrieve : NagaRogueState
+{
+    private const float PostDelay = 1f;
+    private const float MaxRetrieveAngle = 30f; // deg
+
+    public override int GetWeight()
+    {
+        return (NagaRogue.daggerList.Count >= 10 && CountDaggersWithinAngle(MaxRetrieveAngle) >= 1 ? 300 : 0);
+    }
+
+    public override IEnumerator StateCoroutine()
+    {
+        var boss = NagaRogue;
+
+        // 1) 텔포 먼저 완료시키기
+        Vector3 tp = boss.FindRetrievePoint(5f);
+        yield return boss.Teleport(tp);
+
+        // (안정장치) 진짜로 텔포 위치까지 갔는지 확인
+        yield return new WaitUntil(() =>
+            (((Vector2)boss.transform.position - (Vector2)tp).sqrMagnitude < 0.0001f));
+
+        // 2) 텔포 후 "다시" 기준 벡터 계산
+        Vector2 bossPos   = boss.transform.position;
+        Vector2 playerPos = SceneContext.Character.transform.position;
+        Vector2 forward   = (playerPos - bossPos).normalized;
+
+        float cosLimit = Mathf.Cos(MaxRetrieveAngle * Mathf.Deg2Rad);
+
+        // 3) 각도 기준으로 회수 대상 선별(전방 반공간 + 30도 콘)
+        List<GameObject> selected = new();
+        foreach (var d in boss.daggerList)
         {
-            private const float PostDelay = 1f;
-            public override int GetWeight()
-            {
-                return (NagaRogue.daggerList.Count >= 10 ? 300 : 0);
-            }
+            if (!d || !d.activeInHierarchy) continue;
+            Vector2 toDagger = (Vector2)d.transform.position - bossPos;
+            if (toDagger.sqrMagnitude < 0.000001f) continue;
 
-            public override IEnumerator StateCoroutine()
-            {
-                List<GameObject> deleteDaggerList = new();
-                Vector3 pos = NagaRogue.FindRetrievePoint(5f);
-                yield return NagaRogue.Teleport(pos);
-                foreach (var dagger in NagaRogue.daggerList)
-                {
-                    yield return NagaRogue.RetrieveObject(dagger);
-                    dagger.SetActive(false);
-                    deleteDaggerList.Add(dagger);
-                }
-
-                foreach (var dagger in deleteDaggerList)
-                {
-                    NagaRogue.daggerList.Remove(dagger);
-                }
-                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
-            }
+            Vector2 dir = toDagger.normalized;
+            float dot = Vector2.Dot(dir, forward);
+            if (dot > 0f && dot >= cosLimit)
+                selected.Add(d);
         }
+
+        // 가까운 것부터 회수(연출 안정)
+        selected.Sort((a, b) =>
+        {
+            float da = ((Vector2)a.transform.position - bossPos).sqrMagnitude;
+            float db = ((Vector2)b.transform.position - bossPos).sqrMagnitude;
+            return da.CompareTo(db);
+        });
+
+        // 4) 회수
+        List<GameObject> deleteList = new(selected.Count);
+        foreach (var dagger in selected)
+        {
+            if (!dagger) continue;
+            yield return boss.RetrieveObject(dagger);
+            dagger.SetActive(false);
+            deleteList.Add(dagger);
+        }
+        foreach (var d in deleteList) boss.daggerList.Remove(d);
+
+        boss.ChangeState(new PostPatternState(PostDelay){ mob = boss });
+    }
+
+    // (선택) 가중치 계산 등에 쓰고 싶으면
+    private int CountDaggersWithinAngle(float maxAngle)
+    {
+        var bossPos   = (Vector2)NagaRogue.transform.position;
+        var playerPos = (Vector2)SceneContext.Character.transform.position;
+        Vector2 forward = (playerPos - bossPos).normalized;
+
+        int cnt = 0;
+        foreach (var d in NagaRogue.daggerList)
+        {
+            if (d == null || !d.activeInHierarchy) continue;
+            Vector2 toDagger = (Vector2)d.transform.position - bossPos;
+            if (Vector2.Dot(toDagger, forward) <= 0f) continue;
+            if (Vector2.Angle(forward, toDagger) <= maxAngle) cnt++;
+        }
+        return cnt;
+    }
+}
 
         public class ThrowShurikenTP : NagaRogueState
         {
@@ -712,6 +768,114 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
+
+public class DashToPlayerState : NagaRogueState
+{
+    // 튜닝 포인트
+    private const float Startup      = 0.08f;   // 준비 동작(바람잡기)
+    private const float DashDistance = 4.5f;    // 최대 이동 거리
+    private const float DashTime     = 0.18f;   // 실제 돌진 시간
+    private const float EndLag       = 0.25f;   // 후딜
+    private const float Skin         = 0.02f;   // 벽 앞 여유
+    private const float AngleJitter  = 10f;     // 플레이어 방향에서 약간 틀기(예측 회피)
+    private static readonly int ObstacleMask = LayerMask.GetMask("Obstacle");
+
+    public override int GetWeight()
+    {
+        // 멀수록 대쉬 우선시 (가벼운 휴리스틱)
+        Vector2 bossPos   = NagaRogue.transform.position;
+        Vector2 playerPos = SceneContext.Character.transform.position;
+        float dist = Vector2.Distance(bossPos, playerPos);
+        return dist >= 3.5f ? 260 : 180;
+    }
+
+    public override IEnumerator StateCoroutine()
+    {
+        var boss = NagaRogue;
+        var rb   = boss.GetComponent<Rigidbody2D>();
+        var body = boss.GetComponent<Collider2D>();
+
+        // 0) 필수 컴포넌트 체크
+        if (!rb || !body)
+        {
+            Debug.LogWarning("[DashToPlayerState] Rigidbody2D/Collider2D가 필요함.");
+            yield break;
+        }
+
+        // 1) 준비 모션
+        Vector2 bossPos   = boss.transform.position;
+        Vector2 playerPos = SceneContext.Character.transform.position;
+        Vector2 dirToPlayer = (playerPos - bossPos).normalized;
+
+        // 약간 좌/우로 틀어서 '예측 회피' 느낌 (±AngleJitter)
+        float jitter = Random.Range(-AngleJitter, AngleJitter);
+        Vector2 dashDir = Quaternion.Euler(0, 0, jitter) * dirToPlayer;
+        dashDir.Normalize();
+
+        // 방향별 애니(있으면)
+        NagaRogue.Animator.Play($"Dash_{CardinalFrom(dashDir)}");
+
+        if (Startup > 0f) yield return new WaitForSeconds(Startup);
+
+        // 2) 충돌 예측: 자기 콜라이더로 Cast
+        float travel = DashDistance;
+        RaycastHit2D[] hits = new RaycastHit2D[4];
+        var filter = new ContactFilter2D { useLayerMask = true, layerMask = ObstacleMask, useTriggers = false };
+        int count = body.Cast(dashDir, filter, hits, DashDistance);
+        if (count > 0)
+        {
+            float minDist = Mathf.Infinity;
+            for (int i = 0; i < count; i++)
+                if (hits[i].distance < minDist) minDist = hits[i].distance;
+
+            travel = Mathf.Max(0f, minDist - Skin);
+        }
+
+        // 3) 히트박스 온
+        var dashHitbox = FindDashHitbox(boss.transform);
+        bool hadHitbox = dashHitbox != null;
+        if (hadHitbox) dashHitbox.enabled = true;
+
+        // 4) 실제 이동(고정 업데이트 기반)
+        Vector2 start = rb.position;
+        Vector2 end   = start + dashDir * travel;
+
+        float t = 0f;
+        while (t < DashTime)
+        {
+            t += Time.fixedDeltaTime;
+            rb.MovePosition(Vector2.Lerp(start, end, Mathf.Clamp01(t / DashTime)));
+            yield return new WaitForFixedUpdate();
+        }
+        rb.MovePosition(end);
+
+        // 5) 히트박스 오프
+        if (hadHitbox) dashHitbox.enabled = false;
+
+        // 6) 후딜 + 상태 종료
+        if (EndLag > 0f) yield return new WaitForSeconds(EndLag);
+        boss.ChangeState(new PostPatternState(0.05f) { mob = boss });
+    }
+
+    // 자식에 "DashHitbox"라는 이름의 Trigger(Collider2D) 있으면 켜서 데미지 처리 맡김
+    private static Collider2D FindDashHitbox(Transform root)
+    {
+        var tf = root.Find("DashHitbox") ?? root.Find("Hitboxes/DashHitbox");
+        if (!tf) return null;
+        var col = tf.GetComponent<Collider2D>();
+        if (col && !col.isTrigger)
+            Debug.LogWarning("[DashToPlayerState] DashHitbox는 Trigger로 쓰는 걸 권장.");
+        return col;
+    }
+
+    private static string CardinalFrom(Vector2 dir)
+    {
+        // 애니 이름: Dash_Up/Down/Left/Right 가정
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            return dir.x >= 0 ? "Right" : "Left";
+        return dir.y >= 0 ? "Up" : "Down";
+    }
+}
 
         public class PostPatternState : NagaRogueState
         {
