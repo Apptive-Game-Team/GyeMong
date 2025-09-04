@@ -191,6 +191,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         }
         public class ArrowRain : ElfState
         {
+            public ArrowRain()
+            {
+                cooldownTime = 30f;
+            }
             public override int GetWeight()
             {
                 return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
