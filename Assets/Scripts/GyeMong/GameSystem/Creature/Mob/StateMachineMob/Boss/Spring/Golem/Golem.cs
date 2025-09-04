@@ -19,7 +19,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class Golem : Boss
     {
-        [SerializeField] private RootPatternManger mapPattern;
+        [SerializeField] private RootPatternManager mapPattern;
         [SerializeField] private GameObject cubePrefab;
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
@@ -120,11 +120,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                             point,
                             Vector3.zero,
                             shockwavePrefab,
-                            new StaticMovement(point, attackdelayTime / 2)
+                            new StaticMovement(point, attackdelayTime / 4)
                         ).StartRoutine()));
                 }
 
-                yield return new WaitForSeconds(attackdelayTime / 3);
+                yield return new WaitForSeconds(attackdelayTime / 6);
             }
         }
 
