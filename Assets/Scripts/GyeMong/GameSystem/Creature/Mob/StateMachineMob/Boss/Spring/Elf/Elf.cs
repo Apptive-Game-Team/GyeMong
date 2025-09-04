@@ -390,7 +390,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             private SoundObject _soundObject;
             public WhipAttack()
             {
-                cooldownTime = 30f;
+                cooldownTime = 10f;
             }
             public override int GetWeight()
             {
@@ -404,7 +404,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 3);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 3);
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
