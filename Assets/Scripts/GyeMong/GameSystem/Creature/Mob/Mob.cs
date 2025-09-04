@@ -13,8 +13,8 @@ namespace GyeMong.GameSystem.Creature.Mob
             get { return detectionRange; }
         }
 
-        public float maxMeleeAttackRange { get; protected set; }
-        public float minMeleeAttackRange { get; protected set; }
+        public float MeleeAttackRange { get; protected set; }
+        public float MinMeleeAttackRange { get; protected set; }
         public float RangedAttackRange { get; protected set; }
         
         public float DistanceToPlayer =>

@@ -46,7 +46,7 @@ public class RogueMinion : StateMachineMob
         damage = 10;
         speed = 1;
         detectionRange = 20;
-        maxMeleeAttackRange = 2;
+        MeleeAttackRange = 2;
         RangedAttackRange = 20;
 
         _detector = SimplePlayerDistanceDetector.Create(this);

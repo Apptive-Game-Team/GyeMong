@@ -46,7 +46,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
-            maxMeleeAttackRange = 3f;
+            MeleeAttackRange = 3f;
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
@@ -64,16 +64,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 weights = new Dictionary<System.Type, int>
                     {
                         { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
-                        { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 50 : 0 },
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 30 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 30 : 0},
-                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
+                        { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 30 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 },
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 30 : 0},
+                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                        { typeof(HomingArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 10 : 0 },
-                        { typeof(SplitArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 10 : 0 },
-                        { typeof(BindingArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 10 : 0 },
-                        { typeof(ArrowRain), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0}
+                        { typeof(HomingArrowAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 10 : 0 },
+                        { typeof(SplitArrowAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 10 : 0 },
+                        { typeof(BindingArrowAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 10 : 0 },
+                        { typeof(ArrowRain), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0}
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -108,8 +108,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 30 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 50 : 0},
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 30 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
                     };
                 if (weights.Values.All(w => w == 0))
@@ -126,7 +126,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -153,11 +153,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 30 : 0 },
-                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 30 : 0 },
+                        { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 30 : 0 },
-                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 }
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 30 : 0 },
+                        { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -169,7 +169,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -197,7 +197,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -236,7 +236,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -244,13 +244,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetFloat("attackType", 1);
                 Sound.Play("ENEMY_Arrow_Drow");
                 yield return new WaitForSeconds(Elf.attackdelayTime);
-                Elf.Animator.SetBool("attackDelay", false);
-                Elf.Animator.SetBool("isAttack", true);
-                Elf.Animator.SetFloat("attackType", 1);
                 int count = 0;
                 float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
                 while (count < 4)
                 {
+                    Elf.Animator.SetBool("attackDelay", false);
+                    Elf.Animator.SetBool("isAttack", true);
+                    Elf.Animator.SetFloat("attackType", 1);
                     float randomAngle = Random.Range(baseAngle - 20f, baseAngle + 20f);
                     float rad = randomAngle * Mathf.Deg2Rad;
                     Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
@@ -258,11 +258,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     seedObj.GetComponent<SeedArrow>().SetDirection(dir, 13f);
                     Sound.Play("ENEMY_Arrow_Shot");
                     yield return new WaitForSeconds(Elf.attackdelayTime/2);
+                    Elf.Animator.SetBool("isAttack", false);
+                    Elf.Animator.SetBool("attackDelay", true);
+                    Elf.Animator.SetFloat("attackType", 1);
                     count++;
                 }
-                Elf.Animator.SetBool("isAttack", false);
-                Elf.Animator.SetBool("attackDelay", true);
-                Elf.Animator.SetFloat("attackType", 1);
                 Sound.Play("ENEMY_Arrow_Drow");
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("attackDelay", false);
@@ -294,7 +294,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -321,7 +321,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -348,7 +348,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -371,7 +371,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 10 : 0;
+                return (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 10 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -396,7 +396,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 if (Elf.CurrentPhase == 1)
                 {
-                    return (Elf.DistanceToPlayer < Elf.maxMeleeAttackRange) ? 5 : 0;
+                    return (Elf.DistanceToPlayer < Elf.MeleeAttackRange) ? 5 : 0;
                 }
                 return 0;
             }
