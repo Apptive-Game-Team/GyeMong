@@ -46,7 +46,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
-            maxMeleeAttackRange = 2f;
+            maxMeleeAttackRange = 3f;
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
@@ -65,14 +65,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     {
                         { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
                         { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 50 : 0 },
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 10 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 30 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 20 : 0},
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 30 : 0},
                         { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                        { typeof(HomingArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
-                        { typeof(SplitArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
-                        { typeof(BindingArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 },
+                        { typeof(HomingArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 10 : 0 },
+                        { typeof(SplitArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 10 : 0 },
+                        { typeof(BindingArrowAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 10 : 0 },
                         { typeof(ArrowRain), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0}
                     };
                 if (weights.Values.All(w => w == 0))
@@ -108,7 +108,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 10 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 30 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
                     };
@@ -153,10 +153,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 20 : 0 },
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) ? 30 : 0 },
                         { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.maxMeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 10 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange) ? 30 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.maxMeleeAttackRange)  ? 50 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
@@ -193,7 +193,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             public ArrowRain()
             {
-                cooldownTime = 30f;
+                cooldownTime = 50f;
             }
             public override int GetWeight()
             {

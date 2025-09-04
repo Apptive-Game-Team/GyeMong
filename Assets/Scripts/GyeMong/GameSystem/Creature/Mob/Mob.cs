@@ -91,7 +91,7 @@ namespace GyeMong.GameSystem.Creature.Mob
             yield return new WaitForSeconds(delay);
 
             float currentSpeed = 0f;
-            float acceleration = 80f; // 가속도 (값 조절 가능)
+            float acceleration = 100f; // 가속도 (값 조절 가능)
             float traveledDistance = 0f;
 
             while (traveledDistance < targetDistance)
