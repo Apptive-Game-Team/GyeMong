@@ -8,7 +8,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
     public class HomingArrow : ArrowBase
     {
         private GameObject player;
-        [SerializeField] private float homingDuration = 1f;
+        [SerializeField] private float homingDuration = 0.5f;
         [SerializeField] private float rotateSpeed = 720f; // 초당 회전 속도(도)
 
         private bool homingFinished = false;
