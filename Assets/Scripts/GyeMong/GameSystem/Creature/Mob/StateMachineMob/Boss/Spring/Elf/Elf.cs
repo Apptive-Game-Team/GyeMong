@@ -456,9 +456,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Vector3 direction = Elf.DirectionToPlayer;
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
-                yield return new WaitForSeconds(Elf.attackdelayTime);
+                yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval));
-                yield return new WaitForSeconds(Elf.attackdelayTime * 2);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
