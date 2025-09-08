@@ -414,7 +414,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             float time = 0f;
             float realLength = 3.23f;
-            Destroy(laserTransform.gameObject, duration);
             while (time < duration)
             {
                 float t = time / duration;
@@ -431,6 +430,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 time += Time.deltaTime;
                 yield return null;
             }
+            Destroy(laserTransform.gameObject);
         }
 
         private IEnumerator HideOrShow(bool hide, float duration)
@@ -532,6 +532,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             GetComponent<SpriteRenderer>().sortingOrder--;
             StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
             StageManager.ClearStage(this);
+        }
+
+        protected override IEnumerator Blink()
+        {
+            movement.SetBlink(1);
+            yield return new WaitForSeconds(BLINK_DELAY);
+            movement.SetBlink(0);
         }
     }
 }

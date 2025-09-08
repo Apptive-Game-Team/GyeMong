@@ -417,5 +417,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 .SetEase(Ease.OutBack));
             yield return seq.WaitForCompletion();
         }
+
+        public void SetBlink(float value)
+        {
+            foreach (var s in sandwormBody)
+            {
+                s.material.SetFloat("_BlinkTrigger", value);
+            }
+        }
     }
 }
