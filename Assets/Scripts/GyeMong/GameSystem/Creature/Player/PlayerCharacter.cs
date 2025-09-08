@@ -46,7 +46,7 @@ namespace GyeMong.GameSystem.Creature.Player
         public bool isAttacking = false;
         private bool isHealing = false;
         private bool canMove = true;
-        private bool isInvincible = false;
+        public bool isInvincible = false;
         private bool canCombo = false;
         private bool comboQueued = false;
         private CircleCollider2D _hitCollider;
@@ -56,6 +56,7 @@ namespace GyeMong.GameSystem.Creature.Player
         private Coroutine healingCoroutine;
 
         public Material[] materials;
+        private Renderer _renderer;
 
         private Coroutine _attackCoroutine;
         private Tween _attackMoveTween;
@@ -71,12 +72,12 @@ namespace GyeMong.GameSystem.Creature.Player
             soundController = GetComponent<PlayerSoundController>();
             _hitCollider = transform.Find("HitCollider").GetComponent<CircleCollider2D>();
             isTutorial = PlayerPrefs.GetInt("TutorialFlag") == 0;
+            _renderer = gameObject.GetComponent<Renderer>();
+            _renderer.material = materials[0];
         }
 
         private void Start()
         {
-            Renderer renderer = gameObject.GetComponent<Renderer>();
-            renderer.material = materials[0];
             changeListenerCaller.CallShieldChangeListeners(curShield);
             changeListenerCaller.CallHpChangeListeners(curHealth);
         }
@@ -267,10 +268,9 @@ namespace GyeMong.GameSystem.Creature.Player
         
         private IEnumerator TriggerInvincibility()
         {
-            Material material = gameObject.GetComponent<Renderer>().material;
-            material.SetFloat("_BlinkTrigger", 1f);
+            _renderer.material.SetFloat("_BlinkTrigger", 1f);
             yield return new WaitForSeconds(blinkDelay);
-            material.SetFloat("_BlinkTrigger", 0f);
+            _renderer.material.SetFloat("_BlinkTrigger", 0f);
             yield return new WaitForSeconds(stat.InvincibilityDuration - blinkDelay);
         }
 
@@ -305,6 +305,8 @@ namespace GyeMong.GameSystem.Creature.Player
 
             SceneContext.Character.changeListenerCaller.CallDashUsed(stat.DashCooldown);
 
+            StartCoroutine(SetInvincibility(stat.DashDuration / 5, stat.DashDuration * 3 / 5));
+
             yield return (_dashTween = playerRb.DOMove(targetPosition, stat.DashDuration)
                 .SetEase(Ease.OutCubic))
                 .WaitForCompletion();
@@ -317,6 +319,18 @@ namespace GyeMong.GameSystem.Creature.Player
 
             yield return new WaitForSeconds(stat.DashCooldown);
             canDash = true;
+        }
+
+        private IEnumerator SetInvincibility(float delay, float duration)
+        {
+            yield return new WaitForSeconds(delay);
+            isInvincible = true;
+            _renderer.material = materials[2];
+            _renderer.material.SetFloat("_isUsable", 1f);
+            yield return new WaitForSeconds(duration);
+            _renderer.material.SetFloat("_isUsable", 0f);
+            _renderer.material = materials[0];
+            isInvincible = false;
         }
 
         private Vector2 GetCurrentInputDirection(Vector2 direction)
