@@ -14,12 +14,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [Header("Tip")]
         [SerializeField] private GameObject moveTip;
         [SerializeField] private GameObject headRotateTip;
-        [SerializeField] private GameObject bodyTip;
-        
-        [Header("Constraint")]
+        [SerializeField] private GameObject bodyTip1;
+        [SerializeField] private GameObject bodyTip2;
+
+        [Header("Constraint")] 
+        [SerializeField] private MultiParentConstraint head;
         [SerializeField] private MultiParentConstraint root;
-        [SerializeField] private bool isBend;
-        [SerializeField] private MultiParentConstraint bodyConstraint;
+        [SerializeField] private MultiParentConstraint bodyConstraint1;
+        [SerializeField] private MultiParentConstraint bodyConstraint2;
         
         [Header("Sprite")]
         [SerializeField] private List<Sprite> headSprites;
@@ -35,7 +37,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private Tween _idleTween;
         public bool isIdle = true;
         private bool _check = true;
-        private bool[] _hidden = new bool[7];
+        private bool[] _hidden = new bool[13];
+        private int _orderCriteria;
+
+        private void Awake()
+        {
+            _orderCriteria = SceneContext.Character.GetComponent<SpriteRenderer>().sortingOrder + sandwormBody.Count;
+        }
 
         private void Start()
         {
@@ -59,7 +67,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             _idleTween?.Kill();
 
-            Vector3 originalBodyPos = bodyTip.transform.position;
+            Vector3 originalBodyPos = bodyTip1.transform.position;
             Vector3 originalHeadPos = moveTip.transform.position;
             
             Vector3 rootDir = (dest - root.transform.position).normalized;
@@ -71,16 +79,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 .SetAutoKill(true);
 
             
-            seq.Append(bodyTip.transform.DOMove(originalBodyPos - rootDir / 2, preDelay).SetEase(Ease.Linear));
+            seq.Append(bodyTip1.transform.DOMove(originalBodyPos - rootDir / 2, preDelay).SetEase(Ease.Linear));
             seq.Join(moveTip.transform.DORotate(new Vector3(0,0, angle), preDelay).SetEase(Ease.Linear));
 
             Vector3 startPos = moveTip.transform.position;
-            Vector3 endPos = root.transform.position + rootDir * (rootDist * 1.2f);
-            Vector3 controlPos = (startPos + endPos) / 2f + Vector3.up * Vector3.Distance(startPos, endPos) / 5;
+            Vector3 endPos = dest;
+            float dist = Vector3.Distance(startPos, endPos);
+            Vector3 midPos = (startPos + endPos) / 2 + (Vector3)(rootDir.x > 0
+                ? new Vector2(-rootDir.y, rootDir.x)
+                : new Vector2(rootDir.y, -rootDir.x)) * dist / 4;
+            
             //seq.AppendCallback(() => SmoothBlendSource(2, 0f, dur / 4));
-            seq.Append(bodyTip.transform.DOMove(originalBodyPos, dur).SetEase(Ease.OutCubic));
+            seq.Append(bodyTip1.transform.DOMove(originalBodyPos, dur).SetEase(Ease.OutCubic));
             seq.Join(moveTip.transform.DOPath(
-                new[] { startPos, controlPos, endPos },
+                new[] { startPos, midPos, endPos },
                 dur, 
                 PathType.CatmullRom
             ).SetEase(Ease.OutCubic));
@@ -124,30 +136,35 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             FacePlayer(true);
             isIdle = false;
             
-            
             int length = sandwormBody.Count;
             Vector3 dir = (targetPos - root.transform.position).normalized;
             float dist = Vector3.Distance(root.transform.position, targetPos);
             float duration = dist / speed;
             var rootSource = root.data.sourceObjects;
-            var bodySource = bodyConstraint.data.sourceObjects;
-            bodySource.SetWeight(2, 0);
-            bodyConstraint.data.sourceObjects = bodySource;
+            var bodySource1 = bodyConstraint1.data.sourceObjects;
+            var bodySource2 = bodyConstraint2.data.sourceObjects;
+            bodySource1.SetWeight(2, 0);
+            bodyConstraint1.data.sourceObjects = bodySource1;
+            bodySource2.SetWeight(2, 0);
+            bodyConstraint2.data.sourceObjects = bodySource2;
             
             moveTip.transform.position = transform.position;
             Vector3 startPos = moveTip.transform.position;
-            Vector3 midPos = (startPos + targetPos) / 2 + new Vector3(0, dist / 5, 0);
+            Vector3 midPos = (startPos + targetPos) / 2 + new Vector3(0, dist / 4, 0);
             var attackPath = new[]
             {
                 startPos,
                 midPos,
-                targetPos + dir * (dist * 0.2f),
+                targetPos,
             };
 
-            var attackTween = moveTip.transform.DOPath(attackPath, duration * 0.7f, PathType.CatmullRom);
-            rootSource.SetWeight(0, 0.1f);
+            var attackTween = moveTip.transform.DOPath(attackPath, duration * 0.7f, PathType.CatmullRom)
+                .SetEase(Ease.OutQuad);
+            Sequence seq = null;
+            bool flag = true;
+            rootSource.SetWeight(0, 0.5f);
             root.data.sourceObjects = rootSource;
-            attackTween.SetEase(Ease.OutQuad)
+            attackTween
             .OnUpdate(() =>
             {
                 float progress = attackTween.ElapsedPercentage();
@@ -156,31 +173,44 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                     float threshold = (i + 1) / (float)length * 0.3f;
                     if (_hidden[i] && progress >= threshold)
                     {
-                        sandwormBody[i].DOFade(1, 0.1f);
+                        sandwormBody[i].DOFade(1, 0.3f / length).SetEase(Ease.Linear);
                         _hidden[i] = false;
                     }
                 }
                 
+                if (flag && progress >= 0.9f)
+                {
+                    flag = false;
+                    SmoothBlendSource(root.data.sourceObjects, root, 0, 1f, 0.15f);
+                }
+            })
+            .OnComplete(() =>
+            {
+                seq = DOTween.Sequence();
                 for (int i = 0; i < length; i++)
                 {
-                    float threshold = (i + 1) / (float)length * 0.3f + 0.7f;
-                    if (!_hidden[i] && progress >= threshold)
-                    {
-                        sandwormBody[i].DOFade(0, 0.1f);
-                        _hidden[i] = true;
-                    }
+                    int index = i;
+                    seq.Append(
+                        sandwormBody[index]
+                            .DOFade(0, 0.5f / length)
+                            .SetEase(Ease.Linear)
+                            .OnComplete(() => _hidden[index] = true)
+                    );
                 }
             });
 
             yield return attackTween.WaitForCompletion();
+            yield return seq.WaitForCompletion();
             yield return new WaitForSeconds(duration * 0.3f);
             rootSource.SetWeight(0, 0f);
             root.data.sourceObjects = rootSource;
             transform.position = targetPos;
             root.transform.position = transform.TransformPoint(new Vector3(0, 0, 0));
             moveTip.transform.position = transform.TransformPoint(new Vector3(0, 0, 0));
-            bodySource.SetWeight(2, 0.1f);
-            bodyConstraint.data.sourceObjects = bodySource;
+            bodySource1.SetWeight(2, 0.1f);
+            bodyConstraint1.data.sourceObjects = bodySource1;
+            bodySource2.SetWeight(2, 0.1f);
+            bodyConstraint2.data.sourceObjects = bodySource2;
             yield return null;
         }
 
@@ -188,55 +218,57 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         public IEnumerator HideOrShow(bool hide, float duration)
         {
             isIdle = false;
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
-            Vector3 dir = (mousePos - root.transform.position).normalized;
+            Vector3 targetPos = SceneContext.Character.transform.position;
+            Vector3 dir = (targetPos - root.transform.position).normalized;
             int length = sandwormBody.Count;
             
             if (hide)
             {
-                var tween = moveTip.transform.DOPath(
-                    new[]
-                    {
-                        moveTip.transform.position, 
-                        transform.TransformPoint(new Vector3(0, 1.5f, 0)),
-                        transform.position
-                    },
-                    duration
-                    , PathType.CatmullRom
-                );
+                float start = head.data.sourceObjects.GetWeight(0);
+                var seq = DOTween.Sequence();
+                seq.Append(DOTween.To(() => start, w =>
+                {
+                    var s = head.data.sourceObjects;
+                    s.SetWeight(0, w);
+                    s.SetWeight(1, 1 - w);
+                    head.data.sourceObjects = s;
+                    start = w;
+                }, 0, duration / 8).SetEase(Ease.OutQuad));
+                
+                seq.Append(bodyTip1.transform.DOMove(transform.position, duration / 8).SetEase(Ease.OutQuad));
+                seq.Join(bodyTip2.transform.DOMove(transform.position, duration / 8).SetEase(Ease.OutQuad));
 
-                tween.SetEase(Ease.OutCubic)
-                    .OnUpdate(() =>
-                    {
-                        float progress = tween.ElapsedPercentage();
-                        
-                        for (int i = 0; i < length; i++)
-                        {
-                            int idx = length - 1 - i;
-                            float threshold = (i + 1) / (float)length * 0.5f + 0.2f;
-                            if (!_hidden[idx] && progress >= threshold)
-                            {
-                                sandwormBody[idx].DOFade(0, 0.1f);
-                                _hidden[idx] = true;
-                            }
-                        }
-                    });
+                seq.AppendInterval(duration / 8);
+                
+                for (int i = 0; i < length; i++)
+                {
+                    int idx = length - 1 - i;
+                    seq.Append(sandwormBody[idx].DOFade(0, duration / 4 / length).SetEase(Ease.OutQuad));
+                    _hidden[idx] = true;
+                }
 
-                yield return tween.WaitForCompletion();
+                seq.AppendInterval(duration / 8 * 3);
+
+                yield return seq.WaitForCompletion();
+                var s = head.data.sourceObjects;
+                s.SetWeight(0, 1);
+                s.SetWeight(1, 0);
+                head.data.sourceObjects = s;
+                yield return null;
             }
             else
             {
                 isIdle = true;
                 FacePlayer(true);
                 isIdle = false;
+                Vector3 midPos = (moveTip.transform.position + transform.TransformPoint(new Vector3(0, 2.4f, 0)) + dir * 1f) / 2 - dir;
                 moveTip.transform.position = transform.position;
                 var tween = moveTip.transform.DOPath(
                     new[]
                     {
-                        moveTip.transform.position, 
-                        transform.TransformPoint(new Vector3(0, 1.5f, 0)),
-                        transform.TransformPoint(new Vector3(0, 2.8f, 0)) + dir * 0.4f
+                        moveTip.transform.position,
+                        midPos,
+                        transform.TransformPoint(new Vector3(0, 2.4f, 0)) + dir * 1f
                     },
                     duration
                     , PathType.CatmullRom
@@ -264,15 +296,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }
         }
 
-        private void SmoothBlendSource(int index, float target, float duration)
+        private void SmoothBlendSource(WeightedTransformArray array, MultiParentConstraint constraint,
+            int index, float target, float duration)
         {
-            var sources = bodyConstraint.data.sourceObjects;
-            float start = sources.GetWeight(index);
+            float start = array.GetWeight(index);
             DOTween.To(() => start, w =>
             {
-                var s = bodyConstraint.data.sourceObjects;
+                var s = constraint.data.sourceObjects;
                 s.SetWeight(index, w);
-                bodyConstraint.data.sourceObjects = s;
+                constraint.data.sourceObjects = s;
                 start = w;
             }, target, duration).SetUpdate(UpdateType.Late);
         }
@@ -282,12 +314,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             if (!isIdle) return;
             
             Vector3 dir = (SceneContext.Character.transform.position - root.transform.position).normalized;
-
+            Vector3 bodyDir = (SceneContext.Character.transform.position - transform.TransformPoint(new Vector3(0, 2.8f, 0))).normalized;
+            int length = sandwormBody.Count;
+            
             if (!hide)
             {
-                moveTip.transform.position = transform.TransformPoint(new Vector3(0, 2.8f, 0)) + dir * 0.4f;
+                moveTip.transform.position = transform.TransformPoint(new Vector3(0, 2.4f, 0)) + dir * 1f;
             }
-            bodyTip.transform.position = transform.TransformPoint(new Vector3(0, 1.5f, 0)) - dir * 1f;
+            bodyTip1.transform.position = transform.TransformPoint(new Vector3(0, 2.8f, 0)) - bodyDir * 1f;
+            bodyTip2.transform.position = transform.TransformPoint(new Vector3(0, 1.8f, 0)) - dir * 1f;
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             if (angle < 0) angle += 360f;
@@ -295,74 +330,74 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             if (angle is (>= 0f and < 15f) or ( >= 345f and < 360f))
             {
                 sandwormBody[0].sprite = headSprites[0];
-                for (int i = 1; i < sandwormBody.Count; i++)
+                for (int i = 0; i < length; i++)
                 {
-                    sandwormBody[i].sprite = bodySprites[0];
+                    if (i != 0) sandwormBody[i].sprite = bodySprites[0];
+                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
                 }
-                sandwormBody[0].sortingOrder = 18;
             }
             else if (angle is >= 15f and < 60f)
             {
                 sandwormBody[0].sprite = headSprites[1];
-                for (int i = 1; i < sandwormBody.Count; i++)
+                for (int i = 0; i < length; i++)
                 {
-                    sandwormBody[i].sprite = bodySprites[1];
+                    if (i != 0) sandwormBody[i].sprite = bodySprites[1];
+                    sandwormBody[i].sortingOrder = _orderCriteria - (length - i) + 1;
                 }
-                sandwormBody[0].sortingOrder = 12;
             }
             else if (angle is >= 60f and < 120f)
             {
                 sandwormBody[0].sprite = headSprites[2];
-                for (int i = 1; i < sandwormBody.Count; i++)
+                for (int i = 0; i < sandwormBody.Count; i++)
                 {
-                    sandwormBody[i].sprite = bodySprites[1];
+                    if (i != 0) sandwormBody[i].sprite = bodySprites[1];
+                    sandwormBody[i].sortingOrder = _orderCriteria - (length - i) + 1;
                 }
-                sandwormBody[0].sortingOrder = 12;
             }
             else if (angle is >= 120f and < 165f)
             {
                 sandwormBody[0].sprite = headSprites[3];
-                for (int i = 1; i < sandwormBody.Count; i++)
+                for (int i = 0; i < sandwormBody.Count; i++)
                 {
-                    sandwormBody[i].sprite = bodySprites[1];
+                    if (i != 0) sandwormBody[i].sprite = bodySprites[1];
+                    sandwormBody[i].sortingOrder = _orderCriteria - (length - i) + 1;
                 }
-                sandwormBody[0].sortingOrder = 12;
             }
             else if (angle is >= 165f and < 195f)
             {
                 sandwormBody[0].sprite = headSprites[4];
-                for (int i = 1; i < sandwormBody.Count; i++)
+                for (int i = 0; i < sandwormBody.Count; i++)
                 {
-                    sandwormBody[i].sprite = bodySprites[2];
+                    if (i != 0) sandwormBody[i].sprite = bodySprites[2];
+                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
                 }
-                sandwormBody[0].sortingOrder = 18;
             }
             else if (angle is >= 195f and < 240f)
             {
                 sandwormBody[0].sprite = headSprites[5];
-                for (int i = 1; i < sandwormBody.Count; i++)
+                for (int i = 0; i < sandwormBody.Count; i++)
                 {
-                    sandwormBody[i].sprite = bodySprites[3];
+                    if (i != 0) sandwormBody[i].sprite = bodySprites[3];
+                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
                 }
-                sandwormBody[0].sortingOrder = 18;
             }
             else if (angle is >= 240f and < 300f)
             {
                 sandwormBody[0].sprite = headSprites[6];
-                for (int i = 1; i < sandwormBody.Count; i++)
+                for (int i = 0; i < sandwormBody.Count; i++)
                 {
-                    sandwormBody[i].sprite = bodySprites[3];
+                    if (i != 0) sandwormBody[i].sprite = bodySprites[3];
+                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
                 }
-                sandwormBody[0].sortingOrder = 18;
             }
             else
             {
                 sandwormBody[0].sprite = headSprites[7];
-                for (int i = 1; i < sandwormBody.Count; i++)
+                for (int i = 0; i < sandwormBody.Count; i++)
                 {
-                    sandwormBody[i].sprite = bodySprites[3];
+                    if (i != 0) sandwormBody[i].sprite = bodySprites[3];
+                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
                 }
-                sandwormBody[0].sortingOrder = 18;
             }
         }
 
