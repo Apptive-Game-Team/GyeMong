@@ -34,7 +34,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private float _chaseSpeed;
 
         [Header("Movement")] 
-        [SerializeField] private SandwormMovement movement;
+        public SandwormMovement movement;
 
         [Header("Head Attack Move Value")] 
         [SerializeField] private float headAttackMovePreDelay;
@@ -62,6 +62,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [Header("Sound")]
         public SoundObject curBGM;
         public SoundObject burrowingSound;
+
+        private bool _phaseChange;
+        private bool _die;
         
         protected override void Initialize()
         {
@@ -85,8 +88,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             _sunctionSpeed = 3f;
             _chaseSpeed = 4f;
             
-            movement.FacePlayer();
-            ChangeState();
+            // movement.FacePlayer();
+            // ChangeState();
         }
 
         public abstract class SandwormState : CoolDownState
@@ -96,25 +99,36 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override void OnStateUpdate()
             {
-                Sandworm.movement.FacePlayer();
+                if (!Sandworm._phaseChange && !Sandworm._die)
+                {
+                    Sandworm.movement.FacePlayer();
+                }
             }
 
             protected virtual void SetWeights()
             {
-                _weights = new Dictionary<System.Type, int>
+                if (Sandworm._phaseChange)
+                {
+                    _weights = new Dictionary<System.Type, int>
+                    {
+                        {typeof(SandTrapAttack), 1}
+                    };
+                }
+                else
+                {
+                    _weights = new Dictionary<System.Type, int>
                     {
                         {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
                         {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
                         {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        // {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange)
-                        //     && (Sandworm.currentPhase == 1) ? 5 : 0 },
-                        // {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange)
-                        //     && (Sandworm.currentPhase == 1) ? 5 : 0 },
                         {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) && 
-                                                      (Sandworm.DistanceToPlayer > Sandworm.MeleeAttackRange) ? 5 : 0 },
+                                                      (Sandworm.DistanceToPlayer > Sandworm.MeleeAttackRange) && 
+                                                      (Sandworm.currentPhase == 1) ? 5 : 0 },
                         {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) &&
-                                                     (Sandworm.DistanceToPlayer > Sandworm.MeleeAttackRange) ? 50 : 0 },
+                                                     (Sandworm.DistanceToPlayer > Sandworm.MeleeAttackRange) && 
+                                                     (Sandworm.currentPhase == 1) ? 5 : 0 },
                     };
+                }
             }
             
             protected Dictionary<System.Type, int> NextStateWeights
@@ -286,7 +300,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             public override int GetWeight()
             {
-                return (Sandworm.currentPhase == 1) ? 1 : 0;
+                return 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -294,6 +308,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.mapPattern.StopPattern();
                 Sandworm.movement.isIdle = true;
                 yield return new WaitForSeconds(0.1f);
+                yield return Sandworm.movement.HideOrShow(true, 0.5f);
+                Sandworm.transform.position = new Vector3(0, 0, 0);
+                Sandworm.movement.isIdle = true;
+                Sandworm.movement.FacePlayer(false, true);
+                yield return Sandworm.movement.HideOrShow(false, 0.3f, true);
                 Sandworm.GetComponent<Collider2D>().enabled = false;
                 Sound.Play("ENEMY_Sand_Trap_Action");
                 Sandworm.movement.isIdle = false;
@@ -303,7 +322,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 //Sandworm.RotateHead(-30f, 3.5f, 30f, 0.2f, 0.5f);
                 Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
                 Sandworm.StartCoroutine(Sandworm.PlayerPull(3f, Sandworm._sunctionSpeed));
-                yield return new WaitForSeconds(3.6f);
+                yield return new WaitForSeconds(3.3f);
+                Sandworm.StartCoroutine(Sandworm.movement.HeadAttackMove(new Vector3(0, -2, 0), 0.3f, 0, 0));
                 Sound.Play("ENEMY_Sand_Trap");
                 GameObject groundAttack = Instantiate(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity);
                 Destroy(groundAttack, 1f);
@@ -311,6 +331,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return Sandworm.StartCoroutine(Sandworm.ChangePhaseEvent());
                 Sandworm.GetComponent<Collider2D>().enabled = true;
                 Sandworm.movement.isIdle = true;
+                Sandworm._phaseChange = false;
                 SetWeights();
                 Sandworm.mapPattern.StartPattern();
                 Sandworm.ChangeState(NextStateWeights);
@@ -329,7 +350,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private void VenomBreathAttack(Vector3 attackPosition)
         {
             Vector2[] directions = new Vector2[3];
-            Vector3 startPos = movement.sandwormBody[0].transform.position;
+            Vector3 startPos = transform.position;
             directions[0] = (attackPosition - startPos).normalized;
             directions[1] = RotateVector(directions[0], _venomAttackSpreadAngle);
             directions[2] = RotateVector(directions[0], -_venomAttackSpreadAngle);
@@ -469,7 +490,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             if (currentPhase < maxHps.Count - 1)
             {
                 currentPhase++;
-                StopAllCoroutines();
+                _phaseChange = true;
                 MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(ChangePhase());
             }
@@ -484,7 +505,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             yield return StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
             currentHp = CurrentMaxHp;
-            ChangeState();
             yield return null;
         }
 

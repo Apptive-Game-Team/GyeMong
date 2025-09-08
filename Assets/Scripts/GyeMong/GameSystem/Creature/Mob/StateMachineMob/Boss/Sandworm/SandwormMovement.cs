@@ -44,11 +44,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             _orderCriteria = SceneContext.Character.GetComponent<SpriteRenderer>().sortingOrder + sandwormBody.Count;
         }
-
-        private void Start()
-        {
-            //IdleMove();
-        }
         
         public void IdleMove()
         {
@@ -85,9 +80,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Vector3 startPos = moveTip.transform.position;
             Vector3 endPos = dest;
             float dist = Vector3.Distance(startPos, endPos);
-            Vector3 midPos = (startPos + endPos) / 2 + (Vector3)(rootDir.x > 0
-                ? new Vector2(-rootDir.y, rootDir.x)
-                : new Vector2(rootDir.y, -rootDir.x)) * dist / 4;
+            Vector3 midPos = (startPos + endPos) / 2 + Vector3.up * dist / 4;
             
             //seq.AppendCallback(() => SmoothBlendSource(2, 0f, dur / 4));
             seq.Append(bodyTip1.transform.DOMove(originalBodyPos, dur).SetEase(Ease.OutCubic));
@@ -215,11 +208,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         }
 
 
-        public IEnumerator HideOrShow(bool hide, float duration)
+        public IEnumerator HideOrShow(bool hide, float duration, bool fixedDirection = false)
         {
             isIdle = false;
             Vector3 targetPos = SceneContext.Character.transform.position;
-            Vector3 dir = (targetPos - root.transform.position).normalized;
+            Vector3 dir = fixedDirection ? new Vector3(0, -1, 0) : (targetPos - root.transform.position).normalized;
             int length = sandwormBody.Count;
             
             if (hide)
@@ -258,9 +251,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }
             else
             {
-                isIdle = true;
-                FacePlayer(true);
-                isIdle = false;
+                if (!fixedDirection)
+                {
+                    isIdle = true;
+                    FacePlayer(true);
+                    isIdle = false;
+                }
                 Vector3 midPos = (moveTip.transform.position + transform.TransformPoint(new Vector3(0, 2.4f, 0)) + dir * 1f) / 2 - dir;
                 moveTip.transform.position = transform.position;
                 var tween = moveTip.transform.DOPath(
@@ -309,12 +305,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }, target, duration).SetUpdate(UpdateType.Late);
         }
 
-        public void FacePlayer(bool hide = false)
+        public void FacePlayer(bool hide = false, bool fixedDirection = false)
         {
             if (!isIdle) return;
             
-            Vector3 dir = (SceneContext.Character.transform.position - root.transform.position).normalized;
-            Vector3 bodyDir = (SceneContext.Character.transform.position - transform.TransformPoint(new Vector3(0, 2.8f, 0))).normalized;
+            Vector3 dir = fixedDirection ? new Vector3(0, -1, 0) :
+                (SceneContext.Character.transform.position - root.transform.position).normalized;
+            Vector3 bodyDir = fixedDirection ? new Vector3(0, -1, 0) :
+                (SceneContext.Character.transform.position - transform.TransformPoint(new Vector3(0, 2.8f, 0))).normalized;
             int length = sandwormBody.Count;
             
             if (!hide)

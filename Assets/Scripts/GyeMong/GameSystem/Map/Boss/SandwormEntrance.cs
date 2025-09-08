@@ -24,12 +24,20 @@ namespace GyeMong.GameSystem.Map.Boss
 
         private void Start()
         {
+            StartCoroutine(boss.GetComponent<Sandworm>().movement.HideOrShow(true, 0.1f));
             StartCoroutine(TriggerEvents());
         }
         
         private IEnumerator TriggerEvents()
         {
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
+            yield return StartCoroutine((new MoveCreatureEvent()
+            {
+                creatureType = MoveCreatureEvent.CreatureType.Player,
+                iControllable = null,
+                speed = playerMoveSpeed,
+                target = playerDestination
+            }).Execute());
             yield return StartCoroutine((new SetActiveObject()
             {
                 _gameObject = wall,
@@ -37,6 +45,9 @@ namespace GyeMong.GameSystem.Map.Boss
             }).Execute());
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
+            boss.gameObject.SetActive(true);
+            yield return boss.GetComponent<Sandworm>().movement.HideOrShow(false, 0.3f);
+            yield return multiMessages.Play();
             boss.GetComponent<Sandworm>().curBGM = Sound.Play("BGM_Summer_Sandworm", true);
             yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(cameraZoomSize, cameraZoomSpeed));
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());

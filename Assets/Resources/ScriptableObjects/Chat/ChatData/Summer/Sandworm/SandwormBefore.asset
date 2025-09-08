@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: SandwormBefore
   m_EditorClassIdentifier: 
+  bgmName: 
   chatMessages:
-  - speakerName: 7
+  - speakerName: 80
+    faceType: 0
     isLeft: 0
     messages:
     - "\uACB0\uC815\uC740 \uC6B0\uB9AC \uD798\uC758 \uADFC\uC6D0. \uD30C\uAD34\uD558\uB824\uACE0
       \uD55C\uB2E4\uBA74.. \uB098\uC5D0\uAC8C \uB3C4\uC804\uD558\uB294 \uAC83\uC73C\uB85C
       \uAC04\uC8FC\uD558\uB9C8."
-    backgroundImage: 0
+    backgroundImage: 1
     chatImage: 0
     chatDelay: 3
