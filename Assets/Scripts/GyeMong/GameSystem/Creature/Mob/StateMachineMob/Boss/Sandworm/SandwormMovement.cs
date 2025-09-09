@@ -11,6 +11,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 {
     public class SandwormMovement : MonoBehaviour
     {
+        private static readonly int BlinkTrigger = Shader.PropertyToID("_BlinkTrigger");
+
         [Header("Tip")]
         [SerializeField] private GameObject moveTip;
         [SerializeField] private GameObject headRotateTip;
@@ -60,8 +62,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         public IEnumerator HeadAttackMove(Vector3 dest, float dur, float preDelay = 0.5f, float postDelay = 0.1f,
             float backDelay = 1f)
         {
-            _idleTween?.Kill();
-
             Vector3 originalBodyPos = bodyTip1.transform.position;
             Vector3 originalHeadPos = moveTip.transform.position;
             
@@ -69,11 +69,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             float rootDist = Vector3.Magnitude(dest - root.transform.position);
             float angle = dest.x > originalBodyPos.x ? -bodyRotateValue : bodyRotateValue;
 
-            Sequence seq = DOTween.Sequence()
-                .SetUpdate(UpdateType.Late)
-                .SetAutoKill(true);
-
-            
+            Sequence seq = DOTween.Sequence();
             seq.Append(bodyTip1.transform.DOMove(originalBodyPos - rootDir / 2, preDelay).SetEase(Ease.Linear));
             seq.Join(moveTip.transform.DORotate(new Vector3(0,0, angle), preDelay).SetEase(Ease.Linear));
 
@@ -82,7 +78,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             float dist = Vector3.Distance(startPos, endPos);
             Vector3 midPos = (startPos + endPos) / 2 + Vector3.up * dist / 4;
             
-            //seq.AppendCallback(() => SmoothBlendSource(2, 0f, dur / 4));
             seq.Append(bodyTip1.transform.DOMove(originalBodyPos, dur).SetEase(Ease.OutCubic));
             seq.Join(moveTip.transform.DOPath(
                 new[] { startPos, midPos, endPos },
@@ -95,11 +90,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             
             seq.Append(moveTip.transform.DOMove(originalHeadPos, backDelay).SetEase(Ease.InOutSine));
             seq.Join(moveTip.transform.DORotate(Vector3.zero, backDelay).SetEase(Ease.InOutSine));
-            float lastStartTime = seq.Duration() - backDelay;
-            seq.InsertCallback(lastStartTime + backDelay / 2f, () =>
-            {
-                //SmoothBlendSource(2, 0.5f, backDelay);
-            });
             
             yield return seq.WaitForCompletion();
         }
@@ -130,33 +120,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             isIdle = false;
             
             int length = sandwormBody.Count;
-            Vector3 dir = (targetPos - root.transform.position).normalized;
             float dist = Vector3.Distance(root.transform.position, targetPos);
             float duration = dist / speed;
-            var rootSource = root.data.sourceObjects;
-            var bodySource1 = bodyConstraint1.data.sourceObjects;
-            var bodySource2 = bodyConstraint2.data.sourceObjects;
-            bodySource1.SetWeight(2, 0);
-            bodyConstraint1.data.sourceObjects = bodySource1;
-            bodySource2.SetWeight(2, 0);
-            bodyConstraint2.data.sourceObjects = bodySource2;
             
             moveTip.transform.position = transform.position;
-            Vector3 startPos = moveTip.transform.position;
-            Vector3 midPos = (startPos + targetPos) / 2 + new Vector3(0, dist / 4, 0);
-            var attackPath = new[]
-            {
-                startPos,
-                midPos,
-                targetPos,
-            };
+            SetRigState(true);
 
-            var attackTween = moveTip.transform.DOPath(attackPath, duration * 0.7f, PathType.CatmullRom)
+            var attackTween = moveTip.transform.DOJump(targetPos, dist / 6, 1, duration)
                 .SetEase(Ease.OutQuad);
             Sequence seq = null;
-            bool flag = true;
-            rootSource.SetWeight(0, 0.5f);
-            root.data.sourceObjects = rootSource;
             attackTween
             .OnUpdate(() =>
             {
@@ -169,12 +141,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                         sandwormBody[i].DOFade(1, 0.3f / length).SetEase(Ease.Linear);
                         _hidden[i] = false;
                     }
-                }
-                
-                if (flag && progress >= 0.9f)
-                {
-                    flag = false;
-                    SmoothBlendSource(root.data.sourceObjects, root, 0, 1f, 0.15f);
                 }
             })
             .OnComplete(() =>
@@ -195,15 +161,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             yield return attackTween.WaitForCompletion();
             yield return seq.WaitForCompletion();
             yield return new WaitForSeconds(duration * 0.3f);
-            rootSource.SetWeight(0, 0f);
-            root.data.sourceObjects = rootSource;
+            
+            SetRigState(false);
             transform.position = targetPos;
             root.transform.position = transform.TransformPoint(new Vector3(0, 0, 0));
             moveTip.transform.position = transform.TransformPoint(new Vector3(0, 0, 0));
-            bodySource1.SetWeight(2, 0.1f);
-            bodyConstraint1.data.sourceObjects = bodySource1;
-            bodySource2.SetWeight(2, 0.1f);
-            bodyConstraint2.data.sourceObjects = bodySource2;
             yield return null;
         }
 
@@ -243,6 +205,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 seq.AppendInterval(duration / 8 * 3);
 
                 yield return seq.WaitForCompletion();
+                moveTip.transform.position = transform.position;
                 var s = head.data.sourceObjects;
                 s.SetWeight(0, 1);
                 s.SetWeight(1, 0);
@@ -290,19 +253,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 
                 isIdle = true;
             }
-        }
-
-        private void SmoothBlendSource(WeightedTransformArray array, MultiParentConstraint constraint,
-            int index, float target, float duration)
-        {
-            float start = array.GetWeight(index);
-            DOTween.To(() => start, w =>
-            {
-                var s = constraint.data.sourceObjects;
-                s.SetWeight(index, w);
-                constraint.data.sourceObjects = s;
-                start = w;
-            }, target, duration).SetUpdate(UpdateType.Late);
         }
 
         public void FacePlayer(bool hide = false, bool fixedDirection = false)
@@ -399,30 +349,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }
         }
 
-        public IEnumerator RotateHead(bool direction, float upAngle, float upTime, float downAngle, float downTime, float recoverDelay, float recoverTime)
-        {
-            Sequence seq = DOTween.Sequence();
-            if (direction)
-            {
-                upAngle = -upAngle;
-                downAngle = -downAngle;
-            }
-
-            seq.Append(headRotateTip.transform.DORotate(new Vector3(0, 0, upAngle), upTime)
-                .SetEase(Ease.Linear));
-            seq.Append(headRotateTip.transform.DORotate(new Vector3(0, 0, downAngle), downTime)
-                .SetEase(Ease.InCubic));
-            seq.AppendInterval(recoverDelay);
-            seq.Append(headRotateTip.transform.DORotate(new Vector3(0, 0, 0), recoverTime)
-                .SetEase(Ease.OutBack));
-            yield return seq.WaitForCompletion();
-        }
-
         public void SetBlink(float value)
         {
             foreach (var s in sandwormBody)
             {
-                s.material.SetFloat("_BlinkTrigger", value);
+                s.material.SetFloat(BlinkTrigger, value);
+            }
+        }
+
+        private void SetRigState(bool damped)
+        {
+            foreach (var s in sandwormBody)
+            {
+                s.GetComponent<MultiParentConstraint>().weight = damped ? 0f : 1f;
+                s.GetComponent<DampedTransform>().weight = damped ? 1f : 0f;
             }
         }
     }

@@ -81,7 +81,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             RangedAttackRange = 100f;
             
             _venomAttackDuration = 0.8f;
-            _venomAttackSpreadAngle = 15f;
+            _venomAttackSpreadAngle = 5f;
             _venomPitDuration = 2f;
             _laserDuration = 1f;
             _laserDistance = 4f;
@@ -118,15 +118,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 {
                     _weights = new Dictionary<System.Type, int>
                     {
-                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
-                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
+                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 1 : 0 },
+                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 1 : 0 },
+                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 1 : 0 },
                         {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) && 
                                                       (Sandworm.DistanceToPlayer > Sandworm.MeleeAttackRange) && 
-                                                      (Sandworm.currentPhase == 1) ? 5 : 0 },
+                                                      (Sandworm.currentPhase == 1) ? 1 : 0 },
                         {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) &&
                                                      (Sandworm.DistanceToPlayer > Sandworm.MeleeAttackRange) && 
-                                                     (Sandworm.currentPhase == 1) ? 5 : 0 },
+                                                     (Sandworm.currentPhase == 1) ? 1 : 0 },
                     };
                 }
             }
@@ -350,8 +350,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private void VenomBreathAttack(Vector3 attackPosition)
         {
             Vector2[] directions = new Vector2[3];
-            Vector3 startPos = transform.position;
-            directions[0] = (attackPosition - startPos).normalized;
+            Vector3 startPos = movement.sandwormBody[0].transform.position;
+            directions[0] = (attackPosition - movement.sandwormBody[0].transform.position).normalized;
             directions[1] = RotateVector(directions[0], _venomAttackSpreadAngle);
             directions[2] = RotateVector(directions[0], -_venomAttackSpreadAngle);
             Sound.Play("ENEMY_Venom_Breath");
