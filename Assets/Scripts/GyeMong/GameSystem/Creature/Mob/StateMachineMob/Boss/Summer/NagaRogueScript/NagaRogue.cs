@@ -84,6 +84,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         public abstract class NagaRogueState : BaseState
         {
             protected NagaRogue NagaRogue => mob as NagaRogue;
+            protected float Cooldown = 0f;
         }
 
         private IEnumerator SetIdleAnim(float delay)
@@ -568,12 +569,12 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
         //states============================================================================추후 분리
         public class DashSlash : NagaRogueState
         {
-            public const float DashRange = 1f;
+            public const float DashRange = 5f;
             private const float MeleeDelay = 0.3f;
             private const float PostDelay = 1f;
             public override int GetWeight()
             {
-                return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 50 : 0;
+                return (mob.DistanceToPlayer <= 5f) ? 500 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -633,38 +634,6 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             }
         }
         
-        public class DaggerFan : NagaRogueState
-        {
-            private const float PostDelay = 1f;
-            public override int GetWeight()
-            {
-                return 0;
-                return (mob.DistanceToPlayer <= mob.RangedAttackRange && mob.DistanceToPlayer > mob.MeleeAttackRange) ? 50 : 0;
-            }
-
-            public override IEnumerator StateCoroutine()
-            {
-                yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 3, 60f);
-                yield return new WaitForSeconds(1f);
-                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
-            }
-        }
-        public class DaggerFlower : NagaRogueState
-        {
-            private const float PostDelay = 1f;
-            public override int GetWeight()
-            {
-                return 0;
-                return (mob.DistanceToPlayer <= mob.RangedAttackRange && mob.DistanceToPlayer > mob.MeleeAttackRange && NagaRogue.daggerList.Count <= 10) ? 100 : 0;
-            }
-
-            public override IEnumerator StateCoroutine()
-            {
-                yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 9, 360f);
-                yield return new WaitForSeconds(1f);
-                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
-            }
-        }    
 public class TeleportDaggerRetrieve : NagaRogueState
 {
     private const float PostDelay = 1f;
@@ -769,114 +738,6 @@ public class TeleportDaggerRetrieve : NagaRogueState
             }
         }
 
-public class DashToPlayerState : NagaRogueState
-{
-    // 튜닝 포인트
-    private const float Startup      = 0.08f;   // 준비 동작(바람잡기)
-    private const float DashDistance = 4.5f;    // 최대 이동 거리
-    private const float DashTime     = 0.18f;   // 실제 돌진 시간
-    private const float EndLag       = 0.25f;   // 후딜
-    private const float Skin         = 0.02f;   // 벽 앞 여유
-    private const float AngleJitter  = 10f;     // 플레이어 방향에서 약간 틀기(예측 회피)
-    private static readonly int ObstacleMask = LayerMask.GetMask("Obstacle");
-
-    public override int GetWeight()
-    {
-        // 멀수록 대쉬 우선시 (가벼운 휴리스틱)
-        Vector2 bossPos   = NagaRogue.transform.position;
-        Vector2 playerPos = SceneContext.Character.transform.position;
-        float dist = Vector2.Distance(bossPos, playerPos);
-        return dist >= 3.5f ? 260 : 180;
-    }
-
-    public override IEnumerator StateCoroutine()
-    {
-        var boss = NagaRogue;
-        var rb   = boss.GetComponent<Rigidbody2D>();
-        var body = boss.GetComponent<Collider2D>();
-
-        // 0) 필수 컴포넌트 체크
-        if (!rb || !body)
-        {
-            Debug.LogWarning("[DashToPlayerState] Rigidbody2D/Collider2D가 필요함.");
-            yield break;
-        }
-
-        // 1) 준비 모션
-        Vector2 bossPos   = boss.transform.position;
-        Vector2 playerPos = SceneContext.Character.transform.position;
-        Vector2 dirToPlayer = (playerPos - bossPos).normalized;
-
-        // 약간 좌/우로 틀어서 '예측 회피' 느낌 (±AngleJitter)
-        float jitter = Random.Range(-AngleJitter, AngleJitter);
-        Vector2 dashDir = Quaternion.Euler(0, 0, jitter) * dirToPlayer;
-        dashDir.Normalize();
-
-        // 방향별 애니(있으면)
-        NagaRogue.Animator.Play($"Dash_{CardinalFrom(dashDir)}");
-
-        if (Startup > 0f) yield return new WaitForSeconds(Startup);
-
-        // 2) 충돌 예측: 자기 콜라이더로 Cast
-        float travel = DashDistance;
-        RaycastHit2D[] hits = new RaycastHit2D[4];
-        var filter = new ContactFilter2D { useLayerMask = true, layerMask = ObstacleMask, useTriggers = false };
-        int count = body.Cast(dashDir, filter, hits, DashDistance);
-        if (count > 0)
-        {
-            float minDist = Mathf.Infinity;
-            for (int i = 0; i < count; i++)
-                if (hits[i].distance < minDist) minDist = hits[i].distance;
-
-            travel = Mathf.Max(0f, minDist - Skin);
-        }
-
-        // 3) 히트박스 온
-        var dashHitbox = FindDashHitbox(boss.transform);
-        bool hadHitbox = dashHitbox != null;
-        if (hadHitbox) dashHitbox.enabled = true;
-
-        // 4) 실제 이동(고정 업데이트 기반)
-        Vector2 start = rb.position;
-        Vector2 end   = start + dashDir * travel;
-
-        float t = 0f;
-        while (t < DashTime)
-        {
-            t += Time.fixedDeltaTime;
-            rb.MovePosition(Vector2.Lerp(start, end, Mathf.Clamp01(t / DashTime)));
-            yield return new WaitForFixedUpdate();
-        }
-        rb.MovePosition(end);
-
-        // 5) 히트박스 오프
-        if (hadHitbox) dashHitbox.enabled = false;
-
-        // 6) 후딜 + 상태 종료
-        if (EndLag > 0f) yield return new WaitForSeconds(EndLag);
-        boss.ChangeState(new PostPatternState(0.05f) { mob = boss });
-    }
-
-    // 자식에 "DashHitbox"라는 이름의 Trigger(Collider2D) 있으면 켜서 데미지 처리 맡김
-    private static Collider2D FindDashHitbox(Transform root)
-    {
-        var tf = root.Find("DashHitbox") ?? root.Find("Hitboxes/DashHitbox");
-        if (!tf) return null;
-        var col = tf.GetComponent<Collider2D>();
-        if (col && !col.isTrigger)
-            Debug.LogWarning("[DashToPlayerState] DashHitbox는 Trigger로 쓰는 걸 권장.");
-        return col;
-    }
-
-    private static string CardinalFrom(Vector2 dir)
-    {
-        // 애니 이름: Dash_Up/Down/Left/Right 가정
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
-            return dir.x >= 0 ? "Right" : "Left";
-        return dir.y >= 0 ? "Up" : "Down";
-    }
-}
-
         public class PostPatternState : NagaRogueState
         {
             private readonly float Delay;
@@ -928,7 +789,7 @@ public class DashToPlayerState : NagaRogueState
         }
         
         //------------------------------------------------
-        public class CallSandStorm : NagaRogueState
+        public class PhaseChangePattern : NagaRogueState
         {
             public override int GetWeight()
             {
