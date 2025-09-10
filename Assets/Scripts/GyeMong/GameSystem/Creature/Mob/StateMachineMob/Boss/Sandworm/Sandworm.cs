@@ -320,9 +320,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                     Quaternion.Euler(0f, 0f, 90f));
                 Destroy(indicator, 3.6f);
                 //Sandworm.RotateHead(-30f, 3.5f, 30f, 0.2f, 0.5f);
+                Sandworm.StartCoroutine(Sandworm.movement.ChangeScreamImage(true, 0.2f));
                 Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
                 Sandworm.StartCoroutine(Sandworm.PlayerPull(3f, Sandworm._sunctionSpeed));
                 yield return new WaitForSeconds(3.3f);
+                Sandworm.StartCoroutine(Sandworm.movement.ChangeScreamImage(false, 0.2f));
                 Sandworm.StartCoroutine(Sandworm.movement.HeadAttackMove(new Vector3(0, -2, 0), 0.3f, 0, 0));
                 Sound.Play("ENEMY_Sand_Trap");
                 GameObject groundAttack = Instantiate(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity);

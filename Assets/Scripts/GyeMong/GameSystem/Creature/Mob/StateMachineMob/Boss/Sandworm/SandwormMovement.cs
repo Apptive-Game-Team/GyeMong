@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using GyeMong.GameSystem.Creature.Attack;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -125,6 +126,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             
             moveTip.transform.position = transform.position;
             SetRigState(true);
+            sandwormBody[0].GetComponent<Collider2D>().enabled = true;
+            sandwormBody[0].GetComponent<AttackObjectController>().isAttacked = false;
 
             var attackTween = moveTip.transform.DOJump(targetPos, dist / 6, 1, duration)
                 .SetEase(Ease.OutQuad);
@@ -153,7 +156,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                         sandwormBody[index]
                             .DOFade(0, 0.5f / length)
                             .SetEase(Ease.Linear)
-                            .OnComplete(() => _hidden[index] = true)
+                            .OnComplete(() =>
+                            {
+                                _hidden[index] = true;
+                                if (index == 0)
+                                {
+                                    sandwormBody[0].GetComponent<Collider2D>().enabled = false;
+                                }
+                            })
                     );
                 }
             });
@@ -363,6 +373,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 s.GetComponent<MultiParentConstraint>().weight = damped ? 0f : 1f;
                 s.GetComponent<DampedTransform>().weight = damped ? 1f : 0f;
+            }
+        }
+
+        public IEnumerator ChangeScreamImage(bool scream, float delay)
+        {
+            if (scream)
+            {
+                sandwormBody[0].sprite = headSprites[8];
+                yield return new WaitForSeconds(delay);
+                sandwormBody[0].sprite = bodySprites[9];
+            }
+            else
+            {
+                sandwormBody[0].sprite = headSprites[8];
+                yield return new WaitForSeconds(delay);
+                sandwormBody[0].sprite = headSprites[6];
             }
         }
     }
