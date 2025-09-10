@@ -73743,7 +73743,9 @@ MonoBehaviour:
   currentHp: 0
   currentShield: 0
   damage: 0
-  basicAttackPrefab: {fileID: 1582423106245993158, guid: de9aef8decce0184ab3b9694ea82806c,
+  slashAttackPrefab: {fileID: 1582423106245993158, guid: de9aef8decce0184ab3b9694ea82806c,
+    type: 3}
+  thrustAttackPrefab: {fileID: 1582423106245993158, guid: bf62fae96e100bf469f1f063d36ed5b1,
     type: 3}
   daggerPrefab: {fileID: 1349092434517921609, guid: 0329de48301865042bea74bff8ab3cf2,
     type: 3}

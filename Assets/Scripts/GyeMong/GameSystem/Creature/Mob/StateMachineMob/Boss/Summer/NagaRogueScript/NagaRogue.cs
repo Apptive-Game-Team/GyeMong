@@ -7,10 +7,12 @@ using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueScript
@@ -24,7 +26,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
     {
     
         protected IDetector<PlayerCharacter> _detector;
-        [SerializeField] private GameObject basicAttackPrefab;
+        [SerializeField] private GameObject slashAttackPrefab;
+        [SerializeField] private GameObject thrustAttackPrefab;
         [SerializeField] private GameObject daggerPrefab;
         [SerializeField] private GameObject shurikenPrefab;
         [SerializeField] private GameObject sandstormPrefab;
@@ -99,15 +102,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             FaceToPlayer();
             Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
             Animator.Play($"Stab_{dir}");
-            AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * startPosDist, 
-                    DirectionToPlayer, 
+            Vector3 targetPos = transform.position + DirectionToPlayer * startPosDist;
+            Vector3 targetDir = DirectionToPlayer;
+            StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(prefab, targetPos, Quaternion.FromToRotation(Vector3.right, targetDir), duration, 
+                () => AttackObjectController.Create(
+                    targetPos, 
+                    targetDir, 
                     prefab, 
                     new StaticMovement(
-                        transform.position + DirectionToPlayer * startPosDist, 
+                        targetPos, 
                         duration)
-                )
-                .StartRoutine();
+                ).StartRoutine())); 
             yield return new WaitForSeconds(0.2f);
         }
 
@@ -132,17 +137,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             yield return null;
         }
     
-        public float GetRandomCurve()
-        {
-            float minCurve = 3f;
-            float maxCurve = 5f;
-            float baseCurve = Random.Range(minCurve, maxCurve);
-            float curveAmount = baseCurve * (Random.value < 0.5f ? -1 : 1);
-
-            return curveAmount;
-        }
-    
-        private IEnumerator CurveThrow(GameObject prefab, float distance = 0.5f, float throwSpeed = 8f, float curveAmount = 1f)
+        private IEnumerator CurveThrow(GameObject prefab, float distance = 0.5f, float throwSpeed = 8f, float curveAmount = 0.2f)
         {
             Sound.Play("ENEMY_NagaRogue_Throw");
             FaceToPlayer();
@@ -152,7 +147,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
                     transform.position + DirectionToPlayer * distance, 
                     DirectionToPlayer, 
                     prefab, 
-                    new CurveMovement(
+                    new BoomerangMovement(
                         transform.position + DirectionToPlayer * distance, 
                         SceneContext.Character.transform.position,
                         throwSpeed,
@@ -230,7 +225,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             }
         }
 //---------------------------------여러 방향 선택하는 알고리즘들-----------------------------
-// 유틸
+        
+public float GetRandomCurve()
+{
+    float minCurve = 3f;
+    float maxCurve = 5f;
+    float baseCurve = Random.Range(minCurve, maxCurve);
+    float curveAmount = baseCurve * (Random.value < 0.5f ? -1 : 1);
+
+    return curveAmount;
+}
 private Vector3 Perp(Vector3 v) => new Vector3(-v.y, v.x, 0).normalized;
 
 private bool InViewport(Vector3 world, float margin = 0.06f) {
@@ -422,7 +426,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
 
     // 2) 히트 시 살짝 ‘슬라이드’: 표면 법선에 직교 방향으로 보정
     Collider2D col = GetComponent<Collider2D>();
-    var hit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, dir, distance, LayerMask.GetMask("Obstacle"));
+    var hit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, dir, distance, LayerMask.GetMask("Obstacle","Player"));
 
     float moveDist = hit.collider ? Mathf.Max(0f, hit.distance - 0.02f) : distance;
     Vector3 endPos = transform.position + dir * moveDist;
@@ -526,40 +530,6 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             yield return new WaitForSeconds(PostDelay);
         }
     
-        public IEnumerator CamelAttack(float distance = 10f, float rushSpeed = 10f)
-        {
-            Sound.Play("ENEMY_NagaRogue_CamelCharge");
-            float angle = Random.Range(0f, 360f);
-            Vector3 dir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0).normalized;
-        
-            Vector3 startPos = SceneContext.Character.transform.position + dir * distance;
-            Vector3 endPos = SceneContext.Character.transform.position - dir * distance;
-        
-            Vector3 perpendicular = new Vector3(-dir.y, dir.x, 0);
-            float spacing = 1.2f;
-
-            for (int i = 0; i < 3; i++)
-            {
-                int offset = i - 1;
-                Vector3 offsetVec = perpendicular * (spacing * offset);
-
-                Vector3 spawnPos = startPos + offsetVec;
-                Vector3 targetPos = endPos + offsetVec;
-            
-                AttackObjectController.Create(
-                        startPos, 
-                        dir,
-                        rushCamelPrefab,
-                        new LinearMovement(
-                            spawnPos, 
-                            targetPos,
-                            rushSpeed)
-                    )
-                    .StartRoutine();
-            }
-            yield return new WaitForSeconds(4f);
-        }
-    
         private void FaceToPlayer()
         {
             Animator.SetFloat("xDir", DirectionToPlayer.x);
@@ -569,12 +539,13 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
         //states============================================================================추후 분리
         public class DashSlash : NagaRogueState
         {
-            public const float DashRange = 5f;
+            public const float DashRange = 6f;
             private const float MeleeDelay = 0.3f;
             private const float PostDelay = 1f;
+            private const float inCooldown = 4f;
             public override int GetWeight()
             {
-                return (mob.DistanceToPlayer <= 5f) ? 500 : 0;
+                return (Time.time >= Cooldown) ? 500 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -583,8 +554,49 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 yield return new WaitForSeconds(MeleeDelay);
                 for (int i = 0; i < 2; i++)
                 {
-                    yield return NagaRogue.MeleeAttack(NagaRogue.basicAttackPrefab);  
+                    yield return NagaRogue.MeleeAttack(NagaRogue.slashAttackPrefab);  
                 }
+
+                Cooldown = Time.time + inCooldown;
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
+            }
+        }
+        public class SideThrust : NagaRogueState
+        {
+            public const float DashRange = 3f;
+            private const float MeleeDelay = 0.3f;
+            private const float PostDelay = 1f;
+            public override int GetWeight()
+            {
+                return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 500 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                Sound.Play("ENEMY_NagaRogue_Ambush");
+                yield return NagaRogue.MoveSmart(NagaRogue.DirectionToPlayer, DashRange);
+                yield return new WaitForSeconds(MeleeDelay);
+                yield return NagaRogue.MeleeAttack(NagaRogue.thrustAttackPrefab);  
+
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
+            }
+        }
+        public class AmbushThrust : NagaRogueState
+        {
+            public const float ThrustRange = 2f;
+            private const float MeleeDelay = 0.3f;
+            private const float PostDelay = 1f;
+            public override int GetWeight()
+            {
+                return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 500 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                Sound.Play("ENEMY_NagaRogue_Ambush");
+                NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, ThrustRange, out var pos);
+                yield return NagaRogue.Teleport(pos, ThrustRange);
+                yield return new WaitForSeconds(MeleeDelay);
+                yield return NagaRogue.MeleeAttack(NagaRogue.thrustAttackPrefab);  
+
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
@@ -596,40 +608,18 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
             private const float AimErrorDeg = 15f;
             public override int GetWeight()
             {
-                return (mob.DistanceToPlayer <= mob.RangedAttackRange && mob.DistanceToPlayer > mob.MeleeAttackRange) ? 50 : 0;
+                return (mob.DistanceToPlayer > mob.MeleeAttackRange) ? 50 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
-                yield return NagaRogue.PreThrowStrafe();
-                for (int i = 0; i < 3; i++)
+                int iter = Random.Range(1, 4);
+                for (int i = 0; i < iter; i++)
                 {
-                    if (mob.DistanceToPlayer < mob.MeleeAttackRange)
-                    {
-                        NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
-                        yield break;
-                    }
                     yield return NagaRogue.RangeThrow(NagaRogue.daggerPrefab, DaggerRange, ThrowSpeed, AimErrorDeg);
                     yield return new WaitForSeconds(ThrowDelay);
                 }
                 
-                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
-            }
-        }
-
-        public class KitingThrow : NagaRogueState
-        {
-            private const float PostDelay = 1f;
-            public override int GetWeight()
-            {
-                return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 100 : 0;
-            }
-
-            public override IEnumerator StateCoroutine()
-            {
-                NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 5f, out var pos);
-                yield return NagaRogue.Teleport(pos, 7f);
-                yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, 4, daggerRange: DaggerRange, spreadAngle: 60f);
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
@@ -718,33 +708,38 @@ public class TeleportDaggerRetrieve : NagaRogueState
     }
 }
 
-        public class ThrowShurikenTP : NagaRogueState
+        public class BoomerangShuriken: NagaRogueState
         {
             private const float PostDelay = 1f;
             public override int GetWeight()
             {
-                return (mob.DistanceToPlayer >= NagaRogue.RangedAttackRange) ? 100 : 0;
+                return (mob.DistanceToPlayer > NagaRogue.MeleeAttackRange) ? 100 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
-                for (int i = 0; i < 4; i++)
-                {
-                    yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:NagaRogue.GetRandomCurve());
-                }
-                NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 5f, out var pos);
-                yield return NagaRogue.Teleport(pos, 5f);
+                yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:4f, throwSpeed:4f);
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
 
         public class PostPatternState : NagaRogueState
         {
-            private readonly float Delay;
+            private readonly float _delay;
+            private const float RageDelayPercent = 0.7f;
+
+            private float Delay
+            {
+                get
+                {
+                    if (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue._phaseChangeHealthPercent) return _delay * RageDelayPercent;
+                    return _delay;
+                }
+            }
             
             public PostPatternState(float delay)
             {
-                Delay = delay;
+                _delay = delay;
             }
 
             public PostPatternState() {}
@@ -757,8 +752,7 @@ public class TeleportDaggerRetrieve : NagaRogueState
             {
                 if (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue._phaseChangeHealthPercent)
                 {
-                    yield return NagaRogue.PreThrowStrafe();
-                    yield return NagaRogue.DaggerFanThrow(NagaRogue.daggerPrefab, spreadAngle:90f);
+                    NagaRogue.ChangeState(new SideThrust(){mob = NagaRogue});
                 }
                 yield return NagaRogue.SetIdleAnim(Delay);
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
