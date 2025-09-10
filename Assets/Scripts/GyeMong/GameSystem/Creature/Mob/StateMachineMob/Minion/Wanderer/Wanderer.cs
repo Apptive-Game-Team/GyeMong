@@ -1,6 +1,7 @@
 using System.Collections;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
+using GyeMong.GameSystem.Creature.Direction;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
@@ -10,6 +11,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 {
     public class Wanderer : StateMachineMob
     {
+        private const float DEFAULT_ANGULAR_VELOCITY = 1.2f; // radians per second
+        private const float FAST_ANGULAR_VELOCITY = Mathf.PI; // radians per second
+        
         protected IDetector<PlayerCharacter> _detector;
         [SerializeField] private GameObject basicAttackPrefab;
         [SerializeField] private GameObject upwardSlashPrefab;
@@ -17,6 +21,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject attackFloorPrefab;
         [SerializeField] private GameObject comboSlashPrefab;
         [SerializeField] private GameObject growFloorPrefab;
+
+         private DirectionController _directionController;
 
         public override void OnAttacked(float damage)
         {
@@ -29,6 +35,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             {
                 StartCoroutine(Blink());
             }
+        }
+
+        private void Awake()
+        {
+            _directionController = GetComponent<DirectionController>();
+            StartCoroutine(_directionController.TrackPlayer(DEFAULT_ANGULAR_VELOCITY, true));
         }
 
         protected override void OnDead()
@@ -49,12 +61,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
             AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * distance, 
-                    DirectionToPlayer, 
+                    transform.position + _directionController.GetDirection() * distance, 
+                    _directionController.GetDirection(), 
                     prefab, 
                     new ChildMovement(
                         transform, 
-                        DirectionToPlayer * distance, 
+                        _directionController.GetDirection() * distance, 
                         duration)
                 )
                 .StartRoutine();
@@ -68,11 +80,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
             AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * distance, 
-                    DirectionToPlayer, 
+                    transform.position + _directionController.GetDirection() * distance, 
+                    _directionController.GetDirection(), 
                     prefab, 
                     new StaticMovement(
-                        DirectionToPlayer * distance + transform.position, 
+                        _directionController.GetDirection() * distance + transform.position, 
                         duration)
                 )
                 .StartRoutine();
@@ -83,7 +95,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         private IEnumerator ApplyAttackingMove(float duration, float speed = 1)
         {
-            Vector3 targetPosition = transform.position + DirectionToPlayer * speed;
+            Vector3 targetPosition = transform.position + _directionController.GetDirection() * speed;
             float elapsedTime = 0f;
 
             while (elapsedTime < duration)
@@ -112,8 +124,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         private void FaceToPlayer()
         {
-            Animator.SetFloat("xDir", DirectionToPlayer.x);
-            Animator.SetFloat("yDir", DirectionToPlayer.y);
+            Animator.SetFloat("xDir", _directionController.GetDirection().x);
+            Animator.SetFloat("yDir", _directionController.GetDirection().y);
         }
 
         public class CircularSlash : WandererState

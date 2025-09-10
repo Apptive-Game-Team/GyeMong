@@ -6,8 +6,9 @@ namespace GyeMong.GameSystem.Creature.Direction
     public class DirectionController : MonoBehaviour
     {
         
-        float _angle = 0f; // in radians
-    
+        private float _angle = 0f; // in radians
+        private float _angularVelocity = Mathf.PI; // radians per second
+        
         public float Angle
         {
             get { return _angle; }
@@ -22,6 +23,11 @@ namespace GyeMong.GameSystem.Creature.Direction
             return new Vector3(Mathf.Cos(_angle), Mathf.Sin(_angle), 0); 
         }
         
+        public void SetAngularVelocity(float angularVelocity)
+        {
+            _angularVelocity = angularVelocity;
+        }
+        
         public IEnumerator TrackPlayer(float angularVelocity, bool continuously = false)
         {
             return TrackTarget(SceneContext.Character.transform, angularVelocity, continuously);
@@ -29,6 +35,7 @@ namespace GyeMong.GameSystem.Creature.Direction
     
         public IEnumerator TrackTarget(Transform target, float angularVelocity, bool continuously = false)
         {
+            _angularVelocity = angularVelocity;
             while (true)
             {
                 float targetAngle = GetTargetAngle(target);
@@ -45,7 +52,7 @@ namespace GyeMong.GameSystem.Creature.Direction
                     yield break;
                 }
 
-                float angleChange = angularVelocity * Time.deltaTime;
+                float angleChange = _angularVelocity * Time.deltaTime;
                 if (Mathf.Abs(angleDiff) < angleChange)
                 {
                     _angle = targetAngle;
