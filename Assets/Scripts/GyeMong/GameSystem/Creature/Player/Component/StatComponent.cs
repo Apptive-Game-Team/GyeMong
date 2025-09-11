@@ -24,7 +24,11 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         ATTACK_DELAY,
         INVINCIBILITY_DURATION,
         HEAL_COST,
-        HEAL_AMOUNT
+        HEAL_AMOUNT,
+        GRAZE_FALL_ON_NONBATTLE,
+        GRAZE_FALL_ON_HIT,
+        ORB_GAIN_ON_GRAZE,
+        ORB_MAX,
     }
 
     public enum StatValueType
@@ -146,6 +150,11 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         public float InvincibilityDuration => GetStatValue(StatType.INVINCIBILITY_DURATION);
         public float HealAmount => GetStatValue(StatType.HEAL_AMOUNT);
         public float HealCost => GetStatValue(StatType.HEAL_COST);
+        public float GrazeFallOnNonBattle => GetStatValue(StatType.GRAZE_FALL_ON_NONBATTLE);
+        public float GrazeFallOnHit => GetStatValue(StatType.GRAZE_FALL_ON_HIT);
+        public float OrbGainOnGraze => GetStatValue(StatType.ORB_GAIN_ON_GRAZE);
+        public float OrbMax => GetStatValue(StatType.ORB_MAX);
+        
 
         public StatComponent()
         {
@@ -166,6 +175,8 @@ namespace GyeMong.GameSystem.Creature.Player.Component
             statEntries.Add(new StatEntry(StatType.INVINCIBILITY_DURATION, new Stat()));
             statEntries.Add(new StatEntry(StatType.HEAL_AMOUNT, new Stat()));
             statEntries.Add(new StatEntry(StatType.HEAL_COST, new Stat()));
+            statEntries.Add(new StatEntry(StatType.GRAZE_FALL_ON_NONBATTLE, new Stat()));
+            statEntries.Add(new StatEntry(StatType.GRAZE_FALL_ON_HIT, new Stat()));
         }
 
         private float GetStatValue(StatType statType)

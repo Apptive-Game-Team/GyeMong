@@ -9,12 +9,14 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         private class HpCaller : ChangeListenerCaller<IHpChangeListener, float>{}
         private class ShieldCaller : ChangeListenerCaller<IShieldChangeListener, float>{}
         private class SkillGaugeCaller : ChangeListenerCaller<ISkillGaugeChangeListener, float>{}
+        private class SeasonOrbCaller : ChangeListenerCaller<ISeasonOrbChangeListener, float>{}
         public static event Action OnPlayerSpawned;
         public static event Action OnPlayerDied;
 
         private HpCaller _hpCaller = new();
         private ShieldCaller _shieldCaller = new();
         private SkillGaugeCaller _skillGaugeCaller = new();
+        private SeasonOrbCaller _seasonOrbCaller = new();
         
         public void AddHpChangeListener(IHpChangeListener listener)
         {
@@ -27,6 +29,11 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         public void AddSkillGaugeChangeListener(ISkillGaugeChangeListener listener)
         {
             _skillGaugeCaller.AddListener(listener);
+        }
+
+        public void AddSeasonOrbChangeListener(ISeasonOrbChangeListener listener)
+        {
+            _seasonOrbCaller.AddListener(listener);
         }
         
         public void CallHpChangeListeners(float hp)
@@ -41,6 +48,11 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         public void CallSkillGaugeChangeListeners(float skillGauge)
         {
             _skillGaugeCaller.Call(skillGauge);
+        }
+
+        public void CallSeasonOrbChangeListeners(float orb)
+        {
+            _seasonOrbCaller.Call(orb);
         }
         
         public void CallPlayerDied()

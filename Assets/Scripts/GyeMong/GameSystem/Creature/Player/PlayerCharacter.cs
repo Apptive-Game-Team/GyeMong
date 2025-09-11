@@ -9,6 +9,8 @@ using GyeMong.InputSystem;
 using UnityEngine;
 using DG.Tweening;
 using GyeMong.UISystem.Game.BattleUI;
+using Unity.Mathematics;
+using Random = Unity.Mathematics.Random;
 
 namespace GyeMong.GameSystem.Creature.Player
 {
@@ -21,6 +23,7 @@ namespace GyeMong.GameSystem.Creature.Player
         [SerializeField] private float curHealth;
         [SerializeField] public float curShield;
         [SerializeField] private float curSkillGauge;
+        [SerializeField] private float curSeasonOrb;
         public bool isControlled = false;
         private Vector2 movement;
         private Vector2 lastMovementDirection;
@@ -62,6 +65,8 @@ namespace GyeMong.GameSystem.Creature.Player
         private Tween _attackMoveTween;
         private Tween _dashTween;
 
+        public float onbattleTime = 0f;
+        private float _onbattleDuration = 5f;
         protected void Awake()
         {
             stat = _statData.GetStatComp();
@@ -236,7 +241,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public void TakeGauge()
         {
-            curSkillGauge -= stat.GrazeGainOnGraze;
+            curSkillGauge -= stat.GrazeFallOnHit;
             if (curSkillGauge < 0)
             {
                 curSkillGauge = 0f;
@@ -263,7 +268,14 @@ namespace GyeMong.GameSystem.Creature.Player
             {
                 curSkillGauge = stat.GrazeMax;
             }
+
+            curSeasonOrb += stat.OrbGainOnGraze;
+            if (curSeasonOrb > stat.OrbMax)
+            {
+                curSeasonOrb = stat.OrbMax;
+            }
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+            changeListenerCaller.CallSeasonOrbChangeListeners(curSeasonOrb);
         }
         
         private IEnumerator TriggerInvincibility()
@@ -422,10 +434,18 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetBool("isAttacking", true);
 
             curSkillGauge -= stat.SkillCost;
+            int usedSeasonOrb = (int)Mathf.Floor(curSeasonOrb);
+            curSeasonOrb -= usedSeasonOrb;
             changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
+            changeListenerCaller.CallSeasonOrbChangeListeners(curSeasonOrb);
             SpawnAttackCollider(attackColliderPrefab);
             SpawnSkillCollider();
 
+            for (int i = 0; i < usedSeasonOrb; i++)
+            {
+                SpawnOrbSkillCollider();
+            }
+            
             movement = Vector2.zero;
             StopPlayer();
 
@@ -568,6 +588,34 @@ namespace GyeMong.GameSystem.Creature.Player
             atkComp.SetDamage(stat.AttackPower * stat.SkillCoef);
             attackCollider.transform.localScale *= stat.SkillCoef;
             Destroy(attackCollider, stat.AttackDelay * 2);
+        }
+        private void SpawnOrbSkillCollider()
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
+            Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
+
+            float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+
+            GameObject attackCollider = Instantiate(skillColliderPrefab, spawnPosition, spawnRotation, transform);
+
+            attackCollider.AddComponent<AttackObjectBreaker>();
+            
+            SpriteRenderer sr = attackCollider.GetComponent<SpriteRenderer>();
+            sr.color = Color.gray;
+            
+            Material attackParticle = attackCollider.transform.Find("Particle System").GetComponent<Renderer>().material;
+            attackParticle.SetFloat("_Rotation", Mathf.Atan2(mouseDirection.y, mouseDirection.x));
+
+            Rigidbody2D skillRigidbody = attackCollider.GetComponent<Rigidbody2D>();
+            skillRigidbody.velocity = mouseDirection.normalized * stat.SkillSpeed * UnityEngine.Random.Range(0.5f,0.8f);
+
+            AttackCollider atkComp = attackCollider.GetComponent<AttackCollider>();
+            atkComp.Init(soundController);
+            atkComp.SetDamage(stat.AttackPower * stat.SkillCoef);
+            attackCollider.transform.localScale *= stat.SkillCoef;
+            Destroy(attackCollider, stat.AttackDelay * 3);
         }
 
         private void Die()
