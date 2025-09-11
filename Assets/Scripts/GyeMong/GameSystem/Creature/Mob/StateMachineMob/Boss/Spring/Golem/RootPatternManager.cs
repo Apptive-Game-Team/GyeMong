@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
-    public class RootPatternManger : MonoBehaviour
+    public class RootPatternManager : MonoBehaviour
     {
         [SerializeField] private GameObject rootPrefab;
         private GameObject[] rootObjects;
