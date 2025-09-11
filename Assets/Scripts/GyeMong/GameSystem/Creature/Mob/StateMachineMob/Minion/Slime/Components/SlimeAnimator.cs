@@ -32,6 +32,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Component
             Idle,
             MeleeAttack,
             RangedAttack,
+            DashAttack,
             Die
         }
     
