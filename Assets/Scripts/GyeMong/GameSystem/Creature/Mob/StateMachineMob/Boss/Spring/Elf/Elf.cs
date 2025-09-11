@@ -239,6 +239,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
+            public override void OnStateUpdate()
+            {
+                
+            }
             public override IEnumerator StateCoroutine()
             {
                 GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[0], Elf.SkillIndicator.transform.position, Quaternion.identity);
