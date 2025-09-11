@@ -203,16 +203,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
 
             public override IEnumerator StateCoroutine()
             {
+                Vector3 playerPos = SceneContext.Character.transform.position;
+                int direction = (Elf.transform.position.x >= playerPos.x) ? 1 : -1;
+                Vector3 spawnOrigin = playerPos + new Vector3(direction * 4f, 3f, 0);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0); 
-                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, SceneContext.Character.transform.position, Elf.transform, Elf.attackdelayTime /2, Elf.attackdelayTime / 2,4f);
+                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, playerPos, Elf.transform, Elf.attackdelayTime /2, Elf.attackdelayTime / 2,4f);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
-                Vector3 playerPos = SceneContext.Character.transform.position;
-                int direction = (Elf.transform.position.x >= playerPos.x) ? 1 : -1;
-                Vector3 spawnOrigin = playerPos + new Vector3(direction * 4f, 3f, 0);
                 for (int i = 0; i < 10; i++)
                 {
                     Vector2 randomOffset = Random.insideUnitCircle * 3f;
