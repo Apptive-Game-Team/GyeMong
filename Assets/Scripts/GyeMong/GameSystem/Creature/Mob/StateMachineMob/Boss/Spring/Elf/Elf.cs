@@ -245,6 +245,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+                Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
                 GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[0], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
