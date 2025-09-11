@@ -382,7 +382,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 sandwormBody[0].sprite = headSprites[8];
                 yield return new WaitForSeconds(delay);
-                sandwormBody[0].sprite = bodySprites[9];
+                sandwormBody[0].sprite = headSprites[9];
             }
             else
             {

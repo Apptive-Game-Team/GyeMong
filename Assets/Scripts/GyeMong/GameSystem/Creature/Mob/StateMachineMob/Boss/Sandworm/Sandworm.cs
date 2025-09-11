@@ -70,8 +70,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             maxPhase = 2;
             maxHps.Clear();
+            maxHps.Add(30f);
             maxHps.Add(50f);
-            maxHps.Add(100f);
             currentHp = maxHps[currentPhase];
             damage = 20f;
             speed = 2f;
@@ -157,7 +157,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                     (startPositionFlag, Sandworm.attackMovePreAngle, Sandworm.attackMovePreDelay,
                         Sandworm.attackMoveAngle, Sandworm.attackMoveDuration, Sandworm.attackMovePostDelay));
                 yield return new WaitForSeconds(Sandworm.attackMovePreDelay + Sandworm.attackMoveDuration - 0.1f);
-                Sandworm.VenomBreathAttack(attackPosition);
+                Sandworm.VenomBreathAttack(attackPosition, Sandworm.currentPhase > 0);
                 yield return new WaitForSeconds(Sandworm.attackMovePostDelay + 0.2f);
                 Sandworm.movement.isIdle = true;
                 yield return new WaitForSeconds(Sandworm.attackMovePostDelay / 2);
@@ -349,13 +349,18 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }
         }
 
-        private void VenomBreathAttack(Vector3 attackPosition)
+        private void VenomBreathAttack(Vector3 attackPosition, bool isNextPhase = false)
         {
-            Vector2[] directions = new Vector2[3];
+            Vector2[] directions = isNextPhase ? new Vector2[5] : new Vector2[3];
             Vector3 startPos = movement.sandwormBody[0].transform.position;
             directions[0] = (attackPosition - movement.sandwormBody[0].transform.position).normalized;
             directions[1] = RotateVector(directions[0], _venomAttackSpreadAngle);
             directions[2] = RotateVector(directions[0], -_venomAttackSpreadAngle);
+            if (isNextPhase)
+            {
+                directions[3] = RotateVector(directions[0], _venomAttackSpreadAngle * 2);
+                directions[4] = RotateVector(directions[0], _venomAttackSpreadAngle * -2);
+            }
             Sound.Play("ENEMY_Venom_Breath");
             foreach (var dir in directions)
             {
@@ -369,9 +374,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             
             GameObject venom = Instantiate(venomAttack, startPos, Quaternion.identity);
             float dist = Vector3.Distance(startPos, targetPos);
-            Vector3 peakPos = (startPos + targetPos) / 2 + (Vector3)(direction.x > 0
-                ? new Vector2(-direction.y, direction.x)
-                : new Vector2(direction.y, -direction.x));
+            Vector3 peakPos = (startPos + targetPos) / 2 + Vector3.up * dist / 5;
                 
             
             venom.transform.DOPath(
@@ -527,6 +530,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             currentState.OnStateExit();
             mapPattern.StopPattern();
             StopAllCoroutines();
+            movement.SetBlink(0);
             Sound.Stop(curBGM);
             Sound.Play("ENEMY_Ground_Crash");
             StartCoroutine(movement.AttackMove(DirectionToPlayer.x > 0,0,0,50f, 1f, 0, 50f));

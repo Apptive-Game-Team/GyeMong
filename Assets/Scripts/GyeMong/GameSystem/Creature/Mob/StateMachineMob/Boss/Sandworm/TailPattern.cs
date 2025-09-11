@@ -8,7 +8,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 {
     public class TailPattern : MonoBehaviour
     {
-        [SerializeField] private GameObject tailImage;
+        [SerializeField] private GameObject[] tailAttacks;
         [SerializeField] private GameObject sandworm;
         private float _attackDelay;
         private float _nextAttackDelay;
@@ -20,10 +20,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private void Awake()
         {
             _spawnPosAdj = 0.1f;
-            _attackDelay = 1.2f;
-            _nextAttackDelay = 2.4f;
+            _attackDelay = 1f;
+            _nextAttackDelay = 2f;
             _detroyDelay = 0.5f;
-            _burstDuration = 0.5f;
+            _burstDuration = 0.4f;
         }
 
         private IEnumerator TailAttackPattern()
@@ -34,13 +34,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Vector3 sandwormDir = Vector3.Distance(targetPos, sandworm.transform.position) > 1f ? 
                     (sandworm.transform.position - targetPos).normalized : Vector3.zero;
                 Vector3 spawnPos = targetPos + sandwormDir * _spawnPosAdj;
+                int idx = spawnPos.x > targetPos.x ? 0 : 1;
                 
-                yield return IndicatorGenerator.Instance.GenerateIndicator(tailImage, spawnPos, Quaternion.Euler(0f, 0f, 0f), _attackDelay);
+                StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(tailAttacks[idx], spawnPos, Quaternion.Euler(0f, 0f, 0f), _attackDelay));
+                yield return new WaitForSeconds(_attackDelay);
                 
-                GameObject tail = Instantiate(tailImage, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
+                GameObject tail = Instantiate(tailAttacks[idx], spawnPos, Quaternion.Euler(-90f, 0f, 0f));
                 Sound.Play("ENEMY_Map_Tail_Attack");
                 Destroy(tail, _detroyDelay);
-                FlipTail(tail, SceneContext.Character.transform.position.x < spawnPos.x);
                 BurstEffect(tail);
 
                 yield return new WaitForSeconds(_nextAttackDelay);
