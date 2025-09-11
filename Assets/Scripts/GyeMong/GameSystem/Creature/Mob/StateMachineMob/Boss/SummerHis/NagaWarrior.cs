@@ -32,6 +32,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         private AirborneController airborneController;
         float attackdelayTime;
         private float attackSpeed;
+        private float aniSpeed;
         [SerializeField] private DailyCycleManager dailyCycleManager;
         bool isOverheat = false;
         bool isCool = false;
@@ -56,6 +57,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
             attackSpeed = 1f;
+            aniSpeed = 1f;
             attackdelayTime = 1/attackSpeed;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
             airborneController = GetComponent<AirborneController>();
@@ -101,7 +103,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
 
             SpriteRenderer.color = targetColor;
-
             UpdateCombatStats();
         }
         private void UpdateCombatStats()
@@ -111,21 +112,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 damage = 15f;
                 attackSpeed = 1.5f;
                 attackdelayTime = 1/attackSpeed;
-                Animator.speed = attackSpeed;
+                Animator.speed = attackSpeed * aniSpeed;
             }
             else if (isCool)
             {
                 damage = 5f;
                 attackSpeed = 0.75f;
                 attackdelayTime = 1/attackSpeed;
-                Animator.speed = attackSpeed;
+                Animator.speed = attackSpeed * aniSpeed;
             }
             else
             {
                 damage = 10f;
                 attackSpeed = 1f;
                 attackdelayTime = 1/attackSpeed;
-                Animator.speed = attackSpeed;
+                Animator.speed = attackSpeed * aniSpeed;
             }
         }
         private void UpdateBodyHeat()
@@ -242,6 +243,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             {
                 Vector3 targetPos = SceneContext.Character.transform.position;
                 Vector3 jumpDirToPlayer = NagaWarrior.DirectionToPlayer;
+                float jumpSpeed = 10f * NagaWarrior.attackSpeed;
+                NagaWarrior.aniSpeed = jumpSpeed / NagaWarrior.DistanceToPlayer;
                 float _jumpDirToPlayerY = jumpDirToPlayer.y;
                 if (NagaWarrior.DirectionToPlayer.y > 0)
                     _jumpDirToPlayerY = -0.1f;
@@ -252,7 +255,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 NagaWarrior.Animator.SetFloat("xJumpDir", jumpDirToPlayer.x);
                 NagaWarrior.Animator.SetFloat("yJumpDir", _jumpDirToPlayerY);
                 NagaWarrior.Animator.SetBool("isAttack", true);
-                yield return NagaWarrior.airborneController.AirborneTo(targetPos,1f,10f*NagaWarrior.attackSpeed);
+                yield return NagaWarrior.airborneController.AirborneTo(targetPos,1f,jumpSpeed);
                 AttackObjectController.Create(
                     NagaWarrior.transform.position + jumpDirToPlayer,
                     Vector3.zero,
@@ -273,6 +276,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 .StartRoutine();
                 SceneContext.CameraManager.CameraShake(0.3f);
                 Sound.Play("ENEMY_Rock_Falled");
+                NagaWarrior.aniSpeed = 1f;
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
