@@ -31,10 +31,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         [SerializeField] private GameObject daggerPrefab;
         [SerializeField] private GameObject shurikenPrefab;
         [SerializeField] private GameObject sandstormPrefab;
-        [SerializeField] private GameObject rushCamelPrefab;
-        [SerializeField] private GameObject poisonMinionPrefab;
-        [SerializeField] private GameObject sandMinionPrefab;
-        [SerializeField] private ParticleSystem sandStormParticles;
         [SerializeField] private MultiChatMessageData phaseChangeChat;
         [SerializeField] private Transform centerPoint;
 
@@ -42,8 +38,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         private int daggerCap = 6;
         public const float DaggerRange = 10f;
         private float _phaseChangeHealthPercent = 0.66f;
+        private float _lastDitchHealthPercent = 0.33f;
         public bool canPhaseChange = true;
-
+        public bool canLastDitch = true;
+        
         public override void OnAttacked(float damage)
         {
             currentHp -= damage;
@@ -719,26 +717,40 @@ public class DaggerRetrieve : NagaRogueState
         }
         
         //------------------------------------------------
-        public class PhaseChangePattern : NagaRogueState
+        public class LastDitchPattern : NagaRogueState
         {
+
+            private float camShakeTime = 1f;
             public override int GetWeight()
             {
-                return (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue._phaseChangeHealthPercent && NagaRogue.canPhaseChange)? 99999 : 0;
+                return (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue._lastDitchHealthPercent && NagaRogue.canLastDitch)? 999999 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
-                NagaRogue.canPhaseChange = false;
+                NagaRogue.canLastDitch = false;
                 yield return new OpenChatEvent().Execute();
-                SceneContext.CameraManager.CameraShake(0.1f);
                 yield return new ShowMessages(NagaRogue.phaseChangeChat, 3f).Execute();
                 yield return new CloseChatEvent().Execute();
                 yield return new SetKeyInputEvent(){_isEnable = false}.Execute();
-                
-                NagaRogue.ChangeState();
                 yield return new SetKeyInputEvent(){_isEnable = true}.Execute();
                 
+                float t = 0;
+                while (true)
+                {
+                    if (t >= camShakeTime) break;
+                    t += Time.deltaTime;
+                    SceneContext.CameraManager.CameraShake(0.2f);
+                }
+                
+                NagaRogue.sandstormPrefab.SetActive(true);
+                yield return NagaRogue.Teleport(NagaRogue.centerPoint.position);
 
+                for (int i = 0; i < 8; i++)
+                {
+                    
+                }
+                
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
             }
         }
