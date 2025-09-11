@@ -5,70 +5,134 @@ using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
+    public enum MapPattern
+    {
+        Row,
+        TwoRows,
+        Column,
+        TwoColumns,
+        XCross,
+        Rectangle
+    }
+
     public class RootPatternManager : MonoBehaviour
     {
         [SerializeField] private GameObject rootPrefab;
-        private GameObject[] rootObjects;
-        [SerializeField] private List<GameObject> rootSpawnZone;
+        [SerializeField] private List<Transform> rootSpawnZone;
+
+        [SerializeField] private int rows = 5;   // 행 개수
+        [SerializeField] private int cols = 9;   // 열 개수
+
+        private GameObject[,] rootObjects2D;
 
         private void Awake()
         {
-            // if (ConditionManager.Instance.Conditions.TryGetValue("spring_guardian_down", out bool down))
-            // {
-            //     if (down)
-            //     {
-            //         Destroy(gameObject);
-            //     }
-            // }
             gameObject.SetActive(false);
-        }
-        void OnEnable()
-        {
-            rootObjects = new GameObject[rootSpawnZone.Count];
-            for (int i = 0; i < rootSpawnZone.Count; i++)
+
+            rootObjects2D = new GameObject[rows, cols];
+            int index = 0;
+            for (int r = 0; r < rows; r++)
             {
-                GameObject rootObject = Instantiate(rootPrefab, rootSpawnZone[i].transform.position, Quaternion.identity);
-                rootObjects[i] = rootObject;
-                rootObject.SetActive(false);
+                for (int c = 0; c < cols; c++)
+                {
+                    GameObject root = Instantiate(rootPrefab, rootSpawnZone[index].position, Quaternion.identity);
+                    root.SetActive(false);
+                    rootObjects2D[r, c] = root;
+                    index++;
+                }
             }
+        }
+
+        private void OnEnable()
+        {
             StartCoroutine(RootPattern());
         }
 
         private IEnumerator RootPattern()
         {
+            MapPattern[] patterns = new MapPattern[]
+            {
+                MapPattern.Row,
+                MapPattern.TwoRows,
+                MapPattern.Column,
+                MapPattern.TwoColumns,
+                MapPattern.XCross,
+                MapPattern.Rectangle
+            };
+
             while (true)
             {
-                int caseNumber = Random.Range(1, 3);
-                if (!rootObjects[0].activeSelf && !rootObjects[3].activeSelf)
-                {
-                    switch (caseNumber)
-                    {
-                        case 1:
-                            ActivateRootObjects(new int[] { 0, 2, 4, 6, 8, 10, 13, 15, 17, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38 });
-                            break;
-                        case 2:
-                            ActivateRootObjects(new int[] { 1, 3, 5, 7, 9 , 11, 12, 14, 16, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37 });
-                            break;
-                    }
-                    yield return new WaitForSeconds(2f);
-                }
+                MapPattern selectedPattern = patterns[Random.Range(0, patterns.Length)];
+                ActivatePattern(selectedPattern);
+
+                yield return new WaitForSeconds(2f);
+
+                DeActivateAll();
             }
         }
-        private void ActivateRootObjects(int[] indices)
+
+        private void ActivatePattern(MapPattern pattern)
         {
             Sound.Play("ENEMY_Root");
-            foreach (int index in indices)
+
+            switch (pattern)
             {
-                rootObjects[index].SetActive(true);
+                case MapPattern.Row:
+                    int randomRow = Random.Range(0, rows);
+                    for (int c = 0; c < cols; c++)
+                        rootObjects2D[randomRow, c].SetActive(true);
+                    break;
+
+                case MapPattern.TwoRows:
+                    int row1 = Random.Range(0, rows);
+                    int row2;
+                    do { row2 = Random.Range(0, rows); } while (row2 == row1);
+                    for (int c = 0; c < cols; c++)
+                    {
+                        rootObjects2D[row1, c].SetActive(true);
+                        rootObjects2D[row2, c].SetActive(true);
+                    }
+                    break;
+
+                case MapPattern.Column:
+                    int randomCol = Random.Range(0, cols);
+                    for (int r = 0; r < rows; r++)
+                        rootObjects2D[r, randomCol].SetActive(true);
+                    break;
+
+                case MapPattern.TwoColumns:
+                    int col1 = Random.Range(0, cols);
+                    int col2;
+                    do { col2 = Random.Range(0, cols); } while (col2 == col1);
+                    for (int r = 0; r < rows; r++)
+                    {
+                        rootObjects2D[r, col1].SetActive(true);
+                        rootObjects2D[r, col2].SetActive(true);
+                    }
+                    break;
+
+                case MapPattern.XCross:
+                    for (int i = 0; i < Mathf.Min(rows, cols); i++)
+                    {
+                        rootObjects2D[i, i].SetActive(true);                   
+                        rootObjects2D[i, cols - 1 - i].SetActive(true);       
+                    }
+                    break;
+
+                case MapPattern.Rectangle:
+                    for (int r = 0; r < rows; r++)
+                    for (int c = 0; c < cols; c++)
+                        if (r == 0 || r == rows - 1 || c == 0 || c == cols - 1)
+                            rootObjects2D[r, c].SetActive(true);
+                    break;
             }
         }
-        public void DeActivateRootObjects()
+
+        public void DeActivateAll()
         {
-            StopAllCoroutines();
-            foreach (GameObject gameObject in rootObjects)
-            {
-                gameObject.SetActive(false);
-            }
+            for (int r = 0; r < rows; r++)
+                for (int c = 0; c < cols; c++)
+                    rootObjects2D[r, c].SetActive(false);
         }
     }
 }

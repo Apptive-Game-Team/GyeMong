@@ -416,7 +416,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             base.Die();
             Animator.SetBool("isDown", true);
-            mapPattern.DeActivateRootObjects();
+            mapPattern.DeActivateAll();
             StartCoroutine(DieRoutine());
         }
         private IEnumerator DieRoutine()
