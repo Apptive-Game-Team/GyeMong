@@ -48,7 +48,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             maxPhase = 1;
             maxHps.Clear();
-            maxHps.Add(200f);
+            maxHps.Add(30f);
             currentHp = maxHps[currentPhase];
             damage = 10f;
             speed = 2f;
