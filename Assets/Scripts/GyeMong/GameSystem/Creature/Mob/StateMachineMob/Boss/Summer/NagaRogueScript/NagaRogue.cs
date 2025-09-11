@@ -103,6 +103,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
             Animator.Play($"Stab_{dir}");
             Vector3 targetPos = transform.position + DirectionToPlayer * startPosDist;
+            Vector3 targetDir = DirectionToPlayer; 
+            AttackObjectController.Create(targetPos, targetDir, prefab, 
+                    new StaticMovement(targetPos, duration)
+                ).StartRoutine(); 
+            yield return new WaitForSeconds(0.2f);
+        }
+        private IEnumerator ThrustAttack(GameObject prefab, float duration = 0.3f)
+        {
+            const float startPosDist = 2f;
+            FaceToPlayer();
+            Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
+            Animator.Play($"Stab_{dir}");
+            Vector3 targetPos = transform.position + DirectionToPlayer * startPosDist;
             Vector3 targetDir = DirectionToPlayer;
             StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(prefab, targetPos, Quaternion.FromToRotation(Vector3.right, targetDir), duration, 
                 () => AttackObjectController.Create(
@@ -113,7 +126,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
                         targetPos, 
                         duration)
                 ).StartRoutine())); 
-            yield return new WaitForSeconds(0.2f);
+            yield return null;
         }
 
         private IEnumerator RetrieveObject(GameObject prefab, float retrieveSpeed = 40f)
@@ -242,79 +255,6 @@ private bool InViewport(Vector3 world, float margin = 0.06f) {
     if (!cam) return true;
     var v = cam.WorldToViewportPoint(world);
     return v.z > 0 && v.x > margin && v.x < 1 - margin && v.y > margin && v.y < 1 - margin;
-}
-private static Vector3 ClosestPointOnSegment(Vector3 p, Vector3 a, Vector3 b)
-{
-    Vector3 ab = b - a;
-    float t = Vector3.Dot(p - a, ab) / Mathf.Max(ab.sqrMagnitude, 1e-6f);
-    t = Mathf.Clamp01(t);
-    return a + ab * t;
-}
-
-// 다방향 샘플로 최적 스트레이프 방향 선택
-private Vector3 ChooseBestStrafeDir(
-    float maxDist = 1.6f,
-    int samplesPerSide = 7,
-    float coneHalfDeg = 80f)
-{
-    var col = GetComponent<Collider2D>();
-    var center = col.bounds.center;
-    var size   = col.bounds.size;
-
-    Vector3 fwd  = DirectionToPlayer.normalized;
-    Vector3 side = Perp(fwd);               // 오른쪽
-    Vector3[] bases = { side, -side };      // 좌/우 모두 조사
-
-    int obstacleMask = LayerMask.GetMask("Obstacle");
-
-    float bestScore = float.NegativeInfinity;
-    Vector3 bestDir = side;
-    float bestClr   = 0.3f;
-
-    foreach (var basis in bases)
-    {
-        for (int i = 0; i < samplesPerSide; i++)
-        {
-            // [-1..1] 분포로 각도 뽑기 (가운데 → 바깥 순)
-            float t = (samplesPerSide == 1) ? 0f : (i / (samplesPerSide - 1f)) * 2f - 1f;
-            float ang = t * coneHalfDeg;
-            Vector3 cand = Quaternion.Euler(0, 0, ang) * basis;
-
-            // 장애물까지 여유거리 측정(BoxCast)
-            var hit = Physics2D.BoxCast(center, size, 0f, cand, maxDist, obstacleMask);
-            float clr = hit.collider ? hit.distance : maxDist;
-
-            // 그 방향으로 실제 이동했을 때의 목표점(화면 안 선호)
-            Vector3 target = transform.position + cand * Mathf.Min(clr, maxDist);
-
-            // 점수 구성
-            float alignStrafe = Mathf.Abs(Vector3.Dot(cand, side)); // 진정한 좌/우일수록 +
-            float centerBias  = 0f;
-            if (Camera.main) {
-                var camC = Camera.main.transform.position; camC.z = transform.position.z;
-                float before = Vector3.Distance(transform.position, camC);
-                float after  = Vector3.Distance(target, camC);
-                centerBias = Mathf.Max(0f, before - after);         // 화면 중앙 쪽으로 가면 +
-            }
-            float viewPenalty = InViewport(target) ? 0f : 0.6f;      // 화면 밖이면 페널티
-
-            float score = clr + alignStrafe * 0.35f + centerBias * 0.25f - viewPenalty;
-
-            if (score > bestScore)
-            {
-                bestScore = score;
-                bestDir = cand;
-                bestClr = clr;
-            }
-        }
-    }
-    return bestDir;
-}
-
-private IEnumerator PreThrowStrafe(float duration = 0.5f, float distance = 2f)
-{
-    Vector3 dir= ChooseBestStrafeDir(maxDist : 10f, samplesPerSide: 9, coneHalfDeg: 85f);
-    yield return MoveSmart(dir, distance, duration); 
 }
 
 // 단검들의 중심(Centroid)
@@ -575,7 +515,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 Sound.Play("ENEMY_NagaRogue_Ambush");
                 yield return NagaRogue.MoveSmart(NagaRogue.DirectionToPlayer, DashRange);
                 yield return new WaitForSeconds(MeleeDelay);
-                yield return NagaRogue.MeleeAttack(NagaRogue.thrustAttackPrefab);  
+                yield return NagaRogue.ThrustAttack(NagaRogue.thrustAttackPrefab);  
 
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
@@ -583,7 +523,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
         public class AmbushThrust : NagaRogueState
         {
             public const float ThrustRange = 2f;
-            private const float MeleeDelay = 0.3f;
+            private const float MeleeDelay = 0.2f;
             private const float PostDelay = 1f;
             public override int GetWeight()
             {
@@ -595,7 +535,7 @@ public IEnumerator MoveSmart(Vector3 desiredDir, float distance = 2f, float dura
                 NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, ThrustRange, out var pos);
                 yield return NagaRogue.Teleport(pos, ThrustRange);
                 yield return new WaitForSeconds(MeleeDelay);
-                yield return NagaRogue.MeleeAttack(NagaRogue.thrustAttackPrefab);  
+                yield return NagaRogue.ThrustAttack(NagaRogue.thrustAttackPrefab);  
 
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
@@ -752,7 +692,10 @@ public class TeleportDaggerRetrieve : NagaRogueState
             {
                 if (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue._phaseChangeHealthPercent)
                 {
-                    NagaRogue.ChangeState(new SideThrust(){mob = NagaRogue});
+                    Sound.Play("ENEMY_NagaRogue_Ambush");
+                    yield return NagaRogue.MoveSmart(NagaRogue.DirectionToPlayer);
+                    yield return new WaitForSeconds(0.2f);
+                    yield return NagaRogue.ThrustAttack(NagaRogue.thrustAttackPrefab); 
                 }
                 yield return NagaRogue.SetIdleAnim(Delay);
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
