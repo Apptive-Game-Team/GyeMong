@@ -42,7 +42,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 {
                     // 유도 종료 → 마지막 방향으로 직선 비행 시작
                     homingFinished = true;
-                    rb.velocity = direction * speed;
+                    rb.velocity = direction * speed * 3f;
                     RotateArrow();
                 }
 
