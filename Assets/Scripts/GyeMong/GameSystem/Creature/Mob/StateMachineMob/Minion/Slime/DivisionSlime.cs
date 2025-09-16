@@ -93,7 +93,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     7f)
             );
             rangedAttackObject.transform.SetParent(parent);
-            rangedAttackObject.transform.localScale = new Vector3(0.28f, 0.28f, 0);
+            rangedAttackObject.transform.localScale = transform.localScale * 3 / 4;
             rangedAttackObject.StartRoutine();
         }
 
@@ -112,14 +112,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     yield return DivisionSlime.GrazeSystemTutorial1();
                 DivisionSlime.StopCoroutine(DivisionSlime._faceToPlayerCoroutine);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
                 Sound.Play("ENEMY_DivisionSlime_RangedAttack");
-                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 Vector3 offset = new Vector3(0, 0.4f, 0);
                 Vector3 scaledOffset = Vector3.Scale(offset, DivisionSlime.transform.lossyScale);
                 Vector3 shootPos = mob.transform.position + scaledOffset;
                 Vector3 direction = (SceneContext.Character.transform.position - shootPos).normalized;
                 DivisionSlime.SetRangedAttack(shootPos, direction, DivisionSlime.transform);
-                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 3);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
@@ -143,8 +143,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 DivisionSlime.StopCoroutine(DivisionSlime._faceToPlayerCoroutine);
                 Vector3 scale = DivisionSlime.transform.localScale;
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
-                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
-                GameObject bounceAttack = Instantiate(DivisionSlime.bounceAttackPrefab, DivisionSlime.transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
+                GameObject bounceAttack = Instantiate(DivisionSlime.bounceAttackPrefab, DivisionSlime.transform.position - new Vector3(0, 0.7f, 0) * DivisionSlime.transform.localScale.x, Quaternion.identity);
                 float scaleValue = DivisionSlime.transform.localScale.x;
                 bounceAttack.transform.localScale *= scaleValue;
                 
@@ -169,12 +169,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 main.startSize = new ParticleSystem.MinMaxCurve(newMin, newMax);
 
                 yield return IndicatorGenerator.Instance.GenerateIndicator(bounceAttack,
-                    DivisionSlime.transform.position, Quaternion.identity, SlimeAnimator.AnimationDeltaTime * 2);
+                    DivisionSlime.transform.position - new Vector3(0, 0.7f, 0) * DivisionSlime.transform.localScale.x, Quaternion.identity, SlimeAnimator.AnimationDeltaTime * 2);
                 Sound.Play("ENEMY_DivisionSlime_MeleeAttack");
                 bounceAttack.SetActive(true);
                 particle.Play();
                 Destroy(bounceAttack, SlimeAnimator.AnimationDeltaTime);
-                DivisionSlime.transform.DOScale(new Vector3(scale.x * 1.1f, scale.y * 0.9f, scale.z), SlimeAnimator.AnimationDeltaTime * 1.5f)
+                DivisionSlime.transform.DOScale(new Vector3(scale.x * 1.1f, scale.y * 0.9f, scale.z), SlimeAnimator.AnimationDeltaTime)
                     .SetLoops(2, LoopType.Yoyo);
                 
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
@@ -208,15 +208,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 {
                     dashTargetPosition = hit.point - dashDirection * 0.05f;
                 }
-                yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 Vector3 middlePos = (currentPos + dashTargetPosition) / 2;
-                float jumpHeight = Vector3.Distance(DivisionSlime.transform.position, middlePos) / 3;
+                float jumpHeight = Vector3.Distance(DivisionSlime.transform.position, middlePos) / 4;
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DashAttack);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
                 Sound.Play("ENEMY_DivisionSlime_DashAttack");
                 DivisionSlime._dashTween = DivisionSlime.transform
                     .DOJump(middlePos, jumpHeight, 1, 2 * SlimeAnimator.AnimationDeltaTime).SetEase(Ease.OutQuad);
                 yield return DivisionSlime._dashTween.WaitForCompletion();
-                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime / 2);
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 4);
                 if (DivisionSlime.DistanceToPlayer < DivisionSlime.MeleeAttackRange)
                 {
                     DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
@@ -229,12 +230,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     DivisionSlime.StopCoroutine(DivisionSlime._faceToPlayerCoroutine);
                     dashTargetPosition = SceneContext.Character.transform.position + (Vector3)dashDirection * DivisionSlime._scale / 4;
                     DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DashAttack);
-                    jumpHeight = Vector3.Distance(DivisionSlime.transform.position, dashTargetPosition) / 3;
+                    yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
+                    jumpHeight = Vector3.Distance(DivisionSlime.transform.position, dashTargetPosition) / 4;
                     Sound.Play("ENEMY_DivisionSlime_DashAttack");
                     DivisionSlime._dashTween = DivisionSlime.transform
                         .DOJump(dashTargetPosition, jumpHeight, 1, 2 * SlimeAnimator.AnimationDeltaTime).SetEase(Ease.OutQuad);
                     yield return DivisionSlime._dashTween.WaitForCompletion();
-                    yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
+                    yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 4);
                     DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                     DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
                     DivisionSlime.ChangeState();

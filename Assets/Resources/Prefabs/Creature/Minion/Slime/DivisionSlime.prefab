@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7699352649446549994}
   - component: {fileID: 8620803811093990874}
-  - component: {fileID: 12177543809506495}
   - component: {fileID: 3690366075533505093}
   - component: {fileID: 3512257973603151227}
   - component: {fileID: 6957462979725571552}
+  - component: {fileID: 4824213980543842600}
   m_Layer: 0
   m_Name: DivisionSlime
   m_TagString: EnemyAttack
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.37, y: 0.17, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: ddedda145c6f241b1b5647401b022cf0, type: 3}
+  m_Sprite: {fileID: 2011471787, guid: 6bdd518e0dbf044169ae1db033aaab56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -88,58 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!68 &12177543809506495
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7314021124766925139}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.45}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.99443626, y: -0.38135517}
-  - {x: -1.0001931, y: -0.06480697}
-  - {x: -0.8398738, y: 0.2785202}
-  - {x: -0.52128744, y: 0.5857853}
-  - {x: -0.15949391, y: 0.73822486}
-  - {x: 0.16163494, y: 0.74216014}
-  - {x: 0.58466196, y: 0.6511587}
-  - {x: 0.86153936, y: 0.36537462}
-  - {x: 0.9516988, y: 0.053214014}
-  - {x: 1.0920787, y: -0.28556663}
-  - {x: 1.0813708, y: -0.39666337}
-  - {x: 0.03291561, y: -0.40142643}
-  - {x: -0.9825897, y: -0.39139092}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!114 &3690366075533505093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,8 +118,9 @@ MonoBehaviour:
   damage: 0
   rangedAttack: {fileID: 3292165506904152432, guid: c6bd2a40c9acaf3419fbc475ca6586d4,
     type: 3}
-  sprites: {fileID: 11400000, guid: 0a34adb09c2d8496eb57c520266f0392, type: 2}
-  bounceAttackPrefab: {fileID: 0}
+  sprites: {fileID: 11400000, guid: 5db6770fbf5648b4480b71a6bd21293b, type: 2}
+  bounceAttackPrefab: {fileID: 8803794943195885897, guid: 8351bd785a0162e48b0a74c3bb11b11a,
+    type: 3}
 --- !u!114 &6957462979725571552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,3 +137,38 @@ MonoBehaviour:
   isAttacked: 0
   _attackInfo: {fileID: 11400000, guid: f68d3a386f8ce8845af01bb0d3208865, type: 2}
   _attackObjectSounds: {fileID: 0}
+--- !u!58 &4824213980543842600
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7314021124766925139}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.1}
+  serializedVersion: 2
+  m_Radius: 0.69

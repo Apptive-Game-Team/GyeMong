@@ -40,11 +40,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         public IEnumerator FaceToPlayer()
         {
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            while (true)
-            {
-                spriteRenderer.flipX = SceneContext.Character.transform.position.x < transform.position.x;
-                yield return null;
-            }
+            // while (true)
+            // {
+            //     spriteRenderer.flipX = SceneContext.Character.transform.position.x < transform.position.x;
+            //     yield return null;
+            // }
+            yield return null;
         }
 
         protected virtual void Start()
