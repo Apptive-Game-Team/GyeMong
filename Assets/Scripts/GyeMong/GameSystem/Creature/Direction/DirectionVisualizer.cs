@@ -21,7 +21,6 @@ namespace GyeMong.GameSystem.Creature.Direction
         {
             Vector3 dir = _controller.GetDirection();
             Debug.DrawRay(transform.position, dir * 5, Color.red);
-            Debug.Log(dir);
         }
     }
 }

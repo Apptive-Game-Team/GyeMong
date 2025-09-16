@@ -11,7 +11,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 {
     public class Wanderer : StateMachineMob
     {
-        private const float DEFAULT_ANGULAR_VELOCITY = 1.2f; // radians per second
+        private const float DEFAULT_ANGULAR_VELOCITY = 1f; // radians per second
         private const float FAST_ANGULAR_VELOCITY = Mathf.PI; // radians per second
         
         protected IDetector<PlayerCharacter> _detector;
@@ -22,10 +22,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject comboSlashPrefab;
         [SerializeField] private GameObject growFloorPrefab;
 
-         private DirectionController _directionController;
-
+        private DirectionController _directionController;
+         
+         
         public override void OnAttacked(float damage)
         {
+            if (!IsPlayerAtBack())
+            {
+                StartCoroutine(CounterAttack());
+                return;
+            }
+            
             currentHp -= damage;
             if (currentHp <= 0)
             {
@@ -35,6 +42,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             {
                 StartCoroutine(Blink());
             }
+        }
+
+        private IEnumerator CounterAttack()
+        {
+            _directionController.SetAngularVelocity(FAST_ANGULAR_VELOCITY);
+            yield return new WaitForSeconds(0.2f);
+            yield return StaticChildAttack(comboSlashPrefab);
+            _directionController.SetAngularVelocity(DEFAULT_ANGULAR_VELOCITY);
+        }
+        
+        private bool IsPlayerAtBack()
+        {
+            float angle = _directionController.GetAngleDifference(SceneContext.Character.transform);
+            return Mathf.Abs(angle) > Mathf.PI * 3 / 4;
         }
 
         private void Awake()
@@ -109,7 +130,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         protected void Initialize()
         {
-            maxHp = 30;
+            maxHp = 10;
             currentHp = maxHp;
 
             currentShield = 0;
