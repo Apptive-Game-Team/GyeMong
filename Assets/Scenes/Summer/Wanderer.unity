@@ -344,7 +344,7 @@ Transform:
   m_GameObject: {fileID: 355301012}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -71.7, y: 71.9, z: -10.001161}
+  m_LocalPosition: {x: -22.099998, y: 1, z: -10.001161}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16034,6 +16034,8 @@ GameObject:
   - component: {fileID: 1986248217}
   - component: {fileID: 1986248216}
   - component: {fileID: 1986248222}
+  - component: {fileID: 1986248223}
+  - component: {fileID: 1986248224}
   m_Layer: 0
   m_Name: Wanderer
   m_TagString: Untagged
@@ -16231,6 +16233,30 @@ MonoBehaviour:
     type: 3}
   growFloorPrefab: {fileID: 7626255705165784212, guid: 4ed45d6bca50d4069aad3fe9d77f5711,
     type: 3}
+--- !u!114 &1986248223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986248214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b62e0137d4282463caad9f61bb865143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1986248224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986248214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a99696703b4af8816ea1f2c349893d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2099379834
 PrefabInstance:
   m_ObjectHideFlags: 0
