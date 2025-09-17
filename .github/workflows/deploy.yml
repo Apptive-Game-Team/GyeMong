@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
+          token: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
 
       - name: Cache Library folder
         uses: actions/cache@v4
