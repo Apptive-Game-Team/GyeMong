@@ -17,8 +17,9 @@ namespace GyeMong.DataSystem
 #endif
         private readonly string encryptionKey = "GyemongFighting!"; // 16, 24, 32 글자로 key 설정
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
 #if UNITY_EDITOR
 #else
         savePath = Path.Combine(Application.persistentDataPath, "Database");
