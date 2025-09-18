@@ -185,16 +185,6 @@ namespace GyeMong.EventSystem.Event
     }
 
     [Serializable]
-    public class DestroySelfEvent : Event
-    {
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            eventObject.DestroySelf();
-            return null;
-        }
-    }
-
-    [Serializable]
     public class TriggerEvent : Event
     {
         [SerializeField]
