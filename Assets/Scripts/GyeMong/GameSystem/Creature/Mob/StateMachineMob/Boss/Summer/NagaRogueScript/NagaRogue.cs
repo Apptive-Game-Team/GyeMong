@@ -30,7 +30,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         [SerializeField] private GameObject thrustAttackPrefab;
         [SerializeField] private GameObject daggerPrefab;
         [SerializeField] private GameObject shurikenPrefab;
-        [SerializeField] private GameObject sandstormPrefab;
+        [SerializeField] private ParticleSystem sandstormPrefab;
         [SerializeField] private MultiChatMessageData phaseChangeChat;
         [SerializeField] private Transform centerPoint;
 
@@ -534,6 +534,32 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
+
+        public class RetreatThrow : NagaRogueState
+        {
+            private const float ThrowDelay = 0.2f;
+            private const float PostDelay = 1f;
+            private const float ThrowSpeed = 15f;
+            private const float AimErrorDeg = 15f;
+            public override int GetWeight()
+            {
+                return (mob.DistanceToPlayer <= mob.MeleeAttackRange) ? 500 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, mob.MeleeAttackRange, out var pos);
+                yield return NagaRogue.Teleport(pos, mob.MeleeAttackRange);
+                for (int i = 0; i < 2; i++)
+                {
+                    yield return NagaRogue.RangeThrow(NagaRogue.daggerPrefab, DaggerRange, ThrowSpeed, AimErrorDeg);
+                    yield return new WaitForSeconds(ThrowDelay);
+                }
+                
+                NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
+            }
+        }
+        
         public class SequentialDaggerThrow : NagaRogueState
         {
             private const float ThrowDelay = 0.2f;
@@ -542,7 +568,7 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
             private const float AimErrorDeg = 15f;
             public override int GetWeight()
             {
-                return (mob.DistanceToPlayer > mob.MeleeAttackRange) ? 50 : 0;
+                return (mob.DistanceToPlayer > mob.MeleeAttackRange) ? 500 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -565,7 +591,7 @@ public class DaggerRetrieve : NagaRogueState
 
     public override int GetWeight()
     {
-        return (NagaRogue.daggerList.Count >= 1 ? 500 : 0);
+        return (CountDaggersWithinAngle(MaxRetrieveAngle) >= 1 && NagaRogue.daggerList.Count >= 1 ? 500 : 0);
     }
 
     public override IEnumerator StateCoroutine()
@@ -743,15 +769,31 @@ public class DaggerRetrieve : NagaRogueState
                     SceneContext.CameraManager.CameraShake(0.2f);
                 }
                 
-                NagaRogue.sandstormPrefab.SetActive(true);
+                NagaRogue.sandstormPrefab.gameObject.SetActive(true);
+                var module = NagaRogue.sandstormPrefab.velocityOverLifetime;
+                NagaRogue.StartCoroutine(IncrementOrbital(module.orbitalYMultiplier)); 
                 yield return NagaRogue.Teleport(NagaRogue.centerPoint.position);
 
                 for (int i = 0; i < 8; i++)
                 {
-                    
+                    Sound.Play("ENEMY_NagaRogue_Ambush");
+                    NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 2f, out var pos);
+                    yield return NagaRogue.Teleport(pos, 2f);
+                    yield return new WaitForSeconds(0.2f);
+                    yield return NagaRogue.ThrustAttack(NagaRogue.thrustAttackPrefab);
+                    yield return new WaitForSeconds(1f);
                 }
                 
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
+            }
+
+            public IEnumerator IncrementOrbital(float orbitSpeed)
+            {
+                while (orbitSpeed < 2)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                    orbitSpeed = Mathf.Clamp(orbitSpeed+0.01f, 1, 2);
+                }
             }
         }
     
