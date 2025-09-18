@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: NagaWarriorAfter
   m_EditorClassIdentifier: 
+  bgmName: 
   chatMessages:
-  - speakerName: 9
+  - speakerName: 60
+    faceType: 0
     isLeft: 0
     messages:
     - "\uB300\uB2E8\uD558\uAD70. \uC0AC\uB9C9\uC758 \uC804\uC0AC\uB85C\uC11C \uC644\uBCBD\uD788

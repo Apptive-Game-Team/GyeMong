@@ -1117,7 +1117,7 @@ PrefabInstance:
     - target: {fileID: 208246280978884676, guid: c2f3182f131863545b899e8b19921037,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.87
+      value: 17.27
       objectReference: {fileID: 0}
     - target: {fileID: 208246280978884676, guid: c2f3182f131863545b899e8b19921037,
         type: 3}
@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onSprite: {fileID: 21300000, guid: 617fff16aaf704f3fa00f17376c9c837, type: 3}
   offSprite: {fileID: 21300000, guid: bf9c79bcb77d1440097c797c7a7ae65d, type: 3}
-  stageInfo: {fileID: 11400000, guid: 349739494a1c9484c9b07e72fc8a9dc6, type: 2}
+  stageInfo: {fileID: 11400000, guid: 774f2154b58500544a82dced6a14d361, type: 2}
 --- !u!212 &1299055768
 SpriteRenderer:
   m_ObjectHideFlags: 0
