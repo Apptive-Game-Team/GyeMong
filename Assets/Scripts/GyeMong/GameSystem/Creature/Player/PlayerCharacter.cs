@@ -136,8 +136,8 @@ namespace GyeMong.GameSystem.Creature.Player
                 StartCoroutine(Dash());
             }
 
-            if ((InputManager.Instance.GetKeyDown(ActionCode.Attack) || InputManager.Instance.GetKey(ActionCode.Attack)) &&
-                !isDashing)
+            if ((InputManager.Instance.GetKeyDown(ActionCode.Attack) && curSkillGauge >= stat.AttackCost || InputManager.Instance.GetKey(ActionCode.Attack)) &&
+                !isDashing && curSkillGauge >= stat.AttackCost) //test for New Battle System
             {
                 if (!isAttacking)
                 {
@@ -354,6 +354,7 @@ namespace GyeMong.GameSystem.Creature.Player
             StopPlayer();
             
             animator.SetBool("isAttacking", true);
+            curSkillGauge -= stat.AttackCost; // for test new battle system
             SpawnAttackCollider(attackColliderPrefab);
             soundController.Trigger(PlayerSoundType.SWORD_SWING);
             yield return new WaitForSeconds(stat.AttackDelay / 2);
@@ -369,6 +370,7 @@ namespace GyeMong.GameSystem.Creature.Player
                 UpdateState();
                 soundController.Trigger(PlayerSoundType.SWORD_SWING);
                 animator.SetBool("isAttacking2", true);
+                curSkillGauge -= stat.AttackCost/2;
                 SpawnAttackCollider(attackComboColliderPrefab);
                 yield return new WaitForSeconds(stat.AttackDelay / 2);
                 AttackMove(GetCurrentInputDirection(mouseDirection));

@@ -24,7 +24,8 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         ATTACK_DELAY,
         INVINCIBILITY_DURATION,
         HEAL_COST,
-        HEAL_AMOUNT
+        HEAL_AMOUNT,
+        ATTACK_COST // Test For New Battle System
     }
 
     public enum StatValueType
@@ -146,6 +147,8 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         public float InvincibilityDuration => GetStatValue(StatType.INVINCIBILITY_DURATION);
         public float HealAmount => GetStatValue(StatType.HEAL_AMOUNT);
         public float HealCost => GetStatValue(StatType.HEAL_COST);
+        //for test New Battle System
+        public float AttackCost => GetStatValue(StatType.ATTACK_COST);
 
         public StatComponent()
         {
@@ -166,6 +169,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component
             statEntries.Add(new StatEntry(StatType.INVINCIBILITY_DURATION, new Stat()));
             statEntries.Add(new StatEntry(StatType.HEAL_AMOUNT, new Stat()));
             statEntries.Add(new StatEntry(StatType.HEAL_COST, new Stat()));
+            statEntries.Add(new StatEntry(StatType.ATTACK_COST, new Stat()));
         }
 
         private float GetStatValue(StatType statType)
