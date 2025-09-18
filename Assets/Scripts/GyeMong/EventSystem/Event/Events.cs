@@ -41,10 +41,6 @@ namespace GyeMong.EventSystem.Event
 
             return null;
         }
-        public virtual List<ToggeableCondition> FindToggleableConditions()
-        {
-            return null;
-        }
     }
 
     [Serializable]
