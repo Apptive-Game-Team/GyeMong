@@ -12,6 +12,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         Shadow = 3,
         Golem = 4,
         NagaRouge = 5,
+        NagaWarrior = 6,
         Wanderer = 7,
     }
     

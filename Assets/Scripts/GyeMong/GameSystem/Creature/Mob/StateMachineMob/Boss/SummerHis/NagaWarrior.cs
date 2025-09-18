@@ -501,6 +501,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                 _gameObject = dailyCycleIndicator,
                 isActive = false
             }).Execute());
+            StageManager.ClearStage(this);
         }
         private void SpawnAttackComboCollider(Vector3 direction, int combo)
         {
