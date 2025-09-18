@@ -18,7 +18,8 @@ jobs:
         with:
           submodules: 'recursive'
           token: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
-
+          fetch-depth: 0
+      
       - name: Cache Library folder (WebGL)
         uses: actions/cache@v4
         with:
