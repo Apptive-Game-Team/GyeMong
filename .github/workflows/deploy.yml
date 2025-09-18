@@ -19,14 +19,15 @@ jobs:
           submodules: 'recursive'
           token: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
 
-      - name: Cache Library folder
+      - name: Cache Library folder (WebGL)
         uses: actions/cache@v4
         with:
-          path: Library
-          key: Library-WebGL-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          path: |
+            Library/ShaderCache
+            Library/ScriptAssemblies
+          key: WebGL-Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
-            Library-WebGL-
-            Library-
+            WebGL-Library-
 
       - name: Build WebGL
         uses: game-ci/unity-builder@v4
