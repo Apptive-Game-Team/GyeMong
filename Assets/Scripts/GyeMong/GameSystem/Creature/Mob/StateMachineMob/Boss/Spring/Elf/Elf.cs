@@ -213,7 +213,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     Vector2 randomOffset = Random.insideUnitCircle * 3f;
                     Vector3 spawnPos = spawnOrigin + new Vector3(randomOffset.x, randomOffset.y, 0);
@@ -221,7 +221,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     Vector3 shootDir = (playerPos - spawnOrigin).normalized;
                     arrowObj.GetComponent<BasicArrow>().SetDirection(shootDir, 5f);
                     Sound.Play("ENEMY_Arrow_Shot");
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(0.05f);
                 }
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
