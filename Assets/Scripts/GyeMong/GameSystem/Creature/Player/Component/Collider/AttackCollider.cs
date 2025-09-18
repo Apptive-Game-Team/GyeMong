@@ -33,7 +33,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
     
         private void OnTriggerEnter2D(Collider2D collision)
         {
-        
+            if (!collision.isTrigger) return;
             var creature = collision.GetComponent<Creature>();
             if (creature != null)
             {
