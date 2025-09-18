@@ -86,12 +86,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             yield return ApplyAttackingMove(0.2f);
             yield return IndicatorGenerator.Instance.GenerateIndicator(
                 AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * distance, 
-                    DirectionToPlayer, 
+                    transform.position + _directionController.GetDirection() * distance, 
+                    _directionController.GetDirection(), 
                     prefab, 
                     new ChildMovement(
                         transform, 
-                        DirectionToPlayer * distance, 
+                        _directionController.GetDirection() * distance, 
                         duration)
                 ), delay);
             _animator.SetBool("isAttacking", false);
