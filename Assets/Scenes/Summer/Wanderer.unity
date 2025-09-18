@@ -15680,6 +15680,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5083188182615057341, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+        type: 3}
+      propertyPath: materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5083188182615057341, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
+        type: 3}
+      propertyPath: materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 109df2615f0d5f240aac4de76c9ef585, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15862,8 +15872,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ef74a0f408d47619252752f44c7d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creature: {fileID: 0}
---- !u!1001 &1399905628
+  creature: {fileID: 1986248222}
+--- !u!1001 &1490673195
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
