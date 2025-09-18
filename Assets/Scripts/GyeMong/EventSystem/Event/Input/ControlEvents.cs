@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using GyeMong.EventSystem.Controller.Condition;
 using GyeMong.InputSystem;
 using UnityEngine;
 
@@ -38,40 +36,6 @@ namespace GyeMong.EventSystem.Event.Input
             // EventObject _object = (EventObject)eventObject;
             this.eventObject.SetTriggerLimitCounter((int) _activeState);
             return null;
-        }
-    }
-
-    [Serializable]
-    public class NestedEventEvent : ControlEvent
-    {
-        [SerializeReference]
-        private List<Event> events;
-
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            foreach (Event @event in events)
-            {
-                yield return @event?.Execute();
-            }
-        }
-    
-        public override Event[] GetChildren()
-        {
-            return events.ToArray();
-        }
-    
-        public override List<ToggeableCondition> FindToggleableConditions()
-        {
-            List<ToggeableCondition> result = new List<ToggeableCondition>();
-            foreach (Event @event in events)
-            {
-                List<ToggeableCondition> temp = @event?.FindToggleableConditions();
-                if (temp != null)
-                {
-                    result.AddRange(temp);
-                }
-            }
-            return result;
         }
     }
 }

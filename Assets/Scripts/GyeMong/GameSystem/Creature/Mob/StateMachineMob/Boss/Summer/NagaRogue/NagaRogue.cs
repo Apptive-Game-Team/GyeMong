@@ -9,9 +9,8 @@ using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+
 public enum Direction
 {
     Up, Down, Right, Left
