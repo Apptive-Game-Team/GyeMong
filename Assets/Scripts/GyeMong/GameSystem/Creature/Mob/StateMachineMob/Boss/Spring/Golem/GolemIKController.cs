@@ -32,9 +32,26 @@ public class GolemIKController : MonoBehaviour
         lHandIdlePos = ikLHand.transform.position;
     }
 
-    private void Start()
+    private void Update()
     {
-        StartCoroutine(HandUpDown());
+        // Q → 양손 위아래
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            StopAllCoroutines();
+            StartCoroutine(HandUpDown());
+        }
+
+        // W → 양손 교대로 위아래
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            StopAllCoroutines();
+            StartCoroutine(HandAlternateUpDown());
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StopAllCoroutines();
+            StartCoroutine(HandSpread());
+        }
     }
 
     public void MoveIKToPosition(GameObject target, Vector3 targetPos, float duration = 0.5f)
@@ -83,6 +100,36 @@ public class GolemIKController : MonoBehaviour
             ikLeft.transform.position = leftIdlePos + Vector3.up * offset;
             yield return null;
         }
+        ResetToIdle();
+    }
+    public IEnumerator HandAlternateUpDown(float duration = 2f, float amplitude = 0.5f, int frequency = 2)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float rOffset = Mathf.Sin(elapsed * frequency * Mathf.PI * 2) * amplitude;
+            float lOffset = Mathf.Sin(elapsed * frequency * Mathf.PI * 2 + Mathf.PI) * amplitude;
+            ikRight.transform.position = rightIdlePos + Vector3.up * rOffset;
+            ikLeft.transform.position = leftIdlePos + Vector3.up * lOffset;
+            yield return null;
+        }
+        ResetToIdle();
+    }
+    public IEnumerator HandSpread(float duration = 1f, float distance = 1.5f)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            ikRight.transform.position = Vector3.Lerp(rightIdlePos, rightIdlePos + Vector3.right * distance, t);
+            ikLeft.transform.position  = Vector3.Lerp(leftIdlePos,  leftIdlePos  + Vector3.left  * distance, t);
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.3f);
         ResetToIdle();
     }
 }
