@@ -37,6 +37,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             
             currentHp -= damage;
             Debug.Log("Attack Complete");
+
+            StartCoroutine(OnAttackedReact());
+
             if (currentHp <= 0)
             {
                 OnDead();
@@ -53,6 +56,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             yield return new WaitForSeconds(0.2f);
             yield return StaticChildAttack(comboSlashPrefab);
             _directionController.SetAngularVelocity(DEFAULT_ANGULAR_VELOCITY);
+        }
+        private IEnumerator OnAttackedReact()
+        {
+            SceneContext.CameraManager.CameraShake(0.2f);
+            yield return null;
         }
         
         private bool IsPlayerAtBack()
