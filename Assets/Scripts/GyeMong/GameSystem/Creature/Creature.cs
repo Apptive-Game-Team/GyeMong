@@ -33,7 +33,7 @@ namespace GyeMong.GameSystem.Creature
         protected Animator _animator;
         protected SpriteRenderer _spriteRenderer;
         
-        private MaterialController _materialController;
+        public MaterialController _materialController;
         public MaterialController MaterialController
         {
             get

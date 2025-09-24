@@ -2,6 +2,7 @@ using System.Collections;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Direction;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
@@ -25,8 +26,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject growFloorPrefab;
         
         private DirectionController _directionController;
-         
-         
+
         public override void OnAttacked(float damage)
         {
             if (!IsPlayerAtBack())
@@ -36,6 +36,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             
             currentHp -= damage;
+            Debug.Log("Attack Complete");
             if (currentHp <= 0)
             {
                 OnDead();
@@ -63,6 +64,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private void Awake()
         {
             _directionController = GetComponent<DirectionController>();
+            _materialController = GetComponent<MaterialController>();
             StartCoroutine(_directionController.TrackPlayer(DEFAULT_ANGULAR_VELOCITY, true));
         }
 
@@ -77,6 +79,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             Initialize();
 
             ChangeState(new DetectingPlayer() {mob= this});
+        }
+
+        private void Update()
+        {
+            if (IsPlayerAtBack())
+                _materialController.SetMaterial(MaterialController.MaterialType.BACK);
+            else
+                _materialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
         }
 
         private IEnumerator StaticChildAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f, float delay = 0.3f)
