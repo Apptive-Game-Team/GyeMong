@@ -16261,6 +16261,7 @@ MonoBehaviour:
   currentHp: 0
   currentShield: 0
   damage: 10
+  _materialController: {fileID: 0}
   basicAttackPrefab: {fileID: 4806369639637517785, guid: 0fae7d3dd5336434390fb3fe06bd0bd9,
     type: 3}
   upwardSlashPrefab: {fileID: 1929313978257415614, guid: ed5aa159ebdb642ca854f0f241e647f9,
