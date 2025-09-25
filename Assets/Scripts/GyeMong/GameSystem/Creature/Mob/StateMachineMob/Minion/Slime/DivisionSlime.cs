@@ -25,6 +25,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
     
     public class DivisionSlime : SlimeBase
     {
+        [SerializeField] private GameObject slimeSprite;
         [SerializeField] private GameObject bounceAttackPrefab;
         private CapsuleCollider2D _bounceAttackCollider;
         private GameObject _playerCollider;
@@ -33,6 +34,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         private int _divisionLevel = 0;
         private int _maxDivisionLevel = 2;
         private Tween _dashTween;
+        private Tween _jumpTween;
         private float _scale;
         private bool _isTutorial;
         private bool _isTutorialShown;
@@ -53,7 +55,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             
             _detector = SimplePlayerDetector.Create(this);
             _pathFinder = new SimplePathFinder();
-            _slimeAnimator = SlimeAnimator.Create(gameObject, sprites);
+            _slimeAnimator = SlimeAnimator.Create(slimeSprite, sprites);
             
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
@@ -174,8 +176,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 bounceAttack.SetActive(true);
                 particle.Play();
                 Destroy(bounceAttack, SlimeAnimator.AnimationDeltaTime);
-                DivisionSlime.transform.DOScale(new Vector3(scale.x * 1.1f, scale.y * 0.9f, scale.z), SlimeAnimator.AnimationDeltaTime)
-                    .SetLoops(2, LoopType.Yoyo);
                 
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
@@ -214,9 +214,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.DashAttack);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
                 Sound.Play("ENEMY_DivisionSlime_DashAttack");
-                DivisionSlime._dashTween = DivisionSlime.transform
-                    .DOJump(middlePos, jumpHeight, 1, 2 * SlimeAnimator.AnimationDeltaTime).SetEase(Ease.OutQuad);
-                yield return DivisionSlime._dashTween.WaitForCompletion();
+                Sequence seq1 = DOTween.Sequence();
+                DivisionSlime._dashTween = DivisionSlime.transform.DOMove(middlePos, 2 * SlimeAnimator.AnimationDeltaTime).SetEase(Ease.OutQuad);
+                DivisionSlime._jumpTween = DivisionSlime.slimeSprite.transform
+                    .DOJump(middlePos, jumpHeight, 1,
+                        2 * SlimeAnimator.AnimationDeltaTime).SetEase(Ease.OutQuad);
+                seq1.Append(DivisionSlime._dashTween);
+                seq1.Join(DivisionSlime._jumpTween);
+                yield return seq1.WaitForCompletion();
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 4);
                 if (DivisionSlime.DistanceToPlayer < DivisionSlime.MeleeAttackRange)
                 {
@@ -233,9 +238,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     yield return new WaitForSeconds(2 * SlimeAnimator.AnimationDeltaTime);
                     jumpHeight = Vector3.Distance(DivisionSlime.transform.position, dashTargetPosition) / 4;
                     Sound.Play("ENEMY_DivisionSlime_DashAttack");
+                    Sequence seq2 = DOTween.Sequence();
                     DivisionSlime._dashTween = DivisionSlime.transform
+                        .DOMove(dashTargetPosition, 2 * SlimeAnimator.AnimationDeltaTime).SetEase(Ease.OutQuad);
+                    DivisionSlime._jumpTween = DivisionSlime.slimeSprite.transform
                         .DOJump(dashTargetPosition, jumpHeight, 1, 2 * SlimeAnimator.AnimationDeltaTime).SetEase(Ease.OutQuad);
-                    yield return DivisionSlime._dashTween.WaitForCompletion();
+                    seq2.Append(DivisionSlime._dashTween);
+                    seq2.Join(DivisionSlime._jumpTween);
+                    yield return seq2.WaitForCompletion();
                     yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 4);
                     DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                     DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
