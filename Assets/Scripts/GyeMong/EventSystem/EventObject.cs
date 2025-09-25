@@ -40,36 +40,9 @@ namespace GyeMong.EventSystem
         {
             triggerLimitCounter = counter;
         }
-        private List<ToggeableCondition> FindToggleableConditions()
-        {
-            List<ToggeableCondition> result = new List<ToggeableCondition>();
-            foreach (Event.Event @event in eventSequence)
-            {
-                if (@event == null)
-                {
-                    continue;
-                }
-                List<ToggeableCondition> temp = @event.FindToggleableConditions();
-                if (temp != null)
-                {
-                    result.AddRange(temp);
-                }
-            }
-            return result;
-        }
-
-        private void InitializeToggleableConditions()
-        {
-            List<ToggeableCondition> conditions = FindToggleableConditions();
-            foreach (ToggeableCondition condition in conditions)
-            {
-                condition.Check();
-            }
-        }
-
+        
         private void Start()
         {
-            InitializeToggleableConditions();
             if (trigger == EventTrigger.OnAwake && triggerLimitCounter != 0)
             {
                 TriggerEvent();

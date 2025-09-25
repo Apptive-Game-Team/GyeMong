@@ -37,13 +37,15 @@ namespace GyeMong.GameSystem.Creature.Attack
                 objectPool = _objectPools[prefab];
             }
             AttackObjectController attackObjectController = objectPool.GetObject();
-            attackObjectController.gameObject.SetActive(true);
+            attackObjectController.gameObject.SetActive(false);
             attackObjectController.Initialize(position, direction);
             return attackObjectController;
         }
         
         public void StartRoutine()
         {
+            gameObject.SetActive(true);
+            
             StartCoroutine(ExecuteAttackSequence());
         }
         

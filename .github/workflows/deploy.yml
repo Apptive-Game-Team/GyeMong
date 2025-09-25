@@ -1,0 +1,67 @@
+name: Build and Deploy WebGL
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  buildWebGL:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          token: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Cache Library folder (WebGL)
+        uses: actions/cache@v4
+        with:
+          path: |
+            Library/ShaderCache
+            Library/ScriptAssemblies
+          key: WebGL-Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            WebGL-Library-
+
+      - name: Build WebGL
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: 2022.3.22f1
+          targetPlatform: WebGL
+          customParameters: -logFile - -ignoreCompilerErrors
+
+      - name: Upload WebGL build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WebGL-Build
+          path: build
+
+      - name: Push to another repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # clone target repo
+          git clone https://x-access-token:${{ secrets.GYE_MONG_PLAY_TOKEN }}@github.com/Apptive-Game-Team/GyeMong_Play.git
+          
+          ls -R build
+          
+          cd GyeMong_Play
+
+          # copy build result
+          rm -rf ./Build
+          rm -rf ./index.html
+          cp -r ../build/WebGL/WebGL/* ./
+          
+          ls -R 
+
+          git add .
+          git commit -m "Update WebGL build from main repo"
+          git push origin main

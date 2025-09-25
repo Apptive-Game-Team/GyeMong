@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3177125301614160029}
   - component: {fileID: 8398534771569484446}
-  - component: {fileID: 792450951232701171}
   - component: {fileID: 1186087241229166475}
   - component: {fileID: -7035211059090515817}
   m_Layer: 0
@@ -88,34 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &792450951232701171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3037104521305943131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 1
-  trigger: 2
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 3294224070563332096
-  references:
-    version: 2
-    RefIds:
-    - rid: 3294224070563332096
-      type: {class: AnimationEvent, ns: , asm: Assembly-CSharp}
-      data:
-        frames:
-        - {fileID: 21300000, guid: 19a633cde105948a5889609c2131bbba, type: 3}
-        - {fileID: 21300000, guid: 1d930323345774908a86c2db50277c6b, type: 3}
-        deltaTime: 0.1
-        _renderer: {fileID: 8398534771569484446}
 --- !u!58 &1186087241229166475
 CircleCollider2D:
   m_ObjectHideFlags: 0
