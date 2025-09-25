@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &8753741
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -78581,7 +78581,9 @@ MonoBehaviour:
     type: 3}
   shurikenPrefab: {fileID: 1349092434517921609, guid: 2c0d5d827e05bfc44b0a845b80418800,
     type: 3}
-  sandstormPrefab: {fileID: 8753740}
+  handEffectPrefab: {fileID: 2826333813790059607, guid: e40de44e6c3af944e89cf2365c9d0834,
+    type: 3}
+  sandstormPrefab: {fileID: 8753742}
   phaseChangeChat: {fileID: 11400000, guid: ee698a69103a40347b30df00a91b5352, type: 2}
   centerPoint: {fileID: 884024970}
   canPhaseChange: 1

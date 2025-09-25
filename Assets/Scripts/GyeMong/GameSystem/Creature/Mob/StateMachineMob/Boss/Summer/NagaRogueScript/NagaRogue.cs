@@ -30,6 +30,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         [SerializeField] private GameObject thrustAttackPrefab;
         [SerializeField] private GameObject daggerPrefab;
         [SerializeField] private GameObject shurikenPrefab;
+        [SerializeField] private GameObject handEffectPrefab;
         [SerializeField] private ParticleSystem sandstormPrefab;
         [SerializeField] private MultiChatMessageData phaseChangeChat;
         [SerializeField] private Transform centerPoint;
@@ -92,7 +93,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         private IEnumerator SetIdleAnim(float delay)
         {
             Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
-            Animator.Play($"Idle_{dir}", 1, 0f);
+            Animator.Play($"Idle_{dir}", 0, 0f);
             yield return new WaitForSeconds(delay);
         }
         private IEnumerator MeleeAttack(GameObject prefab, float duration = 0.3f)
@@ -126,6 +127,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
                     targetPos, 
                     duration)
             ).StartRoutine();
+            Vector3 spawnPos = transform.position + DirectionToPlayer * 0.5f;
+            GameObject go = Instantiate(handEffectPrefab, spawnPos, Quaternion.identity);
+            Destroy(go,0.5f);
             yield return null;
         }
 
@@ -147,6 +151,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             );
             ac.StartRoutine();
             ac.gameObject.GetComponent<ReturnDagger>().Initiate(transform);
+            Vector3 spawnPos = transform.position + DirectionToPlayer * 0.5f;
+            GameObject go = Instantiate(handEffectPrefab, spawnPos, Quaternion.identity);
+            Destroy(go,0.5f);
             yield return null;
         }
     
@@ -155,18 +162,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             Sound.Play("ENEMY_NagaRogue_Throw");
             FaceToPlayer();
             Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
+            Vector3 spawnPos = transform.position + DirectionToPlayer * distance;
             Animator.Play($"Throw_{dir}",0,0f);
             AttackObjectController.Create(
-                    transform.position + DirectionToPlayer * distance, 
+                    spawnPos, 
                     DirectionToPlayer, 
                     prefab, 
                     new BoomerangMovement(
-                        transform.position + DirectionToPlayer * distance, 
+                        spawnPos, 
                         SceneContext.Character.transform.position,
                         throwSpeed,
                         curveAmount)
                 )
                 .StartRoutine();
+            GameObject go = Instantiate(handEffectPrefab, spawnPos, Quaternion.identity);
+            Destroy(go,0.5f);
             yield return new WaitForSeconds(0.5f);
         }
         
@@ -199,6 +209,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             );
             ac.gameObject.GetComponent<ReturnDagger>().Initiate(transform);
             ac.StartRoutineWithCallOnEnd(() => AddDagger(ac.gameObject));
+            GameObject go = Instantiate(handEffectPrefab, spawnPos, Quaternion.identity);
+            Destroy(go,0.5f);
 
             yield return new WaitForSeconds(0.2f);
         }
@@ -374,6 +386,7 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
         endPos += (Vector3)tangent * sideDist * 0.8f;
     }
 
+    Sound.Play("ENEMY_NagaRogue_Step");
     Direction animDir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
     Animator.Play($"Backstep_{animDir}",0,0f);
     yield return transform.DOMove(endPos, duration).SetEase(Ease.InOutCubic).WaitForCompletion();
@@ -483,7 +496,6 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
             }
             public override IEnumerator StateCoroutine()
             {
-                Sound.Play("ENEMY_NagaRogue_Ambush");
                 yield return NagaRogue.Move(NagaRogue.DirectionToPlayer, DashRange);
                 yield return new WaitForSeconds(MeleeDelay);
                 for (int i = 0; i < 2; i++)
@@ -506,7 +518,6 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
             }
             public override IEnumerator StateCoroutine()
             {
-                Sound.Play("ENEMY_NagaRogue_Ambush");
                 yield return NagaRogue.Move(NagaRogue.DirectionToPlayer, DashRange);
                 yield return new WaitForSeconds(MeleeDelay);
                 yield return NagaRogue.ThrustAttack(NagaRogue.thrustAttackPrefab);  
@@ -525,7 +536,6 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
             }
             public override IEnumerator StateCoroutine()
             {
-                Sound.Play("ENEMY_NagaRogue_Ambush");
                 NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, ThrustRange, out var pos);
                 yield return NagaRogue.Teleport(pos, ThrustRange);
                 yield return new WaitForSeconds(MeleeDelay);
@@ -708,7 +718,6 @@ public class DaggerRetrieve : NagaRogueState
             {
                 if (NagaRogue.currentHp <= NagaRogue.maxHp * NagaRogue._phaseChangeHealthPercent)
                 {
-                    Sound.Play("ENEMY_NagaRogue_Ambush");
                     yield return NagaRogue.Move(NagaRogue.DirectionToPlayer);
                     yield return new WaitForSeconds(0.2f);
                     yield return NagaRogue.ThrustAttack(NagaRogue.thrustAttackPrefab);
@@ -781,7 +790,7 @@ public class DaggerRetrieve : NagaRogueState
                     yield return NagaRogue.Teleport(pos, 2f);
                     yield return new WaitForSeconds(0.2f);
                     yield return NagaRogue.ThrustAttack(NagaRogue.thrustAttackPrefab);
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.3f);
                 }
                 
                 NagaRogue.ChangeState(new DetectingPlayer() {mob = NagaRogue});
