@@ -168,6 +168,8 @@ public class GolemIKController : MonoBehaviour
     public void DownAnimation()
     {
         StopAllCoroutines();
+        SetHandSprite(HandSide.Left, HandSpriteID.Idle);
+        SetHandSprite(HandSide.Right, HandSpriteID.Idle);
         SetHeadSprite(0);
     }
     public void CallAnimation(string animName) 
