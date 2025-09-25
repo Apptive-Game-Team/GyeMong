@@ -19,6 +19,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class Golem : Boss
     {
+        [SerializeField] private GolemIKController ikController;
         [SerializeField] private RootPatternManager mapPattern;
         [SerializeField] private GameObject cubePrefab;
         [SerializeField] private GameObject floorPrefab;
@@ -29,13 +30,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         public SoundObject ShockwaveSoundObject => _shockwavesoundObject;
         [SerializeField] private SoundObject _tossSoundObject;
 
-        [Header("Stop Animator")]
-        [SerializeField] private Animator targetAnimator;
-
-        [Header("Change Sprite")]
-        [SerializeField] private SpriteRenderer targetSpriteRenderer;
-        [SerializeField] private Sprite newSprite1;
-        
         [SerializeField] private float autoSkipTime = 3f;
 
         [Header("Boss Room Object")]
@@ -93,6 +87,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             for (int i = startRadius; i <= targetRadius; i++)
             {
+                ikController.CallAnimation("HandSmash");
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
@@ -193,11 +188,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
-                Golem.Animator.SetBool("TwoHand", true);
+                Golem.ikController.CallAnimation("HandSmash");
                 yield return Golem.MakeShock(2);
                 yield return Golem.MakeShock(4);
                 yield return new WaitForSeconds(Golem.attackdelayTime);
-                Golem.Animator.SetBool("TwoHand", false);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
@@ -226,7 +220,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
-                Golem.Animator.SetBool("Push", true);
+                Golem.ikController.CallAnimation("PushOutAttack");
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 SceneContext.CameraManager.CameraShake(0.15f);
                 Vector3 targetPos = SceneContext.Character.transform.position;
@@ -242,7 +236,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     )
                     .StartRoutine()));
                 yield return new WaitForSeconds(Golem.attackdelayTime);
-                Golem.Animator.SetBool("Push", false);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
@@ -271,10 +264,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             }
             public override IEnumerator StateCoroutine()
             {
-                Golem.Animator.SetBool("Toss", true);
+                Golem.ikController.CallAnimation("FallingCube");
                 Golem.StartCoroutine(Golem.TossSoundObject.Play());
                 yield return new WaitForSeconds(Golem.attackdelayTime * 2);
-                Golem.Animator.SetBool("Toss", false);
                 GameObject cube = Instantiate(Golem.cubePrefab, SceneContext.Character.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
@@ -282,7 +274,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override void OnStateExit()
             {
                 base.OnStateExit();
-                Golem.Animator.SetBool("Toss", false);
             }
         }
 
@@ -299,13 +290,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
-                Golem.Animator.SetBool("isShield", true);
+                Golem.ikController.CallAnimation("DefenseStance");
                 Sound.Play("ENEMY_Laser");
                 yield return new WaitForSeconds(Golem.attackdelayTime);
                 Golem.currentShield = 5f;
                 Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
                 Golem.MaterialController.SetFloat(1);
-                Golem.Animator.SetBool("isShield", false);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
@@ -320,7 +310,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
-                Golem.Animator.SetBool("OneHand", true);
+                Golem.ikController.CallAnimation("UpStone");
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
 
                 int numberOfObjects = 5;
@@ -332,8 +322,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Vector3 startPosition = Golem.transform.position + spawnStoneRadius;
                 SceneContext.CameraManager.CameraShake(0.15f);
                 Golem.StartCoroutine(SpawnFloor(startPosition, direction, fixedDistance, numberOfObjects, interval));
-
-                Golem.Animator.SetBool("OneHand", false);
 
                 yield return new WaitForSeconds(Golem.attackdelayTime );
                 SetWeights();
@@ -371,10 +359,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             public override IEnumerator StateCoroutine()
             {
-                Golem.Animator.SetBool("TwoHand", true);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
                 yield return Golem.MakeShockwave();
-                Golem.Animator.SetBool("TwoHand", false);
                 yield return new WaitForSeconds(Golem.attackdelayTime / 3);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
@@ -402,7 +388,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 currentPhase++;
                 StopAllCoroutines();
                 currentState.OnStateExit();
-                Animator.SetBool("isStun", false);
+                ikController.CallAnimation("Down");
                 MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(ChangingPhase());
             }
@@ -415,7 +401,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         protected override void Die()
         {
             base.Die();
-            Animator.SetBool("isDown", true);
+            ikController.CallAnimation("Down");
             mapPattern.DeActivateAll();
             StartCoroutine(DieRoutine());
         }
@@ -432,10 +418,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         private IEnumerator TriggerEvents()
         {
-            var changeSpriteEvent = new ChangeSpriteEvent();
-            changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
-            changeSpriteEvent.SetSprite(newSprite1);
-            yield return changeSpriteEvent.Execute();
+            ikController.CallAnimation("Down");
 
             yield return new HideBossHealthBarEvent().Execute();
             
@@ -463,11 +446,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             currentShield = 0f;
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
             Debug.Log("Check2");
-            Animator.SetBool("isStun", true);
+            ikController.CallAnimation("Down");
             currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
             yield return new WaitForSeconds(duration);
-            Animator.SetBool("isStun", false);
+            ikController.CallAnimation("Idle");
             ChangeState();
         }
     }

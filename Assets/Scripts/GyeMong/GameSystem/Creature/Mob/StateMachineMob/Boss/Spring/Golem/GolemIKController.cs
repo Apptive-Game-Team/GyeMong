@@ -31,8 +31,10 @@ public class GolemIKController : MonoBehaviour
     [Header("Changed Sprite")]
     [SerializeField] private SpriteRenderer lHandSpriteRenderer;
     [SerializeField] private SpriteRenderer rHandSpriteRenderer;
+    [SerializeField] private SpriteRenderer headSpriteRenderer;
     [SerializeField] private Sprite[] lHandSprites;
     [SerializeField] private Sprite[] rHandSprites;
+    [SerializeField] private Sprite[] headSprites;
 
     private Vector3 rightIdlePos;
     private Vector3 rArmIdlePos;
@@ -53,7 +55,7 @@ public class GolemIKController : MonoBehaviour
     }
 
     //테스트
-    private void Start()
+    /*private void Start()
     {
         StartCoroutine(IdleStateAnimation());
     }
@@ -94,7 +96,7 @@ public class GolemIKController : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(FallingCubekAnimation());
         }
-    }
+    }*/
     //보조 매서드
     public void MoveIKToPosition(GameObject target, Vector3 targetPos, float duration = 0.3f)
     {
@@ -129,6 +131,10 @@ public class GolemIKController : MonoBehaviour
                 rHandSpriteRenderer.sprite = rHandSprites[(int)state];
         }
     }
+    private void SetHeadSprite(int idx)
+    {
+        headSpriteRenderer.sprite = headSprites[idx];
+    }
     private Vector3 GetIKPos(GameObject target)
     {
         return target.transform.position;
@@ -145,8 +151,62 @@ public class GolemIKController : MonoBehaviour
 
         SetHandSprite(HandSide.Left, HandSpriteID.Idle);
         SetHandSprite(HandSide.Right, HandSpriteID.Idle);
+        SetHeadSprite(2);
 
         StartCoroutine(IdleStateAnimation());
+    }
+    // 행동 호출
+    public void StopAnimation()
+    {
+        StopAllCoroutines();
+    }
+    public void StartIdleAnimation()
+    {
+        StopAllCoroutines();
+        StartCoroutine(IdleStateAnimation());
+    }
+    public void DownAnimation()
+    {
+        StopAllCoroutines();
+        SetHeadSprite(0);
+    }
+    public void CallAnimation(string animName) 
+    {
+        StopAllCoroutines();
+
+        switch (animName)
+        {
+            case "Idle":
+                StartCoroutine(IdleStateAnimation());
+                break;
+            case "HandUpDown":
+                StartCoroutine(HandUpDownLoop());
+                break;
+            case "HandAlternateUpDown":
+                StartCoroutine(HandAlternateUpDownLoop());
+                break;
+            case "HandSmash":
+                StartCoroutine(HandSmash());
+                break;
+            case "DefenseStance":
+                StartCoroutine(DefenseStance());
+                break;
+            case "PushOutAttack":
+                StartCoroutine(PushOutAttackAnimation());
+                break;
+            case "UpStone":
+                StartCoroutine(UpStoneAnimation());
+                break;
+            case "FallingCube":
+                StartCoroutine(FallingCubekAnimation());
+                break;
+            case "Down":
+                DownAnimation();
+                break;
+            default:
+                Debug.LogWarning($"Animation '{animName}' not found!");
+                break;
+        }
     }
     // 행동 정의
     public IEnumerator IdleStateAnimation()

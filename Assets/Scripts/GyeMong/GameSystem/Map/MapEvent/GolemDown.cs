@@ -2,6 +2,7 @@ using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem;
 using GyeMong.GameSystem.Creature.Player.Component;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
 {
     public class GolemDown : MonoBehaviour
     {
-        [Header("Stop Animator")]
-        [SerializeField] private Animator targetAnimator;
+        [Header("Target Animator")]
+        [SerializeField] private GolemIKController golem;
 
         [Header("Change Sprite")]
         [SerializeField] private SpriteRenderer targetSpriteRenderer;
@@ -34,9 +35,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
         private IEnumerator TriggerEvents()
         {
             BgmManager.Stop();
-            var stopAnimEvent = new CustomStopAnimatorEvent();
-            stopAnimEvent.SetAnimator(targetAnimator);
-            yield return stopAnimEvent.Execute();
+            golem.DownAnimation();
 
             var changeSpriteEvent = new ChangeSpriteEvent();
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);

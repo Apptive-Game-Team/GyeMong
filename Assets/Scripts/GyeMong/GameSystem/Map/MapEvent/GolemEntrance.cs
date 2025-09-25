@@ -14,8 +14,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
 {
     public class GolemEntrance : MonoBehaviour
     {
-        [Header("Stop Animator")]
-        [SerializeField] private Animator targetAnimator;
+        [Header("Target Animator")]
+        [SerializeField] private GolemIKController golem;
 
         [Header("Change Sprite")]
         [SerializeField] private SpriteRenderer targetSpriteRenderer;
@@ -39,9 +39,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [Header("Boss")]
         [SerializeField] private GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Boss boss;
 
-        [Header("Start Animator")]
-        [SerializeField] private Animator someAnimator;
-
         [Header("Boss Room Entrance")]
         [SerializeField] private BossRoomEntrance bossRoomEntrance;
 
@@ -62,9 +59,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
             _isTriggered = true;
 
-            var stopAnimEvent = new CustomStopAnimatorEvent();
-            stopAnimEvent.SetAnimator(targetAnimator);
-            yield return stopAnimEvent.Execute();
+            golem.StopAnimation();
 
             var changeSpriteEvent = new ChangeSpriteEvent();
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
@@ -106,10 +101,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             animEvent.SetFrames(animationFrames);
             animEvent.SetDeltaTime(0.5f);
             yield return animEvent.Execute();
-            
-            var startEvent = new StartAnimatorEvent();
-            startEvent.SetAnimator(someAnimator);
-            yield return startEvent.Execute();
+
+            golem.StartIdleAnimation();
             
             if (beforeScript != null)
             {
