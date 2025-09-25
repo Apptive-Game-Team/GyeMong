@@ -2,7 +2,7 @@ using System;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
-using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
