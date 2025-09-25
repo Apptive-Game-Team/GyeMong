@@ -94,36 +94,40 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 default:                           return null;
             }
         }
-        private IEnumerator WavePattern()
-        {
-            
-            for (int c = 0; c < cols; c++)
-            {
-                for (int r = 0; r < rows; r++)
-                    rootObjects2D[r, c].SetActive(true);
-                Sound.Play("ENEMY_Root");
-                yield return new WaitForSeconds(0.5f);
-                if (c > 0)
-                {
-                    for (int r = 0; r < rows; r++)
-                        rootObjects2D[r, c - 1].SetActive(false);
-                }
-            }
-            for (int r = 0; r < rows; r++)
-                rootObjects2D[r, cols - 1].SetActive(false);
-
-            yield return null;
-        }
         private IEnumerator RowPattern()
         {
             Sound.Play("ENEMY_Root");
             int randomRow = Random.Range(0, rows);
             for (int c = 0; c < cols; c++)
-                rootObjects2D[randomRow, c].SetActive(true);
+                StartCoroutine(RootRise(rootObjects2D[randomRow, c]));
+            yield return new WaitForSeconds(1f);
+            DeActivateAll();
+        }
+        private IEnumerator XCrossPattern()
+        {
+            Sound.Play("ENEMY_Root");
+            int size = Mathf.Min(rows, cols);
+            for (int i = 0; i < size; i++)
+            {
+                StartCoroutine(RootRise(rootObjects2D[i, i]));
+                StartCoroutine(RootRise(rootObjects2D[i, cols - 1 - i]));
+            }
             yield return new WaitForSeconds(1f);
             DeActivateAll();
         }
 
+        private IEnumerator XCrossFlippedPattern()
+        {
+            Sound.Play("ENEMY_Root");
+            int size = Mathf.Min(rows, cols);
+            for (int i = 0; i < size; i++)
+            {
+                StartCoroutine(RootRise(rootObjects2D[rows - 1 - i, i]));
+                StartCoroutine(RootRise(rootObjects2D[i, i]));
+            }
+            yield return new WaitForSeconds(1f);
+            DeActivateAll();
+        }
         private IEnumerator TwoRowsPattern()
         {
             Sound.Play("ENEMY_Root");
@@ -133,8 +137,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             for (int c = 0; c < cols; c++)
             {
-                rootObjects2D[row1, c].SetActive(true);
-                rootObjects2D[row2, c].SetActive(true);
+                StartCoroutine(RootRise(rootObjects2D[row1, c]));
+                StartCoroutine(RootRise(rootObjects2D[row2, c]));
             }
             yield return new WaitForSeconds(1f);
             DeActivateAll();
@@ -145,7 +149,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             Sound.Play("ENEMY_Root");
             int randomCol = Random.Range(0, cols);
             for (int r = 0; r < rows; r++)
-                rootObjects2D[r, randomCol].SetActive(true);
+                StartCoroutine(RootRise(rootObjects2D[r, randomCol]));
             yield return new WaitForSeconds(1f);
             DeActivateAll();
         }
@@ -159,32 +163,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             for (int r = 0; r < rows; r++)
             {
-                rootObjects2D[r, col1].SetActive(true);
-                rootObjects2D[r, col2].SetActive(true);
-            }
-            yield return new WaitForSeconds(1f);
-            DeActivateAll();
-        }
-
-        private IEnumerator XCrossPattern()
-        {
-            Sound.Play("ENEMY_Root");
-            for (int i = 0; i < Mathf.Min(rows, cols); i++)
-            {
-                rootObjects2D[i, i].SetActive(true);
-                rootObjects2D[i, cols - 1 - i].SetActive(true);
-            }
-            yield return new WaitForSeconds(1f);
-            DeActivateAll();
-        }
-
-        private IEnumerator XCrossFlippedPattern()
-        {
-            Sound.Play("ENEMY_Root");
-            for (int i = 0; i < Mathf.Min(rows, cols); i++)
-            {
-                rootObjects2D[rows - 1 - i, i].SetActive(true);
-                rootObjects2D[i, i].SetActive(true);
+                StartCoroutine(RootRise(rootObjects2D[r, col1]));
+                StartCoroutine(RootRise(rootObjects2D[r, col2]));
             }
             yield return new WaitForSeconds(1f);
             DeActivateAll();
@@ -194,9 +174,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             Sound.Play("ENEMY_Root");
             for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++)
-                if (r == 0 || r == rows - 1 || c == 0 || c == cols - 1)
-                    rootObjects2D[r, c].SetActive(true);
+                for (int c = 0; c < cols; c++)
+                    if (r == 0 || r == rows - 1 || c == 0 || c == cols - 1)
+                        StartCoroutine(RootRise(rootObjects2D[r, c]));
             yield return new WaitForSeconds(1f);
             DeActivateAll();
         }
@@ -210,13 +190,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Sound.Play("ENEMY_Root");
                 for (int r = layer; r < rows - layer; r++)
                 {
-                    rootObjects2D[r, layer].SetActive(true);
-                    rootObjects2D[r, cols - 1 - layer].SetActive(true);
+                    StartCoroutine(RootRise(rootObjects2D[r, layer]));
+                    StartCoroutine(RootRise(rootObjects2D[r, cols - 1 - layer]));
                 }
                 for (int c = layer; c < cols - layer; c++)
                 {
-                    rootObjects2D[layer, c].SetActive(true);
-                    rootObjects2D[rows - 1 - layer, c].SetActive(true);
+                    StartCoroutine(RootRise(rootObjects2D[layer, c]));
+                    StartCoroutine(RootRise(rootObjects2D[rows - 1 - layer, c]));
                 }
 
                 yield return new WaitForSeconds(1f);
@@ -231,11 +211,33 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             int randC = Random.Range(0, cols);
 
             for (int r = 0; r < rows; r++)
-                rootObjects2D[r, randC].SetActive(true);
+                StartCoroutine(RootRise(rootObjects2D[r, randC]));
             for (int c = 0; c < cols; c++)
-                rootObjects2D[randR, c].SetActive(true);
+                StartCoroutine(RootRise(rootObjects2D[randR, c]));
+
             yield return new WaitForSeconds(1f);
             DeActivateAll();
+        }
+
+        private IEnumerator WavePattern()
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                for (int r = 0; r < rows; r++)
+                    StartCoroutine(RootRise(rootObjects2D[r, c]));
+                Sound.Play("ENEMY_Root");
+                yield return new WaitForSeconds(0.5f);
+
+                if (c > 0)
+                {
+                    for (int r = 0; r < rows; r++)
+                        rootObjects2D[r, c - 1].SetActive(false);
+                }
+            }
+            for (int r = 0; r < rows; r++)
+                rootObjects2D[r, cols - 1].SetActive(false);
+
+            yield return null;
         }
 
         public void DeActivateAll()
@@ -243,6 +245,24 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             for (int r = 0; r < rows; r++)
                 for (int c = 0; c < cols; c++)
                     rootObjects2D[r, c].SetActive(false);
+        }
+        private IEnumerator RootRise(GameObject root, float duration = 0.3f)
+        {
+            root.SetActive(true);
+            Quaternion startRot = Quaternion.Euler(90f, 0f, 0f);
+            Quaternion endRot = Quaternion.Euler(0f, 0f, 0f);
+            root.transform.rotation = startRot;
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                root.transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+                yield return null;
+            }
+
+            root.transform.rotation = endRot; // 끝나면 보정
         }
     }
 }
