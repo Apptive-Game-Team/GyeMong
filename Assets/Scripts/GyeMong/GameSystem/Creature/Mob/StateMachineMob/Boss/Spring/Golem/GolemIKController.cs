@@ -2,6 +2,19 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Anima2D;
+public enum HandSpriteID
+{
+    Idle = 0,
+    Down = 1,
+    Up = 2,
+    Fist = 3
+}
+public enum HandSide
+{
+    None = 0,
+    Left = 1,
+    Right = 2
+}
 public class GolemIKController : MonoBehaviour
 {
     [Header("IK Targets")]
@@ -15,6 +28,12 @@ public class GolemIKController : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
 
+    [Header("Changed Sprite")]
+    [SerializeField] private SpriteRenderer lHandSpriteRenderer;
+    [SerializeField] private SpriteRenderer rHandSpriteRenderer;
+    [SerializeField] private Sprite[] lHandSprites;
+    [SerializeField] private Sprite[] rHandSprites;
+
     private Vector3 rightIdlePos;
     private Vector3 rArmIdlePos;
     private Vector3 rHandIdlePos;
@@ -22,6 +41,7 @@ public class GolemIKController : MonoBehaviour
     private Vector3 lArmIdlePos;
     private Vector3 lHandIdlePos;
     
+    //캐싱
     private void Awake()
     {
         rightIdlePos = ikRight.transform.position;
@@ -32,29 +52,51 @@ public class GolemIKController : MonoBehaviour
         lHandIdlePos = ikLHand.transform.position;
     }
 
+    //테스트
+    private void Start()
+    {
+        StartCoroutine(IdleStateAnimation());
+    }
     private void Update()
     {
-        // Q → 양손 위아래
         if (Input.GetKeyDown(KeyCode.Q))
         {
             StopAllCoroutines();
-            StartCoroutine(HandUpDown());
+            StartCoroutine(HandUpDownLoop());
         }
-
-        // W → 양손 교대로 위아래
         if (Input.GetKeyDown(KeyCode.W))
         {
             StopAllCoroutines();
-            StartCoroutine(HandAlternateUpDown());
+            StartCoroutine(HandAlternateUpDownLoop());
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             StopAllCoroutines();
-            StartCoroutine(HandSpread());
+            StartCoroutine(HandSmash());
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StopAllCoroutines();
+            StartCoroutine(DefenseStance());
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            StopAllCoroutines();
+            StartCoroutine(PushOutAttackAnimation());
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            StopAllCoroutines();
+            StartCoroutine(UpStoneAnimation());
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            StopAllCoroutines();
+            StartCoroutine(FallingCubekAnimation());
         }
     }
-
-    public void MoveIKToPosition(GameObject target, Vector3 targetPos, float duration = 0.5f)
+    //보조 매서드
+    public void MoveIKToPosition(GameObject target, Vector3 targetPos, float duration = 0.3f)
     {
         StartCoroutine(MoveIKCoroutine(target, targetPos, duration));
     }
@@ -74,11 +116,24 @@ public class GolemIKController : MonoBehaviour
 
         target.transform.position = targetPos; //도착 위치 보정
     }
-
+    private void SetHandSprite(HandSide side, HandSpriteID state)
+    {
+        if (side == HandSide.Left)
+        {
+            if (lHandSprites.Length > (int)state)
+                lHandSpriteRenderer.sprite = lHandSprites[(int)state];
+        }
+        else if(side == HandSide.Right)
+        {
+            if (rHandSprites.Length > (int)state)
+                rHandSpriteRenderer.sprite = rHandSprites[(int)state];
+        }
+    }
     private Vector3 GetIKPos(GameObject target)
     {
         return target.transform.position;
     }
+    //상태 초기화 매서드
     public void ResetToIdle()
     {
         MoveIKToPosition(ikRight, rightIdlePos);
@@ -87,46 +142,181 @@ public class GolemIKController : MonoBehaviour
         MoveIKToPosition(ikLeft, leftIdlePos);
         MoveIKToPosition(ikLArm, lArmIdlePos);
         MoveIKToPosition(ikLHand, lHandIdlePos);
+
+        SetHandSprite(HandSide.Left, HandSpriteID.Idle);
+        SetHandSprite(HandSide.Right, HandSpriteID.Idle);
+
+        StartCoroutine(IdleStateAnimation());
     }
-    public IEnumerator HandUpDown(float duration = 2f, float amplitude = 0.5f, int frequency = 2)
+    // 행동 정의
+    public IEnumerator IdleStateAnimation()
     {
+        //기본 애니메이션
+        float amplitude = 0.1f;
+        float frequency = 0.5f; //초당 무브번트 횟수
+        float elapsed = 0f;
+
+        while (true)
+        {
+            elapsed += Time.deltaTime;
+
+            float rOffset = Mathf.Sin(elapsed * frequency * Mathf.PI * 2f) * amplitude;
+            float lOffset = Mathf.Sin(elapsed * frequency * Mathf.PI * 2f) * amplitude;
+
+            ikRight.transform.position = rightIdlePos + Vector3.up * rOffset;
+            ikLeft.transform.position = leftIdlePos + Vector3.up * lOffset;
+
+            yield return null;
+        }
+    }
+    public IEnumerator HandUpDownLoop(float duration = 2f, float amplitude = 0.5f, int frequency = 2)
+    {
+        //양손 위아래
+        SetHandSprite(HandSide.Left, HandSpriteID.Fist);
+        SetHandSprite(HandSide.Right, HandSpriteID.Fist);
+
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float offset = Mathf.Sin(elapsed * frequency * Mathf.PI * 2) * amplitude;
+            float offset = (Mathf.Sin(elapsed * frequency * Mathf.PI * 2) + 1) * amplitude;
             ikRight.transform.position = rightIdlePos + Vector3.up * offset;
             ikLeft.transform.position = leftIdlePos + Vector3.up * offset;
             yield return null;
         }
         ResetToIdle();
     }
-    public IEnumerator HandAlternateUpDown(float duration = 2f, float amplitude = 0.5f, int frequency = 2)
+    public IEnumerator HandAlternateUpDownLoop(float duration = 2f, float amplitude = 0.5f, int frequency = 2)
     {
+        //양손 교대로 위아래
+        SetHandSprite(HandSide.Left, HandSpriteID.Fist);
+        SetHandSprite(HandSide.Right, HandSpriteID.Fist);
+
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float rOffset = Mathf.Sin(elapsed * frequency * Mathf.PI * 2) * amplitude;
-            float lOffset = Mathf.Sin(elapsed * frequency * Mathf.PI * 2 + Mathf.PI) * amplitude;
+            float rOffset = (Mathf.Sin(elapsed * frequency * Mathf.PI * 2) + 1) * amplitude;
+            float lOffset = (Mathf.Sin(elapsed * frequency * Mathf.PI * 2 + Mathf.PI) + 1) * amplitude;
             ikRight.transform.position = rightIdlePos + Vector3.up * rOffset;
             ikLeft.transform.position = leftIdlePos + Vector3.up * lOffset;
             yield return null;
         }
         ResetToIdle();
     }
-    public IEnumerator HandSpread(float duration = 1f, float distance = 1.5f)
+    public IEnumerator HandSmash(float duration = 0.5f, float distance = 1f)
     {
+        // 양 손 쿵 찍기
+        SetHandSprite(HandSide.Left, HandSpriteID.Fist);
+        SetHandSprite(HandSide.Right, HandSpriteID.Fist);
+
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
-            ikRight.transform.position = Vector3.Lerp(rightIdlePos, rightIdlePos + Vector3.right * distance, t);
-            ikLeft.transform.position  = Vector3.Lerp(leftIdlePos,  leftIdlePos  + Vector3.left  * distance, t);
+
+            float offset = Mathf.Sin(t * Mathf.PI) * distance;
+
+            ikRight.transform.position = rightIdlePos + Vector3.up * offset;
+            ikLeft.transform.position = leftIdlePos + Vector3.up * offset;
+
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.3f);
+        ResetToIdle();
+    }
+    public IEnumerator DefenseStance(float duration = 0.5f, float distance = 0.5f)
+    {
+        //앞 막기
+        SetHandSprite(HandSide.Left, HandSpriteID.Fist);
+        SetHandSprite(HandSide.Right, HandSpriteID.Fist);
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            ikRHand.transform.position = Vector3.Lerp(rHandIdlePos, rHandIdlePos + Vector3.up * distance, t);
+            ikLHand.transform.position = Vector3.Lerp(lHandIdlePos, lHandIdlePos + Vector3.up * distance, t);
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.3f);
+        ResetToIdle();
+    }
+    public IEnumerator UpStoneAnimation(float duration = 0.5f, float distance = 10f)
+    {
+        // 왼손 찍기
+        SetHandSprite(HandSide.Left, HandSpriteID.Down);
+
+        float elapsed = 0f;
+
+        while (elapsed < duration/5)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            ikLHand.transform.position = lHandIdlePos + Vector3.up * t * distance;
+
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.3f);
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            ikLHand.transform.position = lHandIdlePos + Vector3.up * (1 - t) * distance;
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.3f);
+        ResetToIdle();
+    }
+    public IEnumerator PushOutAttackAnimation(float duration = 0.5f, float distance = 10f)
+    {
+        // 오른손 찍기
+
+        float upDuration = duration / 5f;
+        float downDuration = duration - upDuration;
+        float elapsed = 0f;
+
+        while (elapsed < upDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / upDuration);
+
+            ikRHand.transform.position = rHandIdlePos + Vector3.up * t * distance;
+
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.3f);
+        while (elapsed < downDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / downDuration);
+            ikRHand.transform.position = rHandIdlePos + Vector3.up * (1 - t) * distance;
+            yield return null;
+        }
+        SetHandSprite(HandSide.Right, HandSpriteID.Down);
+        yield return new WaitForSeconds(0.3f);
+        ResetToIdle();
+    }
+    public IEnumerator FallingCubekAnimation(float duration = 0.5f, float distance = 10f)
+    {
+        // 오른손 들기
+        SetHandSprite(HandSide.Right, HandSpriteID.Up);
+        float elapsed = 0f;
+
+        while (elapsed < duration / 5)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            ikRHand.transform.position = rHandIdlePos + Vector3.up * t * distance;
+
             yield return null;
         }
         yield return new WaitForSeconds(0.3f);
