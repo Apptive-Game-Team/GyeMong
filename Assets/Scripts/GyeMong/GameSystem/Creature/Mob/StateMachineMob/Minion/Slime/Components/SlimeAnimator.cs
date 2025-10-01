@@ -36,21 +36,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Component
             Die
         }
     
-        public IEnumerator SyncPlay(AnimationType type, bool loop = false)
+        public IEnumerator SyncPlay(AnimationType type, bool loop = false, int dir = 0)
         {
             CurrentAnimationType = type;
             do
             {
-                yield return PlayerAnimation(_sprites.GetSprite(type));
+                yield return PlayerAnimation(_sprites.GetSprite(type, dir));
             } while (loop);
         }
     
 
     
-        public void AsyncPlay(AnimationType type, bool loop = false)
+        public void AsyncPlay(AnimationType type, bool loop = false, int dir = 0)
         {
             Stop();
-            _currentAnimation = StartCoroutine(SyncPlay(type, loop));
+            _currentAnimation = StartCoroutine(SyncPlay(type, loop, dir));
         }
     
         public void Stop()
