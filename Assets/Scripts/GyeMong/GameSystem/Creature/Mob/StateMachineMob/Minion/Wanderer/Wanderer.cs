@@ -8,7 +8,9 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
+using GyeMong.SoundSystem;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 {
@@ -53,6 +55,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private IEnumerator CounterAttack()
         {
             _directionController.SetAngularVelocity(FAST_ANGULAR_VELOCITY);
+            SoundObject _soundObject;
+            _soundObject = Sound.Play("ENEMY_Wanderer_CounterAttack", false);
             yield return new WaitForSeconds(0.2f);
             yield return StaticChildAttack(comboSlashPrefab);
             _directionController.SetAngularVelocity(DEFAULT_ANGULAR_VELOCITY);
