@@ -2,24 +2,59 @@ using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Direction
 {
-    // Gizmo to visualize the direction controlled by DirectionController
     public class DirectionVisualizer : MonoBehaviour
     {
         private DirectionController _controller;
+        private MeshFilter _meshFilter;
+        private MeshRenderer _meshRenderer;
+        private Mesh _mesh;
+
+        [Header("Cone Settings")]
+        public float length = 3f;
+        public float angle = 45f;
+        public Color color = new Color(1, 1, 0, 0.3f);
 
         private void Awake()
         {
-            _controller = GetComponent<DirectionController>();
-            if (_controller == null)
+            _controller = GetComponentInParent<DirectionController>();
+
+            _meshFilter = gameObject.AddComponent<MeshFilter>();
+            _meshRenderer = gameObject.AddComponent<MeshRenderer>();
+
+            _mesh = new Mesh();
+            Vector3[] verts = new Vector3[3];
+            verts[0] = Vector3.zero;
+            verts[1] = Quaternion.Euler(0, 0, -angle) * Vector3.right * length;
+            verts[2] = Quaternion.Euler(0, 0, angle) * Vector3.right * length;
+
+            int[] tris = { 0, 1, 2 };
+
+            _mesh.vertices = verts;
+            _mesh.triangles = tris;
+
+            _meshFilter.sharedMesh = _mesh;
+
+            Material mat = new Material(Shader.Find("Custom/DirectionCone"));
+            mat.SetColor("_Color", color);
+            _meshRenderer.material = mat;
+
+            var sr = GetComponentInParent<SpriteRenderer>();
+            if (sr != null)
             {
-                Debug.LogError("DirectionVisualizer requires a DirectionController component on the same GameObject.");
-                Destroy(this);
+                _meshRenderer.sortingLayerID = sr.sortingLayerID;
+                _meshRenderer.sortingOrder = sr.sortingOrder + 1;
             }
         }
+
         private void Update()
         {
+            if (_controller == null) return;
+
             Vector3 dir = _controller.GetDirection();
-            Debug.DrawRay(transform.position, dir * 5, Color.red);
+            if (dir == Vector3.zero) return;
+
+            Quaternion rot = Quaternion.FromToRotation(Vector3.right, dir.normalized);
+            transform.localRotation = rot;
         }
     }
 }
