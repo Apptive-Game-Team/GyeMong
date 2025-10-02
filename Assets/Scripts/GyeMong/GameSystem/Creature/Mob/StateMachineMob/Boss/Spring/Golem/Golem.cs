@@ -34,7 +34,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj1;
-        [SerializeField] private GameObject bossRoomObj2;
+
+        [SerializeField] private MaterialController[] partMaterialControllers;
 
         public SoundObject TossSoundObject => _tossSoundObject;
         protected override void Initialize()
@@ -50,8 +51,56 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             detectionRange = 10f;
             MeleeAttackRange = 5f;
             MinMeleeAttackRange = 3f;
+
+            partMaterialControllers = GetComponentsInChildren<MaterialController>();
+        }
+        #region 마테리얼조작
+        public void SetMaterial(MaterialController.MaterialType type)
+        {
+            foreach (var mc in partMaterialControllers)
+            {
+                mc.SetMaterial(type);
+            }
+        }
+        public void SetFloat(float value)
+        {
+            foreach (var mc in partMaterialControllers)
+            {
+                mc.SetFloat(value);
+            }
         }
 
+        public IEnumerator BlinkAll()
+        {
+            foreach (var mc in partMaterialControllers)
+            {
+                mc.SetMaterial(MaterialController.MaterialType.HIT);
+                mc.SetFloat(1);
+            }
+
+            yield return new WaitForSeconds(0.15f);
+
+            foreach (var mc in partMaterialControllers)
+            {
+                if (mc.GetCurrentMaterialType() == MaterialController.MaterialType.HIT)
+                    mc.SetFloat(0);
+                mc.SetMaterial(MaterialController.MaterialType.DEFAULT);
+            }
+        }
+        #endregion
+        public override void OnAttacked(float damage)
+        {
+            currentHp -= damage;
+
+            if (currentHp <= 0)
+            {
+                OnDead();
+            }
+            else
+            {
+                StartCoroutine(BlinkAll());
+            }
+        }
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
         {
             Vector3[] points = new Vector3[numberOfPoints];
@@ -295,8 +344,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Sound.Play("ENEMY_Laser");
                 yield return new WaitForSeconds(Golem.attackdelayTime);
                 Golem.currentShield = 5f;
-                Golem.MaterialController.SetMaterial(MaterialController.MaterialType.SHIELD);
-                Golem.MaterialController.SetFloat(1);
+                Golem.SetMaterial(MaterialController.MaterialType.SHIELD);
+                Golem.SetFloat(1);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
             }
@@ -390,12 +439,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 StopAllCoroutines();
                 currentState.OnStateExit();
                 ikController.CallAnimation("Down");
-                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(ChangingPhase());
             }
             else
             {
-                MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+                SetMaterial(MaterialController.MaterialType.DEFAULT);
                 Die();
             }
         }
@@ -436,16 +485,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
             deactivateEvent.SetBossRoomObject(bossRoomObj1);
             yield return deactivateEvent.Execute();
-
-            deactivateEvent.SetBossRoomObject(bossRoomObj2);
-            yield return deactivateEvent.Execute();
         }
 
         public override IEnumerator Stun(float duration)
         {
             Debug.Log("Check1");
             currentShield = 0f;
-            MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
+            SetMaterial(MaterialController.MaterialType.DEFAULT);
             Debug.Log("Check2");
             ikController.CallAnimation("Down");
             currentState.OnStateExit();
