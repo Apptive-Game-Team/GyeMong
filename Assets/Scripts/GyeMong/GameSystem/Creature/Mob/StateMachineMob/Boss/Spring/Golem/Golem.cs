@@ -222,6 +222,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.ikController.CallAnimation("PushOutAttack");
                 yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                yield return new WaitForSeconds(Golem.attackdelayTime / 4);
                 SceneContext.CameraManager.CameraShake(0.15f);
                 Vector3 targetPos = SceneContext.Character.transform.position;
                 Golem.StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator
@@ -311,7 +312,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             public override IEnumerator StateCoroutine()
             {
                 Golem.ikController.CallAnimation("UpStone");
-                yield return new WaitForSeconds(Golem.attackdelayTime / 2);
+                yield return new WaitForSeconds(Golem.attackdelayTime);
 
                 int numberOfObjects = 5;
                 float interval = 0.2f;
