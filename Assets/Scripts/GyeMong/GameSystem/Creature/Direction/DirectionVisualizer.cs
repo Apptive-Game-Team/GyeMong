@@ -24,8 +24,8 @@ namespace GyeMong.GameSystem.Creature.Direction
             _mesh = new Mesh();
             Vector3[] verts = new Vector3[3];
             verts[0] = Vector3.zero;
-            verts[1] = Quaternion.Euler(0, 0, -angle) * Vector3.right * length;
-            verts[2] = Quaternion.Euler(0, 0, angle) * Vector3.right * length;
+            verts[1] = Quaternion.Euler(0, 0, -angle) * Vector3.up * length;
+            verts[2] = Quaternion.Euler(0, 0, angle) * Vector3.up * length;
 
             int[] tris = { 0, 1, 2 };
 
@@ -53,8 +53,8 @@ namespace GyeMong.GameSystem.Creature.Direction
             Vector3 dir = _controller.GetDirection();
             if (dir == Vector3.zero) return;
 
-            Quaternion rot = Quaternion.FromToRotation(Vector3.right, dir.normalized);
-            transform.localRotation = rot;
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, dir.normalized);
+            transform.rotation = rot;
         }
     }
 }
