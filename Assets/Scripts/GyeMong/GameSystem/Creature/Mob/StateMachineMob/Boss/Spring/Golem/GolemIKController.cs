@@ -322,7 +322,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             while (elapsed < duration / 5)
             {
                 elapsed += Time.deltaTime;
-                float t = elapsed / duration;
+                float t = elapsed / (duration / 5);
 
                 ikLHand.transform.position = lHandIdlePos + Vector3.up * t * distance;
 
