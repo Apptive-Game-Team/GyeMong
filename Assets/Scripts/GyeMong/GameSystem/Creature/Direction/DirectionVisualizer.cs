@@ -24,8 +24,8 @@ namespace GyeMong.GameSystem.Creature.Direction
             _mesh = new Mesh();
             Vector3[] verts = new Vector3[3];
             verts[0] = Vector3.zero;
-            verts[1] = Quaternion.Euler(0, 0, -angle) * Vector3.up * length;
-            verts[2] = Quaternion.Euler(0, 0, angle) * Vector3.up * length;
+            verts[1] = Quaternion.Euler(0, 0, -angle) * Vector3.up * (length * 1.5f);
+            verts[2] = Quaternion.Euler(0, 0, angle) * Vector3.up * (length * 1.5f);
 
             int[] tris = { 0, 1, 2 };
 
@@ -37,6 +37,7 @@ namespace GyeMong.GameSystem.Creature.Direction
             Material mat = new Material(Shader.Find("Custom/DirectionCone"));
             mat.SetColor("_Color", color);
             _meshRenderer.material = mat;
+            _meshRenderer.material.SetFloat("_Range", length);
 
             var sr = GetComponentInParent<SpriteRenderer>();
             if (sr != null)

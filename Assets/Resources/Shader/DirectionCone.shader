@@ -2,7 +2,8 @@ Shader "Custom/DirectionCone"
 {
     Properties
     {
-        _Color ("Color", Color) = (1,0,0,0.5)
+        _Color ("Color", Color) = (1,1,0,0.5)
+        _Range ("Range", Float) = 1.0
     }
     SubShader
     {
@@ -21,28 +22,33 @@ Shader "Custom/DirectionCone"
             struct appdata
             {
                 float4 vertex : POSITION;
-                float2 uv     : TEXCOORD0;
             };
 
             struct v2f
             {
                 float4 pos : SV_POSITION;
-                float2 uv  : TEXCOORD0;
+                float2 localPos : TEXCOORD0;
             };
 
             float4 _Color;
+            float _Range;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv * 2 - 1;
+
+                o.localPos = v.vertex.xy;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                return _Color;
+                float t = saturate(i.localPos.y / _Range);
+
+                float alpha = smoothstep(1.0, 0.0, t);
+
+                return float4(_Color.rgb, _Color.a * alpha);
             }
             ENDCG
         }
