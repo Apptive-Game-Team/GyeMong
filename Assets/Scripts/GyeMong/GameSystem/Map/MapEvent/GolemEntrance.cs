@@ -34,7 +34,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj1;
-        [SerializeField] private GameObject bossRoomObj2;
 
         [Header("Boss")]
         [SerializeField] private GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Boss boss;
@@ -126,9 +125,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
             bossRoomEntrance.Trigger();
 
             activateBossRoomEvent.SetBossRoomObject(bossRoomObj1);
-            yield return activateBossRoomEvent.Execute();
-
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj2);
             yield return activateBossRoomEvent.Execute();
         }
 
