@@ -61,6 +61,7 @@ public class JoinPage : MonoBehaviour
                 if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
                 {
                     Debug.LogError(request.downloadHandler.text);
+                    ShowError(request.downloadHandler.text);
                     AccountContext.IsLoading = false;
                 }
                 else
@@ -81,6 +82,13 @@ public class JoinPage : MonoBehaviour
         {
             AccountContext.IsLoading = false;
         }
+    }
+    
+    private void ShowError(string message)
+    {
+        // Implement error display logic here
+        Debug.LogError(message);
+        GetComponentInChildren<ErrorDisplay>().ShowError(message.Replace("|", "\n"));
     }
 
     private void ResetText()
