@@ -28,6 +28,7 @@ public class SocialPage : MonoBehaviour
     private void Update()
     {
         // Debug.Log($"{AccountContext.IsLoading} / {AccountContext.CurrentPage} / {currentPage}");
+        if (pages.Count == 0) return;
         
         if (AccountContext.IsLoading)
         {
