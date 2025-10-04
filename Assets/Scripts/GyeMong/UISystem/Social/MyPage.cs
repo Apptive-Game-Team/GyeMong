@@ -20,11 +20,15 @@ public class MyPage : MonoBehaviour
     [SerializeField] private Button uploadButton;
     [SerializeField] private Button downloadButton;
     
+    [SerializeField] private Button feedbackButton;
+    [SerializeField] private GameObject feedbackPage;
+    
     private void OnEnable()
     {
         logoutButton.onClick.AddListener(OnClickLogout);
         uploadButton.onClick.AddListener(UploadProgress);
         downloadButton.onClick.AddListener(DownloadProgress);
+        feedbackButton.onClick.AddListener(() => feedbackPage.SetActive(true));
         
         StartCoroutine(LoadUserInfo());
         LoadProgress();
