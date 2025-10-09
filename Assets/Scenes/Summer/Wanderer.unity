@@ -15741,11 +15741,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b12fd03b8046b48931a8b6956285e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 2.5
   viewAngle: 270
   segments: 120
-  frontColor: {r: 0.5018867, g: 0.5018867, b: 0.5018867, a: 0.3}
-  backColor: {r: 1, g: 0.39811313, b: 0.39811313, a: 0.15}
+  frontColor: {r: 0.22118193, g: 0.23625237, b: 0.3584906, a: 0.3}
+  backColor: {r: 1, g: 0.1716981, b: 0.1716981, a: 0.15}
 --- !u!23 &1029889820
 MeshRenderer:
   m_ObjectHideFlags: 0
