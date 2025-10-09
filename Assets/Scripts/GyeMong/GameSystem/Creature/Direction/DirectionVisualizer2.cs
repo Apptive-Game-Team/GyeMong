@@ -33,7 +33,7 @@ namespace GyeMong.GameSystem.Creature.Direction
             if (sr != null)
             {
                 _meshRenderer.sortingLayerID = sr.sortingLayerID;
-                _meshRenderer.sortingOrder = sr.sortingOrder + 1;
+                _meshRenderer.sortingOrder = sr.sortingOrder - 1;
             }
         }
 
