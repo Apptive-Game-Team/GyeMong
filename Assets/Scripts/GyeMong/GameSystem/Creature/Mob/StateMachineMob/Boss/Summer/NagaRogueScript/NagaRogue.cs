@@ -601,6 +601,10 @@ public class DaggerRetrieve : NagaRogueState
 
     public override int GetWeight()
     {
+        if (NagaRogue.daggerList.Count >= 5)
+        {
+            return 50000;
+        }
         return (CountDaggersWithinAngle(MaxRetrieveAngle) >= 1 && NagaRogue.daggerList.Count >= 1 ? 500 : 0);
     }
 
@@ -608,18 +612,12 @@ public class DaggerRetrieve : NagaRogueState
     {
         var boss = NagaRogue;
 
-        // 1) 텔포 먼저 완료시키기
-        Vector3 tp = boss.FindRetrievePoint(5f);
-        yield return boss.Move(tp);
-
-        // 2) 텔포 후 "다시" 기준 벡터 계산
         Vector2 bossPos   = boss.transform.position;
         Vector2 playerPos = SceneContext.Character.transform.position;
         Vector2 forward   = (playerPos - bossPos).normalized;
 
         float cosLimit = Mathf.Cos(MaxRetrieveAngle * Mathf.Deg2Rad);
-
-        // 3) 각도 기준으로 회수 대상 선별(전방 반공간 + 30도 콘)
+        
         List<GameObject> selected = new();
         foreach (var d in boss.daggerList)
         {
@@ -633,24 +631,85 @@ public class DaggerRetrieve : NagaRogueState
                 selected.Add(d);
         }
 
-        // 가까운 것부터 회수(연출 안정)
-        selected.Sort((a, b) =>
+        if (selected.Count > 0)
         {
-            float da = ((Vector2)a.transform.position - bossPos).sqrMagnitude;
-            float db = ((Vector2)b.transform.position - bossPos).sqrMagnitude;
-            return da.CompareTo(db);
-        });
+            selected.Sort((a, b) =>
+            {
+                float da = ((Vector2)a.transform.position - bossPos).sqrMagnitude;
+                float db = ((Vector2)b.transform.position - bossPos).sqrMagnitude;
+                return da.CompareTo(db);
+            });
 
-        // 4) 회수
-        List<GameObject> deleteList = new(selected.Count);
-        foreach (var dagger in selected)
-        {
-            if (!dagger) continue;
-            yield return boss.RetrieveObject(dagger);
-            dagger.SetActive(false);
-            deleteList.Add(dagger);
+
+            List<GameObject> deleteList = new(selected.Count);
+            foreach (var dagger in selected)
+            {
+                if (!dagger) continue;
+                yield return boss.RetrieveObject(dagger);
+                dagger.SetActive(false);
+                deleteList.Add(dagger);
+            }
+            foreach (var d in deleteList) boss.daggerList.Remove(d); 
         }
-        foreach (var d in deleteList) boss.daggerList.Remove(d);
+else
+{
+    // 대거 리스트의 0번 단검을 기준으로
+    if (boss.daggerList.Count > 0)
+    {
+        var d0 = boss.daggerList[0];
+        if (d0 != null && d0.activeInHierarchy)
+        {
+            Vector2 daggerPos = d0.transform.position;
+
+            // 단검 → 플레이어 방향 기준으로, 플레이어 뒤쪽(같은 선상)에 보스를 배치하면
+            // 보스→플레이어, 보스→단검 벡터가 거의 평행 -> 회수 각도 조건 충족
+            Vector2 dir = (playerPos - daggerPos).normalized;
+            float distFromPlayer = 1.8f; // 필요시 조절
+            Vector2 desired = playerPos + dir * distFromPlayer;
+
+            // 장애물/겹침 보정: 선상 앞/뒤 → 좌/우 순으로 스캔
+            if (!boss.IsPointFree(desired))
+            {
+                bool placed = false;
+
+                int alongSamples = 8; float alongStep = 0.35f;
+                for (int i = 1; i <= alongSamples && !placed; i++)
+                {
+                    Vector2 fwd  = playerPos + dir * (distFromPlayer + i * alongStep);
+                    if (boss.IsPointFree(fwd)) { desired = fwd; placed = true; break; }
+
+                    Vector2 back = playerPos + dir * (distFromPlayer - i * alongStep);
+                    if (boss.IsPointFree(back)) { desired = back; placed = true; break; }
+                }
+
+                if (!placed)
+                {
+                    Vector2 perp = boss.Perp(dir);
+                    int lateralSamples = 6; float lateralStep = 0.3f;
+                    for (int i = 1; i <= lateralSamples && !placed; i++)
+                    {
+                        Vector2 left  = desired + perp * (i * lateralStep);
+                        if (boss.IsPointFree(left))  { desired = left;  placed = true; break; }
+
+                        Vector2 right = desired - perp * (i * lateralStep);
+                        if (boss.IsPointFree(right)) { desired = right; placed = true; break; }
+                    }
+                }
+            }
+
+            // 보스 이동 (DOTween 기반 Move 사용)
+            Vector2 moveDir = (desired - (Vector2)boss.transform.position);
+            float moveDist = moveDir.magnitude;
+            if (moveDist > 0.01f)
+                yield return boss.Move(moveDir.normalized, moveDist);
+
+            // 도착 후 회수
+            yield return boss.RetrieveObject(d0);
+            d0.SetActive(false);
+            boss.daggerList.RemoveAt(0);
+        }
+    }
+}
 
         boss.ChangeState(new PostPatternState(PostDelay){ mob = boss });
     }
