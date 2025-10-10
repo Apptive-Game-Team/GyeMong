@@ -270,7 +270,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             }
             ResetToIdle();
         }
-        public IEnumerator HandSmash(float duration = 0.5f, float distance = 1f)
+        public IEnumerator HandSmash(float duration = 1f, float distance = 1f)
         {
             // 양 손 쿵 찍기
             SetHandSprite(HandSide.Left, HandSpriteID.Fist);
@@ -312,51 +312,57 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return new WaitForSeconds(0.3f);
             ResetToIdle();
         }
-        public IEnumerator UpStoneAnimation(float duration = 0.5f, float distance = 10f)
+        public IEnumerator UpStoneAnimation(float duration = 1f, float distance = 10f)
         {
             // 왼손 찍기
             SetHandSprite(HandSide.Left, HandSpriteID.Down);
 
             float elapsed = 0f;
 
-            while (elapsed < duration / 5)
-            {
-                elapsed += Time.deltaTime;
-                float t = elapsed / duration;
-
-                ikLHand.transform.position = lHandIdlePos + Vector3.up * t * distance;
-
-                yield return null;
-            }
-            yield return new WaitForSeconds(0.3f);
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
                 float t = elapsed / duration;
+                ikLHand.transform.position = lHandIdlePos + Vector3.up * t * distance;
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.3f);
+
+            elapsed = 0f;
+            float downDuration = duration / 10f;
+
+            while (elapsed < downDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / downDuration;
                 ikLHand.transform.position = lHandIdlePos + Vector3.up * (1 - t) * distance;
                 yield return null;
             }
             yield return new WaitForSeconds(0.3f);
             ResetToIdle();
         }
-        public IEnumerator PushOutAttackAnimation(float duration = 0.5f, float distance = 10f)
+        public IEnumerator PushOutAttackAnimation(float duration = 1f, float distance = 10f)
         {
             // 오른손 찍기
 
-            float upDuration = duration / 5f;
-            float downDuration = duration - upDuration;
+            float upDuration = duration;           // 짧게 (빠르게 올림)
+            float downDuration = duration / 10f; // 길게 (느리게 내림)
+
             float elapsed = 0f;
 
+            // 올리는 구간
             while (elapsed < upDuration)
             {
                 elapsed += Time.deltaTime;
                 float t = Mathf.Clamp01(elapsed / upDuration);
-
                 ikRHand.transform.position = rHandIdlePos + Vector3.up * t * distance;
-
                 yield return null;
             }
+
             yield return new WaitForSeconds(0.3f);
+
+            // 내려오는 구간
+            elapsed = 0f;
             while (elapsed < downDuration)
             {
                 elapsed += Time.deltaTime;

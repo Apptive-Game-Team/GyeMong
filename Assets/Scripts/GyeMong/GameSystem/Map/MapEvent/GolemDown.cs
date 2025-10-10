@@ -25,7 +25,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj1;
-        [SerializeField] private GameObject bossRoomObj2;
 
         public IEnumerator Trigger()
         {
@@ -66,9 +65,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
             var deactivateEvent = new DeActivateBossRoomEvent();
 
             deactivateEvent.SetBossRoomObject(bossRoomObj1);
-            yield return deactivateEvent.Execute();
-
-            deactivateEvent.SetBossRoomObject(bossRoomObj2);
             yield return deactivateEvent.Execute();
         }
 
