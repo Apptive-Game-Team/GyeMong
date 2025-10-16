@@ -17,6 +17,16 @@ namespace GyeMong.GameSystem.Creature.Direction
                 _angle = value;
             }
         }
+        
+        public float GetAngleDifference(Transform target)
+        {
+            float targetAngle = GetTargetAngle(target);
+            float diff = targetAngle - Angle;
+            
+            diff = Mathf.Atan2(Mathf.Sin(diff), Mathf.Cos(diff));
+
+            return diff;
+        }
 
         public Vector3 GetDirection()
         {

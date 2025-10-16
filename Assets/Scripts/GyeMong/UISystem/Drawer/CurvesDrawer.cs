@@ -7,7 +7,6 @@ namespace GyeMong.UISystem.Drawer
 {
     public class CurvesDrawer : Image
     {
-        [SerializeField] protected Sprite sprite;
         [SerializeField] protected Color tintColor = Color.black;
         [SerializeField] protected float thickness = 5f;
         [SerializeField] protected int meshDetail = 20;
@@ -27,7 +26,7 @@ namespace GyeMong.UISystem.Drawer
             if (_triangles == null)
                 _triangles = new List<(int idx, int idx2, int idx3)>();
 
-            (Vector2 left, Vector2 right) start, end = default;
+            (Vector2 left, Vector2 right) start;
             foreach (Vector2[] points in _curves)
             {
                 Vector2 lastPoint = GetCubicBezierPoint(0, points);
@@ -36,7 +35,7 @@ namespace GyeMong.UISystem.Drawer
                     float t = i / (float) meshDetail;
                     Vector2 point = GetCubicBezierPoint(t, points);
                     start = GetLineSide(lastPoint, point, 0, thickness);
-                    end = GetLineSide(lastPoint, point, 1, thickness);
+                    var end = GetLineSide(lastPoint, point, 1, thickness);
                     lastPoint = point;
                     StackLine(start, end);
                 }
@@ -47,7 +46,6 @@ namespace GyeMong.UISystem.Drawer
         
         private void StackLine((Vector2 left, Vector2 right) start, (Vector2 left, Vector2 right) end)
         {
-            float distance = (Vector2.Distance(start.left, end.left) + Vector2.Distance(start.right, end.right)) * 0.5f;
             _vertices.Add((start.left, color, new Vector2(0f, 0f)));
             _vertices.Add((end.left, color, new Vector2(0f, 1f)));
             _vertices.Add((end.right, color, new Vector2(1f, 1f)));

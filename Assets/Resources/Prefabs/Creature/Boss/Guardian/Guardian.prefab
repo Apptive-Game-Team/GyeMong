@@ -299,7 +299,6 @@ GameObject:
   - component: {fileID: 6873251832098809791}
   - component: {fileID: 2802353968276510282}
   - component: {fileID: 7223301118056849855}
-  - component: {fileID: 4698537365717467408}
   - component: {fileID: 8049876469865353739}
   m_Layer: 0
   m_Name: Guardian
@@ -430,8 +429,6 @@ MonoBehaviour:
   autoSkipTime: 3
   bossRoomObj1: {fileID: 0}
   bossRoomObj2: {fileID: 0}
-  bossRoomObj3: {fileID: 0}
-  bossRoomObj4: {fileID: 0}
 --- !u!114 &6873251832098809791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,52 +573,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4698537365717467408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4866844568941268327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136e9c2fea2cf4e6a99458146d00d91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoop: 0
-  trigger: 2
-  triggerLimitCounter: -1
-  eventSequence:
-  - rid: 521773909587787776
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 521773909587787776
-      type: {class: ConditionalBranchEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _condition:
-          rid: 521773909587787777
-        eventInTrue:
-          rid: 521773909587787778
-        eventInFalse:
-          rid: -2
-    - rid: 521773909587787777
-      type: {class: ToggeableCondition, ns: , asm: Assembly-CSharp}
-      data:
-        tag: spring_guardian_down
-        condition: 0
-    - rid: 521773909587787778
-      type: {class: NestedEventEvent, ns: , asm: Assembly-CSharp}
-      data:
-        events:
-        - rid: 521773909587787779
-        - rid: -2
-    - rid: 521773909587787779
-      type: {class: StopAnimatorEvent, ns: , asm: Assembly-CSharp}
-      data:
-        _animator: {fileID: 2937423808068081688}
 --- !u!114 &8049876469865353739
 MonoBehaviour:
   m_ObjectHideFlags: 0
