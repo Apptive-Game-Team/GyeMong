@@ -25,24 +25,35 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
     public class NagaRogue : StateMachineMob
     {
     
+        //Essential
         protected IDetector<PlayerCharacter> _detector;
+        
+        //Projectile Prefab
         [SerializeField] private GameObject slashAttackPrefab;
         [SerializeField] private GameObject thrustAttackPrefab;
         [SerializeField] private GameObject daggerPrefab;
         [SerializeField] private GameObject shurikenPrefab;
         [SerializeField] private GameObject handEffectPrefab;
+        
+        //Effect Prefab
         [SerializeField] private ParticleSystem sandstormPrefab;
         [SerializeField] private MultiChatMessageData phaseChangeChat;
+        
+        //CenterPoint for LastDitchPattern
         [SerializeField] private Transform centerPoint;
 
+        //DaggerControl
         private List<GameObject> daggerList = new();
         private int daggerCap = 6;
         public const float DaggerRange = 10f;
+        
+        //PhaseControl
         private float _phaseChangeHealthPercent = 0.66f;
         private float _lastDitchHealthPercent = 0.33f;
         public bool canPhaseChange = true;
         public bool canLastDitch = true;
         
+        //Essential
         public override void OnAttacked(float damage)
         {
             currentHp -= damage;
@@ -263,19 +274,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
 
 private Vector3 Perp(Vector3 v) => new Vector3(-v.y, v.x, 0).normalized;
 
-private bool InViewport(Vector3 world, float margin = 0.06f) {
-    var cam = Camera.main;
-    if (!cam) return true;
-    var v = cam.WorldToViewportPoint(world);
-    return v.z > 0 && v.x > margin && v.x < 1 - margin && v.y > margin && v.y < 1 - margin;
-}
-
-private Vector3 GetRandomDaggerPos()
-{
-    int rnd = Random.Range(0, daggerList.Count);
-    return daggerList[rnd].transform.position;
-}
-
 // 해당 지점이 'Obstacle'과 겹치지 않는지 검사(보스 콜라이더 크기 기준)
 private bool IsPointFree(Vector3 pos, float skin = 0.04f)
 {
@@ -290,52 +288,6 @@ private bool IsPointFree(Vector3 pos, float skin = 0.04f)
     size.y = Mathf.Max(0.01f, size.y);
     return Physics2D.OverlapBox(pos, size, 0f, obstacleMask) == null;
 }
-
-// P(플레이어)에서 d만큼 떨어진 연장선상의 '유효한' 지점을 찾는다.
-// 못 찾으면 약간 앞/뒤, 좌/우로 샘플링해서 가장 가까운 유효 지점을 반환.
-        
-
-private Vector3 FindRetrievePoint(float d,
-    int alongSamples = 8, float alongStep = 0.35f,
-    int lateralSamples = 6, float lateralStep = 0.3f)
-{
-    Vector3 p = SceneContext.Character.transform.position;     // 플레이어
-    Vector3 c = GetRandomDaggerPos();                          
-    Vector3 dir = (p - c);
-    dir.Normalize();
-
-    
-    // 1) 기본 지점: P에서 dir로 d만큼 떨어진 곳
-    Vector3 desired = p + dir * d;
-    if (IsPointFree(desired)) return desired;
-
-    // 2) 선을 따라 앞/뒤로 조금씩 움직이며 검색
-    for (int i = 1; i <= alongSamples; i++)
-    {
-        float s = i * alongStep;
-        Vector3 fwd = p + dir * (d + s);
-        if (IsPointFree(fwd)) return fwd;
-
-        Vector3 back = p + dir * (d - s);
-        if (IsPointFree(back)) return back;
-    }
-
-    // 3) 수직 방향(좌/우)으로 살짝 비켜서 검색
-    Vector3 perp = new Vector3(-dir.y, dir.x, 0f);
-    for (int i = 1; i <= lateralSamples; i++)
-    {
-        float o = i * lateralStep;
-        Vector3 left  = desired + perp * o;
-        if (IsPointFree(left)) return left;
-
-        Vector3 right = desired - perp * o;
-        if (IsPointFree(right)) return right;
-    }
-
-    // 4) 끝까지 못 찾으면 기본 지점 반환(장애물과 겹칠 수도 있음)
-    return desired;
-}
-
 
 
 // 장애물 회피용: 원하는 방향(desired) 근처에서 여러 후보를 테스트하고 최고 점수 방향 선택
@@ -583,8 +535,7 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
 
             public override IEnumerator StateCoroutine()
             {
-                int iter = Random.Range(1, 4);
-                for (int i = 0; i < iter; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     yield return NagaRogue.RangeThrow(NagaRogue.daggerPrefab, DaggerRange, ThrowSpeed, AimErrorDeg);
                     yield return new WaitForSeconds(ThrowDelay);
@@ -593,7 +544,21 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
-        
+        public class OnDaggerTriggered : NagaRogueState
+        {
+            public GameObject daggerObj;
+            public override int GetWeight()
+            {
+                return 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                yield return NagaRogue.RetrieveObject(daggerObj);
+                NagaRogue.daggerList.Remove(daggerObj);
+                NagaRogue.ChangeState(new PostPatternState(0f){mob = NagaRogue});
+            }
+        }
 public class DaggerRetrieve : NagaRogueState
 {
     private const float PostDelay = 1f;

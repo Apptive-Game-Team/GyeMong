@@ -1,9 +1,12 @@
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueScript;
 using UnityEngine;
 
 public class ReturnDagger : MonoBehaviour
 {
     [SerializeField] private LineRenderer ropeLine;
     private Transform _bossTr;
+    private const float THRESHOLD = 0.5f;
+    private float curTime;
 
     public void Initiate(Transform bossTr)
     {
@@ -20,7 +23,7 @@ public class ReturnDagger : MonoBehaviour
 
         // 머티리얼 컬러 속성 주입
         ropeLine.GetPropertyBlock(_mpb);
-        var mat = ropeLine.sharedMaterial; // 속성 존재 여부 확인용
+        var mat = ropeLine.sharedMaterial;
 
         if (mat != null && mat.HasProperty(BASE_COLOR)) _mpb.SetColor(BASE_COLOR, c);
         if (mat != null && mat.HasProperty(COLOR))      _mpb.SetColor(COLOR, c);
@@ -28,7 +31,6 @@ public class ReturnDagger : MonoBehaviour
 
         ropeLine.SetPropertyBlock(_mpb);
 
-        // (보정) 라인렌더러 버텍스컬러 경로도 활성화
         var g = new Gradient();
         g.SetKeys(new [] { new GradientColorKey(c, 0f), new GradientColorKey(c, 1f) },
             new [] { new GradientAlphaKey(c.a, 0f), new GradientAlphaKey(c.a, 1f) });
@@ -58,11 +60,19 @@ public class ReturnDagger : MonoBehaviour
                     float threshold = Mathf.Max(ropeLine.widthMultiplier * 0.5f, 0.25f);
                     if (dist <= threshold)
                     {
-                        SetLineColor(Color.red);   // ← 기존: ropeLine.material = ropeLine.materials[1];
+                        SetLineColor(Color.red);
+                        if (curTime > THRESHOLD)
+                        {
+                            NagaRogue nagaRogue = _bossTr.GetComponent<NagaRogue>(); 
+                            nagaRogue.ChangeState(new NagaRogue.OnDaggerTriggered(){daggerObj = gameObject, mob = nagaRogue});
+                            gameObject.SetActive(false);    
+                        }
+                        curTime += Time.deltaTime;
                     }
                     else
                     {
-                        SetLineColor(Color.white); // ← 기존: ropeLine.material = ropeLine.materials[0];
+                        curTime = 0;
+                        SetLineColor(Color.white);
                     }
 
                 }
