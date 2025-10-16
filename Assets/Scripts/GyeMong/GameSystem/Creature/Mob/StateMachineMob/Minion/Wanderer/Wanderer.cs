@@ -301,9 +301,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override int GetWeight()
             {
                 if (mob.DistanceToPlayer > mob.MeleeAttackRange)
-                {
                     return 5;
-                }
                 return 0;
             }
 
@@ -316,11 +314,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                     mob.TrackPlayer();
                     Wanderer.FaceToPlayer();
 
-                    if (Random.value < 0.005f)
+                    if (Random.value < 0.006f)
                     {
                         mob.Animator.SetBool("isMove", false);
-
-                        Wanderer.ChangeState(new HeavyTripleSlash() { mob = Wanderer });
+                        Wanderer.ChangeState(new AggressiveAttackState() { mob = Wanderer });
                         yield break;
                     }
 
@@ -331,6 +328,52 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 mob.ChangeState();
             }
         }
+        public class AggressiveAttackState : WandererState
+        {
+            public override int GetWeight() => 3;
+
+            public override IEnumerator StateCoroutine()
+            {
+                Debug.Log("AggressiveAttackState!");
+
+                int attackCount = Random.Range(2, 4);
+                for (int i = 0; i < attackCount; i++)
+                {
+                    GameObject prefab = GetRandomAttackPrefab();
+
+                    float moveDistance = 1.2f + 0.3f * i;
+                    float moveDuration = 0.15f;
+
+                    Wanderer.StartCoroutine(Wanderer.ApplyAttackingMove(moveDuration, moveDistance));
+
+                    yield return Wanderer.StaticChildAttack(prefab, distance: 0.8f, duration: 0.4f, delay: 0.2f);
+
+                    SceneContext.CameraManager.CameraShake(0.15f);
+
+                    yield return new WaitForSeconds(0.25f);
+                }
+
+                yield return Wanderer.StaticChildAttack(Wanderer.comboSlashPrefab, distance: 1f, delay: 0.3f);
+                SceneContext.CameraManager.CameraShake(0.25f);
+
+                yield return new WaitForSeconds(0.2f);
+
+                Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
+            }
+
+            private GameObject GetRandomAttackPrefab()
+            {
+                int rand = Random.Range(0, 3);
+                switch (rand)
+                {
+                    case 0: return Wanderer.basicAttackPrefab;
+                    case 1: return Wanderer.upwardSlashPrefab;
+                    case 2: return Wanderer.circleSlashPrefab;
+                }
+                return Wanderer.basicAttackPrefab;
+            }
+        }
+
 
         public abstract class WandererState : BaseState
         {
