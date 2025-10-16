@@ -22,12 +22,16 @@ namespace GyeMong.InputSystem
 
         public ISelectableUI GetHoveredUI()
         {
+            if (_raycaster == null || _eventSystem == null)
+                return null;
+            
             PointerEventData pointerData = new PointerEventData(_eventSystem)
             {
                 position = UnityEngine.Input.mousePosition
             };
 
             List<RaycastResult> results = new List<RaycastResult>();
+            
             _raycaster.Raycast(pointerData, results);
 
             foreach (var result in results)
