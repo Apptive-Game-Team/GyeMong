@@ -177,10 +177,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
             currentShield = 0;
             damage = 10;
-            speed = 1;
-            detectionRange = 10;
-            MeleeAttackRange = 2;
-            RangedAttackRange = 3;
+            speed = 2;
+            detectionRange = 20;
+            MeleeAttackRange = 4;
+            RangedAttackRange = 6;
 
             _detector = SimplePlayerDistanceDetector.Create(this);
         }
@@ -314,7 +314,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                     mob.TrackPlayer();
                     Wanderer.FaceToPlayer();
 
-                    if (Random.value < 0.006f)
+                    if (Random.value < 0.003f)
                     {
                         mob.Animator.SetBool("isMove", false);
                         Wanderer.ChangeState(new AggressiveAttackState() { mob = Wanderer });
@@ -336,7 +336,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             {
                 Debug.Log("AggressiveAttackState!");
 
-                int attackCount = Random.Range(2, 4);
+                int attackCount = Random.Range(1, 3);
                 for (int i = 0; i < attackCount; i++)
                 {
                     GameObject prefab = GetRandomAttackPrefab();
