@@ -314,7 +314,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                     mob.TrackPlayer();
                     Wanderer.FaceToPlayer();
 
-                    if (Random.value < 0.003f)
+                    if (Random.value < 0.01f)
                     {
                         mob.Animator.SetBool("isMove", false);
                         Wanderer.ChangeState(new AggressiveAttackState() { mob = Wanderer });
@@ -352,12 +352,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
                     yield return new WaitForSeconds(0.25f);
                 }
-
-                yield return Wanderer.StaticChildAttack(Wanderer.comboSlashPrefab, distance: 1f, delay: 0.3f);
-                SceneContext.CameraManager.CameraShake(0.25f);
-
-                yield return new WaitForSeconds(0.2f);
-
                 Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
             }
 
