@@ -296,7 +296,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 }
             }
         }
-        
         public class WalkState : WandererState
         {
             public override int GetWeight()
@@ -311,18 +310,28 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 mob.Animator.SetBool("isMove", true);
+
                 while (mob.DistanceToPlayer > mob.MeleeAttackRange)
                 {
                     mob.TrackPlayer();
                     Wanderer.FaceToPlayer();
+
+                    if (Random.value < 0.005f)
+                    {
+                        mob.Animator.SetBool("isMove", false);
+
+                        Wanderer.ChangeState(new HeavyTripleSlash() { mob = Wanderer });
+                        yield break;
+                    }
+
                     yield return null;
                 }
+
                 mob.Animator.SetBool("isMove", false);
-                yield return null;
                 mob.ChangeState();
             }
         }
-        
+
         public abstract class WandererState : BaseState
         {
             protected Wanderer Wanderer => mob as Wanderer;
