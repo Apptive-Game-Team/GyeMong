@@ -26,7 +26,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject attackFloorPrefab;
         [SerializeField] private GameObject comboSlashPrefab;
         [SerializeField] private GameObject growFloorPrefab;
-        [SerializeField] private string counterAttackSound;
         
         private DirectionController _directionController;
 
@@ -56,8 +55,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private IEnumerator CounterAttack()
         {
             _directionController.SetAngularVelocity(FAST_ANGULAR_VELOCITY);
+
             SoundObject _soundObject;
-            _soundObject = Sound.Play(counterAttackSound, false);
+            int randomSuffix = UnityEngine.Random.Range(2, 4);
+            string soundName = "ENEMY_Wanderer_CounterAttack" + randomSuffix;
+            _soundObject = Sound.Play(soundName, false);
+
             yield return new WaitForSeconds(0.2f);
             yield return StaticChildAttack(comboSlashPrefab);
             _directionController.SetAngularVelocity(DEFAULT_ANGULAR_VELOCITY);
