@@ -26,7 +26,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject attackFloorPrefab;
         [SerializeField] private GameObject comboSlashPrefab;
         [SerializeField] private GameObject growFloorPrefab;
-        
+
         private DirectionController _directionController;
 
         public override void OnAttacked(float damage)
@@ -267,7 +267,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 Debug.Log("Ground Smash");
                 yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab, delay: 1f);
                 SceneContext.CameraManager.CameraShake(0.3f);
-                yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 100f);
+                yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 10f);
                 yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
