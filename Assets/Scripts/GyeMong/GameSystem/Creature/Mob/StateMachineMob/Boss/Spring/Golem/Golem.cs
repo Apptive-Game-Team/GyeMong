@@ -90,15 +90,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         #endregion
         public override void OnAttacked(float damage)
         {
-            currentHp -= damage;
-
-            if (currentHp <= 0)
+            
+            if (currentHp > 0)
             {
-                OnDead();
-            }
-            else
-            {
-                StartCoroutine(BlinkAll());
+                if (currentShield >= damage)
+                {
+                    currentShield -= damage;
+                }
+                else
+                {
+                    float temp = currentShield;
+                    currentShield = 0;
+                    StartCoroutine(BlinkAll());
+                    currentHp -= (damage - temp);
+                }
+                CheckPhaseTransition();
             }
         }
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)

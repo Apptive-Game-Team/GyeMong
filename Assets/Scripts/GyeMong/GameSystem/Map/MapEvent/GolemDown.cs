@@ -6,6 +6,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem;
 using GyeMong.GameSystem.Creature.Player.Component;
 using System.Collections;
 using System.Collections.Generic;
+using GyeMong.SoundSystem;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Map.MapEvent
@@ -56,7 +57,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
 
             var zoomEvent = new CameraZoomInOut();
-            zoomEvent.SetSize(3.6f);
+            zoomEvent.SetSize(7f);
             zoomEvent.SetDuration(0.5f);
             yield return StartCoroutine(zoomEvent.Execute());
 
