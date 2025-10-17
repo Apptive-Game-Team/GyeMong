@@ -138,9 +138,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
                     targetPos, 
                     duration)
             ).StartRoutine();
-            Vector3 spawnPos = transform.position + DirectionToPlayer * 0.5f;
-            GameObject go = Instantiate(handEffectPrefab, spawnPos, Quaternion.identity);
-            Destroy(go,0.5f);
             yield return null;
         }
 
@@ -168,26 +165,39 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             yield return null;
         }
     
-        private IEnumerator CurveThrow(GameObject prefab, float distance = 0.5f, float throwSpeed = 8f, float curveAmount = 0.2f)
+        private IEnumerator CurveThrow(GameObject prefab, float distance = 0.5f, float minFlyDistance = 4f, float throwSpeed = 8f, float curveAmount = 0.2f)
         {
             Sound.Play("ENEMY_NagaRogue_Throw");
             FaceToPlayer();
-            Direction dir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
-            Vector3 spawnPos = transform.position + DirectionToPlayer * distance;
-            Animator.Play($"Throw_{dir}",0,0f);
+
+            Direction dirEnum = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
+
+            // ★ 던지는 방향(단위벡터) & 스폰 위치
+            Vector3 dir = DirectionToPlayer.normalized;
+            Vector3 spawnPos = transform.position + dir * distance;
+
+            Animator.Play($"Throw_{dirEnum}", 0, 0f);
+
+            // ★ 최소 전진 거리 보장: 플레이어가 더 멀면 그 거리로, 아니면 minFlyDistance로
+            Vector3 playerPos = SceneContext.Character.transform.position;
+            float toPlayer = Vector3.Distance(spawnPos, playerPos);
+            float forwardDist = Mathf.Max(minFlyDistance, toPlayer);
+            Vector3 aimPos = spawnPos + dir * forwardDist;
+
             AttackObjectController.Create(
-                    spawnPos, 
-                    DirectionToPlayer, 
-                    prefab, 
+                    spawnPos,
+                    dir, // 진행 방향
+                    prefab,
                     new BoomerangMovement(
-                        spawnPos, 
-                        SceneContext.Character.transform.position,
+                        spawnPos,
+                        aimPos,          // ★ 캐릭터 위치 대신 전/후진 목적지
                         throwSpeed,
                         curveAmount)
                 )
                 .StartRoutine();
+
             GameObject go = Instantiate(handEffectPrefab, spawnPos, Quaternion.identity);
-            Destroy(go,0.5f);
+            Destroy(go, 0.5f);
             yield return new WaitForSeconds(0.5f);
         }
         
@@ -562,7 +572,7 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
 public class DaggerRetrieve : NagaRogueState
 {
     private const float PostDelay = 1f;
-    private const float MaxRetrieveAngle = 30f; // deg
+    private const float MaxRetrieveAngle = 10f; // deg
 
     public override int GetWeight()
     {
@@ -703,12 +713,12 @@ else
             private const float PostDelay = 1f;
             public override int GetWeight()
             {
-                return (mob.DistanceToPlayer > NagaRogue.MeleeAttackRange) ? 100 : 0;
+                return (mob.DistanceToPlayer > NagaRogue.MeleeAttackRange) ? 500 : 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
-                yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:4f, throwSpeed:4f);
+                yield return NagaRogue.CurveThrow(NagaRogue.shurikenPrefab, curveAmount:0.2f, throwSpeed:8f);
                 NagaRogue.ChangeState(new PostPatternState(PostDelay){mob = NagaRogue});
             }
         }
@@ -809,7 +819,6 @@ else
 
                 for (int i = 0; i < 8; i++)
                 {
-                    Sound.Play("ENEMY_NagaRogue_Ambush");
                     NagaRogue.GetFreePosInCircle(SceneContext.Character.transform.position, 2f, out var pos);
                     yield return NagaRogue.Teleport(pos, 2f);
                     yield return new WaitForSeconds(0.2f);
