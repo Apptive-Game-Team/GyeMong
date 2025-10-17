@@ -140,7 +140,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
-                SceneContext.CameraManager.CameraShake(0.2f);
+                SceneContext.CameraManager.CameraShake(0.15f);
 
                 foreach (Vector3 point in points)
                 {
@@ -185,7 +185,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                         {
                             ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                             StartCoroutine(ShockwaveSoundObject.Play());
-                            SceneContext.CameraManager.CameraShake(0.2f);
+                            SceneContext.CameraManager.CameraShake(0.15f);
                             AttackObjectController.Create(
                                 point,
                                 Vector3.zero,
