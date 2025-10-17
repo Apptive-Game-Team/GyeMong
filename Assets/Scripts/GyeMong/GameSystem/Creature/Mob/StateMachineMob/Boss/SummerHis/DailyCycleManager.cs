@@ -18,7 +18,7 @@ public class DailyCycleManager : MonoBehaviour
     private Color nightColor = new Color32(30, 30, 30, 255);
 
     public TimeOfDay currentTime;
-    public DailyCycleIndicatorUi dailyCycleIndicatorUi;
+    //public DailyCycleIndicatorUi dailyCycleIndicatorUi;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class DailyCycleManager : MonoBehaviour
 
             UpdateLighting();
             UpdateTime();
-            dailyCycleIndicatorUi.UpdateClock(currentTimePercent);
+            //dailyCycleIndicatorUi.UpdateClock(currentTimePercent);
 
             yield return null;
         }

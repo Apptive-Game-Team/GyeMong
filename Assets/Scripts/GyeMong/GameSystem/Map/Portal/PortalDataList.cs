@@ -20,6 +20,7 @@ namespace GyeMong.GameSystem.Map.Portal
         Wanderer = 26,
         Sandworm = 27,
         NagaRouge = 28,
+        NagaWarrior = 29,
     }
 
     [Serializable]

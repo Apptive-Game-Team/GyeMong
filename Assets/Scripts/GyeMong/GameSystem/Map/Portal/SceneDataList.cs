@@ -26,6 +26,7 @@ namespace GyeMong.GameSystem.Map.Portal
         Wanderer = 10,
         Sandworm = 11,
         NagaRouge = 12,
+        NagaWarrior = 20, //Why Title ID is 13??
     }
 
 

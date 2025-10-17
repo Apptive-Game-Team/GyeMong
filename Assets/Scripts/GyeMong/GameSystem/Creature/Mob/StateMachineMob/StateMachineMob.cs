@@ -11,7 +11,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
     {
         protected Coroutine _currentStateCoroutine;
         protected BaseState currentState;
-        private void Update()
+        protected virtual void Update()
         {
             if (currentState != null)
             {

@@ -12,6 +12,9 @@ namespace GyeMong.EventSystem.Event.Chat
         // Summer
         RougeMinion = 50,
         RougeBoss = 51,
+        NagaWarrior = 60,
+        NagaChild = 61,
+        NagaVillager = 62,
         Wanderer = 70,
         Sandworm = 80,
         

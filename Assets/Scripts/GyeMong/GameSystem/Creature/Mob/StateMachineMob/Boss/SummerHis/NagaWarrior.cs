@@ -11,6 +11,7 @@ using GyeMong.SoundSystem;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event;
 using GyeMong.GameSystem.Indicator;
+using Unity.VisualScripting;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrior
 {
@@ -30,6 +31,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         [SerializeField] private GameObject dailyCycleIndicator;
         private AirborneController airborneController;
         float attackdelayTime;
+        private float attackSpeed;
+        private float aniSpeed;
         [SerializeField] private DailyCycleManager dailyCycleManager;
         bool isOverheat = false;
         bool isCool = false;
@@ -45,7 +48,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             maxPhase = 1;
             maxHps.Clear();
-            maxHps.Add(200f);
+            maxHps.Add(30f);
             currentHp = maxHps[currentPhase];
             damage = 10f;
             speed = 2f;
@@ -53,12 +56,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             detectionRange = 10f;
             MeleeAttackRange = 2f;
             RangedAttackRange = 8f;
-            attackdelayTime = 1f;
+            attackSpeed = 1f;
+            aniSpeed = 1f;
+            attackdelayTime = 1/attackSpeed;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
             airborneController = GetComponent<AirborneController>();
         }
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             UpdatePhaseState();
             UpdateBodyHeat();
             bodyHeatUI.SetHeat(bodyHeat);
@@ -97,7 +103,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
 
             SpriteRenderer.color = targetColor;
-
             UpdateCombatStats();
         }
         private void UpdateCombatStats()
@@ -105,17 +110,23 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             if (isOverheat)
             {
                 damage = 15f;
-                attackdelayTime = 0.5f;
+                attackSpeed = 1.5f;
+                attackdelayTime = 1/attackSpeed;
+                Animator.speed = attackSpeed * aniSpeed;
             }
             else if (isCool)
             {
                 damage = 5f;
-                attackdelayTime = 2f;
+                attackSpeed = 0.75f;
+                attackdelayTime = 1/attackSpeed;
+                Animator.speed = attackSpeed * aniSpeed;
             }
             else
             {
                 damage = 10f;
-                attackdelayTime = 1f;
+                attackSpeed = 1f;
+                attackdelayTime = 1/attackSpeed;
+                Animator.speed = attackSpeed * aniSpeed;
             }
         }
         private void UpdateBodyHeat()
@@ -143,8 +154,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         {
             public NagaWarrior NagaWarrior => mob as NagaWarrior;
             protected Dictionary<System.Type, int> weights;
+            public float faceToFront;
             public override void OnStateUpdate()
             {
+                if (NagaWarrior.DirectionToPlayer.y > 0)
+                    faceToFront = -0.1f;
+                else faceToFront = NagaWarrior.DirectionToPlayer.y;
+                NagaWarrior.Animator.SetFloat("xDir", NagaWarrior.DirectionToPlayer.x);
+                NagaWarrior.Animator.SetFloat("yDir", faceToFront);
             }
             protected virtual void SetWeights()
             {
@@ -168,6 +185,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     return weights;
                 }
             }
+
+            public override void OnStateExit()
+            {
+                base.OnStateExit();
+                NagaWarrior.Animator.SetBool("isAttack", false);
+            }
         }
         public class MeleeAttack : NagaWarriorState
         {
@@ -178,7 +201,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
 
             public override IEnumerator StateCoroutine()
             {
+                NagaWarrior.Animator.SetFloat("patternType", 0);
+                NagaWarrior.Animator.SetBool("isDelay", true);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
+                NagaWarrior.Animator.SetBool("isAttack", true);
                 NagaWarrior.SpawnAttackComboCollider(NagaWarrior.DirectionToPlayer, 1);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 NagaWarrior.SpawnAttackComboCollider(NagaWarrior.DirectionToPlayer, 2);
@@ -216,30 +242,41 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 Vector3 targetPos = SceneContext.Character.transform.position;
-                Vector3 targetDir = NagaWarrior.DirectionToPlayer;
+                Vector3 jumpDirToPlayer = NagaWarrior.DirectionToPlayer;
+                float jumpSpeed = 10f * NagaWarrior.attackSpeed;
+                NagaWarrior.aniSpeed = jumpSpeed / NagaWarrior.DistanceToPlayer;
+                float _jumpDirToPlayerY = jumpDirToPlayer.y;
+                if (NagaWarrior.DirectionToPlayer.y > 0)
+                    _jumpDirToPlayerY = -0.1f;
+                NagaWarrior.Animator.SetFloat("patternType", 2);
+                NagaWarrior.Animator.SetBool("isDelay", true);
                 NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, targetPos, SceneContext.Character.transform, NagaWarrior.attackdelayTime/2, NagaWarrior.attackdelayTime / 2, 1f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                yield return NagaWarrior.airborneController.AirborneTo(targetPos);
+                NagaWarrior.Animator.SetFloat("xJumpDir", jumpDirToPlayer.x);
+                NagaWarrior.Animator.SetFloat("yJumpDir", _jumpDirToPlayerY);
+                NagaWarrior.Animator.SetBool("isAttack", true);
+                yield return NagaWarrior.airborneController.AirborneTo(targetPos,1f,jumpSpeed);
                 AttackObjectController.Create(
-                    NagaWarrior.transform.position + targetDir,
+                    NagaWarrior.transform.position + jumpDirToPlayer,
                     Vector3.zero,
                     NagaWarrior.pitBoundaryPrefab,
                     new StaticMovement(
-                        NagaWarrior.transform.position + targetDir,
+                        NagaWarrior.transform.position + jumpDirToPlayer,
                         NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
                 AttackObjectController.Create(
-                    NagaWarrior.transform.position + targetDir,
+                    NagaWarrior.transform.position + jumpDirToPlayer,
                     Vector3.zero,
                     NagaWarrior.pitCenterPrefab,
                     new StaticMovement(
-                        NagaWarrior.transform.position + targetDir,
+                        NagaWarrior.transform.position + jumpDirToPlayer,
                         NagaWarrior.attackdelayTime/2)
                 )
                 .StartRoutine();
                 SceneContext.CameraManager.CameraShake(0.3f);
                 Sound.Play("ENEMY_Rock_Falled");
+                NagaWarrior.aniSpeed = 1f;
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
@@ -267,14 +304,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             public override IEnumerator StateCoroutine()
             {
+                NagaWarrior.Animator.SetFloat("patternType", 3);
+                NagaWarrior.Animator.SetBool("isDelay", true);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
+                NagaWarrior.Animator.SetBool("isAttack", true);
                 var f_obj = AttackObjectController.Create(
                     NagaWarrior.transform.position,
                     Vector3.zero,
                     NagaWarrior.TailRush1Prefab,
-                    new StaticMovement(
-                        NagaWarrior.transform.position,
-                        NagaWarrior.attackdelayTime / 2)
+                    new ChildMovement(
+                        NagaWarrior.transform, Vector3.zero,
+                        NagaWarrior.attackdelayTime / 3)
                 );
                 f_obj.StartRoutine();
                 f_obj.transform.parent = NagaWarrior.transform;
@@ -284,13 +324,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                     NagaWarrior.transform.position,
                     Vector3.zero,
                     NagaWarrior.TailRush2Prefab,
-                    new StaticMovement(
-                        NagaWarrior.transform.position,
-                        NagaWarrior.attackdelayTime / 2)
+                    new ChildMovement(
+                        NagaWarrior.transform, Vector3.zero,
+                        NagaWarrior.attackdelayTime / 3)
                 );
                 s_obj.StartRoutine();
                 s_obj.transform.parent = NagaWarrior.transform;
-                yield return NagaWarrior.QuickRushAttack();
+                yield return NagaWarrior.QuickHalfRushAttack();
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime / 2);
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
@@ -318,13 +358,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             public override IEnumerator StateCoroutine()
             {
+                NagaWarrior.Animator.SetFloat("patternType", 4);
+                NagaWarrior.Animator.SetBool("isDelay", true);
                 if(NagaWarrior.isOverheat)
                     NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime, NagaWarrior.attackdelayTime / 4, 12f);
                 //burn effect
                 else
                     NagaWarrior.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Line, NagaWarrior.transform.position, SceneContext.Character.transform, NagaWarrior.attackdelayTime, NagaWarrior.attackdelayTime / 4, 6f);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
-                NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer, SceneContext.Character.transform.position);
+                NagaWarrior.Animator.SetBool("isAttack", true);
+                NagaWarrior.SpawnSkillCollider(NagaWarrior.DirectionToPlayer, NagaWarrior.transform.position + NagaWarrior.DirectionToPlayer * 15f);
                 Sound.Play("EFFECT_Sword_Swing");
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 SetWeights();
@@ -354,11 +397,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             public override IEnumerator StateCoroutine()
             {
                 //burn effect
+                NagaWarrior.Animator.SetFloat("patternType", 5);
+                NagaWarrior.Animator.SetBool("isDelay", true);
                 yield return new WaitForSeconds(NagaWarrior.attackdelayTime);
                 int numberofPoints = 6;
                 if(NagaWarrior.isOverheat)
                     numberofPoints = 12;
-                yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(5f, numberofPoints));
+                NagaWarrior.Animator.SetBool("isAttack", true);
+                yield return NagaWarrior.StartCoroutine(NagaWarrior.SpawnBreath(10f, numberofPoints));
                 SetWeights();
                 NagaWarrior.ChangeState(NextStateWeights);
             }
@@ -383,7 +429,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             Vector3[] points = GetCirclePoints(center, radius, numberOfPoints);
             foreach (Vector3 point in points)
             {
-                int numberOfObjects = 5;
+                int numberOfObjects = 10;
                 Vector3 direction = (point - center).normalized;
                 float distance = radius;
                 for (int i = 0; i <= numberOfObjects; i++)
@@ -402,6 +448,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
                         ).StartRoutine()));
                 }
             }
+            Sound.Play("ENEMY_Naga_Breath",false,5f);
             yield return new WaitForSeconds(attackdelayTime * 2);
         }
         private Vector3[] GetCirclePoints(Vector3 center, float radius, int numberOfPoints)
@@ -428,13 +475,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             }
             GameObject attackCollider = Instantiate(skillAttackObj, spawnPosition, spawnRotation);
 
-            StartCoroutine(MoveColliderToTarget(attackCollider.transform, targetPosition, attackdelayTime * 4));
+            StartCoroutine(MoveColliderToTarget(attackCollider.transform, targetPosition, 10/attackdelayTime));
         }
-        private IEnumerator MoveColliderToTarget(Transform obj, Vector3 targetPosition, float speed)
+        private IEnumerator MoveColliderToTarget(Transform obj, Vector3 targetPosition, float _speed)
         {
             while (Vector3.Distance(obj.position, targetPosition) > 0.01f)
             {
-                obj.position = Vector3.MoveTowards(obj.position, targetPosition, speed * Time.deltaTime);
+                obj.position = Vector3.MoveTowards(obj.position, targetPosition, _speed * Time.deltaTime);
                 yield return null;
             }
 
@@ -443,17 +490,27 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         }
         protected override void Die()
         {
-            currentState.OnStateExit();
-            StopAllCoroutines();
-            Sound.Stop(curBGM);
-            Sound.Play("ENEMY_Ground_Crash");
-            GetComponent<Collider2D>().enabled = false;
-            StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
-            StartCoroutine((new SetActiveObject()
-            {
-                _gameObject = dailyCycleIndicator,
-                isActive = false
-            }).Execute());
+            base.Die();
+            Animator.SetBool("isDown", true);
+            BgmManager.Stop();
+            StartCoroutine(DieRoutine());
+        }
+        private IEnumerator DieRoutine()
+        {
+            yield return StartCoroutine(DownTrigger());
+            StageManager.ClearStage(this);
+        }
+
+        public IEnumerator DownTrigger()
+        {
+            return TriggerEvents();
+        }
+
+        private IEnumerator TriggerEvents()
+        {
+            yield return new HideBossHealthBarEvent().Execute();
+
+            SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
         }
         private void SpawnAttackComboCollider(Vector3 direction, int combo)
         {

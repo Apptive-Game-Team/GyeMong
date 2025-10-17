@@ -36,13 +36,13 @@ namespace GyeMong.GameSystem.Map.Boss
         {
             _isTriggered = true;
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
-            yield return StartCoroutine((new MoveCreatureEvent()
+            /*yield return StartCoroutine((new MoveCreatureEvent()
             {
                 creatureType = MoveCreatureEvent.CreatureType.Player,
                 iControllable = null,
                 speed = playerMoveSpeed,
                 target = playerDestination
-            }).Execute());
+            }).Execute());*/
             yield return StartCoroutine((new SetActiveObject()
             {
                 _gameObject = wall,
@@ -52,11 +52,11 @@ namespace GyeMong.GameSystem.Map.Boss
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             boss.GetComponent<NagaWarrior>().curBGM = Sound.Play("BGM_Summer_NagaWarrior", true);
 
-            yield return StartCoroutine((new OpenChatEvent().Execute()));
+            /*yield return StartCoroutine((new OpenChatEvent().Execute()));
 
             yield return new ShowMessages(chatData1, autoSkipTime).Execute();
 
-            yield return StartCoroutine((new CloseChatEvent().Execute()));
+            yield return StartCoroutine((new CloseChatEvent().Execute()));*/
 
             yield return new WaitForSeconds(delayTime);
 
