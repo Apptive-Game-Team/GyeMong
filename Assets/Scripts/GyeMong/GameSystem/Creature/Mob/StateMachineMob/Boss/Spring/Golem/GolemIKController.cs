@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Anima2D;
+using GyeMong.SoundSystem;
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public enum HandSpriteID
@@ -290,6 +291,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 
                 yield return null;
             }
+            Sound.Play("ENEMY_Rock_Falled");
             yield return new WaitForSeconds(0.3f);
             ResetToIdle();
         }
@@ -338,6 +340,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 ikLHand.transform.position = lHandIdlePos + Vector3.up * (1 - t) * distance;
                 yield return null;
             }
+            Sound.Play("ENEMY_Rock_Falled");
             yield return new WaitForSeconds(0.3f);
             ResetToIdle();
         }
@@ -371,6 +374,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return null;
             }
             SetHandSprite(HandSide.Right, HandSpriteID.Down);
+            Sound.Play("ENEMY_Rock_Falled");
             yield return new WaitForSeconds(0.3f);
             ResetToIdle();
         }
