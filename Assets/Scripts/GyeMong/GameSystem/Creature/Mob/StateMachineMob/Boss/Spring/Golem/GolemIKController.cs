@@ -314,7 +314,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return new WaitForSeconds(0.3f);
             ResetToIdle();
         }
-        public IEnumerator UpStoneAnimation(float duration = 1f, float distance = 10f)
+        public IEnumerator UpStoneAnimation(float duration = 1.5f, float distance = 10f)
         {
             // 왼손 찍기
             SetHandSprite(HandSide.Left, HandSpriteID.Down);
@@ -344,7 +344,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return new WaitForSeconds(0.3f);
             ResetToIdle();
         }
-        public IEnumerator PushOutAttackAnimation(float duration = 1f, float distance = 10f)
+        public IEnumerator PushOutAttackAnimation(float duration = 1.5f, float distance = 10f)
         {
             // 오른손 찍기
 
