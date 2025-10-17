@@ -19,10 +19,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
     {
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject seedPrefab;
+        [SerializeField] private GameObject bindingArrowPrefab;
+        [SerializeField] private GameObject homingArrowPrefab;
+        [SerializeField] private GameObject splitArrowPrefab;
         [SerializeField] private GameObject vinePrefab;
         [SerializeField] private GameObject trunkPrefab;
         [SerializeField] private GameObject meleeAttackPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
+        [SerializeField] private GameObject[] arrowIndicators;
         float attackdelayTime = 1f;
 
         [Header("Chat Data")]
@@ -36,14 +40,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             maxPhase = 2;
             maxHps.Clear();
-            maxHps.Add(100f);
-            maxHps.Add(200f);
+            maxHps.Add(10f);
+            maxHps.Add(20f);
             currentHp = maxHps[currentPhase];
             damage = 20f;
             speed = 2f;
             currentShield = 0f;
             detectionRange = 10f;
-            MeleeAttackRange = 2f;
+            MeleeAttackRange = 3f;
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
         }
@@ -62,11 +66,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                     {
                         { typeof(BackStep), (Elf.DistanceToPlayer <= Elf.RangedAttackRange / 2) ? 5 : 0 },
                         { typeof(RushAndAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0 },
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 30 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 },
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0},
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 30 : 0},
                         { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1) ? 50 : 0 },
-                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0}
+                        { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
+                        { typeof(HomingArrowAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 10 : 0 },
+                        { typeof(SplitArrowAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 10 : 0 },
+                        { typeof(BindingArrowAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 10 : 0 },
+                        { typeof(ArrowRain), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0}
                     };
                 if (weights.Values.All(w => w == 0))
                 {
@@ -101,7 +109,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 30 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
                     };
@@ -146,10 +154,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 weights = new Dictionary<System.Type, int>
                     {
-                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(MeleeAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 30 : 0 },
                         { typeof(WhipAttack), (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) && (Elf.CurrentPhase == 1)  ? 50 : 0},
                         { typeof(TrunkAttack), (Elf.CurrentPhase == 1) ? 3 : 0},
-                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0 },
+                        { typeof(RangedAttack), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 30 : 0 },
                         { typeof(SeedRangedAttak), (Elf.DistanceToPlayer >= Elf.MeleeAttackRange)  ? 50 : 0 }
                     };
                 if (weights.Values.All(w => w == 0))
@@ -169,12 +177,52 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
-                Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+                GameObject arrowObj = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
+                arrowObj.GetComponent<BasicArrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer);
                 Sound.Play("ENEMY_Arrow_Shot");
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
+                Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
+                Elf.ChangeState(NextStateWeights);
+            }
+        }
+        public class ArrowRain : ElfState
+        {
+            public ArrowRain()
+            {
+                cooldownTime = 50f;
+            }
+            public override int GetWeight()
+            {
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
+            }
+
+            public override IEnumerator StateCoroutine()
+            {
+                Vector3 playerPos = SceneContext.Character.transform.position;
+                int direction = (Elf.transform.position.x >= playerPos.x) ? 1 : -1;
+                Vector3 spawnOrigin = playerPos + new Vector3(direction * 4f, 3f, 0);
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 0); 
+                Elf.SkillIndicator.DrawIndicator(SkllIndicatorDrawer.IndicatorType.Circle, playerPos, Elf.transform, Elf.attackdelayTime /2, Elf.attackdelayTime / 2,4f);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                for (int i = 0; i < 20; i++)
+                {
+                    Vector2 randomOffset = Random.insideUnitCircle * 3f;
+                    Vector3 spawnPos = spawnOrigin + new Vector3(randomOffset.x, randomOffset.y, 0);
+                    GameObject arrowObj = Instantiate(Elf.arrowPrefab, spawnPos, Quaternion.identity);
+                    Vector3 shootDir = (playerPos - spawnOrigin).normalized;
+                    arrowObj.GetComponent<BasicArrow>().SetDirection(shootDir, 5f);
+                    Sound.Play("ENEMY_Arrow_Shot");
+                    yield return new WaitForSeconds(0.05f);
+                }
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
@@ -191,23 +239,144 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
             }
+            public override void OnStateUpdate()
+            {
+                
+            }
             public override IEnumerator StateCoroutine()
             {
+                Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
+                Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
+                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[0], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
+                Sound.Play("ENEMY_Arrow_Drow");
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Destroy(arrowIndicator);
+                int count = 0;
+                float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
+                while (count < 4)
+                {
+                    Elf.Animator.SetBool("attackDelay", false);
+                    Elf.Animator.SetBool("isAttack", true);
+                    Elf.Animator.SetFloat("attackType", 1);
+                    float randomAngle = Random.Range(baseAngle - 20f, baseAngle + 20f);
+                    float rad = randomAngle * Mathf.Deg2Rad;
+                    Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
+                    GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    seedObj.GetComponent<SeedArrow>().SetDirection(dir, 13f);
+                    Sound.Play("ENEMY_Arrow_Shot");
+                    yield return new WaitForSeconds(Elf.attackdelayTime/2);
+                    Elf.Animator.SetBool("isAttack", false);
+                    Elf.Animator.SetBool("attackDelay", true);
+                    Elf.Animator.SetFloat("attackType", 1);
+                    count++;
+                }
                 Sound.Play("ENEMY_Arrow_Drow");
                 yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 1);
-                int count = 0;
-                while (count < 4)
+                float spread = 40f;
+                int arrowCount = 4;
+                float step = spread / (arrowCount - 1);
+                float startAngle = baseAngle - spread / 2f;
+                for (int i = 0; i < arrowCount; i++)
                 {
-                    Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
-                    Sound.Play("ENEMY_Arrow_Shot");
-                    yield return new WaitForSeconds(Elf.attackdelayTime/3);
-                    count++;
+                    float angle = startAngle + step * i;
+                    float rad = angle * Mathf.Deg2Rad;
+                    Vector3 dir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0);
+                    GameObject seedObj = Instantiate(Elf.seedPrefab, Elf.transform.position, Quaternion.identity);
+                    seedObj.GetComponent<SeedArrow>().SetDirection(dir, 13f);
                 }
+                Sound.Play("ENEMY_Arrow_Shot");
+                Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
+                Elf.ChangeState(NextStateWeights);
+            }
+        }
+        public class BindingArrowAttack : ElfState
+        {
+            public BindingArrowAttack()
+            {
+                cooldownTime = 5f;
+            }
+            public override int GetWeight()
+            {
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[1], Elf.SkillIndicator.transform.position, Quaternion.identity);
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Destroy(arrowIndicator);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                GameObject arrowObj = Instantiate(Elf.bindingArrowPrefab, Elf.transform.position, Quaternion.identity);
+                arrowObj.GetComponent<BindingArrow>().SetDirection(Elf.DirectionToPlayer, 13f);
+                Sound.Play("ENEMY_Arrow_Shot");
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
+                Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
+                Elf.ChangeState(NextStateWeights);
+            }
+        }
+        public class HomingArrowAttack : ElfState
+        {
+            public HomingArrowAttack()
+            {
+                cooldownTime = 5f;
+            }
+            public override int GetWeight()
+            {
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[2], Elf.SkillIndicator.transform.position, Quaternion.identity);
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Destroy(arrowIndicator);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                GameObject arrowObj = Instantiate(Elf.homingArrowPrefab, Elf.transform.position, Quaternion.identity);
+                arrowObj.GetComponent<HomingArrow>().SetDirection(Elf.DirectionToPlayer, 13f);
+                Sound.Play("ENEMY_Arrow_Shot");
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
+                Elf.Animator.SetBool("isAttack", false);
+                SetWeights();
+                Elf.ChangeState(NextStateWeights);
+            }
+        }
+        public class SplitArrowAttack : ElfState
+        {
+            public SplitArrowAttack()
+            {
+                cooldownTime = 5f;
+            }
+            public override int GetWeight()
+            {
+                return (Elf.DistanceToPlayer >= Elf.MeleeAttackRange) ? 5 : 0;
+            }
+            public override IEnumerator StateCoroutine()
+            {
+                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[3], Elf.SkillIndicator.transform.position, Quaternion.identity);
+                Elf.Animator.SetBool("attackDelay", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
+                Destroy(arrowIndicator);
+                Elf.Animator.SetBool("attackDelay", false);
+                Elf.Animator.SetBool("isAttack", true);
+                Elf.Animator.SetFloat("attackType", 0);
+                GameObject arrowObj = Instantiate(Elf.splitArrowPrefab, Elf.transform.position, Quaternion.identity);
+                arrowObj.GetComponent<SplitArrow>().SetDirection(Elf.DirectionToPlayer, 13f);
+                Sound.Play("ENEMY_Arrow_Shot");
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
@@ -217,7 +386,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             public override int GetWeight()
             {
-                return (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 5 : 0;
+                return (Elf.DistanceToPlayer <= Elf.MeleeAttackRange) ? 10 : 0;
             }
             public override IEnumerator StateCoroutine()
             {
@@ -236,7 +405,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             private SoundObject _soundObject;
             public WhipAttack()
             {
-                cooldownTime = 30f;
+                cooldownTime = 10f;
             }
             public override int GetWeight()
             {
@@ -250,7 +419,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             {
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 3);
-                yield return new WaitForSeconds(Elf.attackdelayTime / 3);
+                yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 3);
@@ -302,9 +471,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Vector3 direction = Elf.DirectionToPlayer;
                 Vector3 spawnStoneRadius = 2 * direction;
                 Vector3 startPosition = Elf.transform.position + spawnStoneRadius;
-                yield return new WaitForSeconds(Elf.attackdelayTime);
+                yield return new WaitForSeconds(Elf.attackdelayTime/2);
                 Elf.StartCoroutine(SpawnTrunk(startPosition, direction, fixedDistance, numberOfObjects, interval));
-                yield return new WaitForSeconds(Elf.attackdelayTime * 2);
+                yield return new WaitForSeconds(Elf.attackdelayTime);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);

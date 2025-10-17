@@ -1,0 +1,30 @@
+{
+  "name": "@umm/anima2d",
+  "version": "1.1.2",
+  "description": "Unity Anima2D",
+  "homepage": "https://github.com/umm-projects/anima2d",
+  "bugs": {
+    "url": "https://github.com/umm-projects/anima2d/issues"
+  },
+  "scripts": {
+    "umm:init": "umm-init",
+    "umm:generate_assembly_definition": "umm-generate_assembly_definition",
+    "umm:module:install": "umm-module-install",
+    "umm:module:uninstall": "umm-module-uninstall",
+    "postinstall": "npm run --silent umm:module:install && node ./scripts/postinstall.js",
+    "postuninstall": "npm run --silent umm:module:uninstall"
+  },
+  "author": "Yoshinori Hirasawa",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:umm-projects/anima2d"
+  },
+  "files": [
+    "Assets"
+  ],
+  "dependencies": {
+    "@umm/scripts": "umm/scripts#^1.0.0"
+  },
+  "devDependencies": {}
+}

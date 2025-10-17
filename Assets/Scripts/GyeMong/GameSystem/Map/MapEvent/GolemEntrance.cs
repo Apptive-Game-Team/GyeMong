@@ -2,7 +2,7 @@ using System;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
-using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
@@ -14,8 +14,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
 {
     public class GolemEntrance : MonoBehaviour
     {
-        [Header("Stop Animator")]
-        [SerializeField] private Animator targetAnimator;
+        [Header("Target Animator")]
+        [SerializeField] private GolemIKController golem;
 
         [Header("Change Sprite")]
         [SerializeField] private SpriteRenderer targetSpriteRenderer;
@@ -34,13 +34,9 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj1;
-        [SerializeField] private GameObject bossRoomObj2;
 
         [Header("Boss")]
         [SerializeField] private GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Boss boss;
-
-        [Header("Start Animator")]
-        [SerializeField] private Animator someAnimator;
 
         [Header("Boss Room Entrance")]
         [SerializeField] private BossRoomEntrance bossRoomEntrance;
@@ -62,9 +58,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
             _isTriggered = true;
 
-            var stopAnimEvent = new CustomStopAnimatorEvent();
-            stopAnimEvent.SetAnimator(targetAnimator);
-            yield return stopAnimEvent.Execute();
+            golem.StopAnimation();
 
             var changeSpriteEvent = new ChangeSpriteEvent();
             changeSpriteEvent.SetSpriteRenderer(targetSpriteRenderer);
@@ -106,10 +100,8 @@ namespace GyeMong.GameSystem.Map.MapEvent
             animEvent.SetFrames(animationFrames);
             animEvent.SetDeltaTime(0.5f);
             yield return animEvent.Execute();
-            
-            var startEvent = new StartAnimatorEvent();
-            startEvent.SetAnimator(someAnimator);
-            yield return startEvent.Execute();
+
+            golem.StartIdleAnimation();
             
             if (beforeScript != null)
             {
@@ -133,9 +125,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
             bossRoomEntrance.Trigger();
 
             activateBossRoomEvent.SetBossRoomObject(bossRoomObj1);
-            yield return activateBossRoomEvent.Execute();
-
-            activateBossRoomEvent.SetBossRoomObject(bossRoomObj2);
             yield return activateBossRoomEvent.Execute();
         }
 
