@@ -490,18 +490,27 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         }
         protected override void Die()
         {
-            currentState.OnStateExit();
-            StopAllCoroutines();
-            Sound.Stop(curBGM);
-            Sound.Play("ENEMY_Ground_Crash");
-            GetComponent<Collider2D>().enabled = false;
-            StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
-            StartCoroutine((new SetActiveObject()
-            {
-                _gameObject = dailyCycleIndicator,
-                isActive = false
-            }).Execute());
+            base.Die();
+            Animator.SetBool("isDown", true);
+            BgmManager.Stop();
+            StartCoroutine(DieRoutine());
+        }
+        private IEnumerator DieRoutine()
+        {
+            yield return StartCoroutine(DownTrigger());
             StageManager.ClearStage(this);
+        }
+
+        public IEnumerator DownTrigger()
+        {
+            return TriggerEvents();
+        }
+
+        private IEnumerator TriggerEvents()
+        {
+            yield return new HideBossHealthBarEvent().Execute();
+
+            SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
         }
         private void SpawnAttackComboCollider(Vector3 direction, int combo)
         {
