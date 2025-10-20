@@ -125,13 +125,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 if (DivisionSlime._isTutorial && !DivisionSlime._isTutorialShown) 
                     yield return DivisionSlime.GrazeSystemTutorial1();
                 DivisionSlime.StopCoroutine(DivisionSlime._faceToPlayerCoroutine);
-                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack, false, DivisionSlime.SpriteDirection(DivisionSlime.DirectionToPlayer));
-                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
-                Sound.Play("ENEMY_DivisionSlime_RangedAttack");
                 Vector3 offset = new Vector3(0, 0.4f, 0);
                 Vector3 scaledOffset = Vector3.Scale(offset, DivisionSlime.transform.lossyScale);
                 Vector3 shootPos = mob.transform.position + scaledOffset;
                 Vector3 direction = (SceneContext.Character.transform.position - shootPos).normalized;
+                DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack, false, DivisionSlime.SpriteDirection(DivisionSlime.DirectionToPlayer));
+                yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
+                Sound.Play("ENEMY_DivisionSlime_RangedAttack");
                 DivisionSlime.SetRangedAttack(shootPos, direction, DivisionSlime.transform);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 3);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true, DivisionSlime.SpriteDirection(DivisionSlime.DirectionToPlayer));
