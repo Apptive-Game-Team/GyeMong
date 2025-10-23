@@ -322,8 +322,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.ikController.CallAnimation("FallingCube");
                 Golem.StartCoroutine(Golem.TossSoundObject.Play());
-                yield return new WaitForSeconds(Golem.attackdelayTime);
-                GameObject cube = Instantiate(Golem.cubePrefab, SceneContext.Character.transform.position + new Vector3(0, 4, 0), Quaternion.identity);
+                Instantiate(Golem.cubePrefab, Golem.transform.position + new Vector3(1,-1,0), Quaternion.identity);
                 yield return new WaitForSeconds(Golem.attackdelayTime);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);

@@ -5,33 +5,82 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class CubeShadow : MonoBehaviour
     {
-        private GameObject player;
-        private SpriteRenderer spriteRenderer;
+        [SerializeField] private float smoothTime = 0.08f;
+
+        private Transform player;
+        private SpriteRenderer sr;
+        private Vector3 offset;
+        private Vector3 vel = Vector3.zero;
+
+        private float fadeInTime;
+        private float startAlpha;
+        private float endAlpha;
+
+        private bool isLocked = false;
+        private Vector3 lockedPos;
+
         private void Awake()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            StartCoroutine(FollowAndFall());
+            sr = GetComponent<SpriteRenderer>();
         }
 
-        private IEnumerator FollowAndFall()
+        // Follow 시작 시점에 Cube에서 호출
+        public void Initialize(Transform playerTransform, Vector3 followOffset, float fadeInTime, float startAlpha, float endAlpha)
         {
-            float followDuration = 1f;
-            float elapsedTime = 0f;
-            Color initialColor = spriteRenderer.color;
-            spriteRenderer.color = initialColor;
+            this.player = playerTransform;
+            this.offset = followOffset;
+            this.fadeInTime = fadeInTime;
+            this.startAlpha = startAlpha;
+            this.endAlpha = endAlpha;
 
-            while (elapsedTime < followDuration)
+            if (sr != null)
             {
-                if (player != null)
+                var c = sr.color;
+                c.a = startAlpha;
+                sr.color = c;
+            }
+
+            StartCoroutine(FadeAndFollow());
+        }
+
+        public void LockAt(Vector3 worldPos) // 낙하 직전(선택)
+        {
+            isLocked = true;
+            lockedPos = worldPos;
+            transform.position = lockedPos;
+        }
+
+        private IEnumerator FadeAndFollow()
+        {
+            // 1) 페이드인 하면서 플레이어 발밑 추적
+            float t = 0f;
+            while (t < fadeInTime)
+            {
+                if (!isLocked && player != null)
                 {
-                    transform.position = player.transform.position - new Vector3(0, 0.6f, 0);
-                    float t = elapsedTime / followDuration;
-                    Color newColor = spriteRenderer.color;
-                    newColor.a = Mathf.Lerp(initialColor.a, 1f, t);
-                    spriteRenderer.color = newColor;
+                    Vector3 target = player.position + offset;
+                    transform.position = Vector3.SmoothDamp(transform.position, target, ref vel, smoothTime);
                 }
-                elapsedTime += Time.deltaTime;
+
+                if (sr != null)
+                {
+                    var c = sr.color;
+                    c.a = Mathf.Lerp(startAlpha, endAlpha, fadeInTime <= 0f ? 1f : t / fadeInTime);
+                    sr.color = c;
+                }
+
+                t += Time.deltaTime;
+                yield return null;
+            }
+
+            // 2) 이후엔 계속 부드럽게 추적(고정되면 위치 유지)
+            for (; ; )
+            {
+                if (!isLocked && player != null)
+                {
+                    Vector3 target = player.position + offset;
+                    transform.position = Vector3.SmoothDamp(transform.position, target, ref vel, smoothTime);
+                }
                 yield return null;
             }
         }
@@ -43,4 +92,5 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             }
         }
     }
+
 }
