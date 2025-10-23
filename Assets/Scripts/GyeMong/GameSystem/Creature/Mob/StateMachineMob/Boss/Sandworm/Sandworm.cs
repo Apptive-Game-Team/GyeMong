@@ -152,7 +152,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Vector3 attackPosition = SceneContext.Character.transform.position;
                 Sound.Play("ENEMY_Venom_Breath_Action");
                 Sandworm.StartCoroutine(Sandworm.movement.AttackMove
-                    (startPositionFlag, Sandworm.attackMovePreAngle, Sandworm.attackMovePreDelay,
+                    (Sandworm.DirectionToPlayer, startPositionFlag, Sandworm.attackMovePreAngle, Sandworm.attackMovePreDelay,
                         Sandworm.attackMoveAngle, Sandworm.attackMoveDuration, Sandworm.attackMovePostDelay));
                 yield return new WaitForSeconds(Sandworm.attackMovePreDelay + Sandworm.attackMoveDuration - 0.1f);
                 Sandworm.VenomBreathAttack(attackPosition, Sandworm.currentPhase > 0);
@@ -208,7 +208,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 bool startPositionFlag = Sandworm.DirectionToPlayer.x > 0;
                 Sound.Play("ENEMY_Laser_Action");
                 Sandworm.StartCoroutine(Sandworm.movement.AttackMove
-                    (startPositionFlag, Sandworm.laserAttackMovePreAngle, Sandworm.laserAttackMovePreDelay
+                    (Sandworm.DirectionToPlayer, startPositionFlag, Sandworm.laserAttackMovePreAngle, Sandworm.laserAttackMovePreDelay
                         , Sandworm.laserAttackMoveAngle, Sandworm.laserAttackMoveDuration, Sandworm.laserAttackMovePostDelay));
                 Vector3 attackPosition = SceneContext.Character.transform.position;
                 yield return new WaitForSeconds(Sandworm.laserAttackMovePreDelay + Sandworm.laserAttackMoveDuration - 0.1f);
@@ -236,7 +236,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return Sandworm.HideOrShow(true, 1f);
                 Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed * 1.3f));
                 yield return new WaitForSeconds(2f);
-                Sound.Play("ENEMY_Short_Burst_Action");
                 GameObject body = Instantiate(Sandworm.bodyAttack, Sandworm.transform.position, Quaternion.identity);
                 Destroy(body, 0.07f);
                 yield return Sandworm.HideOrShow(false, 0.3f);
@@ -373,13 +372,26 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             GameObject venom = Instantiate(venomAttack, startPos, Quaternion.identity);
             float dist = Vector3.Distance(startPos, targetPos);
             Vector3 peakPos = (startPos + targetPos) / 2 + Vector3.up * dist / 5;
-                
+            Vector3 prevPos = startPos;    
             
             venom.transform.DOPath(
                 new[] { startPos, peakPos, targetPos},
                 _venomAttackDuration,
                 PathType.CatmullRom
             ).SetEase(Ease.InOutSine)
+            .OnUpdate(() =>
+            {
+                Vector3 currentPos = venom.transform.position;
+                
+                Vector3 dir = currentPos - prevPos;
+                if (dir.sqrMagnitude > 0.0001f)
+                {
+                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    venom.transform.rotation = Quaternion.Euler(0, 0, angle + 90f);
+                }
+                
+                prevPos = currentPos;
+            })
             .OnComplete(() =>
             {
                 if (!venom || !venom.activeInHierarchy) return;
@@ -433,7 +445,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 time += Time.deltaTime;
                 yield return null;
             }
-            Destroy(laserTransform.gameObject);
+            laserTransform.GetComponent<Animator>().enabled = true;
         }
 
         private IEnumerator HideOrShow(bool hide, float duration)
@@ -531,7 +543,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             movement.SetBlink(0);
             Sound.Stop(curBGM);
             Sound.Play("ENEMY_Ground_Crash");
-            StartCoroutine(movement.AttackMove(DirectionToPlayer.x > 0,0,0,50f, 1f, 0, 50f));
+            StartCoroutine(movement.AttackMove(DirectionToPlayer, DirectionToPlayer.x > 0,0,0,50f, 1f, 0, 50f));
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().sortingOrder--;
             StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());

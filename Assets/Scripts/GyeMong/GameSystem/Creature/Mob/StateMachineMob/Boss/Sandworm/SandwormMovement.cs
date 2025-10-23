@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using GyeMong.GameSystem.Creature.Attack;
+using GyeMong.SoundSystem;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -30,12 +31,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private List<Sprite> headSprites;
         [SerializeField] private List<Sprite> bodySprites;
         [SerializeField] private List<Sprite> tailSprites;
+        [SerializeField] private List<Sprite> headRotateSprites;
 
         [Header("Sandworm Body")]
         public List<SpriteRenderer> sandwormBody;
 
         [Header("Head Attack Move Value")] 
         [SerializeField] private float bodyRotateValue;
+
+        [Header("Movement Effect")] 
+        [SerializeField] private GameObject showEffect;
 
         private Tween _idleTween;
         public bool isIdle = true;
@@ -69,9 +74,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Vector3 rootDir = (dest - root.transform.position).normalized;
             float rootDist = Vector3.Magnitude(dest - root.transform.position);
             float angle = dest.x > originalBodyPos.x ? -bodyRotateValue : bodyRotateValue;
+            
+            int spriteIdx = HeadRotateIndex(rootDir);
+            Sprite originSprite = sandwormBody[0].sprite;
 
             Sequence seq = DOTween.Sequence();
-            seq.Append(bodyTip1.transform.DOMove(originalBodyPos - rootDir / 2, preDelay).SetEase(Ease.Linear));
+            seq.Append(bodyTip1.transform.DOMove(originalBodyPos - rootDir / 2, preDelay).SetEase(Ease.Linear)
+                .OnStart(() =>
+                {
+                    if (spriteIdx != -1)
+                    {
+                        sandwormBody[0].sprite = headRotateSprites[spriteIdx];
+                    }
+                }));
             seq.Join(moveTip.transform.DORotate(new Vector3(0,0, angle), preDelay).SetEase(Ease.Linear));
 
             Vector3 startPos = moveTip.transform.position;
@@ -91,27 +106,148 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             
             seq.Append(moveTip.transform.DOMove(originalHeadPos, backDelay).SetEase(Ease.InOutSine));
             seq.Join(moveTip.transform.DORotate(Vector3.zero, backDelay).SetEase(Ease.InOutSine));
+
+            float halfway = preDelay + dur * 0.5f;
+            seq.InsertCallback(halfway, () => 
+            {
+                if (spriteIdx != -1)
+                {
+                    sandwormBody[0].sprite = originSprite;
+                }
+            });
             
             yield return seq.WaitForCompletion();
         }
 
-        public IEnumerator AttackMove(bool dir, float upAngle, float upTime, float downAngle, float downTime, float recoverTime, float recoverAngle = 0f)
+        public IEnumerator AttackMove(Vector3 playerDir, bool dir, float upAngle, float upTime, float downAngle, float downTime, float recoverTime, float recoverAngle = 0f)
         {
-            var seq = DOTween.Sequence();
+            int spriteIdx = HeadRotateIndex(playerDir);
+            float angle = Mathf.Atan2(playerDir.y, playerDir.x) * Mathf.Rad2Deg;
+            if (angle < 0) angle += 360f;
 
-            seq.Append(headRotateTip.transform.DORotate
-                    (new Vector3(0, 0, dir ? upAngle : -upAngle), 
-                        upTime)
-                .SetEase(Ease.OutSine));
-            seq.Append(headRotateTip.transform.DORotate
-                    (new Vector3(0, 0, dir ? downAngle : -downAngle), 
-                        downTime)
-                .SetEase(Ease.InQuad));
-            seq.Append(headRotateTip.transform.DORotate(new Vector3(0, 0, recoverAngle), recoverTime)
-                .SetEase(Ease.Linear));
+            Sprite originSprite = sandwormBody[0].sprite;
+            
+            var seq = DOTween.Sequence();
+            Tween t1, t2, t3;
+
+            if (angle is (>= 240f and < 300f) or (>= 60f and < 120f))
+            {
+                Vector3 originPos = moveTip.transform.position;
+                
+                t1 = moveTip.transform
+                    .DOMove(originPos - playerDir * 0.15f, upTime)
+                    .SetEase(Ease.OutSine)
+                    .OnStart(() =>
+                    {
+                        if (spriteIdx != -1)
+                        {
+                            sandwormBody[0].sprite = headRotateSprites[spriteIdx];
+                        }
+                    });
+
+                t2 = moveTip.transform
+                    .DOMove(originPos + playerDir * 0.2f, downTime)
+                    .SetEase(Ease.InQuad);
+                
+                t3 = moveTip.transform
+                    .DOMove(originPos, recoverTime)
+                    .SetEase(Ease.Linear)
+                    .OnStart(() =>
+                    {
+                        if (spriteIdx != -1)
+                        {
+                            sandwormBody[0].sprite = headRotateSprites[spriteIdx];
+                        }
+                    });
+            }
+            else
+            {
+                t1 = headRotateTip.transform
+                    .DORotate(new Vector3(0, 0, dir ? upAngle : -upAngle), upTime)
+                    .SetEase(Ease.OutSine)
+                    .OnStart(() =>
+                    {
+                        if (spriteIdx != -1)
+                        {
+                            sandwormBody[0].sprite = headRotateSprites[spriteIdx];
+                        }
+                    });
+
+                t2 = headRotateTip.transform
+                    .DORotate(new Vector3(0, 0, dir ? downAngle : -downAngle), downTime)
+                    .SetEase(Ease.InQuad);
+
+                t3 = headRotateTip.transform
+                    .DORotate(new Vector3(0, 0, recoverAngle), recoverTime)
+                    .SetEase(Ease.Linear)
+                    .OnStart(() =>
+                    {
+                        if (spriteIdx != -1)
+                        {
+                            sandwormBody[0].sprite = headRotateSprites[spriteIdx];
+                        }
+                    });
+            }
+
+            seq.Append(t1).Append(t2).Append(t3);
+            
+            float halfway1 = upTime + downTime * 0.3f;
+            float halfway2 = upTime + downTime + recoverTime * 0.7f;
+
+            seq.InsertCallback(halfway1, () => 
+            {
+                if (spriteIdx != -1)
+                {
+                    sandwormBody[0].sprite = headRotateSprites[spriteIdx + 1];
+                }
+            });
+            
+            seq.InsertCallback(halfway2, () => 
+            {
+                if (spriteIdx != -1)
+                {
+                    sandwormBody[0].sprite = originSprite;
+                }
+            });
+
 
 
             yield return seq.WaitForCompletion();
+        }
+
+        private int HeadRotateIndex(Vector3 playerDir)
+        {
+            int spriteIdx;
+            
+            float angle = Mathf.Atan2(playerDir.y, playerDir.x) * Mathf.Rad2Deg;
+            if (angle < 0) angle += 360f;
+
+            if (angle is (>= 0f and < 15f) or (>= 345f and < 360f))
+            {
+                spriteIdx = 0;
+            }
+            else if (angle is >= 300f and < 345f)
+            {
+                spriteIdx = 2;
+            }
+            else if (angle is >= 240f and < 300f)
+            {
+                spriteIdx = 4;
+            }
+            else if (angle is >= 195f and < 240f)
+            {
+                spriteIdx = 6;
+            }
+            else if (angle is >= 165f and < 195f)
+            {
+                spriteIdx = 8;
+            }
+            else
+            {
+                spriteIdx = -1;
+            }
+
+            return spriteIdx;
         }
 
         public IEnumerator BodyAttackMove(Vector3 targetPos, float speed)
@@ -128,6 +264,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             SetRigState(true);
             sandwormBody[0].GetComponent<Collider2D>().enabled = true;
             sandwormBody[0].GetComponent<AttackObjectController>().isAttacked = false;
+            
+            Sound.Play("ENEMY_Long_Burst_Action");
+            Instantiate(showEffect, root.transform.position + new Vector3(0, -0.6f, 0), Quaternion.identity);
 
             var attackTween = moveTip.transform.DOJump(targetPos, dist / 6, 1, duration)
                 .SetEase(Ease.OutQuad);
@@ -232,6 +371,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 }
                 Vector3 midPos = (moveTip.transform.position + transform.TransformPoint(new Vector3(0, 2.4f, 0)) + dir * 1f) / 2 - dir;
                 moveTip.transform.position = transform.position;
+
+                Sound.Play("ENEMY_Short_Burst_Action");
+                Instantiate(showEffect, root.transform.position + new Vector3(0, -0.6f, 0), Quaternion.identity);
+                
                 var tween = moveTip.transform.DOPath(
                     new[]
                     {

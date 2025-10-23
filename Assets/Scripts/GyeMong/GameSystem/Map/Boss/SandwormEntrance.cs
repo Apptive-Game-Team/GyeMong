@@ -24,7 +24,7 @@ namespace GyeMong.GameSystem.Map.Boss
 
         private void Start()
         {
-            StartCoroutine(boss.GetComponent<Sandworm>().movement.HideOrShow(true, 0.1f));
+            StartCoroutine(boss.GetComponent<Sandworm>().movement.HideOrShow(true, 0.2f));
             StartCoroutine(TriggerEvents());
         }
         

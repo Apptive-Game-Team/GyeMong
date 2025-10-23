@@ -97,10 +97,14 @@ MonoBehaviour:
       faceImage: {fileID: 21300000, guid: b60e1270a0dd148dcadf30d27bbc9800, type: 3}
     - faceType: 10
       faceImage: {fileID: 21300000, guid: bb78c0ef574094f3ca19972e60ef33c7, type: 3}
-  - speakerType: 100
-    speakerName: 
-    image: {fileID: 0}
-    Faces: []
+  - speakerType: 80
+    speakerName: "\uC0CC\uB4DC\uC6DC"
+    image: {fileID: 21300000, guid: 30c532e3ec59a4351b06e76d90ce204a, type: 3}
+    Faces:
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: 30c532e3ec59a4351b06e76d90ce204a, type: 3}
+    - faceType: 4
+      faceImage: {fileID: 21300000, guid: d05c9ccb9a6b14a878f7e3eb88d322ad, type: 3}
   - speakerType: 200
     speakerName: "Team 6203\uC758 \uD300\uC7A5"
     image: {fileID: 21300000, guid: 7923ba510d7ef4732a7396a57ba8c0f2, type: 3}
