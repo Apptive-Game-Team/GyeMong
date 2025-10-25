@@ -40,7 +40,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private float bodyRotateValue;
 
         [Header("Movement Effect")] 
-        [SerializeField] private GameObject showEffect;
+        [SerializeField] private GameObject showEffectPrefab;
+        [SerializeField] private ParticleSystem showEffectParticle;
 
         private Tween _idleTween;
         public bool isIdle = true;
@@ -266,7 +267,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             sandwormBody[0].GetComponent<AttackObjectController>().isAttacked = false;
             
             Sound.Play("ENEMY_Long_Burst_Action");
-            Instantiate(showEffect, root.transform.position + new Vector3(0, -0.6f, 0), Quaternion.identity);
+            showEffectParticle.Play();
+            Instantiate(showEffectPrefab, root.transform.position + new Vector3(0, -0.6f, 0), Quaternion.identity);
 
             var attackTween = moveTip.transform.DOJump(targetPos, dist / 6, 1, duration)
                 .SetEase(Ease.OutQuad);
@@ -373,7 +375,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 moveTip.transform.position = transform.position;
 
                 Sound.Play("ENEMY_Short_Burst_Action");
-                Instantiate(showEffect, root.transform.position + new Vector3(0, -0.6f, 0), Quaternion.identity);
+                showEffectParticle.Play();
+                Instantiate(showEffectPrefab, root.transform.position + new Vector3(0, -0.6f, 0), Quaternion.identity);
                 
                 var tween = moveTip.transform.DOPath(
                     new[]

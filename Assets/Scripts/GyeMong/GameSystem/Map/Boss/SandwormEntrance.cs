@@ -46,7 +46,7 @@ namespace GyeMong.GameSystem.Map.Boss
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
             boss.gameObject.SetActive(true);
-            yield return boss.GetComponent<Sandworm>().movement.HideOrShow(false, 0.5f);
+            yield return boss.GetComponent<Sandworm>().movement.HideOrShow(false, 1f);
             yield return multiMessages.Play();
             boss.GetComponent<Sandworm>().curBGM = Sound.Play("BGM_Summer_Sandworm", true);
             yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(cameraZoomSize, cameraZoomSpeed));
