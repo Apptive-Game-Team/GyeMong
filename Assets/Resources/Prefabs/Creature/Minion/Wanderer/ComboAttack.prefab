@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3541338173750445935}
   - component: {fileID: 3296718464729865900}
   - component: {fileID: 1003518870443560885}
-  - component: {fileID: 2954531860150772768}
+  - component: {fileID: 417465265769463361}
   m_Layer: 0
   m_Name: ComboAttack
   m_TagString: EnemyAttack
@@ -125,8 +125,8 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: 46599e5a557af46efb3ca538a18ed180, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: 77fd5f8ae3bd54f7aa8fe59f5bb08977,
     type: 2}
---- !u!58 &2954531860150772768
-CircleCollider2D:
+--- !u!70 &417465265769463361
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -154,9 +154,9 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 0.4, y: 0.6}
+  m_Direction: 0

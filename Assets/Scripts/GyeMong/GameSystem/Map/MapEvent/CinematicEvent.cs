@@ -26,9 +26,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return new ShowMessages(chatData, autoSkipTime).Execute();
             yield return StartCoroutine((new CloseChatEvent().Execute()));
 
-            GyeMong.GameSystem.Map.Stage.Select.Stage currentStage = GyeMong.GameSystem.Map.Stage.Select.Stage.Beach;
-            GyeMong.GameSystem.Map.Stage.Select.Stage maxStage = GyeMong.GameSystem.Map.Stage.Select.Stage.Slime;
-
             PlayerPrefs.DeleteAll();
             StageSelectPage.LoadStageSelectPage();
         }

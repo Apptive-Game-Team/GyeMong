@@ -450,12 +450,18 @@ MonoBehaviour:
     type: 3}
   skillColliderPrefab: {fileID: 2848122850891802944, guid: fcbd072696f050e4a98ba91984d66a04,
     type: 3}
+  healEffectPrefab: {fileID: 1590415177872986601, guid: acdb90624a404aa438447006f1026065,
+    type: 3}
+  healCompleteEffectPrefab: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd,
+    type: 3}
   isDashing: 0
   isAttacking: 0
+  isInvincible: 0
   isTutorial: 0
   materials:
   - {fileID: 2100000, guid: de56a6b3ebfee9940bdcedb5b20cee67, type: 2}
   - {fileID: 2100000, guid: 9aca40901bb145b4f940529ee4b672e8, type: 2}
+  - {fileID: 2100000, guid: 5fb9993cb089b5843acf6c96f5c4e38a, type: 2}
 --- !u!114 &4047033506906318720
 MonoBehaviour:
   m_ObjectHideFlags: 0

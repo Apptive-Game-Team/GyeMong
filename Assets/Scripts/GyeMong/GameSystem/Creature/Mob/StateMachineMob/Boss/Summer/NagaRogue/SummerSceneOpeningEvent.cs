@@ -1,12 +1,9 @@
 using System.Collections;
 using DG.Tweening;
-using GyeMong.EventSystem.Event;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
-using GyeMong.GameSystem.Map.Portal;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
 {
