@@ -17,7 +17,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Component
         {
             SlimeAnimator animator = parent.GetComponent<SlimeAnimator>() == null ?
              parent.AddComponent<SlimeAnimator>() : parent.GetComponent<SlimeAnimator>();
-            animator._spriteRenderer = parent.GetComponent<SpriteRenderer>();
+            animator._spriteRenderer = parent.GetComponentInChildren<SpriteRenderer>();
             animator._sprites = sprites;
             return animator;
         }

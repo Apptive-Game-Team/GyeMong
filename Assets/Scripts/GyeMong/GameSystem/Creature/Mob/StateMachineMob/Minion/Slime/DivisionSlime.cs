@@ -393,9 +393,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             Vector2 scaledSize = _bounceAttackCollider.size * scaleFactor;
             Vector2 scaledOffset = _bounceAttackCollider.offset * scaleFactor;
-            Vector2 center = (Vector2)transform.position + scaledOffset;
+            Vector2 center = (Vector2)transform.position + scaledOffset - new Vector2(0, 0.7f);
             float angle = transform.eulerAngles.z;
-
+            
             Collider2D[] hit = Physics2D.OverlapCapsuleAll(
                 point: center,
                 size: scaledSize,
