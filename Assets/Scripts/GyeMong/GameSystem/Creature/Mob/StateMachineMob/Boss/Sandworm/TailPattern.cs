@@ -8,22 +8,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 {
     public class TailPattern : MonoBehaviour
     {
-        [SerializeField] private GameObject[] tailAttacks;
+        [SerializeField] private GameObject showEffect;
+        [SerializeField] private GameObject tailAttack;
         [SerializeField] private GameObject sandworm;
         private float _attackDelay;
         private float _nextAttackDelay;
         private float _detroyDelay;
         private float _spawnPosAdj;
-        private float _burstDuration;
         private Coroutine _curCoroutine;
 
         private void Awake()
         {
-            _spawnPosAdj = 0.1f;
+            _spawnPosAdj = 0.3f;
             _attackDelay = 1f;
-            _nextAttackDelay = 2f;
-            _detroyDelay = 0.5f;
-            _burstDuration = 0.4f;
+            _nextAttackDelay = 3f;
         }
 
         private IEnumerator TailAttackPattern()
@@ -34,15 +32,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Vector3 sandwormDir = Vector3.Distance(targetPos, sandworm.transform.position) > 1f ? 
                     (sandworm.transform.position - targetPos).normalized : Vector3.zero;
                 Vector3 spawnPos = targetPos + sandwormDir * _spawnPosAdj;
-                int idx = spawnPos.x > targetPos.x ? 0 : 1;
                 
-                StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(tailAttacks[idx], spawnPos, Quaternion.Euler(0f, 0f, 0f), _attackDelay));
+                StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(tailAttack, spawnPos, Quaternion.Euler(0f, 0f, 0f), _attackDelay));
                 yield return new WaitForSeconds(_attackDelay);
                 
-                GameObject tail = Instantiate(tailAttacks[idx], spawnPos, Quaternion.Euler(-90f, 0f, 0f));
+                GameObject tail = Instantiate(tailAttack, spawnPos, Quaternion.identity);
+                Instantiate(showEffect, spawnPos, Quaternion.identity);
                 Sound.Play("ENEMY_Map_Tail_Attack");
-                Destroy(tail, _detroyDelay);
-                BurstEffect(tail);
 
                 yield return new WaitForSeconds(_nextAttackDelay);
             }
@@ -57,17 +53,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             if (_curCoroutine != null)
                 StopCoroutine(_curCoroutine);
-        }
-
-        private void FlipTail(GameObject tail, bool flag)
-        {
-            tail.GetComponent<SpriteRenderer>().flipX = flag;
-        }
-
-        private void BurstEffect(GameObject tail)
-        {
-            Vector3 burstRotation = new Vector3(0f, 0f, 0f);
-            tail.transform.DORotate(burstRotation, _burstDuration).SetEase(Ease.InOutSine);
         }
     }
 }
