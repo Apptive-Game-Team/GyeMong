@@ -293,24 +293,18 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 for (int i = 0; i < length; i++)
                 {
                     int index = i;
-                    seq.Append(
-                        sandwormBody[index]
-                            .DOFade(0, 0.5f / length)
-                            .SetEase(Ease.Linear)
-                            .OnComplete(() =>
-                            {
-                                _hidden[index] = true;
-                                if (index == 0)
-                                {
-                                    sandwormBody[0].GetComponent<Collider2D>().enabled = false;
-                                }
-                            })
-                    );
+                    StartCoroutine(WaitAndFade(seq, index, targetPos));
                 }
             });
 
             yield return attackTween.WaitForCompletion();
             yield return seq.WaitForCompletion();
+            yield return new WaitUntil(() =>
+            {
+                for (int i = 0; i < length; i++)
+                    if (!_hidden[i]) return false;
+                return true;
+            });
             yield return new WaitForSeconds(duration * 0.3f);
             
             SetRigState(false);
@@ -318,6 +312,26 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             root.transform.position = transform.TransformPoint(new Vector3(0, 0, 0));
             moveTip.transform.position = transform.TransformPoint(new Vector3(0, 0, 0));
             yield return null;
+        }
+
+        private IEnumerator WaitAndFade(Sequence seq, int index, Vector3 targetPos)
+        {
+            while (Vector3.Distance(targetPos, sandwormBody[index].transform.position) > 0.1f)
+            {
+                yield return null;
+            }
+            sandwormBody[index]
+                .DOFade(0, 0.2f)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
+                    {
+                        _hidden[index] = true;
+                        if (index == 0)
+                        {
+                            sandwormBody[0].GetComponent<Collider2D>().enabled = false;
+                        }
+                    }
+                );
         }
 
 

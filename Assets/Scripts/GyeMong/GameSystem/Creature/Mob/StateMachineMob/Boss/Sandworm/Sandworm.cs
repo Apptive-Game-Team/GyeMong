@@ -417,7 +417,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Vector3 start = movement.sandwormBody[0].transform.position;
             
             Vector3 dir = (attackPosition - transform.position).normalized;
-            Vector3 startPos = attackPosition - dir * _laserDistance;
+            Vector3 startPos = transform.position + dir;
             Vector3 endPos = attackPosition + dir * _laserDistance;     // 레이저가 땅에 닿는 시작 부분, 끝 부분 지정
             
             GameObject laser = Instantiate(laserAttack, start, Quaternion.identity);
