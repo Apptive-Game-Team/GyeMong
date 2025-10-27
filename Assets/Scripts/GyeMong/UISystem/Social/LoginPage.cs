@@ -65,8 +65,6 @@ public class LoginPage : MonoBehaviour
                     AuthResponse response = new AuthResponse();
                     JsonUtility.FromJsonOverwrite(request.downloadHandler.text, response);
                     
-                    Debug.Log($"jwtToken: {response.jwt}");
-                    
                     AccountContext.IsLoading = false;
                     Debug.Log("Login Success End Of Loading");
                     AccountContext.OnLogin(response.jwt);
