@@ -12,7 +12,7 @@ namespace Util
             {
                 if (_instance == null)
                 {
-                    _instance = FindObjectOfType<T>();
+                    _instance = FindObjectOfType<T>(true);
                     DontDestroyOnLoad(_instance.gameObject);
                 }
 
