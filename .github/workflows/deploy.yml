@@ -56,6 +56,7 @@ jobs:
           cd GyeMong_Play
 
           # copy build result
+          rm -rf ./TemplateData
           rm -rf ./Build
           rm -rf ./index.html
           cp -r ../build/WebGL/WebGL/* ./
