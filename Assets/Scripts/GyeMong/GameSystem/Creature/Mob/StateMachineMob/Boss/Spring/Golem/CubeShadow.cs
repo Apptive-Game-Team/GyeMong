@@ -24,7 +24,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             sr = GetComponent<SpriteRenderer>();
         }
 
-        // Follow ½ÃÀÛ ½ÃÁ¡¿¡ Cube¿¡¼­ È£Ãâ
+        // Follow ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Cubeï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
         public void Initialize(Transform playerTransform, Vector3 followOffset, float fadeInTime, float startAlpha, float endAlpha)
         {
             this.player = playerTransform;
@@ -43,16 +43,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             StartCoroutine(FadeAndFollow());
         }
 
-        public void LockAt(Vector3 worldPos) // ³«ÇÏ Á÷Àü(¼±ÅÃ)
+        public void LockAt() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
         {
             isLocked = true;
-            lockedPos = worldPos;
-            transform.position = lockedPos;
         }
 
         private IEnumerator FadeAndFollow()
         {
-            // 1) ÆäÀÌµåÀÎ ÇÏ¸é¼­ ÇÃ·¹ÀÌ¾î ¹ß¹Ø ÃßÀû
+            // 1) ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ï¸é¼­ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß¹ï¿½ ï¿½ï¿½ï¿½ï¿½
             float t = 0f;
             while (t < fadeInTime)
             {
@@ -73,7 +71,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return null;
             }
 
-            // 2) ÀÌÈÄ¿£ °è¼Ó ºÎµå·´°Ô ÃßÀû(°íÁ¤µÇ¸é À§Ä¡ À¯Áö)
+            // 2) ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½)
             for (; ; )
             {
                 if (!isLocked && player != null)

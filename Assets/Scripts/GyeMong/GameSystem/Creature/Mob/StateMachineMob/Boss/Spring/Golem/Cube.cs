@@ -71,12 +71,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             cubeShadowComp = cubeShadow.GetComponent<CubeShadow>();
             if (cubeShadowComp != null)
             {
-                // ÇÃ·¹ÀÌ¾î ¹ß¹ØÀ» µû¶ó°¡¸ç alpha¸¦ 0¡æ1·Î ÆäÀÌµåÀÎ
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ó°¡¸ï¿½ alphaï¿½ï¿½ 0ï¿½ï¿½1ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½
                 cubeShadowComp.Initialize(
                     playerTransform: player != null ? player.transform : null,
                     followOffset: new Vector3(0, -0.6f, 0),
-                    fadeInTime: 0.35f,          // ¿øÇÏ´Â °ªÀ¸·Î Á¶Àý
-                    startAlpha: 0.0f,           // »ý¼º Á÷ÈÄ ¾È º¸ÀÌ°Ô
+                    fadeInTime: 0.35f,          // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    startAlpha: 0.0f,           // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½
                     endAlpha: 1.0f
                 );
             }
@@ -95,6 +95,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                 yield return null;
             }
             Sound.Play("ENEMY_Toss");
+            cubeShadowComp.LockAt();
             StartCoroutine(StartFalling());
         }
 
