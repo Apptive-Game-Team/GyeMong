@@ -314,10 +314,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return new WaitForSeconds(0.3f);
             ResetToIdle();
         }
-        public IEnumerator UpStoneAnimation(float duration = 1.5f, float distance = 10f)
+        public IEnumerator UpStoneAnimation(float duration = 1.5f, float distance = 1f)
         {
             // 왼손 찍기
-            SetHandSprite(HandSide.Left, HandSpriteID.Down);
+            SetHandSprite(HandSide.Left, HandSpriteID.Fist);
 
             float elapsed = 0f;
 
@@ -325,19 +325,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 elapsed += Time.deltaTime;
                 float t = elapsed / duration;
-                ikLHand.transform.position = lHandIdlePos + Vector3.up * t * distance;
+                ikLeft.transform.position = leftIdlePos + Vector3.up * t * distance;
                 yield return null;
             }
             yield return new WaitForSeconds(0.3f);
 
             elapsed = 0f;
             float downDuration = duration / 10f;
-
+            
             while (elapsed < downDuration)
             {
                 elapsed += Time.deltaTime;
                 float t = elapsed / downDuration;
-                ikLHand.transform.position = lHandIdlePos + Vector3.up * (1 - t) * distance;
+                ikLeft.transform.position = leftIdlePos + Vector3.up * (1 - t) * distance;
                 yield return null;
             }
             Sound.Play("ENEMY_Rock_Falled");
