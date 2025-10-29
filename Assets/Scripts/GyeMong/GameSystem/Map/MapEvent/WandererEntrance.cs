@@ -1,4 +1,8 @@
+using GyeMong.EventSystem;
+using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Input;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer;
 using GyeMong.GameSystem.Map.Boss;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +14,9 @@ namespace GyeMong.GameSystem.Map.MapEvent
     {
         [Header("Boss Room Entrance")]
         [SerializeField] private BossRoomEntrance bossRoomEntrance;
+
+        [Header("Wanderer")]
+        [SerializeField] private GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer.Wanderer wanderer;
 
         private bool _isTriggered = false;
         private void OnTriggerEnter2D(Collider2D other)
@@ -26,9 +33,32 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
 
-            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
+            var showHpEvent = new ShowWandererHealthBarEvent();
+            showHpEvent.SetWanderer(wanderer);
+            yield return showHpEvent.Execute();
 
-            bossRoomEntrance.Trigger();
+            yield return new WaitForSeconds(5f);
+
+            yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
+        }
+    }
+
+    public class ShowWandererHealthBarEvent
+    {
+        [SerializeField] private GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer.Wanderer _wanderer;
+
+        public void SetWanderer(GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer.Wanderer wanderer)
+        {
+            _wanderer = wanderer;
+        }
+
+        public IEnumerator Execute()
+        {
+            var hpBar = SceneContext.EffectManager.GetHpBarController();
+            hpBar.gameObject.SetActive(true);
+            hpBar.ClearBoss();
+            hpBar.UpdateHp(_wanderer.CurrentHp, _wanderer.MaxHp);
+            yield return null;
         }
     }
 }
