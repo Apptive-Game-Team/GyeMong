@@ -8,7 +8,7 @@ namespace GyeMong.GameSystem.Creature
 {
     public abstract class Creature : MonoBehaviour, IAttackable
     {
-        private const float BLINK_DELAY = 0.15f;
+        protected const float BLINK_DELAY = 0.15f;
         
         protected float maxHp;
         public float MaxHp
@@ -72,7 +72,7 @@ namespace GyeMong.GameSystem.Creature
             }
         }
         private Color? _originalColor = null;
-        protected IEnumerator Blink()
+        protected virtual IEnumerator Blink()
         {
             MaterialController?.SetMaterial(MaterialController.MaterialType.HIT);
             MaterialController?.SetFloat(1);
