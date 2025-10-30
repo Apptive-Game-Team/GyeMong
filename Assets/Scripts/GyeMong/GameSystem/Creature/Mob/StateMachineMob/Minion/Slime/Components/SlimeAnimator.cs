@@ -17,7 +17,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Component
         {
             SlimeAnimator animator = parent.GetComponent<SlimeAnimator>() == null ?
              parent.AddComponent<SlimeAnimator>() : parent.GetComponent<SlimeAnimator>();
-            animator._spriteRenderer = parent.GetComponent<SpriteRenderer>();
+            animator._spriteRenderer = parent.GetComponentInChildren<SpriteRenderer>();
             animator._sprites = sprites;
             return animator;
         }
@@ -36,21 +36,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Component
             Die
         }
     
-        public IEnumerator SyncPlay(AnimationType type, bool loop = false)
+        public IEnumerator SyncPlay(AnimationType type, bool loop = false, int dir = 0)
         {
             CurrentAnimationType = type;
             do
             {
-                yield return PlayerAnimation(_sprites.GetSprite(type));
+                yield return PlayerAnimation(_sprites.GetSprite(type, dir));
             } while (loop);
         }
     
 
     
-        public void AsyncPlay(AnimationType type, bool loop = false)
+        public void AsyncPlay(AnimationType type, bool loop = false, int dir = 0)
         {
             Stop();
-            _currentAnimation = StartCoroutine(SyncPlay(type, loop));
+            _currentAnimation = StartCoroutine(SyncPlay(type, loop, dir));
         }
     
         public void Stop()

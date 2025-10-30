@@ -33,14 +33,14 @@ namespace GyeMong.GameSystem.Creature
         protected Animator _animator;
         protected SpriteRenderer _spriteRenderer;
         
-        public MaterialController _materialController;
+        private MaterialController _materialController;
         public MaterialController MaterialController
         {
             get
             {
                 if (_materialController == null)
                 {
-                    _materialController = GetComponent<MaterialController>();
+                    _materialController = GetComponentInChildren<MaterialController>();
                 }
 
                 return _materialController;
@@ -76,17 +76,18 @@ namespace GyeMong.GameSystem.Creature
         {
             MaterialController?.SetMaterial(MaterialController.MaterialType.HIT);
             MaterialController?.SetFloat(1);
-            if (!_originalColor.HasValue)
+            SpriteRenderer sR = GetComponent<SpriteRenderer>();
+            if (!_originalColor.HasValue && sR != null)
                 _originalColor = GetComponent<SpriteRenderer>().color;
             ;
-            GetComponent<SpriteRenderer>().color = Color.white;
+            if (sR != null) GetComponent<SpriteRenderer>().color = Color.white;
             yield return new WaitForSeconds(BLINK_DELAY);
             if (MaterialController?.GetCurrentMaterialType() == MaterialController.MaterialType.HIT)
             {
                 MaterialController?.SetFloat(0);
             }
 
-            GetComponent<SpriteRenderer>().color = _originalColor.Value;
+            if (sR != null) GetComponent<SpriteRenderer>().color = _originalColor.Value;
         }
         
         public void TrackPath(List<Vector2> path)

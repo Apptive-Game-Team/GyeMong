@@ -57,6 +57,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public Material[] materials;
         private Renderer _renderer;
+        private SpriteRenderer _spriteRenderer;
 
         private Coroutine _attackCoroutine;
         private Tween _attackMoveTween;
@@ -72,6 +73,7 @@ namespace GyeMong.GameSystem.Creature.Player
             soundController = GetComponent<PlayerSoundController>();
             _hitCollider = transform.Find("HitCollider").GetComponent<CircleCollider2D>();
             isTutorial = PlayerPrefs.GetInt("TutorialFlag") == 0;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             _renderer = gameObject.GetComponent<Renderer>();
             _renderer.material = materials[0];
         }
@@ -307,8 +309,21 @@ namespace GyeMong.GameSystem.Creature.Player
 
             StartCoroutine(SetInvincibility(stat.DashDuration / 5, stat.DashDuration * 3 / 5));
 
+            int afterImageCount = 0;
+            int afterImageCountMax = 7;
             yield return (_dashTween = playerRb.DOMove(targetPosition, stat.DashDuration)
                 .SetEase(Ease.OutCubic))
+                .OnUpdate(() =>
+                {
+                    float progress = _dashTween.ElapsedPercentage(); // 0 ~ 70%
+                    float targetThreshold = (afterImageCount + 1) / (float)afterImageCountMax * 0.7f;
+
+                    if (progress >= targetThreshold && afterImageCount < afterImageCountMax)
+                    {
+                        SpawnAfterImage();
+                        afterImageCount++;
+                    }
+                })
                 .WaitForCompletion();
 
             StopPlayer();
@@ -319,6 +334,32 @@ namespace GyeMong.GameSystem.Creature.Player
 
             yield return new WaitForSeconds(stat.DashCooldown);
             canDash = true;
+        }
+        
+        private void SpawnAfterImage()
+        {
+            GameObject clone = new GameObject("AfterImage")
+            {
+                transform =
+                {
+                    position = transform.position,
+                    rotation = transform.rotation
+                }
+            };
+
+            SpriteRenderer sr = clone.AddComponent<SpriteRenderer>();
+            if (isInvincible)
+            {
+                sr.material = materials[2];
+                sr.material.SetFloat("_isUsable", 1f);
+            }
+            sr.sprite = _spriteRenderer.sprite;
+            sr.flipX = _spriteRenderer.flipX;
+            sr.sortingLayerID = _spriteRenderer.sortingLayerID;
+            sr.sortingOrder = _spriteRenderer.sortingOrder - 1;
+            sr.color = new Color(1f, 1f, 1f, 0.45f);
+            
+            Destroy(clone, stat.DashDuration * 0.3f);
         }
 
         private IEnumerator SetInvincibility(float delay, float duration)

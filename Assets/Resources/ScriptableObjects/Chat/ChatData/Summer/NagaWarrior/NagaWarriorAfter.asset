@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: NagaWarriorAfter
   m_EditorClassIdentifier: 
+  bgmName: 
   chatMessages:
-  - speakerName: 9
+  - speakerName: 60
+    faceType: 0
     isLeft: 0
     messages:
     - "\uB300\uB2E8\uD558\uAD70. \uC0AC\uB9C9\uC758 \uC804\uC0AC\uB85C\uC11C \uC644\uBCBD\uD788
@@ -25,6 +27,6 @@ MonoBehaviour:
     - "\uB098\uB97C \uD3EC\uD568\uD55C \uC6B0\uB9AC \uAE0D\uC9C0\uB192\uC740 \uC804\uC0AC\uB4E4\uC774
       \uD55C \uB450\uBC88 \uB3C4\uC804\uD558\uC5EC \uD328\uBC30\uD55C\uAC8C \uC544\uB2C8\uB2C8
       \uB9D0\uC774\uC57C. "
-    backgroundImage: 0
+    backgroundImage: 3
     chatImage: 0
     chatDelay: 3
