@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a01606584bac04484ef871d9967c3e, type: 3}
+  m_Name: ElfArrowImages
+  m_EditorClassIdentifier: 
+  seedArrow:
+    seedArrowImage: {fileID: 938631676, guid: d03599efc72e24ab6aeeeb813d1d2322, type: 3}
+  bindingArrow:
+    bindingArrowImage: {fileID: -417571044, guid: d03599efc72e24ab6aeeeb813d1d2322,
+      type: 3}
+  hommingArrow:
+    hommingArrowImage: {fileID: 1773736975, guid: d03599efc72e24ab6aeeeb813d1d2322,
+      type: 3}
+  splitArrow:
+    splitArrowImage: {fileID: -1948681427, guid: d03599efc72e24ab6aeeeb813d1d2322,
+      type: 3}

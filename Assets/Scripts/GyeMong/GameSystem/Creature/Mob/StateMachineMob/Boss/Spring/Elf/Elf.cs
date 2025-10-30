@@ -11,7 +11,9 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndica
 using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
 {
@@ -36,6 +38,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         [Header("Boss Room Object")]
         [SerializeField] private GameObject bossRoomObj_wall;
 
+        [Header("Arrow Images")]
+        [SerializeField] private ArrowImages arrowImages;
+        [SerializeField] private SpriteRenderer arrowIndicator;
+
         protected override void Initialize()
         {
             maxPhase = 2;
@@ -50,6 +56,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             MeleeAttackRange = 3f;
             RangedAttackRange = 8f;
             SkillIndicator = transform.Find("SkillIndicator").GetComponent<SkllIndicatorDrawer>();
+            arrowIndicator = transform.Find("ArrowIndicator").GetComponent<SpriteRenderer>();
         }
         public abstract class ElfState : CoolDownState
         {
@@ -245,6 +252,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                Elf.arrowIndicator.sprite = Elf.arrowImages.seedArrow.seedArrowImage;
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
                 GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[0], Elf.SkillIndicator.transform.position, Quaternion.identity);
@@ -292,6 +300,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Sound.Play("ENEMY_Arrow_Shot");
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
+                Elf.arrowIndicator.sprite = null;
                 Elf.ChangeState(NextStateWeights);
             }
         }
@@ -307,6 +316,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                Elf.arrowIndicator.sprite = Elf.arrowImages.bindingArrow.bindingArrowImage;
                 GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[1], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
@@ -321,6 +331,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
+                Elf.arrowIndicator.sprite = null;
                 Elf.ChangeState(NextStateWeights);
             }
         }
@@ -336,6 +347,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                Elf.arrowIndicator.sprite = Elf.arrowImages.hommingArrow.hommingArrowImage;
                 GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[2], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
@@ -349,6 +361,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
+                Elf.arrowIndicator.sprite = null;
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
@@ -365,6 +378,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             }
             public override IEnumerator StateCoroutine()
             {
+                Elf.arrowIndicator.sprite = Elf.arrowImages.splitArrow.splitArrowImage;
                 GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[3], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
@@ -378,6 +392,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
+                Elf.arrowIndicator.sprite = null;
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
