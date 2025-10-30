@@ -41,10 +41,6 @@ namespace GyeMong.EventSystem.Event
 
             return null;
         }
-        public virtual List<ToggeableCondition> FindToggleableConditions()
-        {
-            return null;
-        }
     }
 
     [Serializable]
@@ -181,16 +177,6 @@ namespace GyeMong.EventSystem.Event
         {
             @gameObject.transform.position = targetPosition;
             yield return null;
-        }
-    }
-
-    [Serializable]
-    public class DestroySelfEvent : Event
-    {
-        public override IEnumerator Execute(EventObject eventObject = null)
-        {
-            eventObject.DestroySelf();
-            return null;
         }
     }
 

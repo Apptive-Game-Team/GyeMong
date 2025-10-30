@@ -33,7 +33,7 @@ namespace GyeMong.UISystem.Game.PlayerUI
         }
 
 
-        private void UpdateSkillGauge()
+        protected override void UpdateSkillGauge()
         {
             base.UpdateSkillGauge();
             if (GetCurrentGauge() >= GetMaxGauge()) 

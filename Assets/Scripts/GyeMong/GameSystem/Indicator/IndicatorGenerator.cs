@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GyeMong.GameSystem.Creature.Attack;
 using UnityEngine;
 using Util;
 
@@ -110,7 +111,8 @@ namespace GyeMong.GameSystem.Indicator
             if (_shapeMap.TryGetValue(type, out var shape))
             {
                 GameObject indicator = shape.CreateIndicator(attackObject, pos, rot);
-                yield return indicator.AddComponent<Indicator>().Flick(duration);
+                StartCoroutine(indicator.AddComponent<Indicator>().Flick(duration));
+                yield return new WaitForSeconds(duration);
                 action?.Invoke();
             }
             else
@@ -118,6 +120,17 @@ namespace GyeMong.GameSystem.Indicator
                 Debug.LogWarning($"No provider registered for {type}");
                 yield return null;
             }
+        }
+        
+        public IEnumerator GenerateIndicator(AttackObjectController attackObjectController, float duration)
+        {
+            return GenerateIndicator(
+                attackObjectController.gameObject,
+                attackObjectController.transform.position,
+                attackObjectController.transform.rotation * Quaternion.Euler(0, 0, 90f),
+                duration,
+                () => attackObjectController.StartRoutine()
+            );
         }
     }
 }
