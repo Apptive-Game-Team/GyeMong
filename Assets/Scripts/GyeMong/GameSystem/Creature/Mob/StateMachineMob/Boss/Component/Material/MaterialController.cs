@@ -9,6 +9,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Materia
             DEFAULT,
             HIT,
             SHIELD,
+            BACK,
         }
     
         [SerializeField] private MaterialDatas _materialDatas;

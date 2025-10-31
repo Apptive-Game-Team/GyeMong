@@ -2,12 +2,15 @@ using System.Collections;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Direction;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
+using GyeMong.SoundSystem;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 {
@@ -23,10 +26,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject attackFloorPrefab;
         [SerializeField] private GameObject comboSlashPrefab;
         [SerializeField] private GameObject growFloorPrefab;
-        
+
         private DirectionController _directionController;
-         
-         
+
         public override void OnAttacked(float damage)
         {
             if (!IsPlayerAtBack())
@@ -36,6 +38,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             
             currentHp -= damage;
+            Debug.Log("Attack Complete");
+
+            StartCoroutine(OnAttackedReact());
+
             if (currentHp <= 0)
             {
                 OnDead();
@@ -49,11 +55,36 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private IEnumerator CounterAttack()
         {
             _directionController.SetAngularVelocity(FAST_ANGULAR_VELOCITY);
+
+            SoundObject _soundObject;
+            int randomSuffix = UnityEngine.Random.Range(2, 4);
+            string soundName = "ENEMY_Wanderer_CounterAttack" + randomSuffix;
+            _soundObject = Sound.Play(soundName, false);
+
             yield return new WaitForSeconds(0.2f);
             yield return StaticChildAttack(comboSlashPrefab);
             _directionController.SetAngularVelocity(DEFAULT_ANGULAR_VELOCITY);
         }
-        
+        private IEnumerator OnAttackedReact()
+        {
+            StartCoroutine(Knockback());
+            SceneContext.CameraManager.CameraShake(0.2f);
+            yield return null;
+        }
+        private IEnumerator Knockback(float distance = 0.5f, float duration = 0.1f)
+        {
+            Vector3 startPos = transform.position;
+            Vector3 endPos = startPos + _directionController.GetDirection() * distance;
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                transform.position = Vector3.Lerp(startPos, endPos, elapsed / duration);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = endPos;
+        }
+
         private bool IsPlayerAtBack()
         {
             float angle = _directionController.GetAngleDifference(SceneContext.Character.transform);
@@ -63,6 +94,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private void Awake()
         {
             _directionController = GetComponent<DirectionController>();
+            _materialController = GetComponent<MaterialController>();
             StartCoroutine(_directionController.TrackPlayer(DEFAULT_ANGULAR_VELOCITY, true));
         }
 
@@ -77,6 +109,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             Initialize();
 
             ChangeState(new DetectingPlayer() {mob= this});
+        }
+
+        private void Update()
+        {
+            if (IsPlayerAtBack())
+                _materialController.SetMaterial(MaterialController.MaterialType.BACK);
+            else
+                _materialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
         }
 
         private IEnumerator StaticChildAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f, float delay = 0.3f)
@@ -137,10 +177,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
             currentShield = 0;
             damage = 10;
-            speed = 1;
-            detectionRange = 10;
-            MeleeAttackRange = 2;
-            RangedAttackRange = 3;
+            speed = 3;
+            detectionRange = 20;
+            MeleeAttackRange = 4;
+            RangedAttackRange = 6;
 
             _detector = SimplePlayerDistanceDetector.Create(this);
         }
@@ -227,7 +267,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 Debug.Log("Ground Smash");
                 yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab, delay: 1f);
                 SceneContext.CameraManager.CameraShake(0.3f);
-                yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 100f);
+                yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 10f);
                 yield return new WaitForSeconds(1.5f);
                 Wanderer.ChangeState(new DetectingPlayer() {mob = Wanderer});
             }
@@ -256,33 +296,79 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 }
             }
         }
-        
         public class WalkState : WandererState
         {
             public override int GetWeight()
             {
                 if (mob.DistanceToPlayer > mob.MeleeAttackRange)
-                {
                     return 5;
-                }
                 return 0;
             }
 
             public override IEnumerator StateCoroutine()
             {
                 mob.Animator.SetBool("isMove", true);
+
                 while (mob.DistanceToPlayer > mob.MeleeAttackRange)
                 {
                     mob.TrackPlayer();
                     Wanderer.FaceToPlayer();
-                    yield return null;
+
+                    if (Random.value < 0.01f * Time.deltaTime * 60f)
+                    {
+                        mob.Animator.SetBool("isMove", false);
+                        Wanderer.ChangeState(new AggressiveAttackState() { mob = Wanderer });
+                        yield break;
+                    }
+
+                    yield return new WaitForSeconds(0.02f);
                 }
+
                 mob.Animator.SetBool("isMove", false);
-                yield return null;
                 mob.ChangeState();
             }
         }
-        
+        public class AggressiveAttackState : WandererState
+        {
+            public override int GetWeight() => 3;
+
+            public override IEnumerator StateCoroutine()
+            {
+                Debug.Log("AggressiveAttackState!");
+
+                int attackCount = Random.Range(1, 2);
+                for (int i = 0; i < attackCount; i++)
+                {
+                    GameObject prefab = GetRandomAttackPrefab();
+
+                    float moveDistance = 1.8f + 0.3f * i;
+                    float moveDuration = 0.15f;
+
+                    Wanderer.StartCoroutine(Wanderer.ApplyAttackingMove(moveDuration, moveDistance));
+
+                    yield return Wanderer.StaticChildAttack(prefab, distance: 0.8f, duration: 0.4f, delay: 0.2f);
+
+                    SceneContext.CameraManager.CameraShake(0.15f);
+
+                    yield return new WaitForSeconds(0.25f);
+                }
+                Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
+            }
+
+            private GameObject GetRandomAttackPrefab()
+            {
+                int rand = Random.Range(0, 3);
+                switch (rand)
+                {
+                    case 0: return Wanderer.basicAttackPrefab;
+                    case 1: return Wanderer.upwardSlashPrefab;
+                    case 2: return Wanderer.circleSlashPrefab;
+                }
+                return Wanderer.basicAttackPrefab;
+            }
+        }
+
+
         public abstract class WandererState : BaseState
         {
             protected Wanderer Wanderer => mob as Wanderer;
