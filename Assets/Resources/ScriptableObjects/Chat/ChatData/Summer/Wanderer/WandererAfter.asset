@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751913e3d51ba3248a478ab6a578a952, type: 3}
   m_Name: WandererAfter
   m_EditorClassIdentifier: 
+  bgmName: 
   chatMessages:
-  - speakerName: 5
+  - speakerName: 70
+    faceType: 1
+    isLeft: 0
     messages:
     - "\u2026\uD06D. \uC774\uAC74 \uC608\uC0C1\uCE58 \uBABB\uD588\uAD70\u2026"
     - "\uB124 \uC6C0\uC9C1\uC784, \uB3C4\uC801\uB2E8 \uB530\uC704\uC640\uB294 \uB2E4\uB974\uB2E4."
@@ -21,17 +24,24 @@ MonoBehaviour:
       \uC218\uB828 \uC911\uC774\uC5C8\uC9C0."
     - "\uCD5C\uADFC \uC774 \uC77C\uB300\uC5D0 \uB3C4\uC801\uB4E4\uC774 \uB9CE\uC544\u2026
       \uB108\uB3C4 \uADF8 \uC911 \uD558\uB098\uB77C \uCC29\uAC01\uD588\uC5B4."
-    chatDelay: 3
     backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
   - speakerName: 0
+    faceType: 0
+    isLeft: 1
     messages:
     - "\u2026\u2026"
-    chatDelay: 3
     backgroundImage: 0
-  - speakerName: 5
+    chatImage: 0
+    chatDelay: 3
+  - speakerName: 70
+    faceType: 14
+    isLeft: 0
     messages:
     - "\uC5B8\uC820\uAC00 \uB2E4\uC2DC \uB9C8\uC8FC\uCE5C\uB2E4\uBA74\u2026 \uADF8\uB550
       \uC815\uC2DD\uC73C\uB85C \uACA8\uB8E8\uC790."
     - "\uADF8\uB0A0\uAE4C\uC9C0, \uAC15\uD574\uC838\uB77C."
-    chatDelay: 3
     backgroundImage: 0
+    chatImage: 0
+    chatDelay: 3
