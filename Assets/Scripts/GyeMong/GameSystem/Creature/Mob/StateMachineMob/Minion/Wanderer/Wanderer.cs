@@ -102,7 +102,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             Debug.Log("Wanderer Death");
             //StageManager.ClearStage(this);
-            WandererManager.Instance.WandererDeadEvent();
+            WandererManager.Instance.StartWandererDeath();
             gameObject.SetActive(false);
         }
 

@@ -16,6 +16,10 @@ public class WandererManager : MonoBehaviour
         if (Instance != null) Destroy(this);
         else Instance = this;
     }
+    public void StartWandererDeath()
+    {
+        StartCoroutine(WandererDeadEvent());
+    }
     public IEnumerator WandererDeadEvent()
     {
         Debug.Log("Start Wanderer Dead Coroutine");
