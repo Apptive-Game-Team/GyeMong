@@ -35,5 +35,10 @@ namespace GyeMong.GameSystem.Creature.Attack.Component.Movement
 
             return linearPos + curveOffset;
         }
+        
+        public Vector3? GetDirection(float time)
+        {
+            return null;
+        }
     }
 }
