@@ -108,8 +108,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private void Start()
         {
             Initialize();
-
-            ChangeState(new DetectingPlayer() {mob= this});
+        }
+        public void StartMove()
+        {
+            ChangeState(new DetectingPlayer() { mob = this });
         }
 
         private void Update()

@@ -16293,8 +16293,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9456a02764465ec449dc7b0746c8d365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDestination: {x: 0, y: 0, z: 0}
-  cameraSpeed: 0
+  cameraDestination: {x: 0, y: 4, z: 0}
+  cameraSpeed: 5
+  wanderer: {fileID: 1986248222}
 --- !u!1 &1986248214
 GameObject:
   m_ObjectHideFlags: 0
