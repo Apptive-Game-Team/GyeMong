@@ -77,7 +77,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
         {
             Initialize();
             //test
-            ChangeState();
+            // ChangeState();
         }
 
         protected void Initialize()

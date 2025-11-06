@@ -4,6 +4,7 @@ using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
 using UnityEngine;
+using Util;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueScript
 {
@@ -51,7 +52,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             SceneContext.Character.transform.localScale = new Vector3(1f, 1f, 1f);
             SceneContext.CameraManager.CameraFollow(SceneContext.Character.transform);
             yield return StartCoroutine(SceneContext.CameraManager.CameraZoomInOut(5f, cameraSpeed));
-            StartCoroutine(nagaRogueOpeningEvent.TriggerEvents());
+            SceneLoader.LoadScene("NagaRogueScene");
+            // StartCoroutine(nagaRogueOpeningEvent.TriggerEvents());
         }
     }
 }
