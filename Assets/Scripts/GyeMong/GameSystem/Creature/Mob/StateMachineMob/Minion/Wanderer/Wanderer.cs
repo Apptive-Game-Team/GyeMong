@@ -100,7 +100,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         protected override void OnDead()
         {
-            StageManager.ClearStage(this);
+            Debug.Log("Wanderer Death");
+            //StageManager.ClearStage(this);
+            WandererManager.Instance.WandererDeadEvent();
             gameObject.SetActive(false);
         }
 
