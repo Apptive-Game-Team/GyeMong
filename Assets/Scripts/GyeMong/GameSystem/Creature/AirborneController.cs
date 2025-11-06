@@ -18,7 +18,7 @@ namespace GyeMong.GameSystem.Creature
                 yield break;
             isAirborned = true;
             Vector3 origin = transform.position;
-            if(shadow!=null)
+            if(shadow !=null)
             {
                 originShadowLocalY = shadow.transform.localPosition.y;
             }

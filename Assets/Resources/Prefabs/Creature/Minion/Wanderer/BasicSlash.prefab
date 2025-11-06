@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3808737874857786981}
   - component: {fileID: 5539407791025390024}
   - component: {fileID: 2052385148905936599}
-  - component: {fileID: 959082701479382786}
+  - component: {fileID: 3919016871215928104}
   m_Layer: 0
   m_Name: BasicSlash
   m_TagString: EnemyAttack
@@ -125,8 +125,8 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: 3add27a75317357439439f20f4a87963, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: 77fd5f8ae3bd54f7aa8fe59f5bb08977,
     type: 2}
---- !u!58 &959082701479382786
-CircleCollider2D:
+--- !u!70 &3919016871215928104
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -158,5 +158,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 0.7, y: 0.5}
+  m_Direction: 0

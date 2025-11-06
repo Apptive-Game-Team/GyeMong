@@ -167,7 +167,7 @@ namespace GyeMong.InputSystem
                 }
 
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
                 _keyActiveFlags[action] = true;
                 _keyDownBools[action] = false;
@@ -184,9 +184,9 @@ namespace GyeMong.InputSystem
         {
             try
             {
-                return (UnityEngine.Input.GetKey(_keyMappings[action]) && _keyActiveFlags[action]);
+                return Input.GetKey(_keyMappings[action]) && _keyActiveFlags[action];
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
                 SetDefaultKey();
                 return false;
@@ -208,7 +208,7 @@ namespace GyeMong.InputSystem
                 {
                     if (_keyActiveFlags[action])
                     {
-                        if (UnityEngine.Input.GetKeyDown(_keyMappings[action]))//
+                        if (Input.GetKeyDown(_keyMappings[action]))
                         {
                             _keyDownBools[action] = true;
                             _keyDownBoolsForListener[action] = true;
@@ -222,16 +222,14 @@ namespace GyeMong.InputSystem
                         }
                     }
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
                 {
                     SetDefaultKey();
                     _keyDownCounterCoroutine[action] = null;
                     _keyDownBools[action] = false;
                     _keyActiveFlags[action] = true;
                 }
-            
             }
-
         }
 
         private void InitKeyDownDictionary()
@@ -259,11 +257,11 @@ namespace GyeMong.InputSystem
                             _keyDownBoolsForListener[action] = false;
                             OnKeyEvent?.Invoke(action, InputType.Down);
                         }
-                        else if (UnityEngine.Input.GetKey(_keyMappings[action]))
+                        else if (Input.GetKey(_keyMappings[action]))
                         {
                             OnKeyEvent?.Invoke(action, InputType.Press);
                         }
-                        else if (UnityEngine.Input.GetKeyUp(_keyMappings[action]))
+                        else if (Input.GetKeyUp(_keyMappings[action]))
                         {
                             OnKeyEvent?.Invoke(action, InputType.Up);
                         }

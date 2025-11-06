@@ -5,37 +5,40 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Alpha Version/a0.0.1-1/TitleScene.unity
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
     guid: e1e3201c648fc7c409ad819ed4eb74b6
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Alpha Version/a0.0.1-1/Cinematic.unity
     guid: 65ed42980e3d56c409a7a2e4d25e0589
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Alpha Version/a0.0.1-1/SpringBeach.unity
     guid: ade0c2e8f2059411fab7f871e9d7cacf
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Alpha Version/a0.0.1-1/SpringGolemTemple.unity
     guid: a0334c83a7cd0427ba4e210e9ca7e82a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Alpha Version/a0.0.1-1/SpringNorthForest.unity
     guid: 3e0082f24a9754f73b57238b0faee31c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Alpha Version/a0.0.1-1/SpringShadowIsland.unity
     guid: fc8f38f44a40840468a61dccd436202e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Summer/Wanderer.unity
     guid: 1c507ac7e72f944e58c0bfffb162fa0f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/StageSelect/StageSelectPage.unity
     guid: 58351d7350f544bc1997e498ecba21c0
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Summer/SummerOpeningScene.unity
     guid: 9b6a494cfff55cf47b112ebb0e900138
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LoadingScene.unity
     guid: 21506acec0b8d469e8ce5dd919686a55
   - enabled: 1
     path: Assets/Scenes/Summer/NagaRogueScene.unity
     guid: 744bdfb86e83f3043917f6078ce5e39d
+  - enabled: 1
+    path: Assets/Scenes/Summer/SummerNagaWarrior.unity
+    guid: b9f9b35912cf1e1428a87d2dba0f6ab9
   m_configObjects: {}

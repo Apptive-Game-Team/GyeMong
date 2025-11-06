@@ -53,6 +53,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         public Material[] materials;
         private Renderer _renderer;
+        private SpriteRenderer _spriteRenderer;
 
         private Coroutine _attackCoroutine;
         private Tween _attackMoveTween;
@@ -68,6 +69,7 @@ namespace GyeMong.GameSystem.Creature.Player
             soundController = GetComponent<PlayerSoundController>();
             _hitCollider = transform.Find("HitCollider").GetComponent<CircleCollider2D>();
             isTutorial = PlayerPrefs.GetInt("TutorialFlag") == 0;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             _renderer = gameObject.GetComponent<Renderer>();
             _renderer.material = materials[0];
         }
@@ -151,7 +153,7 @@ namespace GyeMong.GameSystem.Creature.Player
                 // StartCoroutine(SkillAttack());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost)
+            if (InputManager.Instance.GetKeyDown(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost && curHealth != stat.HealthMax)
             {
                 healingCoroutine = StartCoroutine(Heal());
             }
@@ -294,15 +296,30 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetFloat("yDir", dashDirection.y);
             Vector2 startPosition = playerRb.position;
 
-            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance,
-                LayerMask.GetMask("Wall"));
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, dashDirection, stat.DashDistance, LayerMask.GetMask("Wall"));
             Vector2 targetPosition = hit.collider == null
                 ? startPosition + dashDirection * stat.DashDistance
                 : hit.point + hit.normal * 0.1f;
-            
+
+            SceneContext.Character.changeListenerCaller.CallDashUsed(stat.DashCooldown);
+
             StartCoroutine(SetInvincibility(stat.DashDuration / 5, stat.DashDuration * 3 / 5));
+
+            int afterImageCount = 0;
+            int afterImageCountMax = 7;
             yield return (_dashTween = playerRb.DOMove(targetPosition, stat.DashDuration)
                 .SetEase(Ease.OutCubic))
+                .OnUpdate(() =>
+                {
+                    float progress = _dashTween.ElapsedPercentage(); // 0 ~ 70%
+                    float targetThreshold = (afterImageCount + 1) / (float)afterImageCountMax * 0.7f;
+
+                    if (progress >= targetThreshold && afterImageCount < afterImageCountMax)
+                    {
+                        SpawnAfterImage();
+                        afterImageCount++;
+                    }
+                })
                 .WaitForCompletion();
 
             StopPlayer();
@@ -312,8 +329,33 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetBool("isDashing", false);
 
             yield return new WaitForSeconds(stat.DashCooldown);
-
             canDash = true;
+        }
+        
+        private void SpawnAfterImage()
+        {
+            GameObject clone = new GameObject("AfterImage")
+            {
+                transform =
+                {
+                    position = transform.position,
+                    rotation = transform.rotation
+                }
+            };
+
+            SpriteRenderer sr = clone.AddComponent<SpriteRenderer>();
+            if (isInvincible)
+            {
+                sr.material = materials[2];
+                sr.material.SetFloat("_isUsable", 1f);
+            }
+            sr.sprite = _spriteRenderer.sprite;
+            sr.flipX = _spriteRenderer.flipX;
+            sr.sortingLayerID = _spriteRenderer.sortingLayerID;
+            sr.sortingOrder = _spriteRenderer.sortingOrder - 1;
+            sr.color = new Color(1f, 1f, 1f, 0.45f);
+            
+            Destroy(clone, stat.DashDuration * 0.3f);
         }
 
         private IEnumerator SetInvincibility(float delay, float duration)
@@ -450,21 +492,20 @@ namespace GyeMong.GameSystem.Creature.Player
             float elapsed = 0f;
             float consumedGauge = 0f;
 
+            float tick = 0.1f;
+            float costPerTick = stat.HealCost * tick / 1f;
+
             while (InputManager.Instance.GetKey(ActionCode.Heal))
             {
-                float delta = Time.deltaTime;
-                float costPerSecond = stat.HealCost / 1f;
-                float cost = costPerSecond * delta;
-
-                if (curSkillGauge < cost)
+                if (curSkillGauge < costPerTick)
                 {
                     Debug.Log("게이지 부족으로 힐 중단");
                     break;
                 }
 
-                curSkillGauge -= cost;
-                consumedGauge += cost;
-                elapsed += delta;
+                curSkillGauge -= costPerTick;
+                consumedGauge += costPerTick;
+                elapsed += tick;
 
                 changeListenerCaller.CallSkillGaugeChangeListeners(curSkillGauge);
 
@@ -474,21 +515,22 @@ namespace GyeMong.GameSystem.Creature.Player
                     SpawnHealCompleteEffect(healCompleteEffectPrefab);
                     soundController.Trigger(PlayerSoundType.HEAL);
                     Debug.Log("Heal is Complete");
+
+                    curSkillGauge -= (stat.HealCost - consumedGauge);
                     break;
                 }
 
-                yield return null;
+                yield return new WaitForSeconds(tick);
             }
 
             Debug.Log("힐 끝");
 
             DestroyEffect(ref activeHealEffect);
-            
+
             animator.SetBool("isHealing", false);
             isHealing = false;
             isAttacking = false;
             canMove = true;
-
         }
 
         public void Heal(float amount)

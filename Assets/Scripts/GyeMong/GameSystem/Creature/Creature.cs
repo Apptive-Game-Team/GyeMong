@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Interface;
 using UnityEngine;
@@ -41,7 +40,7 @@ namespace GyeMong.GameSystem.Creature
             {
                 if (_materialController == null)
                 {
-                    _materialController = GetComponent<MaterialController>();
+                    _materialController = GetComponentInChildren<MaterialController>();
                 }
 
                 return _materialController;
@@ -77,17 +76,18 @@ namespace GyeMong.GameSystem.Creature
         {
             MaterialController?.SetMaterial(MaterialController.MaterialType.HIT);
             MaterialController?.SetFloat(1);
-            if (!_originalColor.HasValue)
+            SpriteRenderer sR = GetComponent<SpriteRenderer>();
+            if (!_originalColor.HasValue && sR != null)
                 _originalColor = GetComponent<SpriteRenderer>().color;
             ;
-            GetComponent<SpriteRenderer>().color = Color.white;
+            if (sR != null) GetComponent<SpriteRenderer>().color = Color.white;
             yield return new WaitForSeconds(BLINK_DELAY);
             if (MaterialController?.GetCurrentMaterialType() == MaterialController.MaterialType.HIT)
             {
                 MaterialController?.SetFloat(0);
             }
 
-            GetComponent<SpriteRenderer>().color = _originalColor.Value;
+            if (sR != null) GetComponent<SpriteRenderer>().color = _originalColor.Value;
         }
         
         public void TrackPath(List<Vector2> path)
@@ -127,20 +127,6 @@ namespace GyeMong.GameSystem.Creature
                 StartCoroutine(Blink());
                 currentHp -= (damage - temp);
             }
-
-            PlayHitFeedback();
-        }
-        
-        public void PlayHitFeedback()
-        {
-            transform.DOKill(); // 중복 방지
-
-            Sequence seq = DOTween.Sequence();
-            seq.Append(transform.DOScaleX(0.6f, 0.3f))   // 가로로 홀쭉
-                .Join(transform.DOScaleY(1.4f, 0.3f))     // 세로로 늘어남
-                .Append(transform.DOScale(new Vector3(1.1f, 0.9f, 1f), 0.1f)) // 반동
-                .Append(transform.DOScale(Vector3.one, 0.3f)) // 원래대로
-                .SetEase(Ease.OutElastic);
         }
         
         protected virtual void OnDead()

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3357680610360814002}
   - component: {fileID: 8628865513876954702}
-  - component: {fileID: 5858137262956387410}
   m_Layer: 20
   m_Name: GlobalLight2D
   m_TagString: Untagged
@@ -83,15 +82,3 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!114 &5858137262956387410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1187482303317515197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47db825c83824219867d9b886424a7dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
