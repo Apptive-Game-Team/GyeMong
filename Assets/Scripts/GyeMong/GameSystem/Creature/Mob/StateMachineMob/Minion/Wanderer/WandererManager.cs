@@ -18,20 +18,6 @@ public class WandererManager : MonoBehaviour
     }
     public void StartWandererDeath()
     {
-        StartCoroutine(WandererDeadEvent());
-    }
-    public IEnumerator WandererDeadEvent()
-    {
-        Debug.Log("Start Wanderer Dead Coroutine");
-        yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
-        if (afterScript != null)
-        {
-            foreach (var script in afterScript)
-            {
-                yield return script.Play();
-            }
-        }
-        yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
         StageManager.ClearStage(this);
     }
 }
