@@ -8,6 +8,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
+using UnityEngine.Rendering.Universal;
 using Sequence = DG.Tweening.Sequence;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
@@ -58,6 +59,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
         [Header("Body Attack Move Value")] 
         [SerializeField] private float bodyAttackSpeed;
+        
+        [Header("BackGround Setting")]
+        [SerializeField] private GameObject[] backGrounds;
+        [SerializeField] private Light2D globalLight;
         
         [Header("Sound")]
         public SoundObject curBGM;
@@ -306,7 +311,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.movement.isIdle = true;
                 yield return new WaitForSeconds(0.1f);
                 yield return Sandworm.movement.HideOrShow(true, 0.5f);
-                Sandworm.transform.position = new Vector3(0, 0, 0);
+                Sandworm.transform.position = new Vector3(0, -3, 0);
                 Sandworm.movement.isIdle = true;
                 Sandworm.movement.FacePlayer(false, true);
                 yield return Sandworm.movement.HideOrShow(false, 0.3f, true);
@@ -322,11 +327,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.StartCoroutine(Sandworm.PlayerPull(3f, Sandworm._sunctionSpeed));
                 yield return new WaitForSeconds(3.3f);
                 Sandworm.StartCoroutine(Sandworm.movement.ChangeScreamImage(false, 0.2f));
-                Sandworm.StartCoroutine(Sandworm.movement.HeadAttackMove(new Vector3(0, -2, 0), 0.3f, 0, 0));
+                Sandworm.StartCoroutine(Sandworm.movement.HeadAttackMove(new Vector3(0, -5, 0), 0.3f, 0, 0));
+                yield return new WaitForSeconds(0.3f);
                 Sound.Play("ENEMY_Sand_Trap");
                 GameObject groundAttack = Instantiate(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity);
-                Destroy(groundAttack, 1f);
-                yield return new WaitForSeconds(1f);
+                Destroy(groundAttack, 0.2f);
+                yield return new WaitForSeconds(0.2f);
+                yield return SceneContext.EffectManager.FadeOut();
+                yield return new WaitForSeconds(0.7f);
                 yield return Sandworm.StartCoroutine(Sandworm.ChangePhaseEvent());
                 Sandworm.GetComponent<Collider2D>().enabled = true;
                 Sandworm.movement.isIdle = true;
@@ -527,7 +535,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine(SceneContext.EffectManager.FadeOut());
-            // change floor to basement
+            yield return HideOrShow(true, 0.3f);
+            backGrounds[0].gameObject.SetActive(false);
+            backGrounds[1].gameObject.SetActive(true);
+            globalLight.intensity = 0.2f;
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(SceneContext.EffectManager.FadeIn());
             curBGM = Sound.Play("BGM_Summer_Sandworm", true);

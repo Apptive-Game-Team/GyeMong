@@ -53,6 +53,7 @@ namespace GyeMong.GameSystem.Map.Boss
             yield return StartCoroutine((new ShowBossHealthBarEvent() { _boss = boss }).Execute());
             boss.ChangeState();
             mapPattern.StartPattern();
+            yield return new CameraFollowPlayer().Execute();
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
         }
     }
