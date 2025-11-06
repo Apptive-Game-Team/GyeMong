@@ -20,7 +20,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
     public class Golem : Boss
     {
         [SerializeField] private GolemIKController ikController;
-        [SerializeField] private RootPatternManager mapPattern;
         [SerializeField] private GameObject cubePrefab;
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject shockwavePrefab;
@@ -458,7 +457,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         {
             base.Die();
             ikController.CallAnimation("Down");
-            mapPattern.DeActivateAll();
             StartCoroutine(DieRoutine());
         }
         private IEnumerator DieRoutine()
