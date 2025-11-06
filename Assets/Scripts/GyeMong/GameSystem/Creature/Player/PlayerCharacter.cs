@@ -1,21 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using GyeMong.EventSystem.Interface;
 using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
 using GyeMong.GameSystem.Creature.Player.Controller;
-using GyeMong.GameSystem.Map.Stage;
 using GyeMong.InputSystem;
 using UnityEngine;
 using DG.Tweening;
-using GyeMong.UISystem.Game.BattleUI;
 
 namespace GyeMong.GameSystem.Creature.Player
 {
     public class PlayerCharacter : MonoBehaviour, IControllable, IEventTriggerable
     {
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
-        
         public StatComponent stat;
         [SerializeField] private StatData _statData;
         [SerializeField] private float curHealth;
@@ -27,7 +23,7 @@ namespace GyeMong.GameSystem.Creature.Player
         private Vector2 mousePosition;
         public Vector2 mouseDirection { get; private set; }
         
-        private Rigidbody2D playerRb;
+        public Rigidbody2D playerRb;
         private Animator animator;
         private PlayerSoundController soundController;
         
