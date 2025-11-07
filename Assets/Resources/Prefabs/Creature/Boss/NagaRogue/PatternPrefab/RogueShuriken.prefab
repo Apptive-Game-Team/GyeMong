@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8557463274029972440}
   - component: {fileID: 1813008252662639558}
   - component: {fileID: -8444384107883641834}
+  - component: {fileID: 7928663940892273189}
   m_Layer: 0
   m_Name: RogueShuriken
   m_TagString: EnemyAttack
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: 9e0f9bfc4b0303e4eb32410100b8b24e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 823ae033a61ed46af9c66dd7ff9cad4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -146,18 +147,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01819358, y: 0.00057757646}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.17066666, y: 0.17066666}
+    oldSize: {x: 0.10666667, y: 0.10666667}
     newSize: {x: 0.17066666, y: 0.17066666}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21790479, y: 0.08564034}
+  m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
 --- !u!114 &-8444384107883641834
 MonoBehaviour:
@@ -176,3 +177,24 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: 995722e865bf28d4999619bf9714cd20, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: edc8cfefe5868fa4f9fdee7dc873268a,
     type: 2}
+--- !u!95 &7928663940892273189
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349092434517921609}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1e79f2be1a018b4badb87d31dd0c3c2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

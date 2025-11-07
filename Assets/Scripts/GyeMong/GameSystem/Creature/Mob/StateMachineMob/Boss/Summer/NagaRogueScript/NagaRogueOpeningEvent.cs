@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using GyeMong.EventSystem.Event;
 using GyeMong.EventSystem.Event.Chat;
@@ -6,18 +7,14 @@ using GyeMong.EventSystem.Event.Input;
 using GyeMong.SoundSystem;
 using UnityEngine;
 
-namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
+namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueScript
 {
     public class NagaRogueOpeningEvent : MonoBehaviour
     {
-        [SerializeField] private global::NagaRogue nagaRogue; 
+        [SerializeField] private NagaRogue nagaRogue; 
         [SerializeField] private Vector3 playerDestination;
         [SerializeField] private float playerMoveSpeed;
         [SerializeField] private GameObject wall;
-        [SerializeField] private Vector3 cameraDestination;
-        [SerializeField] private float cameraSpeed;
-        [SerializeField] private float cameraZoomSize;
-        [SerializeField] private float cameraZoomSpeed;
         [SerializeField] private MultiChatMessageData battleOpeningChat;
         private float autoSkipTime = 3f;
         private bool _isTriggered = false;
@@ -45,6 +42,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogue
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             nagaRogue.ChangeState();
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
+        }
+
+        public void Start()
+        {
+            StartCoroutine(TriggerEvents());
         }
     }
 }
