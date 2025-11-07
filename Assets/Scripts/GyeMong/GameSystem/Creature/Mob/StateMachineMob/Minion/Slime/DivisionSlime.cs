@@ -57,8 +57,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             _pathFinder = new SimplePathFinder();
             _slimeAnimator = SlimeAnimator.Create(slimeSprite, sprites);
             
-            MeleeAttackRange = 2f;
-            RangedAttackRange = 8f;
+            RangedAttackRange = 10f;
             detectionRange = 20f;
         }
 
@@ -92,7 +91,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 new ParabolicMovement(
                     shootPos,
                     shootPos + direction * RangedAttackRange,
-                    7f)
+                    11f)
             );
             rangedAttackObject.transform.SetParent(parent);
             rangedAttackObject.transform.localScale = transform.localScale * 3 / 4;
@@ -117,7 +116,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             public override int GetWeight()
             {
                 if (DivisionSlime._type == SlimeType.Melee) return 0;
-                return !DivisionSlime.IsInBounceAttackRange() && DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange ? 5 : 0;
+                return !DivisionSlime.IsInBounceAttackRange() && 
+                       DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange * 1.5f ? 5 : 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -127,7 +127,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 DivisionSlime.StopCoroutine(DivisionSlime._faceToPlayerCoroutine);
                 Vector3 offset = new Vector3(0, 0.4f, 0);
                 Vector3 scaledOffset = Vector3.Scale(offset, DivisionSlime.transform.lossyScale);
-                Vector3 shootPos = mob.transform.position + scaledOffset;
+                Vector3 shootPos = DivisionSlime.transform.position + scaledOffset;
                 Vector3 direction = (SceneContext.Character.transform.position - shootPos).normalized;
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack, false, DivisionSlime.SpriteDirection(DivisionSlime.DirectionToPlayer));
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
@@ -235,7 +235,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 seq1.Join(DivisionSlime._jumpTween);
                 yield return seq1.WaitForCompletion();
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 4);
-                if (DivisionSlime.DistanceToPlayer < DivisionSlime.MeleeAttackRange)
+                if (DivisionSlime.IsInBounceAttackRange())
                 {
                     DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
                     DivisionSlime.ChangeState();
@@ -340,7 +340,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 
                 slimeComponent._slimeAnimator = SlimeAnimator.Create(slimeComponent.gameObject, sprites);
                 slimeComponent._detector = SimplePlayerDetector.Create(slimeComponent);
-                slimeComponent.MeleeAttackRange = MeleeAttackRange * DIVIDE_RATIO;
                 slimeComponent.RangedAttackRange = RangedAttackRange * DIVIDE_RATIO;
                 slimeComponent._scale = _scale * DIVIDE_RATIO;
                 slimeComponent._divisionLevel = _divisionLevel + 1;
