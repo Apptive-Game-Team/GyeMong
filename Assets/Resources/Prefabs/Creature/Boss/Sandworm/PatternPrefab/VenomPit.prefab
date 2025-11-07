@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5124972313852771720}
   - component: {fileID: -6121001992179181559}
   - component: {fileID: 612062865889387337}
+  - component: {fileID: -139911191515198916}
+  - component: {fileID: -7484807836491824323}
   m_Layer: 0
   m_Name: VenomPit
   m_TagString: EnemyAttack
@@ -29,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: 4f7dbed4471a82843abd2572fce2c914, type: 3}
+  m_Sprite: {fileID: 811618506, guid: 9dcf5c70b5c98431c954f51ed0abbf8d, type: 3}
   m_Color: {r: 0.17890944, g: 0.011764712, b: 0.42352942, a: 0.92941177}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +87,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &-6121001992179181559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +137,39 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.016459465, y: 0.02}
-  m_Size: {x: 2.25, y: 1.52}
+  m_Offset: {x: -0.016459465, y: 0}
+  m_Size: {x: 2.25, y: 0.8}
   m_Direction: 1
+--- !u!114 &-139911191515198916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5689267337111875486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b75f87b3b43c324f813a37f1c67dc94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &-7484807836491824323
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5689267337111875486}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ddfe8fd337f6e694aa0310bc5cd908a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
