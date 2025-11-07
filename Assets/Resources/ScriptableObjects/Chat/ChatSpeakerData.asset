@@ -77,8 +77,16 @@ MonoBehaviour:
     Faces: []
   - speakerType: 60
     speakerName: "\uB098\uAC00 \uC804\uC0AC\uC7A5"
-    image: {fileID: -1798986292, guid: 8587d2ef76d1fbe4b9beecfd2d0875e9, type: 3}
-    Faces: []
+    image: {fileID: 21300000, guid: 61d4ea667a15644b5865c76c24c56fa1, type: 3}
+    Faces:
+    - faceType: 1
+      faceImage: {fileID: 21300000, guid: 61d4ea667a15644b5865c76c24c56fa1, type: 3}
+    - faceType: 4
+      faceImage: {fileID: 21300000, guid: 1981096bacb6240599dd0b24bbed7982, type: 3}
+    - faceType: 2
+      faceImage: {fileID: 21300000, guid: 04ff59673d9a1489c88391d87b7876b7, type: 3}
+    - faceType: 12
+      faceImage: {fileID: 21300000, guid: d1c73153eef8c4090a0d6df12c923a62, type: 3}
   - speakerType: 61
     speakerName: "\uB098\uAC00 \uC544\uC774"
     image: {fileID: 21300000, guid: 4348dcd24f13547ffb732e8e8499e0d1, type: 3}
