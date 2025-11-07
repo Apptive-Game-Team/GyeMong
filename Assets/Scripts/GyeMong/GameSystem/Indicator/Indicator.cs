@@ -15,6 +15,7 @@ namespace GyeMong.GameSystem.Indicator
             
             int flickCount = 6;
             float flickInterval = 0.1f;
+            if (flickCount * flickInterval > duration) flickCount = (int)(duration / flickInterval);
             float flickStart = duration - flickInterval * flickCount;
             float elapsed = 0f;
 
