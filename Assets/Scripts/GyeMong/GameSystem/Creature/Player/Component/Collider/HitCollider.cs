@@ -11,6 +11,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
     public class HitCollider : MonoBehaviour
     {
         [SerializeField] private AirborneController airborneController;
+        [SerializeField] private GameObject hitEffect;
 
         private Dictionary<Collider2D, float> multiHitTimers = new Dictionary<Collider2D, float>();
 
@@ -29,7 +30,6 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
             if (enemyAttackInfo.canMultiHit)
             {
-                
                 attackObjectController.isAttacked = true;
                 float lastHitTime = multiHitTimers.ContainsKey(collider) ? multiHitTimers[collider] : 0f;
 
@@ -41,6 +41,8 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             }
             else if (!attackObjectController.isAttacked)
             {
+                GameObject go = Instantiate(hitEffect, collider.ClosestPoint(transform.position), Quaternion.identity);
+                Destroy(go,0.5f);
                 ApplyHitImpact(enemyAttackInfo.damage, collider);
                 attackObjectController.isAttacked = true;
 

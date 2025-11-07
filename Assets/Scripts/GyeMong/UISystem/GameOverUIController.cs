@@ -5,7 +5,9 @@ using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.InputSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Util;
 
 public class GameOverUIController : MonoBehaviour
 {
@@ -31,5 +33,8 @@ public class GameOverUIController : MonoBehaviour
         yield return new WaitUntil(() => InputManager.Instance.GetKeyDown(ActionCode.Interaction));
         gameOverUI.SetActive(false);
         StageManager.LoseStage(this);
+        #if UNITY_EDITOR
+        SceneLoader.LoadScene(SceneManager.GetActiveScene().name);
+        #endif
     }
 }
