@@ -8,6 +8,7 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
+using UnityEngine.Rendering.Universal;
 using Sequence = DG.Tweening.Sequence;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
@@ -34,7 +35,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         private float _chaseSpeed;
 
         [Header("Movement")] 
-        [SerializeField] private SandwormMovement movement;
+        public SandwormMovement movement;
 
         [Header("Head Attack Move Value")] 
         [SerializeField] private float headAttackMovePreDelay;
@@ -59,16 +60,23 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [Header("Body Attack Move Value")] 
         [SerializeField] private float bodyAttackSpeed;
         
+        [Header("BackGround Setting")]
+        [SerializeField] private GameObject[] backGrounds;
+        [SerializeField] private Light2D globalLight;
+        
         [Header("Sound")]
         public SoundObject curBGM;
         public SoundObject burrowingSound;
+
+        private bool _phaseChange;
+        private bool _die;
         
         protected override void Initialize()
         {
             maxPhase = 2;
             maxHps.Clear();
+            maxHps.Add(30f);
             maxHps.Add(50f);
-            maxHps.Add(100f);
             currentHp = maxHps[currentPhase];
             damage = 20f;
             speed = 2f;
@@ -78,15 +86,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             RangedAttackRange = 100f;
             
             _venomAttackDuration = 0.8f;
-            _venomAttackSpreadAngle = 15f;
+            _venomAttackSpreadAngle = 5f;
             _venomPitDuration = 2f;
             _laserDuration = 1f;
             _laserDistance = 4f;
             _sunctionSpeed = 3f;
             _chaseSpeed = 4f;
             
-            movement.FacePlayer();
-            ChangeState();
+            // movement.FacePlayer();
+            // ChangeState();
         }
 
         public abstract class SandwormState : CoolDownState
@@ -96,25 +104,34 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             public override void OnStateUpdate()
             {
-                Sandworm.movement.FacePlayer();
+                if (!Sandworm._phaseChange && !Sandworm._die)
+                {
+                    Sandworm.movement.FacePlayer();
+                }
             }
 
             protected virtual void SetWeights()
             {
-                _weights = new Dictionary<System.Type, int>
+                if (Sandworm._phaseChange)
+                {
+                    _weights = new Dictionary<System.Type, int>
                     {
-                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 5 : 0 },
-                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 5 : 0 },
-                        // {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange)
-                        //     && (Sandworm.currentPhase == 1) ? 5 : 0 },
-                        // {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange)
-                        //     && (Sandworm.currentPhase == 1) ? 5 : 0 },
-                        {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) && 
-                                                      (Sandworm.DistanceToPlayer > Sandworm.MeleeAttackRange) ? 5 : 0 },
-                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) &&
-                                                     (Sandworm.DistanceToPlayer > Sandworm.MeleeAttackRange) ? 5 : 0 },
+                        {typeof(SandTrapAttack), 1}
                     };
+                }
+                else
+                {
+                    _weights = new Dictionary<System.Type, int>
+                    {
+                        {typeof(VenomBreath), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 2 : 0 },
+                        {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 2 : 0 },
+                        {typeof(FlameLaser), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) ? 2 : 0 },
+                        {typeof(ShortBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) && 
+                                                      (Sandworm.currentPhase == 1) ? 2 : 0 },
+                        {typeof(LongBurstOutAttack), (Sandworm.DistanceToPlayer < Sandworm.RangedAttackRange) &&
+                                                     (Sandworm.currentPhase == 1) ? 1 : 0 },
+                    };
+                }
             }
             
             protected Dictionary<System.Type, int> NextStateWeights
@@ -140,10 +157,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Vector3 attackPosition = SceneContext.Character.transform.position;
                 Sound.Play("ENEMY_Venom_Breath_Action");
                 Sandworm.StartCoroutine(Sandworm.movement.AttackMove
-                    (startPositionFlag, Sandworm.attackMovePreAngle, Sandworm.attackMovePreDelay,
+                    (Sandworm.DirectionToPlayer, startPositionFlag, Sandworm.attackMovePreAngle, Sandworm.attackMovePreDelay,
                         Sandworm.attackMoveAngle, Sandworm.attackMoveDuration, Sandworm.attackMovePostDelay));
                 yield return new WaitForSeconds(Sandworm.attackMovePreDelay + Sandworm.attackMoveDuration - 0.1f);
-                Sandworm.VenomBreathAttack(attackPosition);
+                Sandworm.VenomBreathAttack(attackPosition, Sandworm.currentPhase > 0);
                 yield return new WaitForSeconds(Sandworm.attackMovePostDelay + 0.2f);
                 Sandworm.movement.isIdle = true;
                 yield return new WaitForSeconds(Sandworm.attackMovePostDelay / 2);
@@ -196,7 +213,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 bool startPositionFlag = Sandworm.DirectionToPlayer.x > 0;
                 Sound.Play("ENEMY_Laser_Action");
                 Sandworm.StartCoroutine(Sandworm.movement.AttackMove
-                    (startPositionFlag, Sandworm.laserAttackMovePreAngle, Sandworm.laserAttackMovePreDelay
+                    (Sandworm.DirectionToPlayer, startPositionFlag, Sandworm.laserAttackMovePreAngle, Sandworm.laserAttackMovePreDelay
                         , Sandworm.laserAttackMoveAngle, Sandworm.laserAttackMoveDuration, Sandworm.laserAttackMovePostDelay));
                 Vector3 attackPosition = SceneContext.Character.transform.position;
                 yield return new WaitForSeconds(Sandworm.laserAttackMovePreDelay + Sandworm.laserAttackMoveDuration - 0.1f);
@@ -221,14 +238,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 Sandworm.movement.isIdle = false;
                 Sandworm.mapPattern.StopPattern();
-                Sandworm.HideOrShow(true, 0.3f);
-                yield return new WaitForSeconds(0.3f);
+                yield return Sandworm.HideOrShow(true, 1f);
                 Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed * 1.3f));
                 yield return new WaitForSeconds(2f);
-                Sandworm.HideOrShow(false, 0.3f);
-                Sound.Play("ENEMY_Short_Burst_Action");
                 GameObject body = Instantiate(Sandworm.bodyAttack, Sandworm.transform.position, Quaternion.identity);
                 Destroy(body, 0.07f);
+                yield return Sandworm.HideOrShow(false, 0.3f);
                 yield return new WaitForSeconds(0.2f);
                 Sandworm.mapPattern.StartPattern();
                 yield return new WaitForSeconds(0.2f);
@@ -242,7 +257,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 _weights = new Dictionary<System.Type, int>
                 {
                     {typeof(VenomBreath), 1},
-                    {typeof(HeadAttack), 1},
+                    {typeof(HeadAttack), (Sandworm.DistanceToPlayer < Sandworm.MeleeAttackRange) ? 1 : 0},
                     {typeof(FlameLaser), 1},
                 };
             }
@@ -259,12 +274,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             {
                 Sandworm.movement.isIdle = false;
                 Sandworm.mapPattern.StopPattern();
-                Sandworm.HideOrShow(true, 0.3f);
-                yield return new WaitForSeconds(0.3f);
+                yield return Sandworm.HideOrShow(true, 1f);
                 Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed * 0.7f));
                 yield return new WaitForSeconds(2f);
                 Vector3 attackPosition = SceneContext.Character.transform.position + Sandworm.DirectionToPlayer * 2f;
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f);
                 Sandworm.GetComponentInChildren<ParticleSystem>().Stop();
                 Sound.Play("ENEMY_Long_Burst_Action");
                 yield return Sandworm.movement.BodyAttackMove(attackPosition, Sandworm.bodyAttackSpeed);
@@ -288,7 +302,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             public override int GetWeight()
             {
-                return (Sandworm.currentPhase == 1) ? 1 : 0;
+                return 0;
             }
 
             public override IEnumerator StateCoroutine()
@@ -296,6 +310,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.mapPattern.StopPattern();
                 Sandworm.movement.isIdle = true;
                 yield return new WaitForSeconds(0.1f);
+                yield return Sandworm.movement.HideOrShow(true, 0.5f);
+                Sandworm.transform.position = new Vector3(0, -3, 0);
+                Sandworm.movement.isIdle = true;
+                Sandworm.movement.FacePlayer(false, true);
+                yield return Sandworm.movement.HideOrShow(false, 0.3f, true);
                 Sandworm.GetComponent<Collider2D>().enabled = false;
                 Sound.Play("ENEMY_Sand_Trap_Action");
                 Sandworm.movement.isIdle = false;
@@ -303,16 +322,23 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                     Quaternion.Euler(0f, 0f, 90f));
                 Destroy(indicator, 3.6f);
                 //Sandworm.RotateHead(-30f, 3.5f, 30f, 0.2f, 0.5f);
+                Sandworm.StartCoroutine(Sandworm.movement.ChangeScreamImage(true, 0.2f));
                 Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
                 Sandworm.StartCoroutine(Sandworm.PlayerPull(3f, Sandworm._sunctionSpeed));
-                yield return new WaitForSeconds(3.6f);
+                yield return new WaitForSeconds(3.3f);
+                Sandworm.StartCoroutine(Sandworm.movement.ChangeScreamImage(false, 0.2f));
+                Sandworm.StartCoroutine(Sandworm.movement.HeadAttackMove(new Vector3(0, -5, 0), 0.3f, 0, 0));
+                yield return new WaitForSeconds(0.3f);
                 Sound.Play("ENEMY_Sand_Trap");
                 GameObject groundAttack = Instantiate(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity);
-                Destroy(groundAttack, 1f);
-                yield return new WaitForSeconds(1f);
+                Destroy(groundAttack, 0.2f);
+                yield return new WaitForSeconds(0.2f);
+                yield return SceneContext.EffectManager.FadeOut();
+                yield return new WaitForSeconds(0.7f);
                 yield return Sandworm.StartCoroutine(Sandworm.ChangePhaseEvent());
                 Sandworm.GetComponent<Collider2D>().enabled = true;
                 Sandworm.movement.isIdle = true;
+                Sandworm._phaseChange = false;
                 SetWeights();
                 Sandworm.mapPattern.StartPattern();
                 Sandworm.ChangeState(NextStateWeights);
@@ -328,13 +354,18 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             }
         }
 
-        private void VenomBreathAttack(Vector3 attackPosition)
+        private void VenomBreathAttack(Vector3 attackPosition, bool isNextPhase = false)
         {
-            Vector2[] directions = new Vector2[3];
+            Vector2[] directions = isNextPhase ? new Vector2[5] : new Vector2[3];
             Vector3 startPos = movement.sandwormBody[0].transform.position;
-            directions[0] = (attackPosition - startPos).normalized;
+            directions[0] = (attackPosition - movement.sandwormBody[0].transform.position).normalized;
             directions[1] = RotateVector(directions[0], _venomAttackSpreadAngle);
             directions[2] = RotateVector(directions[0], -_venomAttackSpreadAngle);
+            if (isNextPhase)
+            {
+                directions[3] = RotateVector(directions[0], _venomAttackSpreadAngle * 2);
+                directions[4] = RotateVector(directions[0], _venomAttackSpreadAngle * -2);
+            }
             Sound.Play("ENEMY_Venom_Breath");
             foreach (var dir in directions)
             {
@@ -347,14 +378,28 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Vector3 targetPos = startPos + (Vector3)direction * (attackPosition - startPos).magnitude + (Vector3)Random.insideUnitCircle / 4;
             
             GameObject venom = Instantiate(venomAttack, startPos, Quaternion.identity);
-            
-            Vector3 peakPos = Vector3.Lerp(startPos, targetPos, 0.5f) + Vector3.up * 1.5f;
+            float dist = Vector3.Distance(startPos, targetPos);
+            Vector3 peakPos = (startPos + targetPos) / 2 + Vector3.up * dist / 5;
+            Vector3 prevPos = startPos;    
             
             venom.transform.DOPath(
-                new[] { startPos, peakPos, targetPos },
+                new[] { startPos, peakPos, targetPos},
                 _venomAttackDuration,
                 PathType.CatmullRom
             ).SetEase(Ease.InOutSine)
+            .OnUpdate(() =>
+            {
+                Vector3 currentPos = venom.transform.position;
+                
+                Vector3 dir = currentPos - prevPos;
+                if (dir.sqrMagnitude > 0.0001f)
+                {
+                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    venom.transform.rotation = Quaternion.Euler(0, 0, angle + 90f);
+                }
+                
+                prevPos = currentPos;
+            })
             .OnComplete(() =>
             {
                 if (!venom || !venom.activeInHierarchy) return;
@@ -380,7 +425,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Vector3 start = movement.sandwormBody[0].transform.position;
             
             Vector3 dir = (attackPosition - transform.position).normalized;
-            Vector3 startPos = attackPosition - dir * _laserDistance;
+            Vector3 startPos = transform.position + dir;
             Vector3 endPos = attackPosition + dir * _laserDistance;     // 레이저가 땅에 닿는 시작 부분, 끝 부분 지정
             
             GameObject laser = Instantiate(laserAttack, start, Quaternion.identity);
@@ -392,7 +437,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             float time = 0f;
             float realLength = 3.23f;
-            Destroy(laserTransform.gameObject, duration);
             while (time < duration)
             {
                 float t = time / duration;
@@ -409,13 +453,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 time += Time.deltaTime;
                 yield return null;
             }
+            laserTransform.GetComponent<Animator>().enabled = true;
         }
 
-        private void HideOrShow(bool hide, float duration)
+        private IEnumerator HideOrShow(bool hide, float duration)
         {
             GetComponent<Collider2D>().enabled = !hide;
             Sound.Play(hide ? "ENEMY_Hide" : "ENEMY_Show");
-            StartCoroutine(movement.HideOrShow(hide, duration));
+            yield return movement.HideOrShow(hide, duration);
         }
 
         private IEnumerator ChasePlayer(float duration, float chaseSpeed)
@@ -430,11 +475,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return null;
             }
             Sound.Stop(burrowingSound);
-        }
-
-        private void JumpToPlayer(Vector3 playerPosition, float speed)
-        {
-            StartCoroutine(movement.BodyAttackMove(playerPosition, speed));
         }
 
         private IEnumerator Scream(float duration, float force)
@@ -473,7 +513,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             if (currentPhase < maxHps.Count - 1)
             {
                 currentPhase++;
-                StopAllCoroutines();
+                _phaseChange = true;
                 MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(ChangePhase());
             }
@@ -488,7 +528,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             yield return StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
             currentHp = CurrentMaxHp;
-            ChangeState();
             yield return null;
         }
 
@@ -496,7 +535,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
             yield return StartCoroutine(SceneContext.EffectManager.FadeOut());
-            // change floor to basement
+            yield return HideOrShow(true, 0.3f);
+            backGrounds[0].gameObject.SetActive(false);
+            backGrounds[1].gameObject.SetActive(true);
+            globalLight.intensity = 0.2f;
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(SceneContext.EffectManager.FadeIn());
             curBGM = Sound.Play("BGM_Summer_Sandworm", true);
@@ -509,13 +551,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             currentState.OnStateExit();
             mapPattern.StopPattern();
             StopAllCoroutines();
+            movement.SetBlink(0);
             Sound.Stop(curBGM);
             Sound.Play("ENEMY_Ground_Crash");
-            StartCoroutine(movement.AttackMove(DirectionToPlayer.x > 0,0,0,50f, 1f, 0, 50f));
+            StartCoroutine(movement.AttackMove(DirectionToPlayer, DirectionToPlayer.x > 0,0,0,50f, 1f, 0, 50f));
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().sortingOrder--;
             StartCoroutine((new HideBossHealthBarEvent() { _boss = this }).Execute());
             StageManager.ClearStage(this);
+        }
+
+        protected override IEnumerator Blink()
+        {
+            movement.SetBlink(1);
+            yield return new WaitForSeconds(BLINK_DELAY);
+            movement.SetBlink(0);
         }
     }
 }
