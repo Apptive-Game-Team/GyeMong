@@ -80,6 +80,15 @@ namespace GyeMong.GameSystem.Creature.Attack
                     gameObject.SetActive(false);
                     break;
                 }
+                
+                // Set Object's Origin Direction == Right Direction
+                Vector3? direction = _movement.GetDirection(elapsedTime);
+                if (direction.HasValue)
+                {
+                    float angle = Mathf.Atan2(direction.Value.y, direction.Value.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                }
+                
                 transform.position = position.Value;
                 yield return null;
             }

@@ -28,5 +28,10 @@ namespace GyeMong.GameSystem.Creature.Attack.Component.Movement
             }
             return Vector3.Lerp(_startPosition, _targetPosition, time*2 / _duration);
         }
+        
+        public Vector3? GetDirection(float time)
+        {
+            return null;
+        }
     }
 }

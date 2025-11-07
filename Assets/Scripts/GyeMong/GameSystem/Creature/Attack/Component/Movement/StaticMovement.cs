@@ -21,5 +21,10 @@ namespace GyeMong.GameSystem.Creature.Attack.Component.Movement
 
             return _position;
         }
+        
+        public Vector3? GetDirection(float time)
+        {
+            return null;
+        }
     }
 }
