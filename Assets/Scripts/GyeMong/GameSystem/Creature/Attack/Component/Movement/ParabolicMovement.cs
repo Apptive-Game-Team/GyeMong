@@ -32,5 +32,21 @@ namespace GyeMong.GameSystem.Creature.Attack.Component.Movement
 
             return linearPos;
         }
+        
+        public Vector3? GetDirection(float time)
+        {
+            if (time > _duration) return null;
+
+            float tNorm = Mathf.Clamp01(time / _duration);
+            Vector3 delta = _targetPosition - _startPosition;
+            
+            Vector3 v = delta / _duration;
+            
+            float dy = Mathf.Cos(tNorm * Mathf.PI) * Mathf.PI * _arcHeight / _duration;
+            v.y += dy;
+            
+            float mag = v.magnitude;
+            return v / mag;
+        }
     }
 }

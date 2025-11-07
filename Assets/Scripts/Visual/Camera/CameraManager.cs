@@ -73,6 +73,10 @@ namespace Visual.Camera
             yield return currentCam.transform
                 .DOMove(destination, speed)
                 .SetEase(Ease.OutQuad)
+                .OnUpdate(() =>
+                {
+                    currentCam.gameObject.GetComponent<CinemachineConfiner2D>().InvalidateCache();
+                })
                 .WaitForCompletion();
         }
 
