@@ -102,26 +102,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         
         private IEnumerator CopyAction()
         {
-            _movement.x = 0;
-            _movement.y = 0;
-
-            if (InputManager.Instance.GetKey(ActionCode.MoveRight))
-            {
-                _movement.x = -1;
-            }
-            else if (InputManager.Instance.GetKey(ActionCode.MoveLeft))
-            {
-                _movement.x = 1;
-            }
-
-            if (InputManager.Instance.GetKey(ActionCode.MoveUp))
-            {
-                _movement.y = -1;
-            }
-            else if (InputManager.Instance.GetKey(ActionCode.MoveDown))
-            {
-                _movement.y = 1;
-            }
+            _movement = ReverseDirection(SceneContext.Character.Velocity);
 
             _movement.Normalize();
             if (_movement == Vector2.zero) Animator.SetBool("isMove", false);
@@ -138,6 +119,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             }
 
             yield return null;
+        }
+        
+        private Vector2 ReverseDirection(Vector2 direction)
+        {
+            return new Vector2(-direction.x, -direction.y);
         }
 
         protected void Initialize()

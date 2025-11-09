@@ -18,6 +18,10 @@ namespace GyeMong.GameSystem.Creature.Player
         [SerializeField] public float curShield;
         [SerializeField] private float curSkillGauge;
         public bool isControlled = false;
+        
+        public Vector2 Movement => movement;
+        public Vector2 Velocity => playerRb.velocity;
+        
         private Vector2 movement;
         private Vector2 lastMovementDirection;
         private Vector2 mousePosition;
