@@ -1476,6 +1476,7 @@ MonoBehaviour:
   cameraDuration: 3
   beforeScript:
   - {fileID: 11400000, guid: 215ce32ee8a4b40b6ac209a28b1f5a01, type: 2}
+  hpBarGameObject: {fileID: 1700247929}
 --- !u!1 &1180974396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,6 +1686,7 @@ GameObject:
   - component: {fileID: 1230071929}
   - component: {fileID: 1230071931}
   - component: {fileID: 1230071932}
+  - component: {fileID: 1230071933}
   m_Layer: 0
   m_Name: ShadowOfHero
   m_TagString: Untagged
@@ -1711,8 +1713,8 @@ MonoBehaviour:
     type: 3}
   skillPrefab: {fileID: 8480704386990181861, guid: d0458759a61874e51908dcbc9e0af182,
     type: 3}
-  key: {fileID: 4814796725110161025, guid: 0efd04cacb9b9f1409984ed9e57696c7, type: 3}
   SkillIndicator: {fileID: 0}
+  hpBarGameObject: {fileID: 1700247929}
 --- !u!4 &1230071926
 Transform:
   m_ObjectHideFlags: 0
@@ -1831,7 +1833,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1858,14 +1860,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230071924}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1876,7 +1878,42 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!58 &1230071933
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230071924}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.42
 --- !u!1 &1250832983
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,6 +2203,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7910654563229973028, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7910654563229973028, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2670,6 +2717,11 @@ PrefabInstance:
     - target: {fileID: 6422704290843774735, guid: 003d692d6059a24478089b5179679b50,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723060582642691127, guid: 003d692d6059a24478089b5179679b50,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8757841022984470928, guid: 003d692d6059a24478089b5179679b50,
