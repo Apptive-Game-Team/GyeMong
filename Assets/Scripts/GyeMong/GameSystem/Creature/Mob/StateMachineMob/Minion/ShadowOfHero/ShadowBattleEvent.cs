@@ -15,6 +15,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         [SerializeField] private float cameraSize;
         [SerializeField] private float cameraDuration;
         [SerializeField] private List<MultiChatMessageData> beforeScript;
+        [SerializeField] private GameObject hpBarGameObject;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -39,7 +40,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             }
             SceneContext.CameraManager.CameraFollow(SceneContext.Character.gameObject.transform);
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
+            hpBarGameObject.SetActive(true);
             shadow.ChangeState(new ShadowOfHero.DetectingPlayer() { mob = shadow });
+            
         }
     }
 }
