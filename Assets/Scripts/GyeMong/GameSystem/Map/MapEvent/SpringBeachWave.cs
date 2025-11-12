@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using GyeMong.SoundSystem;
 using UnityEngine.Serialization;
 
 namespace GyeMong.GameSystem.Map.MapEvent
@@ -12,6 +13,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private void Start()
         {
+            var waveSound = Sound.Play("EFFECT_Spring_Wave", true, 0.2f);
             StartCoroutine(WaveAnimation());
         }
 
