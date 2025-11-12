@@ -108,7 +108,6 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return (new SetActiveObject() {_gameObject = elfChild, isActive = false}).Execute();
             yield return SceneContext.CameraManager.CameraZoomInOut(cameraSize3, cameraSpeed3);
             yield return slimeEvent.Execute();
-            yield return new WaitForSeconds(_delayTime);
             SceneContext.CameraManager.CameraFollow(SceneContext.Character.gameObject.transform);
             yield return (new SetKeyInputEvent() { _isEnable = true }).Execute();
         }

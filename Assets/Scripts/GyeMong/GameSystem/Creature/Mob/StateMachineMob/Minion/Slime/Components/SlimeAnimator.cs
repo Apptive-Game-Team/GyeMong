@@ -5,7 +5,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Component
 {
     public class SlimeAnimator : MonoBehaviour
     {
-        public static float AnimationDeltaTime = 0.4f;
+        public static float AnimationDeltaTime = 0.3f;
     
         private SpriteRenderer _spriteRenderer;
         private SlimeSprites _sprites;

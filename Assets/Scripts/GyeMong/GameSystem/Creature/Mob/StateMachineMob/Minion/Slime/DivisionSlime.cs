@@ -122,8 +122,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                if (DivisionSlime._isTutorial && !DivisionSlime._isTutorialShown) 
+                if (DivisionSlime._isTutorial && !DivisionSlime._isTutorialShown)
+                {
                     yield return DivisionSlime.GrazeSystemTutorial1();
+                }
                 DivisionSlime.StopCoroutine(DivisionSlime._faceToPlayerCoroutine);
                 Vector3 offset = new Vector3(0, 0.4f, 0);
                 Vector3 scaledOffset = Vector3.Scale(offset, DivisionSlime.transform.lossyScale);
@@ -137,8 +139,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true, DivisionSlime.SpriteDirection(DivisionSlime.DirectionToPlayer));
                 DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
-                if (DivisionSlime._isTutorial) 
+                if (DivisionSlime._isTutorial)
+                {
                     yield return DivisionSlime.GrazeSystemTutorial2();
+                }
                 mob.ChangeState();
             }
         }
