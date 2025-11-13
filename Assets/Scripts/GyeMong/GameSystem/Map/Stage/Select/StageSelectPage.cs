@@ -14,6 +14,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         NagaRouge = 5,
         NagaWarrior = 6,
         Wanderer = 7,
+        Sandworm = 8,
     }
     
     public static class StageSelectPage
