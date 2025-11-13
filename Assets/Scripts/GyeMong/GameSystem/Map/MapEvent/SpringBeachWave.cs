@@ -13,7 +13,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private void Start()
         {
-            var waveSound = Sound.Play("EFFECT_Spring_Wave", true, 0.2f);
+            var waveSound = Sound.Play("EFFECT_Spring_Wave", true);
             StartCoroutine(WaveAnimation());
         }
 
