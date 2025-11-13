@@ -37,6 +37,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return new WaitForSeconds(_attackDelay);
                 
                 GameObject tail = Instantiate(tailAttack, spawnPos, Quaternion.identity);
+                tail.GetComponent<SpriteRenderer>().sortingOrder = spawnPos.y > sandworm.transform.position.y ? 12 : 30;
                 Instantiate(showEffect, spawnPos, Quaternion.identity);
                 Sound.Play("ENEMY_Map_Tail_Attack");
 
