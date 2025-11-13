@@ -126,6 +126,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
+
             yield return ApplyAttackingMove(0.2f);
             yield return IndicatorGenerator.Instance.GenerateIndicator(
                 AttackObjectController.Create(
@@ -145,6 +146,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
+
             yield return ApplyAttackingMove(0.2f);
             AttackObjectController.Create(
                     transform.position + _directionController.GetDirection() * distance, 
@@ -190,8 +192,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         private void FaceToPlayer()
         {
+            Vector2 dir = _directionController.GetDirection();
             Animator.SetFloat("xDir", _directionController.GetDirection().x);
             Animator.SetFloat("yDir", _directionController.GetDirection().y);
+
+            var sprite = GetComponentInChildren<SpriteRenderer>();
+            if (sprite != null)
+                sprite.flipX = dir.x > 0;
         }
 
         public class CircularSlash : WandererState
