@@ -444,6 +444,7 @@ MonoBehaviour:
   curShield: 0
   curSkillGauge: 0
   isControlled: 0
+  playerRb: {fileID: 0}
   attackColliderPrefab: {fileID: 2848122850891802944, guid: 8e8beeeb017f3414891b7e04a9438725,
     type: 3}
   attackComboColliderPrefab: {fileID: 2848122850891802944, guid: b242b1d90c6b5c24b951bbae457eb8f0,
@@ -1909,6 +1910,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   airborneController: {fileID: 5207820199311480366}
+  hitEffect: {fileID: 2826333813790059607, guid: 5a0f071020b1aa14689d6037fcdf8449,
+    type: 3}
 --- !u!1 &8224576282899367610
 GameObject:
   m_ObjectHideFlags: 0
