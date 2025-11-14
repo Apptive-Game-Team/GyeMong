@@ -97,6 +97,7 @@ namespace GyeMong.GameSystem.Creature.Attack
         }
         public void StartRoutineWithCallOnEnd(Action onEnd = null)
         {
+            gameObject.SetActive(true);
             StartCoroutine(ExecuteCollidableAttackSequence(onEnd));
         }
         private IEnumerator ExecuteAttackSequenceCallOnEnd(Action onEnd)
