@@ -24,6 +24,7 @@ namespace GyeMong.UISystem.Game.BossUI
         public const float DEFAULT_HP = 100;
     
         private int currentPhase = -1;
+        
         private void Awake()
         {
             _curHpBar = transform.Find("CurHp").GetComponent<RectTransform>();
@@ -68,8 +69,6 @@ namespace GyeMong.UISystem.Game.BossUI
                 _maxHp = DEFAULT_HP;
             }
         }
-        
-        
 
         public void UpdateHp(float hp, float shield)
         {
