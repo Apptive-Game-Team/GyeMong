@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GyeMong.EventSystem;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.GameSystem.Creature.Attack;
@@ -9,6 +10,7 @@ using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Indicator;
+using GyeMong.GameSystem.Map.MapEvent;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using Unity.VisualScripting;
@@ -513,7 +515,27 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         }
         protected override void Die()
         {
-            base.Die();
+            try
+            {
+                currentState.OnStateExit();
+                StopAllCoroutines();
+
+                GameObject downObj = GameObject.Find("ElfDown");
+
+                if (downObj != null)
+                {
+                    ElfDown fallback = FindObjectOfType<ElfDown>();
+                    StartCoroutine(fallback.Trigger());
+                }
+                else
+                {
+                    GameObject.Find("BossDownEventObject").gameObject.GetComponent<EventObject>().Trigger();
+                }
+            }
+            catch
+            {
+                Debug.Log("BossDownEventObject not found");
+            }
             Animator.SetBool("isDown", true);
             BgmManager.Stop();
             StartCoroutine(DieRoutine());

@@ -23,5 +23,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return new WaitForSeconds(delay);
             Destroy(gameObject);
         }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

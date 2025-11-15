@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GyeMong.EventSystem;
 using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
@@ -10,6 +11,7 @@ using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Indicator;
+using GyeMong.GameSystem.Map.MapEvent;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using Unity.VisualScripting;
@@ -19,6 +21,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
 {
     public class Golem : Boss
     {
+        private List<GameObject> patternObjs = new List<GameObject>();
         [SerializeField] private GolemIKController ikController;
         [SerializeField] private GameObject cubePrefab;
         [SerializeField] private GameObject floorPrefab;
@@ -139,9 +142,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             if (excludeMin < 0f) excludeMin += 360f;
             if (excludeMax >= 360f) excludeMax -= 360f;
 
+            ikController.CallAnimation("HandSmash");
+            yield return new WaitForSeconds(attackdelayTime / 6);
             for (int i = startRadius; i <= targetRadius; i++)
             {
-                ikController.CallAnimation("HandSmash");
                 Vector3[] points = GetCirclePoints(transform.position, i, i * 3 + 10);
                 ShockwaveSoundObject.SetSoundSourceByName("ENEMY_Shockwave");
                 StartCoroutine(ShockwaveSoundObject.Play());
@@ -321,7 +325,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 Golem.ikController.CallAnimation("FallingCube");
                 Golem.StartCoroutine(Golem.TossSoundObject.Play());
-                Instantiate(Golem.cubePrefab, Golem.transform.position + new Vector3(1,-1,0), Quaternion.identity);
+                GameObject cube = Instantiate(Golem.cubePrefab, Golem.transform.position + new Vector3(1,-1,0), Quaternion.identity);
+                Golem.patternObjs.Add(cube);
                 yield return new WaitForSeconds(Golem.attackdelayTime);
                 SetWeights();
                 Golem.ChangeState(NextStateWeights);
@@ -438,6 +443,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         }
         protected override void TransPhase()
         {
+            if (patternObjs != null)
+            {
+                foreach (var obj in patternObjs)
+                {
+                    if (obj != null)
+                        Destroy(obj);
+                }
+                patternObjs.Clear();
+            }
             if (currentPhase < maxHps.Count - 1)
             {
                 currentPhase++;
@@ -455,8 +469,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         }
         protected override void Die()
         {
-            base.Die();
+            currentState.OnStateExit();
+            StopAllCoroutines();
+            GameObject.Find("BossDownEventObject").gameObject.GetComponent<GolemDown>().Trigger();
             ikController.CallAnimation("Down");
+            BgmManager.Stop();
             StartCoroutine(DieRoutine());
         }
         private IEnumerator DieRoutine()
@@ -479,11 +496,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             SceneContext.CameraManager.CameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
 
             var zoomEvent = new CameraZoomInOut();
-            zoomEvent.SetSize(3.6f);
+            zoomEvent.SetSize(7f);
             zoomEvent.SetDuration(0.5f);
             yield return StartCoroutine(zoomEvent.Execute());
-
-            var activateBossRoomEvent = new ActivateBossRoomEvent();
 
             var deactivateEvent = new DeActivateBossRoomEvent();
 

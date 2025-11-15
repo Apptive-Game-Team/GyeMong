@@ -121,7 +121,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return animParamEvent.Execute();
 
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
-
+            yield return StartCoroutine((new CameraFollowPlayer()).Execute());
             bossRoomEntrance.Trigger();
 
             activateBossRoomEvent.SetBossRoomObject(bossRoomObj1);

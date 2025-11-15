@@ -126,7 +126,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             yield return new WaitForSeconds(0.5f);
 
             Destroy(gameObject);
-            Destroy(cubeShadow);
         }
 
         private void OnCollisionStay2D(Collision2D collision)
@@ -140,6 +139,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     golem.StartCoroutine(golem.Stun(1f));
                 }
                 Destroy(gameObject);
+            }
+        }
+        private void OnDestroy()
+        {
+            if (cubeShadow != null)
+            {
                 Destroy(cubeShadow);
             }
         }

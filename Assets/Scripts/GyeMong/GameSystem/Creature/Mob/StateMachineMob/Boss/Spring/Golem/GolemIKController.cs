@@ -271,7 +271,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             }
             ResetToIdle();
         }
-        public IEnumerator HandSmash(float duration = 1f, float distance = 1f)
+        public IEnumerator HandSmash(float duration = 0.5f, float distance = 1f)
         {
             // 양 손 쿵 찍기
             SetHandSprite(HandSide.Left, HandSpriteID.Fist);
