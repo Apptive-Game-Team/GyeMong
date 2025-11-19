@@ -23,7 +23,7 @@ namespace Visual.Camera
 
         protected void Awake() 
         {
-            cameraSize = 7f;
+            cameraSize = 5f;
             GetCameras();
             mainVolumeProfile = Resources.Load<VolumeProfile>("CameraProfile/MainSetting");
             mainCamVolume = UnityEngine.Camera.main.GetComponent<Volume>();
