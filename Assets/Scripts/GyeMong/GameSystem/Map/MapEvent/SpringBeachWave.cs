@@ -10,11 +10,17 @@ namespace GyeMong.GameSystem.Map.MapEvent
     {
         [SerializeField] private SpriteRenderer[] waves;
         [SerializeField] private float waveDuration = 10f;
+        private SoundObject _waveSound;
 
         private void Start()
         {
-            var waveSound = Sound.Play("EFFECT_Spring_Wave", true);
+            _waveSound = Sound.Play("EFFECT_Spring_Wave", true);
             StartCoroutine(WaveAnimation());
+        }
+
+        private void OnDestroy()
+        {
+            _waveSound.Stop();
         }
 
         private IEnumerator WaveAnimation()

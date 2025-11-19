@@ -6,6 +6,7 @@ using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using UnityEngine;
 using GyeMong.EventSystem.Event.EventScene;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 
 namespace GyeMong.GameSystem.Map.MapEvent
 {
@@ -37,10 +38,13 @@ namespace GyeMong.GameSystem.Map.MapEvent
         
         private float _delayTime = 1f;
         private bool _isTutorial;
+        private SlimeHpBar _hpBar;
 
         private void Start()
         {
             _isTutorial = !PlayerPrefs.HasKey("TutorialFlag");
+            _hpBar = FindAnyObjectByType<SlimeHpBar>(FindObjectsInactive.Include);
+            
             StartCoroutine(TriggerEvents());
         }
 
@@ -101,7 +105,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             }
             
             // 슬라임 전투 이벤트
-            SlimeEvents slimeEvent = new SlimeEvents(targetSlime, slimes);
+            SlimeEvents slimeEvent = new SlimeEvents(targetSlime, slimes, _hpBar);
             
             yield return (new SetKeyInputEvent() { _isEnable = false }).Execute();
             yield return SceneContext.CameraManager.CameraMove(cameraDestination3, cameraSpeed3);

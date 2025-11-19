@@ -1,5 +1,6 @@
 using System.Collections;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime;
+using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
 using UnityEngine;
 
 namespace GyeMong.EventSystem.Event.EventScene
@@ -10,11 +11,13 @@ namespace GyeMong.EventSystem.Event.EventScene
     {
         [SerializeField] private GameObject targetSlime;
         [SerializeField] private GameObject[] slimes;
+        private SlimeHpBar _hpBar;
 
-        public SlimeEvents(GameObject targetSlime, GameObject[] slimes)
+        public SlimeEvents(GameObject targetSlime, GameObject[] slimes, SlimeHpBar hpBar)
         {
             this.targetSlime = targetSlime;
             this.slimes = slimes;
+            _hpBar = hpBar;
         }
 
         public override IEnumerator Execute(EventObject eventObject = null)
@@ -41,6 +44,7 @@ namespace GyeMong.EventSystem.Event.EventScene
             }
 
             yield return new WaitForSeconds(3f);
+            yield return _hpBar.ShowHpBarEvent();
             targetSlime.GetComponent<DivisionSlime>().StartMob();
             // targetSlime.AddComponent<DivisionSlime>();
         }

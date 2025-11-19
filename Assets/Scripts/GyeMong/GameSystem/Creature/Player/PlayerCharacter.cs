@@ -72,6 +72,8 @@ namespace GyeMong.GameSystem.Creature.Player
             animator = GetComponent<Animator>();
             soundController = GetComponent<PlayerSoundController>();
             _hitCollider = transform.Find("HitCollider").GetComponent<CircleCollider2D>();
+            PlayerPrefs.DeleteKey("TutorialFlag");
+            PlayerPrefs.Save();
             isTutorial = PlayerPrefs.GetInt("TutorialFlag") == 0;
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _renderer = gameObject.GetComponent<Renderer>();
