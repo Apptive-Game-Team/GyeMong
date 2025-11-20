@@ -47,11 +47,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         public bool isIdle = true;
         private bool _check = true;
         private bool[] _hidden = new bool[13];
-        private int _orderCriteria;
+        public int orderCriteria;
 
         private void Awake()
         {
-            _orderCriteria = SceneContext.Character.GetComponent<SpriteRenderer>().sortingOrder + sandwormBody.Count;
+            orderCriteria = SceneContext.Character.GetComponent<SpriteRenderer>().sortingOrder + sandwormBody.Count;
         }
         
         public void IdleMove()
@@ -443,80 +443,55 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             bodyTip2.transform.position = transform.TransformPoint(new Vector3(0, 1.8f, 0)) - dir * 1f;
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            if (angle < 0) angle += 360f;
+            bool front = SpriteDirection(angle, false) != 1;
+            
+            sandwormBody[0].sprite = headSprites[SpriteDirection(angle)];
+            for (int i = 0; i < sandwormBody.Count; i++)
+            {
+                if (i != 0) sandwormBody[i].sprite = bodySprites[SpriteDirection(angle, false)];
+                sandwormBody[i].sortingOrder = front ? length - i : orderCriteria - (length - i) + 1;
+            }
+        }
 
+        public int SpriteDirection(float angle, bool isHead = true)
+        {
+            int idx;
+            if (angle < 0) angle += 360f;
+            
             if (angle is (>= 0f and < 15f) or ( >= 345f and < 360f))
             {
-                sandwormBody[0].sprite = headSprites[0];
-                for (int i = 0; i < length; i++)
-                {
-                    if (i != 0) sandwormBody[i].sprite = bodySprites[0];
-                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
-                }
+                idx = 0;
             }
             else if (angle is >= 15f and < 60f)
             {
-                sandwormBody[0].sprite = headSprites[1];
-                for (int i = 0; i < length; i++)
-                {
-                    if (i != 0) sandwormBody[i].sprite = bodySprites[1];
-                    sandwormBody[i].sortingOrder = _orderCriteria - (length - i) + 1;
-                }
+                idx = 1;
             }
             else if (angle is >= 60f and < 120f)
             {
-                sandwormBody[0].sprite = headSprites[2];
-                for (int i = 0; i < sandwormBody.Count; i++)
-                {
-                    if (i != 0) sandwormBody[i].sprite = bodySprites[1];
-                    sandwormBody[i].sortingOrder = _orderCriteria - (length - i) + 1;
-                }
+                idx = isHead ? 2 : 1;
             }
             else if (angle is >= 120f and < 165f)
             {
-                sandwormBody[0].sprite = headSprites[3];
-                for (int i = 0; i < sandwormBody.Count; i++)
-                {
-                    if (i != 0) sandwormBody[i].sprite = bodySprites[1];
-                    sandwormBody[i].sortingOrder = _orderCriteria - (length - i) + 1;
-                }
+                idx = isHead ? 3 : 1;
             }
             else if (angle is >= 165f and < 195f)
             {
-                sandwormBody[0].sprite = headSprites[4];
-                for (int i = 0; i < sandwormBody.Count; i++)
-                {
-                    if (i != 0) sandwormBody[i].sprite = bodySprites[2];
-                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
-                }
+                idx = isHead ? 4 : 2;
             }
             else if (angle is >= 195f and < 240f)
             {
-                sandwormBody[0].sprite = headSprites[5];
-                for (int i = 0; i < sandwormBody.Count; i++)
-                {
-                    if (i != 0) sandwormBody[i].sprite = bodySprites[3];
-                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
-                }
+                idx = isHead ? 5 : 3;
             }
             else if (angle is >= 240f and < 300f)
             {
-                sandwormBody[0].sprite = headSprites[6];
-                for (int i = 0; i < sandwormBody.Count; i++)
-                {
-                    if (i != 0) sandwormBody[i].sprite = bodySprites[3];
-                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
-                }
+                idx = isHead ? 6 : 3;
             }
             else
             {
-                sandwormBody[0].sprite = headSprites[7];
-                for (int i = 0; i < sandwormBody.Count; i++)
-                {
-                    if (i != 0) sandwormBody[i].sprite = bodySprites[3];
-                    sandwormBody[i].sortingOrder = _orderCriteria - i - 1;
-                }
+                idx = isHead ? 7 : 3;
             }
+
+            return idx;
         }
 
         public void SetBlink(float value)
