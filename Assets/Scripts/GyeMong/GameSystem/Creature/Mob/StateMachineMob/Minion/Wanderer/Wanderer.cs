@@ -284,11 +284,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
+                Wanderer._animator.SetTrigger("isGroundAttacking");
                 Debug.Log("Ground Smash");
                 yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab, delay: 1f);
                 SceneContext.CameraManager.CameraShake(0.3f);
                 yield return Wanderer.StaticAttack(Wanderer.growFloorPrefab, 1f, 10f);
                 yield return new WaitForSeconds(1.5f);
+                Wanderer._animator.SetBool("isGroundAttacking", false);
                 Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
             }
         }
