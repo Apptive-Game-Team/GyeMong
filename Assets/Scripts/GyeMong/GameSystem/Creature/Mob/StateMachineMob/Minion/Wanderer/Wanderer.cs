@@ -37,6 +37,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 return;
             }
 
+            _directionController.SetAngularVelocity(FAST_ANGULAR_VELOCITY);
+
             currentHp -= damage;
             Debug.Log("Attack Complete");
 
@@ -50,6 +52,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             {
                 StartCoroutine(Blink());
             }
+
+            StartCoroutine(WaitVelocity());     
+        }
+
+        private IEnumerator WaitVelocity()
+        {
+            yield return new WaitForSeconds(1f);
+            _directionController.SetAngularVelocity(DEFAULT_ANGULAR_VELOCITY);
         }
 
         private IEnumerator CounterAttack()
