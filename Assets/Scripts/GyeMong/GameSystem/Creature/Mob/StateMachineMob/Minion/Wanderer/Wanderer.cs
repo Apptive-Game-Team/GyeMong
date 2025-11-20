@@ -246,6 +246,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
+                Wanderer.swordController.animator.speed = 4f;
                 yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab, delay: 1f);
                 SceneContext.CameraManager.CameraShake(0.1f);
                 yield return new WaitForSeconds(0.5f);
@@ -255,6 +256,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 yield return Wanderer.StaticChildAttack(Wanderer.comboSlashPrefab);
                 SceneContext.CameraManager.CameraShake(0.3f);
                 yield return new WaitForSeconds(1.5f);
+                Wanderer.swordController.animator.speed = 1f;
                 Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
             }
         }
@@ -363,6 +365,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 Debug.Log("AggressiveAttackState!");
+                Wanderer.swordController.animator.speed = 4f;
 
                 int attackCount = Random.Range(1, 2);
                 for (int i = 0; i < attackCount; i++)
@@ -380,6 +383,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
                     yield return new WaitForSeconds(0.25f);
                 }
+                Wanderer.swordController.animator.speed = 1f;
                 Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
             }
 
