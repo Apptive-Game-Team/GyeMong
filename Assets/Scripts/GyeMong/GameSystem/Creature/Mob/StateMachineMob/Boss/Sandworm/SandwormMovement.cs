@@ -42,6 +42,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [Header("Movement Effect")] 
         [SerializeField] private GameObject showEffectPrefab;
         [SerializeField] private ParticleSystem showEffectParticle;
+        [SerializeField] private GameObject shadow;
 
         private Tween _idleTween;
         public bool isIdle = true;
@@ -367,9 +368,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                     _hidden[idx] = true;
                 }
 
+                seq.Append(shadow.GetComponent<SpriteRenderer>().DOFade(0, duration / 8).SetEase(Ease.OutQuad));
                 seq.AppendInterval(duration / 8 * 3);
 
                 yield return seq.WaitForCompletion();
+                root.GetComponent<Collider2D>().enabled = false;
                 moveTip.transform.position = transform.position;
                 var s = head.data.sourceObjects;
                 s.SetWeight(0, 1);
@@ -414,12 +417,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                             if (_hidden[i] && progress >= threshold)
                             {
                                 sandwormBody[i].DOFade(1, 0.1f);
+                                if (i == length - 1)
+                                {
+                                    shadow.GetComponent<SpriteRenderer>().DOFade(0.4f, 0.1f);
+                                }
                                 _hidden[i] = false;
                             }
                         }
                     });
                 
                 yield return tween.WaitForCompletion();
+                root.GetComponent<Collider2D>().enabled = true;
                 
                 isIdle = true;
             }
@@ -449,7 +457,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             for (int i = 0; i < sandwormBody.Count; i++)
             {
                 if (i != 0) sandwormBody[i].sprite = bodySprites[SpriteDirection(angle, false)];
-                sandwormBody[i].sortingOrder = front ? length - i : orderCriteria - (length - i) + 1;
+                sandwormBody[i].sortingOrder = front ? length - i + 2 : orderCriteria - (length - i) + 1;
             }
         }
 
