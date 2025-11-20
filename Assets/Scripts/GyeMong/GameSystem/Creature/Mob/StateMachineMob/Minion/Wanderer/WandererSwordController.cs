@@ -17,6 +17,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         public SpriteRenderer wandererRenderer;
 
         private bool isPlaying = false;
+        public bool isGroundAtk = false;
 
         public void PlaySlash(Vector2 dir)
         {
@@ -46,6 +47,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
             animator.SetFloat("xDir", dir.x);
             animator.SetFloat("yDir", dir.y);
+            animator.SetBool("GroundAtk", isGroundAtk);
 
             animator.SetTrigger("Slash");
         }
@@ -55,6 +57,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             gameObject.SetActive(false);
             animator.SetBool("Slash",false);
             isPlaying = false;
+            isGroundAtk = false;
 
             swordRenderer.flipY = false;
         }

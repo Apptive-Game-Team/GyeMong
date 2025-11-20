@@ -290,6 +290,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 Wanderer._animator.SetTrigger("isGroundAttacking");
+                Wanderer.swordController.isGroundAtk = true;
                 Debug.Log("Ground Smash");
                 yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab, delay: 1f);
                 SceneContext.CameraManager.CameraShake(0.3f);
