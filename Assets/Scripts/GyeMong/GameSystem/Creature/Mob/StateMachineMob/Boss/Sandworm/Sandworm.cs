@@ -8,7 +8,9 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 using Sequence = DG.Tweening.Sequence;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
@@ -56,6 +58,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private float laserAttackMoveAngle;
         [SerializeField] private float laserAttackMoveDuration;
         [SerializeField] private float laserAttackMovePostDelay;
+        
+        [Header("Attack Setting")] 
+        [SerializeField] private Vector3[] attackStart;
 
         [Header("Body Attack Move Value")] 
         [SerializeField] private float bodyAttackSpeed;
@@ -216,9 +221,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                     (Sandworm.DirectionToPlayer, startPositionFlag, Sandworm.laserAttackMovePreAngle, Sandworm.laserAttackMovePreDelay
                         , Sandworm.laserAttackMoveAngle, Sandworm.laserAttackMoveDuration, Sandworm.laserAttackMovePostDelay));
                 Vector3 attackPosition = SceneContext.Character.transform.position;
-                yield return new WaitForSeconds(Sandworm.laserAttackMovePreDelay + Sandworm.laserAttackMoveDuration - 0.1f);
+                yield return new WaitForSeconds(Sandworm.laserAttackMovePreDelay);
                 Sandworm.LaserAttack(attackPosition);
-                yield return new WaitForSeconds(Sandworm.laserAttackMovePostDelay + 0.2f);
+                yield return new WaitForSeconds(Sandworm.laserAttackMoveDuration + Sandworm.laserAttackMovePostDelay);
                 Sandworm.movement.isIdle = true;
                 yield return new WaitForSeconds(Sandworm.laserAttackMovePostDelay / 2);
                 SetWeights();
@@ -369,7 +374,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             Sound.Play("ENEMY_Venom_Breath");
             foreach (var dir in directions)
             {
-                SpawnVenomAttack(startPos, dir, attackPosition);
+                SpawnVenomAttack(startPos + SetAttackStart(attackPosition), dir, attackPosition);
             }
         }
 
@@ -377,7 +382,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             Vector3 targetPos = startPos + (Vector3)direction * (attackPosition - startPos).magnitude + (Vector3)Random.insideUnitCircle / 4;
             
+            Vector3 dir = (attackPosition - transform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            int order = movement.sandwormBody[0].GetComponent<SpriteRenderer>().sortingOrder;
+            
             GameObject venom = Instantiate(venomAttack, startPos, Quaternion.identity);
+            
+            venom.GetComponent<SpriteRenderer>().sortingOrder =
+                movement.SpriteDirection(angle, false) == 1 ? order - 1 : order + 1;
             float dist = Vector3.Distance(startPos, targetPos);
             Vector3 peakPos = (startPos + targetPos) / 2 + Vector3.up * dist / 5;
             Vector3 prevPos = startPos;    
@@ -422,15 +434,30 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         
         private void LaserAttack(Vector3 attackPosition)
         {
-            Vector3 start = movement.sandwormBody[0].transform.position;
+            Vector3 start = movement.sandwormBody[0].transform.position + SetAttackStart(attackPosition);
             
             Vector3 dir = (attackPosition - transform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            
             Vector3 startPos = transform.position + dir;
             Vector3 endPos = attackPosition + dir * _laserDistance;     // 레이저가 땅에 닿는 시작 부분, 끝 부분 지정
             
             GameObject laser = Instantiate(laserAttack, start, Quaternion.identity);
+
+            int order = movement.sandwormBody[0].GetComponent<SpriteRenderer>().sortingOrder;
+            laser.GetComponent<SpriteRenderer>().sortingOrder =
+                movement.SpriteDirection(angle, false) == 1 ? order - 1 : order + 1;
             Sound.Play("ENEMY_Laser");
             StartCoroutine(UpdateLaser(laser.transform, start, startPos, endPos, _laserDuration));
+        }
+
+        private Vector3 SetAttackStart(Vector3 attackPos)
+        {
+            Vector3 dir = (attackPos - transform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            Vector3 startPos = attackStart[movement.SpriteDirection(angle)];
+            return startPos * transform.localScale.x;
         }
         
         private IEnumerator UpdateLaser(Transform laserTransform, Vector3 fixedStart, Vector3 moveStart, Vector3 moveEnd, float duration)
@@ -453,7 +480,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 time += Time.deltaTime;
                 yield return null;
             }
-            laserTransform.GetComponent<Animator>().enabled = true;
+
+            laserTransform.GetComponent<Animator>().SetTrigger("End");
         }
 
         private IEnumerator HideOrShow(bool hide, float duration)
@@ -539,6 +567,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             backGrounds[0].gameObject.SetActive(false);
             backGrounds[1].gameObject.SetActive(true);
             globalLight.intensity = 0.2f;
+            if (Camera.main.GetComponent<Volume>().profile.TryGet<Vignette>(out var vignette))
+            {
+                vignette.intensity.value = 0f;
+            }
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(SceneContext.EffectManager.FadeIn());
             curBGM = Sound.Play("BGM_Summer_Sandworm", true);
