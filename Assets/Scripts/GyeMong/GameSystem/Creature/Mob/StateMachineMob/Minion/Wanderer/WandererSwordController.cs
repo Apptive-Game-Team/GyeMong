@@ -8,8 +8,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
     {
         public Animator animator;
         public Transform wanderer;
-        public Vector2 rightOffset = new Vector2(0.3f, 0f);
-        public Vector2 leftOffset = new Vector2(-0.3f, 0f);
+        public Vector2 rightOffset = new Vector2(-5f, 0f);
+        public Vector2 leftOffset = new Vector2(5f, 0f);
         public Vector2 upOffset = new Vector2(0f, 0.4f);
         public Vector2 downOffset = new Vector2(0f, -0.2f);
 
@@ -35,7 +35,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 transform.localPosition = dir.y > 0 ? (Vector3)upOffset : (Vector3)downOffset;
             }
 
-            if (dir.y > 0)
+            if (dir.y > 0 && Mathf.Abs(dir.y) > Mathf.Abs(dir.x))
             {
                 swordRenderer.sortingOrder = wandererRenderer.sortingOrder - 1;
                 swordRenderer.flipY = true;
@@ -50,6 +50,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             animator.SetBool("GroundAtk", isGroundAtk);
 
             animator.SetTrigger("Slash");
+
+            Debug.Log("Sword localPos = " + transform.localPosition);
         }
 
         public void EndSlash()

@@ -16403,8 +16403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1044354900}
   wanderer: {fileID: 1986248221}
-  rightOffset: {x: 0.4, y: 0}
-  leftOffset: {x: -0.4, y: 0}
+  rightOffset: {x: -0.3, y: 0}
+  leftOffset: {x: 0.3, y: 0}
   upOffset: {x: 0, y: 0.4}
   downOffset: {x: 0, y: -0.2}
   swordRenderer: {fileID: 1044354899}
