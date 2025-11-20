@@ -28,6 +28,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject growFloorPrefab;
 
         private DirectionController _directionController;
+        public WandererSwordController swordController;
 
         public override void OnAttacked(float damage)
         {
@@ -136,6 +137,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
+            swordController.PlaySlash(_directionController.GetDirection());
 
             yield return ApplyAttackingMove(0.2f);
             yield return IndicatorGenerator.Instance.GenerateIndicator(
@@ -149,6 +151,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                         duration)
                 ), delay);
             _animator.SetBool("isAttacking", false);
+            swordController.EndSlash();
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -156,6 +159,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         {
             FaceToPlayer();
             _animator.SetTrigger("isAttacking");
+            swordController.PlaySlash(_directionController.GetDirection());
 
             yield return ApplyAttackingMove(0.2f);
             AttackObjectController.Create(
@@ -168,6 +172,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 )
                 .StartRoutine();
             _animator.SetBool("isAttacking", false);
+            swordController.EndSlash();
             yield return new WaitForSeconds(0.1f);
         }
 
