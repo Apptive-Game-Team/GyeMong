@@ -15737,12 +15737,12 @@ PrefabInstance:
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.82
+      value: 4.8
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.32
+      value: -3.3
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
@@ -16355,7 +16355,7 @@ Transform:
   m_GameObject: {fileID: 1513661834}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.531618, y: 0.88759935, z: 0.06698885}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16834,7 +16834,7 @@ Transform:
   m_GameObject: {fileID: 1946936273}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.51, z: 0}
+  m_LocalPosition: {x: 0, y: -1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16852,7 +16852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9456a02764465ec449dc7b0746c8d365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDestination: {x: 0, y: 4, z: -10}
+  cameraDestination: {x: 4.8, y: 4, z: -10}
   cameraSpeed: 5
   wanderer: {fileID: 1986248222}
   hpBarGameObject: {fileID: 1383829166}
@@ -17037,7 +17037,7 @@ Transform:
   m_GameObject: {fileID: 1986248214}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.7, y: 1.68, z: 0}
+  m_LocalPosition: {x: 4.8, y: 4, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17327,13 +17327,13 @@ SceneRoots:
   m_Roots:
   - {fileID: 22293951}
   - {fileID: 1986248221}
+  - {fileID: 876629931}
   - {fileID: 1858646610}
   - {fileID: 355301017}
   - {fileID: 757506738}
   - {fileID: 891939345}
   - {fileID: 551254198}
   - {fileID: 1383829165}
-  - {fileID: 876629931}
   - {fileID: 608511665}
   - {fileID: 2099379834}
   - {fileID: 797518468}
