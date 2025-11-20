@@ -491,8 +491,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         protected override void Die()
         {
             base.Die();
-            Animator.SetBool("isDown", true);
-            BgmManager.Stop();
             StartCoroutine(DieRoutine());
         }
         private IEnumerator DieRoutine()
