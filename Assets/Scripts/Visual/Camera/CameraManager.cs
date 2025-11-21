@@ -7,12 +7,15 @@ using DG.Tweening;
 using GyeMong.GameSystem.Creature.Player.Component;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Visual.Camera
 {
     public class CameraManager : MonoBehaviour
     {
+        [SerializeField] private bool isSelectStage;
+        
         private List<CinemachineVirtualCamera> virtualCams;
         private CinemachineVirtualCamera currentCam;
         private float cameraSize;
@@ -21,9 +24,9 @@ namespace Visual.Camera
         private ColorAdjustments ca;
         private ColorAdjustments cloneCa;
 
-        protected void Awake() 
+        protected void Awake()
         {
-            cameraSize = 5f;
+            cameraSize = isSelectStage ? 5f : 7f;
             GetCameras();
             mainVolumeProfile = Resources.Load<VolumeProfile>("CameraProfile/MainSetting");
             mainCamVolume = UnityEngine.Camera.main.GetComponent<Volume>();
