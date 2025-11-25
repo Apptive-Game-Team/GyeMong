@@ -40,8 +40,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         private Tween _dashTween;
         private Tween _jumpTween;
         private float _scale;
-        private bool _isTutorial;
-        private bool _isTutorialShown;
+        
+        private static bool _isTutorial;
+        private static bool _isTutorialShown;
 
         public Action OnHpChanged;
         
@@ -100,7 +101,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 new ParabolicMovement(
                     shootPos,
                     target,
-                    12f * Vector3.Distance(transform.position, target) / RangedAttackRange)
+                    8f)
             );
             rangedAttackObject.transform.localScale = transform.localScale * 3 / 4;
             rangedAttackObject.StartRoutine();
@@ -123,6 +124,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             private DivisionSlime DivisionSlime => mob as DivisionSlime;
             public override int GetWeight()
             {
+                if (DivisionSlime._isTutorial) return 5;
                 if (DivisionSlime._type == SlimeType.Melee) return 0;
                 return !DivisionSlime.IsInBounceAttackRange() && 
                        DivisionSlime.DistanceToPlayer < DivisionSlime.RangedAttackRange * 1.5f ? 5 : 0;
@@ -347,13 +349,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 
                 GameObject newSlime = Instantiate(gameObject, transform.position, Quaternion.identity);
                 newSlime.transform.localScale = transform.localScale * DivideRatio;
-                
-                newSlime.transform.DOJump(spawnPosition, 1f, 1, 0.5f).SetEase(Ease.OutQuad);
 
                 DivisionSlime slimeComponent = newSlime.GetComponent<DivisionSlime>();
                 slimeComponent._hpBar = _hpBar;
                 
-                slimeComponent._slimeAnimator = SlimeAnimator.Create(slimeComponent.gameObject, sprites);
+                slimeComponent._slimeAnimator = SlimeAnimator.Create(slimeComponent.transform.Find("SlimeSprite").gameObject, sprites);
                 slimeComponent._detector = SimplePlayerDetector.Create(slimeComponent);
                 slimeComponent.RangedAttackRange = RangedAttackRange * DivideRatio;
                 slimeComponent._scale = _scale * DivideRatio;
@@ -363,7 +363,13 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 slimeComponent._playerCollider = SceneContext.Character.GetComponentInChildren<HitCollider>().gameObject;
                 slimeComponent._hpBar.BindAction(slimeComponent);
                 slimeComponent._faceToPlayerCoroutine = slimeComponent.StartCoroutine(slimeComponent.FaceToPlayer());
-                slimeComponent.ChangeState();
+                
+                newSlime.transform.DOJump(spawnPosition, 1f, 1, 0.5f)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() =>
+                    {
+                        slimeComponent.ChangeState();
+                    });
                 
                 DivisionSlimeManager.Instance.RegisterSlime(slimeComponent);
             }
@@ -384,8 +390,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             PlayerCharacter player = SceneContext.Character;
             float time = Time.time;
             yield return new WaitUntil(() => player.CurrentSkillGauge > 0 || Time.time > time + 1f);
-            if (player.CurrentSkillGauge > 0)
+            if (player.CurrentSkillGauge > 0 && _isTutorial)
             {
+                _isTutorial = false;
+                SceneContext.Character.isTutorial = false;
+                PlayerPrefs.SetInt("TutorialFlag", 1);
+                PlayerPrefs.Save();
                 yield return new WaitForSeconds(0.5f);
                 yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
@@ -398,10 +408,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
                     { Title = "슬라임 잡기", Message = "이제 귀여운 슬라임을 잡아보자!", Duration = 3f }).Execute());
                 yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
-                _isTutorial = false;
-                SceneContext.Character.isTutorial = false;
-                PlayerPrefs.SetInt("TutorialFlag", 1);
-                PlayerPrefs.Save();
             }
         }
 

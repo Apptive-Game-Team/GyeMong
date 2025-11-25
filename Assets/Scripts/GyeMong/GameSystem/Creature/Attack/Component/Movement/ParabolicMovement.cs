@@ -9,13 +9,13 @@ namespace GyeMong.GameSystem.Creature.Attack.Component.Movement
         private float _duration;
         private float _arcHeight;
 
-        public ParabolicMovement(Vector3 start, Vector3 target, float speed, float arcHeight = 1f)
+        public ParabolicMovement(Vector3 start, Vector3 target, float speed)
         {
             _startPosition = start;
             _targetPosition = target;
             float distance = Vector3.Distance(start, target);
             _duration = distance / speed;
-            _arcHeight = arcHeight;
+            _arcHeight = Vector3.Distance(start, target) / 5;
         }
 
         public Vector3? GetPosition(float time)
@@ -46,6 +46,11 @@ namespace GyeMong.GameSystem.Creature.Attack.Component.Movement
             v.y += dy;
             
             float mag = v.magnitude;
+            if (mag < 0.001f)
+            {
+                return null;
+            }
+            
             return v / mag;
         }
     }
