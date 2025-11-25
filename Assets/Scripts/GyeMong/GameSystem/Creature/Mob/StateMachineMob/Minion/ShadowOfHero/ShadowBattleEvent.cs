@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.Input;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
@@ -41,6 +41,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             SceneContext.CameraManager.CameraFollow(SceneContext.Character.gameObject.transform);
             yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = true }).Execute());
             hpBarGameObject.SetActive(true);
+            yield return (new ShowBossHealthBarEvent()).Execute();
             shadow.ChangeState(new ShadowOfHero.DetectingPlayer() { mob = shadow });
             
         }
