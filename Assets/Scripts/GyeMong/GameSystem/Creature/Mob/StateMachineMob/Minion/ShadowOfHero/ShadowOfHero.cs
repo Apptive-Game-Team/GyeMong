@@ -6,7 +6,6 @@ using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
-using GyeMong.InputSystem;
 using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
@@ -108,17 +107,21 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             if (_movement == Vector2.zero) Animator.SetBool("isMove", false);
             else Animator.SetBool("isMove", true);
             _shadowRb.velocity = _movement * SceneContext.Character.stat.MoveSpeed;
-
-            if (InputManager.Instance.GetKeyDown(ActionCode.Attack) && !_isCopyingAttack)
-            {
-                _isCopyingAttack = true;
-                _shadowRb.velocity = Vector2.zero;
-                Animator.SetBool("isMove", false);
-                yield return MeleeAttack();
-                _isCopyingAttack = false;
-            }
-
             yield return null;
+        }
+
+        private void OnAttacking()
+        {
+            StartCoroutine(AttackInCopyAction());
+        }
+        
+        private IEnumerator AttackInCopyAction()
+        {
+            _isCopyingAttack = true;
+            _shadowRb.velocity = Vector2.zero;
+            Animator.SetBool("isMove", false);
+            yield return MeleeAttack();
+            _isCopyingAttack = false;
         }
         
         private Vector2 ReverseDirection(Vector2 direction)
@@ -270,6 +273,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
             public override IEnumerator StateCoroutine()
             {
+                SceneContext.Character.OnAttacking += ShadowOfHero.OnAttacking;
+                
                 float duration = 2f, elapsedTime = 0f;
                 mob.Animator.SetBool("isMove", true);
                 while (elapsedTime < duration)
@@ -282,6 +287,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
                 mob.Animator.SetBool("isMove", false);
                 ShadowOfHero._shadowRb.velocity = Vector2.zero;
                 mob.ChangeState();
+            }
+
+            public override void OnStateExit()
+            {
+                base.OnStateExit();
+                SceneContext.Character.OnAttacking -= ShadowOfHero.OnAttacking;
             }
         }
 

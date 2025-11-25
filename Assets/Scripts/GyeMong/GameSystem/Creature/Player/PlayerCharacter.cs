@@ -6,6 +6,7 @@ using GyeMong.GameSystem.Creature.Player.Controller;
 using GyeMong.InputSystem;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 namespace GyeMong.GameSystem.Creature.Player
 {
@@ -62,6 +63,8 @@ namespace GyeMong.GameSystem.Creature.Player
         private Coroutine _attackCoroutine;
         private Tween _attackMoveTween;
         private Tween _dashTween;
+
+        public event UnityAction OnAttacking;
 
         protected void Awake()
         {
@@ -578,6 +581,7 @@ namespace GyeMong.GameSystem.Creature.Player
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider(GameObject attackPrefab)
         {
+            OnAttacking?.Invoke();
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseDirection = (mousePosition - playerRb.position).normalized;
             Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
