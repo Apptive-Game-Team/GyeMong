@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GyeMong.UISystem.Game.BossUI
 {
-    public class GeneralHpBarController : MonoBehaviour
+    public class GeneralHpBarController : AbstractHpBarController
     {
         private RectTransform _curHpBar;
         private RectTransform _curShieldBar;
@@ -35,6 +35,7 @@ namespace GyeMong.UISystem.Game.BossUI
             RectTransform rectTransform = GetComponent<RectTransform>();
             _hpBarWidth = rectTransform.rect.width;
             _shieldBarWidth = rectTransform.rect.width;
+            SceneContext.EffectManager.CachingHpBar(this);
         }
 
         private void Update()
@@ -70,7 +71,12 @@ namespace GyeMong.UISystem.Game.BossUI
             }
         }
 
-        public void UpdateHp(float hp, float shield)
+        public override void Clear()
+        {
+            UpdateHp(0, 0);
+        }
+
+        public override void UpdateHp(float hp, float shield)
         {
             _curHp = hp;
             _curShield = shield;

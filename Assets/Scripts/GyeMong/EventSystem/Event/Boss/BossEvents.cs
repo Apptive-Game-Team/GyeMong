@@ -36,9 +36,9 @@ namespace GyeMong.EventSystem.Event.Boss
   }
   public abstract class BossHpBarEvent : BossEvent
   {
-    private HpBarController _hpBarController;
+    private AbstractHpBarController _hpBarController;
 
-    protected HpBarController HpBarController
+    protected AbstractHpBarController HpBarController
     {
       get
       {
@@ -65,14 +65,18 @@ namespace GyeMong.EventSystem.Event.Boss
         public override IEnumerator Execute(EventObject eventObject = null)
     {
       HpBarController.gameObject.SetActive(true);
-      HpBarController.ClearBoss();
+      HpBarController.Clear();
       HpBarController.UpdateHp(0,0);
     
       yield return DropHpBar();
       yield return ReboundHpBar();
       yield return FillHpBar();
-    
-      HpBarController.SetBoss(_boss);
+
+      if (HpBarController is HpBarController)
+      {
+        ((HpBarController) HpBarController).SetBoss(_boss);
+      }
+      
     }
 
     private IEnumerator DropHpBar()
@@ -128,7 +132,7 @@ namespace GyeMong.EventSystem.Event.Boss
     {
       if(HpBarController!=null)
       {
-        HpBarController.ClearBoss();
+        HpBarController.Clear();
         HpBarController.gameObject.SetActive(false);
       }
       yield return null;

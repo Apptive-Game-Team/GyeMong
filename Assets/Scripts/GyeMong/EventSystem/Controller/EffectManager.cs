@@ -10,7 +10,7 @@ namespace GyeMong.EventSystem.Controller
     /// </summary>
     public class EffectManager : MonoBehaviour
     {
-        private HpBarController hpBarController;
+        private AbstractHpBarController hpBarController;
         private RawImage hurtEffect;
         private RawImage black;
         private const float FADING_DELTA_TIME = 0.05f;
@@ -25,7 +25,7 @@ namespace GyeMong.EventSystem.Controller
             hpBarController.UpdateHp(hp, shield);
         }
     
-        public HpBarController GetHpBarController()
+        public AbstractHpBarController GetHpBarController()
         {
             return hpBarController;
         }
@@ -86,7 +86,7 @@ namespace GyeMong.EventSystem.Controller
             black = transform.Find("Black").GetComponent<RawImage>();
         }
         
-        public void CachingHpBar(HpBarController controller)
+        public void CachingHpBar(AbstractHpBarController controller)
         {
             hpBarController = controller;
             hpBarController.gameObject.SetActive(false);

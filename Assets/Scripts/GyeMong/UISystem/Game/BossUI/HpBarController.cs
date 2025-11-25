@@ -1,10 +1,9 @@
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
-using GyeMong.UISystem.Game.BattleUI;
 using UnityEngine;
 
 namespace GyeMong.UISystem.Game.BossUI
 {
-    public class HpBarController : MonoBehaviour
+    public class HpBarController : AbstractHpBarController
     {
         private RectTransform _curHpBar;
         private RectTransform _curShieldBar;
@@ -63,7 +62,13 @@ namespace GyeMong.UISystem.Game.BossUI
             }
         }
 
-        public void UpdateHp(float hp, float shield)
+        public override void Clear()
+        {
+            _maxHp = DEFAULT_HP;
+            boss = null;
+        }
+
+        public override void UpdateHp(float hp, float shield)
         {
             _curHp = hp;
             _curShield = shield;
@@ -80,12 +85,6 @@ namespace GyeMong.UISystem.Game.BossUI
         public void SetBoss(Boss boss)
         {
             this.boss = boss;
-        }
-    
-        public void ClearBoss()
-        {
-            _maxHp = DEFAULT_HP;
-            boss = null;
         }
     }
 }
