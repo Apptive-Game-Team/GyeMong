@@ -29,12 +29,22 @@ namespace GyeMong.GameSystem.Map.Portal
         NagaWarrior = 20, //Why Title ID is 13??
     }
 
+    public enum SceneType
+    {
+        Outside = 0,
+        Spring = 10,
+        Summer = 11,
+        Autumn = 12,
+        Winter = 13,
+    }
+
 
     [Serializable]
     public class SceneData
     {
         public SceneID sceneID;
         public string sceneName;
+        public SceneType type;
         public string defaultBGM;
     }
 

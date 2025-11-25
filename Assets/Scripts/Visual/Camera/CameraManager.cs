@@ -5,6 +5,8 @@ using Cinemachine;
 using UnityEngine;
 using DG.Tweening;
 using GyeMong.GameSystem.Creature.Player.Component;
+using GyeMong.GameSystem.Map.Portal;
+using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -15,7 +17,8 @@ namespace Visual.Camera
     public class CameraManager : MonoBehaviour
     {
         [SerializeField] private bool isSelectStage;
-        
+     
+        private SceneDataList _sceneDataList;
         private List<CinemachineVirtualCamera> virtualCams;
         private CinemachineVirtualCamera currentCam;
         private float cameraSize;
@@ -26,16 +29,13 @@ namespace Visual.Camera
 
         protected void Awake()
         {
+            _sceneDataList = Resources.Load<SceneDataList>("ScriptableObjects/Portal/AlphaSceneDataList");
+            
             cameraSize = isSelectStage ? 5f : 7f;
             GetCameras();
-            mainVolumeProfile = Resources.Load<VolumeProfile>("CameraProfile/MainSetting");
-            mainCamVolume = UnityEngine.Camera.main.GetComponent<Volume>();
-            mainCamVolume.profile = Instantiate(mainVolumeProfile);
-            for (int i = 0; i < mainCamVolume.profile.components.Count; i++)
-            {
-                var component = Instantiate(mainCamVolume.profile.components[i]);
-                mainCamVolume.profile.components[i] = component;
-            }
+            SetMainVolume();
+            SetSummerSubVolume();
+            
             PlayerChangeListenerCaller.OnPlayerDied += SetVolumeGray;
         }
 
@@ -81,6 +81,36 @@ namespace Visual.Camera
                     currentCam.gameObject.GetComponent<CinemachineConfiner2D>().InvalidateCache();
                 })
                 .WaitForCompletion();
+        }
+
+        private void SetMainVolume()
+        {
+            mainVolumeProfile = Resources.Load<VolumeProfile>("CameraProfile/MainSetting");
+            mainCamVolume = UnityEngine.Camera.main.GetComponent<Volume>();
+            mainCamVolume.profile = Instantiate(mainVolumeProfile);
+            for (int i = 0; i < mainCamVolume.profile.components.Count; i++)
+            {
+                var component = Instantiate(mainCamVolume.profile.components[i]);
+                mainCamVolume.profile.components[i] = component;
+            }
+        }
+
+        private void SetSummerSubVolume()
+        {
+            var sceneData = _sceneDataList.GetSceneDataByName(SceneManager.GetActiveScene().name);
+            if (sceneData.type != SceneType.Summer && sceneData.sceneID == SceneID.Wanderer)
+            {
+                return;
+            }
+            
+            var profile = Resources.Load<VolumeProfile>("CameraProfile/SunFlare");
+            var subCamVolume = UnityEngine.Camera.main.AddComponent<Volume>();
+            subCamVolume.profile = Instantiate(profile);
+            for (int i = 0; i < subCamVolume.profile.components.Count; i++)
+            {
+                var component = Instantiate(subCamVolume.profile.components[i]);
+                subCamVolume.profile.components[i] = component;
+            }
         }
 
         public void SetVolumeGray()

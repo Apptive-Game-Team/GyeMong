@@ -15,37 +15,49 @@ MonoBehaviour:
   sceneDatas:
   - sceneID: 8
     sceneName: Cinematic
+    type: 0
     defaultBGM: BGM_Cinematic
   - sceneID: 1
     sceneName: SpringBeach
+    type: 10
     defaultBGM: BGM_Battle_Chat
   - sceneID: 3
     sceneName: SpringNorthForest
+    type: 10
     defaultBGM: BGM_Spring_Default
   - sceneID: 6
     sceneName: SpringShadowIsland
+    type: 10
     defaultBGM: BGM_Battle_NagaRogue
   - sceneID: 7
     sceneName: SpringGolemTemple
+    type: 10
     defaultBGM: BGM_Spring_Boss
   - sceneID: 20
     sceneName: SummerNagaWarrior
+    type: 11
     defaultBGM: BGM_Summer_NagaWarrior
   - sceneID: 12
     sceneName: NagaRogueScene
+    type: 11
     defaultBGM: BGM_Summer_Default
   - sceneID: 10
     sceneName: Wanderer
+    type: 11
     defaultBGM: BGM_Summer_Default
   - sceneID: 13
     sceneName: TitleScene
+    type: 0
     defaultBGM: BGM_Title
   - sceneID: 14
     sceneName: StageSelectPage
+    type: 0
     defaultBGM: BGM_Title
   - sceneID: 15
     sceneName: LoadingScene
+    type: 0
     defaultBGM: BGM_Title
   - sceneID: 11
     sceneName: SummerSandWorm
+    type: 11
     defaultBGM: 
