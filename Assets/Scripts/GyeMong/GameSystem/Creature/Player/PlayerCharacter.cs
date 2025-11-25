@@ -64,8 +64,6 @@ namespace GyeMong.GameSystem.Creature.Player
         private Tween _attackMoveTween;
         private Tween _dashTween;
 
-        public event UnityAction OnAttacking;
-
         protected void Awake()
         {
             stat = _statData.GetStatComp();
@@ -581,7 +579,7 @@ namespace GyeMong.GameSystem.Creature.Player
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider(GameObject attackPrefab)
         {
-            OnAttacking?.Invoke();
+            changeListenerCaller.CallAttacking();
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseDirection = (mousePosition - playerRb.position).normalized;
             Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;

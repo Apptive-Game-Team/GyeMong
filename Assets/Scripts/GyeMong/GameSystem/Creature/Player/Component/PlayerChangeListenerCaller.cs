@@ -10,6 +10,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         private class DashCaller : ChangeListenerCaller<IDashListener, float> {}
         private class ShieldCaller : ChangeListenerCaller<IShieldChangeListener, float>{}
         private class SkillGaugeCaller : ChangeListenerCaller<ISkillGaugeChangeListener, float>{}
+        public static event Action OnAttacking;
         public static event Action OnPlayerSpawned;
         public static event Action OnPlayerDied;
 
@@ -51,6 +52,11 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         public void CallSkillGaugeChangeListeners(float skillGauge)
         {
             _skillGaugeCaller.Call(skillGauge);
+        }
+        
+        public void CallAttacking()
+        {
+            OnAttacking?.Invoke();
         }
         
         public void CallPlayerDied()

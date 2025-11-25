@@ -4,6 +4,7 @@ using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Component.detector;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using UnityEngine;
@@ -273,7 +274,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
 
             public override IEnumerator StateCoroutine()
             {
-                SceneContext.Character.OnAttacking += ShadowOfHero.OnAttacking;
+                PlayerChangeListenerCaller.OnAttacking += ShadowOfHero.OnAttacking;
                 
                 float duration = 2f, elapsedTime = 0f;
                 mob.Animator.SetBool("isMove", true);
@@ -292,7 +293,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             public override void OnStateExit()
             {
                 base.OnStateExit();
-                SceneContext.Character.OnAttacking -= ShadowOfHero.OnAttacking;
+                PlayerChangeListenerCaller.OnAttacking -= ShadowOfHero.OnAttacking;
             }
         }
 
