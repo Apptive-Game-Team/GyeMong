@@ -98,7 +98,7 @@ namespace Visual.Camera
         private void SetSummerSubVolume()
         {
             var sceneData = _sceneDataList.GetSceneDataByName(SceneManager.GetActiveScene().name);
-            if (sceneData.type != SceneType.Summer && sceneData.sceneID == SceneID.Wanderer)
+            if (sceneData.type != SceneType.Summer || sceneData.sceneID == SceneID.Wanderer)
             {
                 return;
             }
