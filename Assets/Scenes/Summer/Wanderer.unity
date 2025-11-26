@@ -15705,12 +15705,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 61, y: -59}
-      - {x: 91, y: -59}
-      - {x: 91, y: -84}
-      - {x: 61, y: -84}
-      - {x: 61, y: -77}
-      - {x: 61, y: -65}
+    - - {x: 61.7, y: -60}
+      - {x: 92.3, y: -60}
+      - {x: 92.3, y: -77.1}
+      - {x: 61.7, y: -77.1}
   m_UseDelaunayMesh: 0
 --- !u!4 &705679030 stripped
 Transform:
@@ -16016,7 +16014,7 @@ PrefabInstance:
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2490236768487297665, guid: 64f1ae9c03ebe9d4c9496b6f4942f313,
         type: 3}
@@ -16477,13 +16475,11 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 61, y: -59}
-  - {x: 91, y: -59}
-  - {x: 91, y: -84}
-  - {x: 61, y: -84}
-  - {x: 61, y: -77}
-  - {x: 61, y: -65}
-  - {x: 61, y: -59}
+  - {x: 61.7, y: -60}
+  - {x: 92.3, y: -60}
+  - {x: 92.3, y: -77.1}
+  - {x: 61.7, y: -77.1}
+  - {x: 61.7, y: -60}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -17162,7 +17158,7 @@ Transform:
   m_GameObject: {fileID: 1946936273}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.8, z: 0}
+  m_LocalPosition: {x: 5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17180,7 +17176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9456a02764465ec449dc7b0746c8d365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDestination: {x: 4.8, y: 4, z: -10}
+  cameraDestination: {x: 5, y: 6, z: -10}
   cameraSpeed: 5
   wanderer: {fileID: 1986248222}
   hpBarGameObject: {fileID: 1383829166}
@@ -17365,7 +17361,7 @@ Transform:
   m_GameObject: {fileID: 1986248214}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 4, z: 0}
+  m_LocalPosition: {x: 5, y: 6, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
