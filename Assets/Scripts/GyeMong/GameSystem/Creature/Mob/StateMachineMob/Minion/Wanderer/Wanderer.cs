@@ -344,7 +344,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                     mob.TrackPlayer();
                     Wanderer.FaceToPlayer();
 
-                    if (Random.value < 0.01f * Time.deltaTime * 60f)
+                    if (Random.value < 0.004f * Time.deltaTime * 60f)
                     {
                         mob.Animator.SetBool("isMove", false);
                         Wanderer.ChangeState(new AggressiveAttackState() { mob = Wanderer });
