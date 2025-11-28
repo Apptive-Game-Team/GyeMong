@@ -66,7 +66,7 @@ Shader "Custom/SpriteOutline"
 
                 if (c.a > 0.0)
                 {
-                    float brightness = 0.1;
+                    float brightness = 0.8;
                     c.rgb *= brightness;
                     return c;
                 }
