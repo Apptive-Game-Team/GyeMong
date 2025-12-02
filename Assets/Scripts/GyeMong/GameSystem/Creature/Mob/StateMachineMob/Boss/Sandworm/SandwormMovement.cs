@@ -419,7 +419,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                                 sandwormBody[i].DOFade(1, 0.1f);
                                 if (i == length - 1)
                                 {
-                                    shadow.GetComponent<SpriteRenderer>().DOFade(0.4f, 0.1f);
+                                    shadow.GetComponent<SpriteRenderer>().DOFade(0.2f, 0.1f);
                                 }
                                 _hidden[i] = false;
                             }

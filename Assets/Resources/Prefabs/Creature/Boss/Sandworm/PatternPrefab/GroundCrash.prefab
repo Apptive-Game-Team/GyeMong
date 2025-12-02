@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5757049212641719568}
   - component: {fileID: 1846898931456801832}
   - component: {fileID: -172516765218483288}
-  - component: {fileID: 1758238624918854863}
+  - component: {fileID: 3614622971837825091}
   m_Layer: 0
   m_Name: GroundCrash
   m_TagString: EnemyAttack
@@ -103,8 +103,8 @@ MonoBehaviour:
   _attackInfo: {fileID: 11400000, guid: 3ce1307ac42f07c4388ac8a9bf3fb9d1, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: b3d3523cb2cba8b4983b9dd8c1ac8a43,
     type: 2}
---- !u!70 &1758238624918854863
-CapsuleCollider2D:
+--- !u!58 &3614622971837825091
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,5 +136,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.9, y: 0.9}
-  m_Direction: 1
+  serializedVersion: 2
+  m_Radius: 0.45

@@ -1839,11 +1839,7 @@ MonoBehaviour:
     type: 3}
   groundCrash: {fileID: 4283891041595933039, guid: eb16cf507d43ba943ba0ef3d0a1ccfa4,
     type: 3}
-  groundCrashIndicator: {fileID: 5259822088584293259, guid: 3a957694a61f9204783a595d29a16840,
-    type: 3}
   megaGroundCrash: {fileID: 4283891041595933039, guid: 2e26adddb41a8454293360591c8fd22b,
-    type: 3}
-  megaGroundCrashIndicator: {fileID: 5321656734360456791, guid: bc4028d1f3323d6459ef2a3dece5fdc2,
     type: 3}
   laserAttack: {fileID: 2814180586078941912, guid: 95703233de6654e4fb8312b963dbc6fd,
     type: 3}
@@ -181602,7 +181598,7 @@ SpriteRenderer:
   m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
     type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.40784314}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
