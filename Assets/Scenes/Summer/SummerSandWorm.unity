@@ -392,7 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 110138924}
   - component: {fileID: 110138925}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -518,7 +518,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -716,7 +716,7 @@ GameObject:
   m_Component:
   - component: {fileID: 170288982}
   - component: {fileID: 170288983}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_43
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -758,7 +758,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1133,7 +1133,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1586,7 +1586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 568711482}
   - component: {fileID: 568711483}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_42
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1628,7 +1628,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7024,7 +7024,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 8.373217, y: -1.5750147}
+  m_Offset: {x: 8.373217, y: -1.44}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -7035,7 +7035,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.9805908, y: 1.4699705}
+  m_Size: {x: 2.9805908, y: 1.68}
   m_EdgeRadius: 0
 --- !u!61 &645796329
 BoxCollider2D:
@@ -7272,7 +7272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 670448790}
   - component: {fileID: 670448791}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7314,7 +7314,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7659,7 +7659,7 @@ GameObject:
   m_Component:
   - component: {fileID: 916023554}
   - component: {fileID: 916023555}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3_l3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7701,7 +7701,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7732,7 +7732,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &991442146
 GameObject:
   m_ObjectHideFlags: 0
@@ -13025,7 +13025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1071599349}
   - component: {fileID: 1071599350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13067,7 +13067,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13109,7 +13109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1076010316}
   - component: {fileID: 1076010317}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_38
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13151,7 +13151,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13620,7 +13620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1254478616}
   - component: {fileID: 1254478617}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_36
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13662,7 +13662,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -181091,7 +181091,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1369065214}
   - component: {fileID: 1369065215}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181133,7 +181133,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -181175,7 +181175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1380200678}
   - component: {fileID: 1380200679}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_34
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181217,7 +181217,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -182130,7 +182130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1764524991}
   - component: {fileID: 1764524992}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182172,7 +182172,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -182736,7 +182736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2021615139
 Transform:
   m_ObjectHideFlags: 0
@@ -182873,7 +182873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2084077130}
   - component: {fileID: 2084077131}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: summer_boss3-2_l2_21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182915,7 +182915,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
