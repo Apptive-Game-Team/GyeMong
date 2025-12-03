@@ -1,13 +1,20 @@
+using System.Collections.Generic;
 using GyeMong.GameSystem.Map.Portal;
 using GyeMong.SoundSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Util;
 
-public class BgmManager
+public class BgmManager : SingletonObject<BgmManager>
 {
     private static Coroutine bgmCoroutine;
     private static SoundObject soundObject;
     private static string currentBgmName = "";
+
+    protected override void PostConstruct()
+    {
+        Initialize();
+    }
     
     public static void Initialize()
     {
@@ -17,6 +24,11 @@ public class BgmManager
         {
             Play(scene);
         };
+    }
+    
+    public static string GetBgmName()
+    {
+        return currentBgmName;
     }
     
     private static void Play()
@@ -66,5 +78,25 @@ public class BgmManager
         }
 
         Play();
+    }
+    
+    public static class BgmStack
+    {
+        private static readonly Stack<string> bgmStack = new Stack<string>();
+
+        public static void Push(string bgmName)
+        {
+            bgmStack.Push(BgmManager.GetBgmName());
+            BgmManager.Play(bgmName);
+        }
+
+        public static void Pop()
+        {
+            if (bgmStack.Count > 0)
+            {
+                string bgmName = bgmStack.Pop();
+                BgmManager.Play(bgmName);
+            }
+        }
     }
 }

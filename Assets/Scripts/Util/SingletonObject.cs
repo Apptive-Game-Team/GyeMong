@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Util
 {
-    public class SingletonObject<T> : MonoBehaviour where T : MonoBehaviour
+    public abstract class SingletonObject<T> : MonoBehaviour where T : MonoBehaviour
     {
         private static T _instance;
 
@@ -24,12 +24,18 @@ namespace Util
             if (_instance == null)
             {
                 _instance = this as T;
+                PostConstruct();
                 DontDestroyOnLoad(gameObject);
             }
             else if (_instance != this)
             {
                 Destroy(gameObject);
             }
+        }
+
+        protected virtual void PostConstruct()
+        {
+            
         }
     }
 }
