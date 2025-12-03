@@ -29,7 +29,7 @@ namespace GyeMong.EventSystem.Event.Chat
         {
             if (bgmName != null && bgmName.Length != 0)
             {
-                BgmManager.Play(bgmName);
+                BgmManager.BgmStack.Push(bgmName);
             }
             
             yield return ChatController.Open();
@@ -47,7 +47,7 @@ namespace GyeMong.EventSystem.Event.Chat
             ChatController.Close();
             if (bgmName != null && bgmName.Length != 0)
             {
-                BgmManager.Stop();
+                BgmManager.BgmStack.Pop();
             }
         }
     }
