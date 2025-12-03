@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4360534568010519165}
   - component: {fileID: 1665461335346525028}
   - component: {fileID: 5621752726144729828}
+  - component: {fileID: 305044086667357671}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -147,3 +148,15 @@ MonoBehaviour:
     type: 3}
   capsulePrefab: {fileID: 8607135463447496517, guid: 23768871b1971be43943e667397c310c,
     type: 3}
+--- !u!114 &305044086667357671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032769826511270979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71f51c118c5c497e91e2baa84a5b825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

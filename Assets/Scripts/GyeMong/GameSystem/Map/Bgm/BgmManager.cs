@@ -2,12 +2,18 @@ using GyeMong.GameSystem.Map.Portal;
 using GyeMong.SoundSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Util;
 
-public class BgmManager
+public class BgmManager : SingletonObject<BgmManager>
 {
     private static Coroutine bgmCoroutine;
     private static SoundObject soundObject;
     private static string currentBgmName = "";
+
+    protected override void PostConstruct()
+    {
+        Initialize();
+    }
     
     public static void Initialize()
     {
