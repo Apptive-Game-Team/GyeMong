@@ -6,6 +6,7 @@ using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Input;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.Material;
 using GyeMong.GameSystem.Creature.Player;
+using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
 using UnityEngine.Rendering;
@@ -22,9 +23,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private GameObject venomAttack;
         [SerializeField] private GameObject venomPit;
         [SerializeField] private GameObject groundCrash;
-        [SerializeField] private GameObject groundCrashIndicator;
         [SerializeField] private GameObject megaGroundCrash;
-        [SerializeField] private GameObject megaGroundCrashIndicator;
         [SerializeField] private GameObject laserAttack;
         [SerializeField] private GameObject bodyAttack;
         
@@ -184,15 +183,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             public override IEnumerator StateCoroutine()
             {
                 Sandworm.movement.isIdle = false;
-                Vector3 attackPosition = SceneContext.Character.transform.position;
+                Vector3 attackHeadPosition = SceneContext.Character.transform.position;
+                Vector3 attackPosition = attackHeadPosition + new Vector3(0, 0.5f, 0);
                 attackPosition.y -= 0.4f;
                 Sound.Play("ENEMY_Ground_Crash_Action");
                 Sandworm.StartCoroutine(Sandworm.movement.HeadAttackMove
-                    (attackPosition, Sandworm.headAttackMoveDuration, Sandworm.headAttackMovePreDelay, Sandworm.headAttackMovePostDelay, Sandworm.headAttackMoveBackDelay));
-                GameObject indicator = Instantiate(Sandworm.groundCrashIndicator, attackPosition + new Vector3(0.055f, 0.057f, 0f),
-                    Quaternion.Euler(0f, 0f, 90f));
-                Destroy(indicator, Sandworm.headAttackMovePostDelay + Sandworm.headAttackMoveDuration);
-                yield return new WaitForSeconds(Sandworm.headAttackMovePostDelay + Sandworm.headAttackMoveDuration);
+                    (attackHeadPosition, Sandworm.headAttackMoveDuration, Sandworm.headAttackMovePreDelay, Sandworm.headAttackMovePostDelay, Sandworm.headAttackMoveBackDelay));
+                Sandworm.StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(Sandworm.groundCrash,
+                    attackPosition, Quaternion.identity,
+                    Sandworm.headAttackMovePreDelay + Sandworm.headAttackMoveDuration));
+                yield return new WaitForSeconds(Sandworm.headAttackMovePreDelay + Sandworm.headAttackMoveDuration);
                 Sound.Play("ENEMY_Ground_Crash");
                 GameObject crash = Instantiate(Sandworm.groundCrash, attackPosition, Quaternion.identity);
                 Destroy(crash, 0.7f);
@@ -246,6 +246,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return Sandworm.HideOrShow(true, 1f);
                 Sandworm.StartCoroutine(Sandworm.ChasePlayer(2f, Sandworm._chaseSpeed * 1.3f));
                 yield return new WaitForSeconds(2f);
+                Sandworm.StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(Sandworm.bodyAttack,
+                    Sandworm.transform.position, Quaternion.identity, 0.5f));
+                yield return new WaitForSeconds(0.5f);
                 GameObject body = Instantiate(Sandworm.bodyAttack, Sandworm.transform.position, Quaternion.identity);
                 Destroy(body, 0.07f);
                 yield return Sandworm.HideOrShow(false, 0.3f);
@@ -323,10 +326,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.GetComponent<Collider2D>().enabled = false;
                 Sound.Play("ENEMY_Sand_Trap_Action");
                 Sandworm.movement.isIdle = false;
-                GameObject indicator = Instantiate(Sandworm.megaGroundCrashIndicator, Sandworm.transform.position + new Vector3(0.46f, 0.77f, 0f),
-                    Quaternion.Euler(0f, 0f, 90f));
-                Destroy(indicator, 3.6f);
-                //Sandworm.RotateHead(-30f, 3.5f, 30f, 0.2f, 0.5f);
+                Sandworm.StartCoroutine(IndicatorGenerator.Instance.GenerateIndicator(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity, 3.6f));
                 Sandworm.StartCoroutine(Sandworm.movement.ChangeScreamImage(true, 0.2f));
                 Sandworm.StartCoroutine(Sandworm.Scream(3f, 0.05f));
                 Sandworm.StartCoroutine(Sandworm.PlayerPull(3f, Sandworm._sunctionSpeed));
@@ -336,7 +336,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 yield return new WaitForSeconds(0.3f);
                 Sound.Play("ENEMY_Sand_Trap");
                 GameObject groundAttack = Instantiate(Sandworm.megaGroundCrash, Sandworm.transform.position, Quaternion.identity);
-                Destroy(groundAttack, 0.2f);
+                Destroy(groundAttack, 0.5f);
                 yield return new WaitForSeconds(0.2f);
                 yield return SceneContext.EffectManager.FadeOut();
                 yield return new WaitForSeconds(0.7f);

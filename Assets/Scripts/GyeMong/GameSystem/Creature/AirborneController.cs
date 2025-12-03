@@ -7,20 +7,20 @@ namespace GyeMong.GameSystem.Creature
     {
         [SerializeField] private GameObject shadow;
         
-        private bool isAirborned = false;
-        private float originShadowLocalY;
+        private bool _isAirborned;
+        private Vector3 _originShadowLocal;
 
 
         public IEnumerator AirborneTo(Vector3 destination, float airborneHeight = 1f, float speed = 10f)
         {
             
-            if (isAirborned)
+            if (_isAirborned)
                 yield break;
-            isAirborned = true;
+            _isAirborned = true;
             Vector3 origin = transform.position;
             if(shadow !=null)
             {
-                originShadowLocalY = shadow.transform.localPosition.y;
+                _originShadowLocal = shadow.transform.localPosition;
             }
             else
                 yield break;
@@ -29,7 +29,7 @@ namespace GyeMong.GameSystem.Creature
             Vector3 originalScale = transform.localScale;
             Vector3 originalShadowScale = shadow.transform.localScale;
             
-            shadow.transform.parent = null;
+            shadow.transform.SetParent(null, true);
             
             float duration = Vector3.Distance(origin, destination) / speed;
             float elapsed = 0f;
@@ -38,11 +38,10 @@ namespace GyeMong.GameSystem.Creature
             {
                 if (CheckWallImpact())
                 {
-                    yield return OnWallImpact(duration - elapsed, originalScale, originalShadowScale, airborneHeight, originShadowLocalY, currentAirborneHeight);
+                    yield return OnWallImpact(duration - elapsed, originalScale, originalShadowScale, airborneHeight, _originShadowLocal.y, currentAirborneHeight);
                     yield break;
                 }
                 
-                shadow.transform.localPosition = new Vector3(shadow.transform.localPosition.x, originShadowLocalY - currentAirborneHeight, shadow.transform.localPosition.z);
                 elapsed += Time.deltaTime;
                 
                 currentAirborneHeight = CalculateAirborneHeight(elapsed / duration, airborneHeight);
@@ -50,7 +49,7 @@ namespace GyeMong.GameSystem.Creature
                 UpdateScale(gameObject, originalScale, currentAirborneHeight/airborneHeight);
                 UpdateScale(shadow, originalShadowScale, currentAirborneHeight/airborneHeight);
                 
-                shadow.transform.position = Vector3.Lerp(origin, destination, elapsed / duration) + Vector3.up * originShadowLocalY;
+                shadow.transform.position = Vector3.Lerp(origin, destination, elapsed / duration) + Vector3.up * _originShadowLocal.y;
                 transform.position = Vector3.Lerp(origin, destination, elapsed / duration) + Vector3.up * currentAirborneHeight;
                 
                 yield return null;
@@ -59,10 +58,10 @@ namespace GyeMong.GameSystem.Creature
             UpdateScale(gameObject, originalScale, 0);
             UpdateScale(shadow, originalShadowScale, 0);
             
-            shadow.transform.parent = gameObject.transform;
-            shadow.transform.localPosition = new Vector3(shadow.transform.localPosition.x, originShadowLocalY, shadow.transform.localPosition.z);
             transform.position = destination;
-            isAirborned = false;
+            shadow.transform.SetParent(transform, false);
+            shadow.transform.localPosition = _originShadowLocal;
+            _isAirborned = false;
         }
         
         private void UpdateScale(GameObject gameObject, Vector3 originalScale, float rate)
@@ -97,7 +96,7 @@ namespace GyeMong.GameSystem.Creature
             
             shadow.transform.parent = gameObject.transform;
             shadow.transform.localPosition = new Vector3(shadow.transform.localPosition.x, originShadowLocalY, shadow.transform.localPosition.z);
-            isAirborned = false;
+            _isAirborned = false;
         }
 
         private float CalculateAirborneHeight(float rate, float airborneHeight)
