@@ -29,6 +29,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         private DirectionController _directionController;
         public WandererSwordController swordController;
+        [SerializeField] private GameObject hpBarGameObject;
 
         public override void OnAttacked(float damage)
         {
@@ -123,6 +124,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         public void StartMove()
         {
             ChangeState(new DetectingPlayer() { mob = this });
+            hpBarGameObject.SetActive(true);
         }
 
         private void Update()

@@ -16553,6 +16553,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HpBarCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2359206671019948115, guid: 003d692d6059a24478089b5179679b50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3329289967809561212, guid: 003d692d6059a24478089b5179679b50,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -16676,7 +16681,7 @@ PrefabInstance:
     - target: {fileID: 8723060582642691127, guid: 003d692d6059a24478089b5179679b50,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8757841022984470928, guid: 003d692d6059a24478089b5179679b50,
         type: 3}
@@ -17310,7 +17315,6 @@ MonoBehaviour:
   cameraDestination: {x: 5, y: 6, z: -10}
   cameraSpeed: 5
   wanderer: {fileID: 1986248222}
-  hpBarGameObject: {fileID: 1383829166}
   detectingObject: {fileID: 1029889817}
 --- !u!1 &1986248214
 GameObject:
@@ -17528,6 +17532,7 @@ MonoBehaviour:
   growFloorPrefab: {fileID: 7626255705165784212, guid: 4ed45d6bca50d4069aad3fe9d77f5711,
     type: 3}
   swordController: {fileID: 1044354902}
+  hpBarGameObject: {fileID: 1383829166}
 --- !u!114 &1986248223
 MonoBehaviour:
   m_ObjectHideFlags: 0
