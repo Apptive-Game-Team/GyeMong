@@ -12,11 +12,11 @@ namespace GyeMong.GameSystem.Map.MapEvent
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player")) PlayerSr.sortingOrder = 14;
+            if (other.CompareTag("Player")) PlayerSr.sortingOrder = 15;
             if (other.CompareTag("Boss"))
             {
-                WandererSr.sortingOrder = 14;
-                WandererSwordSr.sortingOrder = 14;
+                WandererSr.sortingOrder = 15;
+                WandererSwordSr.sortingOrder = 15;
             }
         }
 
