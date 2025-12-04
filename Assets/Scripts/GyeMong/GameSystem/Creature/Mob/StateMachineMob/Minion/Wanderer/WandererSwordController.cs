@@ -50,8 +50,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             animator.SetBool("GroundAtk", isGroundAtk);
 
             animator.SetTrigger("Slash");
-
-            Debug.Log("Sword localPos = " + transform.localPosition);
         }
 
         public void EndSlash()
