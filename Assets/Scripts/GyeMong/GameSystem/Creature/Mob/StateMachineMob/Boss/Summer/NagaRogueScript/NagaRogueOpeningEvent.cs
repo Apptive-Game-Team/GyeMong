@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using GyeMong.EventSystem.Event;
+using GyeMong.EventSystem.Event.Boss;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.EventSystem.Event.CinematicEvent;
 using GyeMong.EventSystem.Event.Input;
@@ -40,6 +41,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaRogueS
             yield return StartCoroutine((new CloseChatEvent().Execute()));
             Sound.Play("BGM_Battle_NagaRogue",true);
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = false}).Execute());
+            yield return (new ShowBossHealthBarEvent()).Execute();
             nagaRogue.ChangeState();
             yield return StartCoroutine( (new SetKeyInputEvent(){_isEnable = true}).Execute());
         }

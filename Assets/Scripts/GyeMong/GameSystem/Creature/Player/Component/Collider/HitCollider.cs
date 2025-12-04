@@ -39,7 +39,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
                 ApplyHitImpact(enemyAttackInfo.damage, collider, true);
                 SceneContext.Character.TakeDamage(enemyAttackInfo.damage);
             }
-            else if (!attackObjectController.isAttacked)
+            else if (!attackObjectController.isAttacked && !SceneContext.Character.isInvincible)
             {
                 GameObject go = Instantiate(hitEffect, collider.ClosestPoint(transform.position), Quaternion.identity);
                 Destroy(go,0.5f);
