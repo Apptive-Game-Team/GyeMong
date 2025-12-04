@@ -9,6 +9,7 @@ using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Indicator;
 using GyeMong.GameSystem.Map.Stage;
 using GyeMong.SoundSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,6 +20,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private const float DEFAULT_ANGULAR_VELOCITY = 1f; // radians per second
         private const float FAST_ANGULAR_VELOCITY = Mathf.PI; // radians per second
 
+        private Rigidbody2D rb;
         protected IDetector<PlayerCharacter> _detector;
         [SerializeField] private GameObject basicAttackPrefab;
         [SerializeField] private GameObject upwardSlashPrefab;
@@ -85,16 +87,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         }
         private IEnumerator Knockback(float distance = 0.5f, float duration = 0.1f)
         {
-            Vector3 startPos = transform.position;
-            Vector3 endPos = startPos + _directionController.GetDirection() * distance;
+            Vector2 start = rb.position;
+            Vector2 end = start + (Vector2)_directionController.GetDirection() * distance;
+
             float elapsed = 0f;
             while (elapsed < duration)
             {
-                transform.position = Vector3.Lerp(startPos, endPos, elapsed / duration);
+                Vector2 newPos = Vector2.Lerp(start, end, elapsed / duration);
+                rb.MovePosition(newPos);
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            transform.position = endPos;
+
+            rb.MovePosition(end);
         }
 
         private bool IsPlayerAtBack()
@@ -105,6 +110,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         private void Awake()
         {
+            rb = GetComponent<Rigidbody2D>();
             _directionController = GetComponent<DirectionController>();
             _materialController = GetComponent<MaterialController>();
             StartCoroutine(_directionController.TrackPlayer(DEFAULT_ANGULAR_VELOCITY, true));
@@ -178,18 +184,22 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             yield return new WaitForSeconds(0.1f);
         }
 
-        private IEnumerator ApplyAttackingMove(float duration, float speed = 1)
+        private IEnumerator ApplyAttackingMove(float duration, float distance = 1)
         {
-            Vector3 targetPosition = transform.position + _directionController.GetDirection() * speed;
+            Vector2 startPos = rb.position;
+            Vector2 endPos = startPos + (Vector2)_directionController.GetDirection() * distance;
+
             float elapsedTime = 0f;
 
             while (elapsedTime < duration)
             {
-                transform.position = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
+                Vector2 newPos = Vector2.Lerp(startPos, endPos, elapsedTime / duration);
+                rb.MovePosition(newPos);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            transform.position = targetPosition;
+
+            rb.MovePosition(endPos);
         }
 
         protected void Initialize()
@@ -345,7 +355,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
                 while (mob.DistanceToPlayer > mob.MeleeAttackRange)
                 {
-                    mob.TrackPlayer();
+                    Wanderer.TrackPlayerUsingRB(Wanderer.speed);
                     Wanderer.FaceToPlayer();
 
                     if (Random.value < 0.004f * Time.deltaTime * 60f)
@@ -362,6 +372,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 mob.ChangeState();
             }
         }
+        private void TrackPlayerUsingRB(float moveSpeed)
+        {
+            if (rb == null) return;
+
+            Vector2 dir = (SceneContext.Character.transform.position - transform.position).normalized;
+            Vector2 newPos = rb.position + dir * moveSpeed * Time.deltaTime;
+            rb.MovePosition(newPos);
+        }
+
         public class AggressiveAttackState : WandererState
         {
             public override int GetWeight() => 3;
