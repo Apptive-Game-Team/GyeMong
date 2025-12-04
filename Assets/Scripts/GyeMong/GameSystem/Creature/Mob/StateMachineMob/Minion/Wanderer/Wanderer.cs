@@ -29,10 +29,20 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         [SerializeField] private GameObject comboSlashPrefab;
         [SerializeField] private GameObject growFloorPrefab;
 
+        private Vector2 moveVelocity;
+        private bool isForceMoving;
+        private Coroutine forceMoveRoutine;
         private DirectionController _directionController;
         public WandererSwordController swordController;
         [SerializeField] private GameObject hpBarGameObject;
 
+        private void FixedUpdate()
+        {
+            if (isForceMoving)
+                rb.velocity = moveVelocity;
+            else
+                rb.velocity = Vector2.zero;
+        }
         public override void OnAttacked(float damage)
         {
             if (!IsPlayerAtBack())
@@ -87,19 +97,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         }
         private IEnumerator Knockback(float distance = 0.5f, float duration = 0.1f)
         {
-            Vector2 start = rb.position;
-            Vector2 end = start + (Vector2)_directionController.GetDirection() * distance;
+            Vector2 dir = _directionController.GetDirection();
+            float speed = distance / duration;
 
-            float elapsed = 0f;
-            while (elapsed < duration)
-            {
-                Vector2 newPos = Vector2.Lerp(start, end, elapsed / duration);
-                rb.MovePosition(newPos);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            rb.MovePosition(end);
+            yield return ForceMove(duration, speed, dir);
         }
 
         private bool IsPlayerAtBack()
@@ -186,20 +187,10 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         private IEnumerator ApplyAttackingMove(float duration, float distance = 1)
         {
-            Vector2 startPos = rb.position;
-            Vector2 endPos = startPos + (Vector2)_directionController.GetDirection() * distance;
+            Vector2 dir = _directionController.GetDirection();
+            float speed = distance / duration;
 
-            float elapsedTime = 0f;
-
-            while (elapsedTime < duration)
-            {
-                Vector2 newPos = Vector2.Lerp(startPos, endPos, elapsedTime / duration);
-                rb.MovePosition(newPos);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            rb.MovePosition(endPos);
+            yield return ForceMove(duration, speed, dir);
         }
 
         protected void Initialize()
@@ -367,6 +358,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
                     yield return new WaitForSeconds(0.02f);
                 }
+                Wanderer.isForceMoving = false;
+                Wanderer.moveVelocity = Vector2.zero;
 
                 mob.Animator.SetBool("isMove", false);
                 mob.ChangeState();
@@ -374,11 +367,37 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         }
         private void TrackPlayerUsingRB(float moveSpeed)
         {
-            if (rb == null) return;
+            if (forceMoveRoutine != null)
+            {
+                StopCoroutine(forceMoveRoutine);
+                forceMoveRoutine = null;
+            }
 
             Vector2 dir = (SceneContext.Character.transform.position - transform.position).normalized;
-            Vector2 newPos = rb.position + dir * moveSpeed * Time.deltaTime;
-            rb.MovePosition(newPos);
+            moveVelocity = dir * moveSpeed;
+            isForceMoving = true;
+        }
+        private IEnumerator ForceMove(float duration, float speed, Vector2 direction)
+        {
+            if (forceMoveRoutine != null)
+            {
+                StopCoroutine(forceMoveRoutine);
+                forceMoveRoutine = null;
+            }
+
+            forceMoveRoutine = StartCoroutine(ForceMoveRoutine(duration, speed, direction));
+            yield return forceMoveRoutine;
+        }
+        private IEnumerator ForceMoveRoutine(float duration, float speed, Vector2 direction)
+        {
+            isForceMoving = true;
+            moveVelocity = direction * speed;
+
+            yield return new WaitForSeconds(duration);
+
+            isForceMoving = false;
+            moveVelocity = Vector2.zero;
+            forceMoveRoutine = null;
         }
 
         public class AggressiveAttackState : WandererState
