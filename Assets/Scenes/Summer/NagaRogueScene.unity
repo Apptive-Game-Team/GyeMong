@@ -5063,7 +5063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 88354328}
   - component: {fileID: 88354329}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone2l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5105,7 +5105,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5372,7 +5372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567244912}
   - component: {fileID: 567244913}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone3r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5414,7 +5414,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5456,7 +5456,7 @@ GameObject:
   m_Component:
   - component: {fileID: 603129867}
   - component: {fileID: 603129868}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone1l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5498,7 +5498,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5540,7 +5540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 603709625}
   - component: {fileID: 603709626}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone2r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5582,7 +5582,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5658,7 +5658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 675400452}
   - component: {fileID: 675400453}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone4l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5700,7 +5700,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5742,7 +5742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 821660805}
   - component: {fileID: 821660806}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone3l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5784,7 +5784,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6397,6 +6397,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 541526282849564635, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 605
+      objectReference: {fileID: 0}
     - target: {fileID: 1102274170672503387, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6557,6 +6562,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5240283016603957119, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -6597,7 +6612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1321974617}
   - component: {fileID: 1321974618}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone4r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6639,7 +6654,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6681,7 +6696,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323036566}
   - component: {fileID: 1323036567}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone5l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6723,7 +6738,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6765,7 +6780,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1421514076}
   - component: {fileID: 1421514077}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone6r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6807,7 +6822,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6978,7 +6993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1603416785}
   - component: {fileID: 1603416786}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone1r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7020,7 +7035,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7139,7 +7154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1640827206}
   - component: {fileID: 1640827207}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone5r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7181,7 +7196,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7223,7 +7238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1660988824}
   - component: {fileID: 1660988825}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone6l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7265,7 +7280,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
