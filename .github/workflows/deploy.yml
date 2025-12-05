@@ -1,5 +1,7 @@
 name: Build and Deploy WebGL
 
+runs-on: self-hosted
+
 on:
   push:
     branches:
