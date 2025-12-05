@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - merge/461
 
 jobs:
   buildWebGL:
@@ -33,7 +34,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          unityVersion: 2022.3.22f1
+          unityVersion: 2022.3.67f2
           targetPlatform: WebGL
           customParameters: -logFile - -ignoreCompilerErrors
 
