@@ -6,7 +6,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
     {
         public void OnAnimationEnd()
         {
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
         }
     }
 }
