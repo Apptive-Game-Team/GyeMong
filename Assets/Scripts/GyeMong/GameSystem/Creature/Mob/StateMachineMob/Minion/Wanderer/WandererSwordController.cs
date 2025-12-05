@@ -49,7 +49,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             animator.SetFloat("yDir", dir.y);
             animator.SetBool("GroundAtk", isGroundAtk);
 
-            animator.SetTrigger("Slash");
+            animator.SetBool("Slash", true);
         }
 
         public void EndSlash()

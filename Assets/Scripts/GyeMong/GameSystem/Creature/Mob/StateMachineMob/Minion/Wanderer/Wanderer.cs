@@ -145,10 +145,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         private IEnumerator StaticChildAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f, float delay = 0.3f)
         {
             FaceToPlayer();
-            _animator.SetTrigger("isAttacking");
+            _animator.SetBool("isAttacking", true);
+            _animator.SetBool("isDelay", true);
             swordController.PlaySlash(_directionController.GetDirection());
+            swordController.animator.SetBool("SwordDelay", true);
 
             yield return ApplyAttackingMove(0.2f);
+            swordController.animator.SetBool("SwordDelay", false);
+            _animator.SetBool("isDelay", false);
             yield return IndicatorGenerator.Instance.GenerateIndicator(
                 AttackObjectController.Create(
                     transform.position + _directionController.GetDirection() * distance,
@@ -231,6 +235,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
+                Debug.Log("CircularSlash");
                 yield return Wanderer.StaticChildAttack(Wanderer.circleSlashPrefab, 0, delay: 0.3f);
                 yield return new WaitForSeconds(1f);
                 Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
@@ -249,6 +254,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
+                Debug.Log("HeavyTripleSlash");
                 Wanderer.swordController.animator.speed = 4f;
                 yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab, delay: 0.3f);
                 SceneContext.CameraManager.CameraShake(0.1f);
@@ -276,6 +282,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
+                Debug.Log("UpwardSlashWithStun");
                 Wanderer.swordController.animator.speed = 4f;
                 yield return Wanderer.StaticChildAttack(Wanderer.upwardSlashPrefab, delay: 0.3f);
                 yield return new WaitForSeconds(1.5f);
