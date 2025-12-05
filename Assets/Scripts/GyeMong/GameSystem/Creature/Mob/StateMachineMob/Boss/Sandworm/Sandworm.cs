@@ -446,9 +446,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
             int order = movement.sandwormBody[0].GetComponent<SpriteRenderer>().sortingOrder;
             laser.GetComponent<SpriteRenderer>().sortingOrder =
-                movement.SpriteDirection(angle, false) == 1 ? order - 1 : order + 1;
+                movement.SpriteDirection(angle, false) == 1 ? order - 1 : order + 2;
+            laser.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder =
+                movement.SpriteDirection(angle, false) == 1 ? order - 2 : order + 1;
             Sound.Play("ENEMY_Laser");
-            StartCoroutine(UpdateLaser(laser.transform, start, startPos, endPos, _laserDuration));
+            StartCoroutine(UpdateLaser(laser.transform.GetChild(0).transform, start, startPos, endPos, _laserDuration));
         }
 
         private Vector3 SetAttackStart(Vector3 attackPos)
