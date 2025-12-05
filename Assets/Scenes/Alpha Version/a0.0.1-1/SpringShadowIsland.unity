@@ -727,7 +727,7 @@ GameObject:
   - component: {fileID: 736658286}
   - component: {fileID: 736658287}
   - component: {fileID: 736658288}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: spring_boss3_l5_tree (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -769,7 +769,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 779130200}
   - component: {fileID: 779130201}
   - component: {fileID: 779130202}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: spring_boss3_l5_tree (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -926,7 +926,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1357,7 +1357,7 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 6, y: 8}
+  - {x: 6, y: 19}
   - {x: 6, y: -19}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
@@ -1409,7 +1409,7 @@ GameObject:
   - component: {fileID: 1180974397}
   - component: {fileID: 1180974398}
   - component: {fileID: 1180974399}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: spring_boss3_l5_tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1451,7 +1451,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1615,7 +1615,7 @@ GameObject:
   - component: {fileID: 1250832984}
   - component: {fileID: 1250832985}
   - component: {fileID: 1250832986}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: spring_boss3_l5_tree (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1657,7 +1657,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
