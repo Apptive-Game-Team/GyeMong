@@ -583,11 +583,11 @@ MonoBehaviour:
     m_SolverPoses:
     - m_BoneTransform: {fileID: 1676236780}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0.42724642, w: 0.9041352}
+      solverRotation: {x: 0, y: 0, z: 0.42724782, w: 0.9041346}
       defaultLocalRotation: {x: 0, y: 0, z: 0.51450586, w: 0.85748684}
     - m_BoneTransform: {fileID: 1863246287}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0.43233752, w: 0.9017118}
+      solverRotation: {x: 0, y: 0, z: 0.43233764, w: 0.9017118}
       defaultLocalRotation: {x: 0, y: 0, z: 0.5395785, w: 0.84193534}
     m_Weight: 1
     m_RestoreDefaultPose: 0
@@ -971,7 +971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337844489}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.961469, w: 0.27491346}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9614691, w: 0.27491313}
   m_LocalPosition: {x: 0.22439139, y: -1.0130582, z: 6.913689}
   m_LocalScale: {x: 2.8571427, y: 2.8571427, z: 1}
   m_ConstrainProportionsScale: 0
@@ -992,7 +992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 1.1100006
+  m_Length: 1.1100007
   m_ChildTransform: {fileID: 1527244449}
   m_AttachedIK: {fileID: 1827272233}
 --- !u!1 &401746611
@@ -8255,14 +8255,6 @@ EdgeCollider2D:
   - {x: -5.075788, y: -2.4729376}
   - {x: 5.09514, y: -2.4847236}
   - {x: 5.104921, y: 3.190943}
-  - {x: 1.608041, y: 3.206411}
-  - {x: 1.6205063, y: 2.8873477}
-  - {x: 1.2750301, y: 2.8917997}
-  - {x: 1.2735581, y: 3.1908598}
-  - {x: -1.2701873, y: 3.2246659}
-  - {x: -1.2641672, y: 2.883585}
-  - {x: -1.595074, y: 2.9003258}
-  - {x: -1.6168917, y: 3.1956787}
   - {x: -5.0875196, y: 3.17313}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
@@ -71920,7 +71912,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 125a7bdd4acd9d84fb1604d09d773442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72293,22 +72285,22 @@ PrefabInstance:
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.5
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.5
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: 18.6
       objectReference: {fileID: 0}
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
@@ -72528,7 +72520,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025396411}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.24441954, w: 0.9696696}
+  m_LocalRotation: {x: 0, y: 0, z: -0.24441959, w: 0.9696696}
   m_LocalPosition: {x: 0.44999984, y: -0.000000067055225, z: -0.000114917755}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -72550,7 +72542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.44999966
+  m_Length: 0.4499997
   m_ChildTransform: {fileID: 1376129957}
   m_AttachedIK: {fileID: 1651904256}
 --- !u!1 &1063625704
@@ -73550,7 +73542,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376129956}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.56156784, w: 0.8274307}
+  m_LocalRotation: {x: 0, y: 0, z: -0.56156766, w: 0.82743084}
   m_LocalPosition: {x: 0.44999993, y: 0.000000074505806, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -73781,7 +73773,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527244448}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.35982987, w: 0.9330179}
+  m_LocalRotation: {x: 0, y: 0, z: 0.3598284, w: 0.9330185}
   m_LocalPosition: {x: 1.1100006, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -73802,7 +73794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.45000073
+  m_Length: 0.45000124
   m_ChildTransform: {fileID: 1676236780}
   m_AttachedIK: {fileID: 1827272233}
 --- !u!1 &1561955224
@@ -74605,11 +74597,11 @@ MonoBehaviour:
     m_SolverPoses:
     - m_BoneTransform: {fileID: 1025396412}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.24441954, w: 0.9696696}
+      solverRotation: {x: 0, y: 0, z: -0.24441959, w: 0.9696696}
       defaultLocalRotation: {x: 0, y: 0, z: -0.52053344, w: 0.8538413}
     - m_BoneTransform: {fileID: 1376129957}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.56156784, w: 0.8274307}
+      solverRotation: {x: 0, y: 0, z: -0.56156766, w: 0.82743084}
       defaultLocalRotation: {x: 0, y: 0, z: -0.5397126, w: 0.8418494}
     m_Weight: 1
     m_RestoreDefaultPose: 0
@@ -74655,7 +74647,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676236779}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.42724642, w: 0.9041352}
+  m_LocalRotation: {x: 0, y: 0, z: 0.42724782, w: 0.9041346}
   m_LocalPosition: {x: 0.45000088, y: -0.00000038556755, z: -0.000114917755}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -74677,7 +74669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.45000115
+  m_Length: 0.44999963
   m_ChildTransform: {fileID: 1863246287}
   m_AttachedIK: {fileID: 190330986}
 --- !u!1 &1691817904
@@ -74762,22 +74754,22 @@ PrefabInstance:
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.5
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.5
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.6
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 3357680610360814002, guid: 871fd300f434817478d214e7159c525c,
         type: 3}
@@ -75108,11 +75100,11 @@ MonoBehaviour:
     m_SolverPoses:
     - m_BoneTransform: {fileID: 337844490}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0.961469, w: 0.27491346}
+      solverRotation: {x: 0, y: 0, z: 0.96146905, w: 0.2749131}
       defaultLocalRotation: {x: 0, y: 0, z: 0.96488315, w: 0.26267973}
     - m_BoneTransform: {fileID: 1527244449}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0.35982987, w: 0.9330179}
+      solverRotation: {x: 0, y: 0, z: 0.3598284, w: 0.9330185}
       defaultLocalRotation: {x: 0, y: 0, z: 0.2443312, w: 0.9696919}
     m_Weight: 1
     m_RestoreDefaultPose: 0
@@ -75158,7 +75150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863246286}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.43233755, w: 0.9017119}
+  m_LocalRotation: {x: 0, y: 0, z: 0.43233764, w: 0.9017118}
   m_LocalPosition: {x: 0.45000046, y: -0.00000090897083, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
