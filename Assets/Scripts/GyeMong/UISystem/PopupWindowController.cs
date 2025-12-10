@@ -8,8 +8,19 @@ namespace GyeMong.UISystem
 {
     public class PopupWindowController : SingletonObject<PopupWindowController>
     {
+        public enum PopupImageType
+        {
+            None = 0,
+            Wasd = 1,
+            Shift = 2,
+            MouseLeft = 3,
+            MouseRight = 4,
+            Heal = 5,
+        }
+        
         [SerializeField] private GameObject _popupWindow;
         [SerializeField] private TMP_Text _titleText;
+        [SerializeField] private GameObject[] popupImages;
         [SerializeField] private TMP_Text _contentText;
         private RectTransform _rectTransform;
         
@@ -23,10 +34,11 @@ namespace GyeMong.UISystem
             _popupWindow.SetActive(false);
         }
 
-        public IEnumerator OpenPopupWindow(String title = "", String content = "")
+        public IEnumerator OpenPopupWindow(String title = "", String content = "", PopupImageType type = PopupImageType.None)
         {
             _titleText.text = title;
             _contentText.text = content;
+            SetImage(type);
             _popupWindow.SetActive(true);
             Time.timeScale = 0.0f;
             return null;
@@ -46,6 +58,18 @@ namespace GyeMong.UISystem
                 yield return null;
             }
         }
-        
+
+        private void SetImage(PopupImageType type)
+        {
+            foreach (var image in popupImages)
+            {
+                image.SetActive(false);
+            }
+
+            if (type != PopupImageType.None)
+            {
+                popupImages[(int)type - 1].SetActive(true);
+            }
+        }
     }
 }

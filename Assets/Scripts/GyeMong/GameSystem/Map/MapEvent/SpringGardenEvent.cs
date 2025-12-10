@@ -7,6 +7,7 @@ using GyeMong.EventSystem.Event.CinematicEvent;
 using UnityEngine;
 using GyeMong.EventSystem.Event.EventScene;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Components;
+using GyeMong.UISystem;
 
 namespace GyeMong.GameSystem.Map.MapEvent
 {
@@ -97,11 +98,14 @@ namespace GyeMong.GameSystem.Map.MapEvent
             if (_isTutorial)
             {
                 yield return (new SkippablePopupWindowEvent()
-                    { Title = "플레이어 이동", Message = "W, A, S, D를 눌러서 이동할 수 있다.", Duration = 3f }).Execute();
+                    { Title = "플레이어 이동", Message = "W, A, S, D를 눌러서 이동할 수 있다.", 
+                        Type = PopupWindowController.PopupImageType.Wasd, Duration = 3f }).Execute();
                 yield return (new SkippablePopupWindowEvent()
-                    { Title = "돌진", Message = "좌측 Shift키를 눌러 돌진할 수 있다.", Duration = 3f }).Execute();
+                    { Title = "돌진", Message = "Shift키를 눌러 돌진할 수 있다.", 
+                        Type = PopupWindowController.PopupImageType.Shift, Duration = 3f }).Execute();
                 yield return (new SkippablePopupWindowEvent()
-                    { Title = "기본공격", Message = "마우스 좌클릭을 통해 공격할 수 있다.", Duration = 3f }).Execute();
+                    { Title = "기본공격", Message = "마우스 좌클릭을 통해 공격할 수 있다.", 
+                        Type = PopupWindowController.PopupImageType.MouseLeft, Duration = 3f }).Execute();
             }
             
             // 슬라임 전투 이벤트

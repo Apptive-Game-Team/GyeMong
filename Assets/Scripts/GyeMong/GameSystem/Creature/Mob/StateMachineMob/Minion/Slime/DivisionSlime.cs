@@ -12,6 +12,7 @@ using GyeMong.GameSystem.Creature.Player;
 using GyeMong.GameSystem.Creature.Player.Component.Collider;
 using GyeMong.GameSystem.Indicator;
 using GyeMong.SoundSystem;
+using GyeMong.UISystem;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -400,7 +401,14 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 yield return StartCoroutine((new SetKeyInputEvent() { _isEnable = false }).Execute());
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
                     {
-                        Title = "스치기 시스템 배우기", Message = "좌상단에 늘어난 게이지를 이용해 특수공격(마우스 우클릭)을 사용할 수 있다.", Duration = 3f
+                        Title = "스치기 시스템 배우기", Message = "좌상단에 늘어난 게이지를 이용해 특수공격(마우스 우클릭)을 사용할 수 있다.", 
+                        Type = PopupWindowController.PopupImageType.MouseRight, Duration = 3f
+                    })
+                    .Execute());
+                yield return StartCoroutine((new SkippablePopupWindowEvent()
+                    {
+                        Title = "스치기 시스템 배우기", Message = "혹은 R키를 길게 눌러 체력을 회복할 수도 있다.", 
+                        Type = PopupWindowController.PopupImageType.Heal, Duration = 3f
                     })
                     .Execute());
                 yield return StartCoroutine((new SkippablePopupWindowEvent()
