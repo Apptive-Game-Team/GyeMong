@@ -170,6 +170,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         }
         public void DownAnimation()
         {
+            ResetToIdle();
             StopAllCoroutines();
             SetHandSprite(HandSide.Left, HandSpriteID.Idle);
             SetHandSprite(HandSide.Right, HandSpriteID.Idle);
@@ -185,24 +186,31 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
                     StartCoroutine(IdleStateAnimation());
                     break;
                 case "HandUpDown":
+                    SetHeadSprite(2);
                     StartCoroutine(HandUpDownLoop());
                     break;
                 case "HandAlternateUpDown":
+                    SetHeadSprite(2);
                     StartCoroutine(HandAlternateUpDownLoop());
                     break;
                 case "HandSmash":
+                    SetHeadSprite(2);
                     StartCoroutine(HandSmash());
                     break;
                 case "DefenseStance":
+                    SetHeadSprite(2);
                     StartCoroutine(DefenseStance());
                     break;
                 case "PushOutAttack":
+                    SetHeadSprite(2);
                     StartCoroutine(PushOutAttackAnimation());
                     break;
                 case "UpStone":
+                    SetHeadSprite(2);
                     StartCoroutine(UpStoneAnimation());
                     break;
                 case "FallingCube":
+                    SetHeadSprite(2);
                     StartCoroutine(FallingCubekAnimation());
                     break;
                 case "Down":
