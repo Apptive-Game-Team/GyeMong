@@ -459,7 +459,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
             Vector3 startPos = attackStart[movement.SpriteDirection(angle)];
-            return startPos * transform.localScale.x;
+            return startPos;
         }
         
         private IEnumerator UpdateLaser(Transform laserTransform, Vector3 fixedStart, Vector3 moveStart, Vector3 moveEnd, float duration)
