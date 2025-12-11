@@ -92,6 +92,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             _directionController.SetAngularVelocity(DEFAULT_ANGULAR_VELOCITY);
             Animator.speed = 1f;
             swordController.animator.speed = 1f;
+
+            ChangeState(new DetectingPlayer() { mob = this });
         }
         private IEnumerator OnAttackedReact()
         {
@@ -315,7 +317,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             }
             public override IEnumerator StateCoroutine()
             {
-                Wanderer._animator.SetTrigger("isGroundAttacking");
+                Wanderer._animator.SetBool("isGroundAttacking", true);
                 Wanderer.swordController.isGroundAtk = true;
                 Debug.Log("Ground Smash");
                 yield return Wanderer.StaticChildAttack(Wanderer.attackFloorPrefab, delay: 1f);
