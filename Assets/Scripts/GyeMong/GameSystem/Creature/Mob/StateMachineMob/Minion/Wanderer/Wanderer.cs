@@ -328,6 +328,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
             }
         }
+        public void OnGroundAttackEnd()
+        {
+            _animator.SetBool("isGroundAttacking", false);
+            swordController.isGroundAtk = false;
+            swordController.EndSlash();
+        }
 
         public class DetectingPlayer : WandererState
         {
