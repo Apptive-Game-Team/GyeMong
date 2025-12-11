@@ -78,6 +78,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         private IEnumerator CounterAttack()
         {
+            Animator.speed = 4f;
+            swordController.animator.speed = 4f;
             _directionController.SetAngularVelocity(FAST_ANGULAR_VELOCITY);
 
             SoundObject _soundObject;
@@ -88,6 +90,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             yield return new WaitForSeconds(0.2f);
             yield return StaticChildAttack(comboSlashPrefab);
             _directionController.SetAngularVelocity(DEFAULT_ANGULAR_VELOCITY);
+            Animator.speed = 1f;
+            swordController.animator.speed = 1f;
         }
         private IEnumerator OnAttackedReact()
         {
@@ -151,8 +155,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             swordController.animator.SetBool("SwordDelay", true);
 
             yield return ApplyAttackingMove(0.2f);
-            swordController.animator.SetBool("SwordDelay", false);
-            _animator.SetBool("isDelay", false);
+            
             yield return IndicatorGenerator.Instance.GenerateIndicator(
                 AttackObjectController.Create(
                     transform.position + _directionController.GetDirection() * distance,
@@ -163,9 +166,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                         _directionController.GetDirection() * distance,
                         duration)
                 ), delay);
-            _animator.SetBool("isAttacking", false);
-            swordController.EndSlash();
+            swordController.animator.SetBool("SwordDelay", false);
+            _animator.SetBool("isDelay", false);
+
             yield return new WaitForSeconds(0.1f);
+        }
+
+        public void OnAttackAnimationEnd()
+        {
+            swordController.EndSlash();
+            _animator.SetBool("isAttacking", false);
         }
 
         private IEnumerator StaticAttack(GameObject prefab, float distance = 0.5f, float duration = 0.5f)
@@ -255,6 +265,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 Debug.Log("HeavyTripleSlash");
+                Wanderer.Animator.speed = 4f;
                 Wanderer.swordController.animator.speed = 4f;
                 yield return Wanderer.StaticChildAttack(Wanderer.basicAttackPrefab, delay: 0.3f);
                 SceneContext.CameraManager.CameraShake(0.1f);
@@ -265,6 +276,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
                 yield return Wanderer.StaticChildAttack(Wanderer.comboSlashPrefab);
                 SceneContext.CameraManager.CameraShake(0.3f);
                 yield return new WaitForSeconds(1.5f);
+                Wanderer.Animator.speed = 1f;
                 Wanderer.swordController.animator.speed = 1f;
                 Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
             }
@@ -414,6 +426,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             public override IEnumerator StateCoroutine()
             {
                 Debug.Log("AggressiveAttackState!");
+                Wanderer.Animator.speed = 4f;
                 Wanderer.swordController.animator.speed = 4f;
 
                 int attackCount = Random.Range(1, 2);
@@ -432,6 +445,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
                     yield return new WaitForSeconds(0.25f);
                 }
+                Wanderer.Animator.speed = 1f;
                 Wanderer.swordController.animator.speed = 1f;
                 Wanderer.ChangeState(new DetectingPlayer() { mob = Wanderer });
             }
