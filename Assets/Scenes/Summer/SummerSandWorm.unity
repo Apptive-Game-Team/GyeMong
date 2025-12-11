@@ -1861,14 +1861,14 @@ MonoBehaviour:
   laserAttackMoveDuration: 0.5
   laserAttackMovePostDelay: 1
   attackStart:
-  - {x: 0.72, y: -0.43, z: 0}
-  - {x: 0.34, y: -0.72, z: 0}
+  - {x: 3.42, y: -0.42, z: 0}
+  - {x: 1.58, y: -0.42, z: 0}
   - {x: 0, y: -0.84, z: 0}
-  - {x: -0.34, y: -0.72, z: 0}
-  - {x: -0.72, y: -0.43, z: 0}
-  - {x: -0.3, y: -0.82, z: 0}
-  - {x: 0, y: -0.55, z: 0}
-  - {x: 0.3, y: -0.82, z: 0}
+  - {x: -1.58, y: -0.42, z: 0}
+  - {x: -3.42, y: -0.42, z: 0}
+  - {x: -1.37, y: -1.81, z: 0}
+  - {x: 0, y: -1.55, z: 0}
+  - {x: 1.37, y: -1.81, z: 0}
   bodyAttackSpeed: 10
   backGrounds:
   - {fileID: 1048073468}
@@ -181054,6 +181054,11 @@ PrefabInstance:
     - target: {fileID: 5656855513346395058, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,

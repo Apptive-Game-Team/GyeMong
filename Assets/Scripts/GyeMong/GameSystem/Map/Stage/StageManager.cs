@@ -3,6 +3,7 @@ using GyeMong.GameSystem.Map.Portal;
 using GyeMong.GameSystem.Map.Stage.ScriptableObject;
 using GyeMong.GameSystem.Map.Stage.Select;
 using UnityEngine;
+using Util;
 
 namespace GyeMong.GameSystem.Map.Stage
 {
@@ -75,6 +76,10 @@ namespace GyeMong.GameSystem.Map.Stage
             
             StageSelectPage.LoadStageSelectPageOnStageToDestination(_currentStageInfo.id, _currentStageInfo.id + 1);
             _clearStageCoroutine = null;
+            if (_currentStageInfo.portalID == PortalID.Sandworm)
+            {
+                SceneLoader.LoadScene("TitleScene");
+            }
         }
     }
 }

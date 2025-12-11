@@ -63,7 +63,7 @@ namespace GyeMong.GameSystem.Creature.Player
         private Coroutine _attackCoroutine;
         private Tween _attackMoveTween;
         private Tween _dashTween;
-
+        public bool IsDead => curHealth <= 0f;
         protected void Awake()
         {
             stat = _statData.GetStatComp();
@@ -620,8 +620,12 @@ namespace GyeMong.GameSystem.Creature.Player
         {
             //GameOver Event Triggered.
             changeListenerCaller.CallPlayerDied();
-            animator.SetBool("isHuck",true);
+            animator.SetBool("isHuck", true);
+
             GetComponent<AirborneController>()?.StopAllCoroutines();
+            _hitCollider.GetComponent<HitCollider>()
+                ?.StopAllCoroutines();  
+
             StopPlayer();
             Mob.Mob[] mobList = FindObjectsOfType<Mob.Mob>();
             foreach (var mob in mobList)

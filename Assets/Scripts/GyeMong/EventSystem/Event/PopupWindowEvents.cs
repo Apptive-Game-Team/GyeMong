@@ -32,11 +32,12 @@ namespace GyeMong.EventSystem.Event
     {
         public string Title;
         public string Message;
+        public PopupWindowController.PopupImageType Type;
         public float Duration;
     
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            yield return PopupWindowController.Instance.OpenPopupWindow(Title, Message);
+            yield return PopupWindowController.Instance.OpenPopupWindow(Title, Message, Type);
             
             float timer = Time.time;
             yield return new WaitUntil(() => (timer + Duration < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction));

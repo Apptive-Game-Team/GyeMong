@@ -54,12 +54,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         public void EndSlash()
         {
-            gameObject.SetActive(false);
             animator.SetBool("Slash",false);
             isPlaying = false;
             isGroundAtk = false;
 
             swordRenderer.flipY = false;
+            gameObject.SetActive(false);
         }
     }
 }

@@ -56,15 +56,33 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
         private void ApplyAirborne(AttackObjectController controller, float knockbackSpeed)
         {
+            if (SceneContext.Character == null || SceneContext.Character.IsDead)
+                return;
+
             if (controller.AttackInfo.knockbackAmount > 0)
             {
                 Vector3 origin = controller.gameObject.transform.position;
                 Vector3 direction = (SceneContext.Character.transform.position - origin).normalized;
+
                 SceneContext.Character.isControlled = true;
-                StartCoroutine(ActionAfter(airborneController.AirborneTo(direction * controller.AttackInfo.knockbackAmount + SceneContext.Character.transform.position, 1f, knockbackSpeed),
-                    () => { SceneContext.Character.isControlled = false; }));
+
+                StartCoroutine(
+                    ActionAfter(
+                        airborneController.AirborneTo(
+                            direction * controller.AttackInfo.knockbackAmount + SceneContext.Character.transform.position,
+                            1f,
+                            knockbackSpeed),
+                        () =>
+                        {
+                            if (SceneContext.Character == null || SceneContext.Character.IsDead)
+                                return;
+
+                            SceneContext.Character.isControlled = false;
+                        })
+                );
             }
         }
+
 
         private IEnumerator ActionAfter(IEnumerator coroutine, Action action)
         {
