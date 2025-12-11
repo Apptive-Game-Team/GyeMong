@@ -622,11 +622,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         public override IEnumerator Stun(float duration)
         {
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-            Animator.SetBool("isStun", true);
+            //Animator.SetBool("isStun", true); 현재 Elf 내부에 스턴 상황이 없고 오히려 Player 오버 시 스턴이 호출 될 때 보스가 다운해버리는 모양이 나와서 비활성화 처리
             currentState.OnStateExit();
             StopCoroutine(_currentStateCoroutine);
             yield return new WaitForSeconds(duration);
-            Animator.SetBool("isStun", false);
+            //Animator.SetBool("isStun", false);
             ChangeState();
         }
     }
