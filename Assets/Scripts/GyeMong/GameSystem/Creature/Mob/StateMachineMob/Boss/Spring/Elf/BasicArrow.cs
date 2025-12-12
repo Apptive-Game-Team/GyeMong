@@ -9,8 +9,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
     {
         protected override IEnumerator OnReachEnd()
         {
-            yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
+            yield return null;
         }
     }
 }
