@@ -86,8 +86,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Component
             while (timer < FILL_TIME && progress <= 1)
             {
                 timer += DELTA_TIME;
-                currentHp = _maxHp * progress;
-                _hpBar.value = currentHp;
+                _hpBar.value = progress;
                 progress = Mathf.Pow(timer / FILL_TIME, 2);
                 yield return new WaitForSeconds(DELTA_TIME);
             }

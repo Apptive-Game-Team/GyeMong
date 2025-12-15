@@ -36,20 +36,20 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
                 if (Time.time < lastHitTime + enemyAttackInfo.multiHitDelay) return;
 
                 multiHitTimers[collider] = Time.time;
-                ApplyHitImpact(enemyAttackInfo.damage, collider, true);
                 SceneContext.Character.TakeDamage(enemyAttackInfo.damage);
+                ApplyHitImpact(enemyAttackInfo.damage, collider, true);
             }
             else if (!attackObjectController.isAttacked && !SceneContext.Character.isInvincible)
             {
                 GameObject go = Instantiate(hitEffect, collider.ClosestPoint(transform.position), Quaternion.identity);
                 Destroy(go,0.5f);
-                ApplyHitImpact(enemyAttackInfo.damage, collider);
                 attackObjectController.isAttacked = true;
 
                 if (enemyAttackInfo.soundObject != null)
                     enemyAttackInfo.soundObject.PlayAsync();
 
                 SceneContext.Character.TakeDamage(enemyAttackInfo.damage);
+                ApplyHitImpact(enemyAttackInfo.damage, collider);
                 collider.gameObject.SetActive(!enemyAttackInfo.isDestroyOnHit);
             }
         }
@@ -57,7 +57,9 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         private void ApplyAirborne(AttackObjectController controller, float knockbackSpeed)
         {
             if (SceneContext.Character == null || SceneContext.Character.IsDead)
+            {
                 return;
+            }
 
             if (controller.AttackInfo.knockbackAmount > 0)
             {
@@ -129,6 +131,11 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
         private IEnumerator HitStop(float hitStopRatio, float hitStopDuration)
         {
+            if (SceneContext.Character == null || SceneContext.Character.IsDead)
+            {
+                yield break;
+            }
+            
             Time.timeScale = hitStopRatio;
             yield return new WaitForSeconds(hitStopDuration);
             Time.timeScale = 1f;

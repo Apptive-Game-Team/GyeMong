@@ -76,6 +76,11 @@ namespace GyeMong.EventSystem.Event.Boss
       {
         ((HpBarController) HpBarController).SetBoss(_boss);
       }
+
+      if (HpBarController is GeneralHpBarController)
+      {
+        ((GeneralHpBarController) HpBarController).SetCreature();
+      }
       
     }
 

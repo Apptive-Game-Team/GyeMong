@@ -21,6 +21,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
         [SerializeField] private float cameraSpeed;
         [SerializeField] private Wanderer wanderer;
         [SerializeField] private GameObject detectingObject;
+        [SerializeField] private GameObject hpBarGameObject;
         private float delayTime = 1f;
         private bool _isTriggered = false;
 
@@ -40,6 +41,9 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return StartCoroutine(SceneContext.CameraManager.CameraMove(cameraDestination, cameraSpeed));
 
             yield return new WaitForSeconds(delayTime);
+            
+            hpBarGameObject.SetActive(true);
+            yield return (new ShowBossHealthBarEvent()).Execute();
 
             yield return StartCoroutine((new CameraFollowPlayer()).Execute());
             detectingObject.SetActive(true);

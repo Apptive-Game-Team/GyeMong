@@ -1,21 +1,17 @@
 using GyeMong.GameSystem.Creature;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GyeMong.UISystem.Game.BossUI
 {
     public class GeneralHpBarController : AbstractHpBarController
     {
-        private RectTransform _curHpBar;
-        private RectTransform _curShieldBar;
-        
-        private GameObject _hpBar;
-        private GameObject _shieldBar;
-        private GameObject _hpBarBackground;
+        private Slider _hpBar;
+        private Slider _shieldBar;
         
         public Creature creature;
-    
-        private float _hpBarWidth;
-        private float _shieldBarWidth;
+        private Creature _creature;
+        
         private float _curHp;
         private float _curShield;
         private float _maxHp = 100;
@@ -27,14 +23,9 @@ namespace GyeMong.UISystem.Game.BossUI
         
         private void Awake()
         {
-            _curHpBar = transform.Find("CurHp").GetComponent<RectTransform>();
-            _hpBar = _curHpBar.gameObject;
-            _curShieldBar = transform.Find("CurShield").GetComponent<RectTransform>();
-            _shieldBar = _curShieldBar.gameObject;
-            _hpBarBackground = transform.Find("HpBarBackground").gameObject;
-            RectTransform rectTransform = GetComponent<RectTransform>();
-            _hpBarWidth = rectTransform.rect.width;
-            _shieldBarWidth = rectTransform.rect.width;
+            _hpBar = transform.Find("HpBar").GetComponent<Slider>();
+            _shieldBar = transform.Find("ShieldBar").GetComponent<Slider>();
+            _creature = creature;
             SceneContext.EffectManager.CachingHpBar(this);
         }
 
@@ -47,25 +38,12 @@ namespace GyeMong.UISystem.Game.BossUI
         {
             if (creature != null)
             {
-                if (!_isBossSetUp)
-                {
-                    _hpBar.SetActive(true);
-                    _shieldBar.SetActive(true);
-                    _hpBarBackground.SetActive(true);
-                }
                 _isBossSetUp = true;
                 _maxHp = creature.MaxHp;
                 UpdateHp(creature.CurrentHp, creature.CurrentShield);
-                
             }
             else
             {
-                if (_isBossSetUp)
-                {
-                    _hpBar.SetActive(false);
-                    _shieldBar.SetActive(false);
-                    _hpBarBackground.SetActive(false);
-                }
                 _isBossSetUp = false;
                 _maxHp = DEFAULT_HP;
             }
@@ -74,20 +52,21 @@ namespace GyeMong.UISystem.Game.BossUI
         public override void Clear()
         {
             UpdateHp(0, 0);
+            creature = null;
         }
 
         public override void UpdateHp(float hp, float shield)
         {
             _curHp = hp;
             _curShield = shield;
-            Rect hpRect = _curHpBar.rect;
-            Rect shieldRect = _curShieldBar.rect;
-            hpRect.width = (_hpBarWidth - 20) * (_curHp / _maxHp);
-            shieldRect.width = (_shieldBarWidth - 20) * (_curShield / _maxHp);
-            _curHpBar.sizeDelta = new Vector2(hpRect.width, hpRect.height);
-            _curHpBar.localPosition = new Vector3((-_hpBarWidth + hpRect.width)/2 + 10, 0, 0);
-            _curShieldBar.sizeDelta = new Vector2(shieldRect.width, shieldRect.height);
-            _curShieldBar.localPosition = new Vector3((-_shieldBarWidth + shieldRect.width) / 2 + 10, 0, 0);
+            
+            _hpBar.value = _curHp / _maxHp;
+            _shieldBar.value = _curShield / _maxHp;
+        }
+
+        public void SetCreature()
+        {
+            creature = _creature;
         }
     }
 }

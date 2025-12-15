@@ -1,17 +1,17 @@
+using System;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GyeMong.UISystem.Game.BossUI
 {
     public class HpBarController : AbstractHpBarController
     {
-        private RectTransform _curHpBar;
-        private RectTransform _curShieldBar;
+        private Slider _hpBar;
+        private Slider _shieldBar;
     
         public Boss boss;
-    
-        private float _hpBarWidth;
-        private float _shieldBarWidth;
+        
         private float _curHp;
         private float _curShield;
         private float _maxHp = 100;
@@ -20,14 +20,13 @@ namespace GyeMong.UISystem.Game.BossUI
         public const float DEFAULT_HP = 100;
     
         private int currentPhase = -1;
+        
         private void Awake()
         {
-            _curHpBar = transform.Find("CurHp").GetComponent<RectTransform>();
-            _curShieldBar = transform.Find("CurShield").GetComponent<RectTransform>();
-            RectTransform rectTransform = GetComponent<RectTransform>();
-            _hpBarWidth = rectTransform.rect.width;
-            _shieldBarWidth = rectTransform.rect.width;
             SceneContext.EffectManager.CachingHpBar(this);
+            
+            _hpBar = transform.Find("HpBar").GetComponent<Slider>();
+            _shieldBar = transform.Find("ShieldBar").GetComponent<Slider>();
         }
 
         private void Update()
@@ -72,14 +71,9 @@ namespace GyeMong.UISystem.Game.BossUI
         {
             _curHp = hp;
             _curShield = shield;
-            Rect hpRect = _curHpBar.rect;
-            Rect shieldRect = _curShieldBar.rect;
-            hpRect.width = (_hpBarWidth - 20) * (_curHp / _maxHp);
-            shieldRect.width = (_shieldBarWidth - 20) * (_curShield / _maxHp);
-            _curHpBar.sizeDelta = new Vector2(hpRect.width, hpRect.height);
-            _curHpBar.localPosition = new Vector3((-_hpBarWidth + hpRect.width)/2 + 10, 0, 0);
-            _curShieldBar.sizeDelta = new Vector2(shieldRect.width, shieldRect.height);
-            _curShieldBar.localPosition = new Vector3((-_shieldBarWidth + shieldRect.width) / 2 + 10, 0, 0);
+            
+            _hpBar.value = _curHp / _maxHp;
+            _shieldBar.value = _curShield / _maxHp;
         }
     
         public void SetBoss(Boss boss)
