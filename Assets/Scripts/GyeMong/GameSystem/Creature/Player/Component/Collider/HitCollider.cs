@@ -36,7 +36,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
                 if (Time.time < lastHitTime + enemyAttackInfo.multiHitDelay) return;
 
                 multiHitTimers[collider] = Time.time;
-                SceneContext.Character.TakeDamage(enemyAttackInfo.damage);
+                SceneContext.Character.TakeDamage(enemyAttackInfo.damage, attackObjectController.isPowerful);
                 ApplyHitImpact(enemyAttackInfo.damage, collider, true);
             }
             else if (!attackObjectController.isAttacked && !SceneContext.Character.isInvincible)
@@ -48,7 +48,7 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
                 if (enemyAttackInfo.soundObject != null)
                     enemyAttackInfo.soundObject.PlayAsync();
 
-                SceneContext.Character.TakeDamage(enemyAttackInfo.damage);
+                SceneContext.Character.TakeDamage(enemyAttackInfo.damage, attackObjectController.isPowerful);
                 ApplyHitImpact(enemyAttackInfo.damage, collider);
                 collider.gameObject.SetActive(!enemyAttackInfo.isDestroyOnHit);
             }

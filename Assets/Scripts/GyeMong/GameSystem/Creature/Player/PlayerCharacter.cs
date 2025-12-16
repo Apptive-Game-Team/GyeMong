@@ -194,9 +194,12 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetFloat("yDir", mouseDirection.y);
         }
 
-        public void TakeDamage(float damage, bool isUnblockable = false)
+        public void TakeDamage(float damage, bool isPowerful = false)
         {
-            damage = 1;
+            if (!isPowerful)
+            {
+                damage = 1;
+            }
 
             if (isInvincible) return;
 

@@ -17,12 +17,12 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         private SpriteRenderer _playerRenderer;
         private List<SpriteRenderer> _wallRenderers = new();
 
-        private void Awake()
+        private void OnEnable()
         {
             _camera = Camera.main;
             _playerRenderer = SceneContext.Character.transform.GetComponent<SpriteRenderer>();
             
-            SpriteRenderer[] all = GameObject.FindObjectsOfType<SpriteRenderer>();
+            SpriteRenderer[] all = FindObjectsOfType<SpriteRenderer>(true);
             foreach (var sr in all)
             {
                 if (((1 << sr.gameObject.layer) & mask) != 0)

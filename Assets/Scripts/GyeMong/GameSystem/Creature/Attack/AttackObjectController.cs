@@ -14,6 +14,7 @@ namespace GyeMong.GameSystem.Creature.Attack
     {
         public bool isGrazed = false;
         public bool isAttacked = false;
+        public bool isPowerful;
         private IAttackObjectMovement _movement;
         [SerializeField] private EnemyAttackInfo _attackInfo;
         [SerializeField] private AttackObjectSounds _attackObjectSounds;

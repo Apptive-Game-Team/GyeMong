@@ -434,7 +434,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         
         private void LaserAttack(Vector3 attackPosition)
         {
-            Vector3 start = movement.sandwormBody[0].transform.position + SetAttackStart(attackPosition);
+            Vector3 start = movement.sandwormBody[0].transform.position + SetAttackStart(attackPosition) * transform.localScale.x;
             
             Vector3 dir = (attackPosition - transform.position).normalized;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

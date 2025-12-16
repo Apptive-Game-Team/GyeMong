@@ -12,8 +12,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         [SerializeField] private GameObject tailAttack;
         [SerializeField] private GameObject sandworm;
         private float _attackDelay;
-        private float _nextAttackDelay;
-        private float _detroyDelay;
+        private float _destroyDelay;
         private float _spawnPosAdj;
         private Coroutine _curCoroutine;
 
@@ -21,13 +20,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
         {
             _spawnPosAdj = 0.3f;
             _attackDelay = 1f;
-            _nextAttackDelay = 3f;
         }
 
         private IEnumerator TailAttackPattern()
         {
             while (true)
             {
+                if (SceneContext.Character.IsDead)
+                {
+                    yield break;
+                }
+                
                 Vector3 targetPos = SceneContext.Character.transform.position;
                 Vector3 sandwormDir = Vector3.Distance(targetPos, sandworm.transform.position) > 1f ? 
                     (sandworm.transform.position - targetPos).normalized : Vector3.zero;
@@ -41,7 +44,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Instantiate(showEffect, spawnPos, Quaternion.identity);
                 Sound.Play("ENEMY_Map_Tail_Attack");
 
-                yield return new WaitForSeconds(_nextAttackDelay);
+                yield return new WaitForSeconds(Random.Range(2.7f, 3.3f));
             }
         }
 
