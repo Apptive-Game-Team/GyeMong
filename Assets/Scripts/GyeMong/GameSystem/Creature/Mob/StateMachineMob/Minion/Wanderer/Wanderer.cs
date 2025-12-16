@@ -331,6 +331,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
         public void OnGroundAttackEnd()
         {
             _animator.SetBool("isGroundAttacking", false);
+            _animator.SetBool("isAttacking", false);
             swordController.isGroundAtk = false;
             swordController.EndSlash();
         }
