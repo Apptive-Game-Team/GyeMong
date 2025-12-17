@@ -347,7 +347,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                         break;
                     }
                 } while (attempts-- > 0);
-                
+
+                gameObject.GetComponent<Collider2D>().enabled = false;
                 GameObject newSlime = Instantiate(gameObject, transform.position, Quaternion.identity);
                 newSlime.transform.localScale = transform.localScale * DivideRatio;
 
@@ -377,6 +378,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     .OnComplete(() =>
                     {
                         slimeComponent.ChangeState();
+                        slimeComponent.GetComponent<Collider2D>().enabled = true;
                     });
                 Tween t2 = shadow.transform.DOMove(spawnPosition + new Vector3(0, -0.68f, 0), 0.5f)
                     .SetEase(Ease.OutQuad);
