@@ -191,7 +191,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("isAttack", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 GameObject arrowObj = Instantiate(Elf.arrowPrefab, Elf.transform.position, Quaternion.identity);
-                arrowObj.GetComponent<BasicArrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer);
+                arrowObj.GetComponent<BasicArrow>().SetDirection(Elf.DirectionToPlayer, Elf.DistanceToPlayer * 2);
                 Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
@@ -240,6 +240,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         }
         public class SeedRangedAttak : ElfState
         {
+            private GameObject arrowIndicator;
             public SeedRangedAttak()
             {
                 cooldownTime = 30f;
@@ -257,7 +258,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.arrowIndicator.sprite = Elf.arrowImages.seedArrow.seedArrowImage;
                 Elf.Animator.SetFloat("xDir", Elf.DirectionToPlayer.x);
                 Elf.Animator.SetFloat("yDir", Elf.DirectionToPlayer.y);
-                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[0], Elf.SkillIndicator.transform.position, Quaternion.identity);
+                arrowIndicator = Instantiate(Elf.arrowIndicators[0], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 1);
                 Sound.Play("ENEMY_Arrow_Drow");
@@ -305,9 +306,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.arrowIndicator.sprite = null;
                 Elf.ChangeState(NextStateWeights);
             }
+            public override void OnStateExit()
+            {
+                base.OnStateExit();
+                if (arrowIndicator != null)
+                {
+                    Elf.arrowIndicator.sprite = null;
+                    Destroy(arrowIndicator);
+                }
+            }
         }
         public class BindingArrowAttack : ElfState
         {
+            private GameObject arrowIndicator;
             public BindingArrowAttack()
             {
                 cooldownTime = 5f;
@@ -319,7 +330,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             public override IEnumerator StateCoroutine()
             {
                 Elf.arrowIndicator.sprite = Elf.arrowImages.bindingArrow.bindingArrowImage;
-                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[1], Elf.SkillIndicator.transform.position, Quaternion.identity);
+                arrowIndicator = Instantiate(Elf.arrowIndicators[1], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
@@ -336,9 +347,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.arrowIndicator.sprite = null;
                 Elf.ChangeState(NextStateWeights);
             }
+            public override void OnStateExit()
+            {
+                base.OnStateExit();
+                if (arrowIndicator != null)
+                {
+                    Elf.arrowIndicator.sprite = null;
+                    Destroy(arrowIndicator);
+                }
+            }
         }
         public class HomingArrowAttack : ElfState
         {
+            private GameObject arrowIndicator;
             public HomingArrowAttack()
             {
                 cooldownTime = 5f;
@@ -350,7 +371,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             public override IEnumerator StateCoroutine()
             {
                 Elf.arrowIndicator.sprite = Elf.arrowImages.hommingArrow.hommingArrowImage;
-                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[2], Elf.SkillIndicator.transform.position, Quaternion.identity);
+                arrowIndicator = Instantiate(Elf.arrowIndicators[2], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
@@ -367,9 +388,19 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
+            public override void OnStateExit()
+            {
+                base.OnStateExit();
+                if (arrowIndicator != null)
+                {
+                    Elf.arrowIndicator.sprite = null;
+                    Destroy(arrowIndicator);
+                }
+            }
         }
         public class SplitArrowAttack : ElfState
         {
+            private GameObject arrowIndicator;
             public SplitArrowAttack()
             {
                 cooldownTime = 5f;
@@ -381,7 +412,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
             public override IEnumerator StateCoroutine()
             {
                 Elf.arrowIndicator.sprite = Elf.arrowImages.splitArrow.splitArrowImage;
-                GameObject arrowIndicator = Instantiate(Elf.arrowIndicators[3], Elf.SkillIndicator.transform.position, Quaternion.identity);
+                arrowIndicator = Instantiate(Elf.arrowIndicators[3], Elf.SkillIndicator.transform.position, Quaternion.identity);
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
@@ -397,6 +428,15 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.arrowIndicator.sprite = null;
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
+            }
+            public override void OnStateExit()
+            {
+                base.OnStateExit();
+                if (arrowIndicator != null)
+                {
+                    Elf.arrowIndicator.sprite = null;
+                    Destroy(arrowIndicator);
+                }
             }
         }
         public class MeleeAttack : ElfState

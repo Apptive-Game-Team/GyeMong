@@ -170,8 +170,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
         }
         public void DownAnimation()
         {
-            ResetToIdle();
             StopAllCoroutines();
+            ResetToIdle();
             SetHandSprite(HandSide.Left, HandSpriteID.Idle);
             SetHandSprite(HandSide.Right, HandSpriteID.Idle);
             SetHeadSprite(0);
