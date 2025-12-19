@@ -192,6 +192,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
             animator.SetFloat("xDir", mouseDirection.x);
             animator.SetFloat("yDir", mouseDirection.y);
+            animator.SetFloat("speed", stat.MoveSpeed);
         }
 
         public void TakeDamage(float damage, bool isPowerful = false)
