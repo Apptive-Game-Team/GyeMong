@@ -27,6 +27,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime.Component
 
         public void BindAction(DivisionSlime divisionSlime)
         {
+            divisionSlime.OnHpChanged -= UpdateHpBar;
             divisionSlime.OnHpChanged += UpdateHpBar;
         }
 

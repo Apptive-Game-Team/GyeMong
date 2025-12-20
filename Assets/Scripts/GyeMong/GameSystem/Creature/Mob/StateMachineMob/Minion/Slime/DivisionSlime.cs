@@ -80,9 +80,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
         public override void OnAttacked(float damage)
         {
-            _hpBar.currentHp -= Mathf.Min(currentHp, damage);
-            OnHpChanged?.Invoke();
+            float before = currentHp;
             base.OnAttacked(damage);
+            float actualLoss = Mathf.Max(0, before - currentHp);
+            _hpBar.currentHp -= actualLoss;
+            OnHpChanged?.Invoke();
             if (currentState is not SlimeDieState)
             {
                 if (currentHp <= 0)
