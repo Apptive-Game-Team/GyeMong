@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrazed: 0
   isAttacked: 0
+  isPowerful: 0
   _attackInfo: {fileID: 11400000, guid: 509295763564a4247a722c6b3ba8baeb, type: 2}
   _attackObjectSounds: {fileID: 11400000, guid: f2172a48927493f46a8fdbe02f35b398,
     type: 2}
@@ -110,7 +111,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7967004797931423187}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
