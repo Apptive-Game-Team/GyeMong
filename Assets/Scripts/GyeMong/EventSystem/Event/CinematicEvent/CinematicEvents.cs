@@ -105,11 +105,9 @@ namespace GyeMong.EventSystem.Event.CinematicEvent
 
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            float _nowTimeScale = Time.timeScale;
             Time.timeScale = _timeScale;
             yield return new WaitForSecondsRealtime(_modifyDuration);
-            Time.timeScale = _nowTimeScale;
-        
+            Time.timeScale = 1f;
         }
     }
 }
