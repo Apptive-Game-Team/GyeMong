@@ -38,7 +38,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         bool isCool = false;
         public SoundObject curBGM;
 
-        [SerializeField] private BodyHeatUI bodyHeatUI;
         private float bodyHeat;
         private Color dawnColor = new Color32(255, 255, 255, 255);
         private Color dayColor = new Color32(255, 85, 85, 255);
@@ -67,7 +66,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
             base.Update();
             UpdatePhaseState();
             UpdateBodyHeat();
-            bodyHeatUI.SetHeat(bodyHeat);
         }
         private void UpdatePhaseState()
         {
