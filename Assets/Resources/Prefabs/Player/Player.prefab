@@ -2251,16 +2251,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shadow
       objectReference: {fileID: 0}
-    - target: {fileID: 5488032472014669836, guid: 68da3ad8901654f82aac3eaaed696320,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6313726
-      objectReference: {fileID: 0}
-    - target: {fileID: 8325502752614663838, guid: 68da3ad8901654f82aac3eaaed696320,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 8325502752614663838, guid: 68da3ad8901654f82aac3eaaed696320,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2269,7 +2259,7 @@ PrefabInstance:
     - target: {fileID: 8325502752614663838, guid: 68da3ad8901654f82aac3eaaed696320,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7
+      value: -0.46
       objectReference: {fileID: 0}
     - target: {fileID: 8325502752614663838, guid: 68da3ad8901654f82aac3eaaed696320,
         type: 3}

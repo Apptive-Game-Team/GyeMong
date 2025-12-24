@@ -624,11 +624,10 @@ namespace GyeMong.GameSystem.Creature.Player
         {
             //GameOver Event Triggered.
             changeListenerCaller.CallPlayerDied();
+            _hitCollider.enabled = false;
             animator.SetBool("isHuck", true);
 
             GetComponent<AirborneController>()?.StopAllCoroutines();
-            _hitCollider.GetComponent<HitCollider>()
-                ?.StopAllCoroutines();  
 
             StopPlayer();
             Mob.Mob[] mobList = FindObjectsOfType<Mob.Mob>();

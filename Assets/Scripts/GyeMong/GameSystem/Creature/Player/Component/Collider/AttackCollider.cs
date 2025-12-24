@@ -15,7 +15,6 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
         private void Start()
         {
             _particleSystem = GetComponentInChildren<ParticleSystem>();
-            _shape = _particleSystem.shape;//.GetComponent<ParticleSystem.ShapeModule>();
             var player = SceneContext.Character;
             attackDamage = player.stat.AttackPower;
         }
