@@ -263,6 +263,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetFloat("attackType", 1);
                 Sound.Play("ENEMY_Arrow_Drow");
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.arrowIndicator.sprite = null;
                 Destroy(arrowIndicator);
                 int count = 0;
                 float baseAngle = Mathf.Atan2(Elf.DirectionToPlayer.y, Elf.DirectionToPlayer.x) * Mathf.Rad2Deg;
@@ -303,7 +304,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Sound.Play("ENEMY_Arrow_Shot");
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
-                Elf.arrowIndicator.sprite = null;
                 Elf.ChangeState(NextStateWeights);
             }
             public override void OnStateExit()
@@ -334,6 +334,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.arrowIndicator.sprite = null;
                 Destroy(arrowIndicator);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
@@ -344,7 +345,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
                 SetWeights();
-                Elf.arrowIndicator.sprite = null;
                 Elf.ChangeState(NextStateWeights);
             }
             public override void OnStateExit()
@@ -375,6 +375,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.arrowIndicator.sprite = null;
                 Destroy(arrowIndicator);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
@@ -384,7 +385,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.arrowIndicator.sprite = null;
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
@@ -416,6 +416,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Elf.Animator.SetBool("attackDelay", true);
                 Elf.Animator.SetFloat("attackType", 0);
                 yield return new WaitForSeconds(Elf.attackdelayTime);
+                Elf.arrowIndicator.sprite = null;
                 Destroy(arrowIndicator);
                 Elf.Animator.SetBool("attackDelay", false);
                 Elf.Animator.SetBool("isAttack", true);
@@ -425,7 +426,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
                 Sound.Play("ENEMY_Arrow_Shot");
                 yield return new WaitForSeconds(Elf.attackdelayTime / 2);
                 Elf.Animator.SetBool("isAttack", false);
-                Elf.arrowIndicator.sprite = null;
                 SetWeights();
                 Elf.ChangeState(NextStateWeights);
             }
