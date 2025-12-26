@@ -2251,6 +2251,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 5488032472014669836, guid: 68da3ad8901654f82aac3eaaed696320,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.23921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488032472014669836, guid: 68da3ad8901654f82aac3eaaed696320,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488032472014669836, guid: 68da3ad8901654f82aac3eaaed696320,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488032472014669836, guid: 68da3ad8901654f82aac3eaaed696320,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8325502752614663838, guid: 68da3ad8901654f82aac3eaaed696320,
         type: 3}
       propertyPath: m_LocalPosition.x

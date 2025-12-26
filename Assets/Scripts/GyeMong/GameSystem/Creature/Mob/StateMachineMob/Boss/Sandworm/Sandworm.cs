@@ -90,7 +90,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
             RangedAttackRange = 100f;
             
             _venomAttackDuration = 0.8f;
-            _venomAttackSpreadAngle = 5f;
+            _venomAttackSpreadAngle = 15f;
             _venomPitDuration = 2f;
             _laserDuration = 1f;
             _laserDistance = 4f;
@@ -167,7 +167,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.VenomBreathAttack(attackPosition, Sandworm.currentPhase > 0);
                 yield return new WaitForSeconds(Sandworm.attackMovePostDelay + 0.2f);
                 Sandworm.movement.isIdle = true;
-                yield return new WaitForSeconds(Sandworm.attackMovePostDelay / 2);
+                yield return new WaitForSeconds(0.1f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
             }
@@ -198,7 +198,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Destroy(crash, 0.7f);
                 yield return new WaitForSeconds(Sandworm.headAttackMoveBackDelay + 0.4f);
                 Sandworm.movement.isIdle = true;
-                yield return new WaitForSeconds(Sandworm.headAttackMoveBackDelay / 2);
+                yield return new WaitForSeconds(0.1f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
@@ -225,7 +225,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
                 Sandworm.LaserAttack(attackPosition);
                 yield return new WaitForSeconds(Sandworm.laserAttackMoveDuration + Sandworm.laserAttackMovePostDelay);
                 Sandworm.movement.isIdle = true;
-                yield return new WaitForSeconds(Sandworm.laserAttackMovePostDelay / 2);
+                yield return new WaitForSeconds(0.1f);
                 SetWeights();
                 Sandworm.ChangeState(NextStateWeights);
                 yield return null;
