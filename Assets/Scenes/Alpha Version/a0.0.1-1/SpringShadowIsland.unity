@@ -1894,6 +1894,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -2830,6 +2835,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8195501583839503341, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
+        type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 1100347304504271913, guid: fa04c59ff9f5145b7abca73df6c932d9,
+        type: 3}
     - target: {fileID: 8195501583839503341, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
         type: 3}
       propertyPath: hpBarGameObject
