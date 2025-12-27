@@ -2780,10 +2780,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4426637701789234946, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4687317364411881096, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
         type: 3}
       propertyPath: m_Name
       value: ShadowOfHero
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723278281210205032, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7723278281210205032, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
         type: 3}
