@@ -82,6 +82,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
             swordController.animator.speed = 4f;
             _directionController.SetAngularVelocity(FAST_ANGULAR_VELOCITY);
 
+            _animator.SetBool("isGroundAttacking", false);
+            swordController.isGroundAtk = false;
+
             SoundObject _soundObject;
             int randomSuffix = UnityEngine.Random.Range(2, 4);
             string soundName = "ENEMY_Wanderer_CounterAttack" + randomSuffix;
