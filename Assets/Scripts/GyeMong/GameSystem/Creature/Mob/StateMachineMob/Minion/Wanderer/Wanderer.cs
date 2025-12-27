@@ -235,7 +235,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
             var sprite = GetComponentInChildren<SpriteRenderer>();
             if (sprite != null)
-                sprite.flipX = dir.x > 0;
+                sprite.flipX = dir.x < 0;
         }
 
         public class CircularSlash : WandererState
