@@ -77,7 +77,9 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
             Quaternion rot = Quaternion.Euler(0, 0, angle + 45);
             
-            var slashEffect = Instantiate(slashEffectPrefab, hitPoint, rot, other.transform);
+            Debug.Log("target" + other.transform.position + "| player " + SceneContext.Character.transform.parent +  "| AttackDir" + attackDir + "| Slash Effect at " + hitPoint + "| with angle " + (angle + 45));
+            
+            Instantiate(slashEffectPrefab, hitPoint, rot, other.transform);
         }
         private void SetParticleSystemTexture(Collider2D collision)
         {

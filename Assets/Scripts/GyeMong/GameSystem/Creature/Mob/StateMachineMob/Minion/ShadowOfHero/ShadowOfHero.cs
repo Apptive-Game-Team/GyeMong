@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using GyeMong.GameSystem.Creature.Attack;
 using GyeMong.GameSystem.Creature.Attack.Component.Movement;
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Component.SkillIndicator;
@@ -23,6 +24,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
         [SerializeField] private GameObject skillPrefab;
         [SerializeField] private SkllIndicatorDrawer SkillIndicator;
         [SerializeField] private GameObject hpBarGameObject;
+
+        [SerializeField] private GameObject key;
 
         public override void OnAttacked(float damage)
         {
@@ -308,8 +311,17 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
             StopCoroutine(_currentStateCoroutine);
-            yield return new WaitForSecondsRealtime(1f);
+            DropKey();
+            yield return new WaitForSecondsRealtime(2f);
             StageManager.ClearStage(this);
+        }
+        
+        private void DropKey()
+        {
+            GameObject keyObject = Instantiate(key, transform.position, Quaternion.identity);
+            Vector3 dropPosition = transform.position + new Vector3(Random.Range(-1.5f, 1.5f), 0, 0);
+            keyObject.transform.DOJump(dropPosition, 2.0f, 1, 0.5f)
+                .SetEase(Ease.OutQuad);
         }
     }
 }

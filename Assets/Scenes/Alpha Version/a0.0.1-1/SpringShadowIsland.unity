@@ -1894,6 +1894,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7798956274986363067, guid: b8346142fe6d243378a4a73c861e945e,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -2115,7 +2120,7 @@ MonoBehaviour:
   cameraSpeed1: 0
   playerDestination1: {x: -14, y: 0, z: 0}
   playerSpeed1: 2
-  cameraDestination2: {x: -5, y: 0, z: -10}
+  cameraDestination2: {x: -7, y: 0, z: -10}
   cameraSpeed2: 2
   shadowDestination2: {x: 0, y: 0, z: 0}
   shadowSpeed2: 3
@@ -2775,10 +2780,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4426637701789234946, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4687317364411881096, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
         type: 3}
       propertyPath: m_Name
       value: ShadowOfHero
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723278281210205032, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7723278281210205032, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
         type: 3}
@@ -2830,6 +2845,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8195501583839503341, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
+        type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 1100347304504271913, guid: fa04c59ff9f5145b7abca73df6c932d9,
+        type: 3}
     - target: {fileID: 8195501583839503341, guid: 4cab4e02320cd4a7386e8be055c0f8c1,
         type: 3}
       propertyPath: hpBarGameObject
