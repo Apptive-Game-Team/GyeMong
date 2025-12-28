@@ -7,7 +7,8 @@ on:
       - merge/461
 
 jobs:
-  buildWebGL:
+  # 1. 빌드 전용 Job
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -19,14 +20,14 @@ jobs:
           haskell: true
           large-packages: true
           docker-images: true
-            
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
           token: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
           fetch-depth: 0
-      
+
       - name: Cache Library folder (WebGL)
         uses: actions/cache@v4
         with:
@@ -48,31 +49,39 @@ jobs:
           targetPlatform: WebGL
           customParameters: -logFile - -ignoreCompilerErrors
 
+      # 빌드 결과물을 아티팩트로 저장 (다음 Job에서 쓰기 위함)
       - name: Upload WebGL build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WebGL-Build
-          path: build
+          name: WebGL-Build-Files
+          path: build/WebGL/WebGL
+
+  # 2. 배포(Push) 전용 Job
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: WebGL-Build-Files
+          path: build-results
 
       - name: Push to another repo
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # clone target repo
-          git clone https://x-access-token:${{ secrets.GYE_MONG_PLAY_TOKEN }}@github.com/Apptive-Game-Team/GyeMong_Play.git
+          git clone https://x-access-token:${{ secrets.GYE_MONG_PLAY_TOKEN }}@github.com/Apptive-Game-Team/GyeMong_Play.git target_repo
           
-          ls -R build
-          
-          cd GyeMong_Play
+          cd target_repo
 
-          # copy build result
-          rm -rf ./Build
-          rm -rf ./index.html
-          cp -r ../build/WebGL/WebGL/* ./
+          # 기존 파일 삭제
+          rm -rf ./Build ./index.html ./TemplateData
           
-          ls -R 
-
+          # 아티팩트에서 다운로드한 파일 복사
+          cp -r ../build-results/* ./
+          
+          # 변경 사항 확인 및 푸시
           git add .
-          git commit -m "Update WebGL build from main repo"
-          git push origin main
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update WebGL build from main repo" && git push origin main)
