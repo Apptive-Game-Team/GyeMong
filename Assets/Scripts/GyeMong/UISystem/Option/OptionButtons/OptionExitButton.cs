@@ -17,7 +17,10 @@ namespace GyeMong.UISystem.Option.OptionButtons
         {
             gameObject.SetActive(false);
             OptionUIToggler.Instance.ToggleOption();
-            Destroy(SceneContext.Character.gameObject);
+            if (SceneContext.Character != null)
+            {
+                Destroy(SceneContext.Character.gameObject);
+            }
             SceneManager.LoadScene("TitleScene");
         }
     }
