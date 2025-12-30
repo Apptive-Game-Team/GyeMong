@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - merge/461
 
 jobs:
   # 1. 빌드 전용 Job
