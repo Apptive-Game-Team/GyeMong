@@ -1,0 +1,289 @@
+name: Release Build
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to build (e.g. v1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
+env:
+  UNITY_VERSION: 2022.3.34f1
+  BUILD_NAME: GyeMong
+  # 배포된 WebGL 을 플레이할 수 있는 주소. 다르면 저장소 Variables 에 WEB_PLAY_URL 을 등록하세요.
+  DEFAULT_WEB_PLAY_URL: https://apptive-game-team.github.io/GyeMong_Play/
+
+jobs:
+  prepare:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.resolve.outputs.tag }}
+    steps:
+      - name: Resolve tag and ensure release exists
+        id: resolve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          TAG="${EVENT_TAG:-$INPUT_TAG}"
+          if [ -z "$TAG" ]; then
+            echo "::error::릴리스 태그를 확인할 수 없습니다."
+            exit 1
+          fi
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            echo "릴리스가 없어 새로 만듭니다: $TAG"
+            gh release create "$TAG" --title "$TAG" --target "$GITHUB_SHA" --generate-notes
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+  desktop:
+    name: Build ${{ matrix.label }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - targetPlatform: StandaloneOSX
+            label: macOS
+          - targetPlatform: StandaloneWindows64
+            label: Windows
+    steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          token: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
+          fetch-depth: 0
+
+      - name: Cache Library folder
+        uses: actions/cache@v4
+        with:
+          path: |
+            Library/ShaderCache
+            Library/ScriptAssemblies
+          key: ${{ matrix.targetPlatform }}-Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            ${{ matrix.targetPlatform }}-Library-
+
+      - name: Build ${{ matrix.label }}
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: ${{ env.UNITY_VERSION }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildName: ${{ env.BUILD_NAME }}
+          buildsPath: build
+          customParameters: -logFile - -ignoreCompilerErrors
+
+      - name: Package build
+        id: package
+        env:
+          TAG: ${{ needs.prepare.outputs.tag }}
+          TARGET: ${{ matrix.targetPlatform }}
+          LABEL: ${{ matrix.label }}
+        run: |
+          set -euo pipefail
+          sudo chown -R "$(id -u):$(id -g)" build
+          if [ "$TARGET" = "StandaloneOSX" ]; then
+            # .app 번들의 실행 권한이 유지되도록 보정
+            chmod -R +x "build/$TARGET/$BUILD_NAME.app/Contents/MacOS" || true
+          fi
+          ARCHIVE="$BUILD_NAME-$TAG-$LABEL.zip"
+          (cd "build/$TARGET" && zip -r -y -q "$GITHUB_WORKSPACE/$ARCHIVE" .)
+          echo "archive=$ARCHIVE" >> "$GITHUB_OUTPUT"
+
+      - name: Upload build to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+          ARCHIVE: ${{ steps.package.outputs.archive }}
+        run: gh release upload "$TAG" "$ARCHIVE" --clobber
+
+  webgl:
+    name: Build & deploy WebGL
+    needs: prepare
+    runs-on: ubuntu-latest
+    outputs:
+      play_url: ${{ steps.play.outputs.url }}
+    steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          token: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
+          fetch-depth: 0
+
+      - name: Cache Library folder (WebGL)
+        uses: actions/cache@v4
+        with:
+          path: |
+            Library/ShaderCache
+            Library/ScriptAssemblies
+          key: WebGL-Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            WebGL-Library-
+
+      - name: Build WebGL
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: ${{ env.UNITY_VERSION }}
+          targetPlatform: WebGL
+          buildName: ${{ env.BUILD_NAME }}
+          buildsPath: build
+          customParameters: -logFile - -ignoreCompilerErrors
+
+      - name: Package WebGL build
+        id: package
+        env:
+          TAG: ${{ needs.prepare.outputs.tag }}
+        run: |
+          set -euo pipefail
+          sudo chown -R "$(id -u):$(id -g)" build
+          ARCHIVE="$BUILD_NAME-$TAG-WebGL.zip"
+          (cd "build/WebGL/$BUILD_NAME" && zip -r -y -q "$GITHUB_WORKSPACE/$ARCHIVE" .)
+          echo "archive=$ARCHIVE" >> "$GITHUB_OUTPUT"
+
+      - name: Upload WebGL build to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+          ARCHIVE: ${{ steps.package.outputs.archive }}
+        run: gh release upload "$TAG" "$ARCHIVE" --clobber
+
+      - name: Publish WebGL to GyeMong_Play
+        env:
+          TAG: ${{ needs.prepare.outputs.tag }}
+          PLAY_TOKEN: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git clone "https://x-access-token:$PLAY_TOKEN@github.com/Apptive-Game-Team/GyeMong_Play.git" play-repo
+          cd play-repo
+
+          # 기존 빌드 산출물 제거 후 새 빌드 복사 (.git 은 유지)
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          cp -r "$GITHUB_WORKSPACE/build/WebGL/$BUILD_NAME/." ./
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "변경 사항이 없어 푸시를 건너뜁니다."
+          else
+            git commit -m "Update WebGL build for $TAG"
+            git push origin HEAD:main
+          fi
+
+      - name: Resolve play URL
+        id: play
+        env:
+          WEB_PLAY_URL: ${{ vars.WEB_PLAY_URL }}
+        run: echo "url=${WEB_PLAY_URL:-$DEFAULT_WEB_PLAY_URL}" >> "$GITHUB_OUTPUT"
+
+  links:
+    name: Link builds on release
+    needs: [prepare, desktop, webgl]
+    if: always() && needs.prepare.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update release notes with download links
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+          PLAY_URL: ${{ needs.webgl.outputs.play_url }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+
+          asset_url() {
+            # 릴리스에 실제로 올라간 에셋만 링크로 노출
+            name=$(gh release view "$TAG" --json assets -q ".assets[].name | select(endswith(\"$1\"))" | head -n 1)
+            if [ -n "$name" ]; then
+              printf '[%s](%s/%s/releases/download/%s/%s)' \
+                "$name" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$TAG" "$name"
+            fi
+          }
+
+          MAC=$(asset_url "-macOS.zip")
+          WIN=$(asset_url "-Windows.zip")
+          WEB=$(asset_url "-WebGL.zip")
+          FAILED="빌드 실패 — [로그 보기]($RUN_URL)"
+
+          {
+            echo '<!-- release-links:start -->'
+            echo '## 📦 다운로드'
+            echo
+            echo '| 플랫폼 | 링크 |'
+            echo '| --- | --- |'
+            echo "| 🍎 macOS | ${MAC:-$FAILED} |"
+            echo "| 🪟 Windows | ${WIN:-$FAILED} |"
+            if [ -n "$PLAY_URL" ]; then
+              echo "| 🌐 웹에서 바로 플레이 | [$PLAY_URL]($PLAY_URL) |"
+            else
+              echo "| 🌐 웹에서 바로 플레이 | $FAILED |"
+            fi
+            echo "| 🌐 웹 빌드 (직접 호스팅용) | ${WEB:-$FAILED} |"
+            echo
+            echo '> macOS 빌드는 코드 서명이 되어 있지 않습니다. 실행이 막히면 압축을 푼 뒤'
+            echo '> `xattr -dr com.apple.quarantine '"$BUILD_NAME"'.app` 을 실행해 주세요.'
+            echo '<!-- release-links:end -->'
+          } > links.md
+
+          gh release view "$TAG" --json body -q .body > body.md
+
+          # 이전에 추가된 링크 블록이 있으면 교체
+          awk '
+            $0 == "<!-- release-links:start -->" { skip = 1 }
+            !skip { print }
+            $0 == "<!-- release-links:end -->" { skip = 0 }
+          ' body.md > body-clean.md
+
+          { cat body-clean.md; echo; cat links.md; } > new-body.md
+          gh release edit "$TAG" --notes-file new-body.md
