@@ -4,18 +4,44 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  UNITY_VERSION: 2022.3.34f1
+  BUILD_NAME: GyeMong
 
 jobs:
-  buildWebGL:
+  build:
+    name: Build WebGL
     runs-on: ubuntu-latest
     steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
           token: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
           fetch-depth: 0
-      
+
       - name: Cache Library folder (WebGL)
         uses: actions/cache@v4
         with:
@@ -33,35 +59,41 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          unityVersion: 2022.3.22f1
+          unityVersion: ${{ env.UNITY_VERSION }}
           targetPlatform: WebGL
+          buildName: ${{ env.BUILD_NAME }}
+          buildsPath: build
           customParameters: -logFile - -ignoreCompilerErrors
 
-      - name: Upload WebGL build artifact
+      - name: Upload WebGL build
         uses: actions/upload-artifact@v4
         with:
-          name: WebGL-Build
-          path: build
+          name: webgl-build
+          path: build/WebGL/${{ env.BUILD_NAME }}
+          retention-days: 7
 
-      - name: Push to another repo
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download WebGL build
+        uses: actions/download-artifact@v4
+        with:
+          name: webgl-build
+          path: ./webgl-build
 
-          # clone target repo
-          git clone https://x-access-token:${{ secrets.GYE_MONG_PLAY_TOKEN }}@github.com/Apptive-Game-Team/GyeMong_Play.git
-          
-          ls -R build
-          
-          cd GyeMong_Play
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-          # copy build result
-          rm -rf ./Build
-          rm -rf ./index.html
-          cp -r ../build/WebGL/WebGL/* ./
-          
-          ls -R 
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./webgl-build
 
-          git add .
-          git commit -m "Update WebGL build from main repo"
-          git push origin main
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
