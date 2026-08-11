@@ -20,8 +20,6 @@ concurrency:
 env:
   UNITY_VERSION: 2022.3.34f1
   BUILD_NAME: GyeMong
-  # 배포된 WebGL 을 플레이할 수 있는 주소. 다르면 저장소 Variables 에 WEB_PLAY_URL 을 등록하세요.
-  DEFAULT_WEB_PLAY_URL: https://apptive-game-team.github.io/GyeMong_Play/
 
 jobs:
   prepare:
@@ -130,11 +128,9 @@ jobs:
         run: gh release upload "$TAG" "$ARCHIVE" --clobber
 
   webgl:
-    name: Build & deploy WebGL
+    name: Build WebGL
     needs: prepare
     runs-on: ubuntu-latest
-    outputs:
-      play_url: ${{ steps.play.outputs.url }}
     steps:
       - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
@@ -196,39 +192,51 @@ jobs:
           ARCHIVE: ${{ steps.package.outputs.archive }}
         run: gh release upload "$TAG" "$ARCHIVE" --clobber
 
-      - name: Publish WebGL to GyeMong_Play
-        env:
-          TAG: ${{ needs.prepare.outputs.tag }}
-          PLAY_TOKEN: ${{ secrets.GYE_MONG_PLAY_TOKEN }}
-        run: |
-          set -euo pipefail
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Upload WebGL build for Pages
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-webgl
+          path: build/WebGL/${{ env.BUILD_NAME }}
+          retention-days: 7
 
-          git clone "https://x-access-token:$PLAY_TOKEN@github.com/Apptive-Game-Team/GyeMong_Play.git" play-repo
-          cd play-repo
+  deploy-pages:
+    name: Deploy WebGL to GitHub Pages
+    needs: webgl
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      play_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download WebGL build
+        uses: actions/download-artifact@v4
+        with:
+          name: release-webgl
+          path: ./webgl-build
 
-          # 기존 빌드 산출물 제거 후 새 빌드 복사 (.git 은 유지)
-          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
-          cp -r "$GITHUB_WORKSPACE/build/WebGL/$BUILD_NAME/." ./
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-          git add -A
-          if git diff --cached --quiet; then
-            echo "변경 사항이 없어 푸시를 건너뜁니다."
-          else
-            git commit -m "Update WebGL build for $TAG"
-            git push origin HEAD:main
-          fi
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./webgl-build
 
-      - name: Resolve play URL
-        id: play
-        env:
-          WEB_PLAY_URL: ${{ vars.WEB_PLAY_URL }}
-        run: echo "url=${WEB_PLAY_URL:-$DEFAULT_WEB_PLAY_URL}" >> "$GITHUB_OUTPUT"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
   links:
     name: Link builds on release
-    needs: [prepare, desktop, webgl]
+    needs: [prepare, desktop, webgl, deploy-pages]
     if: always() && needs.prepare.result == 'success'
     runs-on: ubuntu-latest
     steps:
@@ -237,7 +245,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           TAG: ${{ needs.prepare.outputs.tag }}
-          PLAY_URL: ${{ needs.webgl.outputs.play_url }}
+          PLAY_URL: ${{ needs.deploy-pages.outputs.play_url }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -euo pipefail
