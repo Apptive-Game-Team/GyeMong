@@ -1,0 +1,7 @@
+interface:
+  display_name: "Handoff"
+  short_description: "Write a structured project handoff document"
+  default_prompt: "Use $handoff to generate and save a structured handoff document for the current project."
+
+policy:
+  allow_implicit_invocation: false
