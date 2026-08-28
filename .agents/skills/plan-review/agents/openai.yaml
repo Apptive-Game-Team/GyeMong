@@ -1,0 +1,7 @@
+interface:
+  display_name: "Plan Review"
+  short_description: "Fast, medium, and heavy review protocol for implementation plans"
+  default_prompt: "Use $plan-review to review my implementation plan with fast, medium, and heavy passes before coding."
+
+policy:
+  allow_implicit_invocation: true

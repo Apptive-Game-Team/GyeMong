@@ -1,0 +1,7 @@
+interface:
+  display_name: "Pair Review"
+  short_description: "Critic subagent protocol for code quality review"
+  default_prompt: "Use $pair-review to run a critic subagent pass focused on YAGNI, DRY, and maintainability."
+
+policy:
+  allow_implicit_invocation: true
