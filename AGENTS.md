@@ -36,6 +36,29 @@ Installed in this repository:
 | `.agents/agents/developer.md` | 계획→구현→리뷰→PR 전 과정 에이전트 |
 | `.agents/agents/pair-review-critic.md` | 독립 크리틱 서브에이전트 |
 
+## Tool Compatibility
+
+`CLAUDE.md` 와 `.claude/` 는 심볼릭 링크다:
+
+```text
+CLAUDE.md -> AGENTS.md
+.claude   -> .agents
+```
+
+Claude Code 는 `CLAUDE.md` 와 `.claude/{agents,skills}/` 를 읽고, 다른 에이전트
+도구는 `AGENTS.md` 와 `.agents/` 를 읽는다. 링크 덕에 사본이 갈라지지 않는다.
+지침을 고칠 때는 항상 `AGENTS.md` / `.agents/` 실체를 고친다.
+
+Windows 에서 심볼릭 링크가 텍스트 파일로 체크아웃되면 아래를 켠다:
+
+```bash
+git config core.symlinks true
+git checkout -- CLAUDE.md .claude
+```
+
+(Windows 는 개발자 모드 또는 관리자 권한이 필요하다. 링크가 깨져도 `AGENTS.md`
+와 `.agents/` 원본은 멀쩡하므로 작업에는 지장이 없다.)
+
 ## Unity Constraints
 
 This is a Unity 2022.3.34f1 (URP, 2D) project. The following override generic
