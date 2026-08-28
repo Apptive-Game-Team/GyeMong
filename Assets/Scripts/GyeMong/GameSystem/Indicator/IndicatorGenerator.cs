@@ -57,7 +57,11 @@ namespace GyeMong.GameSystem.Indicator
 
             Vector2 spriteSize = renderer.sprite.bounds.size;
             Vector3 scale = indicator.transform.lossyScale;
-            Vector2 halfSize = new Vector2(spriteSize.x * scale.x, spriteSize.y * scale.y) * 0.5f;
+            // 공격 오브젝트가 좌우 반전(음수 스케일)일 수 있다. 셰이더의 _HalfSize 는
+            // 절댓값 반폭이어야 모서리 마스크가 뒤집히지 않는다.
+            Vector2 halfSize = new Vector2(
+                Mathf.Abs(spriteSize.x * scale.x),
+                Mathf.Abs(spriteSize.y * scale.y)) * 0.5f;
 
             var material = new Material(shader);
             material.SetVector("_HalfSize", new Vector4(halfSize.x, halfSize.y, 0f, 0f));
@@ -83,7 +87,10 @@ namespace GyeMong.GameSystem.Indicator
             indicator.transform.rotation = rot;
 
             float diameter = circle.radius * 2f;
-            float scale = Mathf.Max(attackObject.transform.lossyScale.x, attackObject.transform.lossyScale.y);
+            // CircleCollider2D 의 실제 반지름은 축별 스케일 절댓값 중 큰 값을 따른다.
+            float scale = Mathf.Max(
+                Mathf.Abs(attackObject.transform.lossyScale.x),
+                Mathf.Abs(attackObject.transform.lossyScale.y));
             indicator.transform.localScale = new Vector3(diameter * scale, diameter * scale, 1f);
 
             return indicator; 
@@ -106,12 +113,17 @@ namespace GyeMong.GameSystem.Indicator
 
             SpriteRenderer sr = indicator.GetComponent<SpriteRenderer>();
             Vector2 spriteSize = sr.sprite.bounds.size;
-            
-            Vector3 desiredSize = capsule.direction == CapsuleDirection2D.Horizontal ? 
-                new Vector3(capsule.size.y, capsule.size.x, 1f) : new Vector3(capsule.size.x, capsule.size.y, 1f);
 
-            Vector3 scaledSize = Vector3.Scale(desiredSize, attackObject.transform.lossyScale);
-            
+            // 캡슐 스프라이트는 긴 축이 가로로 그려져 있어 90도 돌려서 쓴다.
+            // 그만큼 표시의 로컬 X 는 콜라이더의 Y 축에, 로컬 Y 는 X 축에 놓이므로
+            // 크기도 같이 바꿔 넣어야 한다. CapsuleCollider2D 의 size 는 direction 과
+            // 무관하게 (가로, 세로) 경계 상자이므로 direction 으로 분기하지 않는다.
+            Vector3 lossyScale = attackObject.transform.lossyScale;
+            Vector3 scaledSize = new Vector3(
+                Mathf.Abs(capsule.size.y * lossyScale.y),
+                Mathf.Abs(capsule.size.x * lossyScale.x),
+                1f);
+
             Vector3 scale = new Vector3(
                 scaledSize.x / spriteSize.x,
                 scaledSize.y / spriteSize.y,
@@ -143,36 +155,58 @@ namespace GyeMong.GameSystem.Indicator
 
         public IEnumerator GenerateIndicator(GameObject attackObject, Vector3 pos, Quaternion rot, float duration, Action action = null)
         {
-            Collider2D col = attackObject.GetComponent<Collider2D>();
-            if (col == null)
+            GameObject indicator = TryCreateIndicator(attackObject, pos, rot);
+            if (indicator != null)
             {
-                Debug.LogWarning("Collider2D not found");
-                yield return null;
-            }
-
-            var type = col.GetType();
-            if (_shapeMap.TryGetValue(type, out var shape))
-            {
-                GameObject indicator = shape.CreateIndicator(attackObject, pos, rot);
                 Indicator flicker = indicator.GetComponent<Indicator>();
                 if (flicker == null) flicker = indicator.AddComponent<Indicator>();
                 StartCoroutine(flicker.Flick(duration));
-                yield return new WaitForSeconds(duration);
-                action?.Invoke();
             }
-            else
+
+            // 위험표시는 연출이고 공격은 게임 로직이다.
+            // 표시를 못 만들어도 같은 시간을 기다린 뒤 공격은 그대로 실행한다.
+            yield return new WaitForSeconds(duration);
+            action?.Invoke();
+        }
+
+        private GameObject TryCreateIndicator(GameObject attackObject, Vector3 pos, Quaternion rot)
+        {
+            if (attackObject == null)
+            {
+                Debug.LogWarning("Attack object is null");
+                return null;
+            }
+
+            Collider2D col = attackObject.GetComponent<Collider2D>();
+            if (col == null)
+            {
+                Debug.LogWarning($"Collider2D not found on {attackObject.name}");
+                return null;
+            }
+
+            Type type = col.GetType();
+            if (!_shapeMap.TryGetValue(type, out IIndicatorShape shape))
             {
                 Debug.LogWarning($"No provider registered for {type}");
-                yield return null;
+                return null;
             }
+
+            GameObject indicator = shape.CreateIndicator(attackObject, pos, rot);
+            if (indicator == null)
+            {
+                Debug.LogWarning($"Failed to create {type} indicator for {attackObject.name}");
+            }
+            return indicator;
         }
-        
+
         public IEnumerator GenerateIndicator(AttackObjectController attackObjectController, float duration)
         {
+            // 도형별 스프라이트 방향 보정은 각 IIndicatorShape 안에서 한다.
+            // 여기서 임의로 90도를 더하면 캡슐은 이중 적용되고 사각형은 가로 세로가 뒤집힌다.
             return GenerateIndicator(
                 attackObjectController.gameObject,
                 attackObjectController.transform.position,
-                attackObjectController.transform.rotation * Quaternion.Euler(0, 0, 90f),
+                attackObjectController.transform.rotation,
                 duration,
                 () => attackObjectController.StartRoutine()
             );
