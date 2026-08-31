@@ -61,7 +61,7 @@ git checkout -- CLAUDE.md .claude
 
 ## Unity Constraints
 
-This is a Unity 2022.3.34f1 (URP, 2D) project. The following override generic
+This is a Unity 2022.3.62f3 (URP, 2D) project. The following override generic
 guidance:
 
 - **Never hand-edit `.meta` files' `guid` fields.** A GUID change breaks every

@@ -8,7 +8,7 @@ against repository configuration before running them.
 - Product: **계몽 (GyeMong)** — 2D 탑다운 액션 RPG
 - Primary users: 플레이어 (데스크톱/웹 브라우저)
 - Core domain: 계절별 스테이지 진행, 보스 패턴 전투, 이벤트 연출
-- Runtime environment: **Unity 2022.3.34f1**, URP 14.0.11, 2D Feature 2.0.1
+- Runtime environment: **Unity 2022.3.62f3**, URP 14.0.12, 2D Feature 2.0.1
 
 ## Architecture
 
@@ -35,7 +35,7 @@ against repository configuration before running them.
 |---|---|
 | Clone | `git clone --recurse-submodules https://github.com/Apptive-Game-Team/GyeMong.git` |
 | Sync submodule | `git submodule update --init --recursive` |
-| Run locally | Unity Hub → 2022.3.34f1 로 프로젝트 열기 → `TitleScene` 재생 |
+| Run locally | Unity Hub → 2022.3.62f3 로 프로젝트 열기 → `TitleScene` 재생 |
 | Format | TODO (설정 없음) |
 | Lint | TODO (설정 없음) |
 | Type-check | Unity 에디터 컴파일 (별도 명령 없음) |
@@ -50,7 +50,7 @@ CI는 `game-ci/unity-builder@v4` 를 쓰고 `UNITY_LICENSE` / `UNITY_EMAIL` /
 ## Constraints
 
 - Supported platforms: WebGL (GitHub Pages), Windows x64, macOS
-- Compatibility: Unity 버전 고정 (2022.3.34f1). CI 워크플로 3곳에 하드코딩되어
+- Compatibility: Unity 버전 고정 (2022.3.62f3). CI 워크플로 3곳에 하드코딩되어
   있으므로 올릴 때 함께 바꿔야 한다.
 - WebGL 빌드는 `Assets/WebGLTemplates` 의 전용 템플릿을 쓴다 (#466).
 - Performance: 리포 용량이 CI 디스크 한계에 근접한다. `deploy.yml` 이
