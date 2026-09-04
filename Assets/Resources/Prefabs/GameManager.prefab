@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxPrefab: {fileID: 6309003457626774954, guid: 68bfd45c19609ed4fb1debc57060e0c4,
     type: 3}
+  boxCornerRoundness: 0.35
   circlePrefab: {fileID: 5945908489128085552, guid: 27a302ea6ecad24469cc0d2b400485c8,
     type: 3}
   capsulePrefab: {fileID: 8607135463447496517, guid: 23768871b1971be43943e667397c310c,

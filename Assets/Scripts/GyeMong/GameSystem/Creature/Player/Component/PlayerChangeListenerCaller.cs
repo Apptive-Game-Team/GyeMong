@@ -22,17 +22,33 @@ namespace GyeMong.GameSystem.Creature.Player.Component
         {
             _hpCaller.AddListener(listener);
         }
+        public void RemoveHpChangeListener(IHpChangeListener listener)
+        {
+            _hpCaller.RemoveListener(listener);
+        }
         public void AddDashListener(IDashListener listener)
         {
             _dashCaller.AddListener(listener);
+        }
+        public void RemoveDashListener(IDashListener listener)
+        {
+            _dashCaller.RemoveListener(listener);
         }
         public void AddShieldChangeListener(IShieldChangeListener listener)
         {
             _shieldCaller.AddListener(listener);
         }
+        public void RemoveShieldChangeListener(IShieldChangeListener listener)
+        {
+            _shieldCaller.RemoveListener(listener);
+        }
         public void AddSkillGaugeChangeListener(ISkillGaugeChangeListener listener)
         {
             _skillGaugeCaller.AddListener(listener);
+        }
+        public void RemoveSkillGaugeChangeListener(ISkillGaugeChangeListener listener)
+        {
+            _skillGaugeCaller.RemoveListener(listener);
         }
         
         public void CallHpChangeListeners(float hp)

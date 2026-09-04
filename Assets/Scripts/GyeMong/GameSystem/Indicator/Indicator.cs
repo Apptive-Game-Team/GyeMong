@@ -7,6 +7,17 @@ namespace GyeMong.GameSystem.Indicator
     {
         private SpriteRenderer _spriteRenderer;
 
+        /// <summary>
+        /// 런타임에 만들어 이 인디케이터 전용으로 쓰는 머티리얼.
+        /// 인디케이터가 사라질 때 같이 정리한다.
+        /// </summary>
+        private Material _ownedMaterial;
+
+        public void SetOwnedMaterial(Material material)
+        {
+            _ownedMaterial = material;
+        }
+
         public IEnumerator Flick(float duration)
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -32,6 +43,14 @@ namespace GyeMong.GameSystem.Indicator
             }
 
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (_ownedMaterial != null)
+            {
+                Destroy(_ownedMaterial);
+            }
         }
     }
 }

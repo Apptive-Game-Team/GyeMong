@@ -1,3 +1,4 @@
+using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,8 @@ namespace GyeMong.UISystem.Game.PlayerUI
 {
     public class SkillGaugeController : GaugeController, ISkillGaugeChangeListener
     {
+        private PlayerChangeListenerCaller _changeListenerCaller;
+
         private Material gaugeEffectMaterial;
         private float _skillGauge;
         private float _maxSkillGauge;
@@ -28,7 +31,8 @@ namespace GyeMong.UISystem.Game.PlayerUI
 
         private void Start()
         {
-            SceneContext.Character.changeListenerCaller.AddSkillGaugeChangeListener(this);
+            _changeListenerCaller = SceneContext.Character.changeListenerCaller;
+            _changeListenerCaller.AddSkillGaugeChangeListener(this);
             _maxSkillGauge = SceneContext.Character.stat.GrazeMax;
         }
 
@@ -53,5 +57,10 @@ namespace GyeMong.UISystem.Game.PlayerUI
         }
 
         protected override void Update() { } // Do not call base.Update()
+        private void OnDestroy()
+        {
+            _changeListenerCaller?.RemoveSkillGaugeChangeListener(this);
+        }
+
     }
 }

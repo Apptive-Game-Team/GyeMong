@@ -21,25 +21,31 @@ namespace GyeMong.GameSystem.Map.Portal
         public IEnumerator TransitScene(PortalID portalID, float delay = 0f)
         {
             yield return SceneContext.EffectManager.FadeOut();
-            LoadSceneMode(portalID);
-            StartCoroutine(DelayedFadeIn(delay));
+            yield return LoadSceneRoutine(portalID);
+            if (delay > 0f)
+            {
+                yield return new WaitForSeconds(delay);
+            }
+            // 새 씬의 EffectManager 는 black 알파가 0인 새 인스턴스다.
+            // FadeIn 은 0에서 0으로 가서 아무것도 가리지 못하므로 FadeInFirst 를 쓴다.
+            yield return SceneContext.EffectManager.FadeInFirst();
         }
-        
+
         public void LoadSceneMode(PortalID portalID)
+        {
+            StartCoroutine(LoadSceneRoutine(portalID));
+        }
+
+        private IEnumerator LoadSceneRoutine(PortalID portalID)
         {
             PortalData portalData = portalDataList.GetPortalDataByID(portalID);
             SceneData sceneData = sceneDataList.GetSceneDataByID(portalData.sceneID);
-            if (!sceneData.sceneName.Equals(SceneManager.GetActiveScene().name))
+            if (sceneData.sceneName.Equals(SceneManager.GetActiveScene().name))
             {
-                sceneUnloading?.Invoke(SceneManager.GetActiveScene());
-                SceneLoader.LoadScene(sceneData.sceneName);
+                yield break;
             }
-        }
-
-        private IEnumerator DelayedFadeIn(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            yield return SceneContext.EffectManager.FadeIn();
+            sceneUnloading?.Invoke(SceneManager.GetActiveScene());
+            yield return SceneLoader.LoadSceneRoutine(sceneData.sceneName);
         }
     }
 }

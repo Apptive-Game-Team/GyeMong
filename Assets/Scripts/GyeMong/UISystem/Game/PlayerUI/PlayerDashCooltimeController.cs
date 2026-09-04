@@ -1,3 +1,4 @@
+using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 using UnityEngine;
 using System.Collections;
@@ -8,6 +9,8 @@ namespace GyeMong.UISystem.Game.PlayerUI
 {
     public class PlayerDashCooltimeController : MonoBehaviour, IDashListener, IChangeListener<float>
     {
+        private PlayerChangeListenerCaller _changeListenerCaller;
+
         [SerializeField] private Slider dashSlider;
 
         private Coroutine cooldownRoutine;
@@ -19,7 +22,8 @@ namespace GyeMong.UISystem.Game.PlayerUI
 
         private void Start()
         {
-            SceneContext.Character.changeListenerCaller.AddDashListener(this);
+            _changeListenerCaller = SceneContext.Character.changeListenerCaller;
+            _changeListenerCaller.AddDashListener(this);
             if (dashSlider != null) dashSlider.value = 1f;
         }
 
@@ -63,5 +67,10 @@ namespace GyeMong.UISystem.Game.PlayerUI
 
             cooldownRoutine = null;
         }
+        private void OnDestroy()
+        {
+            _changeListenerCaller?.RemoveDashListener(this);
+        }
+
     }
 }
