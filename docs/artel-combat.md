@@ -1,5 +1,7 @@
 # Artel 전투 QA
 
+실행 절차·기대 결과·결과 기록은 [테스트 케이스 39개](artel-test-cases.md)를 참고한다.
+
 Unity 에디터 또는 Development Build에서 Artel에 연결하면 아래 함수가 카탈로그에 등록된다. 일반 릴리스와 SDK 없는 프로젝트에는 QA 코드가 포함되지 않는다.
 
 ## 치트
