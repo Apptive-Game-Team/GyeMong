@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GyeMong.GameSystem.Creature
 {
-    public abstract class Creature : MonoBehaviour, IAttackable
+    public abstract partial class Creature : MonoBehaviour, IAttackable
     {
         protected const float BLINK_DELAY = 0.15f;
         

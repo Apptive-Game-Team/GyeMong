@@ -808,23 +808,23 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: DOTWEEN
-    EmbeddedLinux: DOTWEEN
-    GameCoreScarlett: DOTWEEN
-    GameCoreXboxOne: DOTWEEN
-    LinuxHeadlessSimulation: DOTWEEN
-    Nintendo Switch: DOTWEEN
-    PS4: DOTWEEN
-    PS5: DOTWEEN
-    QNX: DOTWEEN
-    Stadia: DOTWEEN
-    Standalone: AMPLIFY_SHADER_EDITOR;DOTWEEN
-    VisionOS: DOTWEEN
-    WebGL: AMPLIFY_SHADER_EDITOR;DOTWEEN
-    Windows Store Apps: DOTWEEN
-    XboxOne: DOTWEEN
-    iPhone: DOTWEEN
-    tvOS: DOTWEEN
+    Android: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    EmbeddedLinux: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    GameCoreScarlett: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    GameCoreXboxOne: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    LinuxHeadlessSimulation: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    Nintendo Switch: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    PS4: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    PS5: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    QNX: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    Stadia: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    Standalone: AMPLIFY_SHADER_EDITOR;DOTWEEN;ARTEL_GAME_FUNCTIONS
+    VisionOS: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    WebGL: AMPLIFY_SHADER_EDITOR;DOTWEEN;ARTEL_GAME_FUNCTIONS
+    Windows Store Apps: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    XboxOne: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    iPhone: DOTWEEN;ARTEL_GAME_FUNCTIONS
+    tvOS: DOTWEEN;ARTEL_GAME_FUNCTIONS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

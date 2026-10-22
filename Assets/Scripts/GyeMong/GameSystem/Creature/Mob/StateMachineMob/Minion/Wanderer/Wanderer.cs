@@ -31,7 +31,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Wanderer
 
         public override void OnAttacked(float damage)
         {
-            if (!IsPlayerAtBack())
+            bool blocked = !IsPlayerAtBack();
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+            blocked &= !QaDamageInProgress;
+#endif
+            if (blocked)
             {
                 StartCoroutine(CounterAttack());
                 return;

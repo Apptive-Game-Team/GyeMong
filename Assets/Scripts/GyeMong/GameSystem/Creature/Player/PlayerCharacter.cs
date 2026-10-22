@@ -9,7 +9,7 @@ using DG.Tweening;
 
 namespace GyeMong.GameSystem.Creature.Player
 {
-    public class PlayerCharacter : MonoBehaviour, IControllable, IEventTriggerable
+    public partial class PlayerCharacter : MonoBehaviour, IControllable, IEventTriggerable
     {
         public PlayerChangeListenerCaller changeListenerCaller = new PlayerChangeListenerCaller();
         public StatComponent stat;
@@ -105,25 +105,48 @@ namespace GyeMong.GameSystem.Creature.Player
             }
         }
 
+        private bool ReadHeldAction(ActionCode action)
+        {
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+            if (_qaInputActive) return QaActionAllowed(action) && _qaHeld.Contains(action);
+#endif
+            return InputManager.Instance.GetKey(action);
+        }
+
+        private bool ReadPressedAction(ActionCode action)
+        {
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+            if (_qaInputActive) return QaActionAllowed(action) && _qaPressed.Remove(action);
+#endif
+            return InputManager.Instance.GetKeyDown(action);
+        }
+
+        private Vector3 ReadAimPosition()
+        {
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+            if (_qaInputActive) return _qaAim;
+#endif
+            return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
         private void HandleMoveInput()
         {
             movement.x = 0;
             movement.y = 0;
 
-            if (InputManager.Instance.GetKey(ActionCode.MoveRight))
+            if (ReadHeldAction(ActionCode.MoveRight))
             {
                 movement.x = 1;
             }
-            else if (InputManager.Instance.GetKey(ActionCode.MoveLeft))
+            else if (ReadHeldAction(ActionCode.MoveLeft))
             {
                 movement.x = -1;
             }
 
-            if (InputManager.Instance.GetKey(ActionCode.MoveUp))
+            if (ReadHeldAction(ActionCode.MoveUp))
             {
                 movement.y = 1;
             }
-            else if (InputManager.Instance.GetKey(ActionCode.MoveDown))
+            else if (ReadHeldAction(ActionCode.MoveDown))
             {
                 movement.y = -1;
             }
@@ -133,12 +156,12 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private void HandleActionInput()
         {
-            if (InputManager.Instance.GetKeyDown(ActionCode.Dash) && canDash)
+            if (ReadPressedAction(ActionCode.Dash) && canDash)
             {
                 StartCoroutine(Dash());
             }
 
-            if ((InputManager.Instance.GetKeyDown(ActionCode.Attack) || InputManager.Instance.GetKey(ActionCode.Attack)) &&
+            if ((ReadPressedAction(ActionCode.Attack) || ReadHeldAction(ActionCode.Attack)) &&
                 !isDashing)
             {
                 if (!isAttacking)
@@ -151,13 +174,13 @@ namespace GyeMong.GameSystem.Creature.Player
                 }
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Skill) && !isAttacking && curSkillGauge >= stat.SkillCost)
+            if (ReadPressedAction(ActionCode.Skill) && !isAttacking && curSkillGauge >= stat.SkillCost)
             {
                 StartCoroutine(ChargeSkillAttack());
                 // StartCoroutine(SkillAttack());
             }
 
-            if (InputManager.Instance.GetKeyDown(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost && curHealth != stat.HealthMax)
+            if (ReadPressedAction(ActionCode.Heal) && !isAttacking && curSkillGauge >= stat.HealCost && curHealth != stat.HealthMax)
             {
                 healingCoroutine = StartCoroutine(Heal());
             }
@@ -179,7 +202,7 @@ namespace GyeMong.GameSystem.Creature.Player
             animator.SetBool("isMove", isMoving);
             soundController.SetBool(PlayerSoundType.FOOT, isMoving);
 
-            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition = ReadAimPosition();
             mouseDirection = (mousePosition - playerRb.position).normalized;
 
             if (canMove && isMoving)
@@ -377,10 +400,10 @@ namespace GyeMong.GameSystem.Creature.Player
         private Vector2 GetCurrentInputDirection(Vector2 direction)
         {
             var dir = Vector2.zero;
-            if (InputManager.Instance.GetKey(ActionCode.MoveUp)) dir += Vector2.up;
-            if (InputManager.Instance.GetKey(ActionCode.MoveDown)) dir += Vector2.down;
-            if (InputManager.Instance.GetKey(ActionCode.MoveRight)) dir += Vector2.right;
-            if (InputManager.Instance.GetKey(ActionCode.MoveLeft)) dir += Vector2.left;
+            if (ReadHeldAction(ActionCode.MoveUp)) dir += Vector2.up;
+            if (ReadHeldAction(ActionCode.MoveDown)) dir += Vector2.down;
+            if (ReadHeldAction(ActionCode.MoveRight)) dir += Vector2.right;
+            if (ReadHeldAction(ActionCode.MoveLeft)) dir += Vector2.left;
 
             if (dir != Vector2.zero) return dir.normalized;
             return direction;
@@ -446,7 +469,7 @@ namespace GyeMong.GameSystem.Creature.Player
             float curChargePower = 0f;
             
             soundController.Trigger(PlayerSoundType.SWORD_SWING);
-            while (InputManager.Instance.GetKey(ActionCode.Skill) == true && curChargePower < _chargeThreshold)
+            while (ReadHeldAction(ActionCode.Skill) == true && curChargePower < _chargeThreshold)
             {
                 curChargePower += Time.deltaTime * _chargePowerCoef;
                 yield return null;
@@ -499,7 +522,7 @@ namespace GyeMong.GameSystem.Creature.Player
             float tick = 0.1f;
             float costPerTick = stat.HealCost * tick / 1f;
 
-            while (InputManager.Instance.GetKey(ActionCode.Heal))
+            while (ReadHeldAction(ActionCode.Heal))
             {
                 if (curSkillGauge < costPerTick)
                 {
@@ -576,7 +599,7 @@ namespace GyeMong.GameSystem.Creature.Player
         // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnAttackCollider(GameObject attackPrefab)
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePosition = ReadAimPosition();
             mouseDirection = (mousePosition - playerRb.position).normalized;
             Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
 
@@ -590,7 +613,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private void SpawnSkillCollider()
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePosition = ReadAimPosition();
             Vector2 mouseDirection = (mousePosition - playerRb.position).normalized;
             Vector2 spawnPosition = playerRb.position + mouseDirection * 0.5f;
 
