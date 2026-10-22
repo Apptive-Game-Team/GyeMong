@@ -42,6 +42,9 @@ namespace GyeMong.GameSystem.Map.Stage.Select
 
         private void HandleKeyInput()
         {
+            if (PopupWindowController.Instance != null && PopupWindowController.Instance.IsOpen)
+                return;
+
 #if UNITY_EDITOR
             if (Time.time - _lastInputTime < inputDelay) return;
 
@@ -119,7 +122,7 @@ namespace GyeMong.GameSystem.Map.Stage.Select
             yield return new SkippablePopupWindowEvent()
             {
                 Title = "세상을 구하러 가자!",
-                Message = "Enter를 눌러 게임을 진행하자.",
+                Message = "Enter로 안내를 닫고, 다시 Enter를 눌러 게임을 진행하자.",
                 Duration = 3f
             }.Execute();
         }
