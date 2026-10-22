@@ -38,8 +38,14 @@ namespace GyeMong.EventSystem.Event
         {
             yield return PopupWindowController.Instance.OpenPopupWindow(Title, Message);
             
-            float timer = Time.time;
-            yield return new WaitUntil(() => (timer + Duration < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction));
+            float timer = Time.unscaledTime;
+            yield return new WaitUntil(() =>
+            {
+                // Consume both buffered actions, including on the timeout frame.
+                bool interaction = InputManager.Instance.GetKeyDown(ActionCode.Interaction);
+                bool enter = InputManager.Instance.GetKeyDown(ActionCode.Enter);
+                return interaction || enter || Time.unscaledTime >= timer + Duration;
+            });
             
             yield return PopupWindowController.Instance.ClosePopupWindow();
         }

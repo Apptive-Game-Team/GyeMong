@@ -14,7 +14,8 @@ namespace Util
         private static IEnumerator LoadSceneCoroutine(string sceneName, int delay)
         {
             SceneManager.LoadScene("LoadingScene");
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
+            Time.timeScale = 1f;
             SceneManager.LoadSceneAsync(sceneName);
         }
     }

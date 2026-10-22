@@ -2,12 +2,17 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using Util;
 
 namespace GyeMong.UISystem
 {
-    public class PopupWindowController : SingletonObject<PopupWindowController>
+    public class PopupWindowController : MonoBehaviour
     {
+        private static PopupWindowController _instance;
+        public static PopupWindowController Instance =>
+            _instance != null ? _instance : (_instance = FindObjectOfType<PopupWindowController>(true));
+
+        public bool IsOpen { get; private set; }
+        private float _previousTimeScale;
         [SerializeField] private GameObject _popupWindow;
         [SerializeField] private TMP_Text _titleText;
         [SerializeField] private TMP_Text _contentText;
@@ -16,15 +21,23 @@ namespace GyeMong.UISystem
         private const float MOVE_SPEED = 1.0f;
         private const float TARGET_X = 300.0f;
         
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            _instance = this;
             _rectTransform = _popupWindow.GetComponent<RectTransform>();
             _popupWindow.SetActive(false);
         }
 
         public IEnumerator OpenPopupWindow(String title = "", String content = "")
         {
+            if (!IsOpen)
+                _previousTimeScale = Time.timeScale;
+            IsOpen = true;
             _titleText.text = title;
             _contentText.text = content;
             _popupWindow.SetActive(true);
@@ -33,9 +46,21 @@ namespace GyeMong.UISystem
         }
         public IEnumerator ClosePopupWindow()
         {
+            if (!IsOpen) return null;
+            IsOpen = false;
             _popupWindow.SetActive(false);
-            Time.timeScale = 1f;
+            Time.timeScale = _previousTimeScale;
             return null;
+        }
+
+        private void OnDisable()
+        {
+            ClosePopupWindow();
+        }
+
+        private void OnDestroy()
+        {
+            if (_instance == this) _instance = null;
         }
 
         private IEnumerator MoveWindow(float targetX)
