@@ -11,8 +11,7 @@ namespace GyeMong.UISystem.Game.BossUI
     
         public Boss boss;
     
-        private float _hpBarWidth;
-        private float _shieldBarWidth;
+        private RectTransform _rectTransform;
         private float _curHp;
         private float _curShield;
         private float _maxHp = 100;
@@ -25,9 +24,7 @@ namespace GyeMong.UISystem.Game.BossUI
         {
             _curHpBar = transform.Find("CurHp").GetComponent<RectTransform>();
             _curShieldBar = transform.Find("CurShield").GetComponent<RectTransform>();
-            RectTransform rectTransform = GetComponent<RectTransform>();
-            _hpBarWidth = rectTransform.rect.width;
-            _shieldBarWidth = rectTransform.rect.width;
+            _rectTransform = GetComponent<RectTransform>();
             SceneContext.EffectManager.CachingHpBar(this);
         }
 
@@ -42,18 +39,19 @@ namespace GyeMong.UISystem.Game.BossUI
             {
                 if (_isBossSetUp)
                 {
-                    UpdateHp(boss.CurrentHp, boss.CurrentShield);
                     if (currentPhase != boss.CurrentPhase)
                     {
                         currentPhase = boss.CurrentPhase;
                         _maxHp = boss.CurrentMaxHp;
                     }
+                    UpdateHp(boss.CurrentHp, boss.CurrentShield);
                 }
                 else
                 {
                     currentPhase = boss.CurrentPhase;
                     _maxHp = boss.CurrentMaxHp;
                     _isBossSetUp = true;
+                    UpdateHp(boss.CurrentHp, boss.CurrentShield);
                 }
             }
             else
@@ -67,14 +65,14 @@ namespace GyeMong.UISystem.Game.BossUI
         {
             _curHp = hp;
             _curShield = shield;
-            Rect hpRect = _curHpBar.rect;
-            Rect shieldRect = _curShieldBar.rect;
-            hpRect.width = (_hpBarWidth - 20) * (_curHp / _maxHp);
-            shieldRect.width = (_shieldBarWidth - 20) * (_curShield / _maxHp);
-            _curHpBar.sizeDelta = new Vector2(hpRect.width, hpRect.height);
-            _curHpBar.localPosition = new Vector3((-_hpBarWidth + hpRect.width)/2 + 10, 0, 0);
-            _curShieldBar.sizeDelta = new Vector2(shieldRect.width, shieldRect.height);
-            _curShieldBar.localPosition = new Vector3((-_shieldBarWidth + shieldRect.width) / 2 + 10, 0, 0);
+            // Read the current rect so window resizing cannot leave a stale fill width.
+            float width = _rectTransform.rect.width;
+            float hpWidth = _maxHp > 0 ? width * Mathf.Clamp01(_curHp / _maxHp) : 0;
+            float shieldWidth = _maxHp > 0 ? width * Mathf.Clamp01(_curShield / _maxHp) : 0;
+            _curHpBar.sizeDelta = new Vector2(hpWidth, _curHpBar.sizeDelta.y);
+            _curHpBar.anchoredPosition = new Vector2((hpWidth - width) / 2, 0);
+            _curShieldBar.sizeDelta = new Vector2(shieldWidth, _curShieldBar.sizeDelta.y);
+            _curShieldBar.anchoredPosition = new Vector2((shieldWidth - width) / 2, 0);
         }
     
         public void SetBoss(Boss boss)
