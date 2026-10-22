@@ -41,8 +41,11 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
             }
             else if (!attackObjectController.isAttacked)
             {
-                GameObject go = Instantiate(hitEffect, collider.ClosestPoint(transform.position), Quaternion.identity);
-                Destroy(go,0.5f);
+                if (hitEffect != null)
+                {
+                    GameObject go = Instantiate(hitEffect, collider.ClosestPoint(transform.position), Quaternion.identity);
+                    Destroy(go, 0.5f);
+                }
                 ApplyHitImpact(enemyAttackInfo.damage, collider);
                 attackObjectController.isAttacked = true;
 

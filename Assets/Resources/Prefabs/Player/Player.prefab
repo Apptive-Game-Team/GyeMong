@@ -1909,6 +1909,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   airborneController: {fileID: 5207820199311480366}
+  hitEffect: {fileID: 2826333813790059607, guid: 5a0f071020b1aa14689d6037fcdf8449,
+    type: 3}
 --- !u!1 &8224576282899367610
 GameObject:
   m_ObjectHideFlags: 0
