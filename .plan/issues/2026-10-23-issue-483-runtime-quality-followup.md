@@ -2,7 +2,7 @@
 
 - Date: 2026-10-23
 - GitHub Issue: #483, #484, #489
-- Status: In progress
+- Status: Implemented and validated; PR #490
 
 ## Goal
 기존 리팩토링 이후 남은 저장·전투·씬 결함을 근거 기반으로 수정하고 실제 WebGL 빌드까지 검증한다. 문제가 없다는 근거 없이 전체 완벽을 선언하지 않는다.
@@ -15,9 +15,9 @@ PR #485 병합 이후 후속 수정은 fix/489에서 별도 PR로 진행한다. 
 
 ## Approach (Checklist)
 - [x] **Step 0: Recon** 저장 경로·키·오류 처리와 빌드 모듈 확인
-- [ ] **Step 1: Implementation** codec을 버전 prefix와 SHA256 파생 키 및 랜덤 IV로 수정. 평문 JSON은 읽기 호환. 손상 데이터는 원본을 보존하고 기본값으로 로드. 에디터 폴더 생성과 유효 키 항목 검증. 보스/플레이어는 독립 감사로 확인한 결함만 수정. 씬 missing script는 원인 식별 후 복구 가능 여부 결정.
-- [ ] **Step 2: Tests** 임시 디렉터리에서 codec/저장 왕복과 손상·빈 값·유효하지 않은 키 검사. 전투 회귀 검사. 씬 audit과 반복 로드. 배포 없는 로컬 WebGL 빌드.
-- [ ] **Step 3: Rollout / Rollback** 후속 커밋과 PR 설명 갱신. 새 저장 포맷 적용 후 롤백은 데이터 백업과 함께 수행.
+- [x] **Step 1: Implementation** codec을 버전 prefix와 SHA256 파생 키 및 랜덤 IV로 수정. 평문 JSON은 읽기 호환. 손상 데이터는 원본을 보존하고 기본값으로 로드. 에디터 폴더 생성과 유효 키 항목 검증. 보스/플레이어는 독립 감사로 확인한 결함만 수정. 씬 missing script는 원인 식별 후 데이터 없는 컴포넌트만 제거.
+- [x] **Step 2: Tests** 임시 디렉터리에서 codec/저장 왕복과 손상·빈 값·유효하지 않은 키 검사. 전투 회귀 검사. 씬 audit과 반복 로드. 배포 없는 로컬 WebGL 빌드와 브라우저 smoke.
+- [x] **Step 3: Rollout / Rollback** 후속 커밋과 PR #490 게시. 새 저장 포맷 적용 후 롤백은 데이터 백업과 함께 수행.
 
 ## Validation
 - **Commands to run:** Unity batchmode의 프로젝트 전용 검증/BuildPipeline 진입점
@@ -44,6 +44,11 @@ PR #485 병합 이후 후속 수정은 fix/489에서 별도 PR로 진행한다. 
 - runtime-data-quality.log: codec Unicode 왕복·랜덤 IV·평문 호환·손상 복구 PASS.
 - runtime-combat-quality2.log: 보호막 0/.5/1/2, 이동 잠금, 리스너 변경, 스턴 Update/Exit, 가중치 fallback, 동기 상태 전환과 실제 Slime/Golem/Wanderer 경로 PASS.
 - runtime-webgl-quality.log: 저장 및 진행도 검사 PASS 후 ARTEL SDK WebRTC 참조 CS0234/CS0246로 WebGL 빌드 실패. 게임 이슈 #489. 사용자 승인으로 ARTEL 작업에 수정 요청 전달.
-- 최종 취소/재입장/Golem 스턴 페이즈 검사 및 새 fixture 복원, SDK 수정 후 빌드는 진행 중.
+- runtime-combat-quality7.log / artel-combat-validation.txt: 최신 통합 #488과 수정 SDK를 적용한 7개 전투 씬 진입·스턴 복귀, Golem 스턴 페이즈, 입장/클리어 대화 취소·음향 정리·재입장, 레거시 Sandworm 스턴 중 사망 처리 PASS. 긴 입장 대사는 테스트 wrapper에서 배속한다. quality5/6에서 발견한 대사 제한시간 및 비동기 로드 대기 문제는 검증 코드에서 수정했다.
+- ARTEL SDK #160: SDK 별도 프로젝트 WebGL release/development와 CodeGen 22/22 PASS. 게임은 구현 SHA dc00688ab2cf79d2d4e71dd2ef9fc5e838c5dfef에 고정했고 게임 QA의 WebGL 플랫폼 경계도 일치시켰다.
+- runtime-final-quality.log: 씬 설치 audit, 한영 UI 24개 렌더, 11개 씬 독립 시작, 저장 키/음량 보존 PASS. Library/RuntimeSettingsFixtureBackup.json 제거와 임시 설정 파일 복원 확인. 새 캡처에서 이름/본문 배치, 무화자 내레이션, 튜토리얼 계속 안내를 확인했다.
+- runtime-webgl-quality2.log: 전체 게임 WebGL release BuildResult.Succeeded, RUNTIME_WEBGL_BUILD_PASS 및 exit 0. `.wasm` 36,662,489바이트 생성. 타깃 전환 도중 이전 패키지 경로의 캐시 컴파일 오류가 출력됐지만 Unity가 갱신 후 정상 빌드 완료.
+- 별도 headless Chrome smoke: 실제 빌드 타이틀→설정→음량 변경/저장→영어 전환→새로고침 후 언어·음량 유지→새 게임 스토리 진입 및 무화자 영어 대사 표시 확인. webgl-browser-console.log에서 console error/pageerror/암호화 예외 없음. sound length 미로드 로그는 남으며 모든 오디오의 청취 검증은 하지 않았다.
+- 에디터 씬 ready 캡처 일부는 ARTEL 등록 overlay가 가린다. 구조/초기화 검사는 PASS이며 실제 릴리스 화면은 위 Chrome 검사로 별도 확인했다. 모든 보스 패턴/전체 클리어·사망 및 물리 포털 조작 완주는 검증 범위가 아니다.
 - 독립 크리틱: 취소 경로 수정 후 코드 PASS, 실행 결과 별도 확인 필요.
 - 동일 체크아웃의 #487 작업은 사용자 승인으로 별도 worktree에 이관 완료. 해당 변경은 이 PR에 포함하지 않는다.
