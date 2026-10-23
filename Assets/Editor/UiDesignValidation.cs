@@ -70,6 +70,8 @@ public static class UiDesignValidation
     private static void Preview(string kind, int width, int height)
     {
         EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        var input = new GameObject("Preview Input").AddComponent<GyeMong.InputSystem.InputManager>();
+        input.SetDefaultKey();
         var camera = new GameObject("Preview Camera").AddComponent<Camera>();
         camera.clearFlags = CameraClearFlags.SolidColor;
         camera.backgroundColor = new Color(0.16f, 0.22f, 0.19f);
@@ -109,8 +111,11 @@ public static class UiDesignValidation
             if (name.enabled || name.text.Length != 0 || message.rectTransform.anchoredPosition.x >= original.x)
                 throw new Exception("Narration must hide the speaker and expand left.");
             ChatController.SetSpeaker(ChatSpeakerType.Player);
-            if (!name.enabled || message.rectTransform.anchoredPosition != original)
-                throw new Exception("Named dialogue must restore its original geometry.");
+            var namedPosition = message.rectTransform.anchoredPosition;
+            ChatController.SetSpeaker(ChatSpeakerType.None);
+            ChatController.SetSpeaker(ChatSpeakerType.Player);
+            if (!name.enabled || message.rectTransform.anchoredPosition != namedPosition || name.fontSize != message.fontSize)
+                throw new Exception("Named dialogue must have stable geometry and matching text sizes.");
             if (kind == "narration") ChatController.SetSpeaker(ChatSpeakerType.None);
             ChatController.SetBackgroundImage(ChatController.GetBackgroundImageSprite(BackgroundImage.Spring));
             ChatController.SetCharacterImage(null, true);
@@ -133,9 +138,9 @@ public static class UiDesignValidation
         }
         else if (kind == "hud")
         {
-            var hearts = root.transform.Find("PlayerUI/HpHearts");
-            for (int i = 1; i < 5; i++)
-                UnityEngine.Object.Instantiate(hearts.GetChild(0).gameObject, hearts);
+            if (root.transform.Find("PlayerUI/HpHearts") != null)
+                throw new Exception("Legacy hearts must not be present in the HUD.");
+            root.transform.Find("PlayerUI/PlayerHpFillArea").GetComponent<Slider>().value = 0.65f;
             root.transform.Find("PlayerUI").GetComponent<Slider>().value = 0.65f;
             root.transform.Find("PlayerUI/DashCoolTime").GetComponent<Slider>().value = 1;
         }
