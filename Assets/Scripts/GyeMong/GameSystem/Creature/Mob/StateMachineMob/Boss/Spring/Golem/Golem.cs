@@ -442,7 +442,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             {
                 currentPhase++;
                 StopAllCoroutines();
-                currentState.OnStateExit();
+                StopCurrentState();
                 ikController.CallAnimation("Down");
                 SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(ChangingPhase());
@@ -498,8 +498,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Golem
             SetMaterial(MaterialController.MaterialType.DEFAULT);
             Debug.Log("Check2");
             ikController.CallAnimation("Down");
-            currentState.OnStateExit();
-            StopCoroutine(_currentStateCoroutine);
+            StopCurrentState();
             yield return new WaitForSeconds(duration);
             ikController.CallAnimation("Idle");
             ChangeState();

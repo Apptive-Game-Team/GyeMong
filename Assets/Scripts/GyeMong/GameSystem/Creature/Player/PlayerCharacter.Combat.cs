@@ -26,6 +26,7 @@ namespace GyeMong.GameSystem.Creature.Player
             else if (damage < curShield && curShield > 0)
             {
                 curShield -= damage;
+                damage = 0;
                 changeListenerCaller.CallShieldChangeListeners(curShield);
             }
             curHealth -= damage;
@@ -132,7 +133,7 @@ namespace GyeMong.GameSystem.Creature.Player
             int afterImageCount = 0;
             int afterImageCountMax = 7;
             yield return (_dashTween = playerRb.DOMove(targetPosition, stat.DashDuration)
-                .SetEase(Ease.OutCubic))
+                .SetEase(Ease.OutCubic).SetLink(gameObject))
                 .OnUpdate(() =>
                 {
                     float progress = _dashTween.ElapsedPercentage(); // 0 ~ 70%
@@ -255,7 +256,7 @@ namespace GyeMong.GameSystem.Creature.Player
             float adjustedDistance = distance + colliderRadius;
             RaycastHit2D hit = Physics2D.Raycast(currentPos, dirNormalized, adjustedDistance, LayerMask.GetMask("Wall"));
             if (hit.collider == null && (_dashTween == null || !_dashTween.IsActive() || !_dashTween.IsPlaying())) 
-                _attackMoveTween = transform.DOMove(targetPos, stat.AttackDelay).SetEase(Ease.OutCubic);
+                _attackMoveTween = transform.DOMove(targetPos, stat.AttackDelay).SetEase(Ease.OutCubic).SetLink(gameObject);
         }
 
         private float _chargeThreshold = 1f;

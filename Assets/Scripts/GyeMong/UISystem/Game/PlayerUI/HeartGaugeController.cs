@@ -1,3 +1,4 @@
+using GyeMong.GameSystem.Creature.Player.Component;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,9 +15,13 @@ namespace GyeMong.UISystem.Game.PlayerUI
         private int maxHp;
         private int currentHp;
 
+        private PlayerChangeListenerCaller _caller;
+        private void OnDestroy() => _caller?.RemoveHpChangeListener(this);
+
         private void Start()
         {
-            SceneContext.Character.changeListenerCaller.AddHpChangeListener(this);
+            _caller = SceneContext.Character.changeListenerCaller;
+            _caller.AddHpChangeListener(this);
 
             maxHp = (int)SceneContext.Character.stat.HealthMax;
             CreateHearts(maxHp);

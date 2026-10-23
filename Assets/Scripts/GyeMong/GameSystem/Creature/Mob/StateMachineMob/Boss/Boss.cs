@@ -20,14 +20,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
         {
             get
             {
-                try
-                {
-                    return maxHps[currentPhase];
-                }
-                catch (Exception)
-                {
-                    return 100;
-                }
+                return currentPhase >= 0 && currentPhase < maxHps.Count ? maxHps[currentPhase] : 100;
             }
         }
         protected void Start()
@@ -59,6 +52,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
             if (currentPhase < maxHps.Count - 1)
             {
                 currentPhase++;
+                StopCurrentState();
                 StopAllCoroutines();
                 MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
                 StartCoroutine(ChangingPhase());
@@ -99,8 +93,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
         {
             currentShield = 0f;
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-            currentState.OnStateExit();
-            StopCoroutine(_currentStateCoroutine);
+            StopCurrentState();
             yield return new WaitForSeconds(duration);
             ChangeState();
         }
@@ -109,7 +102,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss
         {
             try
             {
-                currentState.OnStateExit();
+                StopCurrentState();
                 StopAllCoroutines();
 
                 GameObject downObj = GameObject.Find("ElfDown");

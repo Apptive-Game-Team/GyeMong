@@ -548,7 +548,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm
 
         protected override void Die()
         {
-            currentState.OnStateExit();
+            StopCurrentState();
             mapPattern.StopPattern();
             StopAllCoroutines();
             movement.SetBlink(0);

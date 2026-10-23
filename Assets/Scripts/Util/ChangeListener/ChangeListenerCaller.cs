@@ -4,18 +4,25 @@ namespace Util.ChangeListener
 {
     public abstract class ChangeListenerCaller<T, TU> where T : IChangeListener<TU>
     {
-        private List<T> _listeners = new List<T>();
-        
+        private readonly List<T> _listeners = new List<T>();
+
         public void AddListener(T listener)
         {
-            _listeners.Add(listener);
+            if (!IsMissing(listener) && !_listeners.Contains(listener)) _listeners.Add(listener);
         }
-        
+
+        public void RemoveListener(T listener) => _listeners.Remove(listener);
+
+        private static bool IsMissing(T listener) => ReferenceEquals(listener, null) ||
+            (listener is UnityEngine.Object obj && obj == null);
+
         public void Call(TU data)
         {
-            foreach (T listener in _listeners)
+            // New listeners start next notification; listeners removed during a callback are skipped.
+            foreach (T listener in _listeners.ToArray())
             {
-                listener.OnChanged(data);
+                if (IsMissing(listener)) { _listeners.Remove(listener); continue; }
+                if (_listeners.Contains(listener)) listener.OnChanged(data);
             }
         }
     }
