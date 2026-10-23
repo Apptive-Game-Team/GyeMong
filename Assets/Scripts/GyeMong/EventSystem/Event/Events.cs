@@ -71,9 +71,10 @@ namespace GyeMong.EventSystem.Event
         public override IEnumerator Execute(EventObject eventObject = null)
         {
             float timer = Time.time;
+            int openedFrame = Time.frameCount;
             yield return new WaitUntil(() =>
             {
-                return (timer + delayTime < Time.time) || InputManager.Instance.GetKeyDown(ActionCode.Interaction);
+                return InputManager.Instance.ConsumeAdvanceInput(openedFrame) || (timer + delayTime < Time.time);
             });
         }
     }

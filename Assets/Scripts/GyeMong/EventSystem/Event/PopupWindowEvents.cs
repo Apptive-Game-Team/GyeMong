@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using GyeMong.InputSystem;
 using GyeMong.UISystem;
 using UnityEngine;
@@ -36,18 +37,30 @@ namespace GyeMong.EventSystem.Event
     
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            yield return PopupWindowController.Instance.OpenPopupWindow(Title, Message);
-            
-            float timer = Time.unscaledTime;
-            yield return new WaitUntil(() =>
+            var input = InputManager.Instance;
+            var previousStates = new Dictionary<ActionCode, bool>();
+            foreach (ActionCode action in input.GetKeyActions().Keys)
             {
-                // Consume both buffered actions, including on the timeout frame.
-                bool interaction = InputManager.Instance.GetKeyDown(ActionCode.Interaction);
-                bool enter = InputManager.Instance.GetKeyDown(ActionCode.Enter);
-                return interaction || enter || Time.unscaledTime >= timer + Duration;
-            });
-            
-            yield return PopupWindowController.Instance.ClosePopupWindow();
+                previousStates[action] = input.GetKeyActive(action);
+                input.SetKeyActive(action, false);
+            }
+            input.ClearBufferedInput();
+            int openedFrame = Time.frameCount;
+            try
+            {
+                yield return PopupWindowController.Instance.OpenPopupWindow(Title, Message);
+
+                float timer = Time.unscaledTime;
+                yield return new WaitUntil(() => input.ConsumeAdvanceInput(openedFrame) ||
+                                                Time.unscaledTime >= timer + Duration);
+            }
+            finally
+            {
+                PopupWindowController.Instance.ClosePopupWindow();
+                input.ClearBufferedInput();
+                foreach (var state in previousStates)
+                    input.SetKeyActive(state.Key, state.Value);
+            }
         }
     }
 }

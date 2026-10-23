@@ -23,14 +23,15 @@ public class GameOverUIController : MonoBehaviour
     }
     void SetGameOverUI()
     {
-        StartCoroutine(WaitForInteract());
+        StartCoroutine(WaitForRestart());
     }
 
-    IEnumerator WaitForInteract()
+    IEnumerator WaitForRestart()
     {
         yield return new WaitForSeconds(2f);
         gameOverUI.SetActive(true);
-        yield return new WaitUntil(() => InputManager.Instance.GetKeyDown(ActionCode.Interaction));
+        int openedFrame = Time.frameCount;
+        yield return new WaitUntil(() => InputManager.Instance.ConsumeAdvanceInput(openedFrame));
         gameOverUI.SetActive(false);
         StageManager.LoseStage(this);
         #if UNITY_EDITOR

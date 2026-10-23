@@ -32,6 +32,7 @@ namespace GyeMong.InputSystem
     {
         private const float KeyListenerDelay = 0.05f;
         private const float KetDownDelay = 1f;
+        private int _advanceConsumedFrame = -1;
     
         private Dictionary<ActionCode, bool> _keyDownBools = new Dictionary<ActionCode, bool>();
         private Dictionary<ActionCode, bool> _keyDownBoolsForListener = new Dictionary<ActionCode, bool>();
@@ -165,7 +166,7 @@ namespace GyeMong.InputSystem
         /// <returns>True if key was pressed down, false otherwise</returns>
         public bool GetKeyDown(ActionCode action)
         {
-            if (!SceneTransitionCurtain.IsCovered && _keyActiveFlags.TryGetValue(action, out var active) && active &&
+            if (_advanceConsumedFrame != Time.frameCount && !SceneTransitionCurtain.IsCovered && _keyActiveFlags.TryGetValue(action, out var active) && active &&
                 _keyDownBools.TryGetValue(action, out var pressed) && pressed)
             {
                 _keyDownBools[action] = false;
@@ -175,13 +176,36 @@ namespace GyeMong.InputSystem
         }
 
         /// <summary>
+        /// Consumes a fresh advance press once per frame, after the current step opened.
+        /// Uses raw input so dialogue and paused tutorials also accept disabled action keys.
+        /// </summary>
+        public bool ConsumeAdvanceInput(int openedFrame)
+        {
+            if (Time.frameCount <= openedFrame || _advanceConsumedFrame == Time.frameCount ||
+                SceneTransitionCurtain.IsCovered || !Input.anyKeyDown) return false;
+
+            _advanceConsumedFrame = Time.frameCount;
+            ClearBufferedInput();
+            return true;
+        }
+
+        public void ClearBufferedInput()
+        {
+            foreach (ActionCode action in _keyMappings.Keys)
+            {
+                _keyDownBools[action] = false;
+                _keyDownBoolsForListener[action] = false;
+            }
+        }
+
+        /// <summary>
         /// Returns true if the specified key is currently being held down.
         /// </summary>
         /// <param name="action">Action code to check</param>
         /// <returns>True if key is held down, otherwise false</returns>
         public bool GetKey(ActionCode action)
         {
-            return !SceneTransitionCurtain.IsCovered && _keyMappings.TryGetValue(action, out var key) &&
+            return _advanceConsumedFrame != Time.frameCount && !SceneTransitionCurtain.IsCovered && _keyMappings.TryGetValue(action, out var key) &&
                    _keyActiveFlags.TryGetValue(action, out var active) && active && Input.GetKey(key);
         }
 
@@ -194,7 +218,7 @@ namespace GyeMong.InputSystem
 
         private void Update()
         {
-            if (SceneTransitionCurtain.IsCovered) return;
+            if (SceneTransitionCurtain.IsCovered || _advanceConsumedFrame == Time.frameCount) return;
             foreach (ActionCode action in _keyMappings.Keys)
             {
                 try
@@ -241,7 +265,7 @@ namespace GyeMong.InputSystem
             while (true)
             {
                 yield return new WaitForSecondsRealtime(KeyListenerDelay);
-                if (SceneTransitionCurtain.IsCovered) continue;
+                if (SceneTransitionCurtain.IsCovered || _advanceConsumedFrame == Time.frameCount) continue;
                 foreach (ActionCode action in Enum.GetValues(typeof(ActionCode)))
                 {
                     if (_keyActiveFlags[action])
