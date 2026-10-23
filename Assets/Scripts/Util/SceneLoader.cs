@@ -24,7 +24,7 @@ namespace Util
         {
             GyeMong.UISystem.Option.OptionUIToggler.Instance?.CloseWindow();
             SceneTransitionCurtain.Cover();
-            Time.timeScale = 1f;
+            GyeMong.GameSystem.GameTime.Scale = 1f;
             try
             {
                 if (delay > 0)

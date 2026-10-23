@@ -12,13 +12,16 @@ namespace GyeMong.UISystem
         protected ActionCode toggleKeyActionCode;
         private bool _isOptionOpened = false;
         [SerializeField] private GameObject _window;
+        protected virtual bool LocksPlayerMovement => true;
+        protected virtual void OnWindowStateChanged(bool opened) { }
 
         protected void OpenOrCloseOption()
         {
             if (SceneTransitionCurtain.IsCovered) return;
             _isOptionOpened = !_isOptionOpened;
             _window.SetActive(_isOptionOpened);
-            if (SceneContext.Character != null)
+            OnWindowStateChanged(_isOptionOpened);
+            if (LocksPlayerMovement && SceneContext.Character != null)
             {
                 SceneContext.Character.SetPlayerMove(!_isOptionOpened);
             }
@@ -34,16 +37,21 @@ namespace GyeMong.UISystem
         
         private void OnDestroy()
         {
+            if (_isOptionOpened) CloseWindow();
             InputManager.OnKeyEvent -= OnKey;
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         public void CloseWindow()
         {
-            if (_isOptionOpened && SceneContext.Character != null) SceneContext.Character.SetPlayerMove(true);
+            if (!_isOptionOpened) { if (_window != null) _window.SetActive(false); return; }
+            if (LocksPlayerMovement && SceneContext.Character != null) SceneContext.Character.SetPlayerMove(true);
             _isOptionOpened = false;
-            _window.SetActive(false);
+            if (_window != null) _window.SetActive(false);
+            OnWindowStateChanged(false);
         }
+
+        private void OnDisable() { CloseWindow(); }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) { CloseWindow(); }
 

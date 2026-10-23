@@ -44,7 +44,10 @@ public static class UiPlayModeValidation
                 var option = UnityEngine.Object.FindObjectOfType<GyeMong.UISystem.Option.OptionUI>(true);
                 if (option == null) throw new Exception("Missing options in title scene.");
                 var panel = option.transform.Find("Canvas/OptionUI");
+                float previousScale = Time.timeScale;
                 UnityEngine.Object.FindObjectOfType<GyeMong.UISystem.Option.OptionUIToggler>(true).ToggleOption();
+                if (Time.timeScale != 0 || !GyeMong.GameSystem.GameTime.IsPaused)
+                    throw new Exception("Options must pause gameplay.");
                 var button = panel.Find("LanguageButton").GetComponent<Button>();
                 GameLocalization.SetLanguage(GameLanguage.Korean, false);
                 button.onClick.Invoke();
@@ -53,6 +56,8 @@ public static class UiPlayModeValidation
                 var label = panel.Find("ResumeButton/Localized Label").GetComponent<TMP_Text>();
                 if (label.text != "Resume") throw new Exception("Active options did not refresh.");
                 UnityEngine.Object.FindObjectOfType<GyeMong.UISystem.Option.OptionUIToggler>(true).ToggleOption();
+                if (Time.timeScale != previousScale || GyeMong.GameSystem.GameTime.IsPaused)
+                    throw new Exception("Closing options must restore gameplay time.");
                 SceneManager.LoadScene("Cinematic");
             }
             else
