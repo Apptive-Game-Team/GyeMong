@@ -13,7 +13,7 @@ namespace GyeMong.GameSystem.Creature.Player
     {
         private bool ReadHeldAction(ActionCode action)
         {
-#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || (DEVELOPMENT_BUILD && !UNITY_WEBGL))
             if (_qaInputActive) return QaActionAllowed(action) && _qaHeld.Contains(action);
 #endif
             return InputManager.Instance.GetKey(action);
@@ -21,7 +21,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private bool ReadPressedAction(ActionCode action)
         {
-#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || (DEVELOPMENT_BUILD && !UNITY_WEBGL))
             if (_qaInputActive) return QaActionAllowed(action) && _qaPressed.Remove(action);
 #endif
             return InputManager.Instance.GetKeyDown(action);
@@ -29,7 +29,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private Vector3 ReadAimPosition()
         {
-#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || (DEVELOPMENT_BUILD && !UNITY_WEBGL))
             if (_qaInputActive) return _qaAim;
 #endif
             return Camera.main.ScreenToWorldPoint(Input.mousePosition);
