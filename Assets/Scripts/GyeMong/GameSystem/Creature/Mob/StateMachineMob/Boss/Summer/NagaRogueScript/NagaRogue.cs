@@ -351,7 +351,7 @@ public IEnumerator Move(Vector3 desiredDir, float distance = 2f, float duration 
     Sound.Play("ENEMY_NagaRogue_Step");
     Direction animDir = NagaRogueAction.GetDirectionToTarget(DirectionToPlayer);
     Animator.Play($"Backstep_{animDir}",0,0f);
-    yield return transform.DOMove(endPos, duration).SetEase(Ease.InOutCubic).WaitForCompletion();
+    yield return transform.DOMove(endPos, duration).SetLink(gameObject).SetEase(Ease.InOutCubic).WaitForCompletion();
 }
         public IEnumerator ChangeAlpha(float targetAlpha, float duration = 0.3f)
         {

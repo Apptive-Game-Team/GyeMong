@@ -50,6 +50,12 @@ namespace GyeMong.GameSystem.Map.Portal
             return sceneData;
         }
 
+        public bool TryGetSceneDataByName(string name, out SceneData data)
+        {
+            data = sceneDatas.Find(scene => scene.sceneName == name);
+            return data != null;
+        }
+
         public SceneData GetSceneDataByID(SceneID id)
         {
             SceneData sceneData = sceneDatas.Find(x => x.sceneID == id);

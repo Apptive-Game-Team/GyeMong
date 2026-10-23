@@ -17,7 +17,7 @@ namespace GyeMong.EventSystem.Controller
 
         public ChatController GetChatController()
         {
-            return GetComponent<ChatController>();
+            return FindObjectOfType<ChatController>();
         }
 
         public void UpdateHpBar(float hp, float shield)

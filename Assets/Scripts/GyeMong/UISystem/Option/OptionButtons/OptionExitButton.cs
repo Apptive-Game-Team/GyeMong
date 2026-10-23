@@ -16,9 +16,8 @@ namespace GyeMong.UISystem.Option.OptionButtons
         public void ExitButton()
         {
             gameObject.SetActive(false);
-            OptionUIToggler.Instance.ToggleOption();
-            Destroy(SceneContext.Character.gameObject);
-            SceneManager.LoadScene("TitleScene");
+            OptionUIToggler.Instance.CloseWindow();
+            Util.SceneLoader.LoadScene("TitleScene", 0);
         }
     }
 }

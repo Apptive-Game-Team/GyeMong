@@ -15,9 +15,10 @@ namespace GyeMong.UISystem
 
         protected void OpenOrCloseOption()
         {
+            if (SceneTransitionCurtain.IsCovered) return;
             _isOptionOpened = !_isOptionOpened;
             _window.SetActive(_isOptionOpened);
-            if (SceneManager.GetActiveScene().name != "TitleScene")
+            if (SceneContext.Character != null)
             {
                 SceneContext.Character.SetPlayerMove(!_isOptionOpened);
             }
@@ -26,13 +27,25 @@ namespace GyeMong.UISystem
         protected override void Awake()
         {
             base.Awake();
+            if (Instance != this) return;
             InputManager.OnKeyEvent += OnKey;
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         
         private void OnDestroy()
         {
             InputManager.OnKeyEvent -= OnKey;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
+
+        public void CloseWindow()
+        {
+            if (_isOptionOpened && SceneContext.Character != null) SceneContext.Character.SetPlayerMove(true);
+            _isOptionOpened = false;
+            _window.SetActive(false);
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) { CloseWindow(); }
 
         private void OnEnable()
         {

@@ -42,20 +42,12 @@ namespace GyeMong.SoundSystem
 
         public SoundSource GetSoundSource(int index)
         {
-            if (!isInit)
-            {
-                Initialize();
-            }
-            return soundSources[index];
+            return GetSoundSources()[index];
         }
 
         public int GetLength()
         {
-            if (!isInit)
-            {
-                Initialize();
-            }
-            return soundSources.Count;
+            return GetSoundSources().Count;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace GyeMong.UISystem.TItle
         {
             optionExitButton.SetActive(true);
             PlayerPrefs.SetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0);
-            SceneManager.LoadScene("Cinematic");
+            Util.SceneLoader.LoadScene("Cinematic", 0);
         }
 
         public IEnumerator Trigger()

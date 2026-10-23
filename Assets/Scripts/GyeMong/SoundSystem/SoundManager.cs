@@ -42,7 +42,8 @@ namespace GyeMong.SoundSystem
             }
         }
         private Dictionary<SoundType, float> volumes = new Dictionary<SoundType, float>();
-        public List<SoundObject> soundObjects;
+        public List<SoundObject> soundObjects = new List<SoundObject>();
+        public float MasterVolume { get; private set; } = DEFAULT_VOLUME;
     
         private void InitializeVolumes()
         {
@@ -75,7 +76,7 @@ namespace GyeMong.SoundSystem
 
         private void GetSoundObjects()
         {
-            soundObjects = new List<SoundObject>(FindObjectsOfType<SoundObject>());
+            soundObjects = new List<SoundObject>(FindObjectsOfType<SoundObject>(true));
         }
 
         public void SetVolume(SoundType type, float volume)
@@ -84,7 +85,7 @@ namespace GyeMong.SoundSystem
 
             foreach (SoundObject soundObject in soundObjects)
             {
-                if (soundObject.GetSoundType() == type)
+                if (soundObject != null && soundObject.GetSoundType() == type)
                 {
                     soundObject.SetVolume(volume);
                 }
@@ -93,9 +94,10 @@ namespace GyeMong.SoundSystem
 
         public void SetMasterVolume(float masterVolume)
         {
+            MasterVolume = masterVolume;
             foreach (SoundObject soundObject in soundObjects)
             {
-                soundObject.SetMasterVolume(masterVolume);
+                if (soundObject != null) soundObject.SetMasterVolume(masterVolume);
             } 
         }
 

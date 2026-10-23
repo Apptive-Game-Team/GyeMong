@@ -23,11 +23,6 @@ namespace GyeMong.SoundSystem
             get { return _audioSource.isPlaying; }
         }
 
-        private void Awake()
-        {
-            _masterVolume = DataManager.Instance.LoadSection<SoundData>("SoundData") == null ? 1f : DataManager.Instance.LoadSection<SoundData>("SoundData").masterVolume;
-        }
-
         private void Start()
         {
             Initialize();
@@ -40,6 +35,8 @@ namespace GyeMong.SoundSystem
                 return;
             }
             _soundManager = SoundManager.Instance;
+            _masterVolume = _soundManager.MasterVolume;
+            if (!_soundManager.soundObjects.Contains(this)) _soundManager.soundObjects.Add(this);
             _audioSource = GetComponent<AudioSource>();
             if (_audioSource == null)
             {
@@ -82,7 +79,12 @@ namespace GyeMong.SoundSystem
 
         public void Stop()
         {
-            _audioSource.Stop();
+            if (_audioSource != null) _audioSource.Stop();
+        }
+
+        private void OnDestroy()
+        {
+            if (_soundManager != null) _soundManager.soundObjects.Remove(this);
         }
 
         public IEnumerator Play()

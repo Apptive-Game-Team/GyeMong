@@ -20,7 +20,7 @@ namespace GyeMong.UISystem.Game.PlayerUI
 
             maxHp = (int)SceneContext.Character.stat.HealthMax;
             CreateHearts(maxHp);
-            OnChanged(SceneContext.Character.stat.HealthMax);
+            OnChanged(SceneContext.Character.CurrentHp);
         }
         
         private void CreateHearts(int count)
@@ -34,6 +34,31 @@ namespace GyeMong.UISystem.Game.PlayerUI
                 var obj = Instantiate(heartPrefab, heartContainer);
                 var img = obj.GetComponent<Image>();
                 hearts.Add(img);
+            }
+            LayoutHearts();
+        }
+
+        private void OnRectTransformDimensionsChange() { LayoutHearts(); }
+
+        private void LayoutHearts()
+        {
+            if (hearts.Count == 0 || !(heartContainer is RectTransform container)) return;
+            var layout = heartContainer.GetComponent<LayoutGroup>();
+            if (layout != null) layout.enabled = false;
+            float width = container.rect.width;
+            float height = container.rect.height;
+            if (width <= 0 || height <= 0) return;
+            const float gap = 2;
+            int columns = Mathf.Min(hearts.Count, Mathf.Max(1, Mathf.CeilToInt(Mathf.Sqrt(hearts.Count * width / height))));
+            int rows = Mathf.CeilToInt((float)hearts.Count / columns);
+            float size = Mathf.Min((width - gap * (columns - 1)) / columns, (height - gap * (rows - 1)) / rows);
+            for (int i = 0; i < hearts.Count; i++)
+            {
+                var rect = hearts[i].rectTransform;
+                rect.anchorMin = rect.anchorMax = new Vector2(0, 1);
+                rect.pivot = new Vector2(0.5f, 0.5f);
+                rect.sizeDelta = new Vector2(size, size);
+                rect.anchoredPosition = new Vector2((i % columns) * (size + gap) + size / 2, -(i / columns) * (size + gap) - size / 2);
             }
         }
 

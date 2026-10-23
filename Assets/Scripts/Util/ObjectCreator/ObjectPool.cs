@@ -1,9 +1,5 @@
 using System.Collections.Generic;
-using GyeMong.GameSystem.Creature.Player.Component;
-using GyeMong.GameSystem.Map.Portal;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Util.ObjectCreator
 {
@@ -11,31 +7,13 @@ namespace Util.ObjectCreator
     {
         private List<T> _pool = new();
         private GameObject _prefab;
-
-        private void OnSceneUnloading(Scene obj)
-        {
-            _pool.Clear();
-        }
-        private void OnPlayerSpawned()
-        {
-            _pool.Clear();
-        }
-        ~ObjectPool()
-        {
-            PlayerChangeListenerCaller.OnPlayerSpawned -= OnPlayerSpawned;
-            PortalManager.sceneUnloading -= OnSceneUnloading; 
-        }
+        private readonly Transform _parent;
 
         public ObjectPool(int numOfObjects, GameObject prefab, Transform parent = null)
         {
             _prefab = prefab;
-            if (_prefab.GetComponent<T>() == null)
-            {
-                _prefab.AddComponent<T>();
-            }
+            _parent = parent;
             CreateObjects(numOfObjects, parent);
-            PortalManager.sceneUnloading += OnSceneUnloading;
-            PlayerChangeListenerCaller.OnPlayerSpawned += OnPlayerSpawned;
         }
 
         public T GetObject()
@@ -44,8 +22,8 @@ namespace Util.ObjectCreator
             if (result != null)
                 return result;
 
-            GameObject newGameObject = Object.Instantiate(_prefab);
-            result = newGameObject.GetComponent<T>();
+            GameObject newGameObject = Object.Instantiate(_prefab, _parent);
+            result = GetOrAddComponent(newGameObject);
             
             _pool.Add(result);
             return result;
@@ -70,26 +48,13 @@ namespace Util.ObjectCreator
             for (int i = 0; i < _pool.Count; i++)
             {
                 T obj = _pool[i];
-                try
+                if (obj == null)
                 {
-                    if (obj.IsDestroyed() || obj.gameObject.IsDestroyed())
-                    {
-                        _pool.RemoveAt(i);
-                        i--;
-                        continue;
-                    }
-
-                    if (!obj.gameObject.activeInHierarchy)
-                    {
-                        return obj;
-                    }
-                }
-                catch (MissingReferenceException e)
-                {
-                    Debug.LogWarning($"ObjectPool: {typeof(T).Name} - MissingReferenceException: {e.Message}");
                     _pool.RemoveAt(i);
                     i--;
+                    continue;
                 }
+                if (!obj.gameObject.activeSelf) return obj;
             }
 
             return null;
@@ -106,10 +71,16 @@ namespace Util.ObjectCreator
             for (int i = 0; i < numOfObjects; i++)
             {
                 GameObject @gameObject = Object.Instantiate(_prefab, parent);
-                T obj = gameObject.GetComponent<T>();
+                T obj = GetOrAddComponent(@gameObject);
                 @gameObject.SetActive(false);
                 _pool.Add(obj);
             }
+        }
+
+        private static T GetOrAddComponent(GameObject instance)
+        {
+            var component = instance.GetComponent<T>();
+            return component != null ? component : instance.AddComponent<T>();
         }
     }
 }

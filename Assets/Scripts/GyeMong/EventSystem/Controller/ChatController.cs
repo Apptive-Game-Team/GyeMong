@@ -64,6 +64,9 @@ namespace GyeMong.EventSystem.Controller
             chattingImage = transform.Find("ChatImageArea").GetComponent<Image>();
             namedMessagePosition = messageText.rectTransform.anchoredPosition;
             namedMessageSize = messageText.rectTransform.sizeDelta;
+            Close();
+            backGround.color = new Color(1, 1, 1, 0);
+            chattingImage.color = new Color(1, 1, 1, 0);
         }
 
         public static IEnumerator Open()

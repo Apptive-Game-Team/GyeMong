@@ -10,6 +10,7 @@ namespace GyeMong.UISystem.Game.PlayerUI
         {
             SceneContext.Character.changeListenerCaller.AddHpChangeListener(this);
             _maxHp = SceneContext.Character.stat.HealthMax;
+            OnChanged(SceneContext.Character.CurrentHp);
         }
 
         protected override float GetCurrentGauge()

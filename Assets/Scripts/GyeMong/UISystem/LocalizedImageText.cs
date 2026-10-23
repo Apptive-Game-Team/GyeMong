@@ -19,17 +19,9 @@ namespace GyeMong.UISystem
             binding.artwork = image;
             binding.originalColor = image.color;
             binding.source = source;
-            var label = new GameObject("English Label", typeof(RectTransform), typeof(TextMeshProUGUI)).GetComponent<TextMeshProUGUI>();
-            label.transform.SetParent(image.transform, false);
-            label.rectTransform.anchorMin = Vector2.zero;
-            label.rectTransform.anchorMax = Vector2.one;
+            var label = LocalizedLabelFactory.CreateLabel(image.transform, LocalizedLabelFactory.Font, 44);
+            label.name = "English Label";
             label.rectTransform.offsetMin = label.rectTransform.offsetMax = Vector2.zero;
-            label.font = Resources.Load<GameObject>("Prefabs/UI/ChatCanvas").transform.Find("NameArea").GetComponent<TMP_Text>().font;
-            label.fontSize = label.fontSizeMax = 44;
-            label.fontSizeMin = 16;
-            label.enableAutoSizing = true;
-            label.alignment = TextAlignmentOptions.Center;
-            label.raycastTarget = false;
             binding.label = label;
             binding.Refresh();
         }
