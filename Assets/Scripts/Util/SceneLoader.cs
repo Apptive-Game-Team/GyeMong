@@ -15,6 +15,7 @@ namespace Util
                 return;
             }
             if (Instance == null || Instance.IsLoading) return;
+            GyeMong.GameSystem.Map.Stage.StageManager.CancelTransitions(Instance);
             Instance.IsLoading = true;
             Instance.StartCoroutine(Instance.LoadSceneCoroutine(sceneName, delay));
         }

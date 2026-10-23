@@ -21,27 +21,32 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         public static readonly string MAX_STAGE_ID_KEY = "MaxStageId";
         private const string SceneName = "StageSelectPage";
 
+        public static void SaveProgress(int unlockedStageId)
+        {
+            int previous = PlayerPrefs.GetInt(MAX_STAGE_ID_KEY, 0);
+            PlayerPrefs.SetInt(MAX_STAGE_ID_KEY, Mathf.Clamp(Mathf.Max(previous, unlockedStageId), 0, (int)Stage.Wanderer));
+        }
+
         public static void LoadStageSelectPage()
         {
             SceneLoader.LoadScene(SceneName);
         }
         public static void LoadStageSelectPage(int maxStageId)
         {
-            PlayerPrefs.SetInt("MaxStageId", maxStageId);
+            SaveProgress(maxStageId);
             SceneLoader.LoadScene(SceneName);
         }
         
         public static void LoadStageSelectPageOnStage(int currentStageId)
         {
-            PlayerPrefs.SetInt("CurrentStageId", currentStageId);
+            PlayerPrefs.SetInt("CurrentStageId", Mathf.Clamp(currentStageId, 0, (int)Stage.Wanderer));
             SceneLoader.LoadScene(SceneName);
         }
         
         public static void LoadStageSelectPageOnStageToDestination(Stage currentStageId, Stage maxStageId)
         {
-            Debug.Log("currentStageId: " + currentStageId+ " maxStageId: " + maxStageId);;
-            PlayerPrefs.SetInt("CurrentStageId", (int) currentStageId);
-            PlayerPrefs.SetInt(MAX_STAGE_ID_KEY, (int) maxStageId);
+            PlayerPrefs.SetInt("CurrentStageId", Mathf.Clamp((int)currentStageId, 0, (int)Stage.Wanderer));
+            SaveProgress((int)maxStageId);
             Debug.Log("CurrentStageId: " + PlayerPrefs.GetInt("CurrentStageId", 0) + " MaxStageId: " + PlayerPrefs.GetInt(MAX_STAGE_ID_KEY, 1));
             SceneLoader.LoadScene(SceneName);
         }

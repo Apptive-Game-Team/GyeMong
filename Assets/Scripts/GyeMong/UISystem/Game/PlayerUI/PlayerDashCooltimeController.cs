@@ -1,3 +1,4 @@
+using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 using UnityEngine;
 using System.Collections;
@@ -17,9 +18,13 @@ namespace GyeMong.UISystem.Game.PlayerUI
             if (dashSlider == null) dashSlider = GetComponent<Slider>();
         }
 
+        private PlayerChangeListenerCaller _caller;
+        private void OnDestroy() => _caller?.RemoveDashListener(this);
+
         private void Start()
         {
-            SceneContext.Character.changeListenerCaller.AddDashListener(this);
+            _caller = SceneContext.Character.changeListenerCaller;
+            _caller.AddDashListener(this);
             if (dashSlider != null) dashSlider.value = 1f;
         }
 

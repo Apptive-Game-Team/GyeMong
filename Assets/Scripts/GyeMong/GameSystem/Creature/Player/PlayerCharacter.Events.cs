@@ -14,6 +14,11 @@ namespace GyeMong.GameSystem.Creature.Player
         public void SetPlayerMove(bool _canMove)
         {
             canMove = _canMove;
+            if (!canMove)
+            {
+                movement = Vector2.zero;
+                if (playerRb != null) playerRb.velocity = Vector2.zero;
+            }
         }
 
         public void Bind(float duration)

@@ -295,7 +295,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.ShadowOfHero
             hpBarGameObject.SetActive(false);
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
-            StopCoroutine(_currentStateCoroutine);
+            StopCurrentState();
             yield return new WaitForSecondsRealtime(1f);
             StageManager.ClearStage(this);
         }

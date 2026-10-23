@@ -1,4 +1,4 @@
-#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || (DEVELOPMENT_BUILD && !UNITY_WEBGL))
 using System;
 using System.Collections;
 using System.Linq;
@@ -173,8 +173,11 @@ namespace GyeMong.QA
                     CheckStageDeadline(deadline);
                     yield return null;
                 }
-                yield return null;
-                yield return null;
+                while (SceneLoader.Instance.IsLoading)
+                {
+                    CheckStageDeadline(deadline);
+                    yield return null;
+                }
                 StageManager.EnterStage(info, SceneLoader.Instance);
                 while (SceneManager.GetActiveScene().name != scenes[(int)stage] || HasPlayer() != null)
                 {

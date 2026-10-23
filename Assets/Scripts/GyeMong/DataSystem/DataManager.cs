@@ -28,79 +28,35 @@ namespace GyeMong.DataSystem
             LoadKeyMappings();
         }
 
-        // 특정 구역 저장
         public void SaveSection<T>(T sectionData, string fileName) where T : class
         {
-#if UNITY_EDITOR
-            string json = JsonUtility.ToJson(sectionData, true); // JSON으로 직렬화
+            Directory.CreateDirectory(savePath);
             string filePath = Path.Combine(savePath, fileName + ".json");
-            // 파일의 읽기 전용 속성을 해제 (파일이 이미 존재할 경우)
-            if (File.Exists(filePath))
-            {
-                FileAttributes attributes = File.GetAttributes(filePath);
-                if (attributes.HasFlag(FileAttributes.ReadOnly))
-                {
-                    File.SetAttributes(filePath, attributes & ~FileAttributes.ReadOnly);
-                }
-            }
-
-            // 파일 저장
-            File.WriteAllText(filePath, json);
-
-            // 파일을 다시 읽기 전용으로 설정
-            File.SetAttributes(filePath, FileAttributes.ReadOnly);
-
-            Debug.Log($"{fileName} saved at {savePath} as ReadOnly.");
-#else
-        EnsurePathExists();
-        string json = JsonUtility.ToJson(sectionData, true); // JSON으로 직렬화
-        string encryptedData = SavedSectionCodec.Encrypt(json); // JSON 데이터를 암호화
-        string filePath = Path.Combine(savePath, fileName + ".json");
-
-        // 파일 저장
-        File.WriteAllText(filePath, encryptedData);
-
-        Debug.Log($"{fileName} saved at {savePath} as ReadOnly and encrypted.");
+            string json = JsonUtility.ToJson(sectionData, true);
+#if !UNITY_EDITOR
+            json = SavedSectionCodec.Encrypt(json);
 #endif
-        
+            if (File.Exists(filePath))
+                File.SetAttributes(filePath, File.GetAttributes(filePath) & ~FileAttributes.ReadOnly);
+            File.WriteAllText(filePath, json);
         }
 
-        private void EnsurePathExists()
-        {
-            if (!Directory.Exists(savePath))
-            {
-                Directory.CreateDirectory(savePath);
-            }
-        }
-
-        // 특정 구역 불러오기
         public T LoadSection<T>(string fileName) where T : class, new()
         {
             string filePath = Path.Combine(savePath, fileName + ".json");
-            if (File.Exists(filePath))
+            if (!File.Exists(filePath)) return new T();
+            try
             {
-#if UNITY_EDITOR
-                string json = File.ReadAllText(filePath); // 파일에서 json 데이터 읽기
-                try
-                {
-                    return JsonUtility.FromJson<T>(json); // JSON에서 객체로 역직렬화
-                }
-                catch
-                {
-                    json = SavedSectionCodec.Decrypt(json); // 데이터를 복호화
-                    return JsonUtility.FromJson<T>(json); // JSON에서 객체로 역직렬화
-                }
-            
-#else
-            string encryptedData = File.ReadAllText(filePath); // 파일에서 암호화된 데이터 읽기
-            string json = SavedSectionCodec.Decrypt(encryptedData); // 데이터를 복호화
-            return JsonUtility.FromJson<T>(json); // JSON에서 객체로 역직렬화
-#endif
+                string json = SavedSectionCodec.Decrypt(File.ReadAllText(filePath));
+                return JsonUtility.FromJson<T>(json) ?? new T();
             }
-            else
+            catch (Exception error) when (error is IOException || error is UnauthorizedAccessException ||
+                error is FormatException || error is System.Security.Cryptography.CryptographicException ||
+                error is ArgumentException)
             {
-                Debug.LogWarning($"{fileName} not found, returning new instance.");
-                return new T(); // 파일이 없으면 새 인스턴스 반환
+                // Preserve the original file so a failed load does not destroy recoverable data.
+                Debug.LogWarning($"Cannot load {fileName}; using defaults. {error.Message}");
+                return new T();
             }
         }
 
@@ -108,26 +64,16 @@ namespace GyeMong.DataSystem
         {
             InputManager.Instance.SetDefaultKey();
             KeyMappingData keyMappingData = LoadSection<KeyMappingData>("KeyMappingData");
-            for (int i = 0; i < keyMappingData.keyBindings.Count; i++)
+            if (keyMappingData.keyBindings == null) return;
+            foreach (KeyMappingEntry entry in keyMappingData.keyBindings)
             {
-                KeyMappingEntry entry = keyMappingData.keyBindings[i];
-
-                ActionCode actionCode = (ActionCode)Enum.Parse(typeof(ActionCode), entry.actionCode);
-                KeyCode keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), entry.keyCode);
-
+                if (entry == null ||
+                    !Enum.TryParse(entry.actionCode, out ActionCode actionCode) || !Enum.IsDefined(typeof(ActionCode), actionCode) ||
+                    !Enum.TryParse(entry.keyCode, out KeyCode keyCode) || !Enum.IsDefined(typeof(KeyCode), keyCode))
+                    continue;
                 InputManager.Instance.SetKey(actionCode, keyCode);
             }
         }
-
-        // public void LoadPlayerData()
-        // {
-        //     PlayerData playerData = LoadSection<PlayerData>("PlayerData");
-        //     if (!playerData.isFirst)
-        //     {
-        //         PlayerCharacter.Instance.transform.position = playerData.playerPosition;
-        //         StartCoroutine(PlayerCharacter.Instance.LoadPlayerEffect());
-        //     }
-        // }
 
         public void DeleteAllData()
         {

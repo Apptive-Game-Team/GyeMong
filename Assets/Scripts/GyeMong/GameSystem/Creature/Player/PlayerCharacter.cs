@@ -99,7 +99,7 @@ namespace GyeMong.GameSystem.Creature.Player
 
         private void FixedUpdate()
         {
-            if (!isControlled)
+            if (!isControlled && canMove)
             {
                 MoveCharacter();
             }

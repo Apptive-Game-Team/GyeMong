@@ -32,7 +32,29 @@ namespace GyeMong.EventSystem.Controller
         private static readonly List<string> previousLines = new List<string>();
 
         private void OnEnable() { GameLocalization.Changed += RefreshLanguage; }
-        private void OnDisable() { GameLocalization.Changed -= RefreshLanguage; }
+        private void OnDisable() { GameLocalization.Changed -= RefreshLanguage; StopDialogueSounds(); }
+
+        private static readonly List<SoundObject> dialogueSounds = new List<SoundObject>();
+
+        public static SoundObject PlayDialogueSound(string id)
+        {
+            var sound = Sound.Play(id, true);
+            dialogueSounds.Add(sound);
+            return sound;
+        }
+
+        public static void StopDialogueSound(SoundObject sound)
+        {
+            if (sound != null) Sound.Stop(sound);
+            dialogueSounds.Remove(sound);
+        }
+
+        public static void StopDialogueSounds()
+        {
+            foreach (var sound in dialogueSounds)
+                if (sound != null) Sound.Stop(sound);
+            dialogueSounds.Clear();
+        }
 
         private static void RefreshLanguage()
         {
@@ -124,9 +146,9 @@ namespace GyeMong.EventSystem.Controller
 
             foreach (string source in multiChatMessage.messages)
             {
-                SoundObject _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
+                SoundObject _soundObject = PlayDialogueSound("EFFECT_Keyboard_Sound");
                 yield return ShowMultipleChat(source);
-                Sound.Stop(_soundObject);
+                StopDialogueSound(_soundObject);
 
                 float timer = Time.time;
                 int openedFrame = Time.frameCount;

@@ -539,11 +539,8 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Summer.NagaWarrio
         public override IEnumerator Stun(float duration)
         {
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
-            Animator.SetBool("isStun", true);
-            currentState.OnStateExit();
-            StopCoroutine(_currentStateCoroutine);
+            StopCurrentState();
             yield return new WaitForSeconds(duration);
-            Animator.SetBool("isStun", false);
             ChangeState();
         }
     }

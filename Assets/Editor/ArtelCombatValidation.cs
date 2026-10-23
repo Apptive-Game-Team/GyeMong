@@ -25,6 +25,7 @@ public static class ArtelCombatValidation
     private static readonly Stack<IEnumerator> Steps = new Stack<IEnumerator>();
     private static int lastFrame = -1;
     private static double started;
+    private static string runtimeError;
     private static readonly string[] SaveKeys = { "TutorialFlag", "CurrentStageId", "MaxStageId" };
 
     static ArtelCombatValidation()
@@ -34,6 +35,12 @@ public static class ArtelCombatValidation
             if (state == PlayModeStateChange.EnteredPlayMode && SessionState.GetBool(RunningKey, false))
             {
                 started = EditorApplication.timeSinceStartup;
+                Application.logMessageReceived += (message, stack, type) =>
+                {
+                    if ((type == LogType.Error || type == LogType.Exception || type == LogType.Assert) &&
+                        !stack.Contains("UnityEditor.Android.TargetScanWorker") && !stack.Contains("CartoonFX.CFXR_WelcomeScreen"))
+                        runtimeError = message + "\n" + stack;
+                };
                 Steps.Push(Validate());
                 EditorApplication.update += Tick;
             }
@@ -59,7 +66,8 @@ public static class ArtelCombatValidation
     {
         try
         {
-            if (EditorApplication.timeSinceStartup - started > 240) throw new TimeoutException("Validation exceeded 240 seconds.");
+            if (runtimeError != null) throw new InvalidOperationException("Runtime error: " + runtimeError);
+            if (EditorApplication.timeSinceStartup - started > 480) throw new TimeoutException("Validation exceeded 480 seconds.");
             if (!EditorApplication.isPlaying || Time.frameCount == lastFrame) return;
             lastFrame = Time.frameCount;
             while (Steps.Count > 0)
@@ -146,6 +154,8 @@ public static class ArtelCombatValidation
         Check(SceneManager.GetActiveScene().name == "SpringBeach", "stage Slime entered");
         yield return Ready();
         var player = SceneContext.Character;
+        RuntimeQualityValidation.RunCombatChecks(player);
+        yield return RuntimeQualityValidation.RunStateTransitionChecks();
         GyeMongGameFunctions.SetPlayerResources(50, 100, 0);
         Check(Mathf.Approximately(player.CurrentHp, player.stat.HealthMax / 2), "resource HP setup");
         GyeMongGameFunctions.HealPlayer();
@@ -183,6 +193,18 @@ public static class ArtelCombatValidation
         GyeMongGameFunctions.DamageEnemies(1);
         Check(Mathf.Approximately(enemy.CurrentHp, hp - 1) && Mathf.Approximately(enemy.CurrentShield, 100), "HP damage bypasses/preserves shield");
 
+        var golem = enemy as GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Boss;
+        if (golem != null)
+        {
+            int phase = golem.CurrentPhase;
+            var stun = golem.Stun(10);
+            stun.MoveNext();
+            GyeMongGameFunctions.DamageEnemies(golem.CurrentHp);
+            Check(golem.CurrentPhase == phase + 1 && golem.CurrentHp > 0, "Golem changes phase while stunned");
+            (stun as IDisposable)?.Dispose();
+            yield return Ready();
+        }
+
         yield return GyeMongGameFunctions.GoToStage(CombatStage.Wanderer);
         Check(SceneManager.GetActiveScene().name == "Wanderer", "stage Wanderer entered");
         yield return Ready();
@@ -192,6 +214,66 @@ public static class ArtelCombatValidation
         Check(Mathf.Approximately(enemy.CurrentHp, hp - 1), "Wanderer HP damage bypasses directional defense");
         yield return GyeMongGameFunctions.DefeatEnemies();
         Check(enemy == null || !enemy.isActiveAndEnabled || enemy.CurrentHp <= 0, "defeat enemy");
+        while (Util.SceneLoader.Instance.IsLoading) yield return null;
+        yield return RuntimeQualityValidation.RunStageCancellationChecks();
+        yield return GyeMongGameFunctions.GoToStage(CombatStage.Slime);
+        Check(SceneManager.GetActiveScene().name == "SpringBeach", "stage entry works after cancelled dialogue");
+        while (Util.SceneLoader.Instance.IsLoading) yield return null;
+        foreach (var stage in new[] { CombatStage.Elf, CombatStage.Shadow, CombatStage.NagaRogue, CombatStage.NagaWarrior })
+        {
+            yield return EnterStageWithAcceleratedIntro(stage);
+            yield return Ready();
+            var enemies = Object.FindObjectsOfType<GyeMong.GameSystem.Creature.Mob.StateMachineMob.StateMachineMob>();
+            Check(enemies.Length > 0, "combat scene has state-machine enemies: " + stage);
+            foreach (var mob in enemies) mob.StartCoroutine(mob.Stun(0.1f));
+            yield return Wait(0.5f);
+            Check(SceneContext.Character != null && SceneContext.Character.CurrentHp > 0, "stun and resume completed: " + stage);
+        }
+        while (Util.SceneLoader.Instance.IsLoading) yield return null;
+        yield return ValidateSandworm();
+    }
+
+    private static IEnumerator EnterStageWithAcceleratedIntro(CombatStage stage)
+    {
+        var entry = GyeMongGameFunctions.GoToStage(stage);
+        try
+        {
+            while (entry.MoveNext())
+            {
+                // Long authored intros exceed the cheat's interactive timeout without input.
+                // Run the actual dialogue and transition, accelerating only this test.
+                Time.timeScale = 20;
+                yield return entry.Current;
+            }
+        }
+        finally
+        {
+            (entry as IDisposable)?.Dispose();
+            Time.timeScale = 1;
+        }
+    }
+
+    private static IEnumerator ValidateSandworm()
+    {
+        var loading = EditorSceneManager.LoadSceneAsyncInPlayMode("Assets/Scenes/Summer/SummerSandWorm.unity",
+            new LoadSceneParameters(LoadSceneMode.Single));
+        while (!loading.isDone) yield return null;
+        yield return Wait(1);
+        var boss = Object.FindObjectOfType<GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Sandworm.Sandworm>(true);
+        Check(boss != null, "legacy Sandworm scene contains its boss");
+        for (var parent = boss.transform; parent != null; parent = parent.parent) parent.gameObject.SetActive(true);
+        boss.enabled = true;
+        yield return Wait(1);
+        if (SceneContext.Character != null) SceneContext.Character.isInvincible = true;
+        // Set up the final phase, then exercise the normal damage/death dispatch while stunned.
+        typeof(GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Boss)
+            .GetField("currentPhase", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(boss, 1);
+        boss.StartCoroutine(boss.Stun(30));
+        boss.OnAttacked(boss.CurrentHp + 1);
+        Check(!boss.GetComponent<Collider2D>().enabled, "Sandworm death while stunned disables collision");
+        yield return Wait(0.5f);
+        Util.SceneLoader.LoadScene("TitleScene", 0);
+        while (Util.SceneLoader.Instance.IsLoading) yield return null;
     }
 
     public static void BuildDevelopment()

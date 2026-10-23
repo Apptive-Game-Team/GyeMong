@@ -1,3 +1,4 @@
+using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,9 +27,13 @@ namespace GyeMong.UISystem.Game.PlayerUI
             gaugeEffectMaterial = transform.Find("Background").GetComponent<Image>().material;
         }
 
+        private PlayerChangeListenerCaller _caller;
+        private void OnDestroy() => _caller?.RemoveSkillGaugeChangeListener(this);
+
         private void Start()
         {
-            SceneContext.Character.changeListenerCaller.AddSkillGaugeChangeListener(this);
+            _caller = SceneContext.Character.changeListenerCaller;
+            _caller.AddSkillGaugeChangeListener(this);
             _maxSkillGauge = SceneContext.Character.stat.GrazeMax;
             OnChanged(SceneContext.Character.CurrentSkillGauge);
         }

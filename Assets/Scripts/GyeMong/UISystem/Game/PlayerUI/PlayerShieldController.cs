@@ -1,3 +1,4 @@
+using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 
 namespace GyeMong.UISystem.Game.PlayerUI
@@ -6,9 +7,13 @@ namespace GyeMong.UISystem.Game.PlayerUI
     {
         private float _shield;
         private float _maxShield;
+        private PlayerChangeListenerCaller _caller;
+        private void OnDestroy() => _caller?.RemoveShieldChangeListener(this);
+
         private void Start()
         {
-            SceneContext.Character.changeListenerCaller.AddShieldChangeListener(this);
+            _caller = SceneContext.Character.changeListenerCaller;
+            _caller.AddShieldChangeListener(this);
             _maxShield = SceneContext.Character.stat.HealthMax;
             OnChanged(SceneContext.Character.curShield);
         }

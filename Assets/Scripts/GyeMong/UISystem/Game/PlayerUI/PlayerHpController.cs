@@ -1,3 +1,4 @@
+using GyeMong.GameSystem.Creature.Player.Component;
 using GyeMong.GameSystem.Creature.Player.Interface.Listener;
 
 namespace GyeMong.UISystem.Game.PlayerUI
@@ -6,9 +7,13 @@ namespace GyeMong.UISystem.Game.PlayerUI
     {
         private float _hp;
         private float _maxHp;
+        private PlayerChangeListenerCaller _caller;
+        private void OnDestroy() => _caller?.RemoveHpChangeListener(this);
+
         private void Start()
         {
-            SceneContext.Character.changeListenerCaller.AddHpChangeListener(this);
+            _caller = SceneContext.Character.changeListenerCaller;
+            _caller.AddHpChangeListener(this);
             _maxHp = SceneContext.Character.stat.HealthMax;
             OnChanged(SceneContext.Character.CurrentHp);
         }

@@ -601,8 +601,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss.Spring.Elf
         {
             MaterialController.SetMaterial(MaterialController.MaterialType.DEFAULT);
             Animator.SetBool("isStun", true);
-            currentState.OnStateExit();
-            StopCoroutine(_currentStateCoroutine);
+            StopCurrentState();
             yield return new WaitForSeconds(duration);
             Animator.SetBool("isStun", false);
             ChangeState();

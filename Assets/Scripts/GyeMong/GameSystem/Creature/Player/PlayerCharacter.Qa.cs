@@ -1,4 +1,4 @@
-#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || (DEVELOPMENT_BUILD && !UNITY_WEBGL))
 using System.Collections.Generic;
 using GyeMong.InputSystem;
 using UnityEngine;

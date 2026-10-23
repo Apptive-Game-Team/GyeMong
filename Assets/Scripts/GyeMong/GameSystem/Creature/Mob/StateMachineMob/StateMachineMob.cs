@@ -11,6 +11,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
     {
         protected Coroutine _currentStateCoroutine;
         protected BaseState currentState;
+        private int stateVersion;
         protected virtual void Update()
         {
             if (currentState != null)
@@ -25,24 +26,38 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
             ChangeState();
         }
         
+        protected void StopCurrentState()
+        {
+            stateVersion++;
+            var previousState = currentState;
+            var previousCoroutine = _currentStateCoroutine;
+            currentState = null;
+            _currentStateCoroutine = null;
+            if (previousCoroutine != null) StopCoroutine(previousCoroutine);
+            previousState?.OnStateExit();
+        }
+
+        private void StartState(BaseState state)
+        {
+            if (state == null) return;
+            int version = ++stateVersion;
+            currentState = state;
+            Coroutine started = StartCoroutine(state.StateCoroutine());
+            // A state may transition synchronously before its first yield.
+            if (stateVersion == version) _currentStateCoroutine = started;
+            else if (started != null) StopCoroutine(started);
+        }
+
         public override IEnumerator Stun(float stunTime)
         {
-            if (_currentStateCoroutine != null)
-            {
-                currentState.OnStateExit();
-                StopCoroutine(_currentStateCoroutine);
-            }
+            StopCurrentState();
          
             yield return new WaitForSeconds(stunTime);
             ChangeState();
         }
         public void ChangeState()
         {
-            if (_currentStateCoroutine != null)
-            {
-                currentState.OnStateExit();
-                StopCoroutine(_currentStateCoroutine);
-            }
+            StopCurrentState();
             List<BaseState> weightedStates = new();
             BaseState[] states = States;
             foreach (BaseState state in states)
@@ -56,34 +71,23 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
             if (weightedStates.Count > 0)
             {
                 int randomIndex = Random.Range(0, weightedStates.Count);
-                currentState = weightedStates[randomIndex];
-                _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
+                StartState(weightedStates[randomIndex]);
             }
         }
         public void ChangeState(BaseState state)
         {
-            if (_currentStateCoroutine != null)
-            {
-                currentState.OnStateExit();
-                StopCoroutine(_currentStateCoroutine);
-            }
+            StopCurrentState();
            
-            currentState = state;
-        
-            _currentStateCoroutine = StartCoroutine(state.StateCoroutine());
+            StartState(state);
         }
         public void ChangeState(Dictionary<Type, int> nextStateWeights)
         {
-            if (_currentStateCoroutine != null)
-            {
-                currentState.OnStateExit();
-                StopCoroutine(_currentStateCoroutine);
-            }
+            StopCurrentState();
             List<BaseState> weightedStates = new();
             for (int i = 0; i < States.Length; i++)
             {
                 var state = States[i];
-                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && state.CanEnterState())
+                if (nextStateWeights.TryGetValue(state.GetType(), out int weight) && weight > 0 && state.CanEnterState())
                 {
                     weightedStates.AddRange(Enumerable.Repeat(state, weight));
                 }
@@ -91,8 +95,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
             if (weightedStates.Count > 0)
             {
                 int randomIndex = Random.Range(0, weightedStates.Count);
-                currentState = weightedStates[randomIndex];
-                _currentStateCoroutine = StartCoroutine(currentState.StateCoroutine());
+                StartState(weightedStates[randomIndex]);
             }
             else
             {
@@ -141,7 +144,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob
                     Type[] stateTypes = parentType.GetNestedTypes();
                     foreach (Type type in stateTypes)
                     {
-                        if (!type.IsAbstract)
+                        if (!type.IsAbstract && typeof(BaseState).IsAssignableFrom(type))
                         {
                             states.Add(Activator.CreateInstance(type) as BaseState);
                             states[states.Count - 1].mob = this;

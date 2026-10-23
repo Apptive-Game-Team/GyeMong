@@ -35,13 +35,13 @@ namespace GyeMong.EventSystem.Event.Chat
             yield return ChatController.Open();
             foreach (var chat in chatMessages)
             {
-                SoundObject _soundObject = Sound.Play("EFFECT_Chat_Sound", true);
+                SoundObject _soundObject = ChatController.PlayDialogueSound("EFFECT_Chat_Sound");
                 yield return new WaitForSeconds(0.2f);
                 
                 ChatController.SetBackgroundImage(ChatController.GetBackgroundImageSprite(chat.backgroundImage));
                 ChatController.SetChatImage(ChatController.GetChatImageSprite(chat.chatImage));
                 
-                Sound.Stop(_soundObject);
+                ChatController.StopDialogueSound(_soundObject);
                 yield return ChatController.MultipleChat(chat, 3f);
             }
             ChatController.Close();

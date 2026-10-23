@@ -1,4 +1,4 @@
-#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || DEVELOPMENT_BUILD)
+#if ARTEL_GAME_FUNCTIONS && (UNITY_EDITOR || (DEVELOPMENT_BUILD && !UNITY_WEBGL))
 using GyeMong.GameSystem.Creature.Mob.StateMachineMob.Boss;
 using UnityEngine;
 
