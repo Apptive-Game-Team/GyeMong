@@ -13,7 +13,7 @@ namespace Util
                 if (_instance == null)
                 {
                     _instance = FindObjectOfType<T>(true);
-                    DontDestroyOnLoad(_instance.gameObject);
+                    if (_instance != null && _instance.transform.parent == null) DontDestroyOnLoad(_instance.gameObject);
                 }
 
                 return _instance;
@@ -24,7 +24,7 @@ namespace Util
             if (_instance == null)
             {
                 _instance = this as T;
-                DontDestroyOnLoad(gameObject);
+                if (transform.parent == null) DontDestroyOnLoad(gameObject);
             }
             else if (_instance != this)
             {

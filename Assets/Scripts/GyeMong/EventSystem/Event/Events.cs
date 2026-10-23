@@ -243,7 +243,7 @@ namespace GyeMong.EventSystem.Event
 
         public override IEnumerator Execute(EventObject eventObject = null)
         {
-            SceneManager.LoadScene(_sceneName);
+            Util.SceneLoader.LoadScene(_sceneName, 0);
             yield return null;
         }
     }

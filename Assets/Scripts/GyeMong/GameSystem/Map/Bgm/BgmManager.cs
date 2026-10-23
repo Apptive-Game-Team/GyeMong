@@ -12,32 +12,22 @@ public class BgmManager
     public static void Initialize()
     {
         Play();
-        
-        SceneManager.sceneLoaded += (scene, mode) =>
-        {
-            Play(scene);
-        };
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
+    private static void OnSceneLoaded(Scene scene, LoadSceneMode mode) { Play(scene); }
     
     private static void Play()
     {
-        if (bgmCoroutine != null)
-        {
-            Stop();
-        }
-        Play(PortalManager.Instance.sceneDataList.GetSceneDataByName(
-                SceneManager.GetActiveScene().name)
-            .defaultBGM);
+        Play(SceneManager.GetActiveScene());
     }
     
 
     private static void Play(Scene scene)
     {
-        if (bgmCoroutine != null)
-        {
-            Stop();
-        }
-        Play(PortalManager.Instance.sceneDataList.GetSceneDataByName(scene.name).defaultBGM);
+        if (PortalManager.Instance.sceneDataList.TryGetSceneDataByName(scene.name, out var data)) Play(data.defaultBGM);
+        else StopPlayback(); // Story-only scenes provide music through their own event sequence.
     }
     
     public static void Play(string sound)
@@ -46,10 +36,8 @@ public class BgmManager
         {
             return;
         }
-        if (bgmCoroutine == null)
-        {
-            soundObject = SoundManager.Instance.GetBgmObject();
-        }
+        StopPlayback();
+        soundObject = SoundManager.Instance.GetBgmObject();
 
         currentBgmName = sound;
         soundObject.SetSoundSourceByName(sound);
@@ -59,12 +47,16 @@ public class BgmManager
     
     public static void Stop()
     {
+        StopPlayback();
+        Play();
+    }
+
+    private static void StopPlayback()
+    {
         if (bgmCoroutine != null)
         {
-            soundObject.Stop();
+            if (soundObject != null) soundObject.Stop();
             bgmCoroutine = null;
         }
-
-        Play();
     }
 }

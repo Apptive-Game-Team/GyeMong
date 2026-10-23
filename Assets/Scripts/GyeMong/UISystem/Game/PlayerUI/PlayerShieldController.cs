@@ -10,6 +10,7 @@ namespace GyeMong.UISystem.Game.PlayerUI
         {
             SceneContext.Character.changeListenerCaller.AddShieldChangeListener(this);
             _maxShield = SceneContext.Character.stat.HealthMax;
+            OnChanged(SceneContext.Character.curShield);
         }
 
         protected override float GetCurrentGauge()

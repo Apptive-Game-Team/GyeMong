@@ -42,6 +42,9 @@ namespace GyeMong.InputSystem
         protected override void Awake()
         {
             base.Awake();
+            if (Instance != this) return;
+            SetDefaultKey();
+            InitKeyDownDictionary();
             SceneManager.sceneLoaded += OnSceneUnloading;
         }
 
@@ -51,6 +54,10 @@ namespace GyeMong.InputSystem
             foreach (ActionCode action in Enum.GetValues(typeof(ActionCode)))
             {
                 _keyDownBools[action] = false;
+                _keyDownBoolsForListener[action] = false;
+                if (_keyDownCounterCoroutine[action] != null) StopCoroutine(_keyDownCounterCoroutine[action]);
+                _keyDownCounterCoroutine[action] = null;
+                _keyActiveFlags[action] = true;
             }
         }
 
@@ -158,19 +165,11 @@ namespace GyeMong.InputSystem
         /// <returns>True if key was pressed down, false otherwise</returns>
         public bool GetKeyDown(ActionCode action)
         {
-            try
+            if (!SceneTransitionCurtain.IsCovered && _keyActiveFlags.TryGetValue(action, out var active) && active &&
+                _keyDownBools.TryGetValue(action, out var pressed) && pressed)
             {
-                if (_keyActiveFlags[action] && _keyDownBools[action])
-                {
-                    _keyDownBools[action] = false;
-                    return true;
-                }
-
-            }
-            catch (KeyNotFoundException)
-            {
-                _keyActiveFlags[action] = true;
                 _keyDownBools[action] = false;
+                return true;
             }
             return false;
         }
@@ -182,15 +181,8 @@ namespace GyeMong.InputSystem
         /// <returns>True if key is held down, otherwise false</returns>
         public bool GetKey(ActionCode action)
         {
-            try
-            {
-                return Input.GetKey(_keyMappings[action]) && _keyActiveFlags[action];
-            }
-            catch (KeyNotFoundException)
-            {
-                SetDefaultKey();
-                return false;
-            }
+            return !SceneTransitionCurtain.IsCovered && _keyMappings.TryGetValue(action, out var key) &&
+                   _keyActiveFlags.TryGetValue(action, out var active) && active && Input.GetKey(key);
         }
 
         private IEnumerator KeyDownCounter(ActionCode action)
@@ -202,6 +194,7 @@ namespace GyeMong.InputSystem
 
         private void Update()
         {
+            if (SceneTransitionCurtain.IsCovered) return;
             foreach (ActionCode action in _keyMappings.Keys)
             {
                 try
@@ -248,7 +241,8 @@ namespace GyeMong.InputSystem
             while (true)
             {
                 yield return new WaitForSecondsRealtime(KeyListenerDelay);
-                foreach (ActionCode action in _keyMappings.Keys)
+                if (SceneTransitionCurtain.IsCovered) continue;
+                foreach (ActionCode action in Enum.GetValues(typeof(ActionCode)))
                 {
                     if (_keyActiveFlags[action])
                     {
@@ -272,8 +266,6 @@ namespace GyeMong.InputSystem
 
         private void Start()
         {
-            SetDefaultKey();
-            InitKeyDownDictionary();
             StartCoroutine(CallListenersCoroutine());
         }
     }

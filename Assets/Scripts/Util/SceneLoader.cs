@@ -6,17 +6,40 @@ namespace Util
 {
     public class SceneLoader : SingletonObject<SceneLoader>
     {
+        public bool IsLoading { get; private set; }
         public static void LoadScene(string sceneName, int delay = 2)
         {
-            Instance.StartCoroutine(LoadSceneCoroutine(sceneName, delay));
+            if (!Application.CanStreamedLevelBeLoaded(sceneName))
+            {
+                Debug.LogError($"Scene is not included in the build: {sceneName}");
+                return;
+            }
+            if (Instance == null || Instance.IsLoading) return;
+            Instance.IsLoading = true;
+            Instance.StartCoroutine(Instance.LoadSceneCoroutine(sceneName, delay));
         }
 
-        private static IEnumerator LoadSceneCoroutine(string sceneName, int delay)
+        private IEnumerator LoadSceneCoroutine(string sceneName, int delay)
         {
-            SceneManager.LoadScene("LoadingScene");
-            yield return new WaitForSecondsRealtime(delay);
+            GyeMong.UISystem.Option.OptionUIToggler.Instance?.CloseWindow();
+            SceneTransitionCurtain.Cover();
             Time.timeScale = 1f;
-            SceneManager.LoadSceneAsync(sceneName);
+            try
+            {
+                if (delay > 0)
+                {
+                    yield return SceneManager.LoadSceneAsync("LoadingScene");
+                    yield return new WaitForSecondsRealtime(delay);
+                }
+                yield return SceneManager.LoadSceneAsync(sceneName);
+                SceneTransitionCurtain.RevealWhenReady();
+                yield return new WaitWhile(() => SceneTransitionCurtain.IsCovered);
+            }
+            finally
+            {
+                if (SceneTransitionCurtain.IsCovered) SceneTransitionCurtain.RevealWhenReady();
+                IsLoading = false;
+            }
         }
     }
 }

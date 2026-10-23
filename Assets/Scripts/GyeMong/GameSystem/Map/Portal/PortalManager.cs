@@ -22,7 +22,9 @@ namespace GyeMong.GameSystem.Map.Portal
         {
             yield return SceneContext.EffectManager.FadeOut();
             LoadSceneMode(portalID);
-            StartCoroutine(DelayedFadeIn(delay));
+            yield return new WaitWhile(() => SceneLoader.Instance.IsLoading);
+            if (delay > 0) yield return new WaitForSecondsRealtime(delay);
+            if (SceneContext.EffectManager != null) yield return SceneContext.EffectManager.FadeIn();
         }
         
         public void LoadSceneMode(PortalID portalID)
@@ -36,10 +38,5 @@ namespace GyeMong.GameSystem.Map.Portal
             }
         }
 
-        private IEnumerator DelayedFadeIn(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            yield return SceneContext.EffectManager.FadeIn();
-        }
     }
 }

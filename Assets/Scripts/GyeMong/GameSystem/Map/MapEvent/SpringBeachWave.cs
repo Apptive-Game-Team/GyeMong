@@ -20,6 +20,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
             while (true)
             {
                 Tween t1 = transform.DOMove(new Vector3(0, -0.57f, 0) * 3, waveDuration * 1.5f)
+                    .SetLink(gameObject)
                     .SetEase(Ease.InOutSine);
 
                 bool waveOut1 = false;
@@ -51,6 +52,7 @@ namespace GyeMong.GameSystem.Map.MapEvent
                 
                 
                 Tween t2 = transform.DOMove(Vector3.zero, waveDuration)
+                    .SetLink(gameObject)
                     .SetEase(Ease.InOutSine);
 
                 bool waveIn1 = false;
