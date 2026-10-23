@@ -56,18 +56,24 @@ namespace GyeMong.UISystem
 
         public static string Text(string source)
         {
-            Load();
-            if (source == null) return string.Empty;
-            if (!entries.TryGetValue(source, out var entry)) return source;
-            string result = Language == GameLanguage.English ? entry.en : entry.ko;
-            result = string.IsNullOrEmpty(result) ? source : result;
+            string result = Template(source);
             if (result.IndexOf('{') < 0) return result;
             foreach (var binding in InputManager.Instance.GetKeyActions())
                 result = result.Replace("{" + binding.Key + "}", "<b>[" + KeyLabel(binding.Value) + "]</b>");
             return result;
         }
 
-        private static string KeyLabel(KeyCode key)
+        public static string Template(string source)
+        {
+            Load();
+            if (source == null) return string.Empty;
+            if (!entries.TryGetValue(source, out var entry)) return source;
+            string result = Language == GameLanguage.English ? entry.en : entry.ko;
+            result = string.IsNullOrEmpty(result) ? source : result;
+            return result;
+        }
+
+        public static string KeyLabel(KeyCode key)
         {
             bool english = Language == GameLanguage.English;
             switch (key)

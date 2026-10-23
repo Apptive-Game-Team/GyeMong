@@ -42,6 +42,9 @@ namespace GyeMong.UISystem
             IsOpen = true;
             LocalizedGameText.Bind(_titleText, title);
             LocalizedGameText.Bind(_contentText, content);
+            var inputDisplay = _popupWindow.GetComponent<TutorialInputDisplay>();
+            if (inputDisplay == null) inputDisplay = _popupWindow.AddComponent<TutorialInputDisplay>();
+            inputDisplay.Show(_contentText.font, content);
             _contentText.enableAutoSizing = true;
             _contentText.fontSizeMin = 28;
             _contentText.fontSizeMax = 40;

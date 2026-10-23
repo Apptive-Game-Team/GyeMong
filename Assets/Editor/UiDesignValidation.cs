@@ -15,6 +15,25 @@ public static class UiDesignValidation
 {
     private const string Output = "Logs/ui-design";
 
+    public static void RunTutorialInputs()
+    {
+        if (!Application.isBatchMode) throw new InvalidOperationException("Use batch mode to preserve open scenes.");
+        Directory.CreateDirectory(Output);
+        var previous = GameLocalization.Language;
+        try
+        {
+            foreach (var language in new[] { GameLanguage.Korean, GameLanguage.English })
+            {
+                GameLocalization.SetLanguage(language, false);
+                foreach (var kind in new[] { "tutorial", "tutorial-skill", "tutorial-move", "tutorial-dash", "tutorial-rebound", "tutorial-plain" })
+                    Preview(kind, 1920, 1080);
+                Preview("tutorial", 1920, 1200);
+            }
+            Debug.Log("TUTORIAL_INPUT_VALIDATION_PASS");
+        }
+        finally { GameLocalization.SetLanguage(previous, false); }
+    }
+
     // Explicit batch entry point. Preview scenes are never saved over game scenes.
     public static void Run()
     {
@@ -79,6 +98,7 @@ public static class UiDesignValidation
         camera.transform.position = new Vector3(0, 0, -10);
         var texture = new RenderTexture(width, height, 24);
         camera.targetTexture = texture;
+        bool tutorial = kind.StartsWith("tutorial");
         bool dialogue = kind == "dialogue" || kind == "narration";
         bool options = kind == "options" || kind == "controls" || kind == "audio";
         string path = dialogue ? "Assets/Resources/Prefabs/UI/ChatCanvas.prefab" : "Assets/Resources/Prefabs/InGameManager.prefab";
@@ -90,7 +110,7 @@ public static class UiDesignValidation
         canvas.worldCamera = camera;
         canvas.planeDistance = 1;
         if (!options) foreach (Transform child in root.transform)
-            child.gameObject.SetActive(kind == "boss" || (dialogue ? child.name != "SpeechBubble" : child.name == (kind == "tutorial" ? "PopupWindow" : kind == "gameover" ? "GameOverUI" : "PlayerUI")));
+            child.gameObject.SetActive(kind == "boss" || (dialogue ? child.name != "SpeechBubble" : child.name == (tutorial ? "PopupWindow" : kind == "gameover" ? "GameOverUI" : "PlayerUI")));
         foreach (var text in root.GetComponentsInChildren<TMP_Text>(true))
             if (GameLocalization.HasTranslation(text.text)) LocalizedGameText.Bind(text, text.text);
         if (options)
@@ -129,12 +149,30 @@ public static class UiDesignValidation
                 if (message.GetPreferredValues(GameLocalization.Text(line), message.rectTransform.rect.width, 0).y > message.rectTransform.rect.height)
                     throw new Exception("Dialogue line exceeds panel: " + line);
         }
-        else if (kind == "tutorial")
+        else if (tutorial)
         {
             var window = root.transform.Find("PopupWindow/Window");
-            window.gameObject.SetActive(true);
-            LocalizedGameText.Bind(window.Find("Title").GetComponent<TMP_Text>(), "기본 공격");
-            LocalizedGameText.Bind(window.Find("Content").GetComponent<TMP_Text>(), "마우스 좌클릭을 통해 공격할 수 있다.");
+            string title = "기본 공격", content = "마우스 좌클릭을 통해 공격할 수 있다.";
+            if (kind == "tutorial-skill") { title = "스치기 시스템 배우기"; content = "좌상단에 늘어난 게이지를 이용해 특수공격(마우스 우클릭)을 사용할 수 있다."; }
+            if (kind == "tutorial-move") { title = "플레이어 이동"; content = "W, A, S, D를 눌러서 이동할 수 있다."; }
+            if (kind == "tutorial-dash") { title = "돌진"; content = "좌측 Shift키를 눌러 돌진할 수 있다."; }
+            if (kind == "tutorial-rebound") input.SetKey(GyeMong.InputSystem.ActionCode.Attack, KeyCode.E);
+            if (kind == "tutorial-plain") { title = "슬라임 잡기"; content = "이제 귀여운 슬라임을 잡아보자!"; }
+            var controller = root.transform.Find("PopupWindow").GetComponent<PopupWindowController>();
+            controller.OpenPopupWindow(title, content);
+            var illustration = window.Find("InputIllustration");
+            if (illustration == null || illustration.gameObject.activeSelf != (kind != "tutorial-plain"))
+                throw new Exception("Incorrect tutorial control visibility: " + kind);
+            foreach (var icon in window.GetComponentsInChildren<RawImage>())
+                if (icon.texture == null || icon.texture.width == 0) throw new Exception("Missing input illustration: " + icon.name);
+            if (kind == "tutorial" || kind == "tutorial-skill")
+            {
+                float expected = kind == "tutorial" ? 1 : -1;
+                if (illustration.Find("Mouse").GetComponent<RawImage>().uvRect.width != expected)
+                    throw new Exception("Wrong highlighted mouse button");
+            }
+            if (kind == "tutorial-rebound" && illustration.Find("Key/Label").GetComponent<TMP_Text>().text != "E")
+                throw new Exception("Key rebinding was not reflected");
         }
         else if (kind == "hud")
         {
