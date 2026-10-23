@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using GyeMong.DataSystem;
 using GyeMong.InputSystem;
 using GyeMong.SoundSystem;
@@ -11,24 +12,41 @@ internal static class RuntimeSettingsFixture
     private const string Key = "GyeMong.SettingsFixture";
     private static readonly string[] Files = { "KeyMappingData.json", "SoundData.json" };
 
+    private const string BackupPath = "Library/RuntimeSettingsFixtureBackup.json";
+    [Serializable] private class Entry
+    {
+        public string path;
+        public bool exists;
+        public string data;
+        public int attributes;
+    }
+    [Serializable] private class Backup
+    {
+        public bool directory;
+        public bool directoryMeta;
+        public List<Entry> entries = new List<Entry>();
+    }
+
     public static void Prepare()
     {
-        if (SessionState.GetBool(Key, false)) throw new InvalidOperationException("Restore the previous settings fixture first.");
-        SessionState.SetBool(Key + ".directory", Directory.Exists("Assets/Database"));
-        SessionState.SetBool(Key + ".directoryMeta", File.Exists("Assets/Database.meta"));
-        Directory.CreateDirectory("Assets/Database");
+        if (File.Exists(BackupPath))
+            throw new InvalidOperationException("Recover the previous fixture with RuntimeSettingsFixture.Restore before running again.");
+        var backup = new Backup { directory = Directory.Exists("Assets/Database"), directoryMeta = File.Exists("Assets/Database.meta") };
         foreach (var name in Files)
             foreach (var suffix in new[] { "", ".meta" })
             {
                 string path = "Assets/Database/" + name + suffix;
                 bool exists = File.Exists(path);
-                SessionState.SetBool(Key + path, exists);
-                if (!exists) continue;
-                SessionState.SetString(Key + path + ".data", Convert.ToBase64String(File.ReadAllBytes(path)));
-                SessionState.SetInt(Key + path + ".attributes", (int)File.GetAttributes(path));
-                File.SetAttributes(path, FileAttributes.Normal);
+                backup.entries.Add(new Entry { path = path, exists = exists,
+                    data = exists ? Convert.ToBase64String(File.ReadAllBytes(path)) : "",
+                    attributes = exists ? (int)File.GetAttributes(path) : 0 });
             }
+        // Persist the complete original state before touching any user file.
+        File.WriteAllText(BackupPath, JsonUtility.ToJson(backup));
         SessionState.SetBool(Key, true);
+        Directory.CreateDirectory("Assets/Database");
+        foreach (var entry in backup.entries)
+            if (entry.exists) File.SetAttributes(entry.path, FileAttributes.Normal);
         var mapping = new KeyMappingData();
         mapping.keyBindings.Add(new KeyMappingEntry(ActionCode.Heal, KeyCode.F2));
         File.WriteAllText("Assets/Database/KeyMappingData.json", JsonUtility.ToJson(mapping));
@@ -47,24 +65,25 @@ internal static class RuntimeSettingsFixture
 
     public static void Restore()
     {
-        if (!SessionState.GetBool(Key, false)) return;
-        foreach (var name in Files)
-            foreach (var suffix in new[] { "", ".meta" })
+        if (!File.Exists(BackupPath)) return;
+        var backup = JsonUtility.FromJson<Backup>(File.ReadAllText(BackupPath));
+        foreach (var entry in backup.entries)
+        {
+            if (File.Exists(entry.path)) File.SetAttributes(entry.path, FileAttributes.Normal);
+            if (entry.exists)
             {
-                string path = "Assets/Database/" + name + suffix;
-                if (File.Exists(path)) File.SetAttributes(path, FileAttributes.Normal);
-                if (SessionState.GetBool(Key + path, false))
-                {
-                    File.WriteAllBytes(path, Convert.FromBase64String(SessionState.GetString(Key + path + ".data", "")));
-                    File.SetAttributes(path, (FileAttributes)SessionState.GetInt(Key + path + ".attributes", 0));
-                }
-                else if (File.Exists(path)) File.Delete(path);
+                Directory.CreateDirectory(Path.GetDirectoryName(entry.path));
+                File.WriteAllBytes(entry.path, Convert.FromBase64String(entry.data));
+                File.SetAttributes(entry.path, (FileAttributes)entry.attributes);
             }
-        if (!SessionState.GetBool(Key + ".directory", true) && Directory.GetFileSystemEntries("Assets/Database").Length == 0)
+            else if (File.Exists(entry.path)) File.Delete(entry.path);
+        }
+        if (!backup.directory && Directory.Exists("Assets/Database") && Directory.GetFileSystemEntries("Assets/Database").Length == 0)
         {
             Directory.Delete("Assets/Database");
-            if (!SessionState.GetBool(Key + ".directoryMeta", true) && File.Exists("Assets/Database.meta")) File.Delete("Assets/Database.meta");
+            if (!backup.directoryMeta && File.Exists("Assets/Database.meta")) File.Delete("Assets/Database.meta");
         }
+        File.Delete(BackupPath);
         SessionState.SetBool(Key, false);
     }
 }

@@ -42,5 +42,5 @@
 - 플레이어 Movement/Combat/Events, 저장 codec, 씬 번역 및 라벨 생성 책임을 분리했다. 사운드/풀/입력/옵션 수명과 초기화를 수정했다. 전체 보스 클래스 분리는 하지 않았다.
 - runtime-play5.log: 16회 순차/왕복 시작 PASS. runtime-final.log: 씬 구성 audit, 한영 UI 24개 렌더, 11개 씬 독립 시작 및 저장된 F2 키/음량 유지 PASS. 임시 설정 파일 복원 확인.
 - 플레이어 이동 메서드 본문 동일성, 삭제 씬 객체 fileID 잔여 참조 검사 PASS. 하트 30개 패널 내부 배치 캡처 확인. 독립 크리틱 PASS.
-- 기존 CartoonFX 에디터 WelcomeScreen 예외만 테스트에서 명시적으로 제외한다. 기존 SpringBeach missing script는 보존한다.
-- WebGL/CI 빌드와 전체 보스 전투/승리/사망/물리 포털 조작은 미검증이므로 PR은 draft로 게시한다. 기존 AES 15바이트 키 문제는 저장 형식을 바꾸지 않기 위해 별도 이슈로 분리한다.
+- 최초 검증에서는 기존 CartoonFX 에디터 WelcomeScreen 예외만 명시적으로 제외했다. 후속 작업에서 SpringBeach의 데이터 없는 missing MonoBehaviour를 제거하고 유효 Light2D는 보존했다.
+- 최초 PR은 빌드 미검증으로 draft 게시했다. 이후 사용자 요청으로 저장 결함 #484와 추가 전투·씬 취소 결함까지 범위를 확장했다. 최신 구현과 실행 결과는 `2026-10-23-issue-483-runtime-quality-followup.md`에 기록한다.
