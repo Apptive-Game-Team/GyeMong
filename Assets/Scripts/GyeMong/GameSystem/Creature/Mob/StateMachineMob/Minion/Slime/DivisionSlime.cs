@@ -82,7 +82,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             }
         }
 
-        private void SetRangedAttack(Vector3 shootPos, Vector3 direction, Transform parent)
+        private void SetRangedAttack(Vector3 shootPos, Vector3 direction)
         {
             AttackObjectController rangedAttackObject = AttackObjectController.Create(
                 shootPos,
@@ -93,8 +93,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     shootPos + direction * RangedAttackRange,
                     11f)
             );
-            rangedAttackObject.transform.SetParent(parent);
-            rangedAttackObject.transform.localScale = transform.localScale * 3 / 4;
+            // Projectiles must not be cloned or destroyed with a dividing slime.
+            rangedAttackObject.transform.SetParent(null);
+            rangedAttackObject.transform.localScale = Vector3.Scale(transform.lossyScale, transform.localScale) * 3 / 4;
             rangedAttackObject.StartRoutine();
         }
 
@@ -120,7 +121,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack, false, DivisionSlime.SpriteDirection(DivisionSlime.DirectionToPlayer));
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
                 Sound.Play("ENEMY_DivisionSlime_RangedAttack");
-                DivisionSlime.SetRangedAttack(shootPos, direction, DivisionSlime.transform);
+                DivisionSlime.SetRangedAttack(shootPos, direction);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 3);
                 DivisionSlime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true, DivisionSlime.SpriteDirection(DivisionSlime.DirectionToPlayer));
                 DivisionSlime._faceToPlayerCoroutine = DivisionSlime.StartCoroutine(DivisionSlime.FaceToPlayer());
