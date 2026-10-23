@@ -98,18 +98,6 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
             rangedAttackObject.StartRoutine();
         }
 
-        private int SpriteDirection(Vector3 dir)
-        {
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            if (angle < 0)
-            {
-                angle += 360f;
-            }
-            
-            int sector = Mathf.FloorToInt(angle / 60f);
-            return sector;
-        }
-
         public class SlimeRangedAttackState : RangedAttackState
         {
             private DivisionSlime DivisionSlime => mob as DivisionSlime;

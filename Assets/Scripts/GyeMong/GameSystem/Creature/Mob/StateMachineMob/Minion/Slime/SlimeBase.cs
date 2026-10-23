@@ -23,6 +23,16 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
         protected Coroutine _faceToPlayerCoroutine;
         
         public override void StartMob() { }
+
+        private int FacingDirection => SceneContext.Character != null ? SpriteDirection(DirectionToPlayer) : 4;
+
+        protected int SpriteDirection(Vector3 direction)
+        {
+            // Six authored sectors: upper-right, up, upper-left, lower-left, down, lower-right.
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            if (angle < 0) angle += 360f;
+            return Mathf.Min(5, Mathf.FloorToInt(angle / 60f));
+        }
         
         public override void OnAttacked(float damage)
         {
@@ -106,7 +116,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 // A close target can make Move finish before its first yield and select Idle again.
                 // Break that synchronous cycle before starting another state.
                 yield return null;
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true, Slime.FacingDirection);
                 while (true)
                 {
                     Transform target = Slime._detector.DetectTarget()?.transform;
@@ -129,7 +139,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.RangedAttack, false, Slime.FacingDirection);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
                 AttackObjectController.Create(
                     mob.transform.position, 
@@ -142,7 +152,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                 ).StartRoutine();
                 
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true, Slime.FacingDirection);
                 yield return new WaitForSeconds(1);
                 mob.ChangeState();
             }
@@ -157,12 +167,12 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.MeleeAttack, false, Slime.FacingDirection);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime * 2);
                 if (mob.DistanceToPlayer <= mob.MeleeAttackRange && SceneContext.Character != null && SceneContext.Character.gameObject.activeInHierarchy)   
                     SceneContext.Character.TakeDamage(mob.damage);
                 yield return new WaitForSeconds(SlimeAnimator.AnimationDeltaTime);
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true, Slime.FacingDirection);
                 yield return new WaitForSeconds(1);
                 mob.ChangeState();
             }
@@ -183,7 +193,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
-                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
+                Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true, Slime.FacingDirection);
                 float duration = 1f;
                 float timer = 0f;
             
@@ -194,7 +204,11 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     Transform target = Slime._detector.DetectTarget()?.transform;
                     if (target)
                     {
+                        Vector3 previousPosition = mob.transform.position;
                         Slime.TrackPath(Slime._pathFinder.FindPath(mob.transform.position, target.position));
+                        Vector3 movement = mob.transform.position - previousPosition;
+                        if (movement.sqrMagnitude > 0)
+                            Slime._slimeAnimator.SetDirection(Slime.SpriteDirection(movement));
                     }
                     else
                     {
