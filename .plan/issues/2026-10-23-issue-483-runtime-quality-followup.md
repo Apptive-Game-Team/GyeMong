@@ -1,7 +1,7 @@
 # 2026-10-23 — 런타임 후속 품질 검증과 결함 수정
 
 - Date: 2026-10-23
-- GitHub Issue: #483, #484
+- GitHub Issue: #483, #484, #489
 - Status: In progress
 
 ## Goal
@@ -11,7 +11,7 @@
 전투 밸런스 재설계, 아트 서브모듈 수정, 쓰지 않는 씬 일괄 삭제, 배포 실행.
 
 ## Context / Constraints
-PR #485 refact/483에서 후속 커밋으로 계속한다. 관련 없는 dirty 에셋은 보존한다. Hindsight는 ENOTFOUND로 조회 불가. 기존 15바이트 AES 키로는 유효한 암호문을 만들 수 없으므로 없는 레거시 암호문 호환을 주장하지 않는다.
+PR #485 병합 이후 후속 수정은 fix/489에서 별도 PR로 진행한다. 최신 통합 브랜치 codex/artel-combat-qa의 #482/#485/#488 변경을 보존했다. 관련 없는 dirty 에셋은 보존한다. Hindsight는 ENOTFOUND로 조회 불가. 기존 15바이트 AES 키로는 유효한 암호문을 만들 수 없으므로 없는 레거시 암호문 호환을 주장하지 않는다.
 
 ## Approach (Checklist)
 - [x] **Step 0: Recon** 저장 경로·키·오류 처리와 빌드 모듈 확인
