@@ -94,8 +94,8 @@ namespace GyeMong.GameSystem.Map.Stage.Select
         
         private void Awake()
         {
-            cursor.SetPosition(stageNodes[PlayerPrefs.GetInt("CurrentStageId", 0)].transform.position);
-            _maxIndex = PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0);
+            cursor.SetPosition(stageNodes[Mathf.Clamp(PlayerPrefs.GetInt("CurrentStageId", 0), 0, stageNodes.Count - 1)].transform.position);
+            _maxIndex = Mathf.Clamp(PlayerPrefs.GetInt(StageSelectPage.MAX_STAGE_ID_KEY, 0), 0, stageNodes.Count - 1);
             if (_maxIndex == 0)
             {
                 StartCoroutine(

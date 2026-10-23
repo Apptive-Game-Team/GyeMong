@@ -26,7 +26,10 @@ namespace GyeMong.GameSystem.Map.MapEvent
             yield return new ShowMessages(chatData, autoSkipTime).Execute();
             yield return StartCoroutine((new CloseChatEvent().Execute()));
 
-            PlayerPrefs.DeleteAll();
+            PlayerPrefs.DeleteKey(StageSelectPage.MAX_STAGE_ID_KEY);
+            PlayerPrefs.DeleteKey("CurrentStageId");
+            PlayerPrefs.DeleteKey("TutorialFlag");
+            PlayerPrefs.Save();
             StageSelectPage.LoadStageSelectPage();
         }
     }

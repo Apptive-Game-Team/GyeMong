@@ -352,7 +352,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1030449217}
   - component: {fileID: 1030449219}
-  - component: {fileID: 1030449218}
   m_Layer: 20
   m_Name: GlobalLight2D (2)
   m_TagString: Untagged
@@ -375,18 +374,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1581621004}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1030449218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030449216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1030449219
 MonoBehaviour:
   m_ObjectHideFlags: 0
