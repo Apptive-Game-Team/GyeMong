@@ -103,6 +103,9 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
 
             public override IEnumerator StateCoroutine()
             {
+                // A close target can make Move finish before its first yield and select Idle again.
+                // Break that synchronous cycle before starting another state.
+                yield return null;
                 Slime._slimeAnimator.AsyncPlay(SlimeAnimator.AnimationType.Idle, true);
                 while (true)
                 {
@@ -196,6 +199,7 @@ namespace GyeMong.GameSystem.Creature.Mob.StateMachineMob.Minion.Slime
                     else
                     {
                         mob.ChangeState(new IdleState(mob));
+                        yield break;
                     }
                 }
             

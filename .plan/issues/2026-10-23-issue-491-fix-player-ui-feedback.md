@@ -20,6 +20,8 @@ Unity 2022.3.34f1. 아트는 별도 서브모듈이며 GUID를 변경하지 않�
 - [ ] **Step 3: Rollout / Rollback** 변경 단위 커밋과 PR, 문제 시 해당 커밋 revert.
 
 ## Validation
+- 슬라임 회귀 검사: 실제 IdleState/SlimeMoveState 코드를 추출한 C# 코루틴 하네스에서 수정 전은 동기 재귀로 실패, 수정 후는 근접 200프레임과 타깃 소실 시 즉시 종료 검사 통과. Unity 엔진 실행을 대체하지는 않는다.
+- 추가 사용자 로그: 근접 상태에서 Slime Idle → Move → Idle이 첫 yield 없이 재진입해 StackOverflow 발생. Idle 진입에서 한 프레임 양보하고 타깃 소실 시 이전 Move 코루틴을 종료한다. 근접 튜토리얼 슬라임 및 타깃 소실 경로를 회귀 검증 대상으로 추가한다.
 - Unity 에디터에서 네 방향 스프라이트 로딩 및 1x1 bounds 확인. 수정 스크립트 초기 컴파일 성공.
 - 독립 pair-review PASS. 하트 제거 후 잔여 fileID 참조 없음.
 - 편집 모드 입력 관리자 생성 검증에서 NullReference 발생 후 임시 오브젝트 검색 제외 플래그 제거. 수정된 검증 전체 재실행과 Play Mode 확인은 미완료.
