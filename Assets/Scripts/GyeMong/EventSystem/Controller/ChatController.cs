@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using GyeMong.EventSystem.Event.Chat;
 using GyeMong.InputSystem;
@@ -7,6 +8,7 @@ using GyeMong.SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using GyeMong.UISystem;
 
 namespace GyeMong.EventSystem.Controller
 {
@@ -18,14 +20,41 @@ namespace GyeMong.EventSystem.Controller
         private static Image characterImage2;
         private static Image chattingImage;
         [SerializeField] private GameObject speechBubble;
-        private const float CHAT_WINDOW_ALPHA = 0.8f;
+        private const float CHAT_WINDOW_ALPHA = 1f;
         private const float SHOW_CHAT_DELAY = 0.1f;
         private static TMP_Text nameText;
         private static TMP_Text messageText;
         private static bool isWorking = false;
+        private static Vector2 namedMessagePosition;
+        private static Vector2 namedMessageSize;
+        private static ChatSpeakerType activeSpeaker;
+        private static string activeLine;
+        private static readonly List<string> previousLines = new List<string>();
+
+        private void OnEnable() { GameLocalization.Changed += RefreshLanguage; }
+        private void OnDisable() { GameLocalization.Changed -= RefreshLanguage; }
+
+        private static void RefreshLanguage()
+        {
+            if (nameText == null || messageText == null || activeLine == null) return;
+            SetSpeaker(activeSpeaker);
+            string line = GameLocalization.Text(activeLine);
+            string prefix = string.Join("\n", previousLines.ConvertAll(GameLocalization.Text));
+            if (prefix.Length > 0) prefix += "\n";
+            if (messageText.GetPreferredValues(prefix + line, messageText.rectTransform.rect.width, 0).y > messageText.rectTransform.rect.height)
+            {
+                previousLines.Clear();
+                prefix = string.Empty;
+            }
+            messageText.text = prefix + line;
+            messageText.ForceMeshUpdate();
+        }
 
         private void Awake()
         {
+            isWorking = false;
+            activeLine = null;
+            previousLines.Clear();
             chatWindow = transform.Find("ChatWindow").GetComponent<Image>();
             nameText = transform.Find("NameArea").GetComponent<TMP_Text>();
             messageText = transform.Find("MessageArea").GetComponent<TMP_Text>();
@@ -33,6 +62,8 @@ namespace GyeMong.EventSystem.Controller
             characterImage = transform.Find("CharacterImageArea").GetComponent<Image>();
             characterImage2 = transform.Find("CharacterImageArea2").GetComponent<Image>();
             chattingImage = transform.Find("ChatImageArea").GetComponent<Image>();
+            namedMessagePosition = messageText.rectTransform.anchoredPosition;
+            namedMessageSize = messageText.rectTransform.sizeDelta;
         }
 
         public static IEnumerator Open()
@@ -60,59 +91,65 @@ namespace GyeMong.EventSystem.Controller
             nameText.color = color;
             nameText.text = "";
             messageText.text = "";
+            activeLine = null;
+            previousLines.Clear();
+            messageText.maxVisibleCharacters = int.MaxValue;
             SetCharacterImage(null, true);
             isWorking = false;
         }
 
         public static IEnumerator MultipleChat(MultiChatMessageData.MultiChatMessage multiChatMessage, float autoSkipTime)
         {
-            nameText.text = SetSpeakerName(multiChatMessage.speakerName);
+            SetSpeaker(multiChatMessage.speakerName);
             messageText.text = "";
 
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
-            var speakerInfo = speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName);
-            Sprite characterSprite = multiChatMessage.faceType == ChatSpeakerData.ChatSpeakerFace.None ? speakerInfo.image :
-                speakerInfo.Faces.Find(info => info.faceType == multiChatMessage.faceType).faceImage;
+            var speakerInfo = speakerData != null ? speakerData.ChatSpeakers.Find(info => info.speakerType == multiChatMessage.speakerName) : default;
+            Sprite characterSprite = speakerInfo.image;
+            if (multiChatMessage.speakerName != ChatSpeakerType.None &&
+                multiChatMessage.faceType != ChatSpeakerData.ChatSpeakerFace.None && speakerInfo.Faces != null)
+                characterSprite = speakerInfo.Faces.Find(info => info.faceType == multiChatMessage.faceType).faceImage;
             
             if (characterSprite == null)
             {
                 characterSprite = speakerInfo.image;
             }
             
-            SetCharacterImage(characterSprite, multiChatMessage.isLeft);
+            SetCharacterImage(multiChatMessage.speakerName == ChatSpeakerType.None ? null : characterSprite, multiChatMessage.isLeft);
 
-            string accumulatedText = "";
+            previousLines.Clear();
 
-            foreach (string line in multiChatMessage.messages)
+            foreach (string source in multiChatMessage.messages)
             {
                 SoundObject _soundObject = Sound.Play("EFFECT_Keyboard_Sound", true);
-                yield return ShowMultipleChat(line, accumulatedText);
+                yield return ShowMultipleChat(source);
                 Sound.Stop(_soundObject);
-
-                accumulatedText += line + "\n";
 
                 float timer = Time.time;
                 yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
                                                  InputManager.Instance.GetKeyDown(ActionCode.Interaction));
+                previousLines.Add(source);
             }
         }
 
-        private static IEnumerator ShowMultipleChat(string newLine, string prefix)
+        private static IEnumerator ShowMultipleChat(string source)
         {
-            string currentText = "";
-            foreach (char c in newLine)
+            activeLine = source;
+            RefreshLanguage();
+            int prefixLength = messageText.text.Length - GameLocalization.Text(source).Length;
+            messageText.maxVisibleCharacters = prefixLength;
+            while (messageText.maxVisibleCharacters < messageText.textInfo.characterCount)
             {
                 if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
                 {
-                    currentText = newLine;
-                    messageText.text = prefix + currentText;
+                    messageText.maxVisibleCharacters = int.MaxValue;
                     yield return new WaitForSeconds(SHOW_CHAT_DELAY);
                     yield break;
                 }
-                currentText += c;
-                messageText.text = prefix + currentText;
+                messageText.maxVisibleCharacters++;
                 yield return new WaitForSeconds(SHOW_CHAT_DELAY);
             }
+            messageText.maxVisibleCharacters = int.MaxValue;
         }
 
         public static void SetBackgroundImage(Sprite sprite)
@@ -178,18 +215,41 @@ namespace GyeMong.EventSystem.Controller
 
         public static String SetSpeakerName(ChatSpeakerType speakerName)
         {
+            // None is intentionally absent from the speaker catalogue.
+            if (speakerName == ChatSpeakerType.None) return string.Empty;
             ChatSpeakerData speakerData = Resources.Load<ChatSpeakerData>("ScriptableObjects/Chat/ChatSpeakerData");
+            if (speakerData == null) return string.Empty;
             
             foreach (var info in speakerData.ChatSpeakers)
             {
                 if (info.speakerType == speakerName)
                 {
-                    if (info.speakerType == ChatSpeakerType.None) return "";
-                    return info.speakerName + " : ";
+                    return string.IsNullOrWhiteSpace(info.speakerName) ? string.Empty : GameLocalization.Text(info.speakerName) + " :";
                 }
             }
 
-            return speakerName.ToString();
+            return string.Empty;
+        }
+
+        public static void SetSpeaker(ChatSpeakerType speaker)
+        {
+            activeSpeaker = speaker;
+            nameText.text = SetSpeakerName(speaker);
+            bool hasSpeaker = !string.IsNullOrWhiteSpace(nameText.text);
+            nameText.enableAutoSizing = true;
+            nameText.fontSizeMin = 12;
+            nameText.fontSizeMax = 32;
+            nameText.enableWordWrapping = false;
+            nameText.enabled = hasSpeaker;
+            // Restore the authored geometry every time; narration must not accumulate offsets.
+            messageText.rectTransform.anchoredPosition = namedMessagePosition;
+            messageText.rectTransform.sizeDelta = namedMessageSize;
+            if (!hasSpeaker)
+            {
+                float reclaimedWidth = namedMessagePosition.x - nameText.rectTransform.anchoredPosition.x;
+                messageText.rectTransform.anchoredPosition -= new Vector2(reclaimedWidth, 0);
+                messageText.rectTransform.sizeDelta += new Vector2(reclaimedWidth, 0);
+            }
         }
         
         public static Sprite GetBackgroundImageSprite(BackgroundImage backgroundImage)
@@ -256,7 +316,7 @@ namespace GyeMong.EventSystem.Controller
         {
             GameObject speechBubbles = Instantiate(speechBubble, NPC.transform.position + new Vector3(0.51f, 1.43f, 0), Quaternion.identity);
             TextMeshPro messageText = speechBubbles.transform.Find("Message").GetComponent<TextMeshPro>();
-            messageText.text = message;
+            LocalizedGameText.Bind(messageText, message);
 
             int order = NPC.GetComponent<SpriteRenderer>().sortingOrder;
             speechBubbles.GetComponent<SpriteRenderer>().sortingOrder = order + 1;

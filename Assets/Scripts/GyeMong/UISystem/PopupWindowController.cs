@@ -30,6 +30,8 @@ namespace GyeMong.UISystem
             }
             _instance = this;
             _rectTransform = _popupWindow.GetComponent<RectTransform>();
+            foreach (var text in _popupWindow.GetComponentsInChildren<TMP_Text>(true))
+                if (GameLocalization.HasTranslation(text.text)) LocalizedGameText.Bind(text, text.text);
             _popupWindow.SetActive(false);
         }
 
@@ -38,8 +40,11 @@ namespace GyeMong.UISystem
             if (!IsOpen)
                 _previousTimeScale = Time.timeScale;
             IsOpen = true;
-            _titleText.text = title;
-            _contentText.text = content;
+            LocalizedGameText.Bind(_titleText, title);
+            LocalizedGameText.Bind(_contentText, content);
+            _contentText.enableAutoSizing = true;
+            _contentText.fontSizeMin = 28;
+            _contentText.fontSizeMax = 40;
             _popupWindow.SetActive(true);
             Time.timeScale = 0.0f;
             return null;

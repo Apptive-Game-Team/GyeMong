@@ -12,6 +12,7 @@ namespace GyeMong.UISystem.Option
         private void Start()
         {
             FindOptionImage();
+            OptionLocalization.Install(transform);
         }
 
         private void FindOptionImage()
