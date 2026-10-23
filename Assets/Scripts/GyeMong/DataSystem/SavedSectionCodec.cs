@@ -7,36 +7,48 @@ namespace GyeMong.DataSystem
 {
     internal static class SavedSectionCodec
     {
-        // Preserve the existing storage contract; format migration is a separate concern.
-        private const string encryptionKey = "GyemongFighting!";
+        private const string Prefix = "GYEMONG1:";
 
-        // AES 암호화
-        public static string Encrypt(string plainText)
+        // Client-side obfuscation only; this embedded key is not a security boundary.
+        private static byte[] CreateKey()
         {
-            using Aes aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(encryptionKey);
-            aes.IV = new byte[16]; // 16-byte 초기화 벡터 (0으로 초기화)
-            using var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-            using var ms = new MemoryStream();
-            using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-            using (var writer = new StreamWriter(cs))
-            {
-                writer.Write(plainText);
-            }
-            return Convert.ToBase64String(ms.ToArray()); // 암호화된 데이터를 Base64로 인코딩
+            using var hash = SHA256.Create();
+            return hash.ComputeHash(Encoding.UTF8.GetBytes("GyemongFighting!"));
         }
 
-        // AES 복호화
-        public static string Decrypt(string cipherText)
+        public static string Encrypt(string plainText)
         {
-            using Aes aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(encryptionKey);
-            aes.IV = new byte[16]; // 16-byte 초기화 벡터 (0으로 초기화)
-            using var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-            using var ms = new MemoryStream(Convert.FromBase64String(cipherText));
-            using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
-            using var reader = new StreamReader(cs);
-            return reader.ReadToEnd(); // 복호화된 데이터를 반환
+            using var aes = Aes.Create();
+            aes.Key = CreateKey();
+            aes.GenerateIV();
+            using var output = new MemoryStream();
+            output.Write(aes.IV, 0, aes.IV.Length);
+            using (var crypto = new CryptoStream(output, aes.CreateEncryptor(), CryptoStreamMode.Write, true))
+            using (var writer = new StreamWriter(crypto, new UTF8Encoding(false)))
+                writer.Write(plainText);
+            return Prefix + Convert.ToBase64String(output.ToArray());
+        }
+
+        public static string Decrypt(string storedText)
+        {
+            if (string.IsNullOrWhiteSpace(storedText)) throw new FormatException("Saved section is empty.");
+            string value = storedText.Trim();
+            // Editor JSON remains readable in builds and is migrated on the next save.
+            if (value.StartsWith("{", StringComparison.Ordinal)) return value;
+            if (!value.StartsWith(Prefix, StringComparison.Ordinal))
+                throw new FormatException("Unsupported saved section format.");
+            byte[] payload = Convert.FromBase64String(value.Substring(Prefix.Length));
+            if (payload.Length < 32 || (payload.Length - 16) % 16 != 0)
+                throw new FormatException("Saved section payload is truncated.");
+            using var aes = Aes.Create();
+            aes.Key = CreateKey();
+            var iv = new byte[16];
+            Buffer.BlockCopy(payload, 0, iv, 0, iv.Length);
+            aes.IV = iv;
+            using var input = new MemoryStream(payload, 16, payload.Length - 16);
+            using var crypto = new CryptoStream(input, aes.CreateDecryptor(), CryptoStreamMode.Read);
+            using var reader = new StreamReader(crypto);
+            return reader.ReadToEnd();
         }
     }
 }
