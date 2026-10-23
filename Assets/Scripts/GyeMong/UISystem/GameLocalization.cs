@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using GyeMong.InputSystem;
 
 namespace GyeMong.UISystem
 {
@@ -55,11 +56,36 @@ namespace GyeMong.UISystem
 
         public static string Text(string source)
         {
+            string result = Template(source);
+            if (result.IndexOf('{') < 0) return result;
+            foreach (var binding in InputManager.Instance.GetKeyActions())
+                result = result.Replace("{" + binding.Key + "}", "<b>[" + KeyLabel(binding.Value) + "]</b>");
+            return result;
+        }
+
+        public static string Template(string source)
+        {
             Load();
             if (source == null) return string.Empty;
             if (!entries.TryGetValue(source, out var entry)) return source;
             string result = Language == GameLanguage.English ? entry.en : entry.ko;
-            return string.IsNullOrEmpty(result) ? source : result;
+            result = string.IsNullOrEmpty(result) ? source : result;
+            return result;
+        }
+
+        public static string KeyLabel(KeyCode key)
+        {
+            bool english = Language == GameLanguage.English;
+            switch (key)
+            {
+                case KeyCode.None: return english ? "Unbound" : "미지정";
+                case KeyCode.Mouse0: return english ? "Left Click" : "마우스 좌클릭";
+                case KeyCode.Mouse1: return english ? "Right Click" : "마우스 우클릭";
+                case KeyCode.Mouse2: return english ? "Middle Click" : "마우스 휠 클릭";
+                case KeyCode.LeftShift: return "Left Shift";
+                case KeyCode.RightShift: return "Right Shift";
+                default: return key.ToString();
+            }
         }
     }
 }

@@ -267,14 +267,23 @@ namespace GyeMong.EventSystem.Controller
             activeSpeaker = speaker;
             nameText.text = SetSpeakerName(speaker);
             bool hasSpeaker = !string.IsNullOrWhiteSpace(nameText.text);
-            nameText.enableAutoSizing = true;
-            nameText.fontSizeMin = 12;
-            nameText.fontSizeMax = 32;
+            // Use the same readable size; reserve width instead of shrinking long names.
+            nameText.enableAutoSizing = false;
+            messageText.enableAutoSizing = false;
+            nameText.fontSize = messageText.fontSize = 32;
             nameText.enableWordWrapping = false;
             nameText.enabled = hasSpeaker;
             // Restore the authored geometry every time; narration must not accumulate offsets.
             messageText.rectTransform.anchoredPosition = namedMessagePosition;
             messageText.rectTransform.sizeDelta = namedMessageSize;
+            float nameWidth = hasSpeaker ? nameText.GetPreferredValues(nameText.text).x : 0;
+            nameText.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, nameWidth);
+            if (hasSpeaker)
+            {
+                float shift = nameText.rectTransform.anchoredPosition.x + nameWidth + 24 - namedMessagePosition.x;
+                messageText.rectTransform.anchoredPosition += new Vector2(shift, 0);
+                messageText.rectTransform.sizeDelta -= new Vector2(shift, 0);
+            }
             if (!hasSpeaker)
             {
                 float reclaimedWidth = namedMessagePosition.x - nameText.rectTransform.anchoredPosition.x;

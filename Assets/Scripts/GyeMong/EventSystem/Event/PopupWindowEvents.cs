@@ -50,9 +50,16 @@ namespace GyeMong.EventSystem.Event
             {
                 yield return PopupWindowController.Instance.OpenPopupWindow(Title, Message);
 
-                float timer = Time.unscaledTime;
-                yield return new WaitUntil(() => input.ConsumeAdvanceInput(openedFrame) ||
-                                                Time.unscaledTime >= timer + Duration);
+                float elapsed = 0;
+                while (elapsed < Duration)
+                {
+                    if (!GyeMong.GameSystem.GameTime.IsPaused)
+                    {
+                        if (input.ConsumeAdvanceInput(openedFrame)) break;
+                        elapsed += Time.unscaledDeltaTime;
+                    }
+                    yield return null;
+                }
             }
             finally
             {

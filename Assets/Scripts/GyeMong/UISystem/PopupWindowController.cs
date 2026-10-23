@@ -38,15 +38,18 @@ namespace GyeMong.UISystem
         public IEnumerator OpenPopupWindow(String title = "", String content = "")
         {
             if (!IsOpen)
-                _previousTimeScale = Time.timeScale;
+                _previousTimeScale = GyeMong.GameSystem.GameTime.Scale;
             IsOpen = true;
             LocalizedGameText.Bind(_titleText, title);
             LocalizedGameText.Bind(_contentText, content);
+            var inputDisplay = _popupWindow.GetComponent<TutorialInputDisplay>();
+            if (inputDisplay == null) inputDisplay = _popupWindow.AddComponent<TutorialInputDisplay>();
+            inputDisplay.Show(_contentText.font, content);
             _contentText.enableAutoSizing = true;
             _contentText.fontSizeMin = 28;
             _contentText.fontSizeMax = 40;
             _popupWindow.SetActive(true);
-            Time.timeScale = 0.0f;
+            GyeMong.GameSystem.GameTime.Scale = 0.0f;
             return null;
         }
         public IEnumerator ClosePopupWindow()
@@ -54,7 +57,7 @@ namespace GyeMong.UISystem
             if (!IsOpen) return null;
             IsOpen = false;
             _popupWindow.SetActive(false);
-            Time.timeScale = _previousTimeScale;
+            GyeMong.GameSystem.GameTime.Scale = _previousTimeScale;
             return null;
         }
 

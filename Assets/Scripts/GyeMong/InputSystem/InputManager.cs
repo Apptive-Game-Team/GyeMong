@@ -1,4 +1,5 @@
 using System;
+using GyeMong.GameSystem;
 using System.Collections;
 using System.Collections.Generic;
 using GyeMong.InputSystem.Interface;
@@ -166,6 +167,7 @@ namespace GyeMong.InputSystem
         /// <returns>True if key was pressed down, false otherwise</returns>
         public bool GetKeyDown(ActionCode action)
         {
+            if (GameTime.IsPaused && action != ActionCode.Option) return false;
             if (_advanceConsumedFrame != Time.frameCount && !SceneTransitionCurtain.IsCovered && _keyActiveFlags.TryGetValue(action, out var active) && active &&
                 _keyDownBools.TryGetValue(action, out var pressed) && pressed)
             {
@@ -181,6 +183,7 @@ namespace GyeMong.InputSystem
         /// </summary>
         public bool ConsumeAdvanceInput(int openedFrame)
         {
+            if (GameTime.IsPaused || (_keyMappings.TryGetValue(ActionCode.Option, out var optionKey) && Input.GetKeyDown(optionKey))) return false;
             if (Time.frameCount <= openedFrame || _advanceConsumedFrame == Time.frameCount ||
                 SceneTransitionCurtain.IsCovered || !Input.anyKeyDown) return false;
 
@@ -198,6 +201,12 @@ namespace GyeMong.InputSystem
             }
         }
 
+        public void SuppressAdvanceForCurrentFrame()
+        {
+            _advanceConsumedFrame = Time.frameCount;
+            ClearBufferedInput();
+        }
+
         /// <summary>
         /// Returns true if the specified key is currently being held down.
         /// </summary>
@@ -205,6 +214,7 @@ namespace GyeMong.InputSystem
         /// <returns>True if key is held down, otherwise false</returns>
         public bool GetKey(ActionCode action)
         {
+            if (GameTime.IsPaused && action != ActionCode.Option) return false;
             return _advanceConsumedFrame != Time.frameCount && !SceneTransitionCurtain.IsCovered && _keyMappings.TryGetValue(action, out var key) &&
                    _keyActiveFlags.TryGetValue(action, out var active) && active && Input.GetKey(key);
         }
@@ -223,7 +233,7 @@ namespace GyeMong.InputSystem
             {
                 try
                 {
-                    if (_keyActiveFlags[action])
+                    if (CanListen(action))
                     {
                         if (Input.GetKeyDown(_keyMappings[action]))
                         {
@@ -260,6 +270,12 @@ namespace GyeMong.InputSystem
             }
         }
 
+        private bool CanListen(ActionCode action)
+        {
+            // Pause remains available while a cinematic or tutorial disables gameplay actions.
+            return action == ActionCode.Option || (!GameTime.IsPaused && _keyActiveFlags[action]);
+        }
+
         private IEnumerator CallListenersCoroutine()
         {
             while (true)
@@ -268,7 +284,7 @@ namespace GyeMong.InputSystem
                 if (SceneTransitionCurtain.IsCovered || _advanceConsumedFrame == Time.frameCount) continue;
                 foreach (ActionCode action in Enum.GetValues(typeof(ActionCode)))
                 {
-                    if (_keyActiveFlags[action])
+                    if (CanListen(action))
                     {
                         if (_keyDownBoolsForListener[action])
                         {

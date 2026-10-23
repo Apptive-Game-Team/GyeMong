@@ -114,9 +114,9 @@ namespace GyeMong.GameSystem.Creature.Player.Component.Collider
 
         private IEnumerator HitStop(float hitStopRatio, float hitStopDuration)
         {
-            Time.timeScale = hitStopRatio;
+            GyeMong.GameSystem.GameTime.Scale = hitStopRatio;
             yield return new WaitForSeconds(hitStopDuration);
-            Time.timeScale = 1f;
+            GyeMong.GameSystem.GameTime.Scale = 1f;
         }
 
         private void HitSound(float volumeRatio)

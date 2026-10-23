@@ -817,8 +817,8 @@
     },
     {
       "source": "W, A, S, D를 눌러서 이동할 수 있다.",
-      "ko": "W, A, S, D를 눌러서 이동할 수 있다.",
-      "en": "Press W, A, S, D to move."
+      "ko": "{MoveUp} {MoveLeft} {MoveDown} {MoveRight}\n키를 눌러 이동할 수 있다.",
+      "en": "{MoveUp} {MoveLeft} {MoveDown} {MoveRight}\nPress these keys to move."
     },
     {
       "source": "돌진",
@@ -827,8 +827,8 @@
     },
     {
       "source": "좌측 Shift키를 눌러 돌진할 수 있다.",
-      "ko": "좌측 Shift키를 눌러 돌진할 수 있다.",
-      "en": "Press Left Shift to dash."
+      "ko": "{Dash}\n키를 눌러 돌진할 수 있다.",
+      "en": "{Dash}\nPress to dash."
     },
     {
       "source": "기본공격",
@@ -842,8 +842,8 @@
     },
     {
       "source": "마우스 좌클릭을 통해 공격할 수 있다.",
-      "ko": "마우스 좌클릭을 통해 공격할 수 있다.",
-      "en": "Left-click to attack."
+      "ko": "{Attack}\n버튼을 눌러 공격할 수 있다.",
+      "en": "{Attack}\nPress to attack."
     },
     {
       "source": "스치기 시스템 배우기",
@@ -857,8 +857,8 @@
     },
     {
       "source": "좌상단에 늘어난 게이지를 이용해 특수공격(마우스 우클릭)을 사용할 수 있다.",
-      "ko": "좌상단에 늘어난 게이지를 이용해 특수공격(마우스 우클릭)을 사용할 수 있다.",
-      "en": "Use the gauge at the top left to perform a special attack with a right-click."
+      "ko": "{Skill}\n좌상단에 늘어난 게이지로 특수공격을 사용할 수 있다.",
+      "en": "{Skill}\nUse the gauge at the top left to perform a special attack."
     },
     {
       "source": "게이지는 기본 공격을 적중시켜도 미세하게 오른다.",
