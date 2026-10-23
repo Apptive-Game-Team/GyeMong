@@ -129,8 +129,9 @@ namespace GyeMong.EventSystem.Controller
                 Sound.Stop(_soundObject);
 
                 float timer = Time.time;
-                yield return new WaitUntil(() => (Time.time - timer) > autoSkipTime ||
-                                                 InputManager.Instance.GetKeyDown(ActionCode.Interaction));
+                int openedFrame = Time.frameCount;
+                yield return new WaitUntil(() => InputManager.Instance.ConsumeAdvanceInput(openedFrame) ||
+                                                 (Time.time - timer) > autoSkipTime);
                 previousLines.Add(source);
             }
         }
@@ -141,16 +142,21 @@ namespace GyeMong.EventSystem.Controller
             RefreshLanguage();
             int prefixLength = messageText.text.Length - GameLocalization.Text(source).Length;
             messageText.maxVisibleCharacters = prefixLength;
+            int openedFrame = Time.frameCount;
+            float nextCharacterTime = Time.time;
             while (messageText.maxVisibleCharacters < messageText.textInfo.characterCount)
             {
-                if (InputManager.Instance.GetKeyDown(ActionCode.Interaction))
+                if (InputManager.Instance.ConsumeAdvanceInput(openedFrame))
                 {
                     messageText.maxVisibleCharacters = int.MaxValue;
-                    yield return new WaitForSeconds(SHOW_CHAT_DELAY);
                     yield break;
                 }
-                messageText.maxVisibleCharacters++;
-                yield return new WaitForSeconds(SHOW_CHAT_DELAY);
+                if (Time.time >= nextCharacterTime)
+                {
+                    messageText.maxVisibleCharacters++;
+                    nextCharacterTime = Time.time + SHOW_CHAT_DELAY;
+                }
+                yield return null;
             }
             messageText.maxVisibleCharacters = int.MaxValue;
         }
