@@ -11,7 +11,7 @@ namespace GyeMong.UISystem.Option
         {
             var panel = root.Find("Canvas/OptionUI");
             if (panel == null || panel.Find("LanguageButton") != null) return;
-            var font = Resources.Load<GameObject>("Prefabs/UI/ChatCanvas").transform.Find("NameArea").GetComponent<TMP_Text>().font;
+            var font = LocalizedLabelFactory.Font;
             var imageLabels = new Dictionary<string, string> {
                 {"OptionText", "설정"}, {"ResumeButton", "계속하기"},
                 {"KeyMappingButton", "키 설정"}, {"SoundControlButton", "소리 설정"},
@@ -29,7 +29,7 @@ namespace GyeMong.UISystem.Option
                 image.color = button ? new Color(0.06f, 0.06f, 0.06f, 1) : Color.clear;
                 var rect = (RectTransform)child;
                 rect.sizeDelta = new Vector2(360, button ? 64 : 72);
-                var label = CreateLabel(child, font, button ? 30 : 44);
+                var label = LocalizedLabelFactory.CreateLabel(child, font, button ? 30 : 44);
                 LocalizedGameText.Bind(label, source);
             }
             foreach (var text in root.GetComponentsInChildren<TMP_Text>(true))
@@ -58,28 +58,11 @@ namespace GyeMong.UISystem.Option
             languageRect.anchoredPosition = new Vector2(0, -240);
             languageRect.sizeDelta = new Vector2(360, 56);
             language.GetComponent<Image>().color = new Color(0.06f, 0.06f, 0.06f, 1);
-            var languageLabel = CreateLabel(language.transform, font, 26);
+            var languageLabel = LocalizedLabelFactory.CreateLabel(language.transform, font, 26);
             LocalizedGameText.Bind(languageLabel, "언어: 한국어  /  English");
             language.GetComponent<Button>().onClick.AddListener(() =>
                 GameLocalization.SetLanguage(GameLocalization.Language == GameLanguage.Korean ? GameLanguage.English : GameLanguage.Korean));
         }
 
-        private static TMP_Text CreateLabel(Transform parent, TMP_FontAsset font, float size)
-        {
-            var label = new GameObject("Localized Label", typeof(RectTransform), typeof(TextMeshProUGUI)).GetComponent<TextMeshProUGUI>();
-            label.transform.SetParent(parent, false);
-            label.rectTransform.anchorMin = Vector2.zero;
-            label.rectTransform.anchorMax = Vector2.one;
-            label.rectTransform.offsetMin = new Vector2(12, 0);
-            label.rectTransform.offsetMax = new Vector2(-12, 0);
-            label.font = font;
-            label.fontSize = size;
-            label.enableAutoSizing = true;
-            label.fontSizeMin = 16;
-            label.fontSizeMax = size;
-            label.alignment = TextAlignmentOptions.Center;
-            label.raycastTarget = false;
-            return label;
-        }
     }
 }
