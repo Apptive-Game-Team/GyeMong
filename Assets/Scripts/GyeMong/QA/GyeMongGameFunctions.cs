@@ -91,7 +91,7 @@ namespace GyeMong.QA
             return string.Join("; ", results);
         }
 
-        [ArtelCheat("Defeats the selected enemy through normal damage/death/phase transitions. All also clears spawned split enemies. Waits for cutscenes, stops on scene change, fails after 45 seconds. Not for victory tests.", when: nameof(HasEnemies))]
+        [ArtelCheat("Defeats the selected enemy through normal damage/death/phase transitions. All also clears spawned split enemies. Waits for cutscenes, stops on scene change, fails after 45 seconds. Use freely to advance combat QA.", when: nameof(HasEnemies))]
         public static IEnumerator DefeatEnemies(EnemySelection selection = EnemySelection.Nearest)
         {
             var selected = SelectEnemies(selection);
@@ -149,7 +149,7 @@ namespace GyeMong.QA
             finally { changingStage = false; }
         }
 
-        [ArtelCheat("Changes combat stage through StageManager and its normal intro. Updates saved stage selection/unlock progress and tutorial flag. Waits for a living player; not for progression/save tests.", when: nameof(CanChangeState))]
+        [ArtelCheat("Changes combat stage through StageManager and its normal intro. Updates saved stage selection/unlock progress and tutorial flag. Waits for a living player. Use freely to reach any supported combat stage.", when: nameof(CanChangeState))]
         public static IEnumerator GoToStage(CombatStage stage)
         {
             string[] paths = { "Spring/SlimeStage", "Spring/ElfStage", "Spring/ShadowStage", "Spring/GolemStage",
@@ -195,7 +195,7 @@ namespace GyeMong.QA
 
         private enum CombatMode { Attack, Chase, Flee, Kite, Circle, Skill, Recover }
 
-        [ArtelBehavior("Continuously attacks toward the nearest enemy through player combat code; does not chase. Respects cooldowns/locks. Not an input binding test.", group: CombatGroup, when: nameof(HasPlayer))]
+        [ArtelBehavior("Continuously attacks toward the nearest enemy through player combat code; does not chase. Respects cooldowns/locks. Use chase_and_attack first when the enemy is out of reach.", group: CombatGroup, when: nameof(HasPlayer))]
         public static IEnumerator KeepAttacking(ArtelBehaviorContext context) => RunCombat(CombatMode.Attack, 2, false, context);
 
         [ArtelBehavior("Chases the nearest enemy and attacks within attackDistance through player combat code. Local wall avoidance, not pathfinding.", group: CombatGroup, when: nameof(HasPlayer))]

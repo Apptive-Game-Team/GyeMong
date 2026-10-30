@@ -1,236 +1,142 @@
 [
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-01][P0] 카탈로그를 조회한다. 개발 빌드에서도 반복한다.",
-    "precondition": "에디터 Artel 연결\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "사용법의 치트 6개·행동 7개가 중복 없이 노출되고 인자·범위가 일치한다. 행동 그룹은 모두 player_combat이다."
+    "scene": "SpringBeach",
+    "step": "[GM-01] go_to_stage(Slime)으로 진입해 인트로와 대화를 진행하고 전투 화면을 확인한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 게임 실행 상태.",
+    "expectedValue": "슬라임 전투 씬이 열리고 플레이어·적·체력 HUD가 보이며 전투를 진행할 수 있다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-02][P0] 개발 빌드 옵션을 끄고 빌드한다. 등록 정보와 QA 함수 호출 가능 여부를 확인한다.",
-    "precondition": "일반 릴리스 빌드\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "컴파일에 성공하고 프로젝트 QA 치트·행동 13개를 호출할 수 없다. SDK 자체의 릴리스 정책과 구분한다."
+    "scene": "SpringBeach",
+    "step": "[GM-02] 자원을 보충하고 chase_and_attack(attackDistance=1)을 최대 20초 실행한다. 필요하면 접근 거리를 조절하고 이동·조준·공격을 이어간다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. Slime 전투, 인트로 종료.",
+    "expectedValue": "플레이어가 적에게 접근하고 적 방향으로 공격한다. 적 체력 변화와 공격 연출이 보이며 행동 진행을 관찰할 수 있다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-03][P1] set_player_resources(healthPercent=50, gaugePercent=25, shield=10)를 호출한다.",
-    "precondition": "살아 있는 플레이어\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "HP·게이지는 각각 최대값의 50%·25%, 방패는 10이고 HUD가 갱신된다. 최대 능력치는 바뀌지 않는다."
+    "scene": "SpringBeach",
+    "step": "[GM-03] 적 근처에서 keep_attacking을 최대 15초 실행한다. 적이 멀어지면 접근 후 다시 실행한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. Slime 전투, 플레이어와 적 생존.",
+    "expectedValue": "연속 공격·콤보 연출이 진행되고 적과 플레이어의 체력 HUD가 화면 상태를 반영한다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-04][P1] 자원을 (1,0,0), 이어서 (100,100,1000)으로 설정한다.",
-    "precondition": "살아 있는 플레이어\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "각 경계값이 정확히 적용된다. HP 1%는 살아 있고 음수·최대치 초과가 없다."
+    "scene": "SpringBeach",
+    "step": "[GM-04] set_player_resources(healthPercent=100,gaugePercent=100,shield=0) 후 keep_using_skill을 최대 15초 실행한다. 필요하면 게이지를 보충한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. Slime 전투, 적이 보이는 상태.",
+    "expectedValue": "적 방향으로 스킬 연출이 발생하고 게이지 HUD가 사용과 보충 상태를 반영한다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-05][P1] heal_player(amount=1), 이어서 기본 인자로 호출한다.",
-    "precondition": "HP 50%, 최대 HP 기록\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "첫 호출은 min(기존 HP+1, 최대 HP), 다음은 최대 HP가 된다."
+    "scene": "SpringBeach",
+    "step": "[GM-05] set_player_resources(healthPercent=30,gaugePercent=100,shield=0)으로 준비하고 heal_player(amount=10000)을 실행한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 살아 있는 플레이어.",
+    "expectedValue": "플레이어 체력이 회복되고 HP 표시가 갱신된다. 최대 체력을 넘는 비정상 표시가 없다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-06][P1] heal_player와 set_player_resources를 각각 호출한다.",
-    "precondition": "플레이어 사망 또는 플레이어 없는 씬\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "실행 불가 사유가 반환되고 부활·객체 참조 예외가 발생하지 않는다."
+    "scene": "SpringBeach",
+    "step": "[GM-06] set_player_resources(healthPercent=50,gaugePercent=50,shield=10)을 실행하고 자원 HUD를 관찰한다. 적을 공격하거나 damage_enemies(amount=1,selection=Nearest)로 적 HP 변화도 확인한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 플레이어와 적이 있는 전투.",
+    "expectedValue": "플레이어 HP·게이지·방패 및 적 HP 표시가 변경된 수치에 맞춰 갱신된다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-07][P1] damage_enemies(amount=10, selection=Nearest)를 호출한다.",
-    "precondition": "적 HP가 10보다 큼\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "가장 가까운 살아 있는 적의 현재 페이즈 HP가 10 감소한다. 결과에 전후 HP가 포함된다."
+    "scene": "SpringBeach",
+    "step": "[GM-07] 슬라임 전투를 진행한다. 필요에 따라 damage_enemies, defeat_enemies(selection=All), 공격 행동을 사용하여 분열 적까지 정리한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. Slime 전투, 인트로 종료.",
+    "expectedValue": "슬라임 페이즈와 분열 적 처리가 진행되고 전투 종료 후 다음 진행 화면 또는 이동 경로가 나타난다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-08][P1] Nearest로 1 피해 후 각 HP를 기록한다. 이어서 All로 1 피해를 준다.",
-    "precondition": "거리가 다른 살아 있는 적 2개 이상\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "첫 호출은 가장 가까운 1개만, 두 번째는 호출 시 살아 있는 모든 적에 각각 1 피해를 준다."
+    "scene": "SpringBeach",
+    "step": "[GM-08] keep_fleeing(safeDistance=5,useDash=true)을 최대 20초 실행한다. 필요하면 HP를 보충하고 위치를 다시 잡아 반복한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 주변에 살아 있는 적이 있다.",
+    "expectedValue": "플레이어가 적으로부터 멀어지는 방향으로 이동한다. 벽에 닿아도 멈춤 상태와 진행 상황을 관찰할 수 있고 중단 후 조작할 수 있다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-09][P1] 방패·HP를 기록하고 damage_enemies(1)를 호출한다.",
-    "precondition": "골렘에 방패가 활성화된 상태, HP>1\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "HP만 1 감소한다. 같은 페이즈에서 살아남은 적의 방패는 보존된다."
+    "scene": "SpringBeach",
+    "step": "[GM-09] 게이지를 채우고 keep_distance(distance=4)를 최대 20초 실행한다. 필요하면 자원을 보충한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. Slime 전투, 적 생존.",
+    "expectedValue": "플레이어가 적과 거리에 따라 접근·후퇴하고 스킬을 사용한다. 진행 중 거리·자원 상태를 확인할 수 있다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-10][P1] damage_enemies(1)를 호출한다.",
-    "precondition": "방랑자 정면, 조작 가능\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "방향 방어와 관계없이 HP가 1 감소한다. 방향 방어로 피해가 0이 되지 않는다."
+    "scene": "SpringBeach",
+    "step": "[GM-10] circle_enemy(radius=3)을 최대 20초 실행하고 진행을 관찰한 뒤 중단한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. Slime 전투, 이동 공간과 적이 있다.",
+    "expectedValue": "플레이어가 적을 바라보며 주변을 이동하고 중단 후 선회 입력이 남지 않는다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-11][P1] 현재 HP보다 큰 damage_enemies(1000000)를 호출하고 전환을 관찰한다.",
-    "precondition": "다음 페이즈가 있는 보스\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "현재 페이즈의 정상 사망/전환이 실행된다. 새 페이즈 HP 회복은 허용하며 한 번의 초과 피해가 다음 페이즈까지 관통하지 않는다."
+    "scene": "SpringBeach",
+    "step": "[GM-11] set_player_resources(healthPercent=40,gaugePercent=100,shield=0) 후 retreat_and_heal(safeDistance=3)을 실행한다. 필요하면 자원을 보충하거나 heal_player로 회복을 마무리한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 플레이어 생존, 전투 진행 상태.",
+    "expectedValue": "후퇴와 회복 진행을 관찰할 수 있고 체력이 증가하며 회복 후 이동·공격을 이어갈 수 있다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-12][P1] defeat_enemies(Nearest)를 호출하고 완료까지 기다린다.",
-    "precondition": "방랑자, 조작 가능\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "선택한 대상이 정상 사망/페이즈 경로를 거쳐 처치된다. 45초 내 불가능하면 명시적 실패가 나며 무한 대기하지 않는다."
+    "scene": "SpringBeach",
+    "step": "[GM-12] chase_and_attack(attackDistance=1)을 실행한 뒤 keep_fleeing(safeDistance=5,useDash=false)으로 교체한다. stop_behavior(all=true) 후 이동과 공격을 이어간다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. Slime 전투, 적 생존.",
+    "expectedValue": "새 행동이 기존 행동을 대체하고 전체 중단 후 자동 입력이 남지 않는다. 이후 전투 조작이 가능하다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-13][P1] defeat_enemies(All)를 호출한다.",
-    "precondition": "분열 가능한 슬라임\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "분열 후 생성된 적까지 재탐색한다. 완료 시 살아 있는 대상이 남지 않거나, 제한시간 실패를 명시한다. 실패는 PASS로 처리하지 않는다."
+    "scene": "SpringBeach",
+    "step": "[GM-13] 전투 행동 실행 중 옵션 메뉴를 열었다 닫고 전투를 재개한다. 필요하면 행동을 다시 시작하고 자원을 보충한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 전투 화면에서 옵션 메뉴를 열 수 있다.",
+    "expectedValue": "옵션 메뉴가 열리고 닫히며 전투 화면과 HUD가 복구된다. 재개 후 이동·공격을 진행할 수 있다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-14][P1] damage_enemies와 defeat_enemies를 각각 호출한다.",
-    "precondition": "살아 있는 적 없음\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "실행 불가 사유를 반환하고 예외·입력 잔류가 없다."
+    "scene": "StageSelectPage",
+    "step": "[GM-14] unlock_stages를 실행하고 선택 화면에서 보스 스테이지를 확인한다. go_to_stage(Golem), go_to_stage(Slime)으로 왕복하고 각 인트로 뒤 전투를 진행한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 게임 실행 상태.",
+    "expectedValue": "해금된 스테이지가 선택 화면에 나타나고 왕복 후 새 플레이어·적·HUD와 행동이 정상적으로 동작한다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-15][P0] 아래 스테이지 매트릭스의 7개 값으로 go_to_stage를 각각 호출한다.\n각 행을 독립 실행하여 결과를 기록한다. Cinematic·Sandworm은 지원 대상이 아니다.\n\n| stage | 기대 활성 씬 |\n|---|---|\n| Slime | SpringBeach |\n| Elf | SpringNorthForest |\n| Shadow | SpringShadowIsland |\n| Golem | SpringGolemTemple |\n| NagaRogue | NagaRogueScene |\n| NagaWarrior | SummerNagaWarrior |\n| Wanderer | Wanderer |",
-    "precondition": "TitleScene 또는 전투 씬\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "정확한 목적 씬에 살아 있는 플레이어가 생성된다. 정상 인트로 이후 조작할 수 있다. 다른 씬 도착을 성공으로 처리하지 않는다."
+    "scene": "SpringNorthForest",
+    "step": "[GM-15] go_to_stage(Elf)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 엘프 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 게임 실행 및 ARTEL 연결 상태.",
+    "expectedValue": "엘프 보스와 전투 HUD가 나타나고 공격·피격·페이즈 연출을 관찰할 수 있다. 적 정리 후 종료 연출과 다음 진행 화면 또는 이동 경로가 나타나며 게임 진행이 멈추지 않는다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-16][P0] Slime→Golem→Slime→Wanderer→Slime 순서로 이동하고 매번 인트로 종료 후 공격한다.",
-    "precondition": "Slime 진입 완료\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "두 번 이상 왕복해도 플레이어·HUD·조작이 정상이다. 중복 입력·리스너·이전 씬 참조 오류가 없다."
+    "scene": "SpringShadowIsland",
+    "step": "[GM-16] go_to_stage(Shadow)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 그림자 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 게임 실행 및 ARTEL 연결 상태.",
+    "expectedValue": "그림자 보스와 전투 HUD가 나타나고 공격·피격·페이즈 연출을 관찰할 수 있다. 적 정리 후 종료 연출과 다음 진행 화면 또는 이동 경로가 나타나며 게임 진행이 멈추지 않는다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-17][P1] unlock_stages 호출 후 선택 화면에서 전투 7개를 확인하고 재실행한다.",
-    "precondition": "일부 스테이지 잠긴 테스트 저장값\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "선택 화면이 열리고 7개 스테이지가 해금된다. 재실행 후에도 해금 상태가 유지된다."
+    "scene": "SpringGolemTemple",
+    "step": "[GM-17] go_to_stage(Golem)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 골렘 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 게임 실행 및 ARTEL 연결 상태.",
+    "expectedValue": "골렘 보스와 전투 HUD가 나타나고 공격·피격·페이즈 연출을 관찰할 수 있다. 적 정리 후 종료 연출과 다음 진행 화면 또는 이동 경로가 나타나며 게임 진행이 멈추지 않는다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-18][P1] 일시정지 상태에서 스테이지 이동·적 피해·처치를 시도한다. 재개 후 다시 호출한다.",
-    "precondition": "전투 진행 중\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "정지 중에는 재개 안내와 함께 거절한다. 재개 후 조건을 충족하면 정상 실행된다."
+    "scene": "NagaRogueScene",
+    "step": "[GM-18] go_to_stage(NagaRogue)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 나가 도적 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 게임 실행 및 ARTEL 연결 상태.",
+    "expectedValue": "나가 도적 보스와 전투 HUD가 나타나고 공격·피격·페이즈 연출을 관찰할 수 있다. 적 정리 후 종료 연출과 다음 진행 화면 또는 이동 경로가 나타나며 게임 진행이 멈추지 않는다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-19][P1] 완료 전에 다른 이동/해금/적 피해/처치 호출을 보낸다.",
-    "precondition": "단계 이동/처치 코루틴 실행 중\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "중첩 상태 변경을 거절한다. 첫 작업 종료 후 잠금이 해제되어 다음 호출이 가능하다."
+    "scene": "SummerNagaWarrior",
+    "step": "[GM-19] go_to_stage(NagaWarrior)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 나가 전사 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 게임 실행 및 ARTEL 연결 상태.",
+    "expectedValue": "나가 전사 보스와 전투 HUD가 나타나고 공격·피격·페이즈 연출을 관찰할 수 있다. 적 정리 후 종료 연출과 다음 진행 화면 또는 이동 경로가 나타나며 게임 진행이 멈추지 않는다.",
+    "folderId": "4"
   },
   {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-20][P1] keep_attacking을 15초 실행한다.",
-    "precondition": "적이 공격 가능한 거리\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "가까운 적을 조준해 실제 공격·콤보를 반복한다. 추적 이동을 하지 않으며 공격 딜레이와 조작 잠금을 따른다. 넉백 등 외력 이동은 별도 기록한다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-21][P1] chase_and_attack(attackDistance=2)을 실행한다.",
-    "precondition": "적과 거리>2, 열린 공간\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "거리가 2보다 크면 접근하고 범위 안에서 공격한다. 적이 멀어지면 다시 접근한다. 범위가 실제 무기 사거리와 다르면 명중 여부를 분리 기록한다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-22][P1] keep_fleeing(safeDistance=7,useDash=false)를 실행한다. 적이 다시 접근하는 상황을 관찰한다.",
-    "precondition": "적과 거리<7, 열린 공간\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "도주해 안전 거리를 확보하면 멈추고, 적이 접근하면 다시 도주한다. 대시를 사용하지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-23][P1] keep_fleeing(7,true)을 실행한다. 대시 시각과 간격을 기록한다.",
-    "precondition": "TC-22와 같은 조건\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "이동 중 대시를 사용하며 기존 쿨다운을 무시한 연속 대시가 없다. 무적 상태를 강제로 부여하지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-24][P1] keep_distance(distance=5)를 가까운 위치와 먼 위치에서 각각 실행한다.",
-    "precondition": "충분한 게이지, 열린 공간\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "가까우면 후퇴, 멀면 접근한다. 4.5~5.5 범위에서는 거리 보정 이동을 멈춘다. 게이지가 허용하면 스킬을 쓰고 자원을 소모한다. 움직이는 적으로 인한 순간 오차는 기록한다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-25][P1] circle_enemy(radius=4)를 실행한다.",
-    "precondition": "열린 공간, 반경 4 주변 장애물 없음\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "적을 조준하며 시계 방향으로 선회하고 너무 가깝거나 멀면 반경을 보정한다. 공격을 자동으로 추가하지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-26][P1] keep_using_skill을 실행하고 게이지 소진까지 관찰한다. 게이지 0%에서도 반복한다.",
-    "precondition": "게이지 100%, 적 존재\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "제자리에서 비충전 스킬을 반복하고 정상 비용을 차감한다. 부족하면 추가 발사하지 않으며 자원을 자동 충전하지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-27][P1] retreat_and_heal(safeDistance=7)을 실행한다. 필요 시 적 없는 상태에서도 반복한다.",
-    "precondition": "HP 감소, 여러 회복을 감당할 게이지\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "위험 거리에서 후퇴하고 안전해지면 정상 회복을 반복한다. 회복 한 번 후 멈추지 않으며 완전 회복 시 완료한다. 실제 회복 비용이 차감된다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-28][P1] retreat_and_heal(7)을 실행한다.",
-    "precondition": "HP 감소, 게이지 0%\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "자원 부족으로 실패를 명시하고 입력을 해제한다. 회복·자원 자동 보충·무한 대기가 없다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-29][P0] keep_fleeing(7,false)를 시작한다.",
-    "precondition": "keep_attacking 실행 중\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "기존 행동이 종료되고 도주만 실행된다. 이미 시작한 공격 연출 종료 후 추가 공격 입력이 발생하지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-30][P0] behaviorId로 stop_behavior 호출, 별도 실행에서 all:true 중단을 수행한다. 이후 수동 이동/공격한다.",
-    "precondition": "각 행동 실행 중\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "행동이 종료되고 QA 입력이 해제된다. 수동 조작이 정상이며 공격·이동·회복이 계속 눌린 채 남지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-31][P0] maxSeconds=5로 실행하고 제한 종료를 확인한다. 별도 실행에서는 연결을 끊는다.",
-    "precondition": "도주 행동 실행 중\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "제한시간 또는 SDK 연결 종료 처리 후 행동이 정리되고 입력이 해제된다. 실제 종료까지 걸린 시간을 기록한다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-32][P0] 일시정지→재개, 대화 잠금→해제, 플레이어 사망, go_to_stage 이동을 각각 독립 실행한다.",
-    "precondition": "행동 실행 중\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "잠금 중에는 QA 입력을 해제하고 기다린다. 해제 시 유효한 행동은 재개한다. 사망/씬 변경에서는 종료하며 다음 씬에 입력이 남지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-33][P1] 정상 전투 또는 준비용 치트로 마지막 적을 제거한다.",
-    "precondition": "회복 외 행동 실행 중\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "살아 있는 적이 없으면 행동이 완료된다. 회복 행동은 적 없이도 HP·자원 조건에 따라 동작한다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-34][P2] 추적·도주·선회를 각각 실행한다.",
-    "precondition": "벽 가까이, 옆으로 이동 가능한 공간\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "벽 관통 없이 가능한 방향을 선택하거나 정지한다. 좁은 미로를 완주하는 것은 합격 조건이 아니다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-35][P2] 지속 공격·도주를 각각 maxSeconds=120으로 실행한다. 30초마다 상태를 기록하고 중단한다.",
-    "precondition": "살아 있는 적과 플레이어 유지 가능\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "시간이 지나도 상태 보고와 입력 정리가 동작한다. 예외 반복·중복 행동·계속 증가하는 지연이 없다. 사망 시 정상 종료를 기록하고 장시간 검증은 재실행한다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-36][P1] 아래 경계 매트릭스의 범위 밖 숫자, 잘못된 enum, 필수 인자 누락을 각각 호출한다.\n최솟값·최댓값은 정상 입력으로 별도 확인하고, 범위 밖 값은 각각 독립 호출한다. 장면 조건 불충족으로 인한 거절과 인자 오류를 구분한다.\n\n| 인자 | 허용 경계 | 거절 확인 예 |\n|---|---|---|\n| heal_player.amount | 1, 10000 | 0, 10001 |\n| set_player_resources.healthPercent | 1, 100 | 0, 101 |\n| set_player_resources.gaugePercent | 0, 100 | -1, 101 |\n| set_player_resources.shield | 0, 1000 | -1, 1001 |\n| damage_enemies.amount | 0.1, 1000000 | 0, 1000001, 필수값 누락 |\n| chase_and_attack.attackDistance | 0.5, 5 | 0.4, 5.1, 필수값 누락 |\n| keep_fleeing.safeDistance | 2, 20 | 1, 21 |\n| keep_distance.distance / retreat_and_heal.safeDistance | 2, 15 | 1, 16 |\n| circle_enemy.radius | 1, 15 | 0, 16 |\n| go_to_stage.stage | 지원 enum 7개 | UnknownStage, 필수값 누락 |\n| damage_enemies / defeat_enemies.selection | Nearest, All | UnknownSelection |\n| keep_fleeing.useDash | true, false | boolean 아닌 문자열, 필수값 누락 |",
-    "precondition": "원격 호출 가능\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "SDK가 명시적 오류로 거절하고 게임 상태가 바뀌지 않는다. 잘못된 인자를 조용히 적용하거나 무응답이면 실패로 기록한다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-37][P0] 실제 키/마우스로 이동·조준·공격·대시·스킬·회복한다.",
-    "precondition": "모든 행동 중단 후\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "기존 조작·쿨다운·소모 자원이 정상이며 QA 입력이 수동 조작을 가로채지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-38][P1] 피해·처치 치트를 쓰지 않고 공격 행동 또는 수동 공격으로 적을 처치한다.",
-    "precondition": "새 전투, 자원 준비 완료\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "정상 피해·사망·승리 연출과 진행 저장이 작동한다. 준비에 스테이지 치트를 썼다면 정상 해금 흐름까지 검증했다고 기록하지 않는다."
-  },
-  {
-    "scene": "Artel 전투 QA",
-    "step": "[TC-39][P1] 이동·해금·피해·처치 치트 없이 정상 메뉴 진입과 전투로 스테이지를 클리어하고 재실행한다.",
-    "precondition": "별도의 초기 테스트 저장값\n\n공통 준비:\n- Unity 2022.3.34f1 에디터 또는 Windows Development Build에서 TitleScene으로 시작하고 Artel에 연결한다. 에디터와 개발 빌드는 실행 기록을 따로 남긴다.\n- 테스트 전용 진행 데이터로 실행한다. `go_to_stage`/`unlock_stages`는 저장값을 변경하므로 기존 플레이 기록을 백업하고 종료 후 복원한다.\n- 전투 TC는 별도 명시가 없으면 Slime 진입 후 대화·인트로가 끝나고 조작이 가능한 상태에서 시작한다. 이전 행동을 모두 중단하고 HP·게이지·방패를 재설정한다.\n- 행동은 기본 `maxSeconds=15`로 시작한다. 장시간 TC만 별도 시간을 사용한다. 비교할 때 수동 이동·공격 입력은 하지 않는다.\n- HP·자원은 HUD와 관찰 가능한 수치를 함께 기록한다. 적의 동시 피격·재생이 수치를 바꾸면 해당 구간을 제외하고 재실행한다. 거리는 플레이어와 적의 월드 좌표로 측정한다.\n- P0: 진행 차단·입력 잔류·빌드 노출, P1: 핵심 기능, P2: 경계·장시간. 실패 시 영상, 호출 인자/응답, behaviorId, 씬, 전후 수치, 콘솔 로그를 첨부한다.\n- 기존 `HitCollider.hitEffect` 미할당과 `CameraManager.Awake` 오류도 기록한다. 판정을 방해하면 차단으로 표시하고 성공 처리하지 않는다.",
-    "expectedValue": "정상 진행 해금과 저장이 유지된다. 치트에 의해 미리 바뀐 저장값을 정상 진행 결과로 오인하지 않는다."
+    "scene": "Wanderer",
+    "step": "[GM-20] go_to_stage(Wanderer)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 방랑자 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "precondition": "Unity 에디터 또는 Windows Development Build에서 ARTEL 연결. 등록된 모든 치트와 행동을 자유롭게 사용한다. 스테이지 이동·해금·자원 보충·피해·처치에도 제한을 두지 않는다. 필요하면 회복하거나 스테이지에 다시 진입해 계속 진행한다. 테스트 전용 저장 데이터를 사용한다. 게임 실행 및 ARTEL 연결 상태.",
+    "expectedValue": "방랑자 보스와 전투 HUD가 나타나고 공격·피격·페이즈 연출을 관찰할 수 있다. 적 정리 후 종료 연출과 다음 진행 화면 또는 이동 경로가 나타나며 게임 진행이 멈추지 않는다.",
+    "folderId": "4"
   }
 ]

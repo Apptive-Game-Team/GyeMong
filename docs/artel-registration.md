@@ -2,32 +2,50 @@
 
 2026-10-30, stage 환경의 `gyemong` 프로젝트(ID 10).
 
-## 게임 함수
+## 현재 구성
 
-치트 6개와 지속 행동 7개는 기존 커밋 `e057a911` 및 후속 수정에 구현되어 있다. 사용법은 [전투 QA](artel-combat.md)를 참고한다. 이번에는 중복 구현 없이 SDK를 현재 설치된 `97c41053731d41a86dd778310811f5f756db6763`으로 고정했다.
+사용자 요청에 따라 기존 TC 42개(ID 1411–1449, 1490–1492)를 모두 삭제하고 게임 QA TC 20개(ID 1493–1512)로 교체했다.
 
-현재 로컬 `Library/ScriptAssemblies/Assembly-CSharp.dll`에서 13개 카탈로그 이름을 확인했다. manifest와 lock의 SDK URL/해시가 일치하며 SDK 패키지에 치트·행동 attribute와 define 동기화 코드가 존재한다. 이는 서버 카탈로그 조회나 실제 호출 성공을 대신하지 않는다.
+- TC 폴더: 기존 `Artel 전투 QA` (ID 4)
+- 전체 시나리오: ID 46, `게임 QA (20개, 치트·행동 자유 사용)`
+- 원본: [artel-test-cases.json](artel-test-cases.json)
+- 읽기용 목록: [artel-test-cases.md](artel-test-cases.md)
+- 시나리오 단계: [artel-scenario-steps.json](artel-scenario-steps.json)
 
-## 테스트 케이스
+모든 TC와 시나리오 단계에서 등록된 치트·행동을 자유롭게 사용한다. 스테이지 이동·해금·회복·자원 보충·피해·처치 사용에 제한을 두지 않는다. 게임 함수 카탈로그의 처치·진행·공격 설명에 있던 테스트 용도 제한 문구도 제거했다.
 
-기존 [전투 TC 원본](artel-test-cases.json) 39개(ID 1411–1449)는 서버 목록과 scene/step/precondition/expectedValue가 모두 일치했다. 중복 등록하거나 기존 분류를 변경하지 않았다.
+## TC 범위
 
-이번에 [회귀 TC 원본](artel-regression-cases.json) 3개를 `ARTEL 연동 회귀` 폴더(ID 6)에 CLI로 생성했다.
+| ID | 항목 |
+|---|---|
+| 1493 | Slime 진입과 전투 화면 |
+| 1494 | 접근과 공격 |
+| 1495 | 연속 공격·콤보 |
+| 1496 | 스킬 |
+| 1497 | 플레이어 회복 |
+| 1498 | 자원·적 HP HUD |
+| 1499 | 슬라임 페이즈·분열 적 정리 |
+| 1500 | 도주·대시 |
+| 1501 | 거리 유지·스킬 |
+| 1502 | 선회 |
+| 1503 | 후퇴·회복 |
+| 1504 | 행동 교체·중단 |
+| 1505 | 옵션 메뉴와 전투 재개 |
+| 1506 | 해금·씬 왕복 |
+| 1507–1512 | Elf, Shadow, Golem, NagaRogue, NagaWarrior, Wanderer 전투 진행 |
 
-| ID | 항목 | 상태 |
-|---|---|---|
-| 1490 | 고정 SDK 연결·치트·행동 카탈로그 | DRAFT |
-| 1491 | Play Mode 재컴파일 지연 및 재진입 | DRAFT |
-| 1492 | 행동 교체와 전투 씬 왕복 | DRAFT |
+## 검증
 
-각 ID를 `case show`로 다시 조회해 네 필드와 folderId가 원본과 일치함을 확인했다. 총 42개이며 신규 TC는 등록만 완료했고 실행하지 않았다.
+CLI로 기존 TC 삭제 후 프로젝트 목록이 0개임을 확인하고 새 TC를 생성했다. 신규 20개를 각각 `case show`로 재조회해 scene/step/precondition/expectedValue/folderId가 원본과 일치함을 검사했다. 최종 목록 20개에 삭제한 ID가 없고, 시나리오 46의 20개 단계가 신규 ID·행동·자유 사용 안내와 일치함을 확인했다.
 
-배포된 `@project-artel/cli@alpha`(0.0.1-alpha.1)는 폴더 명령이 없어서 프로젝트 외부의 기존 CLI 소스를 `Logs/artel-cli-source`에 복사해 빌드하고 사용했다. 해당 복사본과 실행 응답은 Git에서 제외되는 Logs에 있다. 인증은 ARTEL_TOKEN 환경변수를 사용했다.
+TC 상태는 모두 DRAFT이며 이번 작업에서 게임 QA를 실행하지 않았다. 전투 동작 결과는 신규 TC 실행으로 확인해야 한다.
 
-## 검증 한계
+## 백업과 복원
 
-GyeMong 프로젝트가 Unity 에디터에서 열려 있어 별도의 batchmode Play Mode·빌드를 실행하지 않았다. 기존 검증 기록은 [전투 QA](artel-combat.md)와 [에디터 가드 계획](../.plan/general/2026-10-23-defer-play-mode-assembly-reload.md)에 있다. 현재 Editor.log에는 과거 패키지 해석 중 CS0006과 이후 재컴파일/reload 기록 및 GUI 경고가 있어 전체 콘솔 오류 0건으로 보고하지 않는다.
+삭제 전 서버 TC: `Logs/artel-cases-before-reset.json`. 시나리오: `Logs/artel-scenario-46-before-reset.json`. 기존 로컬 원본: `Logs/artel-tc-reset-backup/`. 실행 응답과 재조회 결과도 Logs에 있으며 Git에는 포함하지 않는다. 과거 문서는 Git 이력에도 남아 있다.
 
-## 재등록 시 주의
+TC 복원이 필요하면 백업의 scene/step/precondition/expectedValue/folderId로 다시 생성하고 반환된 새 ID를 시나리오에 연결한다. 삭제한 ID 자체는 재사용하지 않는다.
 
-원본 JSON을 다시 `case create`하면 중복된다. 이번에 생성한 ID 1490–1492를 조회·수정하고, 추가 생성 전 프로젝트 목록을 비교한다.
+## CLI
+
+배포된 `@project-artel/cli@alpha`(0.0.1-alpha.1)에 폴더 명령이 없어 기존 CLI 소스의 빌드 복사본 `Logs/artel-cli-source/dist/cli.js`를 사용했다. 인증은 ARTEL_TOKEN 환경변수로 전달했다. 등록된 TC를 다시 `case create`하면 중복되므로 변경 시 조회·수정을 사용한다.

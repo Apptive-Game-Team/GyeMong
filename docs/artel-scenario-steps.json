@@ -1,0 +1,122 @@
+[
+  {
+    "action": "[GM-01] go_to_stage(Slime)으로 진입해 인트로와 대화를 진행하고 전투 화면을 확인한다.",
+    "case_id": 1493,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-02] 자원을 보충하고 chase_and_attack(attackDistance=1)을 최대 20초 실행한다. 필요하면 접근 거리를 조절하고 이동·조준·공격을 이어간다.",
+    "case_id": 1494,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-03] 적 근처에서 keep_attacking을 최대 15초 실행한다. 적이 멀어지면 접근 후 다시 실행한다.",
+    "case_id": 1495,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-04] set_player_resources(healthPercent=100,gaugePercent=100,shield=0) 후 keep_using_skill을 최대 15초 실행한다. 필요하면 게이지를 보충한다.",
+    "case_id": 1496,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-05] set_player_resources(healthPercent=30,gaugePercent=100,shield=0)으로 준비하고 heal_player(amount=10000)을 실행한다.",
+    "case_id": 1497,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-06] set_player_resources(healthPercent=50,gaugePercent=50,shield=10)을 실행하고 자원 HUD를 관찰한다. 적을 공격하거나 damage_enemies(amount=1,selection=Nearest)로 적 HP 변화도 확인한다.",
+    "case_id": 1498,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-07] 슬라임 전투를 진행한다. 필요에 따라 damage_enemies, defeat_enemies(selection=All), 공격 행동을 사용하여 분열 적까지 정리한다.",
+    "case_id": 1499,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-08] keep_fleeing(safeDistance=5,useDash=true)을 최대 20초 실행한다. 필요하면 HP를 보충하고 위치를 다시 잡아 반복한다.",
+    "case_id": 1500,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-09] 게이지를 채우고 keep_distance(distance=4)를 최대 20초 실행한다. 필요하면 자원을 보충한다.",
+    "case_id": 1501,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-10] circle_enemy(radius=3)을 최대 20초 실행하고 진행을 관찰한 뒤 중단한다.",
+    "case_id": 1502,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-11] set_player_resources(healthPercent=40,gaugePercent=100,shield=0) 후 retreat_and_heal(safeDistance=3)을 실행한다. 필요하면 자원을 보충하거나 heal_player로 회복을 마무리한다.",
+    "case_id": 1503,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-12] chase_and_attack(attackDistance=1)을 실행한 뒤 keep_fleeing(safeDistance=5,useDash=false)으로 교체한다. stop_behavior(all=true) 후 이동과 공격을 이어간다.",
+    "case_id": 1504,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-13] 전투 행동 실행 중 옵션 메뉴를 열었다 닫고 전투를 재개한다. 필요하면 행동을 다시 시작하고 자원을 보충한다.",
+    "case_id": 1505,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-14] unlock_stages를 실행하고 선택 화면에서 보스 스테이지를 확인한다. go_to_stage(Golem), go_to_stage(Slime)으로 왕복하고 각 인트로 뒤 전투를 진행한다.",
+    "case_id": 1506,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-15] go_to_stage(Elf)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 엘프 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "case_id": 1507,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-16] go_to_stage(Shadow)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 그림자 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "case_id": 1508,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-17] go_to_stage(Golem)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 골렘 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "case_id": 1509,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-18] go_to_stage(NagaRogue)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 나가 도적 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "case_id": 1510,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-19] go_to_stage(NagaWarrior)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 나가 전사 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "case_id": 1511,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  },
+  {
+    "action": "[GM-20] go_to_stage(Wanderer)으로 진입해 인트로와 대화를 진행한다. 치트와 행동을 자유롭게 조합해 방랑자 전투의 패턴·페이즈를 관찰하고 적을 정리한다. 필요하면 HP·게이지 보충과 damage_enemies, defeat_enemies(selection=All)을 사용한다.",
+    "case_id": 1512,
+    "hint": "사용 가능한 모든 치트와 행동을 자유롭게 사용해 진행한다. 필요하면 스테이지 이동, 자원 보충, 피해 및 처치 치트를 사용한다.",
+    "input": null
+  }
+]
